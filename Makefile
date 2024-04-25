@@ -1,9 +1,9 @@
-CC = gcc
+CC = g++
 RC = windres
-DLL_CFLAGS = -O0 -g -std=c11 ${WARNS} -Iinclude -D ADD_EXPORTS -fpermissive
+DLL_CFLAGS = -O0 -g -std=c++11 ${WARNS} -Iinclude -D ADD_EXPORTS -fpermissive
 DLL_LDFLAGS = -shared -Wl,--kill-at -Wl,--subsystem,windows,--out-implib,lib/test_library.a
-LOADER_OBJ = source/test_loader.o
-LIBRARY_OBJ =source/test_library.o
+LOADER_OBJ = obj/test_loader.o
+LIBRARY_OBJ =obj/test_library.o
 
 .PHONY: all clean
 
