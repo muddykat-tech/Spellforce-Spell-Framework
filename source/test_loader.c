@@ -25,8 +25,8 @@ int main()
     HMODULE hinstLib = LoadLibrary("test_library.dll");
 	if(hinstLib)
 	{
-		test_caller_function_p tf = (test_caller_function_p) GetProcAddress(hinstLib, "InitModule@4");
-		test_return tr = (test_return)GetProcAddress(hinstLib, "ExportedFunction@0");
+		test_caller_function_p tf = (test_caller_function_p) GetProcAddress(hinstLib, "InitModule");
+		test_return tr = (test_return)GetProcAddress(hinstLib, "ExportedFunction");
 		if (tf)
 		{
 			tf(&FAPI);

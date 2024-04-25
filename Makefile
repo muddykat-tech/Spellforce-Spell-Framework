@@ -1,7 +1,7 @@
 CC = gcc
 RC = windres
 DLL_CFLAGS = -O0 -g -std=c11 ${WARNS} -Iinclude -D ADD_EXPORTS -fpermissive
-DLL_LDFLAGS = -shared -Wl,--subsystem,windows,--out-implib,lib/test_library.a
+DLL_LDFLAGS = -shared -Wl,--kill-at -Wl,--subsystem,windows,--out-implib,lib/test_library.a
 LOADER_OBJ = source/test_loader.o
 LIBRARY_OBJ =source/test_library.o
 
