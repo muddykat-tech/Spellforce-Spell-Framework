@@ -17,10 +17,10 @@ clean:
 bin lib obj:
 	@if not exist "$@" mkdir "$@"
 
-obj/test_loader.o: source/test_loader.c | obj
+obj/test_loader.o: src/test_loader.c | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
-obj/test_library.o: source/test_library.c | obj
+obj/test_library.o: src/test_library.c | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 bin/test_library.dll: ${LIBRARY_OBJ} | bin lib
