@@ -12,12 +12,12 @@ typedef struct _framework_api *pFrameworkAPI;
 
 pFrameworkAPI pFAPI;
 
-__declspec(dllexport) void __stdcall InitModule(void * pInterface)
+extern "C" __declspec(dllexport) void __stdcall InitModule(void * pInterface)
 {
 	pFAPI = (pFrameworkAPI) pInterface;
 }
 
-__declspec(dllexport) int __stdcall ExportedFunction()
+extern "C" __declspec(dllexport) int __stdcall ExportedFunction()
 {
 	return pFAPI->add(2, 2);
 }
