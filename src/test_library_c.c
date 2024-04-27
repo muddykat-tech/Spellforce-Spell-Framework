@@ -1,14 +1,5 @@
 #include <windows.h>
-
-typedef int (*test_called_function)(int, int);
-
-struct _framework_api
-{
-	test_called_function add;
-};
-
-typedef struct _framework_api FrameworkAPI;
-typedef struct _framework_api *pFrameworkAPI;
+#include "test_loader.h"
 
 pFrameworkAPI pFAPI;
 
@@ -19,7 +10,7 @@ extern "C" __declspec(dllexport) void __stdcall InitModule(void * pInterface)
 
 extern "C" __declspec(dllexport) int __stdcall ExportedFunction()
 {
-	return pFAPI->add(2, 2);
+	return pFAPI->add(4, 4);
 }
 
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)

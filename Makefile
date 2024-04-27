@@ -20,7 +20,7 @@ bin lib obj:
 obj/test_loader.o: src/test_loader.c | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
-obj/test_library.o: src/test_library.c | obj
+obj/test_library.o: src/test_library_a.c | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 bin/test_library.dll: ${LIBRARY_OBJ} | bin lib
