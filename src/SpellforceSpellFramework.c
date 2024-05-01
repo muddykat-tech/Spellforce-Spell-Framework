@@ -2,6 +2,7 @@
 #include "asi/sf_asi.h"
 uint16_t (__thiscall *get_spell_spell_line) (void *, uint16_t);
 uint32_t (__thiscall *figure_toolbox_get_unkn)(void *, uint16_t);
+void (__thiscall *figure_toolbox_add_spell)(void *, uint16_t, uint16_t);
 
 uint16_t __thiscall addSpell(SF_CGdSpell *_this, uint16_t spell_id, uint16_t param2, SF_CGdTargetData *source, SF_CGdTargetData *target, uint16_t param5)
 {
@@ -9,7 +10,7 @@ uint16_t __thiscall addSpell(SF_CGdSpell *_this, uint16_t spell_id, uint16_t par
 	uint16_t spell_line;
 	if (target->entity_type == 1)
 	{
-		if (!figure_toolbox_get_unkn(_this->SF_CGdResource, target->entity_index))
+		if (!figure_toolbox_get_unkn(_this->SF_CGdFigureToolBox, target->entity_index))
 		{
 			return 0;
 		}
@@ -46,6 +47,13 @@ uint16_t __thiscall addSpell(SF_CGdSpell *_this, uint16_t spell_id, uint16_t par
 	_this->active_spell_list[spell_index].to_do_count = param2 - (uint16_t)(_this->OpaqueClass->current_step);
 	//TODO Spell Line handler
 
+	if (target->entity_type == 1)
+	{
+		if (spell_line != 0x5A)
+		{
+			figure_toolbox_add_spell (_this->SF_CGdFigureToolBox, target->entity_index, spell_index);
+		}
+	}
 	return spell_index;
 
 }
@@ -53,8 +61,9 @@ uint16_t __thiscall addSpell(SF_CGdSpell *_this, uint16_t spell_id, uint16_t par
 void hookBetaVersion()
 {
 	///this is optional, I'm lazy to make proper typedefs
-	get_spell_spell_line = (uint16_t(__thiscall *)(void*, uint16_t))(ASI::AddrOf(0x26E100));
-	figure_toolbox_get_unkn =(uint32_t(__thiscall *)(void*, uint16_t)) (ASI::AddrOf(0x2FE704));
+	get_spell_spell_line = (uint16_t (__thiscall *)(void *, uint16_t))(ASI::AddrOf(0x26E100));
+	figure_toolbox_get_unkn = (uint32_t (__thiscall *)(void *, uint16_t)) (ASI::AddrOf(0x2FE704));
+	figure_toolbox_add_spell = (void (__thiscall *)(void *,uint16_t, uint16_t)) ASI::AddrOf(0x2F673A);
 }
 
 BOOL APIENTRY DllMain( HMODULE hModule,
