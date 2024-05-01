@@ -1,8 +1,17 @@
 #include "api/sf_spell.h"
 #include "asi/sf_asi.h"
+#include <map>
+
 uint16_t (__thiscall *get_spell_spell_line) (void *, uint16_t);
 uint32_t (__thiscall *figure_toolbox_get_unkn)(void *, uint16_t);
 void (__thiscall *figure_toolbox_add_spell)(void *, uint16_t, uint16_t);
+void (__thiscall *setXData)(SF_CGdSpell *, uint16_t, uint8_t, uint32_t);
+
+typedef (__thiscall *handler_ptr) (SF_CGdSpell *, uint16_t);
+
+
+std::map<uint16_t, handler_ptr> handler_map;
+
 
 uint16_t __thiscall addSpell(SF_CGdSpell *_this, uint16_t spell_id, uint16_t param2, SF_CGdTargetData *source, SF_CGdTargetData *target, uint16_t param5)
 {
@@ -45,7 +54,9 @@ uint16_t __thiscall addSpell(SF_CGdSpell *_this, uint16_t spell_id, uint16_t par
 	_this->active_spell_list[spell_index].target.position.X = (target->position).X;
 	_this->active_spell_list[spell_index].target.position.Y = (target->position).Y;	
 	_this->active_spell_list[spell_index].to_do_count = param2 - (uint16_t)(_this->OpaqueClass->current_step);
+
 	//TODO Spell Line handler
+	//It is C++, I'm lost here
 
 	if (target->entity_type == 1)
 	{
@@ -58,12 +69,25 @@ uint16_t __thiscall addSpell(SF_CGdSpell *_this, uint16_t spell_id, uint16_t par
 
 }
 
+void fireburst_handler(SF_CGdSpell * _this,uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 1;
+	setXData(_this, spell_index, 0x12, 0);
+	setXData(_this, spell_index, 0x26, 0);
+}
+
+void initSpellMap()
+{
+	handler_map[1] = &fireburst_handler;
+}
+
 void hookBetaVersion()
 {
 	///this is optional, I'm lazy to make proper typedefs
-	get_spell_spell_line = (uint16_t (__thiscall *)(void *, uint16_t))(ASI::AddrOf(0x26E100));
+	get_spell_spell_line = (uint16_t (__thiscall *)(void *, uint16_t)) (ASI::AddrOf(0x26E100));
 	figure_toolbox_get_unkn = (uint32_t (__thiscall *)(void *, uint16_t)) (ASI::AddrOf(0x2FE704));
-	figure_toolbox_add_spell = (void (__thiscall *)(void *,uint16_t, uint16_t)) ASI::AddrOf(0x2F673A);
+	figure_toolbox_add_spell = (void (__thiscall *)(void *,uint16_t, uint16_t)) (ASI::AddrOf(0x2F673A));
+	setXData = ASI::AddrOf(0x329C40);
 }
 
 BOOL APIENTRY DllMain( HMODULE hModule,
@@ -84,6 +108,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
         }
         else
         {
+        	initSpellMap();
             hookBetaVersion();
             break;
         }
