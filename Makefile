@@ -22,6 +22,9 @@ SFSF_OBJ = obj/sf_asi.o obj/sfsf.o
 # Default target
 all: bin/test_loader.exe bin/sfsf/test_library_a.dll bin/sfsf/test_library_b.dll bin/sfsf/test_library_c.dll bin/ModuleLoader.dll bin/TestMod.dll
 
+# Framework Target
+framework: bin/sfsf.asi
+
 # Target for cleaning up
 clean:
 	if exist bin\* del /q bin\*
