@@ -1,5 +1,3 @@
-#include "api/sf_spell.h"
-#include "asi/sf_asi.h"
 #include <map>
 #include "SpellforceSpellFramework.h"
 #include "ModuleLoader.h"
@@ -8,8 +6,7 @@ uint16_t (__thiscall *get_spell_spell_line) (void *, uint16_t);
 uint32_t (__thiscall *figure_toolbox_get_unkn)(void *, uint16_t);
 void (__thiscall *figure_toolbox_add_spell)(void *, uint16_t, uint16_t);
 void (__thiscall *setXData)(SF_CGdSpell *, uint16_t, uint8_t, uint32_t);
-
-typedef void (__thiscall *handler_ptr) (SF_CGdSpell *, uint16_t);
+void (__thiscall *handler_ptr) (SF_CGdSpell *, uint16_t);
 
 static std::map<uint16_t, handler_ptr> handler_map;
 
