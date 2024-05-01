@@ -28,3 +28,40 @@ typedef struct __attribute__((packed))
 	uint8_t underfined2; 
 	uint8_t flags;
 } SF_GdSpell;
+
+typedef struct __attribute__((packed))
+{
+	uint8_t unkn1[12];
+	uint32_t current_step;
+	uint8_t unkn2[10];
+
+} OpaqueClass1;
+
+typedef struct __attribute__((packed))
+{
+	void *SF_CGdMain;
+	OpaqueClass1 *OpaqueClass;
+	void *SF_CGdBuilding;
+	void *SF_CGdBuildingToolbox;
+	void *SF_CGdDoubleLinkedList;
+	void *SF_CGdEffect;
+	void *unkn1;
+	void *SF_CGdFigure;
+	void *SF_CGdFigureJobs;
+	void *SF_CGdFigureToolBox;
+	void *SF_CGdFormation;
+	void *unkn2;
+	void *SF_CGdObject;
+	void *SF_CGdObjectToolBox;
+	void *SF_CGdPlayer;
+	void *SF_CGdResource;
+	void *unkn3;
+	void *unkn4;
+	void *SF_CGdWorld;
+	void *SF_CGdWorldToolBox;
+	void *SF_CGdXDataList;
+	uint16_t max_used;
+	SF_GdSpell active_spell_list[800];
+	void *unkn5;
+	uint32_t unkn6;
+} SF_CGdSpell;
