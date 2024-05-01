@@ -7,7 +7,7 @@
 typedef void (*InitModuleFunc)(void*);
 
 void log_error(const char* message) {
-    fprintf(stderr, "Error: %s\n", message);
+    OutputDebugStringA(stderr, "Error: %s\n", message);
 }
 
 void cleanup(void* modHandle) {

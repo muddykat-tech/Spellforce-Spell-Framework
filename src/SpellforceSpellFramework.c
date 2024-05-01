@@ -11,7 +11,7 @@ void (__thiscall *setXData)(SF_CGdSpell *, uint16_t, uint8_t, uint32_t);
 
 typedef void (__thiscall *handler_ptr) (SF_CGdSpell *, uint16_t);
 
-// Moved map to header
+static std::map<uint16_t, handler_ptr> handler_map;
 
 void addSpellHandler(uint16_t spell_index, handler_ptr handler) {
 	// May need to add checks incase bad index?
