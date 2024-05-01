@@ -27,7 +27,7 @@ void __thiscall default_handler (SF_CGdSpell * spell, uint16_t spell_index)
 	;
 }
 
-uint16_t __thiscall addSpell(SF_CGdSpell *_this, uint16_t spell_id, uint16_t param2, SF_CGdTargetData *source, SF_CGdTargetData *target, uint16_t param5)
+uint16_t __thiscall addSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_id, uint16_t param2, SF_CGdTargetData *source, SF_CGdTargetData *target, uint16_t param5)
 {
 	uint16_t spell_index;
 	uint16_t spell_line;
@@ -97,6 +97,7 @@ void initSpellMap()
 	handler_map[0xea] = &fireburst_handler;
 }
 
+
 void hookBetaVersion()
 {
 	///this is optional, I'm lazy to make proper typedefs
@@ -104,6 +105,13 @@ void hookBetaVersion()
 	figure_toolbox_get_unkn = (uint32_t (__thiscall *)(void *, uint16_t)) (ASI::AddrOf(0x2FE704));
 	figure_toolbox_add_spell = (void (__thiscall *)(void *,uint16_t, uint16_t)) (ASI::AddrOf(0x2F673A));
 	setXData = ASI::AddrOf(0x329C40);
+	ASI::MemoryRegion add_spell_mreg(ASI::AddrOf(0x328d60), 5); //building selector
+    ASI::BeginRewrite(add_spell_mreg);
+        *(unsigned char*)(ASI::AddrOf(0x328d60)) = 0xE9;   // jmp instruction
+        *(int*)(ASI::AddrOf(0x328d61)) = (int)(&addSpell_hook_beta) - ASI::AddrOf(0x328d65);
+    ASI::EndRewrite(add_spell_mreg);
+
+
 }
 
 BOOL APIENTRY DllMain( HMODULE hModule,

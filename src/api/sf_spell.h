@@ -39,7 +39,7 @@ typedef struct __attribute__((packed))
 
 typedef struct __attribute__((packed))
 {
-	void *SF_CGdMain;
+	void *SF_CGdAiMain;
 	OpaqueClass1 *OpaqueClass;
 	void *SF_CGdBuilding;
 	void *SF_CGdBuildingToolbox;
