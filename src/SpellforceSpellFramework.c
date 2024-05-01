@@ -7,11 +7,25 @@ uint32_t (__thiscall *figure_toolbox_get_unkn)(void *, uint16_t);
 void (__thiscall *figure_toolbox_add_spell)(void *, uint16_t, uint16_t);
 void (__thiscall *setXData)(SF_CGdSpell *, uint16_t, uint8_t, uint32_t);
 
-typedef (__thiscall *handler_ptr) (SF_CGdSpell *, uint16_t);
+typedef void (__thiscall *handler_ptr) (SF_CGdSpell *, uint16_t);
 
 
 std::map<uint16_t, handler_ptr> handler_map;
 
+handler_ptr get_or_default (std::map<uint16_t, handler_ptr> m, const uint16_t key, const handler_ptr default_value)
+{
+	auto it = m.find(key);
+    if (it == m.end()) {
+        // Element doesn't exist, insert the default value
+        it = m.emplace(key, default_value).first;
+    }
+    return it->second;
+}
+
+void __thiscall default_handler (SF_CGdSpell * spell, uint16_t spell_index)
+{
+	;
+}
 
 uint16_t __thiscall addSpell(SF_CGdSpell *_this, uint16_t spell_id, uint16_t param2, SF_CGdTargetData *source, SF_CGdTargetData *target, uint16_t param5)
 {
@@ -55,8 +69,8 @@ uint16_t __thiscall addSpell(SF_CGdSpell *_this, uint16_t spell_id, uint16_t par
 	_this->active_spell_list[spell_index].target.position.Y = (target->position).Y;	
 	_this->active_spell_list[spell_index].to_do_count = param2 - (uint16_t)(_this->OpaqueClass->current_step);
 
-	//TODO Spell Line handler
-	//It is C++, I'm lost here
+	handler_ptr func = get_or_default(handler_map, spell_line, default_handler);
+	func (_this, spell_index);
 
 	if (target->entity_type == 1)
 	{
@@ -69,7 +83,7 @@ uint16_t __thiscall addSpell(SF_CGdSpell *_this, uint16_t spell_id, uint16_t par
 
 }
 
-void fireburst_handler(SF_CGdSpell * _this,uint16_t spell_index)
+void __thiscall fireburst_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
 	_this->active_spell_list[spell_index].spell_job = 1;
 	setXData(_this, spell_index, 0x12, 0);
@@ -79,6 +93,8 @@ void fireburst_handler(SF_CGdSpell * _this,uint16_t spell_index)
 void initSpellMap()
 {
 	handler_map[1] = &fireburst_handler;
+	handler_map[0x9f] = &fireburst_handler;
+	handler_map[0xea] = &fireburst_handler;
 }
 
 void hookBetaVersion()
