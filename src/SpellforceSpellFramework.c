@@ -56,6 +56,7 @@ uint16_t __thiscall addSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_id, ui
 	{
 		_this->max_used = spell_index;
 	}
+	//somewhere here is smth goes south
 	_this->active_spell_list[spell_index].spell_id = spell_id;
 	spell_line = get_spell_spell_line (_this->SF_CGdResource, spell_id);
 	_this->active_spell_list[spell_index].spell_line = spell_line;
@@ -85,7 +86,8 @@ uint16_t __thiscall addSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_id, ui
 
 void __thiscall fireburst_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
-	_this->active_spell_list[spell_index].spell_job = 1;
+	//here we write the stuff two bytes off
+	_this->active_spell_list[spell_index].spell_job = 0x1;
 	setXData(_this, spell_index, 0x12, 0);
 	setXData(_this, spell_index, 0x26, 0);
 }

@@ -3,14 +3,14 @@
 
 typedef struct __attribute__((packed))
 {
-	uint8_t X;
-	uint8_t Y;
+	uint16_t X;
+	uint16_t Y;
 } SF_Coord;
 
 typedef struct __attribute__((packed))
 {
 	uint8_t entity_type; //1 for figure, 2 for building, 3 for object
-	uint8_t entity_index; 
+	uint16_t entity_index;
 	SF_Coord position;
 } SF_CGdTargetData;
 
