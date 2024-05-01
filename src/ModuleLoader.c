@@ -7,7 +7,9 @@
 typedef void (*InitModuleFunc)(void*);
 
 void log_error(const char* message) {
-    fprintf(stderr, "Error: %s\n", message);
+    char buffer[256]; // Max length of error message...
+    snprintf(buffer, sizeof(buffer), "Error: %s\n", message);
+    OutputDebugStringA(buffer);
 }
 
 void cleanup(void* modHandle) {

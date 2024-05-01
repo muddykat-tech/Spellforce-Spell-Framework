@@ -1,5 +1,3 @@
-#include "api/sf_spell.h"
-#include "asi/sf_asi.h"
 #include <map>
 #include "SpellforceSpellFramework.h"
 #include "ModuleLoader.h"
@@ -9,9 +7,7 @@ get_spell_spell_line_ptr get_spell_spell_line;
 figure_toolbox_get_unkn_ptr figure_toolbox_get_unkn;
 figure_toolbox_add_spell_ptr figure_toolbox_add_spell;
 
-typedef void (__thiscall *handler_ptr) (SF_CGdSpell *, uint16_t);
-
-// Moved map to header
+static std::map<uint16_t, handler_ptr> handler_map;
 
 void addSpellHandler(uint16_t spell_index, handler_ptr handler) {
 	// May need to add checks incase bad index?
