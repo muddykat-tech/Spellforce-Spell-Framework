@@ -46,10 +46,10 @@ bin/test_library_a.dll: ${LIBRARY_OBJ_A} | bin lib
 	${CC}  -o "$@" ${LIBRARY_OBJ_A} ${DLL_LDFLAGS}
 
 bin/test_library_b.dll: ${LIBRARY_OBJ_B} | bin lib
-	${CC}  -o "$@" ${LIBRARY_OBJ_A} ${DLL_LDFLAGS}
+	${CC}  -o "$@" ${LIBRARY_OBJ_B} ${DLL_LDFLAGS}
 
 bin/test_library_c.dll:${LIBRARY_OBJ_C} | bin lib
-	${CC}  -o "$@" ${LIBRARY_OBJ_A} ${DLL_LDFLAGS}
+	${CC}  -o "$@" ${LIBRARY_OBJ_C} ${DLL_LDFLAGS}
 
 bin/test_loader.exe: ${LOADER_OBJ} |bin lib
 	${CC}  -o "$@" ${LOADER_OBJ}

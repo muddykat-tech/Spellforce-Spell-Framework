@@ -10,7 +10,7 @@ extern "C" __declspec(dllexport) void __stdcall InitModule(void * pInterface)
 
 extern "C" __declspec(dllexport) int __stdcall ExportedFunction()
 {
-	return pFAPI->add(1, 1);
+	return pFAPI->add(40, 2);
 }
 
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
