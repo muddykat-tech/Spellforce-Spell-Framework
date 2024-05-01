@@ -1,6 +1,6 @@
 #include <string>
 #include "SpellforceSpellFramework.h"
 
-void initializeModule(SpellforceFramework *framework) {
-
+extern "C" __declspec(dllexport) void initializeModule(SpellforceSpellFramework* framework) {
+    printf("Module initialized successfully!\n");
 }

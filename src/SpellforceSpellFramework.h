@@ -1,5 +1,13 @@
-typedef void (*InitModuleFunc)(SpellforceFramework*);
+// SpellforceSpellFramework.h
+#ifndef SPELLFORCE_SPELL_FRAMEWORK_H
+#define SPELLFORCE_SPELL_FRAMEWORK_H
 
-InitModuleFunc initializeModule;
+// Define the function pointer type without initialization
+typedef void (*InitModuleFunc)(void*);
 
-SpellforceFramework() : initializeModule(SpellforceFramework* pfas) {}
+// Declare the structure
+typedef struct SpellforceSpellFramework {
+    InitModuleFunc initializeModule;
+} SpellforceSpellFramework;
+
+#endif /* SPELLFORCE_SPELL_FRAMEWORK_H */
