@@ -4,10 +4,10 @@
 #include "SpellforceSpellFramework.h"
 #include "ModuleLoader.h"
 
-uint16_t (__thiscall *get_spell_spell_line) (void *, uint16_t);
-uint32_t (__thiscall *figure_toolbox_get_unkn)(void *, uint16_t);
-void (__thiscall *figure_toolbox_add_spell)(void *, uint16_t, uint16_t);
-void (__thiscall *setXData)(SF_CGdSpell *, uint16_t, uint8_t, uint32_t);
+setXData_ptr setXData;
+get_spell_spell_line_ptr get_spell_spell_line;
+figure_toolbox_get_unkn_ptr figure_toolbox_get_unkn;
+figure_toolbox_add_spell_ptr figure_toolbox_add_spell;
 
 typedef void (__thiscall *handler_ptr) (SF_CGdSpell *, uint16_t);
 
@@ -116,11 +116,12 @@ void initSpellMap()
 
 void hookBetaVersion()
 {
-	///this is optional, I'm lazy to make proper typedefs
-	get_spell_spell_line = (uint16_t (__thiscall *)(void *, uint16_t)) (ASI::AddrOf(0x26E100));
-	figure_toolbox_get_unkn = (uint32_t (__thiscall *)(void *, uint16_t)) (ASI::AddrOf(0x2FE704));
-	figure_toolbox_add_spell = (void (__thiscall *)(void *,uint16_t, uint16_t)) (ASI::AddrOf(0x2F673A));
-	setXData = ASI::AddrOf(0x329C40);
+	//TODO move this to Init function of some sort
+	get_spell_spell_line = (get_spell_spell_line_ptr) (ASI::AddrOf(0x26E100));
+	figure_toolbox_get_unkn = (figure_toolbox_get_unkn_ptr) (ASI::AddrOf(0x2FE704));
+	figure_toolbox_add_spell = (figure_toolbox_add_spell_ptr) (ASI::AddrOf(0x2F673A));
+	setXData = (setXData_ptr) ASI::AddrOf(0x329C40);
+
 	ASI::MemoryRegion add_spell_mreg(ASI::AddrOf(0x328d60), 5); //building selector
     ASI::BeginRewrite(add_spell_mreg);
         *(unsigned char*)(ASI::AddrOf(0x328d60)) = 0xE9;   // jmp instruction
