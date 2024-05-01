@@ -1,6 +1,8 @@
 #include "api/sf_spell.h"
 #include "asi/sf_asi.h"
 #include <map>
+#include "SpellforceSpellFramework.h"
+#include "ModuleLoader.h"
 
 uint16_t (__thiscall *get_spell_spell_line) (void *, uint16_t);
 uint32_t (__thiscall *figure_toolbox_get_unkn)(void *, uint16_t);
@@ -9,8 +11,18 @@ void (__thiscall *setXData)(SF_CGdSpell *, uint16_t, uint8_t, uint32_t);
 
 typedef void (__thiscall *handler_ptr) (SF_CGdSpell *, uint16_t);
 
+// Moved map to header
 
-std::map<uint16_t, handler_ptr> handler_map;
+void addSpellHandler(uint16_t spell_index, handler_ptr handler) {
+	// May need to add checks incase bad index?
+	handler_map[spell_index] = handler;
+}
+
+void initializeSpellforceFramework() {
+    printf("Initializing Spellforce Spell Framework...\n");
+    // Call the load_all_mods function from ModuleLoader.c
+    load_all_mods("sfsf", frameworkAPI);
+}
 
 handler_ptr get_or_default (std::map<uint16_t, handler_ptr> m, const uint16_t key, const handler_ptr default_value)
 {
@@ -56,6 +68,7 @@ uint16_t __thiscall addSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_id, ui
 	{
 		_this->max_used = spell_index;
 	}
+
 	//somewhere here is smth goes south
 	_this->active_spell_list[spell_index].spell_id = spell_id;
 	spell_line = get_spell_spell_line (_this->SF_CGdResource, spell_id);
@@ -94,9 +107,10 @@ void __thiscall fireburst_handler(SF_CGdSpell *_this, uint16_t spell_index)
 
 void initSpellMap()
 {
-	handler_map[1] = &fireburst_handler;
-	handler_map[0x9f] = &fireburst_handler;
-	handler_map[0xea] = &fireburst_handler;
+	// Setup Vanilla Spell Handling!
+	addSpellHandler(1, &fireburst_handler);
+    addSpellHandler(0x9f, &fireburst_handler);
+    addSpellHandler(0xea, &fireburst_handler);
 }
 
 
@@ -134,7 +148,12 @@ BOOL APIENTRY DllMain( HMODULE hModule,
         }
         else
         {
-        	initSpellMap();
+        	// Setup Vanilla Spells
+			initSpellMap();
+			
+			// Attempt to load all mods!
+			initFramework();
+
             hookBetaVersion();
             break;
         }
