@@ -13,9 +13,9 @@ void addSpellHandler(uint16_t spell_index, handler_ptr handler) {
 	// May need to add checks incase bad index?
 	handler_map[spell_index] = handler;
 }
-
+static SpellforceSpellFramework frameworkAPI;
 void initializeSpellforceFramework() {
-    printf("Initializing Spellforce Spell Framework...\n");
+    //printf("Initializing Spellforce Spell Framework...\n");
     // Call the load_all_mods function from ModuleLoader.c
     load_all_mods("sfsf", frameworkAPI);
 }

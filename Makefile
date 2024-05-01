@@ -55,10 +55,10 @@ obj/ModuleLoader.o: src/ModuleLoader.c | obj
 obj/TestMod.o: src/TestMod.c | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
-obj/sf_asi.o: src/sf_asi.cpp src/sf_asi.h | obj
+obj/sf_asi.o: src/asi/sf_asi.cpp src/asi/sf_asi.h | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
-obj/sfsf.o: src/sfsf.cpp src/sfsf.h | obj
+obj/sfsf.o: src/SpellforceSpellFramework.c src/asi/sf_asi.h | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 # Target for building DLLs for the old architecture
