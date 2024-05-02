@@ -5,6 +5,7 @@
 #define SPELL_TICK_COUNT_AUX 0x05
 #define SPELL_TICK_COUNT 0x12
 #define SPELL_DOUBLE_DAMAGE 0x26
+#define SPELL_PESTILENCE_DAMAGE 0x0E
 
 typedef struct __attribute__((packed))
 {
