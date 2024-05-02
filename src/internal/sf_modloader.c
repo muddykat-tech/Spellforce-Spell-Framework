@@ -2,11 +2,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../api/SpellforceApellFramework.h"
+
+#include "../api/sfsf.h"
+#include "sf_modloader.h"
 
 typedef void (*InitModuleFunc)(void*);
 
-void initializeMods(){
+void initMods(){
     // load all the mods, we'll also need to at some point use this section to provide framework api functions to the mod as well?
     load_all_mods("sfsf", frameworkAPI);
 }

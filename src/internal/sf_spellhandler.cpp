@@ -1,6 +1,40 @@
-#include "SpellforceHandler.h"
-#include "hooks.h"
-#include "SpellforceSpells.h" // May be redundent as it is called inside (hooks.h -> SpellforceSpellFramework.h)
+#include "sf_spellhandler.h"
+#include "sf_hooks.h"
+#include "../api/sf_spells.h" 
+#include "../api/sfsf.h"
+
+#include <map>
+
+static std::map<uint16_t, handler_ptr> handler_map;
+
+// Exposed in sfsf.h
+static SpellforceSpellFramework frameworkAPI;
+
+// Exposed in sf_spellhandler.h
+void addSpellHandler(uint16_t spell_index, handler_ptr handler) {
+	handler_map[spell_index] = handler;
+}
+
+
+handler_ptr get_or_default (std::map<uint16_t, handler_ptr> m, const uint16_t key)
+{
+	auto it = m.find(key);
+    if (it == m.end()) {
+        // Element doesn't exist, insert the default value
+        it = m.emplace(key, &default_handler).first;
+    }
+    return it->second;
+}
+
+// Exposed in sf_spellhandler.h
+handler_ptr get_spell_handler (const uint16_t key) {
+	return get_or_default(handler_map, key);
+}
+
+void __thiscall default_handler (SF_CGdSpell * spell, uint16_t spell_index)
+{
+	;
+}
 
 void initSpellMap()
 {

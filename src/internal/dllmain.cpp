@@ -1,7 +1,6 @@
 #include <windows.h>
-#include "modloader.h"
-#include "SpellforceSpellHandler.h"
-#include "hooks.h"
+#include "sf_hooks.h"
+#include "sf_registry.h"
 
 BOOL APIENTRY DllMain( HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved) {
     switch (ul_reason_for_call)
@@ -17,13 +16,11 @@ BOOL APIENTRY DllMain( HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpRese
         }
         else
         {
-        	// Setup Vanilla Spells
-			initSpellMap();
-			
-			// Attempt to load all mods!
-			initializeMods();
-
-            hookBetaVersion();
+            // Initialize Framework -> see sf_registry.h
+            initFramework();
+            
+            // Initialize Spellforce Hooks -> see sf_hooks.h
+            initBetaHooks();
             break;
         }
      break;

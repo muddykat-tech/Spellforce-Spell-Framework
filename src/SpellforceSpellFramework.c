@@ -15,6 +15,7 @@ void addSpellHandler(uint16_t spell_index, handler_ptr handler) {
 	// May need to add checks incase bad index?
 	handler_map[spell_index] = handler;
 }
+
 static SpellforceSpellFramework frameworkAPI;
 void initFramework() {
 	CGdSpellFunctions.setXData = (setXData_ptr) ASI::AddrOf(0x329C40);

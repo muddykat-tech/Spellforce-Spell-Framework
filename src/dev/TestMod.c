@@ -1,7 +1,7 @@
 #include <string>
 #include <windows.h>
-#include "../api/SpellforceSpells.h"
-#include "../api/SpellforceSpellFramework.h"
+#include "../api/sf_spells.h"
+#include "../api/sfsf.h"
 
 SpellforceSpellFramework *pSpellforceSpellFramework;
 
@@ -18,6 +18,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework* frame
 	pSpellforceSpellFramework = framework;
     framework->addSpellHandler(0xe, &icestrike_handler);
     framework->addSpellHandler(0xeb, &icestrike_handler);
+    
     OutputDebugStringA("Module initialized successfully!");
 }
 

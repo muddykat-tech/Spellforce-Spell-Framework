@@ -2,8 +2,8 @@
 // DEPRECATED
 #pragma once
 
-#include "SpellforceSpells.h"
-#include "../asi/sf_asi.h" // is relative?
+#include "sf_spells.h"
+#include "../asi/sf_asi.h"
 
 typedef void (*InitModuleFunc)(void*);
 typedef void (__thiscall *handler_ptr) (SF_CGdSpell *, uint16_t);

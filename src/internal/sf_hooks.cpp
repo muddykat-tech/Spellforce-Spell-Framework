@@ -1,30 +1,6 @@
-#include "modloader.h"
-#include "hooks.h"
-#include <map>
-
-static std::map<uint16_t, handler_ptr> handler_map;
-
-void addSpellHandler(uint16_t spell_index, handler_ptr handler) {
-	// May need to add checks incase bad index?
-	handler_map[spell_index] = handler;
-}
-static SpellforceSpellFramework frameworkAPI;
-
-
-handler_ptr get_or_default (std::map<uint16_t, handler_ptr> m, const uint16_t key, const handler_ptr default_value)
-{
-	auto it = m.find(key);
-    if (it == m.end()) {
-        // Element doesn't exist, insert the default value
-        it = m.emplace(key, default_value).first;
-    }
-    return it->second;
-}
-
-void __thiscall default_handler (SF_CGdSpell * spell, uint16_t spell_index)
-{
-	;
-}
+#include "sf_modloader.h"
+#include "sf_hooks.h"
+#include "sf_spellhandler.h"
 
 uint16_t __thiscall addSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_id, uint16_t param2, SF_CGdTargetData *source, SF_CGdTargetData *target, uint16_t param5)
 {
@@ -70,7 +46,7 @@ uint16_t __thiscall addSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_id, ui
 	_this->active_spell_list[spell_index].target.position.Y = (target->position).Y;	
 	_this->active_spell_list[spell_index].to_do_count = param2 - (uint16_t)(_this->OpaqueClass->current_step);
 
-	handler_ptr func = get_or_default(handler_map, spell_line, default_handler);
+	handler_ptr func = get_spell_handler(handler_map, spell_line);
 	func (_this, spell_index);
 
 	if (target->entity_type == 1)
@@ -84,9 +60,9 @@ uint16_t __thiscall addSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_id, ui
 
 }
 
-void hookBetaVersion()
+// Exposed in sf_hooks.h
+void initBetaHooks()
 {
-	//TODO move this to Init function of some sort
 	get_spell_spell_line = (get_spell_spell_line_ptr) (ASI::AddrOf(0x26E100));
 	figure_toolbox_get_unkn = (figure_toolbox_get_unkn_ptr) (ASI::AddrOf(0x2FE704));
 	figure_toolbox_add_spell = (figure_toolbox_add_spell_ptr) (ASI::AddrOf(0x2F673A));
