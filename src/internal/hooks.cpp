@@ -1,11 +1,6 @@
+#include "modloader.h"
+#include "hooks.h"
 #include <map>
-#include "SpellforceSpellFramework.h"
-#include "ModuleLoader.h"
-
-setXData_ptr setXData;
-get_spell_spell_line_ptr get_spell_spell_line;
-figure_toolbox_get_unkn_ptr figure_toolbox_get_unkn;
-figure_toolbox_add_spell_ptr figure_toolbox_add_spell;
 
 static std::map<uint16_t, handler_ptr> handler_map;
 
@@ -14,11 +9,7 @@ void addSpellHandler(uint16_t spell_index, handler_ptr handler) {
 	handler_map[spell_index] = handler;
 }
 static SpellforceSpellFramework frameworkAPI;
-void initializeSpellforceFramework() {
-    //printf("Initializing Spellforce Spell Framework...\n");
-    // Call the load_all_mods function from ModuleLoader.c
-    load_all_mods("sfsf", frameworkAPI);
-}
+
 
 handler_ptr get_or_default (std::map<uint16_t, handler_ptr> m, const uint16_t key, const handler_ptr default_value)
 {
@@ -93,23 +84,6 @@ uint16_t __thiscall addSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_id, ui
 
 }
 
-void __thiscall fireburst_handler(SF_CGdSpell *_this, uint16_t spell_index)
-{
-	//here we write the stuff two bytes off
-	_this->active_spell_list[spell_index].spell_job = 0x1;
-	setXData(_this, spell_index, 0x12, 0);
-	setXData(_this, spell_index, 0x26, 0);
-}
-
-void initSpellMap()
-{
-	// Setup Vanilla Spell Handling!
-	addSpellHandler(1, &fireburst_handler);
-    addSpellHandler(0x9f, &fireburst_handler);
-    addSpellHandler(0xea, &fireburst_handler);
-}
-
-
 void hookBetaVersion()
 {
 	//TODO move this to Init function of some sort
@@ -123,39 +97,4 @@ void hookBetaVersion()
         *(unsigned char*)(ASI::AddrOf(0x328d60)) = 0xE9;   // jmp instruction
         *(int*)(ASI::AddrOf(0x328d61)) = (int)(&addSpell_hook_beta) - ASI::AddrOf(0x328d65);
     ASI::EndRewrite(add_spell_mreg);
-}
-
-BOOL APIENTRY DllMain( HMODULE hModule,
-                       DWORD  ul_reason_for_call,
-                       LPVOID lpReserved
-                     )
-{
-    switch (ul_reason_for_call)
-    {
-    case DLL_PROCESS_ATTACH:
-    {
-        if (!ASI::Init(hModule))
-            return FALSE;
-        //!ASI::CheckSFVersion(ASI::SF_154) &&
-        if (!ASI::CheckSFVersion(ASI::SF_BETA))
-        {
-            return FALSE;
-        }
-        else
-        {
-        	// Setup Vanilla Spells
-			initSpellMap();
-			
-			// Attempt to load all mods!
-			initFramework();
-
-            hookBetaVersion();
-            break;
-        }
-     break;
-    }
-    case DLL_PROCESS_DETACH:
-        break;
-    }
-    return TRUE;
 }
