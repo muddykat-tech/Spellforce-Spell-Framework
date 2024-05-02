@@ -1,10 +1,5 @@
 #include "sf_spellhandler.h"
 
-// Exposed in sf_spellhandler.h
-void addSpellHandler(uint16_t spell_index, handler_ptr handler) {
-	handler_map[spell_index] = handler;
-}
-
 void __thiscall default_handler (SF_CGdSpell * spell, uint16_t spell_index)
 {
 	;
