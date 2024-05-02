@@ -1,6 +1,11 @@
 #pragma once
 #include <stdint.h>
 
+//XData Keys
+#define SPELL_TICK_COUNT_AUX 0x05
+#define SPELL_TICK_COUNT 0x12
+#define SPELL_DOUBLE_DAMAGE 0x26
+
 typedef struct __attribute__((packed))
 {
 	uint16_t X;
