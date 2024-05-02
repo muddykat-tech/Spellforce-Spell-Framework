@@ -2,6 +2,8 @@
 #include "sf_hooks.h"
 #include "sf_registry.h"
 
+#include "../asi/sf_asi.h"
+
 BOOL APIENTRY DllMain( HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved) {
     switch (ul_reason_for_call)
     {

@@ -4,6 +4,7 @@
 
 #include "sf_spells.h"
 #include "../asi/sf_asi.h"
+#include <stdint.h>
 
 typedef void (*InitModuleFunc)(void*);
 typedef void (__thiscall *handler_ptr) (SF_CGdSpell *, uint16_t);

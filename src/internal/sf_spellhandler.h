@@ -4,6 +4,7 @@
 #include "../api/sfsf.h"
 #include "../api/sf_spells.h"
 
-extern "C" __declspec(dllexport) void initSpellMap();
+extern void initSpellMap();
+extern void __thiscall default_handler(SF_CGdSpell * spell, uint16_t spell_index);
 
 #endif 

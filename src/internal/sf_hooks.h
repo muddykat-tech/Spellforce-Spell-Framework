@@ -3,6 +3,7 @@
 
 #include "../api/sfsf.h"
 
-extern "C" __declspec(dllexport) void initBetaHooks();
+extern void initBetaHooks();
+extern setXData_ptr setXData;
 
 #endif 

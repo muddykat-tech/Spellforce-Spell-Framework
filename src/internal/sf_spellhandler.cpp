@@ -1,96 +1,11 @@
 #include "sf_spellhandler.h"
+#include "sf_hooks.h"
+#include "sf_registry.h"
 
 void __thiscall default_handler (SF_CGdSpell * spell, uint16_t spell_index)
 {
 	;
 }
-
-void initSpellMap()
-{
-	// Setup Vanilla Spell Handling!
-	addSpellHandler(0x01, &fireburst_handler);
-	addSpellHandler(0x02, &healing_handler);
-	addSpellHandler(0x03, &death_handler);
-	addSpellHandler(0x04, &slowness_handler);
-	addSpellHandler(0x05, &poison_handler);
-	addSpellHandler(0x06, &invulnerability_handler);
-	addSpellHandler(0x07, &cure_poison_handler);
-	addSpellHandler(0x09, &freeze_handler);
-	addSpellHandler(0x0a, &fog_handler);
-	addSpellHandler(0x0b, &illuminate_handler);
-	addSpellHandler(0x0c, &fireshield_handler);
-	addSpellHandler(0x0d, &fireball_handler);
-	addSpellHandler(0x0e, &icestrike_handler);
-	addSpellHandler(0x0f, &iceshield_handler);
-
-	addSpellHandler(0x10, &decay1_handler);
-	addSpellHandler(0x11, &decay2_handler);
-	addSpellHandler(0x12, &pain_handler);
-	addSpellHandler(0x13, &lifetap_handler);
-	addSpellHandler(0x14, &summons_handler);
-	addSpellHandler(0x15, &hypnotize_handler);
-	addSpellHandler(0x16, &iceshield2_handler);
-	addSpellHandler(0x17, &pestilence_handler);
-	addSpellHandler(0x18, &cure_disease_handler);
-	addSpellHandler(0x19, &petrify_handler);
-	addSpellHandler(0x1c, &area_pain_handler);
-	addSpellHandler(0x1d, &summons_handler);
-	addSpellHandler(0x1e, &raise_dead_handler);
-	addSpellHandler(0x1f, &summons_handler);
-
-	addSpellHandler(0x20, &death_grasp_handler);
-	addSpellHandler(0x21, &summons_handler);
-	addSpellHandler(0x22, &inflexibility_handler);
-	addSpellHandler(0x23, &weaken_handler);
-	addSpellHandler(0x24, &dark_banishing_handler);
-	addSpellHandler(0x25, &area_slowness_handler);
-	addSpellHandler(0x26, &area_inflexibility_handler);
-	addSpellHandler(0x27, &area_weaken_handler);
-	addSpellHandler(0x28, &area_plague_handler);
-	addSpellHandler(0x29, &remediless_handler);
-	addSpellHandler(0x2a, &default_handler); //dark might
-	addSpellHandler(0x2b, &area_healing_handler);
-	addSpellHandler(0x2c, &sentinel_healing_handler);
-	addSpellHandler(0x2d, &healing_handler);
-	addSpellHandler(0x2e, &charm_animal_handler);
-	addSpellHandler(0x2f, &thorn_shield_handler);
-
-	addSpellHandler(0x5c, &summons_handler);
-	addSpellHandler(0x6a, &summons_handler);
-
-	addSpellHandler(0x6d, &summons_handler);
-
-	addSpellHandler(0x85, &summons_handler);
-	addSpellHandler(0x88, &summons_handler);
-	addSpellHandler(0x8d, &summons_handler);
-
-	addSpellHandler(0x9f, &fireburst_handler);
-
-	addSpellHandler(0xa6, &healing_handler);
-	addSpellHandler(0xa7, &hypnotize_handler);
-
-    addSpellHandler(0xbc, &summons_handler);
-
-    addSpellHandler(0xc6, &summons_handler);
-    addSpellHandler(0xcd, &summons_handler);
-    addSpellHandler(0xce, &summons_handler);
-
-    addSpellHandler(0xd1, &summons_handler);
-
-    addSpellHandler(0xe7, &lifetap_handler);
-    addSpellHandler(0xea, &fireburst_handler);
-    addSpellHandler(0xeb, &icestrike_handler);
-    addSpellHandler(0xef, &fireball_handler);
-
-    addSpellHandler(0xf0, &pain_handler);
-
-}
-
-void __thiscall default_handler (SF_CGdSpell * spell, uint16_t spell_index)
-{
-	;
-}
-
 
 void __thiscall fireburst_handler(SF_CGdSpell* _this, uint16_t spell_index)
 {
@@ -323,4 +238,86 @@ void __thiscall thorn_shield_handler (SF_CGdSpell* _this, uint16_t spell_index)
 {
 	_this->active_spell_list[spell_index].spell_job = 0x2a;
 	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
+
+
+void initSpellMap()
+{
+	// Setup Vanilla Spell Handling!
+	addSpellHandler(0x01, &fireburst_handler);
+	addSpellHandler(0x02, &healing_handler);
+	addSpellHandler(0x03, &death_handler);
+	addSpellHandler(0x04, &slowness_handler);
+	addSpellHandler(0x05, &poison_handler);
+	addSpellHandler(0x06, &invulnerability_handler);
+	addSpellHandler(0x07, &cure_poison_handler);
+	addSpellHandler(0x09, &freeze_handler);
+	addSpellHandler(0x0a, &fog_handler);
+	addSpellHandler(0x0b, &illuminate_handler);
+	addSpellHandler(0x0c, &fireshield_handler);
+	addSpellHandler(0x0d, &fireball_handler);
+	addSpellHandler(0x0e, &icestrike_handler);
+	addSpellHandler(0x0f, &iceshield_handler);
+
+	addSpellHandler(0x10, &decay1_handler);
+	addSpellHandler(0x11, &decay2_handler);
+	addSpellHandler(0x12, &pain_handler);
+	addSpellHandler(0x13, &lifetap_handler);
+	addSpellHandler(0x14, &summons_handler);
+	addSpellHandler(0x15, &hypnotize_handler);
+	addSpellHandler(0x16, &iceshield2_handler);
+	addSpellHandler(0x17, &pestilence_handler);
+	addSpellHandler(0x18, &cure_disease_handler);
+	addSpellHandler(0x19, &petrify_handler);
+	addSpellHandler(0x1c, &area_pain_handler);
+	addSpellHandler(0x1d, &summons_handler);
+	addSpellHandler(0x1e, &raise_dead_handler);
+	addSpellHandler(0x1f, &summons_handler);
+
+	addSpellHandler(0x20, &death_grasp_handler);
+	addSpellHandler(0x21, &summons_handler);
+	addSpellHandler(0x22, &inflexibility_handler);
+	addSpellHandler(0x23, &weaken_handler);
+	addSpellHandler(0x24, &dark_banishing_handler);
+	addSpellHandler(0x25, &area_slowness_handler);
+	addSpellHandler(0x26, &area_inflexibility_handler);
+	addSpellHandler(0x27, &area_weaken_handler);
+	addSpellHandler(0x28, &area_plague_handler);
+	addSpellHandler(0x29, &remediless_handler);
+	addSpellHandler(0x2a, &default_handler); //dark might
+	addSpellHandler(0x2b, &area_healing_handler);
+	addSpellHandler(0x2c, &sentinel_healing_handler);
+	addSpellHandler(0x2d, &healing_handler);
+	addSpellHandler(0x2e, &charm_animal_handler);
+	addSpellHandler(0x2f, &thorn_shield_handler);
+
+	addSpellHandler(0x5c, &summons_handler);
+	addSpellHandler(0x6a, &summons_handler);
+
+	addSpellHandler(0x6d, &summons_handler);
+
+	addSpellHandler(0x85, &summons_handler);
+	addSpellHandler(0x88, &summons_handler);
+	addSpellHandler(0x8d, &summons_handler);
+
+	addSpellHandler(0x9f, &fireburst_handler);
+
+	addSpellHandler(0xa6, &healing_handler);
+	addSpellHandler(0xa7, &hypnotize_handler);
+
+    addSpellHandler(0xbc, &summons_handler);
+
+    addSpellHandler(0xc6, &summons_handler);
+    addSpellHandler(0xcd, &summons_handler);
+    addSpellHandler(0xce, &summons_handler);
+
+    addSpellHandler(0xd1, &summons_handler);
+
+    addSpellHandler(0xe7, &lifetap_handler);
+    addSpellHandler(0xea, &fireburst_handler);
+    addSpellHandler(0xeb, &icestrike_handler);
+    addSpellHandler(0xef, &fireball_handler);
+
+    addSpellHandler(0xf0, &pain_handler);
+
 }
