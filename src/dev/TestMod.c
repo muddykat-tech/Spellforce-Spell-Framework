@@ -14,7 +14,7 @@ void __thiscall icestrike_handler(SF_CGdSpell * _this, uint16_t spell_index) {
     OutputDebugStringA("Spell Handled");
 }
 
-extern "C" __declspec(dllexport) void initializeModule(SpellforceSpellFramework* framework) {
+extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework* framework) {
 	pSpellforceSpellFramework = framework;
     framework->addSpellHandler(0xe, &icestrike_handler);
     framework->addSpellHandler(0xeb, &icestrike_handler);

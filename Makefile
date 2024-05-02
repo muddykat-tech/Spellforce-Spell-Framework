@@ -23,7 +23,7 @@ SFSF_OBJ = obj/sf_asi.o obj/sfsf.o obj/ModuleLoader.o
 all: bin/test_loader.exe bin/sfsf/test_library_a.dll bin/sfsf/test_library_b.dll bin/sfsf/test_library_c.dll bin/ModuleLoader.dll bin/TestMod.dll
 
 # Framework Target
-framework: bin/sfsf.asi
+framework: bin/sfsf.asi bin/testmod.sfm
 
 # Target for cleaning up
 clean:
@@ -75,7 +75,7 @@ bin/sfsf/test_library_c.dll:${LIBRARY_OBJ_C} | bin lib
 bin/ModuleLoader.dll: ${MODULE_LOADER_OBJ} | bin lib
 	${CC} -o "$@" ${MODULE_LOADER_OBJ} ${DLL_LDFLAGS}
 
-bin/TestMod.dll: ${TEST_MOD_OBJ} | bin lib
+bin/testmod.sfm: ${TEST_MOD_OBJ} | bin lib
 	${CC} -o "$@" ${TEST_MOD_OBJ} ${DLL_LDFLAGS}
 
 # Target for building the test loader executable

@@ -19,6 +19,7 @@ static SpellforceSpellFramework frameworkAPI;
 void initFramework() {
 	CGdSpellFunctions.setXData = (setXData_ptr) ASI::AddrOf(0x329C40);
 	frameworkAPI.pCGdSpellFunctions = &CGdSpellFunctions;
+	frameworkAPI.addSpellHandler = &addSpellHandler;
 
     //printf("Initializing Spellforce Spell Framework...\n");
     // Call the load_all_mods function from ModuleLoader.c
