@@ -20,7 +20,7 @@ SFSF_OBJ = obj/sf_asi.o obj/sfsf.o obj/ModuleLoader.o
 .PHONY: all clean framework
 
 # Default target
-all: bin/test_loader.exe bin/sfsf/test_library_a.dll bin/sfsf/test_library_b.dll bin/sfsf/test_library_c.dll bin/ModuleLoader.dll bin/TestMod.dll
+all: bin/test_loader.exe bin/sfsf/test_library_a.dll bin/sfsf/test_library_b.dll bin/sfsf/test_library_c.dll bin/ModuleLoader.dll bin/testmod.sfm
 
 # Framework Target
 framework: bin/sfsf.asi bin/testmod.sfm
@@ -36,16 +36,16 @@ bin lib obj:
 	@if not exist "$@" mkdir "$@"
 
 # Object file rules for the old architecture
-obj/test_loader.o: src/test_loader.c | obj
+obj/test_loader.o: src/test/test_loader.c | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
-obj/test_library_a.o: src/test_library_a.c | obj
+obj/test_library_a.o: src/test/test_library_a.c | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
-obj/test_library_b.o: src/test_library_b.c | obj
+obj/test_library_b.o: src/test/test_library_b.c | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
-obj/test_library_c.o: src/test_library_c.c | obj
+obj/test_library_c.o: src/test/test_library_c.c | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 # Object file rules for the new architecture
