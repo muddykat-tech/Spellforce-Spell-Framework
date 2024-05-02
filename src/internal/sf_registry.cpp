@@ -6,12 +6,35 @@
 #include "sf_registry.h"
 #include "sf_spellhandler.h"
 #include "sf_modloader.h"
+#include <map>
 
 // See sf_spells.h
 cgdspellfunctions CGdSpellFunctions;
 
 // Exposed in sfsf.h
 static SpellforceSpellFramework frameworkAPI;
+
+static std::map<uint16_t, handler_ptr> handler_map;
+
+handler_ptr get_or_default (std::map<uint16_t, handler_ptr> m, const uint16_t key)
+{
+	auto it = m.find(key);
+    if (it == m.end()) {
+        // Element doesn't exist, insert the default value
+        it = m.emplace(key, &default_handler).first;
+    }
+    return it->second;
+}
+
+// Exposed in sf_registry.h
+handler_ptr get_spell_handler (const uint16_t key) {
+	return get_or_default(handler_map, key);
+}
+
+// Exposed in sf_registry.h
+void addSpellHandler(uint16_t spell_index, handler_ptr handler) {
+	handler_map[spell_index] = handler;
+}
 
 // exposed in sf_registry.h
 void initFramework() {
