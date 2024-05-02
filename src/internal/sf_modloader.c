@@ -6,11 +6,13 @@
 #include "../api/sfsf.h"
 #include "sf_modloader.h"
 
+extern SpellforceSpellFramework frameworkAPI;
+
 typedef void (*InitModuleFunc)(void*);
 
-void initMods(){
-    // load all the mods, we'll also need to at some point use this section to provide framework api functions to the mod as well?
-    load_all_mods("sfsf", frameworkAPI);
+void cleanup(void* modHandle) {
+    // Free resources (unload mod library using FreeLibrary)
+    FreeLibrary((HMODULE)modHandle);
 }
 
 void log_error(const char* message) {
@@ -19,10 +21,6 @@ void log_error(const char* message) {
     OutputDebugStringA(buffer);
 }
 
-void cleanup(void* modHandle) {
-    // Free resources (unload mod library using FreeLibrary)
-    FreeLibrary((HMODULE)modHandle);
-}
 
 void load_mod(const char* modPath, void* frameworkAPI) {
     // Using same method for loading a library we load the mods other people make
@@ -67,4 +65,10 @@ void load_all_mods(const char* subfolder, void* frameworkAPI) {
     } else {
         log_error("Failed to find mods in specified directory");
     }
+}
+
+
+void initMods(){
+    // load all the mods, we'll also need to at some point use this section to provide framework api functions to the mod as well?
+    load_all_mods("sfsf", &frameworkAPI);
 }

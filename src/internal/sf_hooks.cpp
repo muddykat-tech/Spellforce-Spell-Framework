@@ -1,7 +1,7 @@
 #include "sf_modloader.h"
 #include "sf_hooks.h"
 #include "sf_spellhandler.h"
-
+#include "sf_registry.h"
 #include "../api/sf_spells.h"
 
 static setXData_ptr setXData;
@@ -53,7 +53,7 @@ uint16_t __thiscall addSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_id, ui
 	_this->active_spell_list[spell_index].target.position.Y = (target->position).Y;	
 	_this->active_spell_list[spell_index].to_do_count = param2 - (uint16_t)(_this->OpaqueClass->current_step);
 
-	handler_ptr func = get_spell_handler(handler_map, spell_line);
+	handler_ptr func = get_spell_handler(spell_line);
 	func (_this, spell_index);
 
 	if (target->entity_type == 1)
