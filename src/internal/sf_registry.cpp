@@ -1,7 +1,7 @@
+// Already included in sf_registry, may be good to remove.
 #include "../api/sfsf.h"
-
-// sfsf has this included
 #include "../api/sf_spells"
+//
 
 #include "sf_registry.h"
 #include "sf_spellhandler.h"

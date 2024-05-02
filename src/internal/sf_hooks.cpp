@@ -2,6 +2,13 @@
 #include "sf_hooks.h"
 #include "sf_spellhandler.h"
 
+#include "../api/sf_spells.h"
+
+static setXData_ptr setXData;
+static get_spell_spell_line_ptr get_spell_spell_line;
+static figure_toolbox_get_unkn_ptr figure_toolbox_get_unkn;
+static figure_toolbox_add_spell_ptr figure_toolbox_add_spell;
+
 uint16_t __thiscall addSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_id, uint16_t param2, SF_CGdTargetData *source, SF_CGdTargetData *target, uint16_t param5)
 {
 	uint16_t spell_index;
