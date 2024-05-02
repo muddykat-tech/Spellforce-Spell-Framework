@@ -19,7 +19,10 @@ bin lib obj:
 	@if not exist "$@" mkdir "$@"
 
 
-obj/dllmain.o: dllmain.cpp | obj
+obj/sf_asi.o: ../asi/sf_asi.cpp | obj
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
+
+obj/dllmain.o: dllmain.cpp ../asi/sf_asi.h | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_hooks.o: sf_hooks.cpp | obj
@@ -34,9 +37,5 @@ obj/sf_registry.o: sf_registry.cpp | obj
 obj/sf_spellhandler.o: sf_spellhandler.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
 
-obj/sf_asi.o: ../asi/sf_asi.cpp | obj
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
-
-bin/sfsf.asi: $(INTERNALS_OBJ) | bin lib
-	${CC} -o "$@" ${INTERNALS_OBJ} ${FW_LDFLAGS}
-	cp "bin/sfsf.asi" "../../bin/sfsf.asi"
+bin/sfsf.asi: $(INTERNALS_OBJ) obj/sf_asi.o | bin lib
+	${CC} -o "$@" ${INTERNALS_OBJ} obj/sf_asi.o ${FW_LDFLAGS}
