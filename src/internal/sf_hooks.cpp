@@ -4,8 +4,6 @@
 #include "sf_registry.h"
 #include "../api/sf_spells.h"
 
-#include "../asi/sf_asi.h"
-
 setXData_ptr setXData;
 get_spell_spell_line_ptr get_spell_spell_line;
 figure_toolbox_get_unkn_ptr figure_toolbox_get_unkn;
