@@ -324,4 +324,3 @@ void __thiscall thorn_shield_handler (SF_CGdSpell* _this, uint16_t spell_index)
 	_this->active_spell_list[spell_index].spell_job = 0x2a;
 	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
 }
-

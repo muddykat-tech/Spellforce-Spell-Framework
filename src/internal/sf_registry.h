@@ -1,5 +1,9 @@
 #ifndef REGISTRY_H
 #define REGISTRY_H
+#include <stdint.h>
+
+#include "../api/sfsf.h"
+
 
 // Function prototypes for mod loader.
 extern "C" __declspec(dllexport) void initFramework();
