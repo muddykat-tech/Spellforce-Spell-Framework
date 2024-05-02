@@ -75,5 +75,3 @@ typedef struct
 {
 	setXData_ptr setXData;
 } cgdspellfunctions;
-
-extern cgdspellfunctions CGdSpellFunctions;

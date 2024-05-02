@@ -8,16 +8,21 @@ figure_toolbox_get_unkn_ptr figure_toolbox_get_unkn;
 figure_toolbox_add_spell_ptr figure_toolbox_add_spell;
 
 static std::map<uint16_t, handler_ptr> handler_map;
+cgdspellfunctions CGdSpellFunctions;
+
 
 void addSpellHandler(uint16_t spell_index, handler_ptr handler) {
 	// May need to add checks incase bad index?
 	handler_map[spell_index] = handler;
 }
 static SpellforceSpellFramework frameworkAPI;
-void initializeSpellforceFramework() {
+void initFramework() {
+	CGdSpellFunctions.setXData = (setXData_ptr) ASI::AddrOf(0x329C40);
+	frameworkAPI.pCGdSpellFunctions = &CGdSpellFunctions;
+
     //printf("Initializing Spellforce Spell Framework...\n");
     // Call the load_all_mods function from ModuleLoader.c
-    load_all_mods("sfsf", frameworkAPI);
+    load_all_mods("sfsf", &frameworkAPI);
 }
 
 handler_ptr get_or_default (std::map<uint16_t, handler_ptr> m, const uint16_t key, const handler_ptr default_value)

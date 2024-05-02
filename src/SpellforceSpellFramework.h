@@ -1,7 +1,7 @@
 // SpellforceSpellFramework.h
 #pragma once
 
-#include "api/sf_spell.h"
+#include "api/SpellforceSpells.h"
 #include "asi/sf_asi.h"
 // Define the function pointer type without initialization
 typedef void (*InitModuleFunc)(void*);
@@ -12,5 +12,5 @@ typedef void (*SpellHandlerFunc)(uint16_t spell_index, handler_ptr handler);
 typedef struct SpellforceSpellFramework {
     InitModuleFunc initializeModule;
     SpellHandlerFunc addSpellHandler;
+    cgdspellfunctions * pCGdSpellFunctions;
 } SpellforceSpellFramework;
-

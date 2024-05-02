@@ -14,7 +14,7 @@ LIBRARY_OBJ_C = obj/test_library_c.o
 # Object files for the new architecture
 MODULE_LOADER_OBJ = obj/ModuleLoader.o
 TEST_MOD_OBJ = obj/TestMod.o
-SFSF_OBJ = obj/sf_asi.o obj/sfsf.o
+SFSF_OBJ = obj/sf_asi.o obj/sfsf.o obj/ModuleLoader.o
 
 # Phony targets
 .PHONY: all clean framework
@@ -52,7 +52,7 @@ obj/test_library_c.o: src/test_library_c.c | obj
 obj/ModuleLoader.o: src/ModuleLoader.c | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
-obj/TestMod.o: src/TestMod.c | obj
+obj/TestMod.o: src/dev/TestMod.c | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_asi.o: src/asi/sf_asi.cpp src/asi/sf_asi.h | obj
