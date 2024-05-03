@@ -398,12 +398,9 @@ void initSpellMap()
 	addSpellHandler(0x2e, &charm_animal_handler);
 	addSpellHandler(0x2f, &thorn_shield_handler);
 
-<<<<<<< HEAD
 	addSpellHandler(0x30, &quickness_handler)
 	addSpellHandler(0x31, &area_quickness_handler)
 
-
-=======
 	addSpellHandler(0x50, &default_handler); //empty spell line slot
 	addSpellHandler(0x51, &extinct_handler);
 	addSpellHandler(0x52, &detect_metal_handler);
@@ -416,7 +413,6 @@ void initSpellMap()
 	addSpellHandler(0x59, &aura_handler);
 	addSpellHandler(0x5a, &suicide_death_handler);
 	addSpellHandler(0x5b, &aura_handler);
->>>>>>> 4017d3008dd63599b307a5c133b2d43b5b00aa19
 	addSpellHandler(0x5c, &summons_handler);
 	addSpellHandler(0x5d, &feign_death_handler);
 	addSpellHandler(0x5e, &aura_handler);
