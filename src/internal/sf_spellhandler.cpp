@@ -256,7 +256,7 @@ void initSpellMap()
 	addSpellHandler(0x0b, &illuminate_handler);
 	addSpellHandler(0x0c, &fireshield_handler);
 	addSpellHandler(0x0d, &fireball_handler);
-	addSpellHandler(0x0e, &icestrike_handler);
+	//addSpellHandler(0x0e, &icestrike_handler);
 	addSpellHandler(0x0f, &iceshield_handler);
 
 	addSpellHandler(0x10, &decay1_handler);
@@ -315,7 +315,7 @@ void initSpellMap()
 
     addSpellHandler(0xe7, &lifetap_handler);
     addSpellHandler(0xea, &fireburst_handler);
-    addSpellHandler(0xeb, &icestrike_handler);
+    //addSpellHandler(0xeb, &icestrike_handler);
     addSpellHandler(0xef, &fireball_handler);
 
     addSpellHandler(0xf0, &pain_handler);
