@@ -253,6 +253,59 @@ void __thiscall area_quickness_handler (SF_CGdSpell* _this, uint16_t spell_index
 	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
 }
 
+void __thiscall flexability_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x2b;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+	setXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER, 0);
+}
+
+void __thiscall area_flexability_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x2c;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
+
+void __thiscall strength_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x2d;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+	setXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER, 0);
+}
+
+void __thiscall area_strength_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x2e;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
+
+void __thiscall guard_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x2f;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
+
+void __thiscall remove_curse_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x48;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
+
+void __thiscall regenerate_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x30;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
+
+void __thiscall hallow_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x31;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+	setXData(_this, spell_index, SPELL_DOUBLE_DAMAGE, 0);
+}
+
+
+
 void __thiscall extinct_handler (SF_CGdSpell* _this, uint16_t spell_index)
 {
 	_this->active_spell_list[spell_index].spell_job = 0x47;
@@ -438,6 +491,15 @@ void initSpellMap()
 
 	addSpellHandler(0x30, &quickness_handler);
 	addSpellHandler(0x31, &area_quickness_handler);
+	addSpellHandler(0x32, &flexability_handler);
+	addSpellHandler(0x33, &area_flexability_handler);
+	addSpellHandler(0x34, &strength_handler);
+	addSpellHandler(0x35, &area_strength_handler);
+	addSpellHandler(0x36, &guard_handler);
+	addSpellHandler(0x37, &remove_curse_handler);
+	addSpellHandler(0x38, &regenerate_handler);
+	addSpellHandler(0x3a, &hallow_handler);
+	
 
 	addSpellHandler(0x50, &default_handler); //empty spell line slot
 	addSpellHandler(0x51, &extinct_handler);
