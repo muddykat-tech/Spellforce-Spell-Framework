@@ -240,6 +240,18 @@ void __thiscall thorn_shield_handler (SF_CGdSpell* _this, uint16_t spell_index)
 	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
 }
 
+void __thiscall quickness_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x28;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+	setXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER, 0);
+}
+
+void __thiscall area_quickness_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x29;
+}
+
 void __thiscall extinct_handler (SF_CGdSpell* _this, uint16_t spell_index)
 {
 	_this->active_spell_list[spell_index].spell_job = 0x47;
@@ -385,6 +397,9 @@ void initSpellMap()
 	addSpellHandler(0x2d, &healing_handler);
 	addSpellHandler(0x2e, &charm_animal_handler);
 	addSpellHandler(0x2f, &thorn_shield_handler);
+
+	addSpellHandler(0x30, &quickness_handler)
+	addSpellHandler(0x31, &area_quickness_handler)
 
 	addSpellHandler(0x50, &default_handler); //empty spell line slot
 	addSpellHandler(0x51, &extinct_handler);
