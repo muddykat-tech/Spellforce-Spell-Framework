@@ -32,9 +32,10 @@ void load_mod(const char* modPath, void* frameworkAPI) {
             // Execute the initializeModule function with the framework API
             initModule(frameworkAPI);
             // Cleanup
-            cleanup(modHandle);
         } else {
             log_error("Failed to get address of InitModule");
+            cleanup(modHandle);
+
         }
     } else {
         log_error("Failed to load mod library");
@@ -58,6 +59,7 @@ void load_all_mods(const char* subfolder, void* frameworkAPI) {
         do {
             // Load each mod found
             char modPath[MAX_PATH];
+            sprintf(modDirectory, "%s\\%s", currentDir, subfolder);
             sprintf(modPath, "%s\\%s", modDirectory, findFileData.cFileName);
             load_mod(modPath, frameworkAPI);
         } while (FindNextFile(hFind, &findFileData) != 0);
