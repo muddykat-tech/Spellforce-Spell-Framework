@@ -13,7 +13,7 @@ void __thiscall icestrike_handler(SF_CGdSpell * _this, uint16_t spell_index) {
 	pSpellforceSpellFramework->pCGdSpellFunctions->setXData(_this, spell_index, 0x05, 0);
 	pSpellforceSpellFramework->pCGdSpellFunctions->setXData(_this, spell_index, 0x12, 0);
 	pSpellforceSpellFramework->pCGdSpellFunctions->setXData(_this, spell_index, 0x26, 0);
-    OutputDebugStringA("Spell Handled");
+  OutputDebugStringA("Spell Handled");
 }
 
 extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework* framework) {

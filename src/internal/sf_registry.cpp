@@ -7,6 +7,8 @@
 #include "sf_spellhandler.h"
 #include "sf_modloader.h"
 #include <map>
+#include <windows.h>
+#include <iostream>
 
 // See sf_spells.h
 cgdspellfunctions CGdSpellFunctions;
@@ -31,8 +33,9 @@ void addSpellHandler(uint16_t spell_index, handler_ptr handler) {
     auto check = handler_map.find(spell_index);
     if (check != handler_map.end()){ 
         if(check->second != &default_handler) {
-            std::string warning = "WARNING: a non-default handler has been replaced! (spell_index == " + std::to_string(spell_index) + ") (Was this on purpose?)";
-            OutputDebugStringA(warning);
+            char message[256]; // Assuming a maximum message length of 255 characters
+            sprintf(message, "WARNING: a non-default handler has been replaced! (spell_index == %d) (Was this on purpose?)", spell_index);
+            OutputDebugStringA(message);
         }
     }
 

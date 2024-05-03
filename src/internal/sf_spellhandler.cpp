@@ -481,7 +481,7 @@ void initSpellMap()
 	addSpellHandler(0x5e, &aura_handler);
 	addSpellHandler(0x5f, &aura_handler);
 	
-	addSpellHandler(0x60, &dispel_white_aura_handler)
+	addSpellHandler(0x60, &dispel_white_aura_handler);
 	addSpellHandler(0x61, &aura_handler);
 	addSpellHandler(0x62, &aura_handler);
 	addSpellHandler(0x63, &suffocation_handler);
