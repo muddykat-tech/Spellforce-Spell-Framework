@@ -253,14 +253,14 @@ void __thiscall area_quickness_handler (SF_CGdSpell* _this, uint16_t spell_index
 	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
 }
 
-void __thiscall flexability_handler (SF_CGdSpell* _this, uint16_t spell_index)
+void __thiscall flexibility_handler (SF_CGdSpell* _this, uint16_t spell_index)
 {
 	_this->active_spell_list[spell_index].spell_job = 0x2b;
 	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
 	setXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER, 0);
 }
 
-void __thiscall area_flexability_handler (SF_CGdSpell* _this, uint16_t spell_index)
+void __thiscall area_flexibility_handler (SF_CGdSpell* _this, uint16_t spell_index)
 {
 	_this->active_spell_list[spell_index].spell_job = 0x2c;
 	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
@@ -436,6 +436,33 @@ void __thiscall charm_handler (SF_CGdSpell* _this, uint16_t spell_index)
 	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
 }
 
+void __thiscall befriend_handler(SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x5d;
+}
+
+void __thiscall disenchant_handler(SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x7c;
+}
+
+void __thiscall charisma_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x59;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
+
+void __thiscall shockwave_handler(SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x5c;
+}
+
+void __thiscall demoralization_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x75;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
+
 void initSpellMap()
 {
 	// Setup Vanilla Spell Handling!
@@ -491,8 +518,8 @@ void initSpellMap()
 
 	addSpellHandler(0x30, &quickness_handler);
 	addSpellHandler(0x31, &area_quickness_handler);
-	addSpellHandler(0x32, &flexability_handler);
-	addSpellHandler(0x33, &area_flexability_handler);
+	addSpellHandler(0x32, &flexibility_handler);
+	addSpellHandler(0x33, &area_flexibility_handler);
 	addSpellHandler(0x34, &strength_handler);
 	addSpellHandler(0x35, &area_strength_handler);
 	addSpellHandler(0x36, &guard_handler);
@@ -540,10 +567,20 @@ void initSpellMap()
 	addSpellHandler(0x71, &aura_handler);
 	addSpellHandler(0x72, &aura_handler);
 	addSpellHandler(0x73, &aura_handler);
-
+	addSpellHandler(0x74, &dexterity_handler);
+	addSpellHandler(0x75, &edurance_handler);
+	addSpellHandler(0x76, &fast_fighting_handler);
+	addSpellHandler(0x77, &distract_handler);
+	addSpellHandler(0x78, &dominate_handler);
 	addSpellHandler(0x79, &default_handler); //empty spell line slot
+	addSpellHandler(0x7a, &charm_handler);
+	addSpellHandler(0x7b, &befriend_handler);
+	addSpellHandler(0x7c, &disenchant_handler);
+	addSpellHandler(0x7d, &charisma_handler);
+	addSpellHandler(0x7e, &shockwave_handler);
 	addSpellHandler(0x7f, &aura_handler);
 
+	addSpellHandler(0x80, &demoralization_handler);
 	addSpellHandler(0x81, &aura_handler);
 	addSpellHandler(0x83, &aura_handler);
 	
@@ -575,6 +612,8 @@ void initSpellMap()
     addSpellHandler(0xe7, &lifetap_handler);
     addSpellHandler(0xea, &fireburst_handler);
     addSpellHandler(0xeb, &icestrike_handler);
+    addSpellHandler(0xed, &charm_handler);
+
     addSpellHandler(0xef, &fireball_handler);
 
     addSpellHandler(0xf0, &pain_handler);
