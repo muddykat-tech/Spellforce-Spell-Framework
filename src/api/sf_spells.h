@@ -8,6 +8,7 @@
 #define SPELL_PESTILENCE_DAMAGE 0x0E
 #define EFFECT_EFFECT_INDEX 0x06
 #define SPELL_STAT_MUL_MODIFIER 0x0A
+#define SPELL_STAT_MUL_MODIFIER2 0x27
 
 typedef struct __attribute__((packed))
 {
