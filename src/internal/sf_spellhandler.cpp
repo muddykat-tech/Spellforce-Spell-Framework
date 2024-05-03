@@ -341,7 +341,6 @@ void __thiscall dominate_animal_handler (SF_CGdSpell* _this, uint16_t spell_inde
 void __thiscall dispel_black_aura_handler (SF_CGdSpell* _this, uint16_t spell_index)
 {
 	_this->active_spell_list[spell_index].spell_job = 0x53;
->>>>>>> 4017d3008dd63599b307a5c133b2d43b5b00aa19
 	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
 }
 
