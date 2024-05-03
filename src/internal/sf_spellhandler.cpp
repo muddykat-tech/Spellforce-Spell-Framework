@@ -421,11 +421,11 @@ void initSpellMap()
 	addSpellHandler(0x6f, &aura_handler);
 
 
-	addSpellHandler(0x70,dispel_black_aura_handler);
+	addSpellHandler(0x70, &dispel_black_aura_handler);
 	addSpellHandler(0x71, &aura_handler);
 	addSpellHandler(0x72, &aura_handler);
 	addSpellHandler(0x73, &aura_handler);
-	
+
 	addSpellHandler(0x79, &default_handler); //empty spell line slot
 	addSpellHandler(0x7f, &aura_handler);
 
