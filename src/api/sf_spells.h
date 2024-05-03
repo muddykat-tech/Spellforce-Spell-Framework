@@ -6,7 +6,7 @@
 #define SPELL_TICK_COUNT 0x12
 #define SPELL_DOUBLE_DAMAGE 0x26
 #define SPELL_PESTILENCE_DAMAGE 0x0E
-
+#define EFFECT_EFFECT_INDEX 0x06
 typedef struct __attribute__((packed))
 {
 	uint16_t X;
