@@ -28,6 +28,14 @@ handler_ptr get_spell_handler (const uint16_t key)
 
 // Exposed in sf_registry.h
 void addSpellHandler(uint16_t spell_index, handler_ptr handler) {
+    auto check = handler_map.find(spell_index);
+    if (check != handler_map.end()){ 
+        if(check->second != &default_handler) {
+            std::string warning = "WARNING: a non-default handler has been replaced! (spell_index == " + std::to_string(spell_index) + ") (Was this on purpose?)";
+            OutputDebugStringA(warning);
+        }
+    }
+
 	handler_map[spell_index] = handler;
 }
 

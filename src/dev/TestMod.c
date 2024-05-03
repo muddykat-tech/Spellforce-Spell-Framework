@@ -5,8 +5,10 @@
 
 SpellforceSpellFramework *pSpellforceSpellFramework;
 
+// Spell index is the ID for the TYPE of spell being cast
+// Spell Job is the ID for the LOGIC handler that the spell uses when being cast. ~@UnSchtalch please correct if wrong 
+
 void __thiscall icestrike_handler(SF_CGdSpell * _this, uint16_t spell_index) {
-    // for now, do nothing?
 	_this->active_spell_list[spell_index].spell_job = 0x8;
 	pSpellforceSpellFramework->pCGdSpellFunctions->setXData(_this, spell_index, 0x05, 0);
 	pSpellforceSpellFramework->pCGdSpellFunctions->setXData(_this, spell_index, 0x12, 0);
