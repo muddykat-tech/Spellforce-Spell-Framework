@@ -250,6 +250,7 @@ void __thiscall quickness_handler (SF_CGdSpell* _this, uint16_t spell_index)
 void __thiscall area_quickness_handler (SF_CGdSpell* _this, uint16_t spell_index)
 {
 	_this->active_spell_list[spell_index].spell_job = 0x29;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
 }
 
 void __thiscall extinct_handler (SF_CGdSpell* _this, uint16_t spell_index)
@@ -344,6 +345,43 @@ void __thiscall dispel_black_aura_handler (SF_CGdSpell* _this, uint16_t spell_in
 	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
 }
 
+void __thiscall dexterity_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x50;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+	setXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER, 0);
+}
+
+void __thiscall edurance_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x4e;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+	setXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER, 0);
+}
+
+void __thiscall fast_fighting_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x4f;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+	setXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER, 0);
+}
+
+void __thiscall distract_handler(SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x63;
+}
+
+void __thiscall dominate_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x5e;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
+
+void __thiscall charm_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x5f;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
 
 void initSpellMap()
 {
@@ -398,8 +436,8 @@ void initSpellMap()
 	addSpellHandler(0x2e, &charm_animal_handler);
 	addSpellHandler(0x2f, &thorn_shield_handler);
 
-	addSpellHandler(0x30, &quickness_handler)
-	addSpellHandler(0x31, &area_quickness_handler)
+	addSpellHandler(0x30, &quickness_handler);
+	addSpellHandler(0x31, &area_quickness_handler);
 
 	addSpellHandler(0x50, &default_handler); //empty spell line slot
 	addSpellHandler(0x51, &extinct_handler);
@@ -418,7 +456,7 @@ void initSpellMap()
 	addSpellHandler(0x5e, &aura_handler);
 	addSpellHandler(0x5f, &aura_handler);
 	
-	addSpellHandler(0x60, &dispel_white_aura_handler)
+	addSpellHandler(0x60, &dispel_white_aura_handler);
 	addSpellHandler(0x61, &aura_handler);
 	addSpellHandler(0x62, &aura_handler);
 	addSpellHandler(0x63, &suffocation_handler);
