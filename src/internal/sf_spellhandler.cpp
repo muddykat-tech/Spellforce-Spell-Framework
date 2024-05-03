@@ -240,6 +240,98 @@ void __thiscall thorn_shield_handler (SF_CGdSpell* _this, uint16_t spell_index)
 	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
 }
 
+void __thiscall extinct_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x47;
+}
+
+void __thiscall detect_metal_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x64;
+}
+
+void __thiscall detect_magic_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x1e;
+}
+
+void __thiscall unkn_spell_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x7;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
+
+void __thiscall invisibility_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x46;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
+
+
+void __thiscall stone_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x10;
+}
+
+void __thiscall aura_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x49;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+	setXData(_this, spell_index, EFFECT_EFFECT_INDEX, 0);
+}
+
+void __thiscall suicide_death_handler(SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x4d;
+}
+
+void __thiscall feign_death_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x7a;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
+
+void __thiscall dispel_white_aura_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x52;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
+
+void __thiscall suffocation_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x4a;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
+
+void __thiscall inablility_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x4c;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
+
+void __thiscall slow_fighting_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x4b;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
+
+void __thiscall suicide_heal_handler(SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x51;
+}
+
+void __thiscall dominate_animal_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x54;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
+
+void __thiscall dispel_black_aura_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x53;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
+
 
 void initSpellMap()
 {
@@ -251,6 +343,7 @@ void initSpellMap()
 	addSpellHandler(0x05, &poison_handler);
 	addSpellHandler(0x06, &invulnerability_handler);
 	addSpellHandler(0x07, &cure_poison_handler);
+	addSpellHandler(0x08, &default_handler); //empty spell line slot
 	addSpellHandler(0x09, &freeze_handler);
 	addSpellHandler(0x0a, &fog_handler);
 	addSpellHandler(0x0b, &illuminate_handler);
@@ -269,6 +362,8 @@ void initSpellMap()
 	addSpellHandler(0x17, &pestilence_handler);
 	addSpellHandler(0x18, &cure_disease_handler);
 	addSpellHandler(0x19, &petrify_handler);
+	addSpellHandler(0x1a, &default_handler); //empty spell line slot
+	addSpellHandler(0x1b, &default_handler); //empty spell line slot
 	addSpellHandler(0x1c, &area_pain_handler);
 	addSpellHandler(0x1d, &summons_handler);
 	addSpellHandler(0x1e, &raise_dead_handler);
@@ -291,11 +386,52 @@ void initSpellMap()
 	addSpellHandler(0x2e, &charm_animal_handler);
 	addSpellHandler(0x2f, &thorn_shield_handler);
 
+	addSpellHandler(0x50, &default_handler); //empty spell line slot
+	addSpellHandler(0x51, &extinct_handler);
+	addSpellHandler(0x52, &detect_metal_handler);
+	addSpellHandler(0x53, &detect_magic_handler);
+	addSpellHandler(0x54, &default_handler); //unnamed spell 84
+	addSpellHandler(0x55, &unkn_spell_handler); //unnamed spell 85
+	addSpellHandler(0x56, &invisibility_handler);
+	addSpellHandler(0x57, &stone_handler);
+	addSpellHandler(0x58, &aura_handler);
+	addSpellHandler(0x59, &aura_handler);
+	addSpellHandler(0x5a, &suicide_death_handler);
+	addSpellHandler(0x5b, &aura_handler);
 	addSpellHandler(0x5c, &summons_handler);
+	addSpellHandler(0x5d, &feign_death_handler);
+	addSpellHandler(0x5e, &aura_handler);
+	addSpellHandler(0x5f, &aura_handler);
+	
+	addSpellHandler(0x60, &dispel_white_aura_handler)
+	addSpellHandler(0x61, &aura_handler);
+	addSpellHandler(0x62, &aura_handler);
+	addSpellHandler(0x63, &suffocation_handler);
+	addSpellHandler(0x64, &inablility_handler);
+	addSpellHandler(0x65, &slow_fighting_handler);
+	addSpellHandler(0x66, &aura_handler);
+	addSpellHandler(0x67, &aura_handler);
+	addSpellHandler(0x68, &aura_handler);
+	addSpellHandler(0x69, &suicide_heal_handler);
 	addSpellHandler(0x6a, &summons_handler);
-
+	addSpellHandler(0x6b, &aura_handler);
+	addSpellHandler(0x6c, &dominate_animal_handler);
 	addSpellHandler(0x6d, &summons_handler);
+	addSpellHandler(0x6e, &aura_handler);
+	addSpellHandler(0x6f, &aura_handler);
 
+
+	addSpellHandler(0x70,dispel_black_aura_handler);
+	addSpellHandler(0x71, &aura_handler);
+	addSpellHandler(0x72, &aura_handler);
+	addSpellHandler(0x73, &aura_handler);
+	
+	addSpellHandler(0x79, &default_handler); //empty spell line slot
+	addSpellHandler(0x7f, &aura_handler);
+
+	addSpellHandler(0x81, &aura_handler);
+	addSpellHandler(0x83, &aura_handler);
+	
 	addSpellHandler(0x85, &summons_handler);
 	addSpellHandler(0x88, &summons_handler);
 	addSpellHandler(0x8d, &summons_handler);
@@ -306,12 +442,20 @@ void initSpellMap()
 	addSpellHandler(0xa7, &hypnotize_handler);
 
     addSpellHandler(0xbc, &summons_handler);
-
+	
+	addSpellHandler(0xc0, &aura_handler);
     addSpellHandler(0xc6, &summons_handler);
     addSpellHandler(0xcd, &summons_handler);
     addSpellHandler(0xce, &summons_handler);
 
     addSpellHandler(0xd1, &summons_handler);
+	addSpellHandler(0xdf, &aura_handler);
+
+	addSpellHandler(0xe0, &default_handler); //empty spell line slot
+	addSpellHandler(0xe1, &aura_handler);
+	addSpellHandler(0xe2, &aura_handler);
+	addSpellHandler(0xe3, &aura_handler);
+	addSpellHandler(0xe4, &aura_handler);
 
     addSpellHandler(0xe7, &lifetap_handler);
     addSpellHandler(0xea, &fireburst_handler);
