@@ -9,6 +9,9 @@
 #define EFFECT_EFFECT_INDEX 0x06
 #define SPELL_STAT_MUL_MODIFIER 0x0A
 #define SPELL_STAT_MUL_MODIFIER2 0x27
+#define SPELL_STAT_MUL_MODIFIER3 0x2B
+#define SPELL_STAT_MUL_MODIFIER4 0x2C
+#define SPELL_CONSERVATION_SHIELD 0x0B
 
 typedef struct __attribute__((packed))
 {
