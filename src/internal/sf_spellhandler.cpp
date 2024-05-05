@@ -302,6 +302,100 @@ void __thiscall hallow_handler (SF_CGdSpell* _this, uint16_t spell_index)
 	setXData(_this, spell_index, SPELL_DOUBLE_DAMAGE, 0);
 }
 
+void __thiscall fireshield2_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x32;
+}
+
+void __thiscall thorn_shield2_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x33;
+}
+
+void __thiscall forget_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x37;
+}
+
+void __thiscall self_illusion_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x68;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
+
+void __thiscall retention_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x38;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
+
+void __thiscall brilliance_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x39;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
+
+void __thiscall sacrifice_mana_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x3a;
+}
+
+void __thiscall manatap_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x3b;
+}
+
+void __thiscall manadrain_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x3c;
+}
+
+void __thiscall shock_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x42;
+}
+
+void __thiscall disrupt_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x3f;
+}
+
+void __thiscall confuse_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x3e;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
+
+void __thiscall rain_of_fire_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x41;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
+
+void __thiscall blizzard_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x43;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
+
+void __thiscall acid_cloud_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x40;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
+
+void __thiscall stone_rain_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x44;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
+
+void __thiscall amok_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x3f;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
+
 void __thiscall extinct_handler (SF_CGdSpell* _this, uint16_t spell_index)
 {
 	_this->active_spell_list[spell_index].spell_job = 0x47;
@@ -599,6 +693,86 @@ void __thiscall ability_salvo_handler (SF_CGdSpell* _this, uint16_t spell_index)
 	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
 }
 
+void __thiscall spark_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x74;
+}
+
+void __thiscall tower_hypnotize_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x76;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
+
+void __thiscall tower_pain_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x77;
+}
+
+void __thiscall tower_stone_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x78;
+}
+
+void __thiscall cloak_of_nor_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x79;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
+
+void __thiscall unkn_spell2_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x7b;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
+
+
+void __thiscall freeze2_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x7e;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
+
+void __thiscall freeze3_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x7f;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
+
+void __thiscall lava_bullet_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x80;
+}
+
+void __thiscall tower_extinct_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x81;
+}
+
+void __thiscall manatap_aura_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x82;
+}
+
+void __thiscall firebane_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x83;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
+
+void __thiscall black_essence_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x84;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
+
+void __thiscall white_essence_handler (SF_CGdSpell* _this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x86;
+	setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
+
+
 void __thiscall chain_handler (SF_CGdSpell* _this, uint16_t spell_index)
 {
 	_this->active_spell_list[spell_index].spell_job = 0xa2;
@@ -861,8 +1035,30 @@ void initSpellMap()
 	addSpellHandler(0x36, &guard_handler);
 	addSpellHandler(0x37, &remove_curse_handler);
 	addSpellHandler(0x38, &regenerate_handler);
+	addSpellHandler(0x39, &default_handler); //holy might
 	addSpellHandler(0x3a, &hallow_handler);
-	
+	addSpellHandler(0x3b, &default_handler); //empty slot
+	addSpellHandler(0x3c, &fireshield2_handler); 
+	addSpellHandler(0x3d, &thorn_shield2_handler);
+	addSpellHandler(0x3e, &forget_handler); 
+	addSpellHandler(0x3f, &self_illusion_handler); 
+
+	addSpellHandler(0x40, &retention_handler);
+	addSpellHandler(0x41, &brilliance_handler);
+	addSpellHandler(0x42, &sacrifice_mana_handler);
+	addSpellHandler(0x43, &manatap_handler);
+	addSpellHandler(0x44, &manadrain_handler);
+	addSpellHandler(0x45, &shock_handler);
+	addSpellHandler(0x46, &disrupt_handler);
+	addSpellHandler(0x47, &default_handler); //empty slot
+	addSpellHandler(0x48, &confuse_handler);
+	addSpellHandler(0x49, &rain_of_fire_handler);
+	addSpellHandler(0x4a, &blizzard_handler);
+	addSpellHandler(0x4b, &acid_cloud_handler);
+	addSpellHandler(0x4c, &stone_rain_handler);
+	addSpellHandler(0x4d, &default_handler); //empty slot
+	addSpellHandler(0x4e, &default_handler); //empty slot
+	addSpellHandler(0x4f, &amok_handler);
 
 	addSpellHandler(0x50, &default_handler); //empty spell line slot
 	addSpellHandler(0x51, &extinct_handler);
@@ -950,8 +1146,22 @@ void initSpellMap()
 	addSpellHandler(0x9e, &ability_salvo_handler);
 	addSpellHandler(0x9f, &fireburst_handler);
 
+	addSpellHandler(0xa0, &spark_handler);
+	addSpellHandler(0xa1, &tower_hypnotize_handler);
+	addSpellHandler(0xa2, &tower_pain_handler);
+	addSpellHandler(0xa3, &tower_stone_handler);
+	addSpellHandler(0xa4, &cloak_of_nor_handler);
+	addSpellHandler(0xa5, &unkn_spell2_handler);
 	addSpellHandler(0xa6, &healing_handler);
 	addSpellHandler(0xa7, &hypnotize_handler);
+	addSpellHandler(0xa8, &freeze2_handler);
+	addSpellHandler(0xa9, &freeze3_handler);
+	addSpellHandler(0xaa, &lava_bullet_handler);
+	addSpellHandler(0xab, &tower_extinct_handler);
+	addSpellHandler(0xac, &manatap_aura_handler);
+	addSpellHandler(0xad, &firebane_handler);
+	addSpellHandler(0xae, &black_essence_handler);
+	addSpellHandler(0xaf, &white_essence_handler);
 
 	addSpellHandler(0xb0, &elemental_essence_handler);
 	addSpellHandler(0xb1, &mental_essence_handler);
@@ -1010,14 +1220,15 @@ void initSpellMap()
 	addSpellHandler(0xe3, &aura_handler);
 	addSpellHandler(0xe4, &aura_handler);
  	addSpellHandler(0xe5, &eternity_aura_handler);
+	addSpellHandler(0xe6, &hallow_handler);
     addSpellHandler(0xe7, &lifetap_handler);
-
+	addSpellHandler(0xe8, &manatap_handler);
 	addSpellHandler(0xe9, &mutation_handler);
     addSpellHandler(0xea, &fireburst_handler);
     addSpellHandler(0xeb, &icestrike_handler);
     addSpellHandler(0xec, &rock_bullet_handler);
     addSpellHandler(0xed, &charm_handler);
-
+	addSpellHandler(0xee, &shock_handler);
     addSpellHandler(0xef, &fireball_handler);
 
     addSpellHandler(0xf0, &pain_handler);
