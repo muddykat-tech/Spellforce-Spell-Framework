@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "sf_utility.h"
 #include "../api/sfsf.h"
 #include "sf_modloader.h"
 
@@ -13,12 +14,6 @@ typedef void (*InitModuleFunc)(void*);
 void cleanup(void* modHandle) {
     // Free resources (unload mod library using FreeLibrary)
     FreeLibrary((HMODULE)modHandle);
-}
-
-void log_error(const char* message) {
-    char buffer[256]; // Max length of error message...
-    snprintf(buffer, sizeof(buffer), "Error: %s\n", message);
-    OutputDebugStringA(buffer);
 }
 
 
@@ -33,12 +28,12 @@ void load_mod(const char* modPath, void* frameworkAPI) {
             initModule(frameworkAPI);
             // Cleanup
         } else {
-            log_error("Failed to get address of InitModule");
+            logError("Failed to get address of InitModule");
             cleanup(modHandle);
 
         }
     } else {
-        log_error("Failed to load mod library");
+        logError("Failed to load mod library");
     }
 }
 
@@ -65,7 +60,7 @@ void load_all_mods(const char* subfolder, void* frameworkAPI) {
         } while (FindNextFile(hFind, &findFileData) != 0);
         FindClose(hFind);
     } else {
-        log_error("Failed to find mods in specified directory");
+        logError("Failed to find mods in specified directory");
     }
 }
 
