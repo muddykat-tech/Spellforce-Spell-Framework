@@ -45,6 +45,7 @@ void addSpellHandler(uint16_t spell_index, handler_ptr handler) {
 // exposed in sf_registry.h
 void registerFrameworkAPI(){     
 	CGdSpellFunctions.setXData = (setXData_ptr) ASI::AddrOf(0x329C40);
+    CGdSpellFunctions.initializeSpellData = &initializeSpellData;
 	frameworkAPI.pCGdSpellFunctions = &CGdSpellFunctions;
 	frameworkAPI.addSpellHandler = &addSpellHandler;
 }

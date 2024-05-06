@@ -14,7 +14,7 @@ typedef void (*SpellHandlerFunc)(uint16_t spell_index, handler_ptr handler);
 struct SpellforceSpellFramework {
     InitModuleFunc initializeModule;
     SpellHandlerFunc addSpellHandler;
-    cgdspellfunctions * pCGdSpellFunctions;
+    cgdspellfunctions *pCGdSpellFunctions;
 };
 
 typedef struct SpellforceSpellFramework FrameworkAPI;

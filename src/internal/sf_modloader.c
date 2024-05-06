@@ -26,7 +26,6 @@ void load_mod(const char* modPath, void* frameworkAPI) {
         if (initModule) {
             // Execute the initializeModule function with the framework API
             initModule(frameworkAPI);
-            // Cleanup
         } else {
             logError("Failed to get address of InitModule");
             cleanup(modHandle);

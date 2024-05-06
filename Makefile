@@ -40,7 +40,7 @@ obj/dllmain.o: ${INTERNALS_SRC}/dllmain.cpp src/asi/sf_asi.h | obj
 obj/sf_utility.o: ${INTERNALS_SRC}/sf_utility.c | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
-obj/sf_hooks.o: ${INTERNALS_SRC}/sf_hooks.cpp | obj
+obj/sf_hooks.o: ${INTERNALS_SRC}/sf_hooks.c | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_modloader.o: ${INTERNALS_SRC}/sf_modloader.c | obj
@@ -53,7 +53,7 @@ obj/sf_spellhandler.o: ${INTERNALS_SRC}/sf_spellhandler.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
 
 #mod build
-obj/TestMod.o: src/dev/TestMod.c | obj
+obj/TestMod.o: src/dev/TestMod.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 # Target for building DLLs for the new architecture

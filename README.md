@@ -25,7 +25,7 @@ Contributions to the Spellforce Spell Framework are welcome! Whether it's throug
 This project is licensed under the [GNU General Public License Version 3](https://github.com/muddykat-tech/Spellforce-Spell-Framework/blob/master/LICENSE).
 
 ## SFSF Team
-UnSchtalch
-Shovel_Knight
-Muddykat-Tech
+UnSchtalch\\
+Shovel_Knight\\
+Muddykat-Tech\\
 

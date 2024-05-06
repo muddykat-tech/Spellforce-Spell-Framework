@@ -4,20 +4,26 @@
 #include "../api/sfsf.h"
 
 SpellforceSpellFramework *pSpellforceSpellFramework;
+cgdspellfunctions* spellAPI;
 
 // Spell index is the ID for the TYPE of spell being cast
 // Spell Job is the ID for the LOGIC handler that the spell uses when being cast. ~@UnSchtalch please correct if wrong 
 
 void __thiscall icestrike_handler(SF_CGdSpell * _this, uint16_t spell_index) {
 	_this->active_spell_list[spell_index].spell_job = 0x8;
-	pSpellforceSpellFramework->pCGdSpellFunctions->setXData(_this, spell_index, 0x05, 0);
-	pSpellforceSpellFramework->pCGdSpellFunctions->setXData(_this, spell_index, 0x12, 0);
-	pSpellforceSpellFramework->pCGdSpellFunctions->setXData(_this, spell_index, 0x26, 0);
+
+  
+	spellAPI->initializeSpellData(_this, spell_index, SPELL_TICK_COUNT_AUX);
+	spellAPI->initializeSpellData(_this, spell_index, SPELL_TICK_COUNT);
+	spellAPI->initializeSpellData(_this, spell_index, SPELL_DOUBLE_DAMAGE);
+
   OutputDebugStringA("Spell Handled");
 }
 
 extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework* framework) {
-	pSpellforceSpellFramework = framework;
+	  pSpellforceSpellFramework = framework;
+    cgdspellfunctions* spellAPI = pSpellforceSpellFramework->pCGdSpellFunctions;
+    
     framework->addSpellHandler(0xe, &icestrike_handler);
     framework->addSpellHandler(0xeb, &icestrike_handler);
     
