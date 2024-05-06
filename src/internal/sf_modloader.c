@@ -17,7 +17,7 @@ void cleanup(void* modHandle) {
 }
 
 
-void load_mod(const char* modPath, void* frameworkAPI) {
+void load_mod(const char* modPath, void* pFrameworkAPI) {
     // Using same method for loading a library we load the mods other people make
     HMODULE modHandle = LoadLibrary(modPath);
     if (modHandle) {
@@ -25,7 +25,7 @@ void load_mod(const char* modPath, void* frameworkAPI) {
         InitModuleFunc initModule = (InitModuleFunc)GetProcAddress(modHandle, "InitModule");
         if (initModule) {
             // Execute the initializeModule function with the framework API
-            initModule(frameworkAPI);
+            initModule(pFrameworkAPI);
         } else {
             logError("Failed to get address of InitModule");
             cleanup(modHandle);
@@ -36,7 +36,7 @@ void load_mod(const char* modPath, void* frameworkAPI) {
     }
 }
 
-void load_all_mods(const char* subfolder, void* frameworkAPI) {
+void load_all_mods(const char* subfolder, void* pFrameworkAPI) {
     // Grab the current working directory
     char currentDir[MAX_PATH];
     GetCurrentDirectory(MAX_PATH, currentDir);
@@ -55,7 +55,7 @@ void load_all_mods(const char* subfolder, void* frameworkAPI) {
             char modPath[MAX_PATH];
             sprintf(modDirectory, "%s\\%s", currentDir, subfolder);
             sprintf(modPath, "%s\\%s", modDirectory, findFileData.cFileName);
-            load_mod(modPath, frameworkAPI);
+            load_mod(modPath, pFrameworkAPI);
         } while (FindNextFile(hFind, &findFileData) != 0);
         FindClose(hFind);
     } else {

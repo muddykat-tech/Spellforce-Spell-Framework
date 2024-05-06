@@ -15,6 +15,9 @@ ConsolePrint_ptr ConsolePrint;
 get_spell_spell_line_ptr get_spell_spell_line;
 figure_toolbox_get_unkn_ptr figure_toolbox_get_unkn;
 figure_toolbox_add_spell_ptr figure_toolbox_add_spell;
+uint32_t CMnuScrConsole_ptr = 0;
+SF_String_ctor_ptr SF_String_ctor;
+SF_String_dtor_ptr SF_String_dtor;
 
 uint16_t __thiscall addSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_id, uint16_t param2, SF_CGdTargetData *source, SF_CGdTargetData *target, uint16_t param5)
 {
@@ -73,25 +76,26 @@ uint16_t __thiscall addSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_id, ui
 	return spell_index;
 
 }
-uint32_t CMnuScrConsole_ptr = 0;
+
 void addConsoleHook(){
 	// Hook not working, access violation, unsure if input bad or address is ~Muddykat.
 	uint32_t CAppMain_ptr = ASI::AddrOf(0x9229A8);
 	uint32_t CAppMenu_ptr = *(uint32_t*) (CAppMain_ptr + 0x4);
 	uint32_t CMnuScrConsole_ptr = *(uint32_t*) (CAppMenu_ptr + 0x80);
 	ConsolePrint = (ConsolePrint_ptr) ASI::AddrOf(0x534e70);
+	SF_String_ctor =(SF_String_ctor_ptr) ASI::AddrOf(0x3837e0);
+	SF_String_dtor =(SF_String_dtor_ptr) ASI::AddrOf(0x3839c0);
 }
 
-void ConsoleLog(const char* message) {
-	SF_String* sf_string = convCharToString(message);
-	if(sf_string == NULL && CMnuScrConsole_ptr == 0) return;
-
-	ConsolePrint(CMnuScrConsole_ptr, sf_string);
-
+void ConsoleLog(const char* message)
+{
+	if (!CMnuScrConsole_ptr) return;
+	SF_String sf_string;
+	SF_String_ctor(&sf_string, message);
+	ConsolePrint(CMnuScrConsole_ptr, &sf_string);
 	// Free the memory once log has been sent.
-	free(sf_string->data);
-	free(sf_string->raw_data);
-    free(sf_string);
+	SF_String_dtor(&sf_string);
+
 }
 
 // Exposed in sf_hooks.h

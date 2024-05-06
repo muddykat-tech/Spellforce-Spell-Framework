@@ -22,7 +22,7 @@ void __thiscall icestrike_handler(SF_CGdSpell * _this, uint16_t spell_index) {
 
 extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework* framework) {
 	  sfsf = framework;
-    cgdspellfunctions *spelltypeAPI = sfsf->pCGdSpellFunctions;
+    spelltypeAPI = sfsf->pCGdSpellFunctions;
 
     sfsf->addSpellHandler(0xe, &icestrike_handler);
     sfsf->addSpellHandler(0xeb, &icestrike_handler);
