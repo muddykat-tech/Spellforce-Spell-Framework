@@ -83,6 +83,24 @@ typedef uint16_t (__thiscall *get_spell_spell_line_ptr) (void *, uint16_t);
 typedef uint32_t (__thiscall *figure_toolbox_get_unkn_ptr)(void *, uint16_t);
 typedef void (__thiscall *figure_toolbox_add_spell_ptr)(void *, uint16_t, uint16_t);
 
+typedef struct 
+{
+	uint16_t spell_id;
+	uint16_t spell_line_id;
+	uint8_t skill_requirements[12];
+	uint16_t mana_cost;
+	uint32_t cast_time;
+	uint32_t recast_time;
+	uint16_t min_range;
+	uint16_t max_range;
+	uint8_t cast_type1;
+	uint8_t cast_type2;
+	uint32_t params[10];
+	uint16_t effect_power;
+	uint16_t effect_range;
+
+} SF_CGdResourceSpell;
+
 typedef struct
 {
 	setXData_ptr setXData;
