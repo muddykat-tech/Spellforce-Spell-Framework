@@ -27,5 +27,5 @@ This project is licensed under the [GNU General Public License Version 3](https:
 ## SFSF Team
 UnSchtalch\
 Shovel_Knight\
-Muddykat-Tech\
+Muddykat-Tech
 
