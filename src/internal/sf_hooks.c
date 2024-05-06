@@ -2,9 +2,16 @@
 #include "sf_hooks.h"
 #include "sf_spellhandler.h"
 #include "sf_registry.h"
+#include "sf_utility.h"
+
 #include "../api/sf_spells.h"
 
+#include <stdint.h>
+#include <stdlib.h>
+#include <string.h>
+
 setXData_ptr setXData;
+ConsolePrint_ptr ConsolePrint;
 get_spell_spell_line_ptr get_spell_spell_line;
 figure_toolbox_get_unkn_ptr figure_toolbox_get_unkn;
 figure_toolbox_add_spell_ptr figure_toolbox_add_spell;
@@ -66,10 +73,32 @@ uint16_t __thiscall addSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_id, ui
 	return spell_index;
 
 }
+uint32_t CMnuScrConsole_ptr = 0;
+void addConsoleHook(){
+	// Hook not working, access violation, unsure if input bad or address is ~Muddykat.
+	uint32_t CAppMain_ptr = ASI::AddrOf(0x9229A8);
+	uint32_t CAppMenu_ptr = *(uint32_t*) (CAppMain_ptr + 0x4);
+	uint32_t CMnuScrConsole_ptr = *(uint32_t*) (CAppMenu_ptr + 0x80);
+	ConsolePrint = (ConsolePrint_ptr) ASI::AddrOf(0x534e70);
+}
+
+void ConsoleLog(const char* message) {
+	SF_String* sf_string = convCharToString(message);
+	if(sf_string == NULL && CMnuScrConsole_ptr == 0) return;
+
+	ConsolePrint(CMnuScrConsole_ptr, sf_string);
+
+	// Free the memory once log has been sent.
+	free(sf_string->data);
+	free(sf_string->raw_data);
+    free(sf_string);
+}
 
 // Exposed in sf_hooks.h
 void initBetaHooks()
 {
+	addConsoleHook();
+
 	get_spell_spell_line = (get_spell_spell_line_ptr) (ASI::AddrOf(0x26E100));
 	figure_toolbox_get_unkn = (figure_toolbox_get_unkn_ptr) (ASI::AddrOf(0x2FE704));
 	figure_toolbox_add_spell = (figure_toolbox_add_spell_ptr) (ASI::AddrOf(0x2F673A));

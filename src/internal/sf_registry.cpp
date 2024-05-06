@@ -48,6 +48,8 @@ void registerFrameworkAPI(){
     CGdSpellFunctions.initializeSpellData = &initializeSpellData;
 	frameworkAPI.pCGdSpellFunctions = &CGdSpellFunctions;
 	frameworkAPI.addSpellHandler = &addSpellHandler;
+    frameworkAPI.logWarning = &logWarning;
+    frameworkAPI.logInfo = &logInfo;
 }
 
 void initFramework() {

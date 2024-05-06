@@ -1,6 +1,7 @@
 #include "sf_spellhandler.h"
 #include "sf_hooks.h"
 #include "sf_registry.h"
+#include "sf_utility.h"
 
 void __thiscall initializeSpellData(SF_CGdSpell* _this, uint16_t spell_id, SpellDataKey key) {
 	setXData(_this, spell_id, key, 0);
@@ -24,6 +25,7 @@ void __thiscall icestrike_handler(SF_CGdSpell* _this, uint16_t spell_index)
     initializeSpellData(_this, spell_index, SPELL_TICK_COUNT_AUX);
     initializeSpellData(_this, spell_index, SPELL_TICK_COUNT);
     initializeSpellData(_this, spell_index, SPELL_DOUBLE_DAMAGE);
+	logInfo("Testing?");
 }
 
 void __thiscall healing_handler(SF_CGdSpell* _this, uint16_t spell_index)

@@ -3,8 +3,8 @@
 #include "../api/sf_spells.h"
 #include "../api/sfsf.h"
 
-SpellforceSpellFramework *pSpellforceSpellFramework;
-cgdspellfunctions* spellAPI;
+SpellforceSpellFramework *sfsf;
+cgdspellfunctions *spelltypeAPI;
 
 // Spell index is the ID for the TYPE of spell being cast
 // Spell Job is the ID for the LOGIC handler that the spell uses when being cast. ~@UnSchtalch please correct if wrong 
@@ -13,21 +13,21 @@ void __thiscall icestrike_handler(SF_CGdSpell * _this, uint16_t spell_index) {
 	_this->active_spell_list[spell_index].spell_job = 0x8;
 
   
-	spellAPI->initializeSpellData(_this, spell_index, SPELL_TICK_COUNT_AUX);
-	spellAPI->initializeSpellData(_this, spell_index, SPELL_TICK_COUNT);
-	spellAPI->initializeSpellData(_this, spell_index, SPELL_DOUBLE_DAMAGE);
+	spelltypeAPI->initializeSpellData(_this, spell_index, SPELL_TICK_COUNT_AUX);
+	spelltypeAPI->initializeSpellData(_this, spell_index, SPELL_TICK_COUNT);
+	spelltypeAPI->initializeSpellData(_this, spell_index, SPELL_DOUBLE_DAMAGE);
 
-  OutputDebugStringA("Spell Handled");
+  sfsf->logInfo("Spell Handled");
 }
 
 extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework* framework) {
-	  pSpellforceSpellFramework = framework;
-    cgdspellfunctions* spellAPI = pSpellforceSpellFramework->pCGdSpellFunctions;
+	  sfsf = framework;
+    cgdspellfunctions *spelltypeAPI = sfsf->pCGdSpellFunctions;
+
+    sfsf->addSpellHandler(0xe, &icestrike_handler);
+    sfsf->addSpellHandler(0xeb, &icestrike_handler);
     
-    framework->addSpellHandler(0xe, &icestrike_handler);
-    framework->addSpellHandler(0xeb, &icestrike_handler);
-    
-    OutputDebugStringA("Module initialized successfully!");
+    sfsf->logInfo("Module initialized successfully!");
 }
 
 

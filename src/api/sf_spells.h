@@ -80,7 +80,16 @@ typedef struct __attribute__((packed))
 	uint32_t unkn6;
 } SF_CGdSpell;
 
+typedef struct __attribute__((packed))
+{
+    wchar_t *raw_data;
+    uint8_t str_length;
+    uint8_t unknown_length_var;
+    char *data;
+} SF_String;
+
 typedef void (__thiscall *setXData_ptr)(SF_CGdSpell *, uint16_t, uint8_t, uint32_t);
+typedef void (__thiscall *ConsolePrint_ptr)(uint32_t, SF_String*);
 typedef uint16_t (__thiscall *get_spell_spell_line_ptr) (void *, uint16_t);
 typedef uint32_t (__thiscall *figure_toolbox_get_unkn_ptr)(void *, uint16_t);
 typedef void (__thiscall *figure_toolbox_add_spell_ptr)(void *, uint16_t, uint16_t);
