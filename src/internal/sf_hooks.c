@@ -78,7 +78,6 @@ uint16_t __thiscall addSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_id, ui
 }
 
 void addConsoleHook(){
-	// Hook not working, access violation, unsure if input bad or address is ~Muddykat.
 	uint32_t CAppMain_ptr = ASI::AddrOf(0x9229A8);
 	uint32_t CAppMenu_ptr = *(uint32_t*) (CAppMain_ptr + 0x4);
 	uint32_t CMnuScrConsole_ptr = *(uint32_t*) (CAppMenu_ptr + 0x80);

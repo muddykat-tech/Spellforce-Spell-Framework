@@ -398,7 +398,7 @@ void __thiscall stone_rain_handler (SF_CGdSpell* _this, uint16_t spell_index)
 
 void __thiscall amok_handler (SF_CGdSpell* _this, uint16_t spell_index)
 {
-	_this->active_spell_list[spell_index].spell_job = 0x3f;
+	_this->active_spell_list[spell_index].spell_job = 0x3d;
 	initializeSpellData(_this, spell_index, SPELL_TICK_COUNT_AUX);
 }
 
@@ -902,7 +902,7 @@ void __thiscall mutation_handler (SF_CGdSpell* _this, uint16_t spell_index)
 
 void __thiscall area_darkness_handler (SF_CGdSpell* _this, uint16_t spell_index)
 {
-	_this->active_spell_list[spell_index].spell_job = 0x95;
+	_this->active_spell_list[spell_index].spell_job = 0x94;
 	initializeSpellData(_this, spell_index, SPELL_TICK_COUNT_AUX);
 }
 
