@@ -2,16 +2,18 @@
 #include <stdint.h>
 
 //XData Keys
-#define SPELL_TICK_COUNT_AUX 0x05
-#define SPELL_TICK_COUNT 0x12
-#define SPELL_DOUBLE_DAMAGE 0x26
-#define SPELL_PESTILENCE_DAMAGE 0x0E
-#define EFFECT_EFFECT_INDEX 0x06
-#define SPELL_STAT_MUL_MODIFIER 0x0A
-#define SPELL_STAT_MUL_MODIFIER2 0x27
-#define SPELL_STAT_MUL_MODIFIER3 0x2B
-#define SPELL_STAT_MUL_MODIFIER4 0x2C
-#define SPELL_CONSERVATION_SHIELD 0x0B
+typedef enum {
+    SPELL_TICK_COUNT_AUX = 0x05,
+    SPELL_TICK_COUNT = 0x12,
+    SPELL_DOUBLE_DAMAGE = 0x26,
+    SPELL_PESTILENCE_DAMAGE = 0x0E,
+    EFFECT_EFFECT_INDEX = 0x06,
+    SPELL_STAT_MUL_MODIFIER = 0x0A,
+    SPELL_STAT_MUL_MODIFIER2 = 0x27,
+    SPELL_STAT_MUL_MODIFIER3 = 0x2B,
+    SPELL_STAT_MUL_MODIFIER4 = 0x2C,
+    SPELL_CONSERVATION_SHIELD = 0x0B
+} SpellDataKey;
 
 typedef struct __attribute__((packed))
 {
@@ -78,7 +80,16 @@ typedef struct __attribute__((packed))
 	uint32_t unkn6;
 } SF_CGdSpell;
 
+typedef struct __attribute__((packed))
+{
+    wchar_t *raw_data;
+    uint8_t str_length;
+    uint8_t unknown_length_var;
+    char *data;
+} SF_String;
+
 typedef void (__thiscall *setXData_ptr)(SF_CGdSpell *, uint16_t, uint8_t, uint32_t);
+typedef void (__thiscall *ConsolePrint_ptr)(uint32_t, SF_String*);
 typedef uint16_t (__thiscall *get_spell_spell_line_ptr) (void *, uint16_t);
 typedef uint32_t (__thiscall *figure_toolbox_get_unkn_ptr)(void *, uint16_t);
 typedef void (__thiscall *figure_toolbox_add_spell_ptr)(void *, uint16_t, uint16_t);
@@ -101,7 +112,10 @@ typedef struct
 
 } SF_CGdResourceSpell;
 
+typedef void (__thiscall *initializeSpellDataFunc)(SF_CGdSpell* spell, uint16_t spell_id, SpellDataKey key);
+
 typedef struct
 {
 	setXData_ptr setXData;
+	initializeSpellDataFunc initializeSpellData;
 } cgdspellfunctions;

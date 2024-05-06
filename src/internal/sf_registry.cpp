@@ -1,14 +1,14 @@
 // Already included in sf_registry, may be good to remove.
 #include "../api/sfsf.h"
 #include "../api/sf_spells.h"
-//
 
 #include "sf_registry.h"
 #include "sf_spellhandler.h"
 #include "sf_modloader.h"
+#include "sf_utility.h"
 #include <map>
 #include <windows.h>
-#include <iostream>
+#include <cstdio>
 
 // See sf_spells.h
 cgdspellfunctions CGdSpellFunctions;
@@ -35,7 +35,7 @@ void addSpellHandler(uint16_t spell_index, handler_ptr handler) {
         if(check->second != &default_handler) {
             char message[256]; // Assuming a maximum message length of 255 characters
             sprintf(message, "WARNING: a non-default handler has been replaced! (spell_index == %d) (Was this on purpose?)", spell_index);
-            OutputDebugStringA(message);
+            logWarning(message);
         }
     }
 
@@ -45,8 +45,11 @@ void addSpellHandler(uint16_t spell_index, handler_ptr handler) {
 // exposed in sf_registry.h
 void registerFrameworkAPI(){     
 	CGdSpellFunctions.setXData = (setXData_ptr) ASI::AddrOf(0x329C40);
+    CGdSpellFunctions.initializeSpellData = &initializeSpellData;
 	frameworkAPI.pCGdSpellFunctions = &CGdSpellFunctions;
 	frameworkAPI.addSpellHandler = &addSpellHandler;
+    frameworkAPI.logWarning = &logWarning;
+    frameworkAPI.logInfo = &logInfo;
 }
 
 void initFramework() {

@@ -7,6 +7,8 @@
 #include <stdint.h>
 
 typedef void (*InitModuleFunc)(void*);
+typedef void (*logWarningFunc)(const char*);
+typedef void (*logInfoFunc)(const char*);
 typedef void (__thiscall *handler_ptr) (SF_CGdSpell *, uint16_t);
 typedef void (*SpellHandlerFunc)(uint16_t spell_index, handler_ptr handler);
 
@@ -14,7 +16,11 @@ typedef void (*SpellHandlerFunc)(uint16_t spell_index, handler_ptr handler);
 struct SpellforceSpellFramework {
     InitModuleFunc initializeModule;
     SpellHandlerFunc addSpellHandler;
-    cgdspellfunctions * pCGdSpellFunctions;
+    cgdspellfunctions *pCGdSpellFunctions;
+
+    // Perhaps create a struct for a proper logger? 
+    logWarningFunc logWarning;
+    logInfoFunc logInfo;
 };
 
 typedef struct SpellforceSpellFramework FrameworkAPI;

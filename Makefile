@@ -6,7 +6,7 @@ DLL_LDFLAGS = -shared -Wl,--kill-at -Wl,--subsystem,windows,--out-implib,lib/tes
 FW_LDFLAGS = -shared -static-libgcc -static-libstdc++ -s -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive -Wl,--subsystem,windows,--out-implib,lib/sfsf.a
 
 # Object files for the new architecture
-NTERNALS_OBJ = obj/dllmain.o obj/sf_hooks.o obj/sf_modloader.o obj/sf_registry.o obj/sf_spellhandler.o obj/sf_asi.o
+NTERNALS_OBJ = obj/dllmain.o obj/sf_hooks.o obj/sf_modloader.o obj/sf_registry.o obj/sf_spellhandler.o obj/sf_asi.o obj/sf_utility.o
 TEST_MOD_OBJ = obj/TestMod.o
 INTERNALS_SRC = src/internal
 
@@ -37,7 +37,10 @@ obj/sf_asi.o: src/asi/sf_asi.cpp src/asi/sf_asi.h | obj
 obj/dllmain.o: ${INTERNALS_SRC}/dllmain.cpp src/asi/sf_asi.h | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
-obj/sf_hooks.o: ${INTERNALS_SRC}/sf_hooks.cpp | obj
+obj/sf_utility.o: ${INTERNALS_SRC}/sf_utility.c | obj
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
+
+obj/sf_hooks.o: ${INTERNALS_SRC}/sf_hooks.c | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_modloader.o: ${INTERNALS_SRC}/sf_modloader.c | obj
@@ -50,7 +53,7 @@ obj/sf_spellhandler.o: ${INTERNALS_SRC}/sf_spellhandler.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
 
 #mod build
-obj/TestMod.o: src/dev/TestMod.c | obj
+obj/TestMod.o: src/dev/TestMod.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 # Target for building DLLs for the new architecture
