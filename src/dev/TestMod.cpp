@@ -1,4 +1,3 @@
-#include <string>
 #include <windows.h>
 #include "../api/sf_spells.h"
 #include "../api/sfsf.h"
@@ -24,8 +23,8 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework* frame
 	  sfsf = framework;
     spelltypeAPI = sfsf->pCGdSpellFunctions;
 
-    sfsf->addSpellHandler(0xe, &icestrike_handler);
-    sfsf->addSpellHandler(0xeb, &icestrike_handler);
+    sfsf->registerSpellTypeHandler(0xe, &icestrike_handler);
+    sfsf->registerSpellTypeHandler(0xeb, &icestrike_handler);
     
     sfsf->logInfo("Module initialized successfully!");
 }

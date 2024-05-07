@@ -1,7 +1,7 @@
 #include "sf_modloader.h"
 #include "sf_hooks.h"
-#include "sf_spellhandler.h"
-#include "sf_registry.h"
+#include "sf_spelltype_handlers.h"
+#include "sf_spelltype_registry.h"
 #include "sf_utility.h"
 
 #include "../api/sf_spells.h"
@@ -86,7 +86,7 @@ void addConsoleHook(){
 	SF_String_dtor =(SF_String_dtor_ptr) ASI::AddrOf(0x3839c0);
 }
 
-void ConsoleLog(const char* message)
+void ConsoleLog(char* message)
 {
 	if (!CMnuScrConsole_ptr) return;
 	SF_String sf_string;

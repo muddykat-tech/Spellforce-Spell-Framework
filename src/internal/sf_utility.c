@@ -9,18 +9,21 @@
 void logWarning(const char *message) {
     // This will be used to hook into the game console later on
     // May also have warnings on a flag
-    OutputDebugStringA(message);
-    ConsoleLog(message);
+    char *str = strdup(message);
+    OutputDebugStringA(str);
+    ConsoleLog(str);
 }
 
 void logInfo(const char *message) {
     // This will be used to hook into the game console later on
     // May also have warnings on a flag
-    OutputDebugStringA(message);
-    ConsoleLog(message);
+    char *str = strdup(message);
+    OutputDebugStringA(str);
+    ConsoleLog(str);
 }
 
 void logError(const char* message) {
-    OutputDebugStringA(message);
-    ConsoleLog(message);
+    char *str = strdup(message);
+    OutputDebugStringA(str);
+    ConsoleLog(str);
 }

@@ -3,12 +3,10 @@
 #include "../api/sf_spells.h"
 
 #include "sf_registry.h"
-#include "sf_spellhandler.h"
+#include "sf_spelltype_registry.h"
 #include "sf_modloader.h"
 #include "sf_utility.h"
-#include <map>
 #include <windows.h>
-#include <cstdio>
 
 // See sf_spells.h
 cgdspellfunctions CGdSpellFunctions;
@@ -16,38 +14,12 @@ cgdspellfunctions CGdSpellFunctions;
 // Exposed in sfsf.h
 SpellforceSpellFramework frameworkAPI;
 
-std::map<uint16_t, handler_ptr> handler_map;
-
-handler_ptr get_spell_handler (const uint16_t key)
-{
-	auto it = handler_map.find(key);
-    if (it == handler_map.end()) {
-        // Element doesn't exist, insert the default value
-        it = handler_map.emplace(key, &default_handler).first;
-    }
-    return it->second;
-}
-
-// Exposed in sf_registry.h
-void addSpellHandler(uint16_t spell_index, handler_ptr handler) {
-    auto check = handler_map.find(spell_index);
-    if (check != handler_map.end()){ 
-        if(check->second != &default_handler) {
-            char message[256]; // Assuming a maximum message length of 255 characters
-            sprintf(message, "WARNING: a non-default handler has been replaced! (spell_index == %d) (Was this on purpose?)", spell_index);
-            logWarning(message);
-        }
-    }
-
-	handler_map[spell_index] = handler;
-}
-
 // exposed in sf_registry.h
 void registerFrameworkAPI(){     
 	CGdSpellFunctions.setXData = (setXData_ptr) ASI::AddrOf(0x329C40);
     CGdSpellFunctions.initializeSpellData = &initializeSpellData;
 	frameworkAPI.pCGdSpellFunctions = &CGdSpellFunctions;
-	frameworkAPI.addSpellHandler = &addSpellHandler;
+	frameworkAPI.registerSpellTypeHandler = &registerSpellTypeHandler;
     frameworkAPI.logWarning = &logWarning;
     frameworkAPI.logInfo = &logInfo;
 }

@@ -32,7 +32,10 @@ void load_mod(const char* modPath, void* pFrameworkAPI) {
 
         }
     } else {
-        logError("Failed to load mod library");
+        int debugstr = GetLastError();
+        char msgbuf[MAX_PATH];
+        sprintf(msgbuf, "Failed to load mod library: %d\n", debugstr);
+        logError(msgbuf);
     }
 }
 
@@ -48,7 +51,10 @@ void load_all_mods(const char* subfolder, void* pFrameworkAPI) {
     // Find all .sfm (DLL) files in the specified directory
     WIN32_FIND_DATA findFileData;
     HANDLE hFind = FindFirstFile(strcat(modDirectory, "\\*.sfm"), &findFileData);
-
+    OutputDebugStringA("LOADING ALL MODS!!!!");
+    char msgbuf[MAX_PATH];
+    sprintf(msgbuf, "From Dir: %d\n", modDirectory);
+    OutputDebugStringA(modDirectory);
     if (hFind != INVALID_HANDLE_VALUE) {
         do {
             // Load each mod found
@@ -60,6 +66,9 @@ void load_all_mods(const char* subfolder, void* pFrameworkAPI) {
         FindClose(hFind);
     } else {
         logError("Failed to find mods in specified directory");
+        char msgbuf[MAX_PATH];
+        sprintf(msgbuf, "From Dir: %d\n", modDirectory);
+        logError(strcat(msgbuf, modDirectory));
     }
 }
 

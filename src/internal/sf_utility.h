@@ -11,5 +11,4 @@ extern "C" SF_String_dtor_ptr SF_String_dtor;
 extern "C" void logWarning(const char *message);
 extern "C" void logInfo(const char *message);
 extern "C" void logError(const char *message);
-extern "C" SF_String* convCharToString(const char *message);
 #endif

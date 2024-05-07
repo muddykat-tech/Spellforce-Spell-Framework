@@ -15,7 +15,7 @@ typedef void (*SpellHandlerFunc)(uint16_t spell_index, handler_ptr handler);
 // Declare the structure
 struct SpellforceSpellFramework {
     InitModuleFunc initializeModule;
-    SpellHandlerFunc addSpellHandler;
+    SpellHandlerFunc registerSpellTypeHandler;
     cgdspellfunctions *pCGdSpellFunctions;
 
     // Perhaps create a struct for a proper logger? 

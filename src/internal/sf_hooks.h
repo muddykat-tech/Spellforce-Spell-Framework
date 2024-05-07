@@ -5,6 +5,6 @@
 
 extern void initBetaHooks();
 extern setXData_ptr setXData;
-extern void ConsoleLog(const char*);
+extern void ConsoleLog(char*);
 
 #endif 
