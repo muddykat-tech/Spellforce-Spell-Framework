@@ -42,6 +42,18 @@ void __thiscall triggerEffect_hook(SF_CGdSpell *_this){
     }
 }
 
+
+void ConsoleLog(char* message)
+{
+	if (!CMnuScrConsole_ptr) return;
+	SF_String sf_string;
+	SF_String_ctor(&sf_string, message);
+	ConsolePrint(CMnuScrConsole_ptr, &sf_string);
+	// Free the memory once log has been sent.
+	SF_String_dtor(&sf_string);
+
+}
+
 uint16_t __thiscall addSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_id, uint16_t param2, SF_CGdTargetData *source, SF_CGdTargetData *target, uint16_t param5)
 {
 	uint16_t spell_index;
@@ -101,7 +113,7 @@ uint16_t __thiscall addSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_id, ui
 
 }
 
-void addConsoleHook(){
+void initConsoleHook(){
 	uint32_t CAppMain_ptr = ASI::AddrOf(0x9229A8);
 	uint32_t CAppMenu_ptr = *(uint32_t*) (CAppMain_ptr + 0x4);
 	uint32_t CMnuScrConsole_ptr = *(uint32_t*) (CAppMenu_ptr + 0x80);
@@ -110,30 +122,25 @@ void addConsoleHook(){
 	SF_String_dtor =(SF_String_dtor_ptr) ASI::AddrOf(0x3839c0);
 }
 
-void ConsoleLog(char* message)
-{
-	if (!CMnuScrConsole_ptr) return;
-	SF_String sf_string;
-	SF_String_ctor(&sf_string, message);
-	ConsolePrint(CMnuScrConsole_ptr, &sf_string);
-	// Free the memory once log has been sent.
-	SF_String_dtor(&sf_string);
-
-}
-
-// Exposed in sf_hooks.h
-void initBetaHooks()
-{
-	addConsoleHook();
-
+void initDataHooks(){
 	get_spell_spell_line = (get_spell_spell_line_ptr) (ASI::AddrOf(0x26E100));
 	figure_toolbox_get_unkn = (figure_toolbox_get_unkn_ptr) (ASI::AddrOf(0x2FE704));
 	figure_toolbox_add_spell = (figure_toolbox_add_spell_ptr) (ASI::AddrOf(0x2F673A));
 	setXData = (setXData_ptr) ASI::AddrOf(0x329C40);
+}
 
+void initSpellTypeHook(){
 	ASI::MemoryRegion add_spell_mreg(ASI::AddrOf(0x328d60), 5); //building selector
     ASI::BeginRewrite(add_spell_mreg);
         *(unsigned char*)(ASI::AddrOf(0x328d60)) = 0xE9;   // jmp instruction
         *(int*)(ASI::AddrOf(0x328d61)) = (int)(&addSpell_hook_beta) - ASI::AddrOf(0x328d65);
     ASI::EndRewrite(add_spell_mreg);
+}
+
+// Exposed in sf_hooks.h
+void initBetaHooks()
+{
+	initConsoleHook();
+	initDataHooks();
+	initSpellTypeHook();
 }
