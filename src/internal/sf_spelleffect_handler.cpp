@@ -1,5 +1,5 @@
 #include "../api/sfsf.h"
-#include "../api/sf_spells.h"
+#include "../api/sf_data_utilities.h"
 
 handler_ptr effect_ability_benefactions_handler = (handler_ptr)(ASI::AddrOf(0x32c090));
 handler_ptr effect_ability_berserk_handler = (handler_ptr)(ASI::AddrOf(0x32c4a0));

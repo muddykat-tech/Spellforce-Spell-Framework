@@ -1,6 +1,6 @@
 // Already included in sf_registry, may be good to remove.
 #include "../api/sfsf.h"
-#include "../api/sf_spells.h"
+#include "../api/sf_data_utilities.h"
 
 #include "sf_registry.h"
 #include "sf_spelltype_registry.h"
@@ -8,7 +8,7 @@
 #include "sf_utility.h"
 #include <windows.h>
 
-// See sf_spells.h
+// See sf_data_utilities.h
 cgdspellfunctions CGdSpellFunctions;
 
 // Exposed in sfsf.h

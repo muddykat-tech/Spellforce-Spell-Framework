@@ -16,6 +16,17 @@ void cleanup(void* modHandle) {
     FreeLibrary((HMODULE)modHandle);
 }
 
+// Function to extract filename from the path
+const char* get_filename(const char* path) {
+    const char* filename = strrchr(path, '\\'); // Find the last occurrence of '\' in the path
+    if (filename == NULL) {
+        // If '\' is not found, return the entire path
+        return path;
+    } else {
+        // Otherwise, return the substring after the last '\' (excluding '\')
+        return filename + 1;
+    }
+}
 
 void load_mod(const char* modPath, void* pFrameworkAPI) {
     // Using same method for loading a library we load the mods other people make
@@ -26,10 +37,14 @@ void load_mod(const char* modPath, void* pFrameworkAPI) {
         if (initModule) {
             // Execute the initializeModule function with the framework API
             initModule(pFrameworkAPI);
+
+            char infomsg[256] = "Initialized Mod: ";
+            const char* filename = get_filename(modPath);
+            strcat(infomsg, filename);
+            logInfo(infomsg);
         } else {
             logError("Failed to get address of InitModule");
             cleanup(modHandle);
-
         }
     } else {
         logError("Failed to load mod library");

@@ -2,7 +2,7 @@
 #define SF_SPELLTYPE_HANDLER_H
 
 #include "../api/sfsf.h"
-#include "../api/sf_spells.h"
+#include "../api/sf_data_utilities.h"
 
 void __thiscall default_handler(SF_CGdSpell* spell, uint16_t spell_index);
 void __thiscall fireburst_handler(SF_CGdSpell* _this, uint16_t spell_index);

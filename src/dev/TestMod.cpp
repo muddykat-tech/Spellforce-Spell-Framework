@@ -1,12 +1,12 @@
 #include <windows.h>
-#include "../api/sf_spells.h"
+#include "../api/sf_data_utilities.h"
 #include "../api/sfsf.h"
 
 SpellforceSpellFramework *sfsf;
 cgdspellfunctions *spelltypeAPI;
 
 // Spell index is the ID for the TYPE of spell being cast
-// Spell Job is the ID for the LOGIC handler that the spell uses when being cast. ~@UnSchtalch please correct if wrong 
+// Spell Job is the ID for the LOGIC (effect) handler that the spell uses when being cast.
 
 void __thiscall icestrike_handler(SF_CGdSpell * _this, uint16_t spell_index) {
 	_this->active_spell_list[spell_index].spell_job = 0x8;

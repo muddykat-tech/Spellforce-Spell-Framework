@@ -4,7 +4,7 @@
 #include "sf_spelltype_registry.h"
 #include "sf_utility.h"
 
-#include "../api/sf_spells.h"
+#include "../api/sf_data_utilities.h"
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -41,6 +41,7 @@ uint16_t __thiscall addSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_id, ui
 	}
 	if (spell_index == 799)
 	{
+		logWarning("Warning: Maximum spell limit (800) reached. Additional spells may not be registered.");
 		return 0;
 	}
 	//max_used spells update

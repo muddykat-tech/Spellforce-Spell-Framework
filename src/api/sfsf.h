@@ -2,7 +2,7 @@
 // DEPRECATED
 #pragma once
 
-#include "sf_spells.h"
+#include "sf_data_utilities.h"
 #include "../asi/sf_asi.h"
 #include <stdint.h>
 

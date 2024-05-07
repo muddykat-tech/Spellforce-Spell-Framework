@@ -1,7 +1,7 @@
 #ifndef UTILITY_H
 #define UTILITY_H
 
-#include "../api/sf_spells.h"
+#include "../api/sf_data_utilities.h"
 typedef SF_String * (__thiscall *SF_String_ctor_ptr)(SF_String *, char *);
 typedef void (__thiscall *SF_String_dtor_ptr)(SF_String *);
 
