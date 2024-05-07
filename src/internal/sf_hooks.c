@@ -2,6 +2,7 @@
 #include "sf_hooks.h"
 #include "sf_spelltype_handlers.h"
 #include "sf_spelltype_registry.h"
+#include "sf_spelleffect_handlers.h"
 #include "sf_utility.h"
 
 #include "../api/sf_data_utilities.h"
@@ -18,6 +19,28 @@ figure_toolbox_add_spell_ptr figure_toolbox_add_spell;
 uint32_t CMnuScrConsole_ptr = 0;
 SF_String_ctor_ptr SF_String_ctor;
 SF_String_dtor_ptr SF_String_dtor;
+
+void __thiscall triggerEffect_hook(SF_CGdSpell *_this){
+	uint16_t spell_index;
+	for (spell_index = 1; spell_index <= _this->max_used; ++spell_index)
+    {
+        if (_this->active_spell_list[spell_index].spell_id != 0)
+        {
+            short to_do_count = _this->active_spell_list[spell_index].to_do_count;
+            if(to_do_count == 0){
+				to_do_count = 0;
+			} else {
+				to_do_count = to_do_count + -1;
+			}
+			_this->active_spell_list[spell_index].to_do_count = to_do_count;
+			if(to_do_count == 0){
+				uint16_t spell_job = _this->active_spell_list[spell_index].spell_job;
+				handler_ptr func = get_spell_effect(spell_job);
+				func(_this, spell_index);
+			}
+        }
+    }
+}
 
 uint16_t __thiscall addSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_id, uint16_t param2, SF_CGdTargetData *source, SF_CGdTargetData *target, uint16_t param5)
 {

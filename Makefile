@@ -6,7 +6,7 @@ DLL_LDFLAGS = -shared -static-libgcc -static-libstdc++ -s -Wl,-Bstatic,--whole-a
 FW_LDFLAGS = -shared -static-libgcc -static-libstdc++ -s -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive -Wl,--subsystem,windows,--out-implib,lib/sfsf.a
 
 # Object files for the new architecture
-NTERNALS_OBJ = obj/dllmain.o obj/sf_hooks.o obj/sf_modloader.o obj/sf_registry.o obj/sf_spelltype_handlers.o obj/sf_asi.o obj/sf_utility.o obj/sf_spelltype_registry.o
+NTERNALS_OBJ = obj/dllmain.o obj/sf_hooks.o obj/sf_modloader.o obj/sf_registry.o obj/sf_spelltype_handlers.o obj/sf_asi.o obj/sf_utility.o obj/sf_spelltype_registry.o obj/sf_spelleffect_handlers.o
 TEST_MOD_OBJ = obj/TestMod.o
 INTERNALS_SRC = src/internal
 
@@ -53,6 +53,9 @@ obj/sf_spelltype_handlers.o: ${INTERNALS_SRC}/sf_spelltype_handlers.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
 
 obj/sf_spelltype_registry.o: ${INTERNALS_SRC}/sf_spelltype_registry.cpp | obj
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+
+obj/sf_spelleffect_handlers.o: ${INTERNALS_SRC}/sf_spelleffect_handlers.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
 
 #mod build
