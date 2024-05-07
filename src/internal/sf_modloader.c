@@ -32,10 +32,7 @@ void load_mod(const char* modPath, void* pFrameworkAPI) {
 
         }
     } else {
-        int debugstr = GetLastError();
-        char msgbuf[MAX_PATH];
-        sprintf(msgbuf, "Failed to load mod library: %d\n", debugstr);
-        logError(msgbuf);
+        logError("Failed to load mod library");
     }
 }
 

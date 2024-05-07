@@ -24,6 +24,9 @@ void logInfo(const char *message) {
 
 void logError(const char* message) {
     char *str = strdup(message);
+    int debugstr = GetLastError();
+    sprintf(str, " Last Error: %d\n", debugstr);
+
     OutputDebugStringA(str);
     ConsoleLog(str);
 }
