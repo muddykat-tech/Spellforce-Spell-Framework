@@ -2,8 +2,11 @@
 #include "../api/sfsf.h"
 #include "../api/sf_data_utilities.h"
 
+#include "sf_spelleffect_handlers.h"
 #include "sf_registry.h"
 #include "sf_spelltype_registry.h"
+#include "sf_spelleffect_registry.h"
+
 #include "sf_modloader.h"
 #include "sf_utility.h"
 #include <windows.h>
@@ -20,6 +23,7 @@ void registerFrameworkAPI(){
     CGdSpellFunctions.initializeSpellData = &initializeSpellData;
 	frameworkAPI.pCGdSpellFunctions = &CGdSpellFunctions;
 	frameworkAPI.registerSpellTypeHandler = &registerSpellTypeHandler;
+    frameworkAPI.registerEffectHandler = &registerEffectHandler;
     frameworkAPI.logWarning = &logWarning;
     frameworkAPI.logInfo = &logInfo;
 }
@@ -29,9 +33,12 @@ void initFramework() {
     // setup framework api structure references
     registerFrameworkAPI();
     
-    // Setup Vanilla Spells -> see sf_spellhandler.h
+    // Setup Vanilla Spells -> see sf_spelltype_handler.h
     initSpellMap();
-    
+
+    // Setup effect job id registration -> see sf_spelleffect_handlers.h (This will MOVE to sf_spelleffect_registry.h)
+    initEffectHandlers();
+
     // Attempt to load all mods -> see sf_modloader.h
     initMods();
 

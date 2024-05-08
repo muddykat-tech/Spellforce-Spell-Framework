@@ -153,7 +153,6 @@ void initBetaHooks()
 {
 	initConsoleHook();
 	initDataHooks();
-    initEffectHandlers();
 	initSpellTypeHook();
 	initSpellTriggerHook();
 }

@@ -9,7 +9,7 @@ cgdspellfunctions *spelltypeAPI;
 // Spell Job is the ID for the LOGIC (effect) handler that the spell uses when being cast.
 
 void __thiscall icestrike_handler(SF_CGdSpell * _this, uint16_t spell_index) {
-	_this->active_spell_list[spell_index].spell_job = 0x8;
+	_this->active_spell_list[spell_index].spell_job = 0xa7;
 
   
 	spelltypeAPI->initializeSpellData(_this, spell_index, SPELL_TICK_COUNT_AUX);
@@ -19,14 +19,17 @@ void __thiscall icestrike_handler(SF_CGdSpell * _this, uint16_t spell_index) {
   sfsf->logInfo("Spell Handled");
 }
 
+void __thiscall custom_effect(SF_CGdSpell * _this, uint16_t spell_index) {
+  sfsf->logInfo("Custom Effect Handled");
+}
+
 extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework* framework) {
 	  sfsf = framework;
     spelltypeAPI = sfsf->pCGdSpellFunctions;
 
     sfsf->registerSpellTypeHandler(0xe, &icestrike_handler);
     sfsf->registerSpellTypeHandler(0xeb, &icestrike_handler);
-    
-    sfsf->logInfo("Module initialized successfully!");
+    sfsf->registerEffectHandler(0xa7, &custom_effect);
 }
 
 
