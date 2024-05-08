@@ -6,4 +6,7 @@
 
 handler_ptr __thiscall get_spell_effect(uint16_t spell_job);
 
+void initEffectHandlers();
+
+
 #endif
