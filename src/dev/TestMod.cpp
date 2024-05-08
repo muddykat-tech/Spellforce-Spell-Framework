@@ -21,15 +21,15 @@ void __thiscall icestrike_handler(SF_CGdSpell * _this, uint16_t spell_index) {
 
 void __thiscall custom_effect(SF_CGdSpell * _this, uint16_t spell_index) {
   sfsf->logInfo("Custom Effect Handled");
-  spellAPI->addToXDataList(_this->SF_CGdXDataList, spell_index, SPELL_TICK_COUNT, 1);
-  // uint32_t damage = 2;
-  // SF_GdSpell spell = _this->active_spell_list[(spell_index + -1)]; // May need to decrement by one?
+  //spellAPI->addToXDataList(_this->SF_CGdXDataList, spell_index, SPELL_TICK_COUNT, 1);
+  uint32_t damage = 2;
+  SF_GdSpell spell = _this->active_spell_list[spell_index]; // May need to decrement by one?
   // uint8_t *datapointer = &_this->active_spell_list[(int)(spell_index + -1)].xdata_key;
   // 0x33 is TARGET Data Key from the looks of it
-  // SF_CGdTargetData target = spell.target;//datapointer[SPELL_TARGET];
-  // SF_CGdTargetData source = spell.source;// local_bc + 0x5f; // Tied to Random for some reason in effect_fireball2? And in effect_firebullet is using current calc
+  uint16_t target_index = spell.target.entity_index;//datapointer[SPELL_TARGET];
+  uint16_t source_index = spell.source.entity_index;// local_bc + 0x5f; // Tied to Random for some reason in effect_fireball2? And in effect_firebullet is using current calc
 
-  // spellAPI->dealDamage(_this->SF_CGdFigureToolBox, source, target, damage, 1, 0, 0);
+   spellAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index, target_index, damage, 1, 0, 0);
   // Last Param for effect done should always be 0?
   spellAPI->setEffectDone(_this, spell_index, 0);
 }

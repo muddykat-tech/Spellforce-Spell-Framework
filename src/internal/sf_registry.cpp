@@ -22,7 +22,7 @@ void registerFrameworkAPI(){
 	CGdSpellFunctions.setXData = (setXData_ptr) ASI::AddrOf(0x329C40);
     CGdSpellFunctions.setEffectDone = (setEffectDoneFunc) (ASI::AddrOf(0x32A730));
     CGdSpellFunctions.addToXDataList = (xDataListAddTo_ptr) (ASI::AddrOf(0x354350));
-    CGdSpellFunctions.dealDamage = (dealDamage_ptr) (ASI::AddrOf(0x339C8C));
+    CGdSpellFunctions.dealDamage = (dealDamage_ptr) (ASI::AddrOf(0x2F4A57));
     
     CGdSpellFunctions.initializeSpellData = &initializeSpellData;
 

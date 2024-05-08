@@ -133,7 +133,7 @@ void initDataHooks(){
 	setXData = (setXData_ptr) ASI::AddrOf(0x329C40);
 	setEffectDone = (setEffectDoneFunc) (ASI::AddrOf(0x32A730));
     addToXDataList = (xDataListAddTo_ptr) (ASI::AddrOf(0x354350));
-    dealDamage = (dealDamage_ptr) (ASI::AddrOf(0x339C8C));
+    dealDamage = (dealDamage_ptr) (ASI::AddrOf(0x2f4a57));
 }
 
 void initSpellTypeHook(){
