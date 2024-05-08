@@ -4,7 +4,7 @@
 #include "../api/sfsf.h"
 #include "../api/sf_data_utilities.h"
 
-void __thiscall default_handler(SF_CGdSpell* spell, uint16_t spell_index);
+void __thiscall default_handler(SF_CGdSpell* _this, uint16_t spell_index);
 void __thiscall fireburst_handler(SF_CGdSpell* _this, uint16_t spell_index);
 void __thiscall icestrike_handler(SF_CGdSpell* _this, uint16_t spell_index);
 void __thiscall healing_handler(SF_CGdSpell* _this, uint16_t spell_index);

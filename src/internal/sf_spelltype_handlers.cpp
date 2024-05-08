@@ -4,7 +4,7 @@
 #include "sf_registry.h"
 #include "sf_utility.h"
 
-void __thiscall default_handler (SF_CGdSpell * spell, uint16_t spell_index)
+void __thiscall default_handler (SF_CGdSpell * _this, uint16_t spell_index)
 {
 	;
 }

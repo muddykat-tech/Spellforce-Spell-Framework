@@ -5,13 +5,15 @@
 #include "sf_spelleffect_registry.h"
 #include "sf_utility.h"
 
-#include "../api/sf_data_utilities.h"
-
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 
 setXData_ptr setXData;
+setEffectDoneFunc setEffectDone;
+xDataListAddTo_ptr addToXDataList;
+dealDamage_ptr dealDamage;
+
 ConsolePrint_ptr ConsolePrint;
 get_spell_spell_line_ptr get_spell_spell_line;
 figure_toolbox_get_unkn_ptr figure_toolbox_get_unkn;
@@ -129,6 +131,9 @@ void initDataHooks(){
 	figure_toolbox_get_unkn = (figure_toolbox_get_unkn_ptr) (ASI::AddrOf(0x2FE704));
 	figure_toolbox_add_spell = (figure_toolbox_add_spell_ptr) (ASI::AddrOf(0x2F673A));
 	setXData = (setXData_ptr) ASI::AddrOf(0x329C40);
+	setEffectDone = (setEffectDoneFunc) (ASI::AddrOf(0x32A730));
+    addToXDataList = (xDataListAddTo_ptr) (ASI::AddrOf(0x354350));
+    dealDamage = (dealDamage_ptr) (ASI::AddrOf(0x339C8C));
 }
 
 void initSpellTypeHook(){

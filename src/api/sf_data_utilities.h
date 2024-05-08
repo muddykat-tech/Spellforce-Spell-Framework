@@ -6,6 +6,7 @@ typedef enum {
     SPELL_TICK_COUNT_AUX = 0x05,
     SPELL_TICK_COUNT = 0x12,
     SPELL_DOUBLE_DAMAGE = 0x26,
+	SPELL_TARGET = 0x33,
     SPELL_PESTILENCE_DAMAGE = 0x0E,
     EFFECT_EFFECT_INDEX = 0x06,
     SPELL_STAT_MUL_MODIFIER = 0x0A,
@@ -36,7 +37,7 @@ typedef struct __attribute__((packed))
 	uint16_t spell_job; //aka spell line in older code
 	SF_CGdTargetData source;
 	SF_CGdTargetData target;
-	uint8_t xdata_key; // IDK
+	uint8_t xdata_key; // IDK (Seems to be used in ref for things, seen usage in getting target data and others)
 	uint8_t undefinded1;
 	uint8_t DLLNode;
 	uint8_t underfined2; 
@@ -64,7 +65,7 @@ typedef struct __attribute__((packed))
 	void *SF_CGdFigureJobs;
 	void *SF_CGdFigureToolBox;
 	void *SF_CGdFormation;
-	void *unkn2;
+	void *unkn2; //Seems to be used as first param for GetChanceToResistSpell
 	void *SF_CGdObject;
 	void *SF_CGdObjectToolBox;
 	void *SF_CGdPlayer;
@@ -113,9 +114,16 @@ typedef struct
 } SF_CGdResourceSpell;
 
 typedef void (__thiscall *initializeSpellDataFunc)(SF_CGdSpell* spell, uint16_t spell_id, SpellDataKey key);
+typedef void (__thiscall *setEffectDoneFunc)(SF_CGdSpell* spell, uint16_t spell_id, uint16_t param_2);
+
+typedef uint32_t (__thiscall *xDataListAddTo_ptr)(void* list, uint16_t param_1, SpellDataKey xdatakey, uint32_t param3);
+typedef void (__thiscall *dealDamage_ptr)(void* toolbox, uint16_t source, uint16_t target, uint32_t damage, uint32_t is_spell_damage, uint32_t param5, uint32_t param6);
 
 typedef struct
 {
 	setXData_ptr setXData;
 	initializeSpellDataFunc initializeSpellData;
+	setEffectDoneFunc setEffectDone;
+	xDataListAddTo_ptr addToXDataList;
+	dealDamage_ptr dealDamage;
 } cgdspellfunctions;

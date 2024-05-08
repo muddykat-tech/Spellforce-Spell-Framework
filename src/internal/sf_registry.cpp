@@ -20,7 +20,12 @@ SpellforceSpellFramework frameworkAPI;
 // exposed in sf_registry.h
 void registerFrameworkAPI(){     
 	CGdSpellFunctions.setXData = (setXData_ptr) ASI::AddrOf(0x329C40);
+    CGdSpellFunctions.setEffectDone = (setEffectDoneFunc) (ASI::AddrOf(0x32A730));
+    CGdSpellFunctions.addToXDataList = (xDataListAddTo_ptr) (ASI::AddrOf(0x354350));
+    CGdSpellFunctions.dealDamage = (dealDamage_ptr) (ASI::AddrOf(0x339C8C));
+    
     CGdSpellFunctions.initializeSpellData = &initializeSpellData;
+
 	frameworkAPI.pCGdSpellFunctions = &CGdSpellFunctions;
 	frameworkAPI.registerSpellTypeHandler = &registerSpellTypeHandler;
     frameworkAPI.registerEffectHandler = &registerEffectHandler;
