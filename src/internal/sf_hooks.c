@@ -130,10 +130,19 @@ void initDataHooks(){
 }
 
 void initSpellTypeHook(){
-	ASI::MemoryRegion add_spell_mreg(ASI::AddrOf(0x328d60), 5); //building selector
+	ASI::MemoryRegion add_spell_mreg(ASI::AddrOf(0x328d60), 5);
     ASI::BeginRewrite(add_spell_mreg);
         *(unsigned char*)(ASI::AddrOf(0x328d60)) = 0xE9;   // jmp instruction
         *(int*)(ASI::AddrOf(0x328d61)) = (int)(&addSpell_hook_beta) - ASI::AddrOf(0x328d65);
+    ASI::EndRewrite(add_spell_mreg);
+}
+
+void initSpellTriggerHook()
+{
+	ASI::MemoryRegion add_spell_mreg(ASI::AddrOf(0x278773), 5);
+    ASI::BeginRewrite(add_spell_mreg);
+        *(unsigned char*)(ASI::AddrOf(0x278773)) = 0xE8;   // CALL instruction
+        *(int*)(ASI::AddrOf(0x278774)) = (int)(&triggerEffect_hook) - ASI::AddrOf(0x278778);
     ASI::EndRewrite(add_spell_mreg);
 }
 
@@ -144,4 +153,5 @@ void initBetaHooks()
 	initDataHooks();
     initEffectHandlers();
 	initSpellTypeHook();
+	initSpellTriggerHook();
 }
