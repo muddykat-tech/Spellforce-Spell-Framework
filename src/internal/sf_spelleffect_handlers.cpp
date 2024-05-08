@@ -1,5 +1,6 @@
 #include "sf_spelleffect_handlers.h"
 #include "sf_utility.h"
+#include "sf_spelleffect_registry.h"
 
 handler_ptr effect_ability_benefactions_handler;
 handler_ptr effect_ability_berserk_handler;
@@ -332,502 +333,171 @@ void initEffectHandlers()
     effect_wave_handler = (handler_ptr)(ASI::AddrOf(0x34a5a0));
     effect_weaken_handler = (handler_ptr)(ASI::AddrOf(0x34aa10));
     effect_weaken_area_handler = (handler_ptr)(ASI::AddrOf(0x34ac60));
+
+    registerEffectHandler(1, effect_fireburst_handler);
+    registerEffectHandler(2, effect_healing_handler);
+    registerEffectHandler(3, effect_death_handler);
+    registerEffectHandler(4, effect_poison_handler);
+    registerEffectHandler(5, effect_cure_poison_handler);
+    registerEffectHandler(6, effect_invulnerability_handler);
+    registerEffectHandler(7, effect_unknown1_handler);
+    registerEffectHandler(8, effect_icestrike1_handler);
+    registerEffectHandler(9, effect_fog_handler);
+    registerEffectHandler(10, effect_stone_handler);
+    registerEffectHandler(0xb, effect_slowness_handler);
+    registerEffectHandler(0xc, effect_freeze_handler);
+    registerEffectHandler(0xd, effect_decay_handler);
+    registerEffectHandler(0xe, effect_pain_handler);
+    registerEffectHandler(0xf, effect_iceshield_handler);
+    registerEffectHandler(0x10, effect_illuminate_handler);
+    registerEffectHandler(0x11, effect_fireball1_handler);
+    registerEffectHandler(0x12, effect_fireshield1_handler);
+    registerEffectHandler(0x13, effect_iceshield2_handler);
+    registerEffectHandler(0x14, effect_lifetap_handler);
+    registerEffectHandler(0x15, effect_decay2_handler);
+    registerEffectHandler(0x16, effect_iceshield3_handler);
+    registerEffectHandler(0x17, effect_summon_handler);
+    registerEffectHandler(0x18, effect_petrify_handler);
+    registerEffectHandler(0x19, effect_pestilence_handler);
+    registerEffectHandler(0x1a, effect_cure_disease_handler);
+    registerEffectHandler(0x1b, effect_pain_area_handler);
+    registerEffectHandler(0x1c, effect_death_grasp_handler);
+    registerEffectHandler(0x1d, effect_inflexibility_handler);
+    registerEffectHandler(0x1e, effect_detect_magic_handler);
+    registerEffectHandler(0x1f, effect_weaken_handler);
+    registerEffectHandler(0x20, effect_dark_banishing_handler);
+    registerEffectHandler(0x21, effect_slowness_area_handler);
+    registerEffectHandler(0x22, effect_inflexibility_area_handler);
+    registerEffectHandler(0x23, effect_weaken_area_handler);
+    registerEffectHandler(0x24, effect_plague_area_handler);
+    registerEffectHandler(0x25, effect_remediless_handler);
+    registerEffectHandler(0x26, effect_healing_area_handler);
+    registerEffectHandler(0x27, effect_sentinel_healing_handler);
+    registerEffectHandler(0x28, effect_quickness_handler);
+    registerEffectHandler(0x29, effect_quickness_area_handler);
+    registerEffectHandler(0x2a, effect_thornshield_handler);
+    registerEffectHandler(0x2b, effect_flexibility_handler);
+    registerEffectHandler(0x2c, effect_flexibility_area_handler);
+    registerEffectHandler(0x2d, effect_strength_handler);
+    registerEffectHandler(0x2e, effect_strength_area_handler);
+    registerEffectHandler(0x2f, effect_guard_handler);
+    registerEffectHandler(0x30, effect_regenerate_handler);
+    registerEffectHandler(0x31, effect_hallow_handler);
+    registerEffectHandler(0x32, effect_fireshield2_handler);
+    registerEffectHandler(0x33, effect_thorns_handler);
+    registerEffectHandler(0x34, effect_raise_dead_handler);
+    registerEffectHandler(0x37, effect_forget_handler);
+    registerEffectHandler(0x38, effect_retention_handler);
+    registerEffectHandler(0x39, effect_brilliance_handler);
+    registerEffectHandler(0x3a, effect_sacrifice_mana_handler);
+    registerEffectHandler(0x3b, effect_manatap_handler);
+    registerEffectHandler(0x3c, effect_manadrain_handler);
+    registerEffectHandler(0x3d, effect_amok_handler);
+    registerEffectHandler(0x3e, effect_confuse_handler);
+    registerEffectHandler(0x3f, effect_disrupt_handler);
+    registerEffectHandler(0x40, effect_acid_cloud_handler);
+    registerEffectHandler(0x41, effect_rain_of_fire_handler);
+    registerEffectHandler(0x42, effect_shock_handler);
+    registerEffectHandler(0x43, effect_blizzard_handler);
+    registerEffectHandler(0x44, effect_rain_of_stone_handler);
+    registerEffectHandler(0x45, effect_charm_animal_handler);
+    registerEffectHandler(0x46, effect_invisibility_handler);
+    registerEffectHandler(0x47, effect_extinct_handler);
+    registerEffectHandler(0x48, effect_remove_curse_handler);
+    registerEffectHandler(0x49, effect_aura_handler);
+    registerEffectHandler(0x4a, effect_suffocation_handler);
+    registerEffectHandler(0x4b, effect_slow_fighting_handler);
+    registerEffectHandler(0x4c, effect_inability_handler);
+    registerEffectHandler(0x4d, effect_suicide_death_handler);
+    registerEffectHandler(0x4e, effect_endurance_handler);
+    registerEffectHandler(0x4f, effect_fast_fighting_handler);
+    registerEffectHandler(0x50, effect_dexterity_handler);
+    registerEffectHandler(0x51, effect_suicide_heal_handler);
+    registerEffectHandler(0x52, effect_dispel_white_aura_handler);
+    registerEffectHandler(0x53, effect_dispel_black_aura_handler);
+    registerEffectHandler(0x54, effect_dominate_animal_handler);
+    registerEffectHandler(0x55, effect_wave_handler);
+    registerEffectHandler(0x56, effect_rock_bullet_handler);
+    registerEffectHandler(0x57, effect_melt_resistance_handler);
+    registerEffectHandler(0x58, effect_chill_resistance_handler);
+    registerEffectHandler(0x59, effect_charisma_handler);
+    registerEffectHandler(0x5a, effect_enlightement_handler);
+    registerEffectHandler(0x5b, effect_meditation_handler);
+    registerEffectHandler(0x5c, effect_shockwave_handler);
+    registerEffectHandler(0x5d, effect_befriend_handler);
+    registerEffectHandler(0x5e, effect_dominate_handler);
+    registerEffectHandler(0x5f, effect_charm_handler);
+    registerEffectHandler(0x60, effect_tower_arrow_handler);
+    registerEffectHandler(0x61, effect_healing_aura_handler);
+    registerEffectHandler(0x62, effect_icestrike2_handler);
+    registerEffectHandler(99, effect_distract_handler);
+    registerEffectHandler(100, effect_detect_metal_handler);
+    registerEffectHandler(0x65, effect_conservation_handler)
+    registerEffectHandler(0x66, effect_lifetap_aura_handler)
+    registerEffectHandler(0x67, effect_fireball2_handler)
+    registerEffectHandler(0x68, effect_self_illusion_handler)
+    registerEffectHandler(0x69, effect_ability_warcy_handler)
+    registerEffectHandler(0x6a, effect_ability_benefactions_handler)
+    registerEffectHandler(0x6b, effect_ability_patronize_handler)
+    registerEffectHandler(0x6c, effect_ability_endurance_handler)
+    registerEffectHandler(0x6d, effect_ability_berserk_handler)
+    registerEffectHandler(0x6e, effect_ability_boons_handler)
+    registerEffectHandler(0x6f, effect_ability_shelter_handler)
+    registerEffectHandler(0x70, effect_ability_durability_handler)
+    registerEffectHandler(0x71, effect_ability_trueshot_handler)
+    registerEffectHandler(0x72, effect_ability_steelskin_handler)
+    registerEffectHandler(0x73, effect_ability_salvo_handler)
+    registerEffectHandler(0x74, effect_spark_handler)
+    registerEffectHandler(0x75, effect_demoralization_handler)
+    registerEffectHandler(0x76, effect_hypnotize_handler)
+    registerEffectHandler(0x77, effect_tower_pain_handler)
+    registerEffectHandler(0x78, effect_tower_stone_handler)
+    registerEffectHandler(0x79, effect_cloak_of_nor_handler)
+    registerEffectHandler(0x7a, effect_feign_death_handler)
+    registerEffectHandler(0x7b, effect_dominate_break_handler)
+    registerEffectHandler(0x7c, effect_disenchant_handler)
+    registerEffectHandler(0x7d, effect_unknown2_handler)
+    registerEffectHandler(0x7e, effect_ice1_handler)
+    registerEffectHandler(0x7f, effect_ice2_handler)
+    registerEffectHandler(0x80, effect_firebullet_handler)
+    registerEffectHandler(0x81, effect_tower_extinct_handler)
+    registerEffectHandler(0x82, effect_manatap_aura_handler)
+    registerEffectHandler(0x83, effect_fire_resistance_handler)
+    registerEffectHandler(0x84, effect_essence_black_handler)
+    registerEffectHandler(0x85, effect_almightiness_black_handler)
+    registerEffectHandler(0x86, effect_essence_white_handler)
+    registerEffectHandler(0x87, effect_almightiness_white_handler)
+    registerEffectHandler(0x88, effect_essence_elemental_handler)
+    registerEffectHandler(0x89, effect_almightiness_elemental_handler)
+    registerEffectHandler(0x8a, effect_essence_mental_handler)
+    registerEffectHandler(0x8b, effect_almightiness_mental_handler)
+    registerEffectHandler(0x8c, effect_essence_elemental2_handler)
+    registerEffectHandler(0x8d, effect_almightiness_elemental2_handler)
+    registerEffectHandler(0x8e, effect_assistance_handler)
+    registerEffectHandler(0x8f, effect_holy_touch_handler)
+    registerEffectHandler(0x90, effect_roots_area_handler)
+    registerEffectHandler(0x91, effect_eternity_handler)
+    registerEffectHandler(0x92, effect_cannibalize_handler)
+    registerEffectHandler(0x93, effect_dominate_undead_handler)
+    registerEffectHandler(0x94, effect_darkness_area_handler)
+    registerEffectHandler(0x95, effect_freeze_area_handler)
+    registerEffectHandler(0x96, effect_shift_mana_handler)
+    registerEffectHandler(0x97, effect_revenge_handler)
+    registerEffectHandler(0x98, effect_torture_handler)
+    registerEffectHandler(0x99, effect_reinforcement_handler)
+    registerEffectHandler(0x9a, effect_hypnotize_area_handler)
+    registerEffectHandler(0x9b, effect_feet_of_clay_handler)
+    registerEffectHandler(0x9c, effect_confuse_area_handler)
+    registerEffectHandler(0x9d, effect_mutation_handler)
+    registerEffectHandler(0x9e, effect_ability_shift_life_handler)
+    registerEffectHandler(0x9f, effect_ability_riposte_handler)
+    registerEffectHandler(0xa0, effect_ability_critical_hits_handler)
+    registerEffectHandler(0xa1, effect_manashield_handler)
+    registerEffectHandler(0xa2, effect_chain_handler)
+    registerEffectHandler(0xa3, effect_roots_handler)
+    registerEffectHandler(0xa4, effect_mirage_handler)
+    registerEffectHandler(0xa5, effect_fake_spell_one_figure_handler)
+    registerEffectHandler(0xa6, effect_feedback_handler)
 }
 
-handler_ptr __thiscall get_spell_effect(uint16_t spell_job) {
-    switch(spell_job) {
-        case 1:
-            return effect_fireburst_handler;
-            
-        case 2:
-            return effect_healing_handler;
-            
-        case 3:
-            return effect_death_handler;
-            
-        case 4:
-            return effect_poison_handler;
-            
-        case 5:
-            return effect_cure_poison_handler;
-            
-        case 6:
-            return effect_invulnerability_handler;
-            
-        case 7:
-            return effect_unknown1_handler;
-            
-        case 8:
-            return effect_icestrike1_handler;
-            
-        case 9:
-            return effect_fog_handler;
-            
-        case 10:
-            return effect_stone_handler;
-            
-        case 0xb:
-            return effect_slowness_handler;
-            
-        case 0xc:
-            return effect_freeze_handler;
-            
-        case 0xd:
-            return effect_decay_handler;
-            
-        case 0xe:
-            return effect_pain_handler;
-            
-        case 0xf:
-            return effect_iceshield_handler;
-            
-        case 0x10:
-            return effect_illuminate_handler;
-            
-        case 0x11:
-            return effect_fireball1_handler;
-            
-        case 0x12:
-            return effect_fireshield1_handler;
-            
-        case 0x13:
-            return effect_iceshield2_handler;
-            
-        case 0x14:
-            return effect_lifetap_handler;
-            
-        case 0x15:
-            return effect_decay2_handler;
-            
-        case 0x16:
-            return effect_iceshield3_handler;
-            
-        case 0x17:
-            return effect_summon_handler;
-            
-        case 0x18:
-            return effect_petrify_handler;
-            
-        case 0x19:
-            return effect_pestilence_handler;
-            
-        case 0x1a:
-            return effect_cure_disease_handler;
-            
-        case 0x1b:
-            return effect_pain_area_handler;
-            
-        case 0x1c:
-            return effect_death_grasp_handler;
-            
-        case 0x1d:
-            return effect_inflexibility_handler;
-            
-        case 0x1e:
-            return effect_detect_magic_handler;
-            
-        case 0x1f:
-            return effect_weaken_handler;
-            
-        case 0x20:
-            return effect_dark_banishing_handler;
-            
-        case 0x21:
-            return effect_slowness_area_handler;
-            
-        case 0x22:
-            return effect_inflexibility_area_handler;
-            
-        case 0x23:
-            return effect_weaken_area_handler;
-            
-        case 0x24:
-            return effect_plague_area_handler;
-            
-        case 0x25:
-            return effect_remediless_handler;
-            
-        case 0x26:
-            return effect_healing_area_handler;
-            
-        case 0x27:
-            return effect_sentinel_healing_handler;
-            
-        case 0x28:
-            return effect_quickness_handler;
-            
-        case 0x29:
-            return effect_quickness_area_handler;
-            
-        case 0x2a:
-            return effect_thornshield_handler;
-            
-        case 0x2b:
-            return effect_flexibility_handler;
-            
-        case 0x2c:
-            return effect_flexibility_area_handler;
-            
-        case 0x2d:
-            return effect_strength_handler;
-            
-        case 0x2e:
-            return effect_strength_area_handler;
-            
-        case 0x2f:
-            return effect_guard_handler;
-            
-        case 0x30:
-            return effect_regenerate_handler;
-            
-        case 0x31:
-            return effect_hallow_handler;
-            
-        case 0x32:
-            return effect_fireshield2_handler;
-            
-        case 0x33:
-            return effect_thorns_handler;
-            
-        case 0x34:
-            return effect_raise_dead_handler;
-            
-        case 0x37:
-            return effect_forget_handler;
-            
-        case 0x38:
-            return effect_retention_handler;
-            
-        case 0x39:
-            return effect_brilliance_handler;
-            
-        case 0x3a:
-            return effect_sacrifice_mana_handler;
-            
-        case 0x3b:
-            return effect_manatap_handler;
-            
-        case 0x3c:
-            return effect_manadrain_handler;
-            
-        case 0x3d:
-            return effect_amok_handler;
-            
-        case 0x3e:
-            return effect_confuse_handler;
-            
-        case 0x3f:
-            return effect_disrupt_handler;
-            
-        case 0x40:
-            return effect_acid_cloud_handler;
-            
-        case 0x41:
-            return effect_rain_of_fire_handler;
-            
-        case 0x42:
-            return effect_shock_handler;
-            
-        case 0x43:
-            return effect_blizzard_handler;
-            
-        case 0x44:
-            return effect_rain_of_stone_handler;
-            
-        case 0x45:
-            return effect_charm_animal_handler;
-            
-        case 0x46:
-            return effect_invisibility_handler;
-            
-        case 0x47:
-            return effect_extinct_handler;
-            
-        case 0x48:
-            return effect_remove_curse_handler;
-            
-        case 0x49:
-            return effect_aura_handler;
-            
-        case 0x4a:
-            return effect_suffocation_handler;
-            
-        case 0x4b:
-            return effect_slow_fighting_handler;
-            
-        case 0x4c:
-            return effect_inability_handler;
-            
-        case 0x4d:
-            return effect_suicide_death_handler;
-            
-        case 0x4e:
-            return effect_endurance_handler;
-            
-        case 0x4f:
-            return effect_fast_fighting_handler;
-            
-        case 0x50:
-            return effect_dexterity_handler;
-            
-        case 0x51:
-            return effect_suicide_heal_handler;
-            
-        case 0x52:
-            return effect_dispel_white_aura_handler;
-            
-        case 0x53:
-            return effect_dispel_black_aura_handler;
-            
-        case 0x54:
-            return effect_dominate_animal_handler;
-            
-        case 0x55:
-            return effect_wave_handler;
-            
-        case 0x56:
-            return effect_rock_bullet_handler;
-            
-        case 0x57:
-            return effect_melt_resistance_handler;
-            
-        case 0x58:
-            return effect_chill_resistance_handler;
-            
-        case 0x59:
-            return effect_charisma_handler;
-            
-        case 0x5a:
-            return effect_enlightement_handler;
-            
-        case 0x5b:
-            return effect_meditation_handler;
-            
-        case 0x5c:
-            return effect_shockwave_handler;
-            
-        case 0x5d:
-            return effect_befriend_handler;
-            
-        case 0x5e:
-            return effect_dominate_handler;
-            
-        case 0x5f:
-            return effect_charm_handler;
-            
-        case 0x60:
-            return effect_tower_arrow_handler;
-            
-        case 0x61:
-            return effect_healing_aura_handler;
-            
-        case 0x62:
-            return effect_icestrike2_handler;
-            
-        case 99:
-            return effect_distract_handler;
-            
-        case 100:
-            return effect_detect_metal_handler;
-            
-        case 0x65:
-            return effect_conservation_handler;
-            
-        case 0x66:
-            return effect_lifetap_aura_handler;
-            
-        case 0x67:
-            return effect_fireball2_handler;
-            
-        case 0x68:
-            return effect_self_illusion_handler;
-            
-        case 0x69:
-            return effect_ability_warcy_handler;
-            
-        case 0x6a:
-            return effect_ability_benefactions_handler;
-            
-        case 0x6b:
-            return effect_ability_patronize_handler;
-            
-        case 0x6c:
-            return effect_ability_endurance_handler;
-            
-        case 0x6d:
-            return effect_ability_berserk_handler;
-            
-        case 0x6e:
-            return effect_ability_boons_handler;
-            
-        case 0x6f:
-            return effect_ability_shelter_handler;
-            
-        case 0x70:
-            return effect_ability_durability_handler;
-            
-        case 0x71:
-            return effect_ability_trueshot_handler;
-            
-        case 0x72:
-            return effect_ability_steelskin_handler;
-            
-        case 0x73:
-            return effect_ability_salvo_handler;
-            
-        case 0x74:
-            return effect_spark_handler;
-            
-        case 0x75:
-            return effect_demoralization_handler;
-            
-        case 0x76:
-            return effect_hypnotize_handler;
-            
-        case 0x77:
-            return effect_tower_pain_handler;
-            
-        case 0x78:
-            return effect_tower_stone_handler;
-            
-        case 0x79:
-            return effect_cloak_of_nor_handler;
-            
-        case 0x7a:
-            return effect_feign_death_handler;
-            
-        case 0x7b:
-            return effect_dominate_break_handler;
-            
-        case 0x7c:
-            return effect_disenchant_handler;
-            
-        case 0x7d:
-            return effect_unknown2_handler;
-            
-        case 0x7e:
-            return effect_ice1_handler;
-            
-        case 0x7f:
-            return effect_ice2_handler;
-            
-        case 0x80:
-            return effect_firebullet_handler;
-            
-        case 0x81:
-            return effect_tower_extinct_handler;
-            
-        case 0x82:
-            return effect_manatap_aura_handler;
-            
-        case 0x83:
-            return effect_fire_resistance_handler;
-            
-        case 0x84:
-            return effect_essence_black_handler;
-            
-        case 0x85:
-            return effect_almightiness_black_handler;
-            
-        case 0x86:
-            return effect_essence_white_handler;
-            
-        case 0x87:
-            return effect_almightiness_white_handler;
-            
-        case 0x88:
-            return effect_essence_elemental_handler;
-            
-        case 0x89:
-            return effect_almightiness_elemental_handler;
-            
-        case 0x8a:
-            return effect_essence_mental_handler;
-            
-        case 0x8b:
-            return effect_almightiness_mental_handler;
-            
-        case 0x8c:
-            return effect_essence_elemental2_handler;
-            
-        case 0x8d:
-            return effect_almightiness_elemental2_handler;
-            
-        case 0x8e:
-            return effect_assistance_handler;
-            
-        case 0x8f:
-            return effect_holy_touch_handler;
-            
-        case 0x90:
-            return effect_roots_area_handler;
-            
-        case 0x91:
-            return effect_eternity_handler;
-            
-        case 0x92:
-            return effect_cannibalize_handler;
-            
-        case 0x93:
-            return effect_dominate_undead_handler;
-            
-        case 0x94:
-            return effect_darkness_area_handler;
-            
-        case 0x95:
-            return effect_freeze_area_handler;
-            
-        case 0x96:
-            return effect_shift_mana_handler;
-            
-        case 0x97:
-            return effect_revenge_handler;
-            
-        case 0x98:
-            return effect_torture_handler;
-            
-        case 0x99:
-            return effect_reinforcement_handler;
-            
-        case 0x9a:
-            return effect_hypnotize_area_handler;
-            
-        case 0x9b:
-            return effect_feet_of_clay_handler;
-            
-        case 0x9c:
-            return effect_confuse_area_handler;
-            
-        case 0x9d:
-            return effect_mutation_handler;
-            
-        case 0x9e:
-            return effect_ability_shift_life_handler;
-            
-        case 0x9f:
-            return effect_ability_riposte_handler;
-            
-        case 0xa0:
-            return effect_ability_critical_hits_handler;
-            
-        case 0xa1:
-            return effect_manashield_handler;
-            
-        case 0xa2:
-            return effect_chain_handler;
-            
-        case 0xa3:
-            return effect_roots_handler;
-            
-        case 0xa4:
-            return effect_mirage_handler;
-            
-        case 0xa5:
-            return effect_fake_spell_one_figure_handler;
-            
-        case 0xa6:
-            return effect_feedback_handler;
-    }
-    logError("Unknown Job ID, No effect handler registered.");
-    return NULL;
-}
+

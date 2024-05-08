@@ -2,7 +2,7 @@
 #include "sf_hooks.h"
 #include "sf_spelltype_handlers.h"
 #include "sf_spelltype_registry.h"
-#include "sf_spelleffect_handlers.h"
+#include "sf_spelleffect_registry.h"
 #include "sf_utility.h"
 
 #include "../api/sf_data_utilities.h"
@@ -36,7 +36,9 @@ void __thiscall triggerEffect_hook(SF_CGdSpell *_this){
 			if(to_do_count == 0){
 				uint16_t spell_job = _this->active_spell_list[spell_index].spell_job;
 				handler_ptr func = get_spell_effect(spell_job);
-				func(_this, spell_index);
+				if(func != NULL) {
+					func(_this, spell_index);
+				}
 			}
         }
     }
