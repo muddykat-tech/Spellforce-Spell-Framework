@@ -18,7 +18,9 @@ struct SpellforceSpellFramework {
     InitModuleFunc initializeModule;
     SpellHandlerFunc registerSpellTypeHandler;
     EffectHandlerFunc registerEffectHandler;
-    cgdspellfunctions *pCGdSpellFunctions;
+
+    SpellFunctions *apiSpellFunctions;
+    ToolboxFunctions *apiToolboxFunctions;
 
     // Perhaps create a struct for a proper logger? 
     logWarningFunc logWarning;

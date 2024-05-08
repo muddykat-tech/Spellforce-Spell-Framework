@@ -6,27 +6,33 @@
 #include "sf_registry.h"
 #include "sf_spelltype_registry.h"
 #include "sf_spelleffect_registry.h"
+#include "sf_hooks.h"
 
 #include "sf_modloader.h"
 #include "sf_utility.h"
 #include <windows.h>
 
 // See sf_data_utilities.h
-cgdspellfunctions CGdSpellFunctions;
+SpellFunctions apiSpellFunctions;
+ToolboxFunctions apiToolboxFunctions;
 
 // Exposed in sfsf.h
 SpellforceSpellFramework frameworkAPI;
 
 // exposed in sf_registry.h
-void registerFrameworkAPI(){     
-	CGdSpellFunctions.setXData = (setXData_ptr) ASI::AddrOf(0x329C40);
-    CGdSpellFunctions.setEffectDone = (setEffectDoneFunc) (ASI::AddrOf(0x32A730));
-    CGdSpellFunctions.addToXDataList = (xDataListAddTo_ptr) (ASI::AddrOf(0x354350));
-    CGdSpellFunctions.dealDamage = (dealDamage_ptr) (ASI::AddrOf(0x2F4A57));
-    
-    CGdSpellFunctions.initializeSpellData = &initializeSpellData;
+void registerFrameworkAPI(){
+	apiSpellFunctions.setXData = setXData;
+    apiSpellFunctions.setEffectDone = setEffectDone;
+    apiSpellFunctions.addToXDataList = addToXDataList;
+    apiSpellFunctions.getChanceToResistSpell = getChanceToResistSpell;
+    apiSpellFunctions.getRandom = getRandom;
+    apiToolboxFunctions.dealDamage = dealDamage;
 
-	frameworkAPI.pCGdSpellFunctions = &CGdSpellFunctions;
+    apiSpellFunctions.initializeSpellData = &initializeSpellData;
+    
+	frameworkAPI.apiSpellFunctions = &apiSpellFunctions;
+	frameworkAPI.apiToolboxFunctions = &apiToolboxFunctions;
+
 	frameworkAPI.registerSpellTypeHandler = &registerSpellTypeHandler;
     frameworkAPI.registerEffectHandler = &registerEffectHandler;
     frameworkAPI.logWarning = &logWarning;
@@ -34,6 +40,8 @@ void registerFrameworkAPI(){
 }
 
 void initFramework() {
+    
+	initDataHooks();
 
     // setup framework api structure references
     registerFrameworkAPI();

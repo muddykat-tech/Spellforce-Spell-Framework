@@ -13,6 +13,10 @@ setXData_ptr setXData;
 setEffectDoneFunc setEffectDone;
 xDataListAddTo_ptr addToXDataList;
 dealDamage_ptr dealDamage;
+resistSpell_ptr getChanceToResistSpell;
+
+getRandom_ptr getRandom;
+
 
 ConsolePrint_ptr ConsolePrint;
 get_spell_spell_line_ptr get_spell_spell_line;
@@ -100,7 +104,7 @@ uint16_t __thiscall addSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_id, ui
 	_this->active_spell_list[spell_index].target.entity_type = target->entity_type;
 	_this->active_spell_list[spell_index].target.entity_index = target->entity_index;
 	_this->active_spell_list[spell_index].target.position.X = (target->position).X;
-	_this->active_spell_list[spell_index].target.position.Y = (target->position).Y;	
+	_this->active_spell_list[spell_index].target.position.Y = (target->position).Y;
 	_this->active_spell_list[spell_index].to_do_count = param2 - (uint16_t)(_this->OpaqueClass->current_step);
 
 	handler_ptr func = get_spell_handler(spell_line);
@@ -134,6 +138,9 @@ void initDataHooks(){
 	setEffectDone = (setEffectDoneFunc) (ASI::AddrOf(0x32A730));
     addToXDataList = (xDataListAddTo_ptr) (ASI::AddrOf(0x354350));
     dealDamage = (dealDamage_ptr) (ASI::AddrOf(0x2f4a57));
+	
+	getChanceToResistSpell = (resistSpell_ptr) (ASI::AddrOf(0x317BA0));
+	getRandom = (getRandom_ptr) (ASI::AddrOf(0x2AD200));
 }
 
 void initSpellTypeHook(){
@@ -157,7 +164,6 @@ void initSpellTriggerHook()
 void initBetaHooks()
 {
 	initConsoleHook();
-	initDataHooks();
 	initSpellTypeHook();
 	initSpellTriggerHook();
 }

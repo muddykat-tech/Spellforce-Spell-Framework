@@ -24,6 +24,12 @@ typedef struct __attribute__((packed))
 
 typedef struct __attribute__((packed))
 {
+	uint16_t spell_id;
+	uint16_t job_id;
+} SF_SpellEffectInfo;
+
+typedef struct __attribute__((packed))
+{
 	uint8_t entity_type; //1 for figure, 2 for building, 3 for object
 	uint16_t entity_index;
 	SF_Coord position;
@@ -44,18 +50,36 @@ typedef struct __attribute__((packed))
 	uint8_t flags;
 } SF_GdSpell;
 
+
+/*
+  this->current_step = 0; 4 bytes
+  this->field_0x10 = 0;	1 byte
+  this->field14_0x14 = 0; 4 bytes
+  this->field0_0x0 = 0xab2d; 2 bytes
+  this->field1_0x2 = 0xaf15; 2 bytes
+  this->field2_0x4 = 0xb2fd; 2 bytes
+  this->field15_0x18 = 0xff; 1 byte
+  this->field16_0x19 = 0xff; 1 byte
+*/
+
 typedef struct __attribute__((packed))
 {
-	uint8_t unkn1[12];
+	uint16_t unknown_field_0;
+	uint16_t unknown_field_2;
+	uint16_t unknown_field_4;
+	uint8_t unknown1[6];
 	uint32_t current_step;
-	uint8_t unkn2[10];
-
-} OpaqueClass1;
+	uint8_t unknown_field_10;
+	uint8_t unknown2[3];
+	uint32_t unknown_field_14;
+	uint8_t unknown_field_18;
+	uint8_t unknown_field_19;
+} AutoClass14;
 
 typedef struct __attribute__((packed))
 {
 	void *SF_CGdAiMain;
-	OpaqueClass1 *OpaqueClass;
+	AutoClass14 *OpaqueClass; // For Random
 	void *SF_CGdBuilding;
 	void *SF_CGdBuildingToolbox;
 	void *SF_CGdDoubleLinkedList;
@@ -65,7 +89,7 @@ typedef struct __attribute__((packed))
 	void *SF_CGdFigureJobs;
 	void *SF_CGdFigureToolBox;
 	void *SF_CGdFormation;
-	void *unkn2; //Seems to be used as first param for GetChanceToResistSpell
+	void *unkn2; //Seems to be used as first param for GetChanceToResistSpell 
 	void *SF_CGdObject;
 	void *SF_CGdObjectToolBox;
 	void *SF_CGdPlayer;
@@ -119,11 +143,22 @@ typedef void (__thiscall *setEffectDoneFunc)(SF_CGdSpell* spell, uint16_t spell_
 typedef uint32_t (__thiscall *xDataListAddTo_ptr)(void* list, uint16_t param_1, SpellDataKey xdatakey, uint32_t param3);
 typedef void (__thiscall *dealDamage_ptr)(void* toolbox, uint16_t source, uint16_t target, uint32_t damage, uint32_t is_spell_damage, uint32_t param5, uint32_t param6);
 
+typedef uint32_t (__thiscall *resistSpell_ptr)(void* unkn2_CGdSpell, uint16_t source, uint16_t target, SF_SpellEffectInfo effect_info);
+typedef uint16_t (__thiscall *getRandom_ptr)(void *_this, uint16_t range);
+
 typedef struct
 {
 	setXData_ptr setXData;
 	initializeSpellDataFunc initializeSpellData;
 	setEffectDoneFunc setEffectDone;
+
+	// May move? it doesn't take CGdSpell as first param...	
 	xDataListAddTo_ptr addToXDataList;
+	resistSpell_ptr getChanceToResistSpell;
+	getRandom_ptr getRandom;
+} SpellFunctions;
+
+typedef struct
+{
 	dealDamage_ptr dealDamage;
-} cgdspellfunctions;
+} ToolboxFunctions;
