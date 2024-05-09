@@ -15,6 +15,7 @@
 // See sf_data_utilities.h
 SpellFunctions apiSpellFunctions;
 ToolboxFunctions apiToolboxFunctions;
+FigureFunctions apiFigureFunctions;
 
 // Exposed in sfsf.h
 SpellforceSpellFramework frameworkAPI;
@@ -26,12 +27,17 @@ void registerFrameworkAPI(){
     apiSpellFunctions.addToXDataList = addToXDataList;
     apiSpellFunctions.getChanceToResistSpell = getChanceToResistSpell;
     apiSpellFunctions.getRandom = getRandom;
-    apiToolboxFunctions.dealDamage = dealDamage;
-
     apiSpellFunctions.initializeSpellData = &initializeSpellData;
     
+    apiFigureFunctions.isAlive = isAlive;
+    apiFigureFunctions.setWalkSpeed = setWalkSpeed;
+    
+
+    apiToolboxFunctions.dealDamage = dealDamage;
+
 	frameworkAPI.apiSpellFunctions = &apiSpellFunctions;
 	frameworkAPI.apiToolboxFunctions = &apiToolboxFunctions;
+	frameworkAPI.apiFigureFunctions = &apiFigureFunctions;
 
 	frameworkAPI.registerSpellTypeHandler = &registerSpellTypeHandler;
     frameworkAPI.registerEffectHandler = &registerEffectHandler;

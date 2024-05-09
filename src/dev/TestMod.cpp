@@ -7,6 +7,7 @@
 SpellforceSpellFramework *sfsf;
 SpellFunctions *spellAPI;
 ToolboxFunctions *toolboxAPI;
+FigureFunctions *figureAPI;
 
 // Spell index is the ID for the TYPE of spell being cast
 // Spell Job is the ID for the LOGIC (effect) handler that the spell uses when being cast.
@@ -15,9 +16,9 @@ void __thiscall icestrike_handler(SF_CGdSpell * _this, uint16_t spell_index) {
 	_this->active_spell_list[spell_index].spell_job = 0xa7;
 
   
-	spellAPI->initializeSpellData(_this, spell_index, SPELL_TICK_COUNT_AUX);
+	//spellAPI->initializeSpellData(_this, spell_index, SPELL_TICK_COUNT_AUX);
 	spellAPI->initializeSpellData(_this, spell_index, SPELL_TICK_COUNT);
-	spellAPI->initializeSpellData(_this, spell_index, SPELL_DOUBLE_DAMAGE);
+	//spellAPI->initializeSpellData(_this, spell_index, SPELL_DOUBLE_DAMAGE);
 
   sfsf->logInfo("Spell Handled");
 }
@@ -54,6 +55,13 @@ void __thiscall custom_effect(SF_CGdSpell * _this, uint16_t spell_index) {
   sprintf(ranInfo, "Random:  %d\n", random_roll);
   sfsf->logInfo(ranInfo);
 
+  sfsf->logInfo("Get isAlive Target");
+  uint16_t isAlive = figureAPI->isAlive(_this->SF_CGdFigure, target_index);
+
+  char aliveInfo[256];
+  sprintf(aliveInfo, "isAlive:  %d\n", isAlive);
+  sfsf->logInfo(aliveInfo);
+
   if(resist_chance < random_roll) {
     sfsf->logInfo("Deal Damage");
     toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index, target_index, damage, 1, 0, 0);
@@ -67,6 +75,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework* frame
 	  sfsf = framework;
     spellAPI = sfsf->apiSpellFunctions;
     toolboxAPI = sfsf->apiToolboxFunctions;
+    figureAPI = sfsf->apiFigureFunctions;
 
     sfsf->registerSpellTypeHandler(0xe, &icestrike_handler);
     sfsf->registerSpellTypeHandler(0xeb, &icestrike_handler);

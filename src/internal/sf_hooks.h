@@ -12,6 +12,8 @@ extern xDataListAddTo_ptr addToXDataList;
 extern dealDamage_ptr dealDamage;
 extern resistSpell_ptr getChanceToResistSpell;
 extern getRandom_ptr getRandom;
+extern isAlive_ptr isAlive;
+extern setWalkSpeed_ptr setWalkSpeed;
 
 extern void ConsoleLog(char*);
 

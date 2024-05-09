@@ -50,18 +50,109 @@ typedef struct __attribute__((packed))
 	uint8_t flags;
 } SF_GdSpell;
 
+typedef struct __attribute__((packed))
+{
+	uint16_t base_val;
+	uint16_t bonus_val;
+	uint8_t bonus_multiplier;
+	uint8_t statistic_type; // NOT CONFIRMED
+} FigureStatistic;
 
-/*
-  this->current_step = 0; 4 bytes
-  this->field_0x10 = 0;	1 byte
-  this->field14_0x14 = 0; 4 bytes
-  this->field0_0x0 = 0xab2d; 2 bytes
-  this->field1_0x2 = 0xaf15; 2 bytes
-  this->field2_0x4 = 0xb2fd; 2 bytes
-  this->field15_0x18 = 0xff; 1 byte
-  this->field16_0x19 = 0xff; 1 byte
-*/
+typedef struct __attribute__((packed))
+{
+	uint16_t base_val;
+	uint16_t bonus_val;
+	uint8_t bonus_multiplier;
+	uint8_t statistic_type; // NOT CONFIRMED?
+	uint16_t missing_val; // No idea what this is
+} FigureStatisticExt;
 
+typedef struct __attribute__((packed)){
+	uint32_t unknown1;
+	uint32_t unknown2;
+	uint32_t unknown3;
+	uint16_t unknown4;
+} CGdFigureWeaponStats;
+
+typedef struct __attribute__((packed)){
+	uint16_t figure_index;
+	uint16_t agro_value;
+	uint16_t hate_value;
+} CGdFigureHateEntry;
+
+typedef struct __attribute__((packed))
+{
+	uint16_t to_do_count_remainder;
+	uint16_t anim_length;
+	uint16_t anim_length_remainder;
+	uint8_t activity;
+	uint8_t unknown1;
+	uint16_t building;
+	uint32_t flags; //Actual Type CdFigureFlags
+	uint8_t race;
+	uint8_t level;
+	uint16_t owner;
+	uint8_t min_attack_range;
+	uint8_t max_attack_range;
+	uint16_t master_figure;
+	uint16_t group_leader;
+	uint32_t npc_id;
+	uint16_t unit_data_id;
+	FigureStatistic armor;
+	FigureStatistic agility;
+	FigureStatistic charisma;
+	FigureStatistic dexterity;
+	FigureStatisticExt health;
+	FigureStatistic intelligence;
+	FigureStatisticExt mana_stuff;
+	FigureStatisticExt stamina;
+	FigureStatistic strength;
+	FigureStatistic wisdom;
+	FigureStatistic resistance_fire;
+	FigureStatistic resistance_ice;
+	FigureStatistic resistance_mental;
+	FigureStatistic resistance_black;
+	FigureStatistic walk_speed;
+	FigureStatistic flight_speed;
+	FigureStatistic cast_speed;
+	uint8_t equipment[20]; // No idea how this works, may need a class (undefined2[16] in ghidra, but is of length 20 bytes FigureStatistic is 6 bytes)
+	uint16_t head; //Not sure what this is either 
+	uint32_t unknown2[3]; // three 4 byte data points in a row, no name known for these.
+	uint8_t unknown3[167]; // Many 1 byte sections in a row 
+	uint32_t unknown4[7]; // Many 4 byte sections in a row
+	uint16_t unknown5;
+	uint8_t	unknown6[2];
+	CGdFigureWeaponStats weapon_stats;
+	uint8_t unknown7[12];
+	uint8_t good; // I assume perhaps alignment?
+	uint8_t direction;
+	uint8_t unknown8;
+	uint8_t path_dir;
+	uint8_t path_wish_dir;
+	uint32_t path_bits;
+	uint8_t unknown9;
+	uint32_t unknown10[3];
+	uint16_t unknown11;
+	CGdFigureHateEntry hate_entry;
+	uint8_t debug_flags;
+	uint8_t unknown12;
+	uint16_t formation;
+	uint8_t faction;
+	uint8_t unknown13;
+	uint32_t clan_relations;
+	uint8_t unknown14[120]; // Skipping some variable sections, contains differences Also Check what AutoClass24 is, it's used multiple times in this section
+	uint8_t dwarf_rank;
+	uint8_t set_type;
+} GdFigure;
+
+typedef struct __attribute__((packed))
+{
+	uint16_t max_used;
+	GdFigure figures[2000];
+} SF_CGdFigure;
+
+// This class is required for the RANDOM function, AutoClass14 also seems to hold some relevance to the game world as well
+// This class is initialized in the GameInit function as well.
 typedef struct __attribute__((packed))
 {
 	uint16_t unknown_field_0;
@@ -85,7 +176,7 @@ typedef struct __attribute__((packed))
 	void *SF_CGdDoubleLinkedList;
 	void *SF_CGdEffect;
 	void *unkn1;
-	void *SF_CGdFigure;
+	SF_CGdFigure *SF_CGdFigure;
 	void *SF_CGdFigureJobs;
 	void *SF_CGdFigureToolBox;
 	void *SF_CGdFormation;
@@ -162,3 +253,12 @@ typedef struct
 {
 	dealDamage_ptr dealDamage;
 } ToolboxFunctions;
+
+typedef bool (__thiscall *isAlive_ptr)(SF_CGdFigure* figure, uint16_t target);
+typedef bool (__thiscall *setWalkSpeed_ptr)(SF_CGdFigure* figure, uint16_t target, uint16_t value);
+
+typedef struct
+{
+	isAlive_ptr isAlive;
+	setWalkSpeed_ptr setWalkSpeed;
+} FigureFunctions;

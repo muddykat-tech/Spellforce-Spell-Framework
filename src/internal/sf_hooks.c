@@ -15,6 +15,8 @@ xDataListAddTo_ptr addToXDataList;
 dealDamage_ptr dealDamage;
 resistSpell_ptr getChanceToResistSpell;
 
+isAlive_ptr isAlive;
+setWalkSpeed_ptr setWalkSpeed;
 getRandom_ptr getRandom;
 
 
@@ -141,6 +143,9 @@ void initDataHooks(){
 	
 	getChanceToResistSpell = (resistSpell_ptr) (ASI::AddrOf(0x317BA0));
 	getRandom = (getRandom_ptr) (ASI::AddrOf(0x2AD200));
+
+	isAlive = (isAlive_ptr) (ASI::AddrOf(0x1BE4D0));
+	setWalkSpeed = (setWalkSpeed_ptr) (ASI::AddrOf(0x2B7190));
 }
 
 void initSpellTypeHook(){
