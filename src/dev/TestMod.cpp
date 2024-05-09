@@ -9,27 +9,23 @@ SpellFunctions *spellAPI;
 ToolboxFunctions *toolboxAPI;
 FigureFunctions *figureAPI;
 
+// This custom spell type and custom spell effect need to be setup manually in the GameData.cff file currently
+
 // Spell index is the ID for the TYPE of spell being cast
 // Spell Job is the ID for the LOGIC (effect) handler that the spell uses when being cast.
+void __thiscall custom_spelltype_handler(SF_CGdSpell * _this, uint16_t spell_index) {
+	_this->active_spell_list[spell_index].spell_job = 0xddc;
 
-void __thiscall icestrike_handler(SF_CGdSpell * _this, uint16_t spell_index) {
-	_this->active_spell_list[spell_index].spell_job = 0xa7;
-
-  
-	//spellAPI->initializeSpellData(_this, spell_index, SPELL_TICK_COUNT_AUX);
 	spellAPI->initializeSpellData(_this, spell_index, SPELL_TICK_COUNT);
-	//spellAPI->initializeSpellData(_this, spell_index, SPELL_DOUBLE_DAMAGE);
 
   sfsf->logInfo("Spell Handled");
 }
 
-void __thiscall custom_effect(SF_CGdSpell * _this, uint16_t spell_index) {
+void __thiscall custom_spelleffect_handler(SF_CGdSpell * _this, uint16_t spell_index) {
   sfsf->logInfo("Custom Effect Handled");
   spellAPI->addToXDataList(_this->SF_CGdXDataList, spell_index, SPELL_TICK_COUNT, 1);
-  // Working Resistance and Random!
 
-  uint32_t damage = 2;
-  
+  uint32_t damage = 20;
   sfsf->logInfo("Grab Spell from list");
   SF_GdSpell *spell = &_this->active_spell_list[spell_index];
   
@@ -62,6 +58,9 @@ void __thiscall custom_effect(SF_CGdSpell * _this, uint16_t spell_index) {
   sprintf(aliveInfo, "isAlive:  %d\n", isAlive);
   sfsf->logInfo(aliveInfo);
 
+  sfsf->logInfo("Change Walk Speed to 100");
+  figureAPI->setWalkSpeed(_this->SF_CGdFigure, source_index, 100);
+
   if(resist_chance < random_roll) {
     sfsf->logInfo("Deal Damage");
     toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index, target_index, damage, 1, 0, 0);
@@ -77,9 +76,9 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework* frame
     toolboxAPI = sfsf->apiToolboxFunctions;
     figureAPI = sfsf->apiFigureFunctions;
 
-    sfsf->registerSpellTypeHandler(0xe, &icestrike_handler);
-    sfsf->registerSpellTypeHandler(0xeb, &icestrike_handler);
-    sfsf->registerEffectHandler(0xa7, &custom_effect);
+    // This will OVERWRITE existing entries, so you can fix or modify vanilla spelltypes and effects
+    sfsf->registerSpellTypeHandler(0xf2, &custom_spelltype_handler);
+    sfsf->registerEffectHandler(0xddc, &custom_spelleffect_handler);
 }
 
 
