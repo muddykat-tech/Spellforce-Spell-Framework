@@ -4,6 +4,7 @@
 #include "sf_spelltype_registry.h"
 #include "sf_spelleffect_registry.h"
 #include "sf_utility.h"
+#include "../api/sf_data_utilities.h"
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -17,8 +18,9 @@ resistSpell_ptr getChanceToResistSpell;
 
 isAlive_ptr isAlive;
 setWalkSpeed_ptr setWalkSpeed;
+addAction_ptr addAction;
 getRandom_ptr getRandom;
-
+addBonusMult_ptr addBonusMult;
 
 ConsolePrint_ptr ConsolePrint;
 get_spell_spell_line_ptr get_spell_spell_line;
@@ -120,7 +122,68 @@ uint16_t __thiscall addSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_id, ui
 		}
 	}
 	return spell_index;
+}
 
+void __thiscall addBonusMultToStatistic(SF_CGdFigure* figure, StatisticDataKey key, uint16_t target, uint8_t value){
+	bool invalid = FALSE;
+	FigureStatistic statistic;
+	switch (key) {
+    case ARMOR:
+        statistic = figure->figures[target].armor;
+        break;
+    case AGILITY:
+        statistic = figure->figures[target].agility;
+        break;
+    case CHARISMA:
+        statistic = figure->figures[target].charisma;
+        break;
+    case DEXTERITY:
+        statistic = figure->figures[target].dexterity;
+        break;
+    case INTELLIGENCE:
+        statistic = figure->figures[target].intelligence;
+        break;
+    case STRENGHT:
+        statistic = figure->figures[target].strength;
+        break;
+    case WISDOM:
+        statistic = figure->figures[target].wisdom;
+        break;
+    case RESISTANCE_FIRE:
+        statistic = figure->figures[target].resistance_fire;
+        break;
+    case RESISTANCE_ICE:
+        statistic = figure->figures[target].resistance_ice;
+        break;
+    case RESISTANCE_MENTAL:
+        statistic = figure->figures[target].resistance_mental;
+        break;
+    case RESISTANCE_BLACK:
+        statistic = figure->figures[target].resistance_black;
+        break;
+    case WALK_SPEED:
+        statistic = figure->figures[target].walk_speed;
+        break;
+    case FLIGHT_SPEED:
+        statistic = figure->figures[target].flight_speed;
+        break;
+    case CAST_SPEED:
+        statistic = figure->figures[target].cast_speed;
+        break;
+    default:
+        // Handle default case if needed
+		invalid = TRUE;
+        break;
+	}
+
+	if(invalid) 
+	{
+		logWarning("INVALID STATISTIC KEY");
+		return;
+	}
+
+	addBonusMult(statistic, value);
+	return;
 }
 
 void initConsoleHook(){
@@ -132,20 +195,35 @@ void initConsoleHook(){
 	SF_String_dtor =(SF_String_dtor_ptr) ASI::AddrOf(0x3839c0);
 }
 
+void initSpellAPIHooks(){
+	setXData = (setXData_ptr) ASI::AddrOf(0x329C40);
+	setEffectDone = (setEffectDoneFunc) (ASI::AddrOf(0x32A730));
+}
+
+void initToolboxAPIHooks(){
+    dealDamage = (dealDamage_ptr) (ASI::AddrOf(0x2f4a57));
+}
+
+void initFigureAPIHooks(){
+	
+	isAlive = (isAlive_ptr) (ASI::AddrOf(0x1BE4D0));
+	setWalkSpeed = (setWalkSpeed_ptr) (ASI::AddrOf(0x2B7190));
+	addAction = (addAction_ptr) (ASI::AddrOf(0x2AE0B0));
+	addBonusMult = (addBonusMult_ptr) (ASI::AddrOf(0x35A3E0));
+}
+
+
 void initDataHooks(){
 	get_spell_spell_line = (get_spell_spell_line_ptr) (ASI::AddrOf(0x26E100));
 	figure_toolbox_get_unkn = (figure_toolbox_get_unkn_ptr) (ASI::AddrOf(0x2FE704));
 	figure_toolbox_add_spell = (figure_toolbox_add_spell_ptr) (ASI::AddrOf(0x2F673A));
-	setXData = (setXData_ptr) ASI::AddrOf(0x329C40);
-	setEffectDone = (setEffectDoneFunc) (ASI::AddrOf(0x32A730));
     addToXDataList = (xDataListAddTo_ptr) (ASI::AddrOf(0x354350));
-    dealDamage = (dealDamage_ptr) (ASI::AddrOf(0x2f4a57));
-	
 	getChanceToResistSpell = (resistSpell_ptr) (ASI::AddrOf(0x317BA0));
 	getRandom = (getRandom_ptr) (ASI::AddrOf(0x2AD200));
 
-	isAlive = (isAlive_ptr) (ASI::AddrOf(0x1BE4D0));
-	setWalkSpeed = (setWalkSpeed_ptr) (ASI::AddrOf(0x2B7190));
+	initSpellAPIHooks();
+	initToolboxAPIHooks();	
+	initFigureAPIHooks();
 }
 
 void initSpellTypeHook(){

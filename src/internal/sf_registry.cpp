@@ -31,6 +31,9 @@ void registerFrameworkAPI(){
     
     apiFigureFunctions.isAlive = isAlive;
     apiFigureFunctions.setWalkSpeed = setWalkSpeed;
+    apiFigureFunctions.addAction = addAction;
+    apiFigureFunctions.addBonusMult = addBonusMult;
+    apiFigureFunctions.addBonusMultToStatistic = addBonusMultToStatistic;
     
 
     apiToolboxFunctions.dealDamage = dealDamage;
@@ -60,6 +63,4 @@ void initFramework() {
 
     // Attempt to load all mods -> see sf_modloader.h
     initMods();
-
-    
 }
