@@ -1,4 +1,6 @@
 # Spellforce Spell Framework
+![Maintenance](https://img.shields.io/maintenance/yes/2024)
+ ![GitHub License](https://img.shields.io/github/license/muddykat-tech/Spellforce-Spell-Framework) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa.svg)](code_of_conduct.md) ![GitHub commits since tagged version](https://img.shields.io/github/commits-since/muddykat-tech/Spellforce-Spell-Framework/v3.0.0-alpha)
 
 ## Overview
 The Spellforce Spell Framework (SFSF) is a project designed to assist developers in creating new spell types and spell logic for the game Spellforce 1. This framework is tailored for the beta version of Spellforce 1 Platinum edition, available exclusively on Steam.
