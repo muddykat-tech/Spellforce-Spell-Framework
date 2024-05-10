@@ -17,6 +17,7 @@ If you're interested in creating mods using the Spellforce Spell Framework, you 
 1. Obtain the necessary API files from a release version available on the [repository](https://github.com/muddykat-tech/Spellforce-Spell-Framework/tree/master/src/api).
 2. You can find an example of how to build a mod [here](https://github.com/muddykat-tech/Spellforce-Spell-Framework/tree/master/src/dev)
 3. For assistance with compilation, you can examine the makefile target "mods" on the repo.
+4. To debug your mod, you can use x64dbg (x32dbg version) and attach it to spellforce, once you do this, restart the debugger using the refreash symbol to ensure you capture all logs. (We use this process to debug our framework!)
 
 ## Contributing
 Contributions to the Spellforce Spell Framework are welcome! Whether it's through bug fixes, feature enhancements, or documentation improvements, your contributions help make this project better. Refer to the [contribution guidelines](https://github.com/muddykat-tech/Spellforce-Spell-Framework/blob/master/CONTRIBUTING.md) for more details.
