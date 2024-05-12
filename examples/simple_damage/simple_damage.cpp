@@ -16,21 +16,72 @@ void __thiscall simple_damage_handler(SF_CGdSpell * _this, uint16_t spell_index)
 
 }
 
-void __thiscall custom_spelleffect_handler(SF_CGdSpell * _this, uint16_t spell_index) 
+typedef struct
+{
+    uint32_t partA;
+    uint32_t partB;
+} effect_aux_data;
+
+void __thiscall simple_damage_effect_handler(SF_CGdSpell * _this, uint16_t spell_index)
 {
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
     uint16_t target_index = spell->target.entity_index;
     uint16_t source_index = spell->source.entity_index;
-    SF_SpellEffectInfo effect_info;
-    SF_CGdResourceSpell spell_data;
-    effect_info.spell_id = spell->spell_id;
-    effect_info.job_id = spell->spell_job;
-    //calculate properly, what are we feeding there?
-    spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data,effect_info.spell_id);
+    /***
+     * If entity_type is 1 (unit) and index is not 0
+     * and owner is not 0 (unit is not reserved one)
+     * and unit is alive (probaly?)
+     * and is not special type unit..?
+    */
+    if ((spell->target.entity_type == 1) && (target_index != 0))
+        if ((_this->SF_CGdFigure->figures[target_index].owner != -1) && 
+            (*(uint8_t *)_this->SF_CGdFigure->figures[target_index].flags & 0xa == 0) &&
+            toolboxAPI->isTargetable(_this->SF_CGdFigureToolBox, target_index))
+    {
+        SF_SpellEffectInfo effect_info;
+        SF_CGdResourceSpell spell_data;
+        effect_info.spell_id = spell->spell_id;
+        effect_info.job_id = spell->spell_job;
+        spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data,effect_info.spell_id);
 
-    uint16_t random_roll = spellAPI->getRandom(_this->OpaqueClass, 100);
-    uint32_t resist_chance = spellAPI->getChanceToResistSpell(_this->unkn2, source_index, target_index, effect_info);
-
+        uint16_t random_roll = spellAPI->getRandom(_this->OpaqueClass, 100);
+        uint32_t resist_chance = spellAPI->getChanceToResistSpell(_this->unkn2, source_index, target_index, effect_info);
+        if ((uint32_t) resist_chance < random_roll)
+        {
+            uint32_t unused; 
+            
+            //IDK, if this right, though
+            SF_CGdTargetData relative_data;
+            relative_data.position.X = 0;
+            relative_data.position.Y = 0;
+            relative_data.entity_type = 1;
+            relative_data.entity_index = target_index;
+            //IDK what that structure 
+            effect_aux_data aux_data;
+            aux_data.partA = 0;
+            aux_data.partB = 0;
+            spellAPI->addVisualEffect(_this, spell_index, 3, &unused, &relative_data, _this->OpaqueClass->current_step, 0x19, &aux_data);
+            if (figureAPI->isAlive(_this->SF_CGdFigure, target_index))
+            {
+                toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index, target_index, spell_data.params[0], 1, 0, 0);
+            }
+        }
+        else
+        {
+            spellAPI->figureAggro(_this, spell_index, target_index);
+            uint32_t unused; 
+            SF_CGdTargetData relative_data;
+            relative_data.position.X = 0;
+            relative_data.position.Y = 0;
+            relative_data.entity_type = 1;
+            relative_data.entity_index = target_index;
+            //IDK what that structure 
+            effect_aux_data aux_data;
+            aux_data.partA = 0;
+            aux_data.partB = 0;
+            spellAPI->addVisualEffect(_this, spell_index, 0xb, &unused, &relative_data, _this->OpaqueClass->current_step, 10, &aux_data);
+        }
+    }
     spellAPI->setEffectDone(_this, spell_index, 0);
 }
 
@@ -50,7 +101,8 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework* frame
     sfsf->registerSpellTypeHandler(242, &simple_damage_handler);
 
 
-    //Here comes the spell logic (effect) registration
+    //Here comes the spell logic (effect) registration; f2 = 242
+    sfsf->registerEffectHandler(0xf2, &simple_damage_effect_handler);
 
 }
 

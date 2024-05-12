@@ -229,7 +229,7 @@ typedef void (__thiscall *ConsolePrint_ptr)(uint32_t, SF_String*);
 typedef uint16_t (__thiscall *get_spell_spell_line_ptr) (void *, uint16_t);
 typedef uint32_t (__thiscall *figure_toolbox_get_unkn_ptr)(void *, uint16_t);
 typedef void (__thiscall *figure_toolbox_add_spell_ptr)(void *, uint16_t, uint16_t);
-
+typedef bool (__thiscall *figure_toolbox_is_targetable_ptr)(void *CGdFigureToolbox, uint16_t figure_index);
 typedef struct 
 {
 	uint16_t spell_id;
@@ -257,7 +257,11 @@ typedef uint32_t (__thiscall *resistSpell_ptr)(void* unkn2_CGdSpell, uint16_t so
 typedef uint16_t (__thiscall *getRandom_ptr)(void *_this, uint16_t range);
 typedef SF_CGdResourceSpell* (__thiscall *getResourceSpellData_ptr) (void *, SF_CGdResourceSpell* spellData, uint16_t index);
 
+//Need more annotations
+typedef void (__thiscall *addVisualEffect_ptr) (SF_CGdSpell *_this, uint16_t spell_index, uint16_t effect_id, void * unused, SF_CGdTargetData *target,
+	uint32_t tick_start, uint16_t tick_count, void* param7);
 
+typedef void (__thiscall *figureAggro_ptr)(SF_CGdSpell *_this, uint16_t spell_index, uint16_t target_index);
 typedef struct
 {
 	setXData_ptr setXData;
@@ -270,6 +274,8 @@ typedef struct
 	getRandom_ptr getRandom;
 	//TO DO: move it, once we have proper CGdResource class
 	getResourceSpellData_ptr getResourceSpellData;
+	addVisualEffect_ptr addVisualEffect;
+	figureAggro_ptr figureAggro;
 } SpellFunctions;
 
 typedef void (__thiscall *dealDamage_ptr)(void* toolbox, uint16_t source, uint16_t target, uint32_t damage, uint32_t is_spell_damage, uint32_t param5, uint32_t param6);
@@ -277,6 +283,7 @@ typedef void (__thiscall *dealDamage_ptr)(void* toolbox, uint16_t source, uint16
 typedef struct
 {
 	dealDamage_ptr dealDamage;
+	figure_toolbox_is_targetable_ptr isTargetable;
 } ToolboxFunctions;
 
 typedef bool (__thiscall *isAlive_ptr)(SF_CGdFigure* figure, uint16_t target);

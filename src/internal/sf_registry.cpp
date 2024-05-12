@@ -29,14 +29,16 @@ void registerFrameworkAPI(){
     apiSpellFunctions.getRandom = getRandom;
     apiSpellFunctions.initializeSpellData = &initializeSpellData;
     apiSpellFunctions.getResourceSpellData = getResourceSpellData;
+    apiSpellFunctions.figureAggro = figureAggro;
     
     apiFigureFunctions.isAlive = isAlive;
     apiFigureFunctions.setWalkSpeed = setWalkSpeed;
     apiFigureFunctions.addAction = addAction;
     apiFigureFunctions.addBonusMult = addBonusMult;
     apiFigureFunctions.addBonusMultToStatistic = addBonusMultToStatistic;
-    
 
+
+    apiToolboxFunctions.isTargetable = figure_toolbox_is_targetable;
     apiToolboxFunctions.dealDamage = dealDamage;
 
 	frameworkAPI.apiSpellFunctions = &apiSpellFunctions;

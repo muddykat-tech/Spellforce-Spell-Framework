@@ -15,7 +15,8 @@ setEffectDoneFunc setEffectDone;
 xDataListAddTo_ptr addToXDataList;
 dealDamage_ptr dealDamage;
 resistSpell_ptr getChanceToResistSpell;
-
+addVisualEffect_ptr addVisualEffect;
+figureAggro_ptr figureAggro;
 isAlive_ptr isAlive;
 setWalkSpeed_ptr setWalkSpeed;
 addAction_ptr addAction;
@@ -28,6 +29,7 @@ ConsolePrint_ptr ConsolePrint;
 get_spell_spell_line_ptr get_spell_spell_line;
 figure_toolbox_get_unkn_ptr figure_toolbox_get_unkn;
 figure_toolbox_add_spell_ptr figure_toolbox_add_spell;
+figure_toolbox_is_targetable_ptr figure_toolbox_is_targetable;
 uint32_t CMnuScrConsole_ptr = 0;
 SF_String_ctor_ptr SF_String_ctor;
 SF_String_dtor_ptr SF_String_dtor;
@@ -200,6 +202,8 @@ void initConsoleHook(){
 void initSpellAPIHooks(){
 	setXData = (setXData_ptr) ASI::AddrOf(0x329C40);
 	setEffectDone = (setEffectDoneFunc) (ASI::AddrOf(0x32A730));
+	addVisualEffect = (addVisualEffect_ptr) (ASI::AddrOf(0x329B30));
+	figureAggro = (figureAggro_ptr) (ASI::AddrOf(0x329c90));
 }
 
 void initToolboxAPIHooks(){
@@ -219,6 +223,7 @@ void initDataHooks(){
 	get_spell_spell_line = (get_spell_spell_line_ptr) (ASI::AddrOf(0x26E100));
 	figure_toolbox_get_unkn = (figure_toolbox_get_unkn_ptr) (ASI::AddrOf(0x2FE704));
 	figure_toolbox_add_spell = (figure_toolbox_add_spell_ptr) (ASI::AddrOf(0x2F673A));
+	figure_toolbox_is_targetable = (figure_toolbox_is_targetable_ptr) (ASI::AddrOf(0x2fe704));
     addToXDataList = (xDataListAddTo_ptr) (ASI::AddrOf(0x354350));
 	getChanceToResistSpell = (resistSpell_ptr) (ASI::AddrOf(0x317BA0));
 	getRandom = (getRandom_ptr) (ASI::AddrOf(0x2AD200));
