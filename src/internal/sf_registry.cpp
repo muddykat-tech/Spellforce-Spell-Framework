@@ -28,6 +28,7 @@ void registerFrameworkAPI(){
     apiSpellFunctions.getChanceToResistSpell = getChanceToResistSpell;
     apiSpellFunctions.getRandom = getRandom;
     apiSpellFunctions.initializeSpellData = &initializeSpellData;
+    apiSpellFunctions.getResourceSpellData = getResourceSpellData;
     
     apiFigureFunctions.isAlive = isAlive;
     apiFigureFunctions.setWalkSpeed = setWalkSpeed;

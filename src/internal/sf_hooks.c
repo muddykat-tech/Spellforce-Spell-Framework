@@ -21,6 +21,8 @@ setWalkSpeed_ptr setWalkSpeed;
 addAction_ptr addAction;
 getRandom_ptr getRandom;
 addBonusMult_ptr addBonusMult;
+getResourceSpellData_ptr getResourceSpellData;
+
 
 ConsolePrint_ptr ConsolePrint;
 get_spell_spell_line_ptr get_spell_spell_line;
@@ -220,6 +222,7 @@ void initDataHooks(){
     addToXDataList = (xDataListAddTo_ptr) (ASI::AddrOf(0x354350));
 	getChanceToResistSpell = (resistSpell_ptr) (ASI::AddrOf(0x317BA0));
 	getRandom = (getRandom_ptr) (ASI::AddrOf(0x2AD200));
+	getResourceSpellData = (getResourceSpellData_ptr)(ASI::AddrOf(0x26dc40));
 
 	initSpellAPIHooks();
 	initToolboxAPIHooks();	

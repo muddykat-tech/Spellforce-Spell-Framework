@@ -255,8 +255,7 @@ typedef uint32_t (__thiscall *xDataListAddTo_ptr)(void* list, uint16_t param_1, 
 
 typedef uint32_t (__thiscall *resistSpell_ptr)(void* unkn2_CGdSpell, uint16_t source, uint16_t target, SF_SpellEffectInfo effect_info);
 typedef uint16_t (__thiscall *getRandom_ptr)(void *_this, uint16_t range);
-typedef SF_CGdResourceSpell* (__thiscall *getResourceSpellData_ptr) (void *, SF_CGdResourceSpell* spellData, uint16_t index);
-
+typedef SF_CGdResourceSpell* (__thiscall *getResourceSpellData_ptr) (void * SF_CGdResource, SF_CGdResourceSpell* spellData, uint16_t index);
 
 typedef struct
 {
