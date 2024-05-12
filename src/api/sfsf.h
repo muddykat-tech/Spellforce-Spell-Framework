@@ -3,7 +3,6 @@
 #pragma once
 
 #include "sf_data_utilities.h"
-#include "../asi/sf_asi.h"
 #include <stdint.h>
 
 typedef void (*InitModuleFunc)(void*);

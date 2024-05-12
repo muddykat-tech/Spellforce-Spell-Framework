@@ -3,11 +3,13 @@
 
 #include "../api/sfsf.h"
 #include "../api/sf_data_utilities.h"
+#include "../asi/sf_asi.h"
 
 extern void initBetaHooks();
 extern void initDataHooks();
 extern setXData_ptr setXData;
 extern setEffectDoneFunc setEffectDone;
+extern getResourceSpellData_ptr getResourceSpellData;
 extern xDataListAddTo_ptr addToXDataList;
 extern dealDamage_ptr dealDamage;
 extern resistSpell_ptr getChanceToResistSpell;
