@@ -30,20 +30,15 @@ void __thiscall simple_damage_effect_handler(SF_CGdSpell * _this, uint16_t spell
     uint16_t source_index = spell->source.entity_index;
     /***
      * If entity_type is 1 (unit) and index is not 0
-     * and owner is not 0 (unit is not reserved one)
-     * and unit is alive (probaly?)
+     * and owner is not -1 (unit is not reserved one)
+     * and unit is not dead (probaly?)
      * and is not special type unit..?
     */
 
-    char aliveInfo[256];
-    //TODO
-    // fix figure structure, we get WRONG FLAGS and OWNER
-    sprintf(aliveInfo, "Flags list: Target %hd entity type %x owner %hd flags %x is targetable %x\n",target_index, spell->target.entity_type, _this->SF_CGdFigure->figures[target_index].owner,
-        _this->SF_CGdFigure->figures[target_index].flags, toolboxAPI->isTargetable(_this->SF_CGdFigureToolBox, target_index));
-    sfsf->logInfo(aliveInfo);
-
     if ((spell->target.entity_type == 1) && (target_index != 0))
-        if (toolboxAPI->isTargetable(_this->SF_CGdFigureToolBox, target_index))
+        if (((int16_t)(_this->SF_CGdFigure->figures[target_index].owner) != -1) &&
+          (((uint8_t)(_this->SF_CGdFigure->figures[target_index].flags) & 0xa) == 0) &&
+          (toolboxAPI->isTargetable(_this->SF_CGdFigureToolBox, target_index)))
     {
         SF_SpellEffectInfo effect_info;
         SF_CGdResourceSpell spell_data;

@@ -30,7 +30,8 @@ void registerFrameworkAPI(){
     apiSpellFunctions.initializeSpellData = &initializeSpellData;
     apiSpellFunctions.getResourceSpellData = getResourceSpellData;
     apiSpellFunctions.figureAggro = figureAggro;
-    
+    apiSpellFunctions.addVisualEffect = addVisualEffect;
+
     apiFigureFunctions.isAlive = isAlive;
     apiFigureFunctions.setWalkSpeed = setWalkSpeed;
     apiFigureFunctions.addAction = addAction;
