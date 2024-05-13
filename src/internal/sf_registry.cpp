@@ -35,7 +35,6 @@ void registerFrameworkAPI(){
     apiFigureFunctions.addBonusMult = addBonusMult;
     apiFigureFunctions.addBonusMultToStatistic = addBonusMultToStatistic;
     
-
     apiToolboxFunctions.dealDamage = dealDamage;
 
 	frameworkAPI.apiSpellFunctions = &apiSpellFunctions;

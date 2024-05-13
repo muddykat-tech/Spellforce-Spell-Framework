@@ -102,8 +102,9 @@ typedef struct __attribute__((packed)){
 
 typedef struct __attribute__((packed))
 {
-	uint32_t position;
-	uint32_t unknown_coord_2;
+	SF_Coord position;
+	SF_Coord unknown_coord_2;
+	uint16_t to_do_count;
 	uint16_t to_do_count_remainder;
 	uint16_t anim_length;
 	uint16_t anim_length_remainder;
