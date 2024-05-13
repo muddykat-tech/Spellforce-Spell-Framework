@@ -9,9 +9,10 @@
 void logWarning(const char *message) {
     // This will be used to hook into the game console later on
     // May also have warnings on a flag
-    char *str = strdup(message);
-    OutputDebugStringA(str);
-    ConsoleLog(str);
+    static char modifiedMessage[256]; // Assuming maximum message length
+    snprintf(modifiedMessage, sizeof(modifiedMessage), "[WARNING] %s", message);
+    OutputDebugStringA(modifiedMessage);
+    ConsoleLog(modifiedMessage);
 }
 
 void logInfo(const char *message) {
@@ -23,10 +24,9 @@ void logInfo(const char *message) {
 }
 
 void logError(const char* message) {
-    char *str = strdup(message);
-    int debugstr = GetLastError();
-    sprintf(str, " Last Error: %d\n", debugstr);
-
-    OutputDebugStringA(str);
-    ConsoleLog(str);
+    int lastError = GetLastError();
+    static char modifiedMessage[256]; // Assuming maximum message length
+    snprintf(modifiedMessage, sizeof(modifiedMessage), "[ERROR] %s [Last Error: %d]", message, lastError);
+    OutputDebugStringA(modifiedMessage);
+    ConsoleLog(modifiedMessage);
 }
