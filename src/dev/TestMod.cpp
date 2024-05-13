@@ -14,7 +14,7 @@ FigureFunctions *figureAPI;
 // Spell index is the ID for the TYPE of spell being cast
 // Spell Job is the ID for the LOGIC (effect) handler that the spell uses when being cast.
 void __thiscall custom_spelltype_handler(SF_CGdSpell * _this, uint16_t spell_index) {
-  //Effect ID (links to custom_spelleffect_handler) in the Data Editor so 0xddc is 3548 in editor
+  //Effect ID is the spell_job (links to custom_spelleffect_handler)
 	_this->active_spell_list[spell_index].spell_job = 0xf2; 
 
   // Required for the spell to be initialized as active
@@ -61,10 +61,10 @@ void __thiscall custom_spelleffect_handler(SF_CGdSpell * _this, uint16_t spell_i
   sprintf(aliveInfo, "isAlive:  %d\n", isAlive);
   sfsf->logInfo(aliveInfo);
 
-  sfsf->logInfo("Change Walk Speed of Caster to 100");
-  figureAPI->setWalkSpeed(_this->SF_CGdFigure, source_index, 100);
+  sfsf->logInfo("Change Walk Speed of Caster to 200");
+  figureAPI->setWalkSpeed(_this->SF_CGdFigure, source_index, 200);
 
-  sfsf->logInfo("Addded to the Wisdom Bonus Mult by 2"); // Unconfirmed if working as in tended, does NOT cause a crash though...
+  sfsf->logInfo("Added to the Wisdom Bonus Mult by 2"); // Unconfirmed if working as in tended, does NOT cause a crash though...
   figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, WISDOM, source_index, 2);
 
 
@@ -84,7 +84,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework* frame
     figureAPI = sfsf->apiFigureFunctions;
 
     // This will OVERWRITE existing entries, so you can fix or modify vanilla spelltypes and effects
-    // 0xe and 0xeb are the IceStrike / IceBurst Spell
+    // 0xe and 0xeb are the Icestrike or Iceburst Spell
     sfsf->registerSpellTypeHandler(0xe, &custom_spelltype_handler);
     sfsf->registerSpellTypeHandler(0xeb, &custom_spelltype_handler);
     sfsf->registerEffectHandler(0xf2, &custom_spelleffect_handler);

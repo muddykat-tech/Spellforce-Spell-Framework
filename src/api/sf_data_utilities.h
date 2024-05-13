@@ -102,6 +102,8 @@ typedef struct __attribute__((packed)){
 
 typedef struct __attribute__((packed))
 {
+	uint32_t position;
+	uint32_t unknown_coord_2;
 	uint16_t to_do_count_remainder;
 	uint16_t anim_length;
 	uint16_t anim_length_remainder;
@@ -160,7 +162,7 @@ typedef struct __attribute__((packed))
 	uint8_t faction;
 	uint8_t unknown13;
 	uint32_t clan_relations;
-	uint8_t unknown14[120]; // Skipping some variable sections, contains differences Also Check what AutoClass24 is, it's used multiple times in this section
+	uint8_t unknown14[170]; // Skipping some variable sections, contains differences Also Check what AutoClass24 is, it's used multiple times in this section
 	uint8_t dwarf_rank;
 	uint8_t set_type;
 } GdFigure;
