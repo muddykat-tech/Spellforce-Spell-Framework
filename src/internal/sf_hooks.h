@@ -22,6 +22,12 @@ extern addAction_ptr addAction;
 extern addVisualEffect_ptr addVisualEffect;
 extern figureAggro_ptr figureAggro;
 
+
+extern figureIteratorInit_ptr figureIteratorInit;
+extern figureIteratorSetPointers_ptr figureIteratorSetPointers;
+extern iteratorSetArea_ptr iteratorSetArea;
+extern figureIteratorGetNextFigure_ptr figureIteratorGetNextFigure;
+
 extern void __thiscall addBonusMultToStatistic(SF_CGdFigure* figure, StatisticDataKey key, uint16_t target, uint8_t value);
 
 extern void ConsoleLog(char*);

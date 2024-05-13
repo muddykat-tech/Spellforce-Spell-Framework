@@ -24,6 +24,10 @@ getRandom_ptr getRandom;
 addBonusMult_ptr addBonusMult;
 getResourceSpellData_ptr getResourceSpellData;
 
+figureIteratorInit_ptr figureIteratorInit;
+figureIteratorSetPointers_ptr figureIteratorSetPointers;
+iteratorSetArea_ptr iteratorSetArea;
+figureIteratorGetNextFigure_ptr figureIteratorGetNextFigure;
 
 ConsolePrint_ptr ConsolePrint;
 get_spell_spell_line_ptr get_spell_spell_line;
@@ -218,6 +222,13 @@ void initFigureAPIHooks(){
 	addBonusMult = (addBonusMult_ptr) (ASI::AddrOf(0x35A3E0));
 }
 
+void initIteratorHooks()
+{
+	figureIteratorInit = (figureIteratorInit_ptr) (ASI::AddrOf(0x3183f0));
+	figureIteratorSetPointers = (figureIteratorSetPointers_ptr) (ASI::AddrOf(0x31a680));
+	iteratorSetArea = (iteratorSetArea_ptr) (ASI::AddrOf(0x3195d0));
+	figureIteratorGetNextFigure = (figureIteratorGetNextFigure_ptr) (ASI::AddrOf(0x318f50));
+}
 
 void initDataHooks(){
 	get_spell_spell_line = (get_spell_spell_line_ptr) (ASI::AddrOf(0x26E100));

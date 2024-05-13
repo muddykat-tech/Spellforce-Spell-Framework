@@ -16,6 +16,7 @@
 SpellFunctions apiSpellFunctions;
 ToolboxFunctions apiToolboxFunctions;
 FigureFunctions apiFigureFunctions;
+IteratorFunctions apiIteratorFunctions;
 
 // Exposed in sfsf.h
 SpellforceSpellFramework frameworkAPI;
@@ -38,6 +39,10 @@ void registerFrameworkAPI(){
     apiFigureFunctions.addBonusMult = addBonusMult;
     apiFigureFunctions.addBonusMultToStatistic = addBonusMultToStatistic;
 
+	apiIteratorFunctions.figureIteratorInit = figureIteratorInit;
+	apiIteratorFunctions.figureIteratorSetPointers = figureIteratorSetPointers;
+	apiIteratorFunctions.iteratorSetArea = iteratorSetArea;
+	apiIteratorFunctions.figureIteratorGetNextFigure = figureIteratorGetNextFigure;
 
     apiToolboxFunctions.isTargetable = figure_toolbox_is_targetable;
     apiToolboxFunctions.dealDamage = dealDamage;
@@ -45,6 +50,7 @@ void registerFrameworkAPI(){
 	frameworkAPI.apiSpellFunctions = &apiSpellFunctions;
 	frameworkAPI.apiToolboxFunctions = &apiToolboxFunctions;
 	frameworkAPI.apiFigureFunctions = &apiFigureFunctions;
+    frameworkAPI.apiIteratorFunctions = &apiIteratorFunctions;
 
 	frameworkAPI.registerSpellTypeHandler = &registerSpellTypeHandler;
     frameworkAPI.registerEffectHandler = &registerEffectHandler;

@@ -282,6 +282,19 @@ typedef struct
 	figureAggro_ptr figureAggro;
 } SpellFunctions;
 
+typedef void (__thiscall *figureIteratorInit_ptr) (void *iterator, uint16_t x_start, uint16_t y_start, uint16_t x_end, uint16_t y_end);
+typedef void (__thiscall *figureIteratorSetPointers_ptr) (void *iterator, SF_CGdFigure * figure, void * AutoClass22, void * CGdWorld);
+typedef void (__thiscall *iteratorSetArea_ptr) (void *iterator, SF_Coord *position, uint16_t radius);
+typedef uint16_t (__thiscall *figureIteratorGetNextFigure_ptr)(void *iterator);
+
+typedef struct
+{
+	figureIteratorInit_ptr figureIteratorInit;
+	figureIteratorSetPointers_ptr figureIteratorSetPointers;
+	iteratorSetArea_ptr iteratorSetArea;
+	figureIteratorGetNextFigure_ptr figureIteratorGetNextFigure;
+} IteratorFunctions;
+
 typedef void (__thiscall *dealDamage_ptr)(void* toolbox, uint16_t source, uint16_t target, uint32_t damage, uint32_t is_spell_damage, uint32_t param5, uint32_t param6);
 
 typedef struct
