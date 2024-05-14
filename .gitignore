@@ -45,7 +45,8 @@
 # Kernel Module Compile Results
 *.mod*
 *.cmd
-.vscode/
+.vscode/*
+.vscode
 .tmp_versions/
 modules.order
 Module.symvers

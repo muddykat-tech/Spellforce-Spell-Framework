@@ -104,7 +104,7 @@ typedef struct __attribute__((packed)){
 typedef struct __attribute__((packed))
 {
 	SF_Coord position;
-	SF_Coord unknown_coord_2;
+	SF_Coord destination;
 	uint16_t to_do_count;
 	uint16_t to_do_count_remainder;
 	uint16_t anim_length;
@@ -232,8 +232,9 @@ typedef void (__thiscall *ConsolePrint_ptr)(uint32_t, SF_String*);
 typedef uint16_t (__thiscall *get_spell_spell_line_ptr) (void *, uint16_t);
 typedef uint32_t (__thiscall *figure_toolbox_get_unkn_ptr)(void *, uint16_t);
 typedef void (__thiscall *figure_toolbox_add_spell_ptr)(void *, uint16_t, uint16_t);
+typedef bool (__thiscall *figure_toolbox_is_targetable_ptr)(void *CGdFigureToolbox, uint16_t figure_index);
 
-typedef struct 
+typedef struct __attribute__((packed))
 {
 	uint16_t spell_id;
 	uint16_t spell_line_id;
@@ -268,15 +269,19 @@ DECLARE_FUNCTION(void, addBonusMultToStatistic, SF_CGdFigure* figure, StatisticD
 DECLARE_FUNCTION(uint8_t, addBonusMult, FigureStatistic statistic, uint8_t value);
 
 // Declare the function pointers for the SpellFunctions group
-DECLARE_FUNCTION(void, setXData, SF_CGdSpell * spell, uint16_t, uint8_t, uint32_t);
-DECLARE_FUNCTION(void, initializeSpellData, SF_CGdSpell* spell, uint16_t spell_id, SpellDataKey key);
-DECLARE_FUNCTION(void, setEffectDone, SF_CGdSpell* spell, uint16_t spell_id, uint16_t param_2);
+DECLARE_FUNCTION(void, setXData, SF_CGdSpell * _this, uint16_t, uint8_t, uint32_t);
+DECLARE_FUNCTION(void, initializeSpellData, SF_CGdSpell* _this, uint16_t spell_id, SpellDataKey key);
+DECLARE_FUNCTION(void, setEffectDone, SF_CGdSpell* _this, uint16_t spell_id, uint16_t param_2);
 DECLARE_FUNCTION(uint32_t, addToXDataList, void* , uint16_t, SpellDataKey, uint32_t);
 DECLARE_FUNCTION(uint32_t, getChanceToResistSpell, void*, uint16_t, uint16_t, SF_SpellEffectInfo);
 DECLARE_FUNCTION(uint16_t, getRandom, void*, uint16_t);
+DECLARE_FUNCTION(void, addVisualEffect, SF_CGdSpell* _this, uint16_t spell_index, uint16_t effect_id, void * unused, SF_CGdTargetData *target, uint32_t tick_start, uint16_t tick_count, void* param7)
+DECLARE_FUNCTION(void, figureAggro, SF_CGdSpell *_this, uint16_t spell_index, uint16_t target_index);
+DECLARE_FUNCTION(SF_CGdResourceSpell*, getResourceSpellData, void *, SF_CGdResourceSpell* spellData, uint16_t index);
 
 // Declare the function pointers for the ToolboxFunctions group
-DECLARE_FUNCTION(void, dealDamage, void*, uint16_t, uint16_t, uint32_t, uint32_t, uint32_t, uint32_t);
+DECLARE_FUNCTION(void, dealDamage, void* CGdFigureToolbox, uint16_t, uint16_t, uint32_t, uint32_t, uint32_t, uint32_t);
+DECLARE_FUNCTION(bool, isTargetable, void * CGdFigureToolbox, uint16_t figure_index);
 
 // We define the call name and the ptr it uses, I hope to fine a better way to deal with this.
 DECLARE_FUNCTION_GROUP(Figure,
@@ -285,7 +290,8 @@ DECLARE_FUNCTION_GROUP(Figure,
 	addAction_ptr addAction;
 	addBonusMult_ptr addBonusMult;
 	addBonusMultToStatistic_ptr addBonusMultToStatistic;
-)
+);
+
 DECLARE_FUNCTION_GROUP(Spell,
 	setXData_ptr setXData;
 	initializeSpellData_ptr initializeSpellData;
@@ -293,8 +299,12 @@ DECLARE_FUNCTION_GROUP(Spell,
 	addToXDataList_ptr addToXDataList;
 	getChanceToResistSpell_ptr getChanceToResistSpell;
 	getRandom_ptr getRandom;
-)
+	getResourceSpellData_ptr getResourceSpellData;
+	addVisualEffect_ptr addVisualEffect;
+	figureAggro_ptr figureAggro;
+);
 
 DECLARE_FUNCTION_GROUP(Toolbox,
 	dealDamage_ptr dealDamage;
-)
+	isTargetable_ptr isTargetable;
+);

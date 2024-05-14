@@ -14,6 +14,7 @@ ConsolePrint_ptr ConsolePrint;
 get_spell_spell_line_ptr get_spell_spell_line;
 figure_toolbox_get_unkn_ptr figure_toolbox_get_unkn;
 figure_toolbox_add_spell_ptr figure_toolbox_add_spell;
+figure_toolbox_is_targetable_ptr figure_toolbox_is_targetable;
 uint32_t CMnuScrConsole_ptr = 0;
 SF_String_ctor_ptr SF_String_ctor;
 SF_String_dtor_ptr SF_String_dtor;
@@ -190,11 +191,42 @@ void __thiscall addBonusMultToStatistic(SF_CGdFigure* figure, StatisticDataKey k
 	return;
 }
 
+<<<<<<< HEAD
+=======
+void initConsoleHook(){
+	uint32_t CAppMain_ptr = ASI::AddrOf(0x9229A8);
+	uint32_t CAppMenu_ptr = *(uint32_t*) (CAppMain_ptr + 0x4);
+	uint32_t CMnuScrConsole_ptr = *(uint32_t*) (CAppMenu_ptr + 0x80);
+	ConsolePrint = (ConsolePrint_ptr) ASI::AddrOf(0x534e70);
+	SF_String_ctor =(SF_String_ctor_ptr) ASI::AddrOf(0x3837e0);
+	SF_String_dtor =(SF_String_dtor_ptr) ASI::AddrOf(0x3839c0);
+}
+
+void initSpellAPIHooks(){
+	setXData = (setXData_ptr) ASI::AddrOf(0x329C40);
+	setEffectDone = (setEffectDoneFunc) (ASI::AddrOf(0x32A730));
+
+}
+
+void initToolboxAPIHooks(){
+    dealDamage = (dealDamage_ptr) (ASI::AddrOf(0x2f4a57));
+}
+
+void initFigureAPIHooks(){
+	
+	isAlive = (isAlive_ptr) (ASI::AddrOf(0x1BE4D0));
+	setWalkSpeed = (setWalkSpeed_ptr) (ASI::AddrOf(0x2B7190));
+	addAction = (addAction_ptr) (ASI::AddrOf(0x2AE0B0));
+	addBonusMult = (addBonusMult_ptr) (ASI::AddrOf(0x35A3E0));
+}
+
 void initDataHooks(){
+	// Required for internal use
 	get_spell_spell_line = (get_spell_spell_line_ptr) (ASI::AddrOf(0x26E100));
 	figure_toolbox_get_unkn = (figure_toolbox_get_unkn_ptr) (ASI::AddrOf(0x2FE704));
 	figure_toolbox_add_spell = (figure_toolbox_add_spell_ptr) (ASI::AddrOf(0x2F673A));
-		
+
+	// More defined for external use in api
 	DEFINE_FUNCTION(Figure, isAlive, 0x1BE4D0);
 	DEFINE_FUNCTION(Figure, setWalkSpeed, 0x2B7190);
 	DEFINE_FUNCTION(Figure, addAction, 0x2AE0B0);
@@ -206,13 +238,16 @@ void initDataHooks(){
 	DEFINE_FUNCTION(Spell, addToXDataList, 0x354350);
 	DEFINE_FUNCTION(Spell, getChanceToResistSpell, 0x317BA0);
 	DEFINE_FUNCTION(Spell, getRandom, 0x2AD200);
+	DEFINE_FUNCTION(Spell, addVisualEffect, 0x329B30);
+	DEFINE_FUNCTION(Spell, figureAggro, 0x329c90);
+	DEFINE_FUNCTION(Spell, getResourceSpellData, 0x26dc40);
 
-	// Define the function pointer for ToolboxFunctions group
 	DEFINE_FUNCTION(Toolbox, dealDamage, 0x2f4a57);
+	DEFINE_FUNCTION(Toolbox, isTargetable, 0x2fe704);
 
+	// Method to include functions WE define in the Internal code.
 	INCLUDE_FUNCTION(Spell, initializeSpellData, &initializeSpellData);
 	INCLUDE_FUNCTION(Figure, addBonusMultToStatistic, &addBonusMultToStatistic);
-
 }
 
 void initSpellTypeHook(){

@@ -12,10 +12,10 @@
 #define INCLUDE_FUNCTION(group, name, pointer) \
     api##group##Functions.name = pointer;
 
-
 extern SpellFunctions apiSpellFunctions;
 extern ToolboxFunctions apiToolboxFunctions;
 extern FigureFunctions apiFigureFunctions;
+
 void initBetaHooks();
 void initDataHooks();
 
