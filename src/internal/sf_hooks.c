@@ -23,6 +23,7 @@ SF_String_dtor_ptr SF_String_dtor;
 SpellFunctions apiSpellFunctions;
 ToolboxFunctions apiToolboxFunctions;
 FigureFunctions apiFigureFunctions;
+IteratorFunctions apiIteratorFunctions;
 
 
 void __thiscall triggerEffect_hook(SF_CGdSpell *_this){
@@ -213,6 +214,12 @@ void initDataHooks(){
 
 	DEFINE_FUNCTION(Toolbox, dealDamage, 0x2f4a57);
 	DEFINE_FUNCTION(Toolbox, isTargetable, 0x2fe704);
+
+
+    DEFINE_FUNCTION(Iterator, figureIteratorInit, 0x3183f0);
+    DEFINE_FUNCTION(Iterator, figureIteratorSetPointers, 0x31a680);
+    DEFINE_FUNCTION(Iterator, iteratorSetArea, 0x3195d0);
+    DEFINE_FUNCTION(Iterator, figureIteratorGetNextFigure, 0x318f50);
 
 	// Method to include functions WE define in the Internal code.
 	INCLUDE_FUNCTION(Spell, initializeSpellData, &initializeSpellData);
