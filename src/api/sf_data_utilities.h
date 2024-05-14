@@ -275,7 +275,7 @@ DECLARE_FUNCTION(void, setEffectDone, SF_CGdSpell* _this, uint16_t spell_id, uin
 DECLARE_FUNCTION(uint32_t, addToXDataList, void* , uint16_t, SpellDataKey, uint32_t);
 DECLARE_FUNCTION(uint32_t, getChanceToResistSpell, void*, uint16_t, uint16_t, SF_SpellEffectInfo);
 DECLARE_FUNCTION(uint16_t, getRandom, void*, uint16_t);
-DECLARE_FUNCTION(void, addVisualEffect, SF_CGdSpell* _this, uint16_t spell_index, uint16_t effect_id, void * unused, SF_CGdTargetData *target, uint32_t tick_start, uint16_t tick_count, void* param7)
+DECLARE_FUNCTION(void, addVisualEffect, SF_CGdSpell* _this, uint16_t spell_index, uint16_t effect_id, void * unused, SF_CGdTargetData *target, uint32_t tick_start, uint16_t tick_count, void* param7);
 DECLARE_FUNCTION(void, figureAggro, SF_CGdSpell *_this, uint16_t spell_index, uint16_t target_index);
 DECLARE_FUNCTION(SF_CGdResourceSpell*, getResourceSpellData, void *, SF_CGdResourceSpell* spellData, uint16_t index);
 
