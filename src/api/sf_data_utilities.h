@@ -269,18 +269,18 @@ DECLARE_FUNCTION(void, addBonusMultToStatistic, SF_CGdFigure* figure, StatisticD
 DECLARE_FUNCTION(uint8_t, addBonusMult, FigureStatistic statistic, uint8_t value);
 
 // Declare the function pointers for the SpellFunctions group
-DECLARE_FUNCTION(void, setXData, SF_CGdSpell * _this, uint16_t, uint8_t, uint32_t);
+DECLARE_FUNCTION(void, setXData, SF_CGdSpell * _this, uint16_t spell_id, uint8_t xdatakey, uint32_t value);
 DECLARE_FUNCTION(void, initializeSpellData, SF_CGdSpell* _this, uint16_t spell_id, SpellDataKey key);
 DECLARE_FUNCTION(void, setEffectDone, SF_CGdSpell* _this, uint16_t spell_id, uint16_t param_2);
-DECLARE_FUNCTION(uint32_t, addToXDataList, void* , uint16_t, SpellDataKey, uint32_t);
-DECLARE_FUNCTION(uint32_t, getChanceToResistSpell, void*, uint16_t, uint16_t, SF_SpellEffectInfo);
-DECLARE_FUNCTION(uint16_t, getRandom, void*, uint16_t);
-DECLARE_FUNCTION(void, addVisualEffect, SF_CGdSpell* _this, uint16_t spell_index, uint16_t effect_id, void * unused, SF_CGdTargetData *target, uint32_t tick_start, uint16_t tick_count, void* param7);
+DECLARE_FUNCTION(uint32_t, addToXDataList, void* SF_CGdXDataList, uint16_t spell_id, SpellDataKey key, uint32_t value);
+DECLARE_FUNCTION(uint32_t, getChanceToResistSpell, void* autoclass34, uint16_t source, uint16_t target, SF_SpellEffectInfo effect_info);
+DECLARE_FUNCTION(uint16_t, getRandom, void* autoclass14, uint16_t max_value);
+DECLARE_FUNCTION(void, addVisualEffect, SF_CGdSpell* _this, uint16_t spell_index, uint16_t effect_id, void * unused, SF_CGdTargetData *target, uint32_t tick_start, uint16_t tick_count, void* corner_coords);
 DECLARE_FUNCTION(void, figureAggro, SF_CGdSpell *_this, uint16_t spell_index, uint16_t target_index);
 DECLARE_FUNCTION(SF_CGdResourceSpell*, getResourceSpellData, void *, SF_CGdResourceSpell* spellData, uint16_t index);
 
 // Declare the function pointers for the ToolboxFunctions group
-DECLARE_FUNCTION(void, dealDamage, void* CGdFigureToolbox, uint16_t, uint16_t, uint32_t, uint32_t, uint32_t, uint32_t);
+DECLARE_FUNCTION(void, dealDamage, void* CGdFigureToolbox, uint16_t source_index, uint16_t target_index, uint32_t damage, uint32_t is_spell_damage, uint32_t param5, uint32_t param6);
 DECLARE_FUNCTION(bool, isTargetable, void * CGdFigureToolbox, uint16_t figure_index);
 
 // We define the call name and the ptr it uses, I hope to fine a better way to deal with this.
