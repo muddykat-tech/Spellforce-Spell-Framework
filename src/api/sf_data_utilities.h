@@ -1,5 +1,6 @@
 #pragma once
 #include <stdint.h>
+#include <stdbool.h>
 
 //XData Keys
 typedef enum {
@@ -227,7 +228,6 @@ typedef struct __attribute__((packed))
     char *data;
 } SF_String;
 
-typedef void (__thiscall *setXData_ptr)(SF_CGdSpell *, uint16_t, uint8_t, uint32_t);
 typedef void (__thiscall *ConsolePrint_ptr)(uint32_t, SF_String*);
 typedef uint16_t (__thiscall *get_spell_spell_line_ptr) (void *, uint16_t);
 typedef uint32_t (__thiscall *figure_toolbox_get_unkn_ptr)(void *, uint16_t);
@@ -251,44 +251,50 @@ typedef struct
 
 } SF_CGdResourceSpell;
 
-typedef void (__thiscall *initializeSpellDataFunc)(SF_CGdSpell* spell, uint16_t spell_id, SpellDataKey key);
-typedef void (__thiscall *setEffectDoneFunc)(SF_CGdSpell* spell, uint16_t spell_id, uint16_t param_2);
+// Here comes a better method for setting up our exposed functions, when need to define function, check sf_hooks.h
+#define DECLARE_FUNCTION(type, name, ...) \
+    typedef type (__thiscall *name##_ptr)(__VA_ARGS__);
 
-typedef uint32_t (__thiscall *xDataListAddTo_ptr)(void* list, uint16_t param_1, SpellDataKey xdatakey, uint32_t param3);
+#define DECLARE_FUNCTION_GROUP(group, ...) \
+    typedef struct { \
+        __VA_ARGS__ \
+    } group##Functions;
 
-typedef uint32_t (__thiscall *resistSpell_ptr)(void* unkn2_CGdSpell, uint16_t source, uint16_t target, SF_SpellEffectInfo effect_info);
-typedef uint16_t (__thiscall *getRandom_ptr)(void *_this, uint16_t range);
+// Declare the function pointers for the FigureFunctions group
+DECLARE_FUNCTION(bool, isAlive, SF_CGdFigure* figure, uint16_t target);
+DECLARE_FUNCTION(bool, setWalkSpeed, SF_CGdFigure* figure, uint16_t target, uint16_t value);
+DECLARE_FUNCTION(bool, addAction, SF_CGdFigure* figure, uint16_t target, void* maybe_action);
+DECLARE_FUNCTION(void, addBonusMultToStatistic, SF_CGdFigure* figure, StatisticDataKey key, uint16_t target, uint8_t value);
+DECLARE_FUNCTION(uint8_t, addBonusMult, FigureStatistic statistic, uint8_t value);
 
-typedef struct
-{
-	setXData_ptr setXData;
-	initializeSpellDataFunc initializeSpellData;
-	setEffectDoneFunc setEffectDone;
+// Declare the function pointers for the SpellFunctions group
+DECLARE_FUNCTION(void, setXData, SF_CGdSpell * spell, uint16_t, uint8_t, uint32_t);
+DECLARE_FUNCTION(void, initializeSpellData, SF_CGdSpell* spell, uint16_t spell_id, SpellDataKey key);
+DECLARE_FUNCTION(void, setEffectDone, SF_CGdSpell* spell, uint16_t spell_id, uint16_t param_2);
+DECLARE_FUNCTION(uint32_t, addToXDataList, void* , uint16_t, SpellDataKey, uint32_t);
+DECLARE_FUNCTION(uint32_t, getChanceToResistSpell, void*, uint16_t, uint16_t, SF_SpellEffectInfo);
+DECLARE_FUNCTION(uint16_t, getRandom, void*, uint16_t);
 
-	// May move? it doesn't take CGdSpell as first param...	
-	xDataListAddTo_ptr addToXDataList;
-	resistSpell_ptr getChanceToResistSpell;
-	getRandom_ptr getRandom;
-} SpellFunctions;
+// Declare the function pointers for the ToolboxFunctions group
+DECLARE_FUNCTION(void, dealDamage, void*, uint16_t, uint16_t, uint32_t, uint32_t, uint32_t, uint32_t);
 
-typedef void (__thiscall *dealDamage_ptr)(void* toolbox, uint16_t source, uint16_t target, uint32_t damage, uint32_t is_spell_damage, uint32_t param5, uint32_t param6);
-
-typedef struct
-{
-	dealDamage_ptr dealDamage;
-} ToolboxFunctions;
-
-typedef bool (__thiscall *isAlive_ptr)(SF_CGdFigure* figure, uint16_t target);
-typedef bool (__thiscall *setWalkSpeed_ptr)(SF_CGdFigure* figure, uint16_t target, uint16_t value);
-typedef bool (__thiscall *addAction_ptr)(SF_CGdFigure* figure, uint16_t target, void* maybe_action); 	//	006ae0b0 -- ghidra address
-typedef void (__thiscall *addBonusMultToStatistic_ptr)(SF_CGdFigure* figure, StatisticDataKey key, uint16_t target, uint8_t value); 	//	use internal func from ghidra 0075a3e0 to modify, switch type based on enum?
-typedef uint8_t (__thiscall *addBonusMult_ptr)(FigureStatistic statistic, uint8_t value); 	//	use internal func from ghidra 0075a3e0 to modify, switch type based on enum?
-
-typedef struct
-{
+// We define the call name and the ptr it uses, I hope to fine a better way to deal with this.
+DECLARE_FUNCTION_GROUP(Figure,
 	isAlive_ptr isAlive;
 	setWalkSpeed_ptr setWalkSpeed;
 	addAction_ptr addAction;
-	addBonusMultToStatistic_ptr addBonusMultToStatistic;
 	addBonusMult_ptr addBonusMult;
-} FigureFunctions;
+	addBonusMultToStatistic_ptr addBonusMultToStatistic;
+)
+DECLARE_FUNCTION_GROUP(Spell,
+	setXData_ptr setXData;
+	initializeSpellData_ptr initializeSpellData;
+	setEffectDone_ptr setEffectDone;
+	addToXDataList_ptr addToXDataList;
+	getChanceToResistSpell_ptr getChanceToResistSpell;
+	getRandom_ptr getRandom;
+)
+
+DECLARE_FUNCTION_GROUP(Toolbox,
+	dealDamage_ptr dealDamage;
+)

@@ -10,37 +10,21 @@
 
 #include "sf_modloader.h"
 #include "sf_utility.h"
+#include "sf_hooks.h"
 #include <windows.h>
-
-// See sf_data_utilities.h
-SpellFunctions apiSpellFunctions;
-ToolboxFunctions apiToolboxFunctions;
-FigureFunctions apiFigureFunctions;
 
 // Exposed in sfsf.h
 SpellforceSpellFramework frameworkAPI;
 
+// We can include pointers to our own functions we define.
+// Note these functions are ASSIGNED to a function group when we DEFINE said group, names are VERY important.
+
 // exposed in sf_registry.h
 void registerFrameworkAPI(){
-	apiSpellFunctions.setXData = setXData;
-    apiSpellFunctions.setEffectDone = setEffectDone;
-    apiSpellFunctions.addToXDataList = addToXDataList;
-    apiSpellFunctions.getChanceToResistSpell = getChanceToResistSpell;
-    apiSpellFunctions.getRandom = getRandom;
-    apiSpellFunctions.initializeSpellData = &initializeSpellData;
+    frameworkAPI.apiFigureFunctions = &apiFigureFunctions;
+    frameworkAPI.apiSpellFunctions = &apiSpellFunctions;
+    frameworkAPI.apiToolboxFunctions = &apiToolboxFunctions;
     
-    apiFigureFunctions.isAlive = isAlive;
-    apiFigureFunctions.setWalkSpeed = setWalkSpeed;
-    apiFigureFunctions.addAction = addAction;
-    apiFigureFunctions.addBonusMult = addBonusMult;
-    apiFigureFunctions.addBonusMultToStatistic = addBonusMultToStatistic;
-    
-    apiToolboxFunctions.dealDamage = dealDamage;
-
-	frameworkAPI.apiSpellFunctions = &apiSpellFunctions;
-	frameworkAPI.apiToolboxFunctions = &apiToolboxFunctions;
-	frameworkAPI.apiFigureFunctions = &apiFigureFunctions;
-
 	frameworkAPI.registerSpellTypeHandler = &registerSpellTypeHandler;
     frameworkAPI.registerEffectHandler = &registerEffectHandler;
     frameworkAPI.logWarning = &logWarning;

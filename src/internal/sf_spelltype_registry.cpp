@@ -7,7 +7,7 @@
 #include <cstdio>
 
 void __thiscall initializeSpellData(SF_CGdSpell* _this, uint16_t spell_id, SpellDataKey key) {
-	setXData(_this, spell_id, key, 0);
+	apiSpellFunctions.setXData(_this, spell_id, key, 0);
 }
 
 std::map<uint16_t, handler_ptr> handler_map;

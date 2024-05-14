@@ -5,21 +5,20 @@
 #include "../api/sf_data_utilities.h"
 #include "../asi/sf_asi.h"
 
-extern void initBetaHooks();
-extern void initDataHooks();
-extern setXData_ptr setXData;
-extern setEffectDoneFunc setEffectDone;
-extern getResourceSpellData_ptr getResourceSpellData;
-extern xDataListAddTo_ptr addToXDataList;
-extern dealDamage_ptr dealDamage;
-extern resistSpell_ptr getChanceToResistSpell;
-extern getRandom_ptr getRandom;
-extern isAlive_ptr isAlive;
-extern setWalkSpeed_ptr setWalkSpeed;
-extern addBonusMult_ptr addBonusMult;
-extern addAction_ptr addAction;
-extern void __thiscall addBonusMultToStatistic(SF_CGdFigure* figure, StatisticDataKey key, uint16_t target, uint8_t value);
+#define DEFINE_FUNCTION(group, name, address) \
+    name##_ptr name = (name##_ptr)(ASI::AddrOf(address)); \
+    api##group##Functions.name = name;
 
-extern void ConsoleLog(char*);
+#define INCLUDE_FUNCTION(group, name, pointer) \
+    api##group##Functions.name = pointer;
+
+
+extern SpellFunctions apiSpellFunctions;
+extern ToolboxFunctions apiToolboxFunctions;
+extern FigureFunctions apiFigureFunctions;
+void initBetaHooks();
+void initDataHooks();
+
+void ConsoleLog(char*);
 
 #endif 
