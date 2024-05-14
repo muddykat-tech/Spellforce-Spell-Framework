@@ -210,6 +210,7 @@ void initDataHooks(){
 	DEFINE_FUNCTION(Spell, addVisualEffect, 0x329B30);
 	DEFINE_FUNCTION(Spell, figureAggro, 0x329c90);
 	DEFINE_FUNCTION(Spell, getResourceSpellData, 0x26dc40);
+	DEFINE_FUNCTION(Spell, getXData, 0x354210);
 
 	DEFINE_FUNCTION(Toolbox, dealDamage, 0x2f4a57);
 	DEFINE_FUNCTION(Toolbox, isTargetable, 0x2fe704);

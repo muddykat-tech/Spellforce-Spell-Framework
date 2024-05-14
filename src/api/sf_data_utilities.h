@@ -275,9 +275,10 @@ DECLARE_FUNCTION(void, setEffectDone, SF_CGdSpell* _this, uint16_t spell_id, uin
 DECLARE_FUNCTION(uint32_t, addToXDataList, void* SF_CGdXDataList, uint16_t spell_id, SpellDataKey key, uint32_t value);
 DECLARE_FUNCTION(uint32_t, getChanceToResistSpell, void* autoclass34, uint16_t source, uint16_t target, SF_SpellEffectInfo effect_info);
 DECLARE_FUNCTION(uint16_t, getRandom, void* autoclass14, uint16_t max_value);
-DECLARE_FUNCTION(void, addVisualEffect, SF_CGdSpell* _this, uint16_t spell_index, uint16_t effect_id, void * unused, SF_CGdTargetData *target, uint32_t tick_start, uint16_t tick_count, void* corner_coords);
-DECLARE_FUNCTION(void, figureAggro, SF_CGdSpell *_this, uint16_t spell_index, uint16_t target_index);
+DECLARE_FUNCTION(void, addVisualEffect, SF_CGdSpell* _this, uint16_t spell_id, uint16_t effect_id, void * unused, SF_CGdTargetData *target, uint32_t tick_start, uint16_t tick_count, void* corner_coords);
+DECLARE_FUNCTION(void, figureAggro, SF_CGdSpell *_this, uint16_t spell_id, uint16_t target_index);
 DECLARE_FUNCTION(SF_CGdResourceSpell*, getResourceSpellData, void *, SF_CGdResourceSpell* spellData, uint16_t index);
+DECLARE_FUNCTION(uint32_t, getXData, void* SF_CGdXDataList, uint16_t spell_id, SpellDataKey key);
 
 // Declare the function pointers for the ToolboxFunctions group
 DECLARE_FUNCTION(void, dealDamage, void* CGdFigureToolbox, uint16_t source_index, uint16_t target_index, uint32_t damage, uint32_t is_spell_damage, uint32_t param5, uint32_t param6);
@@ -302,6 +303,7 @@ DECLARE_FUNCTION_GROUP(Spell,
 	getResourceSpellData_ptr getResourceSpellData;
 	addVisualEffect_ptr addVisualEffect;
 	figureAggro_ptr figureAggro;
+	getXData_ptr getXData;
 );
 
 DECLARE_FUNCTION_GROUP(Toolbox,

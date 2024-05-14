@@ -27,11 +27,23 @@ void __thiscall custom_spelltype_handler(SF_CGdSpell * _this, uint16_t spell_ind
 void __thiscall custom_spelleffect_handler(SF_CGdSpell * _this, uint16_t spell_index) {
   sfsf->logInfo("Custom Effect Handled");
   // Required for the spell to eventually become Inactive, without this and setEffectDone, you can't attack the same target again.
-  spellAPI->addToXDataList(_this->SF_CGdXDataList, spell_index, SPELL_TICK_COUNT, 1);
-
-  uint32_t damage = 20;
   sfsf->logInfo("Grab Spell from list");
   SF_GdSpell *spell = &_this->active_spell_list[spell_index];
+  uint8_t xdata_key = spell->xdata_key;
+  uint8_t tick_count = spellAPI->getXData(_this->SF_CGdXDataList, xdata_key, SPELL_TICK_COUNT);
+
+  char countinfo1[256];
+  sprintf(countinfo1, "Tick Count:  %d\n", tick_count);
+  sfsf->logInfo(countinfo1);
+
+  spellAPI->addToXDataList(_this->SF_CGdXDataList, spell_index, SPELL_TICK_COUNT, 100);
+
+  char countinfo2[256];
+  sprintf(countinfo2, "Tick Count:  %d\n", tick_count);
+  sfsf->logInfo(countinfo2);
+
+  uint32_t damage = 1;
+
   
   sfsf->logInfo("Setup Spell Target Info");
   uint16_t target_index = spell->target.entity_index;
@@ -72,9 +84,11 @@ void __thiscall custom_spelleffect_handler(SF_CGdSpell * _this, uint16_t spell_i
   if(resist_chance < random_roll) {
     sfsf->logInfo("Deal Damage");
     toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index, target_index, damage, 1, 0, 0);
+    return;
   }
 
   // Last Param for spell effect done should always be 0?
+  if(tick_count <= 1) 
   spellAPI->setEffectDone(_this, spell_index, 0);
 }
 
