@@ -10,48 +10,21 @@
 
 #include "sf_modloader.h"
 #include "sf_utility.h"
+#include "sf_hooks.h"
 #include <windows.h>
-
-// See sf_data_utilities.h
-SpellFunctions apiSpellFunctions;
-ToolboxFunctions apiToolboxFunctions;
-FigureFunctions apiFigureFunctions;
-IteratorFunctions apiIteratorFunctions;
 
 // Exposed in sfsf.h
 SpellforceSpellFramework frameworkAPI;
 
+// We can include pointers to our own functions we define.
+// Note these functions are ASSIGNED to a function group when we DEFINE said group, names are VERY important.
+
 // exposed in sf_registry.h
 void registerFrameworkAPI(){
-	apiSpellFunctions.setXData = setXData;
-    apiSpellFunctions.setEffectDone = setEffectDone;
-    apiSpellFunctions.addToXDataList = addToXDataList;
-    apiSpellFunctions.getChanceToResistSpell = getChanceToResistSpell;
-    apiSpellFunctions.getRandom = getRandom;
-    apiSpellFunctions.initializeSpellData = &initializeSpellData;
-    apiSpellFunctions.getResourceSpellData = getResourceSpellData;
-    apiSpellFunctions.figureAggro = figureAggro;
-    apiSpellFunctions.addVisualEffect = addVisualEffect;
-
-    apiFigureFunctions.isAlive = isAlive;
-    apiFigureFunctions.setWalkSpeed = setWalkSpeed;
-    apiFigureFunctions.addAction = addAction;
-    apiFigureFunctions.addBonusMult = addBonusMult;
-    apiFigureFunctions.addBonusMultToStatistic = addBonusMultToStatistic;
-
-	apiIteratorFunctions.figureIteratorInit = figureIteratorInit;
-	apiIteratorFunctions.figureIteratorSetPointers = figureIteratorSetPointers;
-	apiIteratorFunctions.iteratorSetArea = iteratorSetArea;
-	apiIteratorFunctions.figureIteratorGetNextFigure = figureIteratorGetNextFigure;
-
-    apiToolboxFunctions.isTargetable = figure_toolbox_is_targetable;
-    apiToolboxFunctions.dealDamage = dealDamage;
-
-	frameworkAPI.apiSpellFunctions = &apiSpellFunctions;
-	frameworkAPI.apiToolboxFunctions = &apiToolboxFunctions;
-	frameworkAPI.apiFigureFunctions = &apiFigureFunctions;
-    frameworkAPI.apiIteratorFunctions = &apiIteratorFunctions;
-
+    frameworkAPI.apiFigureFunctions = &apiFigureFunctions;
+    frameworkAPI.apiSpellFunctions = &apiSpellFunctions;
+    frameworkAPI.apiToolboxFunctions = &apiToolboxFunctions;
+    
 	frameworkAPI.registerSpellTypeHandler = &registerSpellTypeHandler;
     frameworkAPI.registerEffectHandler = &registerEffectHandler;
     frameworkAPI.logWarning = &logWarning;
@@ -59,17 +32,26 @@ void registerFrameworkAPI(){
 }
 
 void initFramework() {
-    
+    logInfo("Initializing Data Hooks");
+
 	initDataHooks();
+
+    logInfo("Linking API functions");
 
     // setup framework api structure references
     registerFrameworkAPI();
     
+    logInfo("Replacing Vanilla Spelltypes");
+
     // Setup Vanilla Spells -> see sf_spelltype_handler.h
     initSpellMap();
 
+    logInfo("Linking Vanilla Effect Handlers");
+
     // Setup effect job id registration -> see sf_spelleffect_handlers.h (This will MOVE to sf_spelleffect_registry.h)
     initEffectHandlers();
+
+    logInfo("Initializing Mods");
 
     // Attempt to load all mods -> see sf_modloader.h
     initMods();

@@ -1,5 +1,5 @@
-#include "../api/sfsf.h"
-#include "../api/sf_data_utilities.h"
+#include "../../src/api/sfsf.h"
+#include "../../src/api/sf_data_utilities.h"
 #include <windows.h>
 #include <stdio.h>
 //For convenience only; You can put headers just near the file and remove ../api/

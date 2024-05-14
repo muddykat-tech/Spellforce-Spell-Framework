@@ -1,6 +1,7 @@
 #include <windows.h>
 #include "sf_hooks.h"
 #include "sf_registry.h"
+#include "sf_utility.h"
 #include "../asi/sf_asi.h"
 
 BOOL APIENTRY DllMain( HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved) {
@@ -17,6 +18,7 @@ BOOL APIENTRY DllMain( HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpRese
         }
         else
         {
+            logInfo("Spellforce Version Accepted; Starting SFSF");
             // Initialize Framework -> see sf_registry.h
             initFramework();
             

@@ -1,5 +1,6 @@
 #pragma once
 #include <stdint.h>
+#include <stdbool.h>
 
 //XData Keys
 typedef enum {
@@ -227,7 +228,6 @@ typedef struct __attribute__((packed))
     char *data;
 } SF_String;
 
-typedef void (__thiscall *setXData_ptr)(SF_CGdSpell *, uint16_t, uint8_t, uint32_t);
 typedef void (__thiscall *ConsolePrint_ptr)(uint32_t, SF_String*);
 typedef uint16_t (__thiscall *get_spell_spell_line_ptr) (void *, uint16_t);
 typedef uint32_t (__thiscall *figure_toolbox_get_unkn_ptr)(void *, uint16_t);
@@ -252,68 +252,59 @@ typedef struct __attribute__((packed))
 
 } SF_CGdResourceSpell;
 
-typedef void (__thiscall *initializeSpellDataFunc)(SF_CGdSpell* spell, uint16_t spell_id, SpellDataKey key);
-typedef void (__thiscall *setEffectDoneFunc)(SF_CGdSpell* spell, uint16_t spell_id, uint16_t param_2);
+// Here comes a better method for setting up our exposed functions, when need to define function, check sf_hooks.h
+#define DECLARE_FUNCTION(type, name, ...) \
+    typedef type (__thiscall *name##_ptr)(__VA_ARGS__);
 
-typedef uint32_t (__thiscall *xDataListAddTo_ptr)(void* list, uint16_t param_1, SpellDataKey xdatakey, uint32_t param3);
+#define DECLARE_FUNCTION_GROUP(group, ...) \
+    typedef struct { \
+        __VA_ARGS__ \
+    } group##Functions;
 
-typedef uint32_t (__thiscall *resistSpell_ptr)(void* unkn2_CGdSpell, uint16_t source, uint16_t target, SF_SpellEffectInfo effect_info);
-typedef uint16_t (__thiscall *getRandom_ptr)(void *_this, uint16_t range);
-typedef SF_CGdResourceSpell* (__thiscall *getResourceSpellData_ptr) (void *, SF_CGdResourceSpell* spellData, uint16_t index);
+// Declare the function pointers for the FigureFunctions group
+DECLARE_FUNCTION(bool, isAlive, SF_CGdFigure* figure, uint16_t target);
+DECLARE_FUNCTION(bool, setWalkSpeed, SF_CGdFigure* figure, uint16_t target, uint16_t value);
+DECLARE_FUNCTION(bool, addAction, SF_CGdFigure* figure, uint16_t target, void* maybe_action);
+DECLARE_FUNCTION(void, addBonusMultToStatistic, SF_CGdFigure* figure, StatisticDataKey key, uint16_t target, uint8_t value);
+DECLARE_FUNCTION(uint8_t, addBonusMult, FigureStatistic statistic, uint8_t value);
 
-//Need more annotations
-typedef void (__thiscall *addVisualEffect_ptr) (SF_CGdSpell *_this, uint16_t spell_index, uint16_t effect_id, void * unused, SF_CGdTargetData *target,
-	uint32_t tick_start, uint16_t tick_count, void* param7);
+// Declare the function pointers for the SpellFunctions group
+DECLARE_FUNCTION(void, setXData, SF_CGdSpell * _this, uint16_t spell_id, uint8_t xdatakey, uint32_t value);
+DECLARE_FUNCTION(void, initializeSpellData, SF_CGdSpell* _this, uint16_t spell_id, SpellDataKey key);
+DECLARE_FUNCTION(void, setEffectDone, SF_CGdSpell* _this, uint16_t spell_id, uint16_t param_2);
+DECLARE_FUNCTION(uint32_t, addToXDataList, void* SF_CGdXDataList, uint16_t spell_id, SpellDataKey key, uint32_t value);
+DECLARE_FUNCTION(uint32_t, getChanceToResistSpell, void* autoclass34, uint16_t source, uint16_t target, SF_SpellEffectInfo effect_info);
+DECLARE_FUNCTION(uint16_t, getRandom, void* autoclass14, uint16_t max_value);
+DECLARE_FUNCTION(void, addVisualEffect, SF_CGdSpell* _this, uint16_t spell_index, uint16_t effect_id, void * unused, SF_CGdTargetData *target, uint32_t tick_start, uint16_t tick_count, void* corner_coords);
+DECLARE_FUNCTION(void, figureAggro, SF_CGdSpell *_this, uint16_t spell_index, uint16_t target_index);
+DECLARE_FUNCTION(SF_CGdResourceSpell*, getResourceSpellData, void *, SF_CGdResourceSpell* spellData, uint16_t index);
 
-typedef void (__thiscall *figureAggro_ptr)(SF_CGdSpell *_this, uint16_t spell_index, uint16_t target_index);
-typedef struct
-{
-	setXData_ptr setXData;
-	initializeSpellDataFunc initializeSpellData;
-	setEffectDoneFunc setEffectDone;
+// Declare the function pointers for the ToolboxFunctions group
+DECLARE_FUNCTION(void, dealDamage, void* CGdFigureToolbox, uint16_t source_index, uint16_t target_index, uint32_t damage, uint32_t is_spell_damage, uint32_t param5, uint32_t param6);
+DECLARE_FUNCTION(bool, isTargetable, void * CGdFigureToolbox, uint16_t figure_index);
 
-	// May move? it doesn't take CGdSpell as first param...	
-	xDataListAddTo_ptr addToXDataList;
-	resistSpell_ptr getChanceToResistSpell;
-	getRandom_ptr getRandom;
-	//TO DO: move it, once we have proper CGdResource class
-	getResourceSpellData_ptr getResourceSpellData;
-	addVisualEffect_ptr addVisualEffect;
-	figureAggro_ptr figureAggro;
-} SpellFunctions;
-
-typedef void (__thiscall *figureIteratorInit_ptr) (void *iterator, uint16_t x_start, uint16_t y_start, uint16_t x_end, uint16_t y_end);
-typedef void (__thiscall *figureIteratorSetPointers_ptr) (void *iterator, SF_CGdFigure * figure, void * AutoClass22, void * CGdWorld);
-typedef void (__thiscall *iteratorSetArea_ptr) (void *iterator, SF_Coord *position, uint16_t radius);
-typedef uint16_t (__thiscall *figureIteratorGetNextFigure_ptr)(void *iterator);
-
-typedef struct
-{
-	figureIteratorInit_ptr figureIteratorInit;
-	figureIteratorSetPointers_ptr figureIteratorSetPointers;
-	iteratorSetArea_ptr iteratorSetArea;
-	figureIteratorGetNextFigure_ptr figureIteratorGetNextFigure;
-} IteratorFunctions;
-
-typedef void (__thiscall *dealDamage_ptr)(void* toolbox, uint16_t source, uint16_t target, uint32_t damage, uint32_t is_spell_damage, uint32_t param5, uint32_t param6);
-
-typedef struct
-{
-	dealDamage_ptr dealDamage;
-	figure_toolbox_is_targetable_ptr isTargetable;
-} ToolboxFunctions;
-
-typedef bool (__thiscall *isAlive_ptr)(SF_CGdFigure* figure, uint16_t target);
-typedef bool (__thiscall *setWalkSpeed_ptr)(SF_CGdFigure* figure, uint16_t target, uint16_t value);
-typedef bool (__thiscall *addAction_ptr)(SF_CGdFigure* figure, uint16_t target, void* maybe_action); 	//	006ae0b0 -- ghidra address
-typedef void (__thiscall *addBonusMultToStatistic_ptr)(SF_CGdFigure* figure, StatisticDataKey key, uint16_t target, uint8_t value); 	//	use internal func from ghidra 0075a3e0 to modify, switch type based on enum?
-typedef uint8_t (__thiscall *addBonusMult_ptr)(FigureStatistic statistic, uint8_t value); 	//	use internal func from ghidra 0075a3e0 to modify, switch type based on enum?
-
-typedef struct
-{
+// We define the call name and the ptr it uses, I hope to fine a better way to deal with this.
+DECLARE_FUNCTION_GROUP(Figure,
 	isAlive_ptr isAlive;
 	setWalkSpeed_ptr setWalkSpeed;
 	addAction_ptr addAction;
-	addBonusMultToStatistic_ptr addBonusMultToStatistic;
 	addBonusMult_ptr addBonusMult;
-} FigureFunctions;
+	addBonusMultToStatistic_ptr addBonusMultToStatistic;
+);
+
+DECLARE_FUNCTION_GROUP(Spell,
+	setXData_ptr setXData;
+	initializeSpellData_ptr initializeSpellData;
+	setEffectDone_ptr setEffectDone;
+	addToXDataList_ptr addToXDataList;
+	getChanceToResistSpell_ptr getChanceToResistSpell;
+	getRandom_ptr getRandom;
+	getResourceSpellData_ptr getResourceSpellData;
+	addVisualEffect_ptr addVisualEffect;
+	figureAggro_ptr figureAggro;
+);
+
+DECLARE_FUNCTION_GROUP(Toolbox,
+	dealDamage_ptr dealDamage;
+	isTargetable_ptr isTargetable;
+);

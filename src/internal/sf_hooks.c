@@ -10,25 +10,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-setXData_ptr setXData;
-setEffectDoneFunc setEffectDone;
-xDataListAddTo_ptr addToXDataList;
-dealDamage_ptr dealDamage;
-resistSpell_ptr getChanceToResistSpell;
-addVisualEffect_ptr addVisualEffect;
-figureAggro_ptr figureAggro;
-isAlive_ptr isAlive;
-setWalkSpeed_ptr setWalkSpeed;
-addAction_ptr addAction;
-getRandom_ptr getRandom;
-addBonusMult_ptr addBonusMult;
-getResourceSpellData_ptr getResourceSpellData;
-
-figureIteratorInit_ptr figureIteratorInit;
-figureIteratorSetPointers_ptr figureIteratorSetPointers;
-iteratorSetArea_ptr iteratorSetArea;
-figureIteratorGetNextFigure_ptr figureIteratorGetNextFigure;
-
 ConsolePrint_ptr ConsolePrint;
 get_spell_spell_line_ptr get_spell_spell_line;
 figure_toolbox_get_unkn_ptr figure_toolbox_get_unkn;
@@ -37,6 +18,12 @@ figure_toolbox_is_targetable_ptr figure_toolbox_is_targetable;
 uint32_t CMnuScrConsole_ptr = 0;
 SF_String_ctor_ptr SF_String_ctor;
 SF_String_dtor_ptr SF_String_dtor;
+
+
+SpellFunctions apiSpellFunctions;
+ToolboxFunctions apiToolboxFunctions;
+FigureFunctions apiFigureFunctions;
+
 
 void __thiscall triggerEffect_hook(SF_CGdSpell *_this){
 	uint16_t spell_index;
@@ -63,15 +50,13 @@ void __thiscall triggerEffect_hook(SF_CGdSpell *_this){
 }
 
 
-void ConsoleLog(char* message)
+void ConsoleLog(const char* message)
 {
 	if (!CMnuScrConsole_ptr) return;
-	SF_String sf_string;
-	SF_String_ctor(&sf_string, message);
-	ConsolePrint(CMnuScrConsole_ptr, &sf_string);
-	// Free the memory once log has been sent.
-	SF_String_dtor(&sf_string);
-
+    SF_String sf_string;
+    SF_String_ctor(&sf_string, message);
+    ConsolePrint(CMnuScrConsole_ptr, &sf_string);
+    SF_String_dtor(&sf_string);
 }
 
 uint16_t __thiscall addSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_id, uint16_t param2, SF_CGdTargetData *source, SF_CGdTargetData *target, uint16_t param5)
@@ -96,7 +81,7 @@ uint16_t __thiscall addSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_id, ui
 	}
 	if (spell_index == 799)
 	{
-		logWarning("Warning: Maximum spell limit (800) reached. Additional spells may not be registered.");
+		logWarning("Maximum spell limit (800) reached. Additional spells may not be registered.");
 		return 0;
 	}
 	//max_used spells update
@@ -132,6 +117,7 @@ uint16_t __thiscall addSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_id, ui
 	return spell_index;
 }
 
+// May be best to remove this function and deal with it elsewhere.
 void __thiscall addBonusMultToStatistic(SF_CGdFigure* figure, StatisticDataKey key, uint16_t target, uint8_t value){
 	bool invalid = FALSE;
 	FigureStatistic statistic;
@@ -190,7 +176,7 @@ void __thiscall addBonusMultToStatistic(SF_CGdFigure* figure, StatisticDataKey k
 		return;
 	}
 
-	addBonusMult(statistic, value);
+	apiFigureFunctions.addBonusMult(statistic, value);
 	return;
 }
 
@@ -203,46 +189,34 @@ void initConsoleHook(){
 	SF_String_dtor =(SF_String_dtor_ptr) ASI::AddrOf(0x3839c0);
 }
 
-void initSpellAPIHooks(){
-	setXData = (setXData_ptr) ASI::AddrOf(0x329C40);
-	setEffectDone = (setEffectDoneFunc) (ASI::AddrOf(0x32A730));
-	addVisualEffect = (addVisualEffect_ptr) (ASI::AddrOf(0x329B30));
-	figureAggro = (figureAggro_ptr) (ASI::AddrOf(0x329c90));
-}
-
-void initToolboxAPIHooks(){
-    dealDamage = (dealDamage_ptr) (ASI::AddrOf(0x2f4a57));
-}
-
-void initFigureAPIHooks(){
-	
-	isAlive = (isAlive_ptr) (ASI::AddrOf(0x1BE4D0));
-	setWalkSpeed = (setWalkSpeed_ptr) (ASI::AddrOf(0x2B7190));
-	addAction = (addAction_ptr) (ASI::AddrOf(0x2AE0B0));
-	addBonusMult = (addBonusMult_ptr) (ASI::AddrOf(0x35A3E0));
-}
-
-void initIteratorHooks()
-{
-	figureIteratorInit = (figureIteratorInit_ptr) (ASI::AddrOf(0x3183f0));
-	figureIteratorSetPointers = (figureIteratorSetPointers_ptr) (ASI::AddrOf(0x31a680));
-	iteratorSetArea = (iteratorSetArea_ptr) (ASI::AddrOf(0x3195d0));
-	figureIteratorGetNextFigure = (figureIteratorGetNextFigure_ptr) (ASI::AddrOf(0x318f50));
-}
-
 void initDataHooks(){
+	// Required for internal use
 	get_spell_spell_line = (get_spell_spell_line_ptr) (ASI::AddrOf(0x26E100));
 	figure_toolbox_get_unkn = (figure_toolbox_get_unkn_ptr) (ASI::AddrOf(0x2FE704));
 	figure_toolbox_add_spell = (figure_toolbox_add_spell_ptr) (ASI::AddrOf(0x2F673A));
-	figure_toolbox_is_targetable = (figure_toolbox_is_targetable_ptr) (ASI::AddrOf(0x2fe704));
-    addToXDataList = (xDataListAddTo_ptr) (ASI::AddrOf(0x354350));
-	getChanceToResistSpell = (resistSpell_ptr) (ASI::AddrOf(0x317BA0));
-	getRandom = (getRandom_ptr) (ASI::AddrOf(0x2AD200));
-	getResourceSpellData = (getResourceSpellData_ptr)(ASI::AddrOf(0x26dc40));
 
-	initSpellAPIHooks();
-	initToolboxAPIHooks();	
-	initFigureAPIHooks();
+	// More defined for external use in api
+	DEFINE_FUNCTION(Figure, isAlive, 0x1BE4D0);
+	DEFINE_FUNCTION(Figure, setWalkSpeed, 0x2B7190);
+	DEFINE_FUNCTION(Figure, addAction, 0x2AE0B0);
+	DEFINE_FUNCTION(Figure, addBonusMult, 0x35A3E0);
+
+	// Define the function pointers for SpellFunctions group
+	DEFINE_FUNCTION(Spell, setXData, 0x329C40);
+	DEFINE_FUNCTION(Spell, setEffectDone, 0x32A730);
+	DEFINE_FUNCTION(Spell, addToXDataList, 0x354350);
+	DEFINE_FUNCTION(Spell, getChanceToResistSpell, 0x317BA0);
+	DEFINE_FUNCTION(Spell, getRandom, 0x2AD200);
+	DEFINE_FUNCTION(Spell, addVisualEffect, 0x329B30);
+	DEFINE_FUNCTION(Spell, figureAggro, 0x329c90);
+	DEFINE_FUNCTION(Spell, getResourceSpellData, 0x26dc40);
+
+	DEFINE_FUNCTION(Toolbox, dealDamage, 0x2f4a57);
+	DEFINE_FUNCTION(Toolbox, isTargetable, 0x2fe704);
+
+	// Method to include functions WE define in the Internal code.
+	INCLUDE_FUNCTION(Spell, initializeSpellData, &initializeSpellData);
+	INCLUDE_FUNCTION(Figure, addBonusMultToStatistic, &addBonusMultToStatistic);
 }
 
 void initSpellTypeHook(){
@@ -265,7 +239,12 @@ void initSpellTriggerHook()
 // Exposed in sf_hooks.h
 void initBetaHooks()
 {
+	logInfo("Hooking Game Console");
 	initConsoleHook();
+
+	logInfo("Hooking Spell Types");
 	initSpellTypeHook();
+	
+	logInfo("Hooking Spell Triggers");
 	initSpellTriggerHook();
 }

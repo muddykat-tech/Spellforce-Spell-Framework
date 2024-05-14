@@ -7,25 +7,25 @@
 #include "sf_hooks.h"
 
 void logWarning(const char *message) {
-    // This will be used to hook into the game console later on
-    // May also have warnings on a flag
-    static char modifiedMessage[256]; // Assuming maximum message length
+    // Logs a warning message to the console and the debug output
+    static char modifiedMessage[256]; 
     snprintf(modifiedMessage, sizeof(modifiedMessage), "[WARNING] %s", message);
     OutputDebugStringA(modifiedMessage);
     ConsoleLog(modifiedMessage);
 }
 
 void logInfo(const char *message) {
-    // This will be used to hook into the game console later on
-    // May also have warnings on a flag
-    char *str = strdup(message);
-    OutputDebugStringA(str);
-    ConsoleLog(str);
+    // Logs an informational message to the console and the debug output
+    static char modifiedMessage[256]; 
+    snprintf(modifiedMessage, sizeof(modifiedMessage), "[SFSF] %s", message);
+    OutputDebugStringA(modifiedMessage);
+    ConsoleLog(modifiedMessage);
 }
 
 void logError(const char* message) {
+    // Logs an error message to the console and the debug output, including the last error code
     int lastError = GetLastError();
-    static char modifiedMessage[256]; // Assuming maximum message length
+    static char modifiedMessage[256];
     snprintf(modifiedMessage, sizeof(modifiedMessage), "[ERROR] %s [Last Error: %d]", message, lastError);
     OutputDebugStringA(modifiedMessage);
     ConsoleLog(modifiedMessage);
