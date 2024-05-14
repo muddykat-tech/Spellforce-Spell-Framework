@@ -32,17 +32,26 @@ void registerFrameworkAPI(){
 }
 
 void initFramework() {
-    
+    logInfo("Initializing Data Hooks");
+
 	initDataHooks();
+
+    logInfo("Linking API functions");
 
     // setup framework api structure references
     registerFrameworkAPI();
     
+    logInfo("Replacing Vanilla Spelltypes");
+
     // Setup Vanilla Spells -> see sf_spelltype_handler.h
     initSpellMap();
 
+    logInfo("Linking Vanilla Effect Handlers");
+
     // Setup effect job id registration -> see sf_spelleffect_handlers.h (This will MOVE to sf_spelleffect_registry.h)
     initEffectHandlers();
+
+    logInfo("Initializing Mods");
 
     // Attempt to load all mods -> see sf_modloader.h
     initMods();

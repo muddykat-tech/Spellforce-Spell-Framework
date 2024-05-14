@@ -28,7 +28,7 @@ void registerSpellTypeHandler(uint16_t spell_index, handler_ptr handler) {
     if (check != handler_map.end()){ 
         if(check->second != &default_handler) {
             char message[256]; // Assuming a maximum message length of 255 characters
-            sprintf(message, "WARNING: a non-default handler has been replaced! (spell_index == %d) (Was this on purpose?)", spell_index);
+            sprintf(message, "A non-default handler has been replaced! [%d] (Was this on purpose?)", spell_index);
             logWarning(message);
         }
     }

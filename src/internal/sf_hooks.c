@@ -50,15 +50,13 @@ void __thiscall triggerEffect_hook(SF_CGdSpell *_this){
 }
 
 
-void ConsoleLog(char* message)
+void ConsoleLog(const char* message)
 {
 	if (!CMnuScrConsole_ptr) return;
-	SF_String sf_string;
-	SF_String_ctor(&sf_string, message);
-	ConsolePrint(CMnuScrConsole_ptr, &sf_string);
-	// Free the memory once log has been sent.
-	SF_String_dtor(&sf_string);
-
+    SF_String sf_string;
+    SF_String_ctor(&sf_string, message);
+    ConsolePrint(CMnuScrConsole_ptr, &sf_string);
+    SF_String_dtor(&sf_string);
 }
 
 uint16_t __thiscall addSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_id, uint16_t param2, SF_CGdTargetData *source, SF_CGdTargetData *target, uint16_t param5)
@@ -83,7 +81,7 @@ uint16_t __thiscall addSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_id, ui
 	}
 	if (spell_index == 799)
 	{
-		logWarning("Warning: Maximum spell limit (800) reached. Additional spells may not be registered.");
+		logWarning("Maximum spell limit (800) reached. Additional spells may not be registered.");
 		return 0;
 	}
 	//max_used spells update
@@ -241,7 +239,12 @@ void initSpellTriggerHook()
 // Exposed in sf_hooks.h
 void initBetaHooks()
 {
+	logInfo("Hooking Game Console");
 	initConsoleHook();
+
+	logInfo("Hooking Spell Types");
 	initSpellTypeHook();
+	
+	logInfo("Hooking Spell Triggers");
 	initSpellTriggerHook();
 }

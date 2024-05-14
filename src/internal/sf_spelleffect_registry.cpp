@@ -11,7 +11,7 @@ void registerEffectHandler(uint16_t spell_job, handler_ptr handler) {
     auto check = effect_handler_map.find(spell_job);
     if (check != effect_handler_map.end()){ 
         char message[256];
-        sprintf(message, "WARNING: An Effect Handler has been replaced! (Job ID == %d) (Was this on purpose?)", spell_job);
+        sprintf(message, "An Effect Handler has been replaced! [%d] (Was this on purpose?)", spell_job);
         logWarning(message);
     }
 

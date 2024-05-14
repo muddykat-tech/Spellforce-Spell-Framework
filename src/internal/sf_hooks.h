@@ -19,6 +19,6 @@ extern FigureFunctions apiFigureFunctions;
 void initBetaHooks();
 void initDataHooks();
 
-void ConsoleLog(char*);
+void ConsoleLog(const char*);
 
 #endif 

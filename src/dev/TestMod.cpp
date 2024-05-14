@@ -21,6 +21,7 @@ void __thiscall custom_spelltype_handler(SF_CGdSpell * _this, uint16_t spell_ind
 	spellAPI->initializeSpellData(_this, spell_index, SPELL_TICK_COUNT);
 
   sfsf->logInfo("Spell Handled");
+  sfsf->logWarning("Test Warning");
 }
 
 void __thiscall custom_spelleffect_handler(SF_CGdSpell * _this, uint16_t spell_index) {
