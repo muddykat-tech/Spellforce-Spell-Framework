@@ -119,15 +119,6 @@ uint16_t __thiscall addSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_id, ui
 	return spell_index;
 }
 
-void initConsoleHook(){
-	uint32_t CAppMain_ptr = ASI::AddrOf(0x9229A8);
-	uint32_t CAppMenu_ptr = *(uint32_t*) (CAppMain_ptr + 0x4);
-	uint32_t CMnuScrConsole_ptr = *(uint32_t*) (CAppMenu_ptr + 0x80);
-	ConsolePrint = (ConsolePrint_ptr) ASI::AddrOf(0x534e70);
-	SF_String_ctor =(SF_String_ctor_ptr) ASI::AddrOf(0x3837e0);
-	SF_String_dtor =(SF_String_dtor_ptr) ASI::AddrOf(0x3839c0);
-}
-
 // May be best to remove this function and deal with it elsewhere.
 void __thiscall addBonusMultToStatistic(SF_CGdFigure* figure, StatisticDataKey key, uint16_t target, uint8_t value){
 	bool invalid = FALSE;
@@ -191,8 +182,6 @@ void __thiscall addBonusMultToStatistic(SF_CGdFigure* figure, StatisticDataKey k
 	return;
 }
 
-<<<<<<< HEAD
-=======
 void initConsoleHook(){
 	uint32_t CAppMain_ptr = ASI::AddrOf(0x9229A8);
 	uint32_t CAppMenu_ptr = *(uint32_t*) (CAppMain_ptr + 0x4);
@@ -200,24 +189,6 @@ void initConsoleHook(){
 	ConsolePrint = (ConsolePrint_ptr) ASI::AddrOf(0x534e70);
 	SF_String_ctor =(SF_String_ctor_ptr) ASI::AddrOf(0x3837e0);
 	SF_String_dtor =(SF_String_dtor_ptr) ASI::AddrOf(0x3839c0);
-}
-
-void initSpellAPIHooks(){
-	setXData = (setXData_ptr) ASI::AddrOf(0x329C40);
-	setEffectDone = (setEffectDoneFunc) (ASI::AddrOf(0x32A730));
-
-}
-
-void initToolboxAPIHooks(){
-    dealDamage = (dealDamage_ptr) (ASI::AddrOf(0x2f4a57));
-}
-
-void initFigureAPIHooks(){
-	
-	isAlive = (isAlive_ptr) (ASI::AddrOf(0x1BE4D0));
-	setWalkSpeed = (setWalkSpeed_ptr) (ASI::AddrOf(0x2B7190));
-	addAction = (addAction_ptr) (ASI::AddrOf(0x2AE0B0));
-	addBonusMult = (addBonusMult_ptr) (ASI::AddrOf(0x35A3E0));
 }
 
 void initDataHooks(){
