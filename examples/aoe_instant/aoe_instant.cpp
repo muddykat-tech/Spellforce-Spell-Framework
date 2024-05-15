@@ -17,11 +17,7 @@ void __thiscall aoe_lifetap_type_handler(SF_CGdSpell * _this, uint16_t spell_ind
 
 }
 
-typedef struct
-{
-    uint32_t partA;
-    uint32_t partB;
-} effect_rectangle;
+
 
 void __thiscall aoe_lifetap_effect_handler(SF_CGdSpell * _this, uint16_t spell_index)
 {
@@ -33,10 +29,25 @@ void __thiscall aoe_lifetap_effect_handler(SF_CGdSpell * _this, uint16_t spell_i
     iteratorAPI->figureIteratorSetPointers(&iterator_memory, _this->SF_CGdFigure, _this->unkn3, _this->SF_CGdWorld);
     SF_CGdResourceSpell spell_data;
     SF_SpellEffectInfo effect_info;
-    effect_rectangle hit_area;
+    SF_Rectangle hit_area;
+    SF_Coord cast_center = {0,0};
+    //SF_Coord
     spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, effect_info.spell_id);
+    spellAPI->getTargetsRectangle(_this, &hit_area, spell_index, spell_data.params[0], &cast_center);
+    SF_CGdTargetData relative_data;
+    relative_data.position = cast_center;
+    relative_data.entity_type = 4;
+    relative_data.entity_index = 0;
 
+    uint32_t unused;
+    spellAPI->addVisualEffect(_this,spell_index, 3, &unused, &relative_data, _this->OpaqueClass->current_step, 0x19, &hit_area);
+    iteratorAPI->iteratorSetArea(&iterator_memory,&cast_center, spell_data.params[0]);
+    uint16_t target_figure_id = iteratorAPI->figureIteratorGetNextFigure(&iterator_memory);
+    while (target_figure_id != 0)
+    {
 
+        target_figure_id = iteratorAPI->figureIteratorGetNextFigure(&iterator_memory);
+    }
     spellAPI->setEffectDone(_this, spell_index, 0);
 }
 

@@ -15,7 +15,7 @@
 extern SpellFunctions apiSpellFunctions;
 extern ToolboxFunctions apiToolboxFunctions;
 extern FigureFunctions apiFigureFunctions;
-
+extern IteratorFunctions apiIteratorFunctions;
 void initBetaHooks();
 void initDataHooks();
 
