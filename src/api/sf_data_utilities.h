@@ -252,6 +252,12 @@ typedef struct __attribute__((packed))
 
 } SF_CGdResourceSpell;
 
+typedef struct __attribute__((packed))
+{
+    uint32_t partA;
+    uint32_t partB;
+} SF_Rectangle;
+
 // Here comes a better method for setting up our exposed functions, when need to define function, check sf_hooks.h
 #define DECLARE_FUNCTION(type, name, ...) \
     typedef type (__thiscall *name##_ptr)(__VA_ARGS__);
@@ -278,6 +284,7 @@ DECLARE_FUNCTION(uint16_t, getRandom, void* autoclass14, uint16_t max_value);
 DECLARE_FUNCTION(void, addVisualEffect, SF_CGdSpell* _this, uint16_t spell_index, uint16_t effect_id, void * unused, SF_CGdTargetData *target, uint32_t tick_start, uint16_t tick_count, void* corner_coords);
 DECLARE_FUNCTION(void, figureAggro, SF_CGdSpell *_this, uint16_t spell_index, uint16_t target_index);
 DECLARE_FUNCTION(SF_CGdResourceSpell*, getResourceSpellData, void *, SF_CGdResourceSpell* spellData, uint16_t index);
+DECLARE_FUNCTION(SF_Rectangle * , getTargetsRectangle, SF_CGdSpell* _this,SF_Rectangle * output ,uint16_t spell_id,  uint16_t radius, SF_Coord * center_maybe);
 
 // Declare the function pointers for the ToolboxFunctions group
 DECLARE_FUNCTION(void, dealDamage, void* CGdFigureToolbox, uint16_t source_index, uint16_t target_index, uint32_t damage, uint32_t is_spell_damage, uint32_t param5, uint32_t param6);
@@ -308,6 +315,7 @@ DECLARE_FUNCTION_GROUP(Spell,
 	getResourceSpellData_ptr getResourceSpellData;
 	addVisualEffect_ptr addVisualEffect;
 	figureAggro_ptr figureAggro;
+    getTargetsRectangle_ptr getTargetsRectangle;
 );
 
 DECLARE_FUNCTION_GROUP(Toolbox,
