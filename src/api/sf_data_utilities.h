@@ -273,6 +273,8 @@ DECLARE_FUNCTION(bool, setWalkSpeed, SF_CGdFigure* figure, uint16_t target, uint
 DECLARE_FUNCTION(bool, addAction, SF_CGdFigure* figure, uint16_t target, void* maybe_action);
 DECLARE_FUNCTION(void, addBonusMultToStatistic, SF_CGdFigure* figure, StatisticDataKey key, uint16_t target, uint8_t value);
 DECLARE_FUNCTION(uint8_t, addBonusMult, FigureStatistic statistic, uint8_t value);
+DECLARE_FUNCTION(uint16_t, getCurrentHealth,SF_CGdFigure* figure, uint16_t figure_id);
+DECLARE_FUNCTION(void, decreaseHealth,SF_CGdFigure* figure, uint16_t figure_id, uint16_t amount);
 
 // Declare the function pointers for the SpellFunctions group
 DECLARE_FUNCTION(void, setXData, SF_CGdSpell * _this, uint16_t spell_id, uint8_t xdatakey, uint32_t value);
@@ -303,6 +305,8 @@ DECLARE_FUNCTION_GROUP(Figure,
 	addAction_ptr addAction;
 	addBonusMult_ptr addBonusMult;
 	addBonusMultToStatistic_ptr addBonusMultToStatistic;
+    decreaseHealth_ptr decreaseHealth;
+    getCurrentHealth_ptr getCurrentHealth;
 );
 
 DECLARE_FUNCTION_GROUP(Spell,

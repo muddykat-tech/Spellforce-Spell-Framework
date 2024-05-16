@@ -22,6 +22,7 @@ void __thiscall aoe_lifetap_type_handler(SF_CGdSpell * _this, uint16_t spell_ind
 void __thiscall aoe_lifetap_effect_handler(SF_CGdSpell * _this, uint16_t spell_index)
 {
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
+    uint16_t source_index = spell->source.entity_index;
     //Iterators are opaque from the user perspective. 
     //Just give enough memory and don't bother what's inside
     uint8_t iterator_memory[0x44];
@@ -42,11 +43,31 @@ void __thiscall aoe_lifetap_effect_handler(SF_CGdSpell * _this, uint16_t spell_i
     uint32_t unused;
     spellAPI->addVisualEffect(_this,spell_index, 3, &unused, &relative_data, _this->OpaqueClass->current_step, 0x19, &hit_area);
     iteratorAPI->iteratorSetArea(&iterator_memory,&cast_center, spell_data.params[0]);
-    uint16_t target_figure_id = iteratorAPI->figureIteratorGetNextFigure(&iterator_memory);
-    while (target_figure_id != 0)
+    uint16_t target_index = iteratorAPI->figureIteratorGetNextFigure(&iterator_memory);
+    while (target_index != 0)
     {
-
-        target_figure_id = iteratorAPI->figureIteratorGetNextFigure(&iterator_memory);
+        uint16_t random_roll = spellAPI->getRandom(_this->OpaqueClass, 100);
+        uint32_t resist_chance = spellAPI->getChanceToResistSpell(_this->unkn2, source_index, target_index, effect_info);
+        if ((uint32_t)resist_chance < random_roll)
+        {
+            if (figureAPI->isAlive(_this->SF_CGdFigure, target_index))
+            {
+                toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index, target_index, spell_data.params[1], 1, 0, 0);
+                if (figureAPI->isAlive(_this->SF_CGdFigure, source_index))
+                {
+                    uint16_t current_hp = figureAPI->getCurrentHealth(_this->SF_CGdFigure, source_index);
+                    if (current_hp != 0)
+                    {
+                        figureAPI->decreaseHealth(_this->SF_CGdFigure, source_index, -spell_data.params[1]);
+                    }
+                }
+            }
+            else
+            {
+                spellAPI->figureAggro(_this, source_index, target_index);
+            }
+        }
+        target_index = iteratorAPI->figureIteratorGetNextFigure(&iterator_memory);
     }
     spellAPI->setEffectDone(_this, spell_index, 0);
 }

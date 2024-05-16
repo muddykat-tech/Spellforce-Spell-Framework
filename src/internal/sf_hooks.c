@@ -201,6 +201,8 @@ void initDataHooks(){
 	DEFINE_FUNCTION(Figure, setWalkSpeed, 0x2B7190);
 	DEFINE_FUNCTION(Figure, addAction, 0x2AE0B0);
 	DEFINE_FUNCTION(Figure, addBonusMult, 0x35A3E0);
+    DEFINE_FUNCTION(Figure, decreaseHealth, 0x2b5b40);
+    DEFINE_FUNCTION(Figure, getCurrentHealth, 0x279350);
 
 	// Define the function pointers for SpellFunctions group
 	DEFINE_FUNCTION(Spell, setXData, 0x329C40);
