@@ -217,6 +217,7 @@ void initDataHooks(){
 
 	DEFINE_FUNCTION(Toolbox, dealDamage, 0x2f4a57);
 	DEFINE_FUNCTION(Toolbox, isTargetable, 0x2fe704);
+	DEFINE_FUNCTION(Toolbox, figuresCheckHostile, 0x2fe7b9);
 
 
     DEFINE_FUNCTION(Iterator, figureIteratorInit, 0x3183f0);

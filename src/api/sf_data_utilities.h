@@ -291,13 +291,13 @@ DECLARE_FUNCTION(SF_Rectangle * , getTargetsRectangle, SF_CGdSpell* _this,SF_Rec
 // Declare the function pointers for the ToolboxFunctions group
 DECLARE_FUNCTION(void, dealDamage, void* CGdFigureToolbox, uint16_t source_index, uint16_t target_index, uint32_t damage, uint32_t is_spell_damage, uint32_t param5, uint32_t param6);
 DECLARE_FUNCTION(bool, isTargetable, void * CGdFigureToolbox, uint16_t figure_index);
+DECLARE_FUNCTION(uint16_t, figuresCheckHostile, void * CGdFigureToolbox, uint16_t source_index, uint16_t target_index);
 
 //Declare the function pointers for IteratorFunctions group
 DECLARE_FUNCTION(void, figureIteratorInit, void *iterator, uint16_t x_start, uint16_t y_start, uint16_t x_end, uint16_t y_end);
 DECLARE_FUNCTION(void, figureIteratorSetPointers, void *iterator, SF_CGdFigure * figure, void * AutoClass22, void * CGdWorld);
 DECLARE_FUNCTION(void, iteratorSetArea, void *iterator, SF_Coord *position, uint16_t radius);
 DECLARE_FUNCTION(uint16_t,figureIteratorGetNextFigure,void *iterator);
-
 // We define the call name and the ptr it uses, I hope to fine a better way to deal with this.
 DECLARE_FUNCTION_GROUP(Figure,
 	isAlive_ptr isAlive;
@@ -325,6 +325,7 @@ DECLARE_FUNCTION_GROUP(Spell,
 DECLARE_FUNCTION_GROUP(Toolbox,
 	dealDamage_ptr dealDamage;
 	isTargetable_ptr isTargetable;
+    figuresCheckHostile_ptr figuresCheckHostile;
 );
 
 DECLARE_FUNCTION_GROUP(Iterator,

@@ -45,32 +45,40 @@ void __thiscall aoe_lifetap_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
 
     while (target_index != 0)
     {
-        /* debug output example
-        Let it be here
-        char aliveInfo[256];
-        sprintf(aliveInfo, "Flags list: Target %hd \n", target_index);
-        sfsf->logInfo(aliveInfo);
-        */
-        uint16_t random_roll = spellAPI->getRandom(_this->OpaqueClass, 100);
-        uint32_t resist_chance = spellAPI->getChanceToResistSpell(_this->unkn2, source_index, target_index, effect_info);
-        if ((uint32_t)resist_chance < random_roll)
+        //If figure is not special unit
+        //not dead and is not friendly
+        //and is targetable - let's work with it
+        if (((int16_t)(_this->SF_CGdFigure->figures[target_index].owner) != -1) &&
+            (((uint8_t)(_this->SF_CGdFigure->figures[target_index].flags) & 0xa) == 0) &&
+            (toolboxAPI->figuresCheckHostile(_this->SF_CGdFigureToolBox, source_index, target_index)) &&
+            (toolboxAPI->isTargetable(_this->SF_CGdFigureToolBox, target_index)))
         {
-            sfsf->logInfo("Resist OK");
-            if (figureAPI->isAlive(_this->SF_CGdFigure, target_index))
+            /* debug output example
+            Let it be here
+            char aliveInfo[256];
+            sprintf(aliveInfo, "Flags list: Target %hd \n", target_index);
+            sfsf->logInfo(aliveInfo);
+            */
+            uint16_t random_roll = spellAPI->getRandom(_this->OpaqueClass, 100);
+            uint32_t resist_chance = spellAPI->getChanceToResistSpell(_this->unkn2, source_index, target_index, effect_info);
+            if ((uint32_t)resist_chance < random_roll)
             {
-                toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index, target_index, spell_data.params[1], 1, 0, 0);
-                if (figureAPI->isAlive(_this->SF_CGdFigure, source_index))
+                if (figureAPI->isAlive(_this->SF_CGdFigure, target_index))
                 {
-                    uint16_t current_hp = figureAPI->getCurrentHealth(_this->SF_CGdFigure, source_index);
-                    if (current_hp != 0)
+                    toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index, target_index, spell_data.params[1], 1, 0, 0);
+                    if (figureAPI->isAlive(_this->SF_CGdFigure, source_index))
                     {
-                        figureAPI->decreaseHealth(_this->SF_CGdFigure, source_index, -spell_data.params[1]);
+                        uint16_t current_hp = figureAPI->getCurrentHealth(_this->SF_CGdFigure, source_index);
+                        if (current_hp != 0)
+                        {
+                            figureAPI->decreaseHealth(_this->SF_CGdFigure, source_index, -spell_data.params[1]);
+                        }
                     }
                 }
-            }
-            else
-            {
-                spellAPI->figureAggro(_this, spell_index, target_index);
+                else
+                {
+                    spellAPI->figureAggro(_this, spell_index, target_index);
+                }
             }
         }
         target_index = iteratorAPI->figureIteratorGetNextFigure(&iterator_memory);
