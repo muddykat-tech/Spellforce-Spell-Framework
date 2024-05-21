@@ -23,6 +23,7 @@ SF_String_dtor_ptr SF_String_dtor;
 SpellFunctions apiSpellFunctions;
 ToolboxFunctions apiToolboxFunctions;
 FigureFunctions apiFigureFunctions;
+IteratorFunctions apiIteratorFunctions;
 
 
 void __thiscall triggerEffect_hook(SF_CGdSpell *_this){
@@ -200,6 +201,8 @@ void initDataHooks(){
 	DEFINE_FUNCTION(Figure, setWalkSpeed, 0x2B7190);
 	DEFINE_FUNCTION(Figure, addAction, 0x2AE0B0);
 	DEFINE_FUNCTION(Figure, addBonusMult, 0x35A3E0);
+    DEFINE_FUNCTION(Figure, decreaseHealth, 0x2b5b40);
+    DEFINE_FUNCTION(Figure, getCurrentHealth, 0x279350);
 
 	// Define the function pointers for SpellFunctions group
 	DEFINE_FUNCTION(Spell, setXData, 0x329C40);
@@ -211,9 +214,17 @@ void initDataHooks(){
 	DEFINE_FUNCTION(Spell, figureAggro, 0x329c90);
 	DEFINE_FUNCTION(Spell, getResourceSpellData, 0x26dc40);
 	DEFINE_FUNCTION(Spell, getXData, 0x354210);
+    DEFINE_FUNCTION(Spell, getTargetsRectangle, 0x329D80);
 
 	DEFINE_FUNCTION(Toolbox, dealDamage, 0x2f4a57);
 	DEFINE_FUNCTION(Toolbox, isTargetable, 0x2fe704);
+	DEFINE_FUNCTION(Toolbox, figuresCheckHostile, 0x2fe7b9);
+
+
+    DEFINE_FUNCTION(Iterator, figureIteratorInit, 0x3183f0);
+    DEFINE_FUNCTION(Iterator, figureIteratorSetPointers, 0x31a680);
+    DEFINE_FUNCTION(Iterator, iteratorSetArea, 0x3195d0);
+    DEFINE_FUNCTION(Iterator, figureIteratorGetNextFigure, 0x318f50);
 
 	// Method to include functions WE define in the Internal code.
 	INCLUDE_FUNCTION(Spell, initializeSpellData, &initializeSpellData);

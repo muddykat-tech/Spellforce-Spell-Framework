@@ -21,6 +21,7 @@ struct SpellforceSpellFramework {
     SpellFunctions *apiSpellFunctions;
     ToolboxFunctions *apiToolboxFunctions;
     FigureFunctions *apiFigureFunctions;
+    IteratorFunctions *apiIteratorFunctions;
 
     // Perhaps create a struct for a proper logger? 
     logWarningFunc logWarning;

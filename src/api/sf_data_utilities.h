@@ -252,6 +252,12 @@ typedef struct __attribute__((packed))
 
 } SF_CGdResourceSpell;
 
+typedef struct __attribute__((packed))
+{
+    uint32_t partA;
+    uint32_t partB;
+} SF_Rectangle;
+
 // Here comes a better method for setting up our exposed functions, when need to define function, check sf_hooks.h
 #define DECLARE_FUNCTION(type, name, ...) \
     typedef type (__thiscall *name##_ptr)(__VA_ARGS__);
@@ -267,6 +273,8 @@ DECLARE_FUNCTION(bool, setWalkSpeed, SF_CGdFigure* figure, uint16_t target, uint
 DECLARE_FUNCTION(bool, addAction, SF_CGdFigure* figure, uint16_t target, void* maybe_action);
 DECLARE_FUNCTION(void, addBonusMultToStatistic, SF_CGdFigure* figure, StatisticDataKey key, uint16_t target, uint8_t value);
 DECLARE_FUNCTION(uint8_t, addBonusMult, FigureStatistic statistic, uint8_t value);
+DECLARE_FUNCTION(uint16_t, getCurrentHealth,SF_CGdFigure* figure, uint16_t figure_id);
+DECLARE_FUNCTION(void, decreaseHealth,SF_CGdFigure* figure, uint16_t figure_id, uint16_t amount);
 
 // Declare the function pointers for the SpellFunctions group
 DECLARE_FUNCTION(void, setXData, SF_CGdSpell * _this, uint16_t spell_id, uint8_t xdatakey, uint32_t value);
@@ -279,11 +287,18 @@ DECLARE_FUNCTION(void, addVisualEffect, SF_CGdSpell* _this, uint16_t spell_id, u
 DECLARE_FUNCTION(void, figureAggro, SF_CGdSpell *_this, uint16_t spell_id, uint16_t target_index);
 DECLARE_FUNCTION(SF_CGdResourceSpell*, getResourceSpellData, void *, SF_CGdResourceSpell* spellData, uint16_t index);
 DECLARE_FUNCTION(uint32_t, getXData, void* SF_CGdXDataList, uint16_t spell_id, SpellDataKey key);
+DECLARE_FUNCTION(SF_Rectangle * , getTargetsRectangle, SF_CGdSpell* _this,SF_Rectangle * output ,uint16_t spell_id,  uint16_t radius, SF_Coord * center_maybe);
 
 // Declare the function pointers for the ToolboxFunctions group
 DECLARE_FUNCTION(void, dealDamage, void* CGdFigureToolbox, uint16_t source_index, uint16_t target_index, uint32_t damage, uint32_t is_spell_damage, uint32_t param5, uint32_t param6);
 DECLARE_FUNCTION(bool, isTargetable, void * CGdFigureToolbox, uint16_t figure_index);
+DECLARE_FUNCTION(uint16_t, figuresCheckHostile, void * CGdFigureToolbox, uint16_t source_index, uint16_t target_index);
 
+//Declare the function pointers for IteratorFunctions group
+DECLARE_FUNCTION(void, figureIteratorInit, void *iterator, uint16_t x_start, uint16_t y_start, uint16_t x_end, uint16_t y_end);
+DECLARE_FUNCTION(void, figureIteratorSetPointers, void *iterator, SF_CGdFigure * figure, void * AutoClass22, void * CGdWorld);
+DECLARE_FUNCTION(void, iteratorSetArea, void *iterator, SF_Coord *position, uint16_t radius);
+DECLARE_FUNCTION(uint16_t,figureIteratorGetNextFigure,void *iterator);
 // We define the call name and the ptr it uses, I hope to fine a better way to deal with this.
 DECLARE_FUNCTION_GROUP(Figure,
 	isAlive_ptr isAlive;
@@ -291,6 +306,8 @@ DECLARE_FUNCTION_GROUP(Figure,
 	addAction_ptr addAction;
 	addBonusMult_ptr addBonusMult;
 	addBonusMultToStatistic_ptr addBonusMultToStatistic;
+    decreaseHealth_ptr decreaseHealth;
+    getCurrentHealth_ptr getCurrentHealth;
 );
 
 DECLARE_FUNCTION_GROUP(Spell,
@@ -304,9 +321,19 @@ DECLARE_FUNCTION_GROUP(Spell,
 	addVisualEffect_ptr addVisualEffect;
 	figureAggro_ptr figureAggro;
 	getXData_ptr getXData;
+    getTargetsRectangle_ptr getTargetsRectangle;
+
 );
 
 DECLARE_FUNCTION_GROUP(Toolbox,
 	dealDamage_ptr dealDamage;
 	isTargetable_ptr isTargetable;
+    figuresCheckHostile_ptr figuresCheckHostile;
+);
+
+DECLARE_FUNCTION_GROUP(Iterator,
+    figureIteratorInit_ptr figureIteratorInit;
+	figureIteratorSetPointers_ptr figureIteratorSetPointers;
+	iteratorSetArea_ptr iteratorSetArea;
+	figureIteratorGetNextFigure_ptr figureIteratorGetNextFigure;
 );

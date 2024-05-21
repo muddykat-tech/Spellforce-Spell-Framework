@@ -24,7 +24,7 @@ void registerFrameworkAPI(){
     frameworkAPI.apiFigureFunctions = &apiFigureFunctions;
     frameworkAPI.apiSpellFunctions = &apiSpellFunctions;
     frameworkAPI.apiToolboxFunctions = &apiToolboxFunctions;
-    
+    frameworkAPI.apiIteratorFunctions = &apiIteratorFunctions;
 	frameworkAPI.registerSpellTypeHandler = &registerSpellTypeHandler;
     frameworkAPI.registerEffectHandler = &registerEffectHandler;
     frameworkAPI.logWarning = &logWarning;
