@@ -15,6 +15,10 @@ get_spell_spell_line_ptr get_spell_spell_line;
 figure_toolbox_get_unkn_ptr figure_toolbox_get_unkn;
 figure_toolbox_add_spell_ptr figure_toolbox_add_spell;
 figure_toolbox_is_targetable_ptr figure_toolbox_is_targetable;
+
+FUN_0069eaf0_ptr FUN_0069eaf0;
+fidfree_ptr fidFree;
+
 uint32_t CMnuScrConsole_ptr = 0;
 SF_String_ctor_ptr SF_String_ctor;
 SF_String_dtor_ptr SF_String_dtor;
@@ -190,11 +194,26 @@ void initConsoleHook(){
 	SF_String_dtor =(SF_String_dtor_ptr) ASI::AddrOf(0x3839c0);
 }
 
+void __thiscall setupFigureIterator(CGdFigureIterator *iterator, SF_CGdSpell *spell){
+    apiIteratorFunctions.figureIteratorInit(iterator, 0x0, 0x0, 0x3ff, 0x3ff);
+    apiIteratorFunctions.figureIteratorSetPointers(iterator, spell->SF_CGdFigure, spell->unkn3, spell->SF_CGdWorld);
+}
+
+// Some funky stuff to clean up Iterator memory, not 100% if correct
+void __thiscall disposeFigureIterator(CGdFigureIterator iterator, SF_CGdTargetData *target_data){
+    FUN_0069eaf0(&iterator.data.offset_0x30, target_data, ((AutoClass69 *) iterator.data.offset_0x30.ac69_ptr1)->ac69_ptr1, iterator.data.offset_0x30.ac69_ptr1);
+    fidFree(iterator.data.offset_0x30.ac69_ptr1);
+}
+
 void initDataHooks(){
 	// Required for internal use
 	get_spell_spell_line = (get_spell_spell_line_ptr) (ASI::AddrOf(0x26E100));
 	figure_toolbox_get_unkn = (figure_toolbox_get_unkn_ptr) (ASI::AddrOf(0x2FE704));
 	figure_toolbox_add_spell = (figure_toolbox_add_spell_ptr) (ASI::AddrOf(0x2F673A));
+	
+	//used in Iterator for AOE Spells Dispose
+	FUN_0069eaf0 = (FUN_0069eaf0_ptr)(ASI::AddrOf(0x29EAF0));
+	fidFree = (fidfree_ptr)(ASI::AddrOf(0x6B6E25));
 
 	// More defined for external use in api
 	DEFINE_FUNCTION(Figure, isAlive, 0x1BE4D0);
@@ -229,6 +248,9 @@ void initDataHooks(){
 	// Method to include functions WE define in the Internal code.
 	INCLUDE_FUNCTION(Spell, initializeSpellData, &initializeSpellData);
 	INCLUDE_FUNCTION(Figure, addBonusMultToStatistic, &addBonusMultToStatistic);
+
+	INCLUDE_FUNCTION(Iterator, setupFigureIterator, &setupFigureIterator);
+	INCLUDE_FUNCTION(Iterator, disposeFigureIterator, &disposeFigureIterator);
 }
 
 void initSpellTypeHook(){

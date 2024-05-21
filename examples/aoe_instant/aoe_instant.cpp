@@ -1,5 +1,5 @@
-#include "../api/sfsf.h"
-#include "../api/sf_data_utilities.h"
+#include "../../src/api/sfsf.h"
+#include "../../src/api/sf_data_utilities.h"
 #include <windows.h>
 #include <stdio.h>
 // For convenience only; You can put headers just near the file and remove ../api/
@@ -22,9 +22,13 @@ void __thiscall aoe_lifetap_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
     uint16_t source_index = spell->source.entity_index;
     // Iterators are opaque from the user perspective.
     // Just give enough memory and don't bother what's inside
-    uint8_t iterator_memory[0x44];
-    iteratorAPI->figureIteratorInit(&iterator_memory, 0x0, 0x0, 0x3ff, 0x3ff);
-    iteratorAPI->figureIteratorSetPointers(&iterator_memory, _this->SF_CGdFigure, _this->unkn3, _this->SF_CGdWorld);
+    CGdFigureIterator iterator_memory;
+    iteratorAPI->setupFigureIterator(&iterator_memory, _this);
+
+    // iteratorAPI->figureIteratorInit(&iterator_memory, 0x0, 0x0, 0x3ff, 0x3ff);
+    // iteratorAPI->figureIteratorSetPointers(&iterator_memory, _this->SF_CGdFigure, _this->unkn3, _this->SF_CGdWorld);
+
+
     SF_SpellEffectInfo effect_info;
     SF_CGdResourceSpell spell_data;
     effect_info.spell_id = spell->spell_id;
@@ -84,6 +88,8 @@ void __thiscall aoe_lifetap_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
         target_index = iteratorAPI->figureIteratorGetNextFigure(&iterator_memory);
     }
     spellAPI->setEffectDone(_this, spell_index, 0);
+
+    iteratorAPI->disposeFigureIterator(iterator_memory, &relative_data);
 }
 
 /***

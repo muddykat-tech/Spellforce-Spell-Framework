@@ -233,6 +233,8 @@ typedef uint16_t (__thiscall *get_spell_spell_line_ptr) (void *, uint16_t);
 typedef uint32_t (__thiscall *figure_toolbox_get_unkn_ptr)(void *, uint16_t);
 typedef void (__thiscall *figure_toolbox_add_spell_ptr)(void *, uint16_t, uint16_t);
 typedef bool (__thiscall *figure_toolbox_is_targetable_ptr)(void *CGdFigureToolbox, uint16_t figure_index);
+typedef uint32_t (__thiscall *FUN_0069eaf0_ptr)(void* ac69, SF_CGdTargetData* ac69_2, void* ac69_3, void* ac69_4);
+typedef void (*fidfree_ptr)(uint32_t* memory_ptr);
 
 typedef struct __attribute__((packed))
 {
@@ -257,6 +259,48 @@ typedef struct __attribute__((packed))
     uint32_t partA;
     uint32_t partB;
 } SF_Rectangle;
+
+typedef struct __attribute__((packed))
+{
+	uint32_t *ac69_ptr1;
+	uint32_t *ac69_ptr2;
+	uint32_t *ac69_ptr3;
+	uint8_t unkn1;
+	uint8_t unkn2;
+	uint16_t figure_index;
+} AutoClass69;
+
+typedef struct __attribute__((packed))
+{
+	uint32_t offset_0x0;
+	uint32_t offset_0x4;
+	uint16_t offset_0x8;
+	uint16_t offset_0xa;
+	uint16_t offset_0xc;
+	uint16_t offset_0xe;
+	uint16_t offset_0x10;
+	uint16_t offset_0x12;
+	uint16_t offset_0x14;
+	uint16_t offset_0x16;
+	uint16_t offset_0x18;
+	uint16_t offset_0x1a;
+	uint32_t offset_0x1c;
+	uint16_t offset_0x20;
+	uint32_t offset_0x22;
+	uint8_t offset_0x26;
+	uint8_t offset_0x27;
+	uint32_t offset_0x28;
+	uint16_t offset_0x2c;
+	uint8_t offset_0x2e;
+	uint8_t offset_0x2f;
+	AutoClass69 offset_0x30;
+} CGdTileIterator_data;
+
+typedef struct __attribute__((packed))
+{
+	uint32_t ftable_ptr;
+	CGdTileIterator_data data;
+} CGdFigureIterator;
 
 // Here comes a better method for setting up our exposed functions, when need to define function, check sf_hooks.h
 #define DECLARE_FUNCTION(type, name, ...) \
@@ -295,10 +339,13 @@ DECLARE_FUNCTION(bool, isTargetable, void * CGdFigureToolbox, uint16_t figure_in
 DECLARE_FUNCTION(uint16_t, figuresCheckHostile, void * CGdFigureToolbox, uint16_t source_index, uint16_t target_index);
 
 //Declare the function pointers for IteratorFunctions group
-DECLARE_FUNCTION(void, figureIteratorInit, void *iterator, uint16_t x_start, uint16_t y_start, uint16_t x_end, uint16_t y_end);
-DECLARE_FUNCTION(void, figureIteratorSetPointers, void *iterator, SF_CGdFigure * figure, void * AutoClass22, void * CGdWorld);
-DECLARE_FUNCTION(void, iteratorSetArea, void *iterator, SF_Coord *position, uint16_t radius);
-DECLARE_FUNCTION(uint16_t,figureIteratorGetNextFigure,void *iterator);
+DECLARE_FUNCTION(void, figureIteratorInit, CGdFigureIterator *iterator, uint16_t x_start, uint16_t y_start, uint16_t x_end, uint16_t y_end);
+DECLARE_FUNCTION(void, figureIteratorSetPointers, CGdFigureIterator *iterator, SF_CGdFigure * figure, void * AutoClass22, void * CGdWorld);
+DECLARE_FUNCTION(void, iteratorSetArea, CGdFigureIterator *iterator, SF_Coord *position, uint16_t radius);
+DECLARE_FUNCTION(uint16_t,figureIteratorGetNextFigure,CGdFigureIterator *iterator);
+DECLARE_FUNCTION(void, setupFigureIterator, CGdFigureIterator *iterator, SF_CGdSpell *spell);
+DECLARE_FUNCTION(void, disposeFigureIterator, CGdFigureIterator iterator, SF_CGdTargetData *target_data);
+
 // We define the call name and the ptr it uses, I hope to fine a better way to deal with this.
 DECLARE_FUNCTION_GROUP(Figure,
 	isAlive_ptr isAlive;
@@ -322,7 +369,6 @@ DECLARE_FUNCTION_GROUP(Spell,
 	figureAggro_ptr figureAggro;
 	getXData_ptr getXData;
     getTargetsRectangle_ptr getTargetsRectangle;
-
 );
 
 DECLARE_FUNCTION_GROUP(Toolbox,
@@ -336,4 +382,6 @@ DECLARE_FUNCTION_GROUP(Iterator,
 	figureIteratorSetPointers_ptr figureIteratorSetPointers;
 	iteratorSetArea_ptr iteratorSetArea;
 	figureIteratorGetNextFigure_ptr figureIteratorGetNextFigure;
+	setupFigureIterator_ptr setupFigureIterator; 
+	disposeFigureIterator_ptr disposeFigureIterator;
 );

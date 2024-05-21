@@ -44,7 +44,6 @@ void __thiscall custom_spelleffect_handler(SF_CGdSpell * _this, uint16_t spell_i
 
   uint32_t damage = 1;
 
-  
   sfsf->logInfo("Setup Spell Target Info");
   uint16_t target_index = spell->target.entity_index;
   uint16_t source_index = spell->source.entity_index;
