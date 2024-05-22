@@ -89,7 +89,7 @@ void __thiscall aoe_lifetap_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
     }
     spellAPI->setEffectDone(_this, spell_index, 0);
 
-    iteratorAPI->disposeFigureIterator(iterator_memory, &relative_data);
+    iteratorAPI->disposeFigureIterator(iterator_memory);
 }
 
 /***

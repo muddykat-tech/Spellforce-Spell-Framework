@@ -200,8 +200,9 @@ void __thiscall setupFigureIterator(CGdFigureIterator *iterator, SF_CGdSpell *sp
 }
 
 // Some funky stuff to clean up Iterator memory, not 100% if correct
-void __thiscall disposeFigureIterator(CGdFigureIterator iterator, SF_CGdTargetData *target_data){
-    FUN_0069eaf0(&iterator.data.offset_0x30, target_data, ((AutoClass69 *) iterator.data.offset_0x30.ac69_ptr1)->ac69_ptr1, iterator.data.offset_0x30.ac69_ptr1);
+void __thiscall disposeFigureIterator(CGdFigureIterator iterator ){
+    uint32_t unused;
+    FUN_0069eaf0(&iterator.data.offset_0x30, &unused, ((AutoClass69 *) iterator.data.offset_0x30.ac69_ptr1)->ac69_ptr1, iterator.data.offset_0x30.ac69_ptr1);
     fidFree(iterator.data.offset_0x30.ac69_ptr1);
 }
 

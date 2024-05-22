@@ -344,7 +344,7 @@ DECLARE_FUNCTION(void, figureIteratorSetPointers, CGdFigureIterator *iterator, S
 DECLARE_FUNCTION(void, iteratorSetArea, CGdFigureIterator *iterator, SF_Coord *position, uint16_t radius);
 DECLARE_FUNCTION(uint16_t,figureIteratorGetNextFigure,CGdFigureIterator *iterator);
 DECLARE_FUNCTION(void, setupFigureIterator, CGdFigureIterator *iterator, SF_CGdSpell *spell);
-DECLARE_FUNCTION(void, disposeFigureIterator, CGdFigureIterator iterator, SF_CGdTargetData *target_data);
+DECLARE_FUNCTION(void, disposeFigureIterator, CGdFigureIterator iterator);
 
 // We define the call name and the ptr it uses, I hope to fine a better way to deal with this.
 DECLARE_FUNCTION_GROUP(Figure,
