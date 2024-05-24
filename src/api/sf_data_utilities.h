@@ -346,6 +346,7 @@ DECLARE_FUNCTION(uint16_t,figureIteratorGetNextFigure,CGdFigureIterator *iterato
 DECLARE_FUNCTION(void, setupFigureIterator, CGdFigureIterator *iterator, SF_CGdSpell *spell);
 DECLARE_FUNCTION(void, disposeFigureIterator, CGdFigureIterator iterator);
 
+DECLARE_FUNCTION(void, buildingDealDamage, void* CGdBuildingToolBox, uint16_t figure_id, uint16_t building_id, uint16_t damage, uint32_t is_spell_damage);
 // We define the call name and the ptr it uses, I hope to fine a better way to deal with this.
 DECLARE_FUNCTION_GROUP(Figure,
 	isAlive_ptr isAlive;
@@ -375,6 +376,7 @@ DECLARE_FUNCTION_GROUP(Toolbox,
 	dealDamage_ptr dealDamage;
 	isTargetable_ptr isTargetable;
     figuresCheckHostile_ptr figuresCheckHostile;
+    buildingDealDamage_ptr buildingDealDamage;
 );
 
 DECLARE_FUNCTION_GROUP(Iterator,
