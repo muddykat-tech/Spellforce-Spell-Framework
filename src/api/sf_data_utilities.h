@@ -233,7 +233,7 @@ typedef uint16_t (__thiscall *get_spell_spell_line_ptr) (void *, uint16_t);
 typedef uint32_t (__thiscall *figure_toolbox_get_unkn_ptr)(void *, uint16_t);
 typedef void (__thiscall *figure_toolbox_add_spell_ptr)(void *, uint16_t, uint16_t);
 typedef bool (__thiscall *figure_toolbox_is_targetable_ptr)(void *CGdFigureToolbox, uint16_t figure_index);
-typedef uint32_t (__thiscall *FUN_0069eaf0_ptr)(void* ac69, SF_CGdTargetData* ac69_2, void* ac69_3, void* ac69_4);
+typedef uint32_t (__thiscall *FUN_0069eaf0_ptr)(void* ac69, void* ac69_2, void* ac69_3, void* ac69_4);
 typedef void (*fidfree_ptr)(uint32_t* memory_ptr);
 
 typedef struct __attribute__((packed))
