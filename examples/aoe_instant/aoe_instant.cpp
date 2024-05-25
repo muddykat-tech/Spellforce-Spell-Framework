@@ -31,28 +31,35 @@ void __thiscall aoe_lifetap_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
 
     SF_SpellEffectInfo effect_info;
     SF_CGdResourceSpell spell_data;
+    spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+
     effect_info.spell_id = spell->spell_id;
     effect_info.job_id = spell->spell_job;
-    uint16_t ticks_total = 0;
-    uint16_t ticks_interval = 0;
+    uint16_t ticks_total = spell_data.params[2];
+    uint16_t ticks_interval = spell_data.params[3];
     SF_Rectangle hit_area;
     SF_Coord cast_center = _this->active_spell_list[spell_index].target.position;
     // SF_Coord
-    spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
-    ticks_total = spell_data.params[2];
-    ticks_interval = spell_data.params[3];
     spellAPI->getTargetsRectangle(_this, &hit_area, spell_index, spell_data.params[0], &cast_center);
-    SF_CGdTargetData relative_data;
-    relative_data.position = cast_center;
-    relative_data.entity_type = 4;
-    relative_data.entity_index = 0;
-    uint32_t unused;
-    spellAPI->addVisualEffect(_this, spell_index, 3, &unused, &relative_data, _this->OpaqueClass->current_step, 0x19, &hit_area);
+
     iteratorAPI->iteratorSetArea(&iterator_memory, &cast_center, spell_data.params[0]);
     uint16_t target_index = iteratorAPI->figureIteratorGetNextFigure(&iterator_memory);
     uint32_t tick_left = spellAPI->getXData(_this->SF_CGdXDataList, _this->active_spell_list[spell_index].xdata_key, SPELL_TICK_COUNT_AUX);
+    if (tick_left == 0)
+    {
+        SF_CGdTargetData relative_data;
+        relative_data.position = cast_center;
+        relative_data.entity_type = 4;
+        relative_data.entity_index = 0;
+        uint32_t unused;
+        spellAPI->addVisualEffect(_this, spell_index, 3, &unused, &relative_data, _this->OpaqueClass->current_step, 0x19, &hit_area);
+    }
+
     // visual effect addition, if tick_left = 0
     uint16_t ticks_passed = spellAPI->addToXDataList(_this->SF_CGdXDataList, spell_index, SPELL_TICK_COUNT_AUX, 1);
+    char aliveInfo[256];
+    sprintf(aliveInfo, "Flags list: Ticks %hd of %hd \n", ticks_passed, ticks_total);
+    sfsf->logWarning(aliveInfo);
     if (ticks_passed < ticks_total)
     {
         while (target_index != 0)
@@ -95,7 +102,7 @@ void __thiscall aoe_lifetap_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
             }
             target_index = iteratorAPI->figureIteratorGetNextFigure(&iterator_memory);
         }
-        _this->active_spell_list[spell_index].to_do_count = (uint16_t)((ticks_interval *10)/1000);
+        _this->active_spell_list[spell_index].to_do_count = (uint16_t)((ticks_interval * 10) / 1000);
     }
     else
     {
