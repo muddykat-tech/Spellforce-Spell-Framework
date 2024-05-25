@@ -60,7 +60,7 @@ void __thiscall simple_damage_effect_handler(SF_CGdSpell *_this, uint16_t spell_
                 effect_aux_data aux_data;
                 aux_data.partA = 0;
                 aux_data.partB = 0;
-                spellAPI->addVisualEffect(_this, spell_index, 3, &unused, &relative_data, _this->OpaqueClass->current_step, 0x19, &aux_data);
+                spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 0x19, &aux_data);
                 if (figureAPI->isAlive(_this->SF_CGdFigure, target_index))
                 {
                     toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index, target_index, spell_data.params[0], 1, 0, 0);

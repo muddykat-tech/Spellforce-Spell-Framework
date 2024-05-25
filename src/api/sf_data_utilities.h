@@ -17,6 +17,49 @@ typedef enum {
     SPELL_CONSERVATION_SHIELD = 0x0B
 } SpellDataKey;
 
+typedef enum
+{
+    kGdEffectNone = 0,
+    kGdEffectSpellCast = 1,
+    kGdEffectSpellHitWorld = 2,
+    kGdEffectSpellHitTarget = 3,
+    kGdEffectSpellDOTHitTarget = 4,
+    kGdEffectSpellMissTarget = 5,
+    kGdEffectSpellResolve = 6,
+    kGdEffectSummonWorker = 7,
+    kGdEffectWorkerAppears = 8,
+    kGdEffectSummonHero = 9,
+    kGdEffectHeroAppears = 10,
+    kGdEffectSpellTargetResisted = 11,
+    kGdEffectSpellResolveSelf = 12,
+    kGdEffectMeteorFall = 13,
+    kGdEffectMeteorHit = 14,
+    kGdEffectBlizzardFall = 15,
+    kGdEffectBlizzardHit = 16,
+    kGdEffectStoneFall = 17,
+    kGdEffectStoneHit = 18,
+    kGdEffectPetAppears = 19,
+    kGdEffectTest = 20,
+    kGdEffectMonumentClaimed = 21,
+    kGdEffectMonumentWorking = 22,
+    kGdEffectAuraResolve = 23,
+    kGdEffectProjectile = 24,
+    kGdEffectBuilding = 25,
+    kGdEffectPlayerBind = 26,
+    kGdEffectSummonMainChar = 27,
+    kGdEffectMainCharAppears = 28,
+    kGdEffectTitanProduction = 29,
+    kGdEffectTitanAppears = 30,
+    kGdEffectMentalTowerCast = 31,
+    kGdEffectMentalTowerIdle = 32,
+    kGdEffectMonumentBullet = 33,
+    kGdEffectMonumentHitFigure = 34,
+    kGdEffectSpellAssistanceHitFigure = 35,
+    kGdEffectChainResolve = 36,
+    kGdEffectSpellVoodooHitFigure = 37,
+    kGdEffectSpellManaShieldHitFigure = 38,
+    kGdEffectMax = 39
+} CGdEffectType;
 typedef enum {
 	ARMOR,
 	AGILITY,
@@ -327,7 +370,7 @@ DECLARE_FUNCTION(void, setEffectDone, SF_CGdSpell* _this, uint16_t spell_id, uin
 DECLARE_FUNCTION(uint32_t, addToXData, SF_CGdSpell *_this, uint16_t spell_id, SpellDataKey key, uint32_t value);
 DECLARE_FUNCTION(uint32_t, getChanceToResistSpell, void* autoclass34, uint16_t source, uint16_t target, SF_SpellEffectInfo effect_info);
 DECLARE_FUNCTION(uint16_t, getRandom, void* autoclass14, uint16_t max_value);
-DECLARE_FUNCTION(void, addVisualEffect, SF_CGdSpell* _this, uint16_t spell_id, uint16_t effect_id, void * unused, SF_CGdTargetData *target, uint32_t tick_start, uint16_t tick_count, void* corner_coords);
+DECLARE_FUNCTION(void, addVisualEffect, SF_CGdSpell* _this, uint16_t spell_id, CGdEffectType effect_id, void * unused, SF_CGdTargetData *target, uint32_t tick_start, uint16_t tick_count, void* corner_coords);
 DECLARE_FUNCTION(void, figureAggro, SF_CGdSpell *_this, uint16_t spell_id, uint16_t target_index);
 DECLARE_FUNCTION(SF_CGdResourceSpell*, getResourceSpellData, void *, SF_CGdResourceSpell* spellData, uint16_t index);
 DECLARE_FUNCTION(uint32_t, getXData, SF_CGdSpell *_this, uint16_t spell_id, SpellDataKey key);

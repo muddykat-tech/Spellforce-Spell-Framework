@@ -42,24 +42,23 @@ void __thiscall aoe_lifetap_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
     // SF_Coord
     spellAPI->getTargetsRectangle(_this, &hit_area, spell_index, spell_data.params[0], &cast_center);
 
-    iteratorAPI->iteratorSetArea(&iterator_memory, &cast_center, spell_data.params[0]);
-    uint16_t target_index = iteratorAPI->figureIteratorGetNextFigure(&iterator_memory);
-    uint32_t tick_left = spellAPI->getXData(_this, _this->active_spell_list[spell_index].xdata_key, SPELL_TICK_COUNT_AUX);
-    if (tick_left == 0)
+    // uint32_t tick_left = spellAPI->getXData(_this, _this->active_spell_list[spell_index].xdata_key, SPELL_TICK_COUNT_AUX);
+    uint16_t ticks_passed = spellAPI->addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1);
+
+    // visual effect addition, if it's 1st tick
+    if (ticks_passed == 1)
     {
         SF_CGdTargetData relative_data;
         relative_data.position = cast_center;
         relative_data.entity_type = 4;
         relative_data.entity_index = 0;
         uint32_t unused;
-        spellAPI->addVisualEffect(_this, spell_index, 3, &unused, &relative_data, _this->OpaqueClass->current_step, 0x19, &hit_area);
+        spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitWorld, &unused, &relative_data, _this->OpaqueClass->current_step, 0x19, &hit_area);
     }
 
-    // visual effect addition, if tick_left = 0
-    uint16_t ticks_passed = spellAPI->addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1);
-    char aliveInfo[256];
-    sprintf(aliveInfo, "Flags list: Ticks %x of %x \n", ticks_passed, ticks_total);
-    sfsf->logWarning(aliveInfo);
+    iteratorAPI->iteratorSetArea(&iterator_memory, &cast_center, spell_data.params[0]);
+    uint16_t target_index = iteratorAPI->figureIteratorGetNextFigure(&iterator_memory);
+
     if (ticks_passed < ticks_total)
     {
         while (target_index != 0)
@@ -84,6 +83,15 @@ void __thiscall aoe_lifetap_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
                 {
                     if (figureAPI->isAlive(_this->SF_CGdFigure, target_index))
                     {
+                        SF_CGdTargetData relative_data;
+                        relative_data.position = {0, 0};
+                        relative_data.entity_type = 1;
+                        relative_data.entity_index = target_index;
+                        uint32_t unused;
+                        SF_Rectangle aux_data;
+                        aux_data.partA = 0;
+                        aux_data.partB = 0;
+                        spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 10, &hit_area);
                         toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index, target_index, spell_data.params[1], 1, 0, 0);
                         if (figureAPI->isAlive(_this->SF_CGdFigure, source_index))
                         {
