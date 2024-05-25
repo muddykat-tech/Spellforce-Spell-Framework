@@ -43,7 +43,7 @@ void __thiscall aoe_lifetap_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
     relative_data.entity_type = 4;
     relative_data.entity_index = 0;
     uint32_t unused;
-    spellAPI->addVisualEffect(_this, spell_index, 3, &unused, &relative_data, _this->OpaqueClass->current_step, 0x19, &hit_area);
+    spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitWorld, &unused, &relative_data, _this->OpaqueClass->current_step, 0x19, &hit_area);
     iteratorAPI->iteratorSetArea(&iterator_memory, &cast_center, spell_data.params[0]);
     uint16_t target_index = iteratorAPI->figureIteratorGetNextFigure(&iterator_memory);
 

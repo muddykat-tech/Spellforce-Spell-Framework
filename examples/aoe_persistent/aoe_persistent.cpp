@@ -11,13 +11,13 @@ ToolboxFunctions *toolboxAPI;
 FigureFunctions *figureAPI;
 IteratorFunctions *iteratorAPI;
 
-void __thiscall aoe_lifetap_type_handler(SF_CGdSpell *_this, uint16_t spell_index)
+void __thiscall thuderstorm_type_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     _this->active_spell_list[spell_index].spell_job = 0xf2;
     spellAPI->setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
 }
 
-void __thiscall aoe_lifetap_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
+void __thiscall thuderstorm_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
     uint16_t source_index = spell->source.entity_index;
@@ -93,14 +93,6 @@ void __thiscall aoe_lifetap_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
                         aux_data.partB = 0;
                         spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 10, &hit_area);
                         toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index, target_index, spell_data.params[1], 1, 0, 0);
-                        if (figureAPI->isAlive(_this->SF_CGdFigure, source_index))
-                        {
-                            uint16_t current_hp = figureAPI->getCurrentHealth(_this->SF_CGdFigure, source_index);
-                            if (current_hp != 0)
-                            {
-                                figureAPI->decreaseHealth(_this->SF_CGdFigure, source_index, -spell_data.params[1]);
-                            }
-                        }
                     }
                     else
                     {
@@ -132,10 +124,10 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     iteratorAPI = sfsf->apiIteratorFunctions;
     // Here comes the spell type registration.
     // Note: you need to pass pointer to function here
-    sfsf->registerSpellTypeHandler(242, &aoe_lifetap_type_handler);
+    sfsf->registerSpellTypeHandler(242, &thuderstorm_type_handler);
 
     // Here comes the spell logic (effect) registration; f2 = 242
-    sfsf->registerEffectHandler(0xf2, &aoe_lifetap_effect_handler);
+    sfsf->registerEffectHandler(0xf2, &thuderstorm_effect_handler);
 }
 
 // Required to be present, not required for any functionality
