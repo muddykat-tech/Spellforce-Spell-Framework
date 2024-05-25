@@ -227,13 +227,13 @@ void initDataHooks(){
 	// Define the function pointers for SpellFunctions group
 	DEFINE_FUNCTION(Spell, setXData, 0x329C40);
 	DEFINE_FUNCTION(Spell, setEffectDone, 0x32A730);
-	DEFINE_FUNCTION(Spell, addToXData, 0x32AAE0);
+	DEFINE_FUNCTION(Spell, addToXData, 0x32AAC0);
 	DEFINE_FUNCTION(Spell, getChanceToResistSpell, 0x317BA0);
 	DEFINE_FUNCTION(Spell, getRandom, 0x2AD200);
 	DEFINE_FUNCTION(Spell, addVisualEffect, 0x329B30);
 	DEFINE_FUNCTION(Spell, figureAggro, 0x329c90);
 	DEFINE_FUNCTION(Spell, getResourceSpellData, 0x26dc40);
-	DEFINE_FUNCTION(Spell, getXData, 0x32AA60);
+	DEFINE_FUNCTION(Spell, getXData, 0x32AA40);
     DEFINE_FUNCTION(Spell, getTargetsRectangle, 0x329D80);
 
 	DEFINE_FUNCTION(Toolbox, dealDamage, 0x2f4a57);
