@@ -44,7 +44,7 @@ void __thiscall aoe_lifetap_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
 
     iteratorAPI->iteratorSetArea(&iterator_memory, &cast_center, spell_data.params[0]);
     uint16_t target_index = iteratorAPI->figureIteratorGetNextFigure(&iterator_memory);
-    uint32_t tick_left = spellAPI->getXData(_this->SF_CGdXDataList, _this->active_spell_list[spell_index].xdata_key, SPELL_TICK_COUNT_AUX);
+    uint32_t tick_left = spellAPI->getXData(_this, _this->active_spell_list[spell_index].xdata_key, SPELL_TICK_COUNT_AUX);
     if (tick_left == 0)
     {
         SF_CGdTargetData relative_data;
@@ -56,9 +56,9 @@ void __thiscall aoe_lifetap_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
     }
 
     // visual effect addition, if tick_left = 0
-    uint16_t ticks_passed = spellAPI->addToXDataList(_this->SF_CGdXDataList, spell_index, SPELL_TICK_COUNT_AUX, 1);
+    uint16_t ticks_passed = spellAPI->addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1);
     char aliveInfo[256];
-    sprintf(aliveInfo, "Flags list: Ticks %hd of %hd \n", ticks_passed, ticks_total);
+    sprintf(aliveInfo, "Flags list: Ticks %x of %x \n", ticks_passed, ticks_total);
     sfsf->logWarning(aliveInfo);
     if (ticks_passed < ticks_total)
     {

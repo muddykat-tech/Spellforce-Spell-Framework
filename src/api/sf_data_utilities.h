@@ -324,13 +324,13 @@ DECLARE_FUNCTION(void, decreaseHealth,SF_CGdFigure* figure, uint16_t figure_id, 
 DECLARE_FUNCTION(void, setXData, SF_CGdSpell * _this, uint16_t spell_id, uint8_t xdatakey, uint32_t value);
 DECLARE_FUNCTION(void, initializeSpellData, SF_CGdSpell* _this, uint16_t spell_id, SpellDataKey key);
 DECLARE_FUNCTION(void, setEffectDone, SF_CGdSpell* _this, uint16_t spell_id, uint16_t param_2);
-DECLARE_FUNCTION(uint32_t, addToXDataList, void* SF_CGdXDataList, uint16_t spell_id, SpellDataKey key, uint32_t value);
+DECLARE_FUNCTION(uint32_t, addToXData, SF_CGdSpell *_this, uint16_t spell_id, SpellDataKey key, uint32_t value);
 DECLARE_FUNCTION(uint32_t, getChanceToResistSpell, void* autoclass34, uint16_t source, uint16_t target, SF_SpellEffectInfo effect_info);
 DECLARE_FUNCTION(uint16_t, getRandom, void* autoclass14, uint16_t max_value);
 DECLARE_FUNCTION(void, addVisualEffect, SF_CGdSpell* _this, uint16_t spell_id, uint16_t effect_id, void * unused, SF_CGdTargetData *target, uint32_t tick_start, uint16_t tick_count, void* corner_coords);
 DECLARE_FUNCTION(void, figureAggro, SF_CGdSpell *_this, uint16_t spell_id, uint16_t target_index);
 DECLARE_FUNCTION(SF_CGdResourceSpell*, getResourceSpellData, void *, SF_CGdResourceSpell* spellData, uint16_t index);
-DECLARE_FUNCTION(uint32_t, getXData, void* SF_CGdXDataList, uint16_t spell_id, SpellDataKey key);
+DECLARE_FUNCTION(uint32_t, getXData, SF_CGdSpell *_this, uint16_t spell_id, SpellDataKey key);
 DECLARE_FUNCTION(SF_Rectangle * , getTargetsRectangle, SF_CGdSpell* _this,SF_Rectangle * output ,uint16_t spell_id,  uint16_t radius, SF_Coord * center_maybe);
 
 // Declare the function pointers for the ToolboxFunctions group
@@ -362,7 +362,7 @@ DECLARE_FUNCTION_GROUP(Spell,
 	setXData_ptr setXData;
 	initializeSpellData_ptr initializeSpellData;
 	setEffectDone_ptr setEffectDone;
-	addToXDataList_ptr addToXDataList;
+	addToXData_ptr addToXData;
 	getChanceToResistSpell_ptr getChanceToResistSpell;
 	getRandom_ptr getRandom;
 	getResourceSpellData_ptr getResourceSpellData;
