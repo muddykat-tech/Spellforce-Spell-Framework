@@ -29,6 +29,21 @@ ToolboxFunctions apiToolboxFunctions;
 FigureFunctions apiFigureFunctions;
 IteratorFunctions apiIteratorFunctions;
 
+int __thiscall CheckCanApply_hook_beta(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    //We need a map of refresh handlers?
+    //And a default handler that does nothing
+    //handler takes (SF_CGdSpell *_this, uint16_t spell_index) as params
+
+}
+
+void __thiscall EndSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    //We need a map of end spell handlers?
+    //And a default handler that does nothing
+    //handler takes (SF_CGdSpell *_this, uint16_t spell_index) as params
+}
+
 
 void __thiscall triggerEffect_hook(SF_CGdSpell *_this){
 	uint16_t spell_index;
