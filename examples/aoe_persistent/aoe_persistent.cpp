@@ -42,11 +42,11 @@ void __thiscall thuderstorm_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
     // SF_Coord
     spellAPI->getTargetsRectangle(_this, &hit_area, spell_index, spell_data.params[0], &cast_center);
 
-    // uint32_t tick_left = spellAPI->getXData(_this, _this->active_spell_list[spell_index].xdata_key, SPELL_TICK_COUNT_AUX);
+    uint32_t tick_current = spellAPI->getXData(_this, spell_index, SPELL_TICK_COUNT_AUX);
     uint16_t ticks_passed = spellAPI->addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1);
 
     // visual effect addition, if it's 1st tick
-    if (ticks_passed == 1)
+    if (tick_current == 0)
     {
         SF_CGdTargetData relative_data;
         relative_data.position = cast_center;
