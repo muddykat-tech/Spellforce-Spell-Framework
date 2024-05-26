@@ -345,6 +345,13 @@ typedef struct __attribute__((packed))
 	CGdTileIterator_data data;
 } CGdFigureIterator;
 
+typedef struct __attribute__((packed))
+{
+	uint32_t btable_ptr;
+	CGdTileIterator_data data;
+} CGdBuildingIterator;
+
+
 // Here comes a better method for setting up our exposed functions, when need to define function, check sf_hooks.h
 #define DECLARE_FUNCTION(type, name, ...) \
     typedef type (__thiscall *name##_ptr)(__VA_ARGS__);
@@ -390,6 +397,10 @@ DECLARE_FUNCTION(void, setupFigureIterator, CGdFigureIterator *iterator, SF_CGdS
 DECLARE_FUNCTION(void, disposeFigureIterator, CGdFigureIterator iterator);
 
 DECLARE_FUNCTION(void, buildingDealDamage, void* CGdBuildingToolBox, uint16_t figure_id, uint16_t building_id, uint16_t damage, uint32_t is_spell_damage);
+
+DECLARE_FUNCTION(uint16_t, getNextBuilding, CGdBuildingIterator * this);
+
+
 // We define the call name and the ptr it uses, I hope to fine a better way to deal with this.
 DECLARE_FUNCTION_GROUP(Figure,
 	isAlive_ptr isAlive;
@@ -422,6 +433,8 @@ DECLARE_FUNCTION_GROUP(Toolbox,
     buildingDealDamage_ptr buildingDealDamage;
 );
 
+// This function group will be reorganized and likely renamed to some extent
+// Deprecated
 DECLARE_FUNCTION_GROUP(Iterator,
     figureIteratorInit_ptr figureIteratorInit;
 	figureIteratorSetPointers_ptr figureIteratorSetPointers;
@@ -429,4 +442,6 @@ DECLARE_FUNCTION_GROUP(Iterator,
 	figureIteratorGetNextFigure_ptr figureIteratorGetNextFigure;
 	setupFigureIterator_ptr setupFigureIterator; 
 	disposeFigureIterator_ptr disposeFigureIterator;
+
+	getNextBuilding_ptr getNextBuilding;
 );
