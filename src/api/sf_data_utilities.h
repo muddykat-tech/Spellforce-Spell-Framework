@@ -387,16 +387,18 @@ DECLARE_FUNCTION(SF_Rectangle * , getTargetsRectangle, SF_CGdSpell* _this,SF_Rec
 DECLARE_FUNCTION(void, dealDamage, void* CGdFigureToolbox, uint16_t source_index, uint16_t target_index, uint32_t damage, uint32_t is_spell_damage, uint32_t param5, uint32_t param6);
 DECLARE_FUNCTION(bool, isTargetable, void * CGdFigureToolbox, uint16_t figure_index);
 DECLARE_FUNCTION(uint16_t, figuresCheckHostile, void * CGdFigureToolbox, uint16_t source_index, uint16_t target_index);
+DECLARE_FUNCTION(void, buildingDealDamage, void* CGdBuildingToolBox, uint16_t figure_id, uint16_t building_id, uint16_t damage, uint32_t is_spell_damage);
 
 //Declare the function pointers for IteratorFunctions group
 DECLARE_FUNCTION(void, figureIteratorInit, CGdFigureIterator *iterator, uint16_t x_start, uint16_t y_start, uint16_t x_end, uint16_t y_end);
 DECLARE_FUNCTION(void, figureIteratorSetPointers, CGdFigureIterator *iterator, SF_CGdFigure * figure, void * AutoClass22, void * CGdWorld);
 DECLARE_FUNCTION(void, iteratorSetArea, CGdFigureIterator *iterator, SF_Coord *position, uint16_t radius);
-DECLARE_FUNCTION(uint16_t,figureIteratorGetNextFigure,CGdFigureIterator *iterator);
+DECLARE_FUNCTION(uint16_t, getNextFigure, CGdFigureIterator *iterator);
 DECLARE_FUNCTION(void, setupFigureIterator, CGdFigureIterator *iterator, SF_CGdSpell *spell);
 DECLARE_FUNCTION(void, disposeFigureIterator, CGdFigureIterator iterator);
 
-DECLARE_FUNCTION(void, buildingDealDamage, void* CGdBuildingToolBox, uint16_t figure_id, uint16_t building_id, uint16_t damage, uint32_t is_spell_damage);
+DECLARE_FUNCTION(void, buildingIteratorInit, CGdBuildingIterator *iterator, uint16_t x_start, uint16_t y_start, uint16_t x_end, uint16_t y_end);
+DECLARE_FUNCTION(void, buildingIteratorSetPointers, CGdBuildingIterator *iterator, SF_CGdBuilding* building, AutoClass22 * unkn1, CGdWorld *world);
 
 DECLARE_FUNCTION(uint16_t, getNextBuilding, CGdBuildingIterator * this);
 
@@ -439,9 +441,11 @@ DECLARE_FUNCTION_GROUP(Iterator,
     figureIteratorInit_ptr figureIteratorInit;
 	figureIteratorSetPointers_ptr figureIteratorSetPointers;
 	iteratorSetArea_ptr iteratorSetArea;
-	figureIteratorGetNextFigure_ptr figureIteratorGetNextFigure;
+	getNextFigure_ptr getNextFigure;
 	setupFigureIterator_ptr setupFigureIterator; 
 	disposeFigureIterator_ptr disposeFigureIterator;
 
 	getNextBuilding_ptr getNextBuilding;
+	buildingIteratorInit_ptr buildingIteratorInit;
+	buildingIteratorSetPointers_ptr buildingIteratorSetPointers;
 );

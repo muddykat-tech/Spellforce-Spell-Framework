@@ -199,7 +199,7 @@ void __thiscall setupFigureIterator(CGdFigureIterator *iterator, SF_CGdSpell *sp
     apiIteratorFunctions.figureIteratorSetPointers(iterator, spell->SF_CGdFigure, spell->unkn3, spell->SF_CGdWorld);
 }
 
-// Some funky stuff to clean up Iterator memory, not 100% if correct
+// Some funky stuff to clean up Iterator memory, not 100% sure if correct
 void __thiscall disposeFigureIterator(CGdFigureIterator iterator ){
     uint32_t unused;
     FUN_0069eaf0(&iterator.data.offset_0x30, &unused, ((AutoClass69 *) iterator.data.offset_0x30.ac69_ptr1)->ac69_ptr1, iterator.data.offset_0x30.ac69_ptr1);
@@ -244,7 +244,10 @@ void initDataHooks(){
     DEFINE_FUNCTION(Iterator, figureIteratorInit, 0x3183f0);
     DEFINE_FUNCTION(Iterator, figureIteratorSetPointers, 0x31a680);
     DEFINE_FUNCTION(Iterator, iteratorSetArea, 0x3195d0);
-    DEFINE_FUNCTION(Iterator, figureIteratorGetNextFigure, 0x318f50);
+    DEFINE_FUNCTION(Iterator, getNextFigure, 0x318f50);
+
+	DEFINE_FUNCTION(Iterator, buildingIteratorInit, 0x318290);
+	DEFINE_FUNCTION(Iterator, buildingIteratorSetPointers,0x31A640);
 
 	// Method to include functions WE define in the Internal code.
 	INCLUDE_FUNCTION(Spell, initializeSpellData, &initializeSpellData);
@@ -252,6 +255,8 @@ void initDataHooks(){
 
 	INCLUDE_FUNCTION(Iterator, setupFigureIterator, &setupFigureIterator);
 	INCLUDE_FUNCTION(Iterator, disposeFigureIterator, &disposeFigureIterator);
+
+	
 }
 
 void initSpellTypeHook(){

@@ -22,11 +22,11 @@ void __thiscall aoe_lifetap_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
     uint16_t source_index = spell->source.entity_index;
     // Iterators are opaque from the user perspective.
     // Just give enough memory and don't bother what's inside
-    CGdFigureIterator iterator_memory;
-    iteratorAPI->setupFigureIterator(&iterator_memory, _this);
+    CGdFigureIterator figure_iterator;
+    iteratorAPI->setupFigureIterator(&figure_iterator, _this);
 
-    // iteratorAPI->figureIteratorInit(&iterator_memory, 0x0, 0x0, 0x3ff, 0x3ff);
-    // iteratorAPI->figureIteratorSetPointers(&iterator_memory, _this->SF_CGdFigure, _this->unkn3, _this->SF_CGdWorld);
+    // iteratorAPI->figureIteratorInit(&figure_iterator, 0x0, 0x0, 0x3ff, 0x3ff);
+    // iteratorAPI->figureIteratorSetPointers(&figure_iterator, _this->SF_CGdFigure, _this->unkn3, _this->SF_CGdWorld);
 
 
     SF_SpellEffectInfo effect_info;
@@ -44,8 +44,8 @@ void __thiscall aoe_lifetap_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
     relative_data.entity_index = 0;
     uint32_t unused;
     spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitWorld, &unused, &relative_data, _this->OpaqueClass->current_step, 0x19, &hit_area);
-    iteratorAPI->iteratorSetArea(&iterator_memory, &cast_center, spell_data.params[0]);
-    uint16_t target_index = iteratorAPI->figureIteratorGetNextFigure(&iterator_memory);
+    iteratorAPI->iteratorSetArea(&figure_iterator, &cast_center, spell_data.params[0]);
+    uint16_t target_index = iteratorAPI->getNextFigure(&figure_iterator);
 
     while (target_index != 0)
     {
@@ -85,11 +85,11 @@ void __thiscall aoe_lifetap_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
                 }
             }
         }
-        target_index = iteratorAPI->figureIteratorGetNextFigure(&iterator_memory);
+        target_index = iteratorAPI->getNextFigure(&figure_iterator);
     }
     spellAPI->setEffectDone(_this, spell_index, 0);
 
-    iteratorAPI->disposeFigureIterator(iterator_memory);
+    iteratorAPI->disposeFigureIterator(figure_iterator);
 }
 
 /***
