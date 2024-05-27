@@ -371,6 +371,7 @@ DECLARE_FUNCTION(uint16_t, getCurrentHealth,SF_CGdFigure* figure, uint16_t figur
 DECLARE_FUNCTION(void, decreaseHealth,SF_CGdFigure* figure, uint16_t figure_id, uint16_t amount);
 
 // Declare the function pointers for the SpellFunctions group
+DECLARE_FUNCTION(void, removeDLLNode, SF_CGdSpell * _this, uint16_t spell_id);
 DECLARE_FUNCTION(void, setXData, SF_CGdSpell * _this, uint16_t spell_id, uint8_t xdatakey, uint32_t value);
 DECLARE_FUNCTION(void, initializeSpellData, SF_CGdSpell* _this, uint16_t spell_id, SpellDataKey key);
 DECLARE_FUNCTION(void, setEffectDone, SF_CGdSpell* _this, uint16_t spell_id, uint16_t param_2);
@@ -413,6 +414,7 @@ DECLARE_FUNCTION_GROUP(Figure,
 );
 
 DECLARE_FUNCTION_GROUP(Spell,
+    removeDLLNode_ptr removeDLLNode;
 	setXData_ptr setXData;
 	initializeSpellData_ptr initializeSpellData;
 	setEffectDone_ptr setEffectDone;
