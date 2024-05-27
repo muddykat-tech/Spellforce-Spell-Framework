@@ -247,6 +247,8 @@ void initDataHooks()
     DEFINE_FUNCTION(Figure, addBonusMult, 0x35A3E0);
     DEFINE_FUNCTION(Figure, decreaseHealth, 0x2b5b40);
     DEFINE_FUNCTION(Figure, getCurrentHealth, 0x279350);
+    DEFINE_FUNCTION(Figure, getCurrentManaMax, 0x2b2a20);
+    DEFINE_FUNCTION(Figure, rescaleMana, 0x2b5d50);
 
     // Define the function pointers for SpellFunctions group
     DEFINE_FUNCTION(Spell, setXData, 0x329C40);
@@ -264,6 +266,7 @@ void initDataHooks()
     DEFINE_FUNCTION(Toolbox, isTargetable, 0x2fe704);
     DEFINE_FUNCTION(Toolbox, figuresCheckHostile, 0x2fe7b9);
     DEFINE_FUNCTION(Toolbox, hasSpellOnHit, 0x2fe4ea);
+    DEFINE_FUNCTION(Toolbox, rescaleLevelStats, 0x2fff48);
 
     DEFINE_FUNCTION(Toolbox, buildingDealDamage, 0x2d6d80);
 

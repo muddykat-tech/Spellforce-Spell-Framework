@@ -373,7 +373,8 @@ DECLARE_FUNCTION(void, addBonusMultToStatistic, SF_CGdFigure *figure, StatisticD
 DECLARE_FUNCTION(uint8_t, addBonusMult, FigureStatistic statistic, int8_t value);
 DECLARE_FUNCTION(uint16_t, getCurrentHealth, SF_CGdFigure *figure, uint16_t figure_id);
 DECLARE_FUNCTION(void, decreaseHealth, SF_CGdFigure *figure, uint16_t figure_id, uint16_t amount);
-
+DECLARE_FUNCTION(uint16_t, getCurrentManaMax, SF_CGdFigure *figure, uint16_t figure_id);
+DECLARE_FUNCTION(void, rescaleMana, SF_CGdFigure *figure, uint16_t figure_id, uint16_t max_mana);
 // Declare the function pointers for the SpellFunctions group
 DECLARE_FUNCTION(void, removeDLLNode, SF_CGdSpell *_this, uint16_t spell_id);
 DECLARE_FUNCTION(void, setXData, SF_CGdSpell *_this, uint16_t spell_id, uint8_t xdatakey, uint32_t value);
@@ -393,6 +394,7 @@ DECLARE_FUNCTION(void, dealDamage, void *CGdFigureToolbox, uint16_t source_index
 DECLARE_FUNCTION(bool, isTargetable, void *CGdFigureToolbox, uint16_t figure_index);
 DECLARE_FUNCTION(uint16_t, figuresCheckHostile, void *CGdFigureToolbox, uint16_t source_index, uint16_t target_index);
 DECLARE_FUNCTION(uint32_t, hasSpellOnHit, void *CGdFigureToolbox, uint16_t figure_index, uint16_t spell_line_id);
+DECLARE_FUNCTION(void, rescaleLevelStats, void *CGdFigureToolbox, uint16_t figure_index);
 // Declare the function pointers for IteratorFunctions group
 DECLARE_FUNCTION(void, figureIteratorInit, CGdFigureIterator *iterator, uint16_t x_start, uint16_t y_start, uint16_t x_end, uint16_t y_end);
 DECLARE_FUNCTION(void, figureIteratorSetPointers, CGdFigureIterator *iterator, SF_CGdFigure *figure, void *AutoClass22, void *CGdWorld);
@@ -413,7 +415,10 @@ DECLARE_FUNCTION_GROUP(Figure,
                        addBonusMult_ptr addBonusMult;
                        addBonusMultToStatistic_ptr addBonusMultToStatistic;
                        decreaseHealth_ptr decreaseHealth;
-                       getCurrentHealth_ptr getCurrentHealth;);
+                       getCurrentHealth_ptr getCurrentHealth;
+                       getCurrentManaMax_ptr getCurrentManaMax;
+                       rescaleMana_ptr rescaleMana;
+                       );
 
 DECLARE_FUNCTION_GROUP(Spell,
                        removeDLLNode_ptr removeDLLNode;
@@ -434,7 +439,9 @@ DECLARE_FUNCTION_GROUP(Toolbox,
                        isTargetable_ptr isTargetable;
                        figuresCheckHostile_ptr figuresCheckHostile;
                        hasSpellOnHit_ptr hasSpellOnHit;
-                       buildingDealDamage_ptr buildingDealDamage;);
+                       buildingDealDamage_ptr buildingDealDamage;
+                       rescaleLevelStats_ptr rescaleLevelStats;
+                       );
 
 // This function group will be reorganized and likely renamed to some extent
 // Deprecated
