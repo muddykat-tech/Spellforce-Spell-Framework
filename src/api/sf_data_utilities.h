@@ -398,9 +398,9 @@ DECLARE_FUNCTION(void, setupFigureIterator, CGdFigureIterator *iterator, SF_CGdS
 DECLARE_FUNCTION(void, disposeFigureIterator, CGdFigureIterator iterator);
 
 DECLARE_FUNCTION(void, buildingIteratorInit, CGdBuildingIterator *iterator, uint16_t x_start, uint16_t y_start, uint16_t x_end, uint16_t y_end);
-DECLARE_FUNCTION(void, buildingIteratorSetPointers, CGdBuildingIterator *iterator, SF_CGdBuilding* building, AutoClass22 * unkn1, CGdWorld *world);
+DECLARE_FUNCTION(void, buildingIteratorSetPointers, CGdBuildingIterator *iterator, void *SF_CGdBuilding, void *AutoClass22, void *CGdWorld);
 
-DECLARE_FUNCTION(uint16_t, getNextBuilding, CGdBuildingIterator * this);
+DECLARE_FUNCTION(uint16_t, getNextBuilding, CGdBuildingIterator * _this);
 
 
 // We define the call name and the ptr it uses, I hope to fine a better way to deal with this.

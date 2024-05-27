@@ -30,7 +30,8 @@ FigureFunctions apiFigureFunctions;
 IteratorFunctions apiIteratorFunctions;
 
 
-void __thiscall triggerEffect_hook(SF_CGdSpell *_this){
+void __thiscall triggerEffect_hook(SF_CGdSpell *_this)
+{
 	uint16_t spell_index;
 	for (spell_index = 1; spell_index <= _this->max_used; ++spell_index)
     {
@@ -123,7 +124,8 @@ uint16_t __thiscall addSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_id, ui
 }
 
 // May be best to remove this function and deal with it elsewhere.
-void __thiscall addBonusMultToStatistic(SF_CGdFigure* figure, StatisticDataKey key, uint16_t target, uint8_t value){
+void __thiscall addBonusMultToStatistic(SF_CGdFigure* figure, StatisticDataKey key, uint16_t target, uint8_t value) 
+{
 	bool invalid = FALSE;
 	FigureStatistic statistic;
 	switch (key) {
@@ -185,7 +187,8 @@ void __thiscall addBonusMultToStatistic(SF_CGdFigure* figure, StatisticDataKey k
 	return;
 }
 
-void initConsoleHook(){
+void initConsoleHook()
+{
 	uint32_t CAppMain_ptr = ASI::AddrOf(0x9229A8);
 	uint32_t CAppMenu_ptr = *(uint32_t*) (CAppMain_ptr + 0x4);
 	uint32_t CMnuScrConsole_ptr = *(uint32_t*) (CAppMenu_ptr + 0x80);
@@ -194,19 +197,25 @@ void initConsoleHook(){
 	SF_String_dtor =(SF_String_dtor_ptr) ASI::AddrOf(0x3839c0);
 }
 
-void __thiscall setupFigureIterator(CGdFigureIterator *iterator, SF_CGdSpell *spell){
+/* 
+	These functions, and future types, will eventually be moved into "sf_api" or some such
+*/ 
+void __thiscall setupFigureIterator(CGdFigureIterator *iterator, SF_CGdSpell *spell)
+{
     apiIteratorFunctions.figureIteratorInit(iterator, 0x0, 0x0, 0x3ff, 0x3ff);
     apiIteratorFunctions.figureIteratorSetPointers(iterator, spell->SF_CGdFigure, spell->unkn3, spell->SF_CGdWorld);
 }
 
 // Some funky stuff to clean up Iterator memory, not 100% sure if correct
-void __thiscall disposeFigureIterator(CGdFigureIterator iterator ){
+void __thiscall disposeFigureIterator(CGdFigureIterator iterator )
+{
     uint32_t unused;
     FUN_0069eaf0(&iterator.data.offset_0x30, &unused, ((AutoClass69 *) iterator.data.offset_0x30.ac69_ptr1)->ac69_ptr1, iterator.data.offset_0x30.ac69_ptr1);
     fidFree(iterator.data.offset_0x30.ac69_ptr1);
 }
 
-void initDataHooks(){
+void initDataHooks()
+{
 	// Required for internal use
 	get_spell_spell_line = (get_spell_spell_line_ptr) (ASI::AddrOf(0x26E100));
 	figure_toolbox_get_unkn = (figure_toolbox_get_unkn_ptr) (ASI::AddrOf(0x2FE704));
@@ -259,7 +268,8 @@ void initDataHooks(){
 	
 }
 
-void initSpellTypeHook(){
+void initSpellTypeHook()
+{
 	ASI::MemoryRegion add_spell_mreg(ASI::AddrOf(0x328d60), 5);
     ASI::BeginRewrite(add_spell_mreg);
         *(unsigned char*)(ASI::AddrOf(0x328d60)) = 0xE9;   // jmp instruction
