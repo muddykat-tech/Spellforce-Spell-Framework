@@ -3,7 +3,6 @@
 
 #include <stdint.h>
 #include "../api/sfsf.h"
-#include "../api/sf_data_utilities.h"
 
 extern void initSpellMap();
 extern void __thiscall initializeSpellData(SF_CGdSpell* _this, uint16_t spell_id, SpellDataKey key);

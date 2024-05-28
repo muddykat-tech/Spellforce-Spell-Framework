@@ -1,8 +1,8 @@
 #include "../../src/api/sfsf.h"
-#include "../../src/api/sf_data_utilities.h"
 #include <windows.h>
 #include <stdio.h>
 // For convenience only; You can put headers just near the file and remove ../api/
+// NOTE sfsf.h includes the OTHER api files, the other files are still required
 
 // Another convenience: you can ommit functions you won't need, or call everything from the framework structure
 SpellforceSpellFramework *sfsf;
@@ -57,7 +57,7 @@ void __thiscall thuderstorm_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
     }
 
     iteratorAPI->iteratorSetArea(&iterator_memory, &cast_center, spell_data.params[0]);
-    uint16_t target_index = iteratorAPI->figureIteratorGetNextFigure(&iterator_memory);
+    uint16_t target_index = iteratorAPI->getNextFigure(&iterator_memory);
 
     if (ticks_passed < ticks_total)
     {
@@ -100,7 +100,7 @@ void __thiscall thuderstorm_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
                     }
                 }
             }
-            target_index = iteratorAPI->figureIteratorGetNextFigure(&iterator_memory);
+            target_index = iteratorAPI->getNextFigure(&iterator_memory);
         }
         _this->active_spell_list[spell_index].to_do_count = (uint16_t)((ticks_interval * 10) / 1000);
     }

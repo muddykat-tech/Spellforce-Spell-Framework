@@ -2,7 +2,6 @@
 #define HOOKS_H
 
 #include "../api/sfsf.h"
-#include "../api/sf_data_utilities.h"
 #include "../asi/sf_asi.h"
 
 #define DEFINE_FUNCTION(group, name, address) \

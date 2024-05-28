@@ -1,8 +1,8 @@
 #include "../../src/api/sfsf.h"
-#include "../../src/api/sf_data_utilities.h"
 #include <windows.h>
 #include <stdio.h>
 // For convenience only; You can put headers just near the file and remove ../api/
+// NOTE sfsf.h includes the OTHER api files, the other files are still required
 
 // Another convenience: you can ommit functions you won't need, or call everything from the framework structure
 SpellforceSpellFramework *sfsf;

@@ -1,6 +1,6 @@
 #include <windows.h>
-#include "../api/sf_data_utilities.h"
 #include "../api/sfsf.h"
+// NOTE sfsf.h includes the OTHER api files, the other files are still required
 
 #include <cstdio>
 
@@ -30,13 +30,13 @@ void __thiscall custom_spelleffect_handler(SF_CGdSpell * _this, uint16_t spell_i
   sfsf->logInfo("Grab Spell from list");
   SF_GdSpell *spell = &_this->active_spell_list[spell_index];
   uint8_t xdata_key = spell->xdata_key;
-  uint8_t tick_count = spellAPI->getXData(_this->SF_CGdXDataList, xdata_key, SPELL_TICK_COUNT);
+  uint8_t tick_count = spellAPI->getXData(_this, xdata_key, SPELL_TICK_COUNT);
 
   char countinfo1[256];
   sprintf(countinfo1, "Tick Count:  %d\n", tick_count);
   sfsf->logInfo(countinfo1);
 
-  spellAPI->addToXDataList(_this->SF_CGdXDataList, spell_index, SPELL_TICK_COUNT, 100);
+  spellAPI->addToXData(_this, spell_index, SPELL_TICK_COUNT, 100);
 
   char countinfo2[256];
   sprintf(countinfo2, "Tick Count:  %d\n", tick_count);

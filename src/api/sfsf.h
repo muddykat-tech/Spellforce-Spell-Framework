@@ -2,7 +2,12 @@
 // DEPRECATED
 #pragma once
 
-#include "sf_data_utilities.h"
+#include "sf_general_structures.h"
+#include "sf_figure_functions.h"
+#include "sf_iterator_functions.h"
+#include "sf_spell_functions.h"
+#include "sf_toolbox_functions.h"
+
 #include <stdint.h>
 
 typedef void (*InitModuleFunc)(void*);

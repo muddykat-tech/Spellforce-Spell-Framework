@@ -40,7 +40,7 @@ obj/dllmain.o: ${INTERNALS_SRC}/dllmain.cpp src/asi/sf_asi.h | obj
 obj/sf_utility.o: ${INTERNALS_SRC}/sf_utility.c | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
-obj/sf_hooks.o: ${INTERNALS_SRC}/sf_hooks.c src/asi/sf_asi.h src/api/sf_data_utilities.h | obj
+obj/sf_hooks.o: ${INTERNALS_SRC}/sf_hooks.c src/asi/sf_asi.h | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_modloader.o: ${INTERNALS_SRC}/sf_modloader.c | obj

@@ -1,6 +1,4 @@
-// Already included in sf_registry, may be good to remove.
 #include "../api/sfsf.h"
-#include "../api/sf_data_utilities.h"
 
 #include "sf_spelleffect_handlers.h"
 #include "sf_registry.h"
