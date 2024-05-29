@@ -3,8 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "sf_utility.h"
-#include "../api/sfsf.h"
+#include "sf_wrappers.h"
 #include "sf_modloader.h"
 
 extern SpellforceSpellFramework frameworkAPI;

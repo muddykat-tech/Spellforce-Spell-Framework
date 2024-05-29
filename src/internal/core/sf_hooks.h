@@ -1,8 +1,8 @@
 #ifndef HOOKS_H
 #define HOOKS_H
 
-#include "../api/sfsf.h"
-#include "../asi/sf_asi.h"
+#include "../../api/sfsf.h"
+#include "../../asi/sf_asi.h"
 
 #define DEFINE_FUNCTION(group, name, address) \
     name##_ptr name = (name##_ptr)(ASI::AddrOf(address)); \

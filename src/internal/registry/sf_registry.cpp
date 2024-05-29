@@ -1,14 +1,11 @@
-#include "../api/sfsf.h"
+#include "../handlers/sf_spelleffect_handlers.h"
+#include "../core/sf_modloader.h"
+#include "../core/sf_wrappers.h"
+#include "../core/sf_hooks.h"
 
-#include "sf_spelleffect_handlers.h"
 #include "sf_registry.h"
 #include "sf_spelltype_registry.h"
 #include "sf_spelleffect_registry.h"
-#include "sf_hooks.h"
-
-#include "sf_modloader.h"
-#include "sf_utility.h"
-#include "sf_hooks.h"
 #include <windows.h>
 
 // Exposed in sfsf.h

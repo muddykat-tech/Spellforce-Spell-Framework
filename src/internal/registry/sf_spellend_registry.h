@@ -1,8 +1,7 @@
 #pragma once
 
-#include "../api/sfsf.h"
-#include "../api/sf_data_utilities.h"
-
+#include "../../api/sfsf.h"
+#include "../../api/sf_general_structures.h"
 
 void __thiscall default_end_handler(SF_CGdSpell* _this, uint16_t spell_index);
 

@@ -1,5 +1,5 @@
 #include "sf_spellend_registry.h"
-#include "sf_hooks.h"
+#include "../core/sf_hooks.h"
 
 // default case
 void __thiscall default_end_handler(SF_CGdSpell *_this, uint16_t spell_index)

@@ -1,6 +1,6 @@
 #include "sf_spelleffect_handlers.h"
-#include "sf_utility.h"
-#include "sf_spelleffect_registry.h"
+#include "../core/sf_wrappers.h"
+#include "../registry/sf_spelleffect_registry.h"
 
 handler_ptr effect_ability_benefactions_handler;
 handler_ptr effect_ability_berserk_handler;

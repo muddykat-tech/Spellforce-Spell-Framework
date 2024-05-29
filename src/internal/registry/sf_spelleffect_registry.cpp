@@ -1,5 +1,5 @@
 #include "sf_spelleffect_registry.h"
-#include "sf_utility.h"
+#include "../core/sf_wrappers.h"
 
 #include <iostream>
 #include <map>

@@ -1,8 +1,9 @@
+#include "../handlers/sf_spelltype_handlers.h"
+#include "../core/sf_hooks.h"
+#include "../core/sf_wrappers.h"
+
 #include "sf_spelltype_registry.h"
-#include "sf_spelltype_handlers.h"
 #include "sf_registry.h"
-#include "sf_hooks.h"
-#include "sf_utility.h"
 #include <map>
 #include <cstdio>
 

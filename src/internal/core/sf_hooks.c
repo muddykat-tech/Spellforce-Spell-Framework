@@ -1,9 +1,9 @@
 #include "sf_modloader.h"
 #include "sf_hooks.h"
-#include "sf_spelltype_handlers.h"
-#include "sf_spelltype_registry.h"
-#include "sf_spelleffect_registry.h"
-#include "sf_utility.h"
+#include "sf_wrappers.h"
+#include "../handlers/sf_spelltype_handlers.h"
+#include "../registry/sf_spelltype_registry.h"
+#include "../registry/sf_spelleffect_registry.h"
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -32,6 +32,7 @@ int __thiscall CheckCanApply_hook_beta(SF_CGdSpell *_this, uint16_t spell_index)
     // We need a map of refresh handlers?
     // And a default handler that does nothing
     // handler takes (SF_CGdSpell *_this, uint16_t spell_index) as params
+    return 0;
 }
 
 void __thiscall EndSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_index)
@@ -201,7 +202,6 @@ void __thiscall addBonusMultToStatistic(SF_CGdFigure *figure, StatisticDataKey k
     }
 
     apiFigureFunctions.addBonusMult(statistic, value);
-    return;
 }
 
 /* 

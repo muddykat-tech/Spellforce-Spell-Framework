@@ -1,8 +1,8 @@
 #include "sf_spelltype_handlers.h"
-#include "sf_hooks.h"
-#include "sf_spelltype_registry.h"
-#include "sf_registry.h"
-#include "sf_utility.h"
+#include "../core/sf_hooks.h"
+#include "../core/sf_wrappers.h"
+#include "../registry/sf_spelltype_registry.h"
+#include "../registry/sf_registry.h"
 
 void __thiscall default_handler (SF_CGdSpell * _this, uint16_t spell_index)
 {

@@ -1,7 +1,7 @@
 #include <windows.h>
-#include "sf_hooks.h"
-#include "sf_registry.h"
-#include "sf_utility.h"
+#include "core/sf_hooks.h"
+#include "core/sf_wrappers.h"
+#include "registry/sf_registry.h"
 #include "../asi/sf_asi.h"
 
 BOOL APIENTRY DllMain( HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved) {

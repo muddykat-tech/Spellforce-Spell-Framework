@@ -6,9 +6,14 @@ DLL_LDFLAGS = -shared -static-libgcc -static-libstdc++ -s -Wl,-Bstatic,--whole-a
 FW_LDFLAGS = -shared -static-libgcc -static-libstdc++ -s -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive -Wl,--subsystem,windows,--out-implib,lib/sfsf.a
 
 # Object files for the new architecture
-NTERNALS_OBJ = obj/dllmain.o obj/sf_hooks.o obj/sf_modloader.o obj/sf_registry.o obj/sf_spelltype_handlers.o obj/sf_asi.o obj/sf_utility.o obj/sf_spelltype_registry.o obj/sf_spelleffect_handlers.o  obj/sf_spelleffect_registry.o
+NTERNALS_OBJ = obj/sfsf.o obj/sf_hooks.o obj/sf_modloader.o obj/sf_registry.o obj/sf_spelltype_handlers.o obj/sf_asi.o obj/sf_wrappers.o obj/sf_spelltype_registry.o obj/sf_spelleffect_handlers.o  obj/sf_spelleffect_registry.o
 TEST_MOD_OBJ = obj/TestMod.o
 INTERNALS_SRC = src/internal
+
+CORE_SRC = ${INTERNALS_SRC}/core
+REGISTRY_SRC = ${INTERNALS_SRC}/registry
+HANDLERS_SRC = ${INTERNALS_SRC}/handlers
+
 
 # Phony targets
 .PHONY: all clean mods
@@ -34,31 +39,31 @@ bin lib obj:
 obj/sf_asi.o: src/asi/sf_asi.cpp src/asi/sf_asi.h | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
-obj/dllmain.o: ${INTERNALS_SRC}/dllmain.cpp src/asi/sf_asi.h | obj
+obj/sfsf.o: ${INTERNALS_SRC}/sfsf.cpp src/asi/sf_asi.h | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
-obj/sf_utility.o: ${INTERNALS_SRC}/sf_utility.c | obj
+obj/sf_wrappers.o: ${CORE_SRC}/sf_wrappers.c | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
-obj/sf_hooks.o: ${INTERNALS_SRC}/sf_hooks.c src/asi/sf_asi.h | obj
+obj/sf_hooks.o: ${CORE_SRC}/sf_hooks.c src/asi/sf_asi.h | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
-obj/sf_modloader.o: ${INTERNALS_SRC}/sf_modloader.c | obj
+obj/sf_modloader.o: ${CORE_SRC}/sf_modloader.c | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
-obj/sf_registry.o: ${INTERNALS_SRC}/sf_registry.cpp | obj
+obj/sf_registry.o: ${REGISTRY_SRC}/sf_registry.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
 
-obj/sf_spelltype_handlers.o: ${INTERNALS_SRC}/sf_spelltype_handlers.cpp | obj
+obj/sf_spelltype_handlers.o: ${HANDLERS_SRC}/sf_spelltype_handlers.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
 
-obj/sf_spelltype_registry.o: ${INTERNALS_SRC}/sf_spelltype_registry.cpp | obj
+obj/sf_spelltype_registry.o: ${REGISTRY_SRC}/sf_spelltype_registry.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
 
-obj/sf_spelleffect_handlers.o: ${INTERNALS_SRC}/sf_spelleffect_handlers.cpp | obj
+obj/sf_spelleffect_handlers.o: ${HANDLERS_SRC}/sf_spelleffect_handlers.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
 
-obj/sf_spelleffect_registry.o: ${INTERNALS_SRC}/sf_spelleffect_registry.cpp | obj
+obj/sf_spelleffect_registry.o: ${REGISTRY_SRC}/sf_spelleffect_registry.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
 
 #mod build

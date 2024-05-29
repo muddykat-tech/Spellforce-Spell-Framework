@@ -1,9 +1,9 @@
 #ifndef SF_SPELLTYPE_HANDLER_H
 #define SF_SPELLTYPE_HANDLER_H
 
-#include "../api/sfsf.h"
-#include "../api/sf_general_structures.h"
-#include "../api/sf_spell_functions.h"
+#include "../../api/sfsf.h"
+#include "../../api/sf_general_structures.h"
+#include "../../api/sf_spell_functions.h"
 
 void __thiscall default_handler(SF_CGdSpell* _this, uint16_t spell_index);
 void __thiscall fireburst_handler(SF_CGdSpell* _this, uint16_t spell_index);
