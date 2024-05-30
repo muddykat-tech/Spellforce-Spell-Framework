@@ -6,12 +6,12 @@
 #include "sf_wrappers.h"
 #include "sf_hooks.h"
 
-void logWarning(const char *message) {
+void log_warning(const char *message) {
     // Logs a warning message to the console and the debug output
     static char modifiedMessage[256]; 
     snprintf(modifiedMessage, sizeof(modifiedMessage), "[WARNING] %s", message);
     OutputDebugStringA(modifiedMessage);
-    ConsoleLog(modifiedMessage);
+    console_log(modifiedMessage);
 }
 
 void logInfo(const char *message) {
@@ -19,7 +19,7 @@ void logInfo(const char *message) {
     static char modifiedMessage[256]; 
     snprintf(modifiedMessage, sizeof(modifiedMessage), "[SFSF] %s", message);
     OutputDebugStringA(modifiedMessage);
-    ConsoleLog(modifiedMessage);
+    console_log(modifiedMessage);
 }
 
 void logError(const char* message) {
@@ -28,5 +28,5 @@ void logError(const char* message) {
     static char modifiedMessage[256];
     snprintf(modifiedMessage, sizeof(modifiedMessage), "[ERROR] %s [Last Error: %d]", message, lastError);
     OutputDebugStringA(modifiedMessage);
-    ConsoleLog(modifiedMessage);
+    console_log(modifiedMessage);
 }

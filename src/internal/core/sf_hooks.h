@@ -6,18 +6,18 @@
 
 #define DEFINE_FUNCTION(group, name, address) \
     name##_ptr name = (name##_ptr)(ASI::AddrOf(address)); \
-    api##group##Functions.name = name;
+    api_##group##_functions.name = name;
 
 #define INCLUDE_FUNCTION(group, name, pointer) \
-    api##group##Functions.name = pointer;
+    api_##group##_functions.name = pointer;
 
-extern SpellFunctions apiSpellFunctions;
-extern ToolboxFunctions apiToolboxFunctions;
-extern FigureFunctions apiFigureFunctions;
-extern IteratorFunctions apiIteratorFunctions;
-void initBetaHooks();
-void initDataHooks();
+extern SpellFunctions api_spell_functions;
+extern ToolboxFunctions api_toolbox_functions;
+extern FigureFunctions api_figure_functions;
+extern IteratorFunctions api_iterator_functions;
+void initialize_beta_hooks();
+void initialize_data_hooks();
 
-void ConsoleLog(const char*);
+void console_log(const char*);
 
 #endif 

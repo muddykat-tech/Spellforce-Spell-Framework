@@ -10,26 +10,26 @@
 
 #include <stdint.h>
 
-typedef void (*InitModuleFunc)(void*);
-typedef void (*logWarningFunc)(const char*);
+typedef void (*initialize_module_ptr)(void*);
+typedef void (*log_warning_ptr)(const char*);
 typedef void (*logInfoFunc)(const char*);
 typedef void (__thiscall *handler_ptr) (SF_CGdSpell *, uint16_t);
-typedef void (*SpellHandlerFunc)(uint16_t spell_index, handler_ptr handler);
-typedef void (*EffectHandlerFunc)(uint16_t spell_job, handler_ptr handler);
+typedef void (*register_spelltype_handler_ptr)(uint16_t spell_index, handler_ptr handler);
+typedef void (*register_effect_handler_ptr)(uint16_t spell_job, handler_ptr handler);
 
 // Declare the structure
 struct SpellforceSpellFramework {
-    InitModuleFunc initializeModule;
-    SpellHandlerFunc registerSpellTypeHandler;
-    EffectHandlerFunc registerEffectHandler;
+    initialize_module_ptr initialize_module;
+    register_spelltype_handler_ptr registerSpellTypeHandler;
+    register_effect_handler_ptr registerEffectHandler;
 
-    SpellFunctions *apiSpellFunctions;
-    ToolboxFunctions *apiToolboxFunctions;
-    FigureFunctions *apiFigureFunctions;
-    IteratorFunctions *apiIteratorFunctions;
+    SpellFunctions *api_spell_functions;
+    ToolboxFunctions *api_toolbox_functions;
+    FigureFunctions *api_figure_functions;
+    IteratorFunctions *api_iterator_functions;
 
     // Perhaps create a struct for a proper logger? 
-    logWarningFunc logWarning;
+    log_warning_ptr log_warning;
     logInfoFunc logInfo;
 };
 

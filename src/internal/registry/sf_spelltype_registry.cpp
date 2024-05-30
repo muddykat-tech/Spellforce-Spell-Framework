@@ -8,7 +8,7 @@
 #include <cstdio>
 
 void __thiscall initializeSpellData(SF_CGdSpell* _this, uint16_t spell_id, SpellDataKey key) {
-	apiSpellFunctions.setXData(_this, spell_id, key, 0);
+	api_spell_functions.setXData(_this, spell_id, key, 0);
 }
 
 std::map<uint16_t, handler_ptr> handler_map;
@@ -30,7 +30,7 @@ void registerSpellTypeHandler(uint16_t spell_index, handler_ptr handler) {
         if(check->second != &default_handler) {
             char message[256]; // Assuming a maximum message length of 255 characters
             sprintf(message, "A non-default handler has been replaced! [%d] (Was this on purpose?)", spell_index);
-            logWarning(message);
+            log_warning(message);
         }
     }
 

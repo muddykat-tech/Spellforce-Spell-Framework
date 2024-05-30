@@ -91,6 +91,7 @@ DECLARE_FUNCTION(void, figureAggro, SF_CGdSpell *_this, uint16_t spell_id, uint1
 DECLARE_FUNCTION(SF_CGdResourceSpell*, getResourceSpellData, void *, SF_CGdResourceSpell* spellData, uint16_t index);
 DECLARE_FUNCTION(uint32_t, getXData, SF_CGdSpell *_this, uint16_t spell_id, SpellDataKey key);
 DECLARE_FUNCTION(SF_Rectangle * , getTargetsRectangle, SF_CGdSpell* _this,SF_Rectangle * output ,uint16_t spell_id,  uint16_t radius, SF_Coord * center_maybe);
+DECLARE_FUNCTION(void, removeDLLNode, SF_CGdSpell* _this, uint16_t param_1);
 
 DECLARE_FUNCTION_GROUP(Spell,
 	setXData_ptr setXData;
@@ -104,4 +105,5 @@ DECLARE_FUNCTION_GROUP(Spell,
 	figureAggro_ptr figureAggro;
 	getXData_ptr getXData;
     getTargetsRectangle_ptr getTargetsRectangle;
+    removeDLLNode_ptr removeDLLNode;
 );

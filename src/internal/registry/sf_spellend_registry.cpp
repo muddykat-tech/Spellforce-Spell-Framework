@@ -1,136 +1,38 @@
+
 #include "sf_spellend_registry.h"
-#include "../core/sf_hooks.h"
+#include "../core/sf_wrappers.h"
+#include "../handlers/sf_spellend_handlers.h"
 
-// default case
-void __thiscall default_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
+#include <iostream>
+#include <map>
+#include <cstdint>
+
+std::map<uint16_t, handler_ptr> spellend_handler_map;
+
+void register_spell_end_handler(uint16_t spell_job, handler_ptr handler) 
 {
-    apiSpellFunctions.removeDLLNode(_this, spell_index);
-    apiSpellFunctions.setEffectDone(_this, spell_index, 0);
-}
-
-// Stat changing handlers
-
-void __thiscall slowness_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
-{
-    SF_CGdResourceSpell spell_data;
-    apiSpellFunctions.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index].spell_id);
-    uint16_t target_index = _this->active_spell_list[spell_index].target.entity_index;
-
-    if (apiToolboxFunctions.hasSpellOnHit(_this->SF_CGdFigureToolBox, target_index, spell_data.spell_line_id))
-    {
-        apiFigureFunctions.addBonusMultToStatistic(_this->SF_CGdFigure, WALK_SPEED, target_index, spell_data.params[0]);
+    auto check = spellend_handler_map.find(spell_job);
+    if (check != spellend_handler_map.end()){ 
+        char message[256];
+        sprintf(message, "An On Spell End Handler has been replaced! [%d] (Was this on purpose?)", spell_job);
+        log_warning(message);
     }
-    // just don't wanna to repeat it every time
-    default_end_handler(_this, spell_index);
+
+    spellend_handler_map[spell_job] = handler;
 }
-void __thiscall decay1_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
+
+handler_ptr get_spell_end(uint16_t spell_job) 
 {
-    SF_CGdResourceSpell spell_data;
-    apiSpellFunctions.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index].spell_id);
-    uint16_t target_index = _this->active_spell_list[spell_index].target.entity_index;
-
-    if (apiToolboxFunctions.hasSpellOnHit(_this->SF_CGdFigureToolBox, target_index, spell_data.spell_line_id))
-    {
-        apiFigureFunctions.addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, target_index, spell_data.params[2]);
+    auto it = spellend_handler_map.find(spell_job);
+    if (it == spellend_handler_map.end()) {
+        logError("Unknown Job ID, No spell end handler registered.");
+        return NULL;
     }
-    default_end_handler(_this, spell_index);
+    return it->second;
 }
 
-void __thiscall inflexibility_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
+void register_vanilla_spell_end_handlers()
 {
-    SF_CGdResourceSpell spell_data;
-    apiSpellFunctions.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index].spell_id);
-    uint16_t target_index = _this->active_spell_list[spell_index].target.entity_index;
-
-    if (apiToolboxFunctions.hasSpellOnHit(_this->SF_CGdFigureToolBox, target_index, spell_data.spell_line_id))
-    {
-        apiFigureFunctions.addBonusMultToStatistic(_this->SF_CGdFigure, AGILITY, target_index, spell_data.params[0]);
-    }
-    default_end_handler(_this, spell_index);
+    //As we define ALL of the end handlers ourself inside sf_spellend_handlers.cpp, we do NOT need to initialize them here. (unlike sf_spelleffect_registry.cpp)
+    register_spell_end_handler(0xb, &default_end_handler); // And so on, (not sure if 0xb is default but it may be based on ghidra? CGdSpell:EndSpell)
 }
-
-void __thiscall weaken_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
-{
-    SF_CGdResourceSpell spell_data;
-    apiSpellFunctions.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index].spell_id);
-    uint16_t target_index = _this->active_spell_list[spell_index].target.entity_index;
-
-    if (apiToolboxFunctions.hasSpellOnHit(_this->SF_CGdFigureToolBox, target_index, spell_data.spell_line_id))
-    {
-        apiFigureFunctions.addBonusMultToStatistic(_this->SF_CGdFigure, STRENGTH, target_index, spell_data.params[0]);
-    }
-    default_end_handler(_this, spell_index);
-}
-
-void __thiscall quickness_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
-{
-    SF_CGdResourceSpell spell_data;
-    apiSpellFunctions.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index].spell_id);
-    uint16_t target_index = _this->active_spell_list[spell_index].target.entity_index;
-    int8_t bonus = (int8_t)(-apiSpellFunctions.getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER));
-
-    if (apiToolboxFunctions.hasSpellOnHit(_this->SF_CGdFigureToolBox, target_index, spell_data.spell_line_id))
-    {
-        apiFigureFunctions.addBonusMultToStatistic(_this->SF_CGdFigure, WALK_SPEED, target_index, bonus);
-    }
-    default_end_handler(_this, spell_index);
-}
-
-void __thiscall flexibility_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
-{
-    SF_CGdResourceSpell spell_data;
-    apiSpellFunctions.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index].spell_id);
-    uint16_t target_index = _this->active_spell_list[spell_index].target.entity_index;
-    int8_t bonus = (int8_t)(-apiSpellFunctions.getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER));
-
-    if (apiToolboxFunctions.hasSpellOnHit(_this->SF_CGdFigureToolBox, target_index, spell_data.spell_line_id))
-    {
-        apiFigureFunctions.addBonusMultToStatistic(_this->SF_CGdFigure, AGILITY, target_index, bonus);
-    }
-    default_end_handler(_this, spell_index);
-}
-
-void __thiscall strength_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
-{
-    SF_CGdResourceSpell spell_data;
-    apiSpellFunctions.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index].spell_id);
-    uint16_t target_index = _this->active_spell_list[spell_index].target.entity_index;
-    int8_t bonus = (int8_t)(-apiSpellFunctions.getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER));
-
-    if (apiToolboxFunctions.hasSpellOnHit(_this->SF_CGdFigureToolBox, target_index, spell_data.spell_line_id))
-    {
-        apiFigureFunctions.addBonusMultToStatistic(_this->SF_CGdFigure, STRENGTH, target_index, bonus);
-    }
-    default_end_handler(_this, spell_index);
-}
-
-// same handler for both brilliance and retention
-void __thiscall brilliance_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
-{
-    SF_CGdResourceSpell spell_data;
-    apiSpellFunctions.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index].spell_id);
-    uint16_t target_index = _this->active_spell_list[spell_index].target.entity_index;
-    uint16_t max_mana = apiFigureFunctions.getCurrentManaMax(_this->SF_CGdFigure, target_index);
-    if (apiToolboxFunctions.hasSpellOnHit(_this->SF_CGdFigureToolBox, target_index, spell_data.spell_line_id))
-    {
-        apiFigureFunctions.addBonusMultToStatistic(_this->SF_CGdFigure, WISDOM, target_index, -spell_data.params[0]);
-        apiToolboxFunctions.rescaleLevelStats(_this->SF_CGdFigureToolBox, target_index);
-        apiFigureFunctions.rescaleMana(_this->SF_CGdFigure, target_index, max_mana);
-    }
-    default_end_handler(_this, spell_index);
-}
-
-void __thiscall suffocation_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
-void __thiscall inablility_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
-void __thiscall slow_fighting_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
-void __thiscall dexterity_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
-void __thiscall edurance_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
-void __thiscall fast_fighting_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
-void __thiscall charisma_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
-void __thiscall enlightenment_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
-void __thiscall melt_resistance_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
-void __thiscall chill_resistance_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
-void __thiscall firebane_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
-void __thiscall black_almightness_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
-void __thiscall mutation_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
-void __thiscall eternity_end_handler(SF_CGdSpell *_this, uint16_t spell_index);

@@ -6,10 +6,10 @@
 
 // Another convenience: you can ommit functions you won't need, or call everything from the framework structure
 SpellforceSpellFramework *sfsf;
-SpellFunctions *spellAPI;
-ToolboxFunctions *toolboxAPI;
-FigureFunctions *figureAPI;
-IteratorFunctions *iteratorAPI;
+api_spell_functions *spellAPI;
+api_toolbox_functions *toolboxAPI;
+api_figure_functions *figureAPI;
+api_iterator_functions *iteratorAPI;
 
 void __thiscall thuderstorm_type_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
@@ -118,7 +118,7 @@ void __thiscall thuderstorm_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
 extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *framework)
 {
     sfsf = framework;
-    spellAPI = sfsf->apiSpellFunctions;
+    spellAPI = sfsf->api_spell_functions;
     toolboxAPI = sfsf->apiToolboxFunctions;
     figureAPI = sfsf->apiFigureFunctions;
     iteratorAPI = sfsf->apiIteratorFunctions;

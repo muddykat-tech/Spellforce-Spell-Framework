@@ -4,6 +4,7 @@
 #include "../../api/sfsf.h"
 
 extern handler_ptr get_spell_effect (const uint16_t spell_job);
-extern void registerEffectHandler(uint16_t spell_job, handler_ptr handler);
+extern void register_effect_handler(uint16_t spell_job, handler_ptr handler);
+void __thiscall register_vanilla_effect_handlers();
 
 #endif

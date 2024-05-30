@@ -23,7 +23,7 @@ BOOL APIENTRY DllMain( HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpRese
             initFramework();
             
             // Initialize Spellforce Hooks -> see sf_hooks.h
-            initBetaHooks();
+            initialize_beta_hooks();
             break;
         }
      break;

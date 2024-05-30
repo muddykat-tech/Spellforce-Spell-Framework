@@ -1,4 +1,3 @@
-#include "../handlers/sf_spelleffect_handlers.h"
 #include "../core/sf_modloader.h"
 #include "../core/sf_wrappers.h"
 #include "../core/sf_hooks.h"
@@ -6,6 +5,7 @@
 #include "sf_registry.h"
 #include "sf_spelltype_registry.h"
 #include "sf_spelleffect_registry.h"
+#include "sf_spellend_registry.h"
 #include <windows.h>
 
 // Exposed in sfsf.h
@@ -15,37 +15,42 @@ SpellforceSpellFramework frameworkAPI;
 // Note these functions are ASSIGNED to a function group when we DEFINE said group, names are VERY important.
 
 // exposed in sf_registry.h
-void registerFrameworkAPI(){
-    frameworkAPI.apiFigureFunctions = &apiFigureFunctions;
-    frameworkAPI.apiSpellFunctions = &apiSpellFunctions;
-    frameworkAPI.apiToolboxFunctions = &apiToolboxFunctions;
-    frameworkAPI.apiIteratorFunctions = &apiIteratorFunctions;
+void registerFrameworkAPI()
+{
+    frameworkAPI.api_figure_functions = &api_figure_functions;
+    frameworkAPI.api_spell_functions = &api_spell_functions;
+    frameworkAPI.api_toolbox_functions = &api_toolbox_functions;
+    frameworkAPI.api_iterator_functions = &api_iterator_functions;
 	frameworkAPI.registerSpellTypeHandler = &registerSpellTypeHandler;
-    frameworkAPI.registerEffectHandler = &registerEffectHandler;
-    frameworkAPI.logWarning = &logWarning;
+    frameworkAPI.registerEffectHandler = &register_effect_handler;
+    frameworkAPI.log_warning = &log_warning;
     frameworkAPI.logInfo = &logInfo;
 }
 
-void initFramework() {
+void initFramework() 
+{
     logInfo("Initializing Data Hooks");
 
-	initDataHooks();
+	initialize_data_hooks();
 
     logInfo("Linking API functions");
 
     // setup framework api structure references
     registerFrameworkAPI();
     
-    logInfo("Replacing Vanilla Spelltypes");
+    logInfo("Registration of Vanilla Spelltypes");
 
     // Setup Vanilla Spells -> see sf_spelltype_handler.h
     initSpellMap();
 
-    logInfo("Linking Vanilla Effect Handlers");
+    logInfo("Registration of Vanilla Effect Handlers");
 
-    // Setup effect job id registration -> see sf_spelleffect_handlers.h (This will MOVE to sf_spelleffect_registry.h)
-    initEffectHandlers();
+    register_vanilla_effect_handlers();
 
+    logInfo("Registration of Vanilla Spell End Handlers");
+
+    register_vanilla_spell_end_handlers();
+    
     logInfo("Initializing Mods");
 
     // Attempt to load all mods -> see sf_modloader.h
