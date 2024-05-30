@@ -6,9 +6,9 @@
 
 // Another convenience: you can ommit functions you won't need, or call everything from the framework structure
 SpellforceSpellFramework *sfsf;
-spellAPI *spellAPI;
-api_toolbox_functions *toolboxAPI;
-api_figure_functions *figureAPI;
+SpellFunctions *spellAPI;
+ToolboxFunctions *toolboxAPI;
+FigureFunctions *figureAPI;
 
 void __thiscall simple_damage_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
@@ -93,8 +93,8 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
 {
     sfsf = framework;
     spellAPI = sfsf->spellAPI;
-    toolboxAPI = sfsf->apiToolboxFunctions;
-    figureAPI = sfsf->apiFigureFunctions;
+    toolboxAPI = sfsf->toolboxAPI;
+    figureAPI = sfsf->figureAPI;
 
     // Here comes the spell type registration.
     // Note: you need to pass pointer to function here

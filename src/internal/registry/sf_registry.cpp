@@ -22,7 +22,7 @@ void registerFrameworkAPI()
     frameworkAPI.toolboxAPI = &toolboxAPI;
     frameworkAPI.iteratorAPI = &iteratorAPI;
 	frameworkAPI.registerSpellTypeHandler = &registerSpellTypeHandler;
-    frameworkAPI.registerEffectHandler = &register_effect_handler;
+    frameworkAPI.registerEffectHandler = &registerEffectHandler;
     frameworkAPI.logWarning = &log_warning;
     frameworkAPI.logInfo = &log_info;
 }

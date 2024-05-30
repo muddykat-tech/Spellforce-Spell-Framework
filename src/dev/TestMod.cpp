@@ -66,15 +66,15 @@ void __thiscall custom_spelleffect_handler(SF_CGdSpell * _this, uint16_t spell_i
   sprintf(ranInfo, "Random:  %d\n", random_roll);
   sfsf->logInfo(ranInfo);
 
-  sfsf->logInfo("Get is_alive Target");
-  uint16_t is_alive = figureAPI->is_alive(_this->SF_CGdFigure, target_index);
+  sfsf->logInfo("Get isAlive Target");
+  uint16_t isAlive = figureAPI->isAlive(_this->SF_CGdFigure, target_index);
 
   char aliveInfo[256];
-  sprintf(aliveInfo, "is_alive:  %d\n", is_alive);
+  sprintf(aliveInfo, "isAlive:  %d\n", isAlive);
   sfsf->logInfo(aliveInfo);
 
   sfsf->logInfo("Change Walk Speed of Caster to 200");
-  figureAPI->set_walk_speed(_this->SF_CGdFigure, source_index, 200);
+  figureAPI->setWalkSpeed(_this->SF_CGdFigure, source_index, 200);
 
   sfsf->logInfo("Added to the Wisdom Bonus Mult by 2"); // Unconfirmed if working as in tended, does NOT cause a crash though...
   figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, WISDOM, source_index, 2);
@@ -93,9 +93,9 @@ void __thiscall custom_spelleffect_handler(SF_CGdSpell * _this, uint16_t spell_i
 
 extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework* framework) {
 	  sfsf = framework;
-    spellAPI = sfsf->SpellFunctions;
-    toolboxAPI = sfsf->api_toolbox_functions;
-    figureAPI = sfsf->api_figure_functions;
+    spellAPI = sfsf->spellAPI;
+    toolboxAPI = sfsf->toolboxAPI;
+    figureAPI = sfsf->figureAPI;
 
     // This will OVERWRITE existing entries, so you can fix or modify vanilla spelltypes and effects
     // 0xe and 0xeb are the Icestrike or Iceburst Spell
