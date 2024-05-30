@@ -25,7 +25,7 @@ handler_ptr get_spell_end(uint16_t spell_job)
 {
     auto it = spellend_handler_map.find(spell_job);
     if (it == spellend_handler_map.end()) {
-        logError("Unknown Job ID, No spell end handler registered.");
+        log_error("Unknown Job ID, No spell end handler registered.");
         return NULL;
     }
     return it->second;

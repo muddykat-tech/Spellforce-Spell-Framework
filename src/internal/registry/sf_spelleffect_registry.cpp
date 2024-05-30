@@ -24,7 +24,7 @@ handler_ptr get_spell_effect(uint16_t spell_job)
 {
     auto it = effect_handler_map.find(spell_job);
     if (it == effect_handler_map.end()) {
-        logError("Unknown Job ID, No effect handler registered.");
+        log_error("Unknown Job ID, No effect handler registered.");
         return NULL;
     }
     return it->second;

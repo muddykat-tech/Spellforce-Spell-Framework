@@ -170,4 +170,4 @@ void __thiscall ability_riposte_handler (SF_CGdSpell* _this, uint16_t spell_inde
 void __thiscall ability_critical_hits_handler (SF_CGdSpell* _this, uint16_t spell_index);
 void __thiscall belial_effect_handler (SF_CGdSpell* _this, uint16_t spell_index);
 
-#endif 
+#endif

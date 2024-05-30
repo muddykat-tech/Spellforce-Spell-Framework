@@ -17,42 +17,42 @@ SpellforceSpellFramework frameworkAPI;
 // exposed in sf_registry.h
 void registerFrameworkAPI()
 {
-    frameworkAPI.api_figure_functions = &api_figure_functions;
-    frameworkAPI.api_spell_functions = &api_spell_functions;
-    frameworkAPI.api_toolbox_functions = &api_toolbox_functions;
-    frameworkAPI.api_iterator_functions = &api_iterator_functions;
+    frameworkAPI.figureAPI = &figureAPI;
+    frameworkAPI.spellAPI = &spellAPI;
+    frameworkAPI.toolboxAPI = &toolboxAPI;
+    frameworkAPI.iteratorAPI = &iteratorAPI;
 	frameworkAPI.registerSpellTypeHandler = &registerSpellTypeHandler;
     frameworkAPI.registerEffectHandler = &register_effect_handler;
-    frameworkAPI.log_warning = &log_warning;
-    frameworkAPI.logInfo = &logInfo;
+    frameworkAPI.logWarning = &log_warning;
+    frameworkAPI.logInfo = &log_info;
 }
 
-void initFramework() 
+void initialize_framework() 
 {
-    logInfo("Initializing Data Hooks");
+    log_info("Initializing Data Hooks");
 
 	initialize_data_hooks();
 
-    logInfo("Linking API functions");
+    log_info("Linking API functions");
 
     // setup framework api structure references
     registerFrameworkAPI();
     
-    logInfo("Registration of Vanilla Spelltypes");
+    log_info("Registration of Vanilla Spelltypes");
 
     // Setup Vanilla Spells -> see sf_spelltype_handler.h
     initSpellMap();
 
-    logInfo("Registration of Vanilla Effect Handlers");
+    log_info("Registration of Vanilla Effect Handlers");
 
     register_vanilla_effect_handlers();
 
-    logInfo("Registration of Vanilla Spell End Handlers");
+    log_info("Registration of Vanilla Spell End Handlers");
 
     register_vanilla_spell_end_handlers();
     
-    logInfo("Initializing Mods");
+    log_info("Initializing Mods");
 
     // Attempt to load all mods -> see sf_modloader.h
-    initMods();
+    initialize_mods();
 }

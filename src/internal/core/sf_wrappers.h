@@ -9,6 +9,6 @@ extern "C" SF_String_ctor_ptr SF_String_ctor;
 extern "C" SF_String_dtor_ptr SF_String_dtor;
 
 extern "C" void log_warning(const char *message);
-extern "C" void logInfo(const char *message);
-extern "C" void logError(const char *message);
+extern "C" void log_info(const char *message);
+extern "C" void log_error(const char *message);
 #endif

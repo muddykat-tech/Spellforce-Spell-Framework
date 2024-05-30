@@ -22,10 +22,10 @@ uint32_t CMnuScrConsole_ptr = 0;
 SF_String_ctor_ptr SF_String_ctor;
 SF_String_dtor_ptr SF_String_dtor;
 
-SpellFunctions api_spell_functions;
-ToolboxFunctions api_toolbox_functions;
-FigureFunctions api_figure_functions;
-IteratorFunctions api_iterator_functions;
+SpellFunctions spellAPI;
+ToolboxFunctions toolboxAPI;
+FigureFunctions figureAPI;
+IteratorFunctions iteratorAPI;
 
 int __thiscall CheckCanApply_hook_beta(SF_CGdSpell *_this, uint16_t spell_index)
 {
@@ -141,7 +141,7 @@ uint16_t __thiscall add_spell_hook_beta(SF_CGdSpell *_this, uint16_t spell_id, u
 }
 
 
-void __thiscall add_bonus_mult_to_statistic(SF_CGdFigure *figure, StatisticDataKey key, uint16_t target, int8_t value)
+void __thiscall addBonusMultToStatistic(SF_CGdFigure *figure, StatisticDataKey key, uint16_t target, int8_t value)
 {
     bool invalid = FALSE;
     FigureStatistic statistic;
@@ -201,7 +201,7 @@ void __thiscall add_bonus_mult_to_statistic(SF_CGdFigure *figure, StatisticDataK
         return;
     }
 
-    api_figure_functions.add_bonus_mult(statistic, value);
+    figureAPI.addBonusMult(statistic, value);
 }
 
 /* 
@@ -217,10 +217,10 @@ void initialize_console_hook()
     SF_String_dtor = (SF_String_dtor_ptr)ASI::AddrOf(0x3839c0);
 }
 
-void __thiscall setup_figure_iterator(CGdFigureIterator *iterator, SF_CGdSpell *spell)
+void __thiscall setupFigureIterator(CGdFigureIterator *iterator, SF_CGdSpell *spell)
 {
-    api_iterator_functions.figureIteratorInit(iterator, 0x0, 0x0, 0x3ff, 0x3ff);
-    api_iterator_functions.figureIteratorSetPointers(iterator, spell->SF_CGdFigure, spell->unkn3, spell->SF_CGdWorld);
+    iteratorAPI.figureIteratorInit(iterator, 0x0, 0x0, 0x3ff, 0x3ff);
+    iteratorAPI.figureIteratorSetPointers(iterator, spell->SF_CGdFigure, spell->unkn3, spell->SF_CGdWorld);
 }
 
 // Some funky stuff to clean up Iterator memory, not 100% sure if correct
@@ -244,13 +244,13 @@ void initialize_data_hooks()
     fidFree = (fidfree_ptr)(ASI::AddrOf(0x6B6E25));
 
     // More defined for external use in api
-    DEFINE_FUNCTION(figure, is_alive, 0x1BE4D0);
-    DEFINE_FUNCTION(figure, set_walk_speed, 0x2B7190);
-    DEFINE_FUNCTION(figure, add_action, 0x2AE0B0);
-    DEFINE_FUNCTION(figure, add_bonus_mult, 0x35A3E0);
+    DEFINE_FUNCTION(figure, isAlive, 0x1BE4D0);
+    DEFINE_FUNCTION(figure, setWalkSpeed, 0x2B7190);
+    DEFINE_FUNCTION(figure, addAction, 0x2AE0B0);
+    DEFINE_FUNCTION(figure, addBonusMult, 0x35A3E0);
     DEFINE_FUNCTION(figure, decreaseHealth, 0x2b5b40);
     DEFINE_FUNCTION(figure, getCurrentHealth, 0x279350);
-    DEFINE_FUNCTION(figure, getCurrentManaMax, 0x2b2a20);
+    DEFINE_FUNCTION(figure, getCurrentMaxMana, 0x2b2a20);
     DEFINE_FUNCTION(figure, rescaleMana, 0x2b5d50);
 
     // Define the function pointers for SpellFunctions group
@@ -284,9 +284,9 @@ void initialize_data_hooks()
 
     // Method to include functions WE define in the Internal code.
     INCLUDE_FUNCTION(spell, initializeSpellData, &initializeSpellData);
-    INCLUDE_FUNCTION(figure, add_bonus_mult_to_statistic, &add_bonus_mult_to_statistic);
+    INCLUDE_FUNCTION(figure, addBonusMultToStatistic, &addBonusMultToStatistic);
 
-	INCLUDE_FUNCTION(iterator, setup_figure_iterator, &setup_figure_iterator);
+	INCLUDE_FUNCTION(iterator, setupFigureIterator, &setupFigureIterator);
 	INCLUDE_FUNCTION(iterator, disposeFigureIterator, &disposeFigureIterator);
 }
 
@@ -311,12 +311,12 @@ void initialize_spell_trigger_hook()
 // Exposed in sf_hooks.h
 void initialize_beta_hooks()
 {
-    logInfo("Hooking Game Console");
+    log_info("Hooking Game Console");
     initialize_console_hook();
 
-    logInfo("Hooking Spell Types");
+    log_info("Hooking Spell Types");
     initialize_spelltype_hook();
 
-    logInfo("Hooking Spell Triggers");
+    log_info("Hooking Spell Triggers");
     initialize_spell_trigger_hook();
 }

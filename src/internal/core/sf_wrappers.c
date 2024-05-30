@@ -14,7 +14,7 @@ void log_warning(const char *message) {
     console_log(modifiedMessage);
 }
 
-void logInfo(const char *message) {
+void log_info(const char *message) {
     // Logs an informational message to the console and the debug output
     static char modifiedMessage[256]; 
     snprintf(modifiedMessage, sizeof(modifiedMessage), "[SFSF] %s", message);
@@ -22,7 +22,7 @@ void logInfo(const char *message) {
     console_log(modifiedMessage);
 }
 
-void logError(const char* message) {
+void log_error(const char* message) {
     // Logs an error message to the console and the debug output, including the last error code
     int lastError = GetLastError();
     static char modifiedMessage[256];

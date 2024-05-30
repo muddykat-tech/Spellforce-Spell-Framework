@@ -4,7 +4,6 @@
 #include "../../api/sf_general_structures.h"
 
 void __thiscall default_end_handler(SF_CGdSpell* _this, uint16_t spell_index);
-
 void __thiscall slowness_end_handler(SF_CGdSpell* _this, uint16_t spell_index);
 void __thiscall poison_end_handler (SF_CGdSpell* _this, uint16_t spell_index);
 void __thiscall invulnerability_end_handler (SF_CGdSpell* _this, uint16_t spell_index);

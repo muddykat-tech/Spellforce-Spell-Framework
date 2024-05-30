@@ -4,6 +4,6 @@
 #include "../../api/sfsf.h"
 
 // Function prototypes for mod loader.
-extern void initFramework();
+extern void initialize_framework();
 
 #endif // REGISTRY_H

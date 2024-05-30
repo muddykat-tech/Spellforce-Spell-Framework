@@ -31,13 +31,13 @@ void load_mod(const char* modPath, void* pFrameworkAPI) {
             initModule(pFrameworkAPI);
             char infomsg[256];
             snprintf(infomsg, sizeof(infomsg), "[Initialized Mod: %s]", get_filename(modPath));
-            logInfo(infomsg);
+            log_info(infomsg);
         } else {
-            logError("Failed to get address of InitModule");
+            log_error("Failed to get address of InitModule");
             cleanup(modHandle);
         }
     } else {
-        logError("Failed to load mod library");
+        log_error("Failed to load mod library");
     }
 }
 
@@ -63,12 +63,12 @@ void load_all_mods(const char* subfolder, void* pFrameworkAPI) {
     } else {
         char msgbuf[MAX_PATH];
         snprintf(msgbuf, sizeof(msgbuf), "Failed to find mods in directory: %s", modDirectory);
-        logError(msgbuf);
+        log_error(msgbuf);
     }
 }
 
-void initMods() {    
-    logInfo("--- Mod Loading Phase Start ---");
+void initialize_mods() {    
+    log_info("--- Mod Loading Phase Start ---");
     load_all_mods("sfsf", &frameworkAPI);
-    logInfo("--- Mod Loading Phase End ---");
+    log_info("--- Mod Loading Phase End ---");
 }

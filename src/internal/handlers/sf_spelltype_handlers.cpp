@@ -590,7 +590,7 @@ void __thiscall chill_resistance_handler (SF_CGdSpell* _this, uint16_t spell_ind
 void __thiscall rock_bullet_handler (SF_CGdSpell* _this, uint16_t spell_index)
 {
 	_this->active_spell_list[spell_index].spell_job = 0x56;
-	api_spell_functions.setXData(_this, spell_index, 0x45, 0);
+	spellAPI.setXData(_this, spell_index, 0x45, 0);
 }
 
 void __thiscall conservation_handler (SF_CGdSpell* _this, uint16_t spell_index)

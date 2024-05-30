@@ -18,9 +18,9 @@ BOOL APIENTRY DllMain( HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpRese
         }
         else
         {
-            logInfo("Spellforce Version Accepted; Starting SFSF");
+            log_info("Spellforce Version Accepted; Starting SFSF");
             // Initialize Framework -> see sf_registry.h
-            initFramework();
+            initialize_framework();
             
             // Initialize Spellforce Hooks -> see sf_hooks.h
             initialize_beta_hooks();

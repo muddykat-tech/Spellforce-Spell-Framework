@@ -10,7 +10,7 @@
 
 #include <stdint.h>
 
-typedef void (*initialize_module_ptr)(void*);
+typedef void (*initializeModule_ptr)(void*);
 typedef void (*log_warning_ptr)(const char*);
 typedef void (*logInfoFunc)(const char*);
 typedef void (__thiscall *handler_ptr) (SF_CGdSpell *, uint16_t);
@@ -19,17 +19,17 @@ typedef void (*register_effect_handler_ptr)(uint16_t spell_job, handler_ptr hand
 
 // Declare the structure
 struct SpellforceSpellFramework {
-    initialize_module_ptr initialize_module;
+    initializeModule_ptr initializeModule;
     register_spelltype_handler_ptr registerSpellTypeHandler;
     register_effect_handler_ptr registerEffectHandler;
 
-    SpellFunctions *api_spell_functions;
-    ToolboxFunctions *api_toolbox_functions;
-    FigureFunctions *api_figure_functions;
-    IteratorFunctions *api_iterator_functions;
+    SpellFunctions *spellAPI;
+    ToolboxFunctions *toolboxAPI;
+    FigureFunctions *figureAPI; 
+    IteratorFunctions *iteratorAPI;
 
     // Perhaps create a struct for a proper logger? 
-    log_warning_ptr log_warning;
+    log_warning_ptr logWarning;
     logInfoFunc logInfo;
 };
 

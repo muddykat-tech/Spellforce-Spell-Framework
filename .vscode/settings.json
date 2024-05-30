@@ -9,5 +9,7 @@
         "string_view": "c",
         "initializer_list": "c",
         "sf_data_utilities.h": "c"
-    }
+    },
+    "C_Cpp.errorSquiggles": "disabled",
+    "makefile.makePath": "mingw32-make"
 }

@@ -3,5 +3,5 @@
 
 #include "../../api/sfsf.h"
 // Function prototypes for mod loader.
-extern "C" __declspec(dllexport) void initMods();
+extern "C" __declspec(dllexport) void initialize_mods();
 #endif // MODLOADER_H

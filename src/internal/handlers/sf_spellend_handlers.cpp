@@ -4,8 +4,8 @@
 // default case
 void __thiscall default_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
-    api_spell_functions.removeDLLNode(_this, spell_index);
-    api_spell_functions.setEffectDone(_this, spell_index, 0);
+    spellAPI.removeDLLNode(_this, spell_index);
+    spellAPI.setEffectDone(_this, spell_index, 0);
 }
 
 // Stat changing handlers
@@ -13,12 +13,12 @@ void __thiscall default_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 void __thiscall slowness_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     SF_CGdResourceSpell spell_data;
-    api_spell_functions.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index].spell_id);
+    spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index].spell_id);
     uint16_t target_index = _this->active_spell_list[spell_index].target.entity_index;
 
-    if (api_toolbox_functions.hasSpellOnHit(_this->SF_CGdFigureToolBox, target_index, spell_data.spell_line_id))
+    if (toolboxAPI.hasSpellOnHit(_this->SF_CGdFigureToolBox, target_index, spell_data.spell_line_id))
     {
-        api_figure_functions.add_bonus_mult_to_statistic(_this->SF_CGdFigure, WALK_SPEED, target_index, spell_data.params[0]);
+        figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, WALK_SPEED, target_index, spell_data.params[0]);
     }
     // just don't wanna to repeat it every time
     default_end_handler(_this, spell_index);
@@ -26,12 +26,12 @@ void __thiscall slowness_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 void __thiscall decay1_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     SF_CGdResourceSpell spell_data;
-    api_spell_functions.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index].spell_id);
+    spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index].spell_id);
     uint16_t target_index = _this->active_spell_list[spell_index].target.entity_index;
 
-    if (api_toolbox_functions.hasSpellOnHit(_this->SF_CGdFigureToolBox, target_index, spell_data.spell_line_id))
+    if (toolboxAPI.hasSpellOnHit(_this->SF_CGdFigureToolBox, target_index, spell_data.spell_line_id))
     {
-        api_figure_functions.add_bonus_mult_to_statistic(_this->SF_CGdFigure, ARMOR, target_index, spell_data.params[2]);
+        figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, target_index, spell_data.params[2]);
     }
     default_end_handler(_this, spell_index);
 }
@@ -39,12 +39,12 @@ void __thiscall decay1_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 void __thiscall inflexibility_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     SF_CGdResourceSpell spell_data;
-    api_spell_functions.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index].spell_id);
+    spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index].spell_id);
     uint16_t target_index = _this->active_spell_list[spell_index].target.entity_index;
 
-    if (api_toolbox_functions.hasSpellOnHit(_this->SF_CGdFigureToolBox, target_index, spell_data.spell_line_id))
+    if (toolboxAPI.hasSpellOnHit(_this->SF_CGdFigureToolBox, target_index, spell_data.spell_line_id))
     {
-        api_figure_functions.add_bonus_mult_to_statistic(_this->SF_CGdFigure, AGILITY, target_index, spell_data.params[0]);
+        figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, AGILITY, target_index, spell_data.params[0]);
     }
     default_end_handler(_this, spell_index);
 }
@@ -52,12 +52,12 @@ void __thiscall inflexibility_end_handler(SF_CGdSpell *_this, uint16_t spell_ind
 void __thiscall weaken_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     SF_CGdResourceSpell spell_data;
-    api_spell_functions.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index].spell_id);
+    spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index].spell_id);
     uint16_t target_index = _this->active_spell_list[spell_index].target.entity_index;
 
-    if (api_toolbox_functions.hasSpellOnHit(_this->SF_CGdFigureToolBox, target_index, spell_data.spell_line_id))
+    if (toolboxAPI.hasSpellOnHit(_this->SF_CGdFigureToolBox, target_index, spell_data.spell_line_id))
     {
-        api_figure_functions.add_bonus_mult_to_statistic(_this->SF_CGdFigure, STRENGTH, target_index, spell_data.params[0]);
+        figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, STRENGTH, target_index, spell_data.params[0]);
     }
     default_end_handler(_this, spell_index);
 }
@@ -65,13 +65,13 @@ void __thiscall weaken_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 void __thiscall quickness_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     SF_CGdResourceSpell spell_data;
-    api_spell_functions.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index].spell_id);
+    spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index].spell_id);
     uint16_t target_index = _this->active_spell_list[spell_index].target.entity_index;
-    int8_t bonus = (int8_t)(-api_spell_functions.getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER));
+    int8_t bonus = (int8_t)(-spellAPI.getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER));
 
-    if (api_toolbox_functions.hasSpellOnHit(_this->SF_CGdFigureToolBox, target_index, spell_data.spell_line_id))
+    if (toolboxAPI.hasSpellOnHit(_this->SF_CGdFigureToolBox, target_index, spell_data.spell_line_id))
     {
-        api_figure_functions.add_bonus_mult_to_statistic(_this->SF_CGdFigure, WALK_SPEED, target_index, bonus);
+        figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, WALK_SPEED, target_index, bonus);
     }
     default_end_handler(_this, spell_index);
 }
@@ -79,13 +79,13 @@ void __thiscall quickness_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 void __thiscall flexibility_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     SF_CGdResourceSpell spell_data;
-    api_spell_functions.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index].spell_id);
+    spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index].spell_id);
     uint16_t target_index = _this->active_spell_list[spell_index].target.entity_index;
-    int8_t bonus = (int8_t)(-api_spell_functions.getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER));
+    int8_t bonus = (int8_t)(-spellAPI.getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER));
 
-    if (api_toolbox_functions.hasSpellOnHit(_this->SF_CGdFigureToolBox, target_index, spell_data.spell_line_id))
+    if (toolboxAPI.hasSpellOnHit(_this->SF_CGdFigureToolBox, target_index, spell_data.spell_line_id))
     {
-        api_figure_functions.add_bonus_mult_to_statistic(_this->SF_CGdFigure, AGILITY, target_index, bonus);
+        figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, AGILITY, target_index, bonus);
     }
     default_end_handler(_this, spell_index);
 }
@@ -93,13 +93,13 @@ void __thiscall flexibility_end_handler(SF_CGdSpell *_this, uint16_t spell_index
 void __thiscall strength_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     SF_CGdResourceSpell spell_data;
-    api_spell_functions.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index].spell_id);
+    spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index].spell_id);
     uint16_t target_index = _this->active_spell_list[spell_index].target.entity_index;
-    int8_t bonus = (int8_t)(-api_spell_functions.getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER));
+    int8_t bonus = (int8_t)(-spellAPI.getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER));
 
-    if (api_toolbox_functions.hasSpellOnHit(_this->SF_CGdFigureToolBox, target_index, spell_data.spell_line_id))
+    if (toolboxAPI.hasSpellOnHit(_this->SF_CGdFigureToolBox, target_index, spell_data.spell_line_id))
     {
-        api_figure_functions.add_bonus_mult_to_statistic(_this->SF_CGdFigure, STRENGTH, target_index, bonus);
+        figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, STRENGTH, target_index, bonus);
     }
     default_end_handler(_this, spell_index);
 }
@@ -108,14 +108,14 @@ void __thiscall strength_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 void __thiscall brilliance_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     SF_CGdResourceSpell spell_data;
-    api_spell_functions.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index].spell_id);
+    spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index].spell_id);
     uint16_t target_index = _this->active_spell_list[spell_index].target.entity_index;
-    uint16_t max_mana = api_figure_functions.getCurrentManaMax(_this->SF_CGdFigure, target_index);
-    if (api_toolbox_functions.hasSpellOnHit(_this->SF_CGdFigureToolBox, target_index, spell_data.spell_line_id))
+    uint16_t max_mana = figureAPI.getCurrentMaxMana(_this->SF_CGdFigure, target_index);
+    if (toolboxAPI.hasSpellOnHit(_this->SF_CGdFigureToolBox, target_index, spell_data.spell_line_id))
     {
-        api_figure_functions.add_bonus_mult_to_statistic(_this->SF_CGdFigure, WISDOM, target_index, -spell_data.params[0]);
-        api_toolbox_functions.rescaleLevelStats(_this->SF_CGdFigureToolBox, target_index);
-        api_figure_functions.rescaleMana(_this->SF_CGdFigure, target_index, max_mana);
+        figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, WISDOM, target_index, -spell_data.params[0]);
+        toolboxAPI.rescaleLevelStats(_this->SF_CGdFigureToolBox, target_index);
+        figureAPI.rescaleMana(_this->SF_CGdFigure, target_index, max_mana);
     }
     default_end_handler(_this, spell_index);
 }
