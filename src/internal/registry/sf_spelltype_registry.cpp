@@ -37,7 +37,7 @@ void registerSpellTypeHandler(uint16_t spell_index, handler_ptr handler) {
 	handler_map[spell_index] = handler;
 }
 
-void initSpellMap()
+void register_vanilla_spelltype_handlers()
 {
 	// Setup Vanilla Spell Handling!
 	registerSpellTypeHandler(0x01, &fireburst_handler);

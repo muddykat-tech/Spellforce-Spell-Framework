@@ -38,10 +38,10 @@ void initialize_framework()
     // setup framework api structure references
     registerFrameworkAPI();
     
-    log_info("Registration of Vanilla Spelltypes");
+    log_info("Registration of Vanilla Spelltype Handlers");
 
     // Setup Vanilla Spells -> see sf_spelltype_handler.h
-    initSpellMap();
+    register_vanilla_spelltype_handlers();
 
     log_info("Registration of Vanilla Effect Handlers");
 

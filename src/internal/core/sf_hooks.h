@@ -15,6 +15,13 @@ extern SpellFunctions spellAPI;
 extern ToolboxFunctions toolboxAPI;
 extern FigureFunctions figureAPI;
 extern IteratorFunctions iteratorAPI;
+
+extern void __thiscall setupFigureIterator(CGdFigureIterator *iterator, SF_CGdSpell *spell);
+extern void __thiscall disposeFigureIterator(CGdFigureIterator iterator);
+extern void __thiscall addBonusMultToStatistic(SF_CGdFigure *figure, StatisticDataKey key, uint16_t target, int8_t value);
+extern FUN_0069eaf0_ptr FUN_0069eaf0;
+extern fidfree_ptr fidFree;
+
 void initialize_beta_hooks();
 void initialize_data_hooks();
 
