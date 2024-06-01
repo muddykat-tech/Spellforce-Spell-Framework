@@ -81,12 +81,15 @@ void __thiscall effect_trigger_hook(SF_CGdSpell *_this)
 
 void console_log(const char *message)
 {
-    if (!CMnuScrConsole_ptr)
-        return;
-    SF_String sf_string;
-    SF_String_ctor(&sf_string, message);
-    console_print(CMnuScrConsole_ptr, &sf_string);
-    SF_String_dtor(&sf_string);
+    if (console_print != NULL)
+    {
+        uint32_t _appication = ASI::AddrOf(0x925C64);
+        console_print(_appication, message);
+    }
+    else
+    {
+        OutputDebugStringA(modifiedMessage);
+    }
 }
 
 uint16_t __thiscall add_spell_hook_beta(SF_CGdSpell *_this, uint16_t spell_id, uint16_t param2, SF_CGdTargetData *source, SF_CGdTargetData *target, uint16_t param5)
@@ -147,15 +150,15 @@ uint16_t __thiscall add_spell_hook_beta(SF_CGdSpell *_this, uint16_t spell_id, u
     return spell_index;
 }
 
-/* 
-	These functions, and future types, will eventually be moved into "sf_api" or some such
-*/ 
+/*
+    These functions, and future types, will eventually be moved into "sf_api" or some such
+*/
 void initialize_console_hook()
 {
     uint32_t CAppMain_ptr = ASI::AddrOf(0x9229A8);
     uint32_t CAppMenu_ptr = *(uint32_t *)(CAppMain_ptr + 0x4);
     CMnuScrConsole_ptr = *(uint32_t *)(CAppMenu_ptr + 0x80);
-    console_print = (console_print_ptr)ASI::AddrOf(0x534e70);
+    console_print = (console_print_ptr)ASI::AddrOf(0x1b58f0);
     SF_String_ctor = (SF_String_ctor_ptr)ASI::AddrOf(0x3837e0);
     SF_String_dtor = (SF_String_dtor_ptr)ASI::AddrOf(0x3839c0);
 }
@@ -208,15 +211,15 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(iterator, iteratorSetArea, 0x3195d0);
     DEFINE_FUNCTION(iterator, getNextFigure, 0x318f50);
 
-	DEFINE_FUNCTION(iterator, buildingIteratorInit, 0x318290);
-	DEFINE_FUNCTION(iterator, buildingIteratorSetPointers,0x31A640);
+    DEFINE_FUNCTION(iterator, buildingIteratorInit, 0x318290);
+    DEFINE_FUNCTION(iterator, buildingIteratorSetPointers, 0x31A640);
 
     // Method to include functions WE define in the Internal code.
     INCLUDE_FUNCTION(spell, initializeSpellData, &initializeSpellData);
     INCLUDE_FUNCTION(figure, addBonusMultToStatistic, &addBonusMultToStatistic);
 
-	INCLUDE_FUNCTION(iterator, setupFigureIterator, &setupFigureIterator);
-	INCLUDE_FUNCTION(iterator, disposeFigureIterator, &disposeFigureIterator);
+    INCLUDE_FUNCTION(iterator, setupFigureIterator, &setupFigureIterator);
+    INCLUDE_FUNCTION(iterator, disposeFigureIterator, &disposeFigureIterator);
 }
 
 void initialize_spelltype_hook()

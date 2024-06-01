@@ -27,7 +27,6 @@ void log_error(const char* message) {
     int lastError = GetLastError();
     static char modifiedMessage[256];
     snprintf(modifiedMessage, sizeof(modifiedMessage), "[ERROR] %s [Last Error: %d]", message, lastError);
-    OutputDebugStringA(modifiedMessage);
     console_log(modifiedMessage);
 }
 
