@@ -88,7 +88,7 @@ void console_log(const char *message)
     }
     else
     {
-        OutputDebugStringA(modifiedMessage);
+        OutputDebugStringA(message);
     }
 }
 
