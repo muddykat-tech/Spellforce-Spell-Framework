@@ -10,7 +10,11 @@
         "initializer_list": "c",
         "sf_data_utilities.h": "c",
         "iostream": "cpp",
-        "compare": "cpp"
+        "compare": "cpp",
+        "tuple": "c",
+        "type_traits": "c",
+        "utility": "c",
+        "typeinfo": "c"
     },
     "C_Cpp.errorSquiggles": "disabled",
     "makefile.makePath": "mingw32-make"

@@ -5,7 +5,7 @@
 // default case
 void __thiscall default_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
-    log_info("Did we get it ?");
+    log_info("Default End Handler");
     spellAPI.removeDLLNode(_this, spell_index);
     spellAPI.setEffectDone(_this, spell_index, 0);
 }
@@ -136,3 +136,4 @@ void __thiscall firebane_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall black_almightness_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall mutation_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall eternity_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
+

@@ -218,6 +218,47 @@ typedef struct __attribute__((packed))
 	uint32_t unkn6;
 } SF_CGdSpell;
 
+/* |-========== Internal Structures ==========-| */
+
+typedef struct __attribute__((packed)) 
+{
+	uint32_t vftablePTR;
+	uint8_t CMnuBase_data[0x208];
+	uint8_t CMnuVisControl_data[0x9C];
+	uint8_t CMnuLabel_data[0xc0];
+} CMnuLabel;
+
+typedef struct __attribute__((packed))
+{
+	uint32_t vftablePTR;
+	uint8_t CMnuBase_data[0x208];
+	uint8_t CMnuVisControl_data[0x9C];
+	uint8_t CMnuContainer_data[0x98];
+} CMnuContainer;
+
+typedef struct __attribute__((packed))
+{
+	uint8_t unkn1[0x8];
+	uint8_t offset_0x8;
+	uint8_t unkn2[0x3];
+	uint32_t offset_0xc;
+	uint32_t offset_0x10;
+	uint8_t offset_0x14;
+	uint8_t unkn3[0x3];
+	uint32_t offset_0x18;
+	uint32_t offset_0x1c;
+	uint8_t unknown[0x44];
+	SF_String unknown_string;
+} data_CUiStartMenu;
+
+typedef struct __attribute__((packed))
+{
+	uint32_t vftablePTR;
+	uint8_t CMnuBase_data[0x208];
+	uint8_t CMnuVisControl_data[0x9C];
+	uint8_t CMnuContainer_data[0x98];
+	data_CUiStartMenu CUiStartMenu_data;
+} CUiStartMenu;
 
 /* |-========== Internal Functions ==========-| */
 // These functions are used in SFSF internally, and may be moved.
@@ -229,6 +270,12 @@ typedef void (__thiscall *figure_toolbox_add_spell_ptr)(void *, uint16_t, uint16
 typedef bool (__thiscall *figure_toolbox_is_targetable_ptr)(void *CGdFigureToolbox, uint16_t figure_index);
 typedef uint32_t (__thiscall *FUN_0069eaf0_ptr)(void* ac69, void* ac69_2, void* ac69_3, void* ac69_4);
 typedef void (*fidfree_ptr)(uint32_t* memory_ptr);
+typedef void (__thiscall *menu_label_ptr)(CMnuLabel *_this);
+typedef void (__thiscall *menu_label_set_string_ptr)(CMnuLabel *_this, SF_String *string);
+typedef void (__thiscall *initialize_menu_container_ptr)(CMnuContainer *_this);
+typedef void (__thiscall *construct_default_sf_string_ptr)(SF_String *_this);
+
+typedef void (__thiscall *construct_start_menu_ptr)(CUiStartMenu *_this, uint32_t p1);
 
 /* |-========== Macros ==========-| */
 // Here comes a better method for setting up our exposed functions, to define functions also check sf_hooks.h

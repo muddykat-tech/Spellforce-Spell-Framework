@@ -21,6 +21,8 @@ extern void __thiscall disposeFigureIterator(CGdFigureIterator iterator);
 extern void __thiscall addBonusMultToStatistic(SF_CGdFigure *figure, StatisticDataKey key, uint16_t target, int8_t value);
 extern FUN_0069eaf0_ptr FUN_0069eaf0;
 extern fidfree_ptr fidFree;
+extern menu_label_ptr initialize_menu_label;
+extern menu_label_set_string_ptr menu_label_set_string;
 
 void initialize_beta_hooks();
 void initialize_data_hooks();
