@@ -10,7 +10,6 @@ void log_warning(const char *message) {
     // Logs a warning message to the console and the debug output
     static char modifiedMessage[256]; 
     snprintf(modifiedMessage, sizeof(modifiedMessage), "[WARNING] %s", message);
-    OutputDebugStringA(modifiedMessage);
     console_log(modifiedMessage);
 }
 
@@ -18,7 +17,6 @@ void log_info(const char *message) {
     // Logs an informational message to the console and the debug output
     static char modifiedMessage[256]; 
     snprintf(modifiedMessage, sizeof(modifiedMessage), "[SFSF] %s", message);
-    OutputDebugStringA(modifiedMessage);
     console_log(modifiedMessage);
 }
 

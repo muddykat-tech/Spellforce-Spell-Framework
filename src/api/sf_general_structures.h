@@ -222,7 +222,7 @@ typedef struct __attribute__((packed))
 /* |-========== Internal Functions ==========-| */
 // These functions are used in SFSF internally, and may be moved.
 
-typedef void (__thiscall *console_print_ptr)(uint32_t, char *);
+typedef void (__thiscall *console_print_ptr)(uint32_t, const char *);
 typedef uint16_t (__thiscall *get_spell_spell_line_ptr) (void *, uint16_t);
 typedef uint32_t (__thiscall *figure_toolbox_get_unkn_ptr)(void *, uint16_t);
 typedef void (__thiscall *figure_toolbox_add_spell_ptr)(void *, uint16_t, uint16_t);
