@@ -36,5 +36,5 @@ handler_ptr get_spell_end(uint16_t spell_line)
 void register_vanilla_spell_end_handlers()
 {
     //As we define ALL of the end handlers ourself inside sf_spellend_handlers.cpp, we do NOT need to initialize them here. (unlike sf_spelleffect_registry.cpp)
-    register_spell_end_handler(0xb, &default_end_handler); // And so on, (not sure if 0xb is default but it may be based on ghidra? CGdSpell:EndSpell)
+    register_spell_end_handler(0xe, &default_end_handler); // And so on, (not sure if 0xb is default but it may be based on ghidra? CGdSpell:EndSpell)
 }

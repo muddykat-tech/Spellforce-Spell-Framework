@@ -1,9 +1,11 @@
 #include "sf_spellend_handlers.h"
 #include "../core/sf_hooks.h"
+#include "../core/sf_wrappers.h"
 
 // default case
 void __thiscall default_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
+    log_info("Did we get it ?");
     spellAPI.removeDLLNode(_this, spell_index);
     spellAPI.setEffectDone(_this, spell_index, 0);
 }

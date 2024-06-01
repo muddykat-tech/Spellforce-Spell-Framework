@@ -28,6 +28,7 @@ ToolboxFunctions toolboxAPI;
 FigureFunctions figureAPI;
 IteratorFunctions iteratorAPI;
 
+// Bool function?
 int __thiscall CheckCanApply_hook_beta(SF_CGdSpell *_this, uint16_t spell_index)
 {
     // We need a map of refresh handlers?
@@ -165,7 +166,6 @@ void initialize_console_hook()
 
 void initialize_data_hooks()
 {
-
     // Required for internal use
     get_spell_spell_line = (get_spell_spell_line_ptr)(ASI::AddrOf(0x26E100));
     figure_toolbox_get_unkn = (figure_toolbox_get_unkn_ptr)(ASI::AddrOf(0x2FE704));
@@ -248,6 +248,25 @@ void initialize_spellend_hook()
     *(int *)(ASI::AddrOf(0x34b0a1)) = (int)(&EndSpell_hook_beta) - ASI::AddrOf(0x34b0a5);
     ASI::EndRewrite(end_spell_mreg);
 }
+
+void initialize_spellrefresh_hook(){
+    
+    ASI::MemoryRegion refresh_spell_mreg(ASI::AddrOf(0x329f90), 9);
+    ASI::BeginRewrite(refresh_spell_mreg);
+    *(unsigned char*)(ASI::AddrOf(0x329f90)) = 0x90;   // nop trail
+    *(unsigned char*)(ASI::AddrOf(0x329f91)) = 0x90;   // nop trail
+    *(unsigned char*)(ASI::AddrOf(0x329f92)) = 0x90;   // nop trail
+    *(unsigned char*)(ASI::AddrOf(0x329f93)) = 0x90;   // nop trail
+    *(unsigned char *)(ASI::AddrOf(0x329f94)) = 0xE9; // jmp instruction
+    *(int *)(ASI::AddrOf(0x329f95)) = (int)(&CheckCanApply_hook_beta) - ASI::AddrOf(0x329f99);
+    ASI::EndRewrite(refresh_spell_mreg);
+}
+
+// Figure out later -> Function (Siege Handler for Multi Effect Spells)
+
+// Figure out later -> Function to add display in menu? 
+// Would like to display version of Mod framework and perhaps mod page with loaded mods
+
 // Exposed in sf_hooks.h
 void initialize_beta_hooks()
 {
@@ -260,5 +279,11 @@ void initialize_beta_hooks()
     log_info("Hooking Spell Triggers");
     initialize_spell_trigger_hook();
 
-    log_info("We will be Hooking Spell Ends here Later on");
+    log_info("Hooking Spell Refresh Triggers");
+    initialize_spellrefresh_hook();
+
+    log_info("Hooking Spell End Triggers");
+    initialize_spellend_hook();
+
+    log_info("(Not yet) Hooking Multi Stage Spell Handler")
 }

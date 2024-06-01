@@ -24,6 +24,12 @@ void __thiscall custom_spelltype_handler(SF_CGdSpell * _this, uint16_t spell_ind
   sfsf->logWarning("Test Warning");
 }
 
+void __thiscall custom_spellend_handler(SF_CGdSpell * _this, uint16_t spell_index){
+  sfsf->logInfo("END EFFECT HANDLED");
+  spellAPI.removeDLLNode(_this, spell_index);
+  spellAPI.setEffectDone(_this, spell_index, 0);
+}
+
 void __thiscall custom_spelleffect_handler(SF_CGdSpell * _this, uint16_t spell_index) {
   sfsf->logInfo("Custom Effect Handled");
   // Required for the spell to eventually become Inactive, without this and setEffectDone, you can't attack the same target again.
@@ -32,56 +38,29 @@ void __thiscall custom_spelleffect_handler(SF_CGdSpell * _this, uint16_t spell_i
   uint8_t xdata_key = spell->xdata_key;
   uint8_t tick_count = spellAPI->getXData(_this, xdata_key, SPELL_TICK_COUNT);
 
-  char countinfo1[256];
-  sprintf(countinfo1, "Tick Count:  %d\n", tick_count);
-  sfsf->logInfo(countinfo1);
-
   spellAPI->addToXData(_this, spell_index, SPELL_TICK_COUNT, 100);
-
-  char countinfo2[256];
-  sprintf(countinfo2, "Tick Count:  %d\n", tick_count);
-  sfsf->logInfo(countinfo2);
 
   uint32_t damage = 1;
 
-  sfsf->logInfo("Setup Spell Target Info");
   uint16_t target_index = spell->target.entity_index;
   uint16_t source_index = spell->source.entity_index;
-  
-  sfsf->logInfo("Setup Spell Effect Info");
+
   SF_SpellEffectInfo effect_info;
   effect_info.spell_id = spell->spell_id;
   effect_info.job_id = spell->spell_job;
 
-  sfsf->logInfo("Get Resist");
   uint32_t resist_chance = spellAPI->getChanceToResistSpell(_this->unkn2, source_index, target_index, effect_info);
-  char resInfo[256];
-  sprintf(resInfo, "Resist:  %d\n", resist_chance);
-  sfsf->logInfo(resInfo);
 
-  sfsf->logInfo("Get Random");
   uint16_t random_roll = spellAPI->getRandom(_this->OpaqueClass, 100);
 
-  char ranInfo[256];
-  sprintf(ranInfo, "Random:  %d\n", random_roll);
-  sfsf->logInfo(ranInfo);
-
-  sfsf->logInfo("Get isAlive Target");
   uint16_t isAlive = figureAPI->isAlive(_this->SF_CGdFigure, target_index);
 
-  char aliveInfo[256];
-  sprintf(aliveInfo, "isAlive:  %d\n", isAlive);
-  sfsf->logInfo(aliveInfo);
-
-  sfsf->logInfo("Change Walk Speed of Caster to 200");
   figureAPI->setWalkSpeed(_this->SF_CGdFigure, source_index, 200);
 
-  sfsf->logInfo("Added to the Wisdom Bonus Mult by 2"); // Unconfirmed if working as in tended, does NOT cause a crash though...
   figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, WISDOM, source_index, 2);
 
 
   if(resist_chance < random_roll) {
-    sfsf->logInfo("Deal Damage");
     toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index, target_index, damage, 1, 0, 0);
     return;
   }
@@ -99,9 +78,10 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework* frame
 
     // This will OVERWRITE existing entries, so you can fix or modify vanilla spelltypes and effects
     // 0xe and 0xeb are the Icestrike or Iceburst Spell
-    sfsf->registerSpellTypeHandler(0xe, &custom_spelltype_handler);
-    sfsf->registerSpellTypeHandler(0xeb, &custom_spelltype_handler);
-    sfsf->registerEffectHandler(0xf2, &custom_spelleffect_handler);
+    //sfsf->registerSpellTypeHandler(0xe, &custom_spelltype_handler);
+    //sfsf->registerSpellTypeHandler(0xeb, &custom_spelltype_handler);
+    //sfsf->registerEffectHandler(0xf2, &custom_spelleffect_handler);
+    sfsf->registerEndSpellHandler(0xe, &custom_spellend_handler);
 }
 
 
