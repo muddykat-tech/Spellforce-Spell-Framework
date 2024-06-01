@@ -15,6 +15,13 @@ get_spell_spell_line_ptr get_spell_spell_line;
 figure_toolbox_get_unkn_ptr figure_toolbox_get_unkn;
 figure_toolbox_add_spell_ptr figure_toolbox_add_spell;
 figure_toolbox_is_targetable_ptr figure_toolbox_is_targetable;
+menu_label_ptr initialize_menu_label;
+menu_label_set_string_ptr menu_label_set_string;
+
+initialize_menu_container_ptr initialize_menu_container;
+construct_default_sf_string_ptr construct_default_sf_string;
+
+construct_start_menu_ptr construct_start_menu;
 
 FUN_0069eaf0_ptr FUN_0069eaf0;
 fidfree_ptr fidFree;
@@ -48,6 +55,11 @@ void __thiscall EndSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_index)
     {
         spellend_handler(_this, spell_index);
     }
+}
+
+void __thiscall menu_trigger(CUiStartMenu *_this, uint32_t param_1)
+{
+    log_info("Does this Trigger Start?");
 }
 
 void __thiscall effect_trigger_hook(SF_CGdSpell *_this)
@@ -171,6 +183,12 @@ void initialize_data_hooks()
     figure_toolbox_get_unkn = (figure_toolbox_get_unkn_ptr)(ASI::AddrOf(0x2FE704));
     figure_toolbox_add_spell = (figure_toolbox_add_spell_ptr)(ASI::AddrOf(0x2F673A));
 
+    initialize_menu_label = (menu_label_ptr) (ASI::AddrOf(0x51a180));
+    menu_label_set_string = (menu_label_set_string_ptr) (ASI::AddrOf(0x52fab0));
+
+    initialize_menu_container = (initialize_menu_container_ptr) (ASI::AddrOf(0x505780));
+    construct_default_sf_string = (construct_default_sf_string_ptr) (ASI::AddrOf(0x383900));
+
     // used in Iterator for AOE Spells Dispose
     FUN_0069eaf0 = (FUN_0069eaf0_ptr)(ASI::AddrOf(0x29EAF0));
     fidFree = (fidfree_ptr)(ASI::AddrOf(0x6B6E25));
@@ -268,6 +286,14 @@ void initialize_spellrefresh_hook(){
 
 // Figure out later -> Function to add display in menu? 
 // Would like to display version of Mod framework and perhaps mod page with loaded mods
+// NON Functional Hook, @TODO need to check if possible to hook this area [CUiStartMenu::~CUiStartMenu(CUiStartMenu *this, uint32_t param_1)]
+void initialize_menuload_hook(){
+    ASI::MemoryRegion load_menu_mreg(ASI::AddrOf(0x617c70), 5);
+    ASI::BeginRewrite(load_menu_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x617c70)) = 0xE9; // Call instruction
+    *(int *)(ASI::AddrOf(0x617c71)) = (int)(&menu_trigger) - ASI::AddrOf(0x617c75);
+    ASI::EndRewrite(load_menu_mreg);
+}
 
 // Exposed in sf_hooks.h
 void initialize_beta_hooks()
@@ -288,4 +314,7 @@ void initialize_beta_hooks()
     initialize_spellend_hook();
 
     log_info("(Not yet) Hooking Multi Stage Spell Handler");
+
+    log_info("Dirty Menu Loading Trigger Test");
+    //initialize_menuload_hook();
 }
