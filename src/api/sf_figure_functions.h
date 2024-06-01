@@ -32,7 +32,11 @@ DECLARE_FUNCTION(uint8_t, addBonusMult, FigureStatistic statistic, uint8_t value
 DECLARE_FUNCTION(uint16_t, getCurrentHealth, SF_CGdFigure* figure, uint16_t figure_id);
 DECLARE_FUNCTION(void, decreaseHealth, SF_CGdFigure* figure, uint16_t figure_id, uint16_t amount);
 DECLARE_FUNCTION(uint16_t, getCurrentMaxMana, SF_CGdFigure *figure, uint16_t figure_id);
+DECLARE_FUNCTION(uint16_t, getCurrentMaxHealth, SF_CGdFigure *figure, uint16_t figure_id);
+
 DECLARE_FUNCTION(void, rescaleMana, SF_CGdFigure *figure, uint16_t figure_id, uint16_t max_mana);
+DECLARE_FUNCTION(void, rescaleHealth, SF_CGdFigure *figure, uint16_t figure_id, uint16_t max_health);
+
 
 DECLARE_FUNCTION_GROUP(Figure,
 	isAlive_ptr isAlive;
@@ -42,6 +46,8 @@ DECLARE_FUNCTION_GROUP(Figure,
 	addBonusMultToStatistic_ptr addBonusMultToStatistic;
     decreaseHealth_ptr decreaseHealth;
     getCurrentHealth_ptr getCurrentHealth;
+    getCurrentMaxHealth_ptr getCurrentMaxHealth;
 	getCurrentMaxMana_ptr getCurrentMaxMana;
     rescaleMana_ptr rescaleMana;
+    rescaleHealth_ptr rescaleHealth;
 );

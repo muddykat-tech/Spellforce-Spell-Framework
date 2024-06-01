@@ -184,6 +184,8 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(figure, getCurrentHealth, 0x279350);
     DEFINE_FUNCTION(figure, getCurrentMaxMana, 0x2b2a20);
     DEFINE_FUNCTION(figure, rescaleMana, 0x2b5d50);
+    DEFINE_FUNCTION(figure, getCurrentMaxHealth, 0x2b2970);
+    DEFINE_FUNCTION(figure, rescaleHealth, 0x2b5cd0);
 
     // Define the function pointers for SpellFunctions group
     DEFINE_FUNCTION(spell, setXData, 0x329C40);
@@ -285,5 +287,5 @@ void initialize_beta_hooks()
     log_info("Hooking Spell End Triggers");
     initialize_spellend_hook();
 
-    log_info("(Not yet) Hooking Multi Stage Spell Handler")
+    log_info("(Not yet) Hooking Multi Stage Spell Handler");
 }
