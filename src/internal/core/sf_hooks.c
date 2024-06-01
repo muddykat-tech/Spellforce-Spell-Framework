@@ -4,6 +4,7 @@
 #include "../handlers/sf_spelltype_handlers.h"
 #include "../registry/sf_spelltype_registry.h"
 #include "../registry/sf_spelleffect_registry.h"
+#include "../registry/sf_spellend_registry.h"
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -40,6 +41,12 @@ void __thiscall EndSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_index)
     // We need a map of end spell handlers?
     // And a default handler that does nothing
     // handler takes (SF_CGdSpell *_this, uint16_t spell_index) as params
+    uint16_t spell_line = _this->active_spell_list[spell_index].spell_line;
+    handler_ptr spellend_handler = get_spell_end(spell_line);
+    if (spellend_handler != NULL)
+    {
+        spellend_handler(_this, spell_index);
+    }
 }
 
 void __thiscall effect_trigger_hook(SF_CGdSpell *_this)
@@ -230,6 +237,14 @@ void initialize_spell_trigger_hook()
     ASI::EndRewrite(add_spell_mreg);
 }
 
+void initialize_spellend_hook()
+{
+    ASI::MemoryRegion end_spell_mreg(ASI::AddrOf(0x34b0a0), 5);
+    ASI::BeginRewrite(end_spell_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x34b0a0)) = 0xE9; // jmp instruction
+    *(int *)(ASI::AddrOf(0x34b0a1)) = (int)(&EndSpell_hook_beta) - ASI::AddrOf(0x34b0a5);
+    ASI::EndRewrite(end_spell_mreg);
+}
 // Exposed in sf_hooks.h
 void initialize_beta_hooks()
 {

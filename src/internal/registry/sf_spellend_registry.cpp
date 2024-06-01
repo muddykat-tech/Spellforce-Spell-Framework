@@ -9,22 +9,24 @@
 
 std::map<uint16_t, handler_ptr> spellend_handler_map;
 
-void register_spell_end_handler(uint16_t spell_job, handler_ptr handler) 
+void register_spell_end_handler(uint16_t spell_line, handler_ptr handler)
 {
-    auto check = spellend_handler_map.find(spell_job);
-    if (check != spellend_handler_map.end()){ 
+    auto check = spellend_handler_map.find(spell_line);
+    if (check != spellend_handler_map.end())
+    { 
         char message[256];
-        sprintf(message, "An On Spell End Handler has been replaced! [%d] (Was this on purpose?)", spell_job);
+        sprintf(message, "An On Spell End Handler has been replaced! [%d] (Was this on purpose?)", spell_line);
         log_warning(message);
     }
 
-    spellend_handler_map[spell_job] = handler;
+    spellend_handler_map[spell_line] = handler;
 }
 
-handler_ptr get_spell_end(uint16_t spell_job) 
+handler_ptr get_spell_end(uint16_t spell_line)
 {
-    auto it = spellend_handler_map.find(spell_job);
-    if (it == spellend_handler_map.end()) {
+    auto it = spellend_handler_map.find(spell_line);
+    if (it == spellend_handler_map.end()) 
+    {
         log_error("Unknown Job ID, No spell end handler registered.");
         return NULL;
     }
