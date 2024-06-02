@@ -161,3 +161,24 @@ void __thiscall firebane_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall black_almightness_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall mutation_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall eternity_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
+
+// Muddykat Section:
+
+// FIRST BLOCK (has a goto, to FigureClearCheckSpellsBeforeCheckBattle; -> break;)
+void __thiscall invulnerability_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
+void __thiscall decay2_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
+void __thiscall remediless_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
+void __thiscall unkn_end_handler(SF_CGdSpell *_this, uint16_t spell_index); // Unused spell 85
+void __thiscall demoralization_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
+ 
+// SECOND BLOCK FigureClearCheckSpellsBeforeCheckBattle -> FigureTryUnfreeze -> break;
+void __thiscall freeze_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
+void __thiscall petrify_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
+
+// THIRD BLOCK FigureClearCheckSpellsBeforeCheckBattle -> Done -> Return;
+void __thiscall decay1_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
+
+// FOURTH BLOCK FigureTryClearCheckSpellsBeforeJob2 -> goto -> FigureClearCheckSpellsBeforeCheckBattle -> break;
+void __thiscall fireshield_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
+void __thiscall feign_death_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
+void __thiscall manashield_end_handler(SF_CGdSpell *_this, uint16_t spell_index);

@@ -79,7 +79,7 @@ void __thiscall menu_trigger(uint32_t _CAppMenu)
     initialize_menu_container(new_cont_test);
 
     // I believe this is MAY be a method to asociate containers and screens in some manner, not sure yet.
-    // This does weird shit, it draws the menu normal menu BEFORE it should now?
+    // This does weird shit, it draws the normal menu BEFORE it should now?
     new_cont_test->vftablePTR = screen_vftable_ptr;
     
     // CMnuLabel * test_label;
