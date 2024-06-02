@@ -17,11 +17,9 @@ figure_toolbox_add_spell_ptr figure_toolbox_add_spell;
 figure_toolbox_is_targetable_ptr figure_toolbox_is_targetable;
 menu_label_ptr initialize_menu_label;
 menu_label_set_string_ptr menu_label_set_string;
-
+message_box_ptr show_message_box;
 initialize_menu_container_ptr initialize_menu_container;
 construct_default_sf_string_ptr construct_default_sf_string;
-
-construct_start_menu_ptr construct_start_menu;
 
 FUN_0069eaf0_ptr FUN_0069eaf0;
 fidfree_ptr fidFree;
@@ -57,9 +55,11 @@ void __thiscall EndSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_index)
     }
 }
 
-void __thiscall menu_trigger(CUiStartMenu *_this, uint32_t param_1)
+void __thiscall menu_trigger()
 {
-    log_info("Does this Trigger Start?");
+    log_info("Menu Trigger Was Called");
+
+    log_info("the Original Start Menu Code");
 }
 
 void __thiscall effect_trigger_hook(SF_CGdSpell *_this)
@@ -267,8 +267,8 @@ void initialize_spellend_hook()
     ASI::EndRewrite(end_spell_mreg);
 }
 
-void initialize_spellrefresh_hook(){
-    
+void initialize_spellrefresh_hook()
+{   
     ASI::MemoryRegion refresh_spell_mreg(ASI::AddrOf(0x329f90), 9);
     ASI::BeginRewrite(refresh_spell_mreg);
     *(unsigned char*)(ASI::AddrOf(0x329f90)) = 0x90;   // nop trail
@@ -280,17 +280,34 @@ void initialize_spellrefresh_hook(){
     ASI::EndRewrite(refresh_spell_mreg);
 }
 
+uint32_t original_menu_func;
+uint32_t menu_return_addr;
+
 // Figure out later -> Function (Siege Handler for Multi Effect Spells)
+void __declspec(naked) menuload_hook_beta()
+{
+    asm("call %P0               \n\t"
+        "mov %%edi, %%ecx       \n\t"
+        "call %P1               \n\t"
+        "jmp *%2                \n\t":
+        :"i"(menu_trigger), "i"(original_menu_func), "o"(menu_return_addr));
+}
 
 // Figure out later -> Function to add display in menu? 
 // Would like to display version of Mod framework and perhaps mod page with loaded mods
 // NON Functional Hook, @TODO need to check if possible to hook this area [CUiStartMenu::~CUiStartMenu(CUiStartMenu *this, uint32_t param_1)]
-void initialize_menuload_hook(){
-    ASI::MemoryRegion load_menu_mreg(ASI::AddrOf(0x617c70), 5);
-    ASI::BeginRewrite(load_menu_mreg);
-    *(unsigned char *)(ASI::AddrOf(0x617c70)) = 0xE9; // Call instruction
-    *(int *)(ASI::AddrOf(0x617c71)) = (int)(&menu_trigger) - ASI::AddrOf(0x617c75);
-    ASI::EndRewrite(load_menu_mreg);
+void initialize_menuload_hook() 
+{
+    // setup original_menu_func
+    // setup return_addr
+    original_menu_func = (ASI::AddrOf(0x197b10));
+    menu_return_addr = (ASI::AddrOf(0x182799));
+    
+    ASI::MemoryRegion menu_load_mreg(ASI::AddrOf(0x182794), 5);
+    ASI::BeginRewrite(menu_load_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x182794)) = 0xE9; // jmp instruction
+    *(int *)(ASI::AddrOf(0x182795)) = (int)(&menuload_hook_beta) - ASI::AddrOf(0x182799);
+    ASI::EndRewrite(menu_load_mreg);
 }
 
 // Exposed in sf_hooks.h
@@ -314,5 +331,5 @@ void initialize_beta_hooks()
     log_info("(Not yet) Hooking Multi Stage Spell Handler");
 
     log_info("Dirty Menu Loading Trigger Test");
-    //initialize_menuload_hook();
+    initialize_menuload_hook();
 }

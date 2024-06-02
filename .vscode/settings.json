@@ -14,7 +14,12 @@
         "tuple": "c",
         "type_traits": "c",
         "utility": "c",
-        "typeinfo": "c"
+        "typeinfo": "c",
+        "sf_hooks.h": "c",
+        "sf_spelltype_registry.h": "c",
+        "sf_spelleffect_registry.h": "c",
+        "stdint.h": "c",
+        "string.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled",
     "makefile.makePath": "mingw32-make"
