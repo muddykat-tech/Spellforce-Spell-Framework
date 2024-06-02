@@ -279,6 +279,8 @@ typedef void (__thiscall *construct_start_menu_ptr)(CUiStartMenu *_this, uint32_
 
 typedef void (__thiscall *message_box_ptr)(uint32_t CMnuScreen_ptr, SF_String *string_ptr);
 
+typedef void (__fastcall *original_menu_func_ptr)(uint32_t param1);
+
 /* |-========== Macros ==========-| */
 // Here comes a better method for setting up our exposed functions, to define functions also check sf_hooks.h
 #define DECLARE_FUNCTION(type, name, ...) \

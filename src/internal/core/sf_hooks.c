@@ -55,11 +55,12 @@ void __thiscall EndSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_index)
     }
 }
 
-void __thiscall menu_trigger()
+void __thiscall menu_trigger(uint32_t _CAppMenu)
 {
     log_info("Menu Trigger Was Called");
-
+    original_menu_func(_CAppMenu);
     log_info("the Original Start Menu Code");
+    
 }
 
 void __thiscall effect_trigger_hook(SF_CGdSpell *_this)
@@ -282,17 +283,15 @@ void initialize_spellrefresh_hook()
     ASI::EndRewrite(refresh_spell_mreg);
 }
 
-uint32_t original_menu_func;
+original_menu_func_ptr original_menu_func;
 uint32_t menu_return_addr;
 
 // Figure out later -> Function (Siege Handler for Multi Effect Spells)
 void __declspec(naked) menuload_hook_beta()
 {
-    asm("call %P0               \n\t"
-        "mov %%edi, %%ecx       \n\t"
-        "call %P1               \n\t"
-        "jmp *%2                \n\t":
-        :"i"(menu_trigger), "i"(original_menu_func), "o"(menu_return_addr));
+    asm("call %P0           \n\t"
+        "mov %%edi, %%ecx   \n\t"
+        "jmp *%1            \n\t" : : "i"(menu_trigger), "o"(menu_return_addr));
 }
 
 // Figure out later -> Function to add display in menu? 
@@ -302,7 +301,7 @@ void initialize_menuload_hook()
 {
     // setup original_menu_func
     // setup return_addr
-    original_menu_func = (ASI::AddrOf(0x197b10));
+    original_menu_func = (original_menu_func_ptr)(ASI::AddrOf(0x197b10));
     menu_return_addr = (ASI::AddrOf(0x182799));
     
     ASI::MemoryRegion menu_load_mreg(ASI::AddrOf(0x182794), 5);
