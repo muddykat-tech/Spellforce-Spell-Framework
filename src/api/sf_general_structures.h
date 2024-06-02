@@ -220,6 +220,12 @@ typedef struct __attribute__((packed))
 
 /* |-========== Internal Structures ==========-| */
 
+typedef struct __attribute__((packed))
+{
+	uint32_t vftable_ptr;
+	uint8_t CAppMenu_data[0x688];
+} CAppMenu;
+
 typedef struct __attribute__((packed)) 
 {
 	uint32_t vftablePTR;
@@ -280,6 +286,10 @@ typedef void (__thiscall *construct_start_menu_ptr)(CUiStartMenu *_this, uint32_
 typedef void (__thiscall *message_box_ptr)(uint32_t CMnuScreen_ptr, SF_String *string_ptr);
 
 typedef void (__fastcall *original_menu_func_ptr)(uint32_t param1);
+
+typedef void* (__cdecl *new_operator_ptr)(uint32_t param_1);
+typedef void (__thiscall *container_add_control_ptr)(CMnuContainer * _this, void *CMnuBase, uint8_t c1, uint8_t c2, uint32_t p4);
+typedef void (__thiscall *menu_label_set_data_ptr)(CMnuLabel *_this, uint32_t maybe_font, uint32_t maybe_color, uint32_t unkn1, uint8_t unknchar);
 
 /* |-========== Macros ==========-| */
 // Here comes a better method for setting up our exposed functions, to define functions also check sf_hooks.h

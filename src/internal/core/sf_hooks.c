@@ -21,6 +21,10 @@ message_box_ptr show_message_box;
 initialize_menu_container_ptr initialize_menu_container;
 construct_default_sf_string_ptr construct_default_sf_string;
 
+new_operator_ptr new_operator;
+container_add_control_ptr container_add_control;
+menu_label_set_data_ptr menu_label_set_data;
+
 FUN_0069eaf0_ptr FUN_0069eaf0;
 fidfree_ptr fidFree;
 
@@ -57,10 +61,46 @@ void __thiscall EndSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_index)
 
 void __thiscall menu_trigger(uint32_t _CAppMenu)
 {
+    SF_String *test_label_string;
+
+    construct_default_sf_string(test_label_string);
+    
+    uint32_t CAppMenu_ptr = *(uint32_t *)(_CAppMenu);
+    uint32_t CAppMenu_data = *(uint32_t *)(CAppMenu_ptr + 0x4);
+    uint32_t CMnuScreen_ptr = *(uint32_t *)(CAppMenu_ptr + 0x68);
+    uint32_t screen_vftable_ptr = *(uint32_t *) (CMnuScreen_ptr); // First field is the vftable ptr
+    // Ghidra Converts this in the following order: CMnuScreen_ptr -> CMnuContainer_ptr -> CMnuVisControl -> CMnuBase
+    // The data structure that these have is aligned, best I can describe this is that it trims the data from the previous structure
+    // EG. as screen ptr it has CMnuScreen_data, but as Container ptr it is missing CMnuScreen_data but everything else remains in same order and so on.
+    
+    // This DOES work, it creates a new Container properly, but we now need to attach it somehow...
+    new_operator = (new_operator_ptr)(ASI::AddrOf(0x675A9D));
+    CMnuContainer *new_cont_test = (CMnuContainer *) new_operator(0x340);
+    initialize_menu_container(new_cont_test);
+
+    // I believe this is MAY be a method to asociate containers and screens in some manner, not sure yet.
+    // This does weird shit, it draws the menu normal menu BEFORE it should now?
+    new_cont_test->vftablePTR = screen_vftable_ptr;
+    
+    // CMnuLabel * test_label;
+    // test_label = (CMnuLabel *) new_operator(0x368);
+
+    // menu_label_set_data = (menu_label_set_data_ptr) (ASI::AddrOf(0x530330));
+    // // CMnuLabel::FUN_00930330
+    // uint64_t RG_Color = 0xf32f32;
+    // uint64_t color = 0xf32f32f32;
+
+    // menu_label_set_data(test_label, RG_Color, (RG_Color >> 0x20), 0x0000f32, '\x01');
+    // menu_label_set_string(test_label, test_label_string);
+    // container_add_control = (container_add_control_ptr) (ASI::AddrOf(0x506f30));
+    // container_add_control(new_cont_test, test_label, '\x01', '\x01', 0);
+
     log_info("Menu Trigger Was Called");
     original_menu_func(_CAppMenu);
-    log_info("the Original Start Menu Code");
     
+    log_info("Test String Dtor");
+    SF_String_dtor(test_label_string);
+    log_info("Jumping back to Normal Flow");
 }
 
 void __thiscall effect_trigger_hook(SF_CGdSpell *_this)
@@ -289,8 +329,9 @@ uint32_t menu_return_addr;
 // Figure out later -> Function (Siege Handler for Multi Effect Spells)
 void __declspec(naked) menuload_hook_beta()
 {
-    asm("call %P0           \n\t"
-        "mov %%edi, %%ecx   \n\t"
+    asm("push %%edi         \n\t"
+        "call %P0           \n\t"
+        "pop %%edi          \n\t"
         "jmp *%1            \n\t" : : "i"(menu_trigger), "o"(menu_return_addr));
 }
 
