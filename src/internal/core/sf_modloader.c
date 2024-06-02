@@ -6,9 +6,10 @@
 #include "sf_wrappers.h"
 #include "sf_modloader.h"
 
-extern SpellforceSpellFramework frameworkAPI;
 
+extern SpellforceSpellFramework frameworkAPI;
 typedef void (*InitModuleFunc)(void*);
+int mod_count = 0;
 
 void cleanup(void* modHandle) {
     // Free resources (unload mod library using FreeLibrary)
@@ -32,6 +33,7 @@ void load_mod(const char* modPath, void* pFrameworkAPI) {
             char infomsg[256];
             snprintf(infomsg, sizeof(infomsg), "[Initialized Mod: %s]", get_filename(modPath));
             log_info(infomsg);
+            mod_count += 1;
         } else {
             log_error("Failed to get address of InitModule");
             cleanup(modHandle);
@@ -70,5 +72,8 @@ void load_all_mods(const char* subfolder, void* pFrameworkAPI) {
 void initialize_mods() {    
     log_info("--- Mod Loading Phase Start ---");
     load_all_mods("sfsf", &frameworkAPI);
+    static char info_str[256]; 
+    snprintf(info_str, sizeof(info_str), "%d Mods Initialized", mod_count);
+    log_info(info_str);
     log_info("--- Mod Loading Phase End ---");
 }
