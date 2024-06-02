@@ -112,9 +112,9 @@ void __thiscall brilliance_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
     SF_CGdResourceSpell spell_data;
     spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index].spell_id);
     uint16_t target_index = _this->active_spell_list[spell_index].target.entity_index;
-    uint16_t max_mana = figureAPI.getCurrentMaxMana(_this->SF_CGdFigure, target_index);
     if (toolboxAPI.hasSpellOnHit(_this->SF_CGdFigureToolBox, target_index, spell_data.spell_line_id))
     {
+        uint16_t max_mana = figureAPI.getCurrentMaxMana(_this->SF_CGdFigure, target_index);
         figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, WISDOM, target_index, -spell_data.params[0]);
         toolboxAPI.rescaleLevelStats(_this->SF_CGdFigureToolBox, target_index);
         figureAPI.rescaleMana(_this->SF_CGdFigure, target_index, max_mana);
@@ -122,8 +122,33 @@ void __thiscall brilliance_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
     default_end_handler(_this, spell_index);
 }
 
-void __thiscall suffocation_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
-void __thiscall inablility_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
+void __thiscall suffocation_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    SF_CGdResourceSpell spell_data;
+    spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index].spell_id);
+    uint16_t target_index = _this->active_spell_list[spell_index].target.entity_index;
+    if (toolboxAPI.hasSpellOnHit(_this->SF_CGdFigureToolBox, target_index, spell_data.spell_line_id))
+    {
+        uint16_t max_health = figureAPI.getCurrentMaxHealth(_this->SF_CGdFigure, target_index);
+        figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, STAMINA, target_index, spell_data.params[0]);
+        toolboxAPI.rescaleLevelStats(_this->SF_CGdFigureToolBox, target_index);
+        figureAPI.rescaleHealth(_this->SF_CGdFigure, target_index, max_health);
+    }
+    default_end_handler(_this, spell_index);
+}
+
+void __thiscall inablility_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    SF_CGdResourceSpell spell_data;
+    spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index].spell_id);
+    uint16_t target_index = _this->active_spell_list[spell_index].target.entity_index;
+    if (toolboxAPI.hasSpellOnHit(_this->SF_CGdFigureToolBox, target_index, spell_data.spell_line_id))
+    {
+        figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, DEXTERITY, target_index, spell_data.params[0]);
+    }
+    default_end_handler(_this, spell_index);
+}
+
 void __thiscall slow_fighting_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall dexterity_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall edurance_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
@@ -136,4 +161,3 @@ void __thiscall firebane_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall black_almightness_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall mutation_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall eternity_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
-
