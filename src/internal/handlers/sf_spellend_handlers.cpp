@@ -149,8 +149,31 @@ void __thiscall inablility_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
     default_end_handler(_this, spell_index);
 }
 
-void __thiscall slow_fighting_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
-void __thiscall dexterity_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
+void __thiscall slow_fighting_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    SF_CGdResourceSpell spell_data;
+    spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index].spell_id);
+    uint16_t target_index = _this->active_spell_list[spell_index].target.entity_index;
+    if (toolboxAPI.hasSpellOnHit(_this->SF_CGdFigureToolBox, target_index, spell_data.spell_line_id))
+    {
+        figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, FLIGHT_SPEED, target_index, spell_data.params[0]);
+    }
+    default_end_handler(_this, spell_index);
+}
+
+void __thiscall dexterity_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    SF_CGdResourceSpell spell_data;
+    spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index].spell_id);
+    uint16_t target_index = _this->active_spell_list[spell_index].target.entity_index;
+    if (toolboxAPI.hasSpellOnHit(_this->SF_CGdFigureToolBox, target_index, spell_data.spell_line_id))
+    {
+        int8_t bonus = (int8_t)(-spellAPI.getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER));
+        figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, DEXTERITY, target_index, bonus);
+    }
+    default_end_handler(_this, spell_index);
+}
+
 void __thiscall edurance_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall fast_fighting_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall charisma_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
@@ -164,13 +187,13 @@ void __thiscall eternity_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
 
 // Muddykat Section:
 
-// FIRST BLOCK (has a goto, to FigureClearCheckSpellsBeforeCheckBattle; -> break;)
+// FIRST BLOCK (has a goto, to FigureClearCheckSpellsBeforeCheckBattle; -> break;) break = default handler
 void __thiscall invulnerability_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall decay2_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall remediless_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall unkn_end_handler(SF_CGdSpell *_this, uint16_t spell_index); // Unused spell 85
 void __thiscall demoralization_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
- 
+
 // SECOND BLOCK FigureClearCheckSpellsBeforeCheckBattle -> FigureTryUnfreeze -> break;
 void __thiscall freeze_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall petrify_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
