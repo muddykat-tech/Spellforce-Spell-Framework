@@ -11,17 +11,19 @@
 #include <stdint.h>
 
 typedef void (*initializeModule_ptr)(void*);
+typedef SFMod (*registerMod_ptr)(void*);
 typedef void (*log_warning_ptr)(const char*);
 typedef void (*logInfoFunc)(const char*);
 typedef void (__thiscall *handler_ptr) (SF_CGdSpell *, uint16_t);
 typedef void (*register_spelltype_handler_ptr)(uint16_t spell_index, handler_ptr handler);
 typedef void (*register_effect_handler_ptr)(uint16_t spell_job, handler_ptr handler);
+typedef void (*register_spell_end_handler_ptr)(uint16_t spell_index, handler_ptr handler);
 
 // Declare the structure
 struct SpellforceSpellFramework {
-    initializeModule_ptr initializeModule;
     register_spelltype_handler_ptr registerSpellTypeHandler;
     register_effect_handler_ptr registerEffectHandler;
+    register_spell_end_handler_ptr registerSpellEndHandler;
 
     SpellFunctions *spellAPI;
     ToolboxFunctions *toolboxAPI;

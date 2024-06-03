@@ -10,7 +10,7 @@
 
 // Exposed in sfsf.h
 SpellforceSpellFramework frameworkAPI;
-
+SFMod current_mod;
 // We can include pointers to our own functions we define.
 // Note these functions are ASSIGNED to a function group when we DEFINE said group, names are VERY important.
 
@@ -23,8 +23,14 @@ void registerFrameworkAPI()
     frameworkAPI.iteratorAPI = &iteratorAPI;
 	frameworkAPI.registerSpellTypeHandler = &registerSpellTypeHandler;
     frameworkAPI.registerEffectHandler = &registerEffectHandler;
+    frameworkAPI.registerSpellEndHandler = &registerSpellEndHandler;
     frameworkAPI.logWarning = &log_warning;
     frameworkAPI.logInfo = &log_info;
+
+    strcpy(current_mod.mod_id, "SFSF");
+    strcpy(current_mod.mod_description, "The Spellforce Spell Framework");
+    strcpy(current_mod.mod_version, "4.0.0");
+    strcpy(current_mod.mod_author, "Muddykat, UnSchtalch, shovel_knight");
 }
 
 void initialize_framework() 

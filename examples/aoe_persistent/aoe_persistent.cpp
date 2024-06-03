@@ -131,6 +131,15 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     sfsf->registerEffectHandler(0xf2, &thuderstorm_effect_handler);
 }
 
+SFMod mod;
+extern "C" __declspec(dllexport) SFMod RegisterMod() {
+    strcpy(mod.mod_id, "Persistent AOE Example Mod");
+    strcpy(mod.mod_version, "1.0.0");
+    strcpy(mod.mod_description, "A mod designed to provide an example of a Persistent AOE spell");
+    strcpy(mod.mod_author, "UnSchtalch");
+    return mod;
+}
+
 // Required to be present, not required for any functionality
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 {

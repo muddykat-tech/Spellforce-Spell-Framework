@@ -2,6 +2,16 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+/* |-========== Mod Loading Structures ==========-| */
+
+typedef struct __attribute__((packed))
+{
+	char mod_id[64];
+	char mod_version[24];
+	char mod_description[128];
+	char mod_author[128];
+} SFMod;
+
 /* |-========== General Structures ==========-| */
 
 typedef struct __attribute__((packed))

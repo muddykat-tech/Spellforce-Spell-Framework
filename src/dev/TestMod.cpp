@@ -1,8 +1,10 @@
 #include <windows.h>
 #include "../api/sfsf.h"
+#include "../api/sf_general_structures.h"
 // NOTE sfsf.h includes the OTHER api files, the other files are still required
 
 #include <cstdio>
+#include <string.h>
 
 SpellforceSpellFramework *sfsf;
 SpellFunctions *spellAPI;
@@ -26,8 +28,9 @@ void __thiscall custom_spelltype_handler(SF_CGdSpell * _this, uint16_t spell_ind
 
 void __thiscall custom_spellend_handler(SF_CGdSpell * _this, uint16_t spell_index){
   sfsf->logInfo("END EFFECT HANDLED");
-  spellAPI.removeDLLNode(_this, spell_index);
-  spellAPI.setEffectDone(_this, spell_index, 0);
+  spellAPI->spellClearFigureFlag(_this, spell_index, UNFREEZE);
+  spellAPI->removeDLLNode(_this, spell_index);
+  spellAPI->setEffectDone(_this, spell_index, 0);
 }
 
 void __thiscall custom_spelleffect_handler(SF_CGdSpell * _this, uint16_t spell_index) {
@@ -78,12 +81,20 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework* frame
 
     // This will OVERWRITE existing entries, so you can fix or modify vanilla spelltypes and effects
     // 0xe and 0xeb are the Icestrike or Iceburst Spell
-    //sfsf->registerSpellTypeHandler(0xe, &custom_spelltype_handler);
-    //sfsf->registerSpellTypeHandler(0xeb, &custom_spelltype_handler);
-    //sfsf->registerEffectHandler(0xf2, &custom_spelleffect_handler);
-    sfsf->registerEndSpellHandler(0xe, &custom_spellend_handler);
+    sfsf->registerSpellTypeHandler(0xe, &custom_spelltype_handler);
+    sfsf->registerSpellTypeHandler(0xeb, &custom_spelltype_handler);
+    sfsf->registerEffectHandler(0xf2, &custom_spelleffect_handler);
+    sfsf->registerSpellEndHandler(0xe, &custom_spellend_handler);
 }
 
+SFMod mod;
+extern "C" __declspec(dllexport) SFMod RegisterMod() {
+    strcpy(mod.mod_id, "Test Mod");
+    strcpy(mod.mod_version, "1.0.0");
+    strcpy(mod.mod_description, "A mod designed to test in development functions exposed through the SFSF API");
+    strcpy(mod.mod_author, "Muddykat, UnSchtalch");
+    return mod;
+}
 
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 {

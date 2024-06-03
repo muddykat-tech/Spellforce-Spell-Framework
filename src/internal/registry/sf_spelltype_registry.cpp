@@ -1,6 +1,7 @@
 #include "../handlers/sf_spelltype_handlers.h"
 #include "../core/sf_hooks.h"
 #include "../core/sf_wrappers.h"
+#include "../core/sf_modloader.h"
 
 #include "sf_spelltype_registry.h"
 #include "sf_registry.h"
@@ -29,7 +30,7 @@ void registerSpellTypeHandler(uint16_t spell_index, handler_ptr handler) {
     if (check != handler_map.end()){ 
         if(check->second != &default_handler) {
             char message[256]; // Assuming a maximum message length of 255 characters
-            sprintf(message, "A Spelltype Handler has been replaced! [%d] (Was this on purpose?)", spell_index);
+            sprintf(message, "%s (v%s) has replaced a Spelltype Handler! [%d] (Was this on purpose?)", current_mod.mod_id, current_mod.mod_version, spell_index);
             log_warning(message);
         }
     }
