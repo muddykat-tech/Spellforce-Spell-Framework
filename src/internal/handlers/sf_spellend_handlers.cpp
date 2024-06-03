@@ -156,7 +156,7 @@ void __thiscall slow_fighting_end_handler(SF_CGdSpell *_this, uint16_t spell_ind
     uint16_t target_index = _this->active_spell_list[spell_index].target.entity_index;
     if (toolboxAPI.hasSpellOnHit(_this->SF_CGdFigureToolBox, target_index, spell_data.spell_line_id))
     {
-        figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, FLIGHT_SPEED, target_index, spell_data.params[0]);
+        figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, FIGHT_SPEED, target_index, spell_data.params[0]);
     }
     default_end_handler(_this, spell_index);
 }
@@ -197,7 +197,7 @@ void __thiscall fast_fighting_end_handler(SF_CGdSpell *_this, uint16_t spell_ind
     uint16_t target_index = _this->active_spell_list[spell_index].target.entity_index;
     if (toolboxAPI.hasSpellOnHit(_this->SF_CGdFigureToolBox, target_index, spell_data.spell_line_id))
     {
-        figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, FLIGHT_SPEED, target_index, -spell_data.params[0]);
+        figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, FIGHT_SPEED, target_index, -spell_data.params[0]);
     }
     default_end_handler(_this, spell_index);
 }
@@ -255,8 +255,6 @@ void __thiscall chill_resistance_end_handler(SF_CGdSpell *_this, uint16_t spell_
     default_end_handler(_this, spell_index);
 }
 
-void __thiscall firebane_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
-
 void __thiscall black_almightness_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     SF_CGdResourceSpell spell_data;
@@ -264,7 +262,7 @@ void __thiscall black_almightness_end_handler(SF_CGdSpell *_this, uint16_t spell
     uint16_t target_index = _this->active_spell_list[spell_index].target.entity_index;
     if (toolboxAPI.hasSpellOnHit(_this->SF_CGdFigureToolBox, target_index, spell_data.spell_line_id))
     {
-        figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, FLIGHT_SPEED, target_index, spell_data.params[3]);
+        figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, FIGHT_SPEED, target_index, spell_data.params[3]);
         figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, AGILITY, target_index, spell_data.params[2]);
     }
     default_end_handler(_this, spell_index);
@@ -277,12 +275,11 @@ void __thiscall white_almightness_end_handler(SF_CGdSpell *_this, uint16_t spell
     uint16_t target_index = _this->active_spell_list[spell_index].target.entity_index;
     if (toolboxAPI.hasSpellOnHit(_this->SF_CGdFigureToolBox, target_index, spell_data.spell_line_id))
     {
-        figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, FLIGHT_SPEED, target_index, -spell_data.params[3]);
+        figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, FIGHT_SPEED, target_index, -spell_data.params[3]);
         figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, DEXTERITY, target_index, -spell_data.params[2]);
     }
     default_end_handler(_this, spell_index);
 }
-
 
 void __thiscall mutation_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall eternity_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
@@ -367,4 +364,19 @@ void __thiscall manashield_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
     spellClearFigureFlag(_this, spell_index, CHECK_SPELLS_BEFORE_JOB2);
     spellClearFigureFlag(_this, spell_index, CHECK_SPELLS_BEFORE_CHECK_BATTLE);
     default_end_handler(_this, spell_index);
+}
+
+void __thiscall clay_feet_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    SF_CGdResourceSpell spell_data;
+    spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index].spell_id);
+    uint16_t target_index = _this->active_spell_list[spell_index].target.entity_index;
+    if (toolboxAPI.hasSpellOnHit(_this->SF_CGdFigureToolBox, target_index, spell_data.spell_line_id))
+    {
+        figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, FIGHT_SPEED, target_index, spell_data.params[1]);
+        figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, CAST_SPEED, target_index, spell_data.params[1]);
+    }
+    spellClearFigureFlag(_this, spell_index, CHECK_SPELLS_BEFORE_JOB2);
+    spellClearFigureFlag(_this, spell_index, CHECK_SPELLS_BEFORE_CHECK_BATTLE);
+    spellAPI.setEffectDone(_this, spell_index, 0);
 }
