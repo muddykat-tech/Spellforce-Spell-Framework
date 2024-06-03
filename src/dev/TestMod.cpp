@@ -87,13 +87,8 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework* frame
     sfsf->registerSpellEndHandler(0xe, &custom_spellend_handler);
 }
 
-SFMod mod;
-extern "C" __declspec(dllexport) SFMod RegisterMod() {
-    strcpy(mod.mod_id, "Test Mod");
-    strcpy(mod.mod_version, "1.0.0");
-    strcpy(mod.mod_description, "A mod designed to test in development functions exposed through the SFSF API");
-    strcpy(mod.mod_author, "Muddykat, UnSchtalch");
-    return mod;
+extern "C" __declspec(dllexport) SFMod RegisterMod(SpellforceSpellFramework* framework) {
+    return framework->createModInfo("Test Mod", "1.0.0", "Muddykat, UnSchtalch", "A mod designed to test in development functions exposed through the SFSF API");
 }
 
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)

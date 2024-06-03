@@ -12,6 +12,8 @@
 
 typedef void (*initializeModule_ptr)(void*);
 typedef SFMod (*registerMod_ptr)(void*);
+typedef SFMod (*createModInfo_ptr)(const char *mod_id, const char* mod_version, const char *mod_author, const char *mod_description);
+
 typedef void (*log_warning_ptr)(const char*);
 typedef void (*logInfoFunc)(const char*);
 typedef void (__thiscall *handler_ptr) (SF_CGdSpell *, uint16_t);
@@ -24,6 +26,7 @@ struct SpellforceSpellFramework {
     register_spelltype_handler_ptr registerSpellTypeHandler;
     register_effect_handler_ptr registerEffectHandler;
     register_spell_end_handler_ptr registerSpellEndHandler;
+    createModInfo_ptr createModInfo;
 
     SpellFunctions *spellAPI;
     ToolboxFunctions *toolboxAPI;

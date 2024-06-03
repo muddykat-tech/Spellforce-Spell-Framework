@@ -104,13 +104,12 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     sfsf->registerEffectHandler(0xf2, &simple_damage_effect_handler);
 }
 
-SFMod mod;
-extern "C" __declspec(dllexport) SFMod RegisterMod() {
-    strcpy(mod.mod_id, "Simple Damage Example Mod");
-    strcpy(mod.mod_version, "1.0.0");
-    strcpy(mod.mod_description, "A mod designed to provide an example of a simple damage spell");
-    strcpy(mod.mod_author, "UnSchtalch");
-    return mod;
+/***
+ * This function MUST be present in your code with the exact declaration
+ * otherwise the framework is unable to describe your mod in logs and mod info menu (menu not yet implemented)
+ ***/
+extern "C" __declspec(dllexport) SFMod RegisterMod(SpellforceSpellFramework* framework) {
+    return framework->createModInfo("Simple Damage Example Mod", "1.0.0", "UnSchtalch", "A mod designed to provide an example of a simple damage spell");
 }
 
 // Required to be present, not required for any functionality

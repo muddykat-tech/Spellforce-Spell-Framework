@@ -9,7 +9,7 @@
 
 extern SpellforceSpellFramework frameworkAPI;
 typedef void (*InitModuleFunc)(void*);
-typedef SFMod (*RegisterModFunc)();
+typedef SFMod (*RegisterModFunc)(void*);
 int mod_count = 0;
 int error_count = 0;
 
@@ -36,7 +36,7 @@ void load_mod(const char* modPath, void* pFrameworkAPI) {
     RegisterModFunc registerMod = (RegisterModFunc)GetProcAddress(modHandle, "RegisterMod");
     InitModuleFunc initModule = (InitModuleFunc)GetProcAddress(modHandle, "InitModule");
     
-    if(registerMod != NULL) current_mod = registerMod();
+    if(registerMod != NULL) current_mod = registerMod(pFrameworkAPI);
 
     if (!initModule) {
         log_warning(get_filename(modPath));

@@ -121,3 +121,26 @@ void __thiscall spellClearFigureFlag(SF_CGdSpell* _this, uint16_t spell_id, Spel
         break;
     }
 }
+/*
+	char mod_id[64];
+	char mod_version[24];
+	char mod_description[128];
+	char mod_author[128];
+*/
+
+SFMod createModInfo(const char* mod_id, const char* mod_version, const char* mod_author, const char* mod_description){
+    // Sanitize the mod info, no buffer overflows for us!
+    SFMod mod;
+    strncpy(mod.mod_id, mod_id, 63);
+    mod.mod_id[63] = '\0';
+
+    strncpy(mod.mod_version, mod_version, 23);
+    mod.mod_version[23] = '\0';
+
+    strncpy(mod.mod_description, mod_description, 127);
+    mod.mod_description[127] = '\0';
+
+    strncpy(mod.mod_author, mod_author, 127);
+    mod.mod_author[127] = '\0';
+    return mod;
+}

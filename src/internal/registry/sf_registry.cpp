@@ -24,13 +24,11 @@ void registerFrameworkAPI()
 	frameworkAPI.registerSpellTypeHandler = &registerSpellTypeHandler;
     frameworkAPI.registerEffectHandler = &registerEffectHandler;
     frameworkAPI.registerSpellEndHandler = &registerSpellEndHandler;
+    frameworkAPI.createModInfo = &createModInfo;
     frameworkAPI.logWarning = &log_warning;
     frameworkAPI.logInfo = &log_info;
 
-    strcpy(current_mod.mod_id, "SFSF");
-    strcpy(current_mod.mod_description, "The Spellforce Spell Framework");
-    strcpy(current_mod.mod_version, "4.0.0");
-    strcpy(current_mod.mod_author, "Muddykat, UnSchtalch, shovel_knight");
+    current_mod = createModInfo("SFSF", "The Spellforce Spell Framework", "4.0.0", "Muddykat, UnSchtalch, shovel_knight");
 }
 
 void initialize_framework() 
