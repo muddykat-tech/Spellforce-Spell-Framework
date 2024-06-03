@@ -165,20 +165,81 @@ void __thiscall eternity_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
 // Muddykat Section:
 
 // FIRST BLOCK (has a goto, to FigureClearCheckSpellsBeforeCheckBattle; -> break;)
-void __thiscall invulnerability_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
-void __thiscall decay2_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
-void __thiscall remediless_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
-void __thiscall unkn_end_handler(SF_CGdSpell *_this, uint16_t spell_index); // Unused spell 85
-void __thiscall demoralization_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
+void __thiscall common_handler_check_battle(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    spellClearFigureFlag(_this, spell_index, CHECK_SPELLS_BEFORE_CHECK_BATTLE);
+    default_end_handler(_this, spell_index);
+}
+
+void __thiscall invulnerability_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    common_handler_check_battle(_this, spell_index);
+}
+
+void __thiscall illuminate_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    common_handler_check_battle(_this, spell_index);
+}
+
+void __thiscall remediless_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    common_handler_check_battle(_this, spell_index);
+}
+
+// Unused spell 85
+void __thiscall unkn_spell_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    common_handler_check_battle(_this, spell_index);
+}
+
+void __thiscall demoralization_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    common_handler_check_battle(_this, spell_index);
+}
  
+void __thiscall common_handler_unfreeze(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    spellClearFigureFlag(_this, spell_index, CHECK_SPELLS_BEFORE_CHECK_BATTLE);
+    spellClearFigureFlag(_this, spell_index, UNFREEZE);
+    default_end_handler(_this, spell_index);
+}
+
 // SECOND BLOCK FigureClearCheckSpellsBeforeCheckBattle -> FigureTryUnfreeze -> break;
-void __thiscall freeze_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
-void __thiscall petrify_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
+void __thiscall freeze_end_handler(SF_CGdSpell *_this, uint16_t spell_index) 
+{
+    common_handler_unfreeze(_this, spell_index);
+}
+
+void __thiscall petrify_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    common_handler_unfreeze(_this, spell_index);
+}
 
 // THIRD BLOCK FigureClearCheckSpellsBeforeCheckBattle -> Done -> Return;
-void __thiscall decay1_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
+void __thiscall fog_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    spellClearFigureFlag(_this, spell_index, CHECK_SPELLS_BEFORE_CHECK_BATTLE);
+    spellAPI.setEffectDone(_this, spell_index, 0);
+};
 
 // FOURTH BLOCK FigureTryClearCheckSpellsBeforeJob2 -> goto -> FigureClearCheckSpellsBeforeCheckBattle -> break;
-void __thiscall fireshield_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
-void __thiscall feign_death_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
-void __thiscall manashield_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
+void __thiscall fireshield_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    spellClearFigureFlag(_this, spell_index, CHECK_SPELLS_BEFORE_JOB2);
+    spellClearFigureFlag(_this, spell_index, CHECK_SPELLS_BEFORE_CHECK_BATTLE);
+    default_end_handler(_this, spell_index);
+}
+
+void __thiscall feign_death_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    spellClearFigureFlag(_this, spell_index, CHECK_SPELLS_BEFORE_JOB2);
+    spellClearFigureFlag(_this, spell_index, CHECK_SPELLS_BEFORE_CHECK_BATTLE);
+    default_end_handler(_this, spell_index);
+}
+
+void __thiscall manashield_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    spellClearFigureFlag(_this, spell_index, CHECK_SPELLS_BEFORE_JOB2);
+    spellClearFigureFlag(_this, spell_index, CHECK_SPELLS_BEFORE_CHECK_BATTLE);
+    default_end_handler(_this, spell_index);
+}

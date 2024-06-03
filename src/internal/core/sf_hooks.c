@@ -258,6 +258,10 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(spell, getXData, 0x32aa60);
     DEFINE_FUNCTION(spell, getTargetsRectangle, 0x329D80);
     DEFINE_FUNCTION(spell, removeDLLNode, 0x34B030);
+    DEFINE_FUNCTION(spell, figClrChkSplBfrChkBattle, 0x32a470);
+    DEFINE_FUNCTION(spell, figTryClrCHkSPlBfrJob2, 0x32a4f0);
+    DEFINE_FUNCTION(spell, figTryUnfreeze, 0x32a5a0);
+
 
     DEFINE_FUNCTION(toolbox, dealDamage, 0x2f4a57);
     DEFINE_FUNCTION(toolbox, isTargetable, 0x2fe704);
@@ -277,6 +281,8 @@ void initialize_data_hooks()
 
     // Method to include functions WE define in the Internal code.
     INCLUDE_FUNCTION(spell, initializeSpellData, &initializeSpellData);
+    INCLUDE_FUNCTION(spell, spellClearFigureFlag, &spellClearFigureFlag);
+
     INCLUDE_FUNCTION(figure, addBonusMultToStatistic, &addBonusMultToStatistic);
 
     INCLUDE_FUNCTION(iterator, setupFigureIterator, &setupFigureIterator);

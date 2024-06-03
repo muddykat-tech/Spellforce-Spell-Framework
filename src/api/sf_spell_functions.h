@@ -3,7 +3,8 @@
 #include <stdbool.h>
 #include "sf_general_structures.h"
 
-typedef enum {
+typedef enum 
+{
     SPELL_TICK_COUNT_AUX = 0x05,
     SPELL_TICK_COUNT = 0x12,
     SPELL_DOUBLE_DAMAGE = 0x26,
@@ -16,6 +17,13 @@ typedef enum {
     SPELL_STAT_MUL_MODIFIER4 = 0x2C,
     SPELL_CONSERVATION_SHIELD = 0x0B
 } SpellDataKey;
+
+typedef enum 
+{
+    CHECK_SPELLS_BEFORE_CHECK_BATTLE,
+    CHECK_SPELLS_BEFORE_JOB2,
+    UNFREEZE
+} SpellFlagKey;
 
 typedef enum
 {
@@ -76,7 +84,6 @@ typedef struct __attribute__((packed))
 	uint32_t params[10];
 	uint16_t effect_power;
 	uint16_t effect_range;
-
 } SF_CGdResourceSpell;
 
 // Declare the function pointers for the SpellFunctions group
@@ -92,6 +99,11 @@ DECLARE_FUNCTION(SF_CGdResourceSpell*, getResourceSpellData, void *, SF_CGdResou
 DECLARE_FUNCTION(uint32_t, getXData, SF_CGdSpell *_this, uint16_t spell_id, SpellDataKey key);
 DECLARE_FUNCTION(SF_Rectangle * , getTargetsRectangle, SF_CGdSpell* _this,SF_Rectangle * output ,uint16_t spell_id,  uint16_t radius, SF_Coord * center_maybe);
 DECLARE_FUNCTION(void, removeDLLNode, SF_CGdSpell* _this, uint16_t param_1);
+DECLARE_FUNCTION(void, spellClearFigureFlag, SF_CGdSpell* _this, uint16_t spell_id, SpellFlagKey key);
+
+DECLARE_FUNCTION(void, figClrChkSplBfrChkBattle, SF_CGdSpell * _this, uint16_t spell_id, uint16_t unk1);
+DECLARE_FUNCTION(void, figTryClrCHkSPlBfrJob2, SF_CGdSpell * _this, uint16_t spell_id, uint16_t unk1);
+DECLARE_FUNCTION(void, figTryUnfreeze, SF_CGdSpell * _this, uint16_t spell_id, uint16_t unk1);
 
 DECLARE_FUNCTION_GROUP(Spell,
 	setXData_ptr setXData;
@@ -106,4 +118,9 @@ DECLARE_FUNCTION_GROUP(Spell,
 	getXData_ptr getXData;
     getTargetsRectangle_ptr getTargetsRectangle;
     removeDLLNode_ptr removeDLLNode;
+    spellClearFigureFlag_ptr spellClearFigureFlag;
+    // flag clear function used inside spellClearFigureFlag Wrapper
+    figClrChkSplBfrChkBattle_ptr figClrChkSplBfrChkBattle; 
+    figTryClrCHkSPlBfrJob2_ptr figTryClrCHkSPlBfrJob2;
+    figTryUnfreeze_ptr figTryUnfreeze;
 );

@@ -104,3 +104,20 @@ void __thiscall addBonusMultToStatistic(SF_CGdFigure *figure, StatisticDataKey k
 
     figureAPI.addBonusMult(statistic, value);
 }
+
+
+void __thiscall spellClearFigureFlag(SF_CGdSpell* _this, uint16_t spell_id, SpellFlagKey key)
+{
+    switch(key)
+    {
+        case CHECK_SPELLS_BEFORE_CHECK_BATTLE:
+            spellAPI.figClrChkSplBfrChkBattle(_this, spell_id, 0);
+        break;
+        case CHECK_SPELLS_BEFORE_JOB2:
+            spellAPI.figTryClrCHkSPlBfrJob2(_this, spell_id, 0);
+        break;
+        case UNFREEZE:
+            spellAPI.figTryUnfreeze(_this, spell_id, 0);
+        break;
+    }
+}
