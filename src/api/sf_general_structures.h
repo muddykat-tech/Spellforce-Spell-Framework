@@ -115,7 +115,7 @@ typedef struct __attribute__((packed))
 	FigureStatistic resistance_mental;
 	FigureStatistic resistance_black;
 	FigureStatistic walk_speed;
-	FigureStatistic flight_speed;
+	FigureStatistic fight_speed;
 	FigureStatistic cast_speed;
 	uint8_t equipment[20]; // No idea how this works, may need a class (undefined2[16] in ghidra, but is 20 bytes FigureStatistic is 6 bytes)
 	uint16_t head; //Not sure what this does

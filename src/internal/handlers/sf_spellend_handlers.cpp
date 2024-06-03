@@ -281,7 +281,75 @@ void __thiscall white_almightness_end_handler(SF_CGdSpell *_this, uint16_t spell
     default_end_handler(_this, spell_index);
 }
 
-void __thiscall mutation_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
+void __thiscall mutation_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    SF_CGdResourceSpell spell_data;
+    spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index].spell_id);
+    uint16_t target_index = _this->active_spell_list[spell_index].target.entity_index;
+    if (toolboxAPI.hasSpellOnHit(_this->SF_CGdFigureToolBox, target_index, spell_data.spell_line_id))
+    {
+        int8_t bonus = spellAPI.getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER);
+        uint16_t stat_value = _this->SF_CGdFigure->figures[target_index].resistance_fire.base_val;
+        int8_t recalc_value = stat_value - ((bonus * stat_value) / 100);
+        figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, RESISTANCE_FIRE, target_index, recalc_value);
+
+        stat_value = _this->SF_CGdFigure->figures[target_index].fight_speed.base_val;
+        recalc_value = stat_value - ((bonus * stat_value) / 100);
+        figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, FIGHT_SPEED, target_index, recalc_value);
+
+        stat_value = _this->SF_CGdFigure->figures[target_index].intelligence.base_val;
+        recalc_value = stat_value - ((bonus * stat_value) / 100);
+        figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, INTELLIGENCE, target_index, recalc_value);
+
+        stat_value = _this->SF_CGdFigure->figures[target_index].stamina.base_val;
+        recalc_value = stat_value - ((bonus * stat_value) / 100);
+        figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, STAMINA, target_index, recalc_value);
+
+        bonus = spellAPI.getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER2);
+        stat_value = _this->SF_CGdFigure->figures[target_index].resistance_ice.base_val;
+        recalc_value = stat_value - ((bonus * stat_value) / 100);
+        figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, RESISTANCE_ICE, target_index, recalc_value);
+
+        stat_value = _this->SF_CGdFigure->figures[target_index].cast_speed.base_val;
+        recalc_value = stat_value - ((bonus * stat_value) / 100);
+        figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, CAST_SPEED, target_index, recalc_value);
+
+        stat_value = _this->SF_CGdFigure->figures[target_index].wisdom.base_val;
+        recalc_value = stat_value - ((bonus * stat_value) / 100);
+        figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, WISDOM, target_index, recalc_value);
+
+        bonus = spellAPI.getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER3);
+        stat_value = _this->SF_CGdFigure->figures[target_index].resistance_black.base_val;
+        recalc_value = stat_value - ((bonus * stat_value) / 100);
+        figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, RESISTANCE_BLACK, target_index, recalc_value);
+
+        stat_value = _this->SF_CGdFigure->figures[target_index].walk_speed.base_val;
+        recalc_value = stat_value - ((bonus * stat_value) / 100);
+        figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, WALK_SPEED, target_index, recalc_value);
+
+        stat_value = _this->SF_CGdFigure->figures[target_index].charisma.base_val;
+        recalc_value = stat_value - ((bonus * stat_value) / 100);
+        figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, CHARISMA, target_index, recalc_value);
+
+        stat_value = _this->SF_CGdFigure->figures[target_index].dexterity.base_val;
+        recalc_value = stat_value - ((bonus * stat_value) / 100);
+        figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, DEXTERITY, target_index, recalc_value);
+
+        bonus = spellAPI.getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER4);
+        stat_value = _this->SF_CGdFigure->figures[target_index].resistance_mental.base_val;
+        recalc_value = stat_value - ((bonus * stat_value) / 100);
+        figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, RESISTANCE_MENTAL, target_index, recalc_value);
+
+        stat_value = _this->SF_CGdFigure->figures[target_index].strength.base_val;
+        recalc_value = stat_value - ((bonus * stat_value) / 100);
+        figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, STRENGTH, target_index, recalc_value);
+
+        stat_value = _this->SF_CGdFigure->figures[target_index].agility.base_val;
+        recalc_value = stat_value - ((bonus * stat_value) / 100);
+        figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, AGILITY, target_index, recalc_value);
+    }
+    default_end_handler(_this, spell_index);
+}
 
 void __thiscall eternity_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {

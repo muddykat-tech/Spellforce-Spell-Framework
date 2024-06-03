@@ -85,7 +85,7 @@ void __thiscall addBonusMultToStatistic(SF_CGdFigure *figure, StatisticDataKey k
         statistic = figure->figures[target].walk_speed;
         break;
     case FIGHT_SPEED:
-        statistic = figure->figures[target].flight_speed;
+        statistic = figure->figures[target].fight_speed;
         break;
     case CAST_SPEED:
         statistic = figure->figures[target].cast_speed;
