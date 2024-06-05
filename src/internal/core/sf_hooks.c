@@ -36,6 +36,7 @@ SpellFunctions spellAPI;
 ToolboxFunctions toolboxAPI;
 FigureFunctions figureAPI;
 IteratorFunctions iteratorAPI;
+RegistrationFunctions registrationAPI;
 
 // Bool function?
 int __thiscall CheckCanApply_hook_beta(SF_CGdSpell *_this, uint16_t spell_index)
@@ -287,6 +288,12 @@ void initialize_data_hooks()
 
     INCLUDE_FUNCTION(iterator, setupFigureIterator, &setupFigureIterator);
     INCLUDE_FUNCTION(iterator, disposeFigureIterator, &disposeFigureIterator);
+
+    INCLUDE_FUNCTION(registration, registerSpell, &registerSpell);
+    INCLUDE_FUNCTION(registration, linkTypeHandler, &linkTypeHandler);
+    INCLUDE_FUNCTION(registration, linkEffectHandler, &linkEffectHandler);
+    INCLUDE_FUNCTION(registration, linkEndHandler, &linkEndHandler); 
+    INCLUDE_FUNCTION(registration, linkSpellTags, &linkSpellTags);
 }
 
 void initialize_spelltype_hook()

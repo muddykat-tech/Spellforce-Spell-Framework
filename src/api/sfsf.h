@@ -7,6 +7,7 @@
 #include "sf_iterator_functions.h"
 #include "sf_spell_functions.h"
 #include "sf_toolbox_functions.h"
+#include "sf_registration_functions.h"
 
 #include <stdint.h>
 
@@ -31,7 +32,8 @@ struct SpellforceSpellFramework {
     ToolboxFunctions *toolboxAPI;
     FigureFunctions *figureAPI; 
     IteratorFunctions *iteratorAPI;
-
+    RegistrationFunctions *registrationAPI;
+    
     SFLog *logAPI;
 };
 

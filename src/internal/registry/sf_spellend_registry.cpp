@@ -26,10 +26,10 @@ void registerSpellEndHandler(uint16_t spell_line, handler_ptr handler)
 handler_ptr get_spell_end(uint16_t spell_line)
 {
     auto it = spellend_handler_map.find(spell_line);
-    if (it == spellend_handler_map.end()) 
-    {
-        log_error("Unknown Job ID, No spell end handler registered.");
-        return NULL;
+    if (it == spellend_handler_map.end()) {
+        // Element doesn't exist, insert the default value
+        log_warning("Unknown Job ID for Spell End Effect, Assigning a default handler.");
+        it = spellend_handler_map.emplace(spell_line, &default_end_handler).first;
     }
     return it->second;
 }

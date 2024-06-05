@@ -1,6 +1,7 @@
 #include <windows.h>
 #include "../api/sfsf.h"
 #include "../api/sf_general_structures.h"
+#include "../api/sf_registration_functions.h"
 // NOTE sfsf.h includes the OTHER api files, the other files are still required
 
 #include <cstdio>
@@ -10,6 +11,7 @@ SpellforceSpellFramework *sfsf;
 SpellFunctions *spellAPI;
 ToolboxFunctions *toolboxAPI;
 FigureFunctions *figureAPI;
+RegistrationFunctions *registrationAPI;
 SFLog *logger;
 // This custom spell type and custom spell effect need to be setup manually in the GameData.cff file currently
 
@@ -79,13 +81,23 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework* frame
     toolboxAPI = sfsf->toolboxAPI;
     figureAPI = sfsf->figureAPI;
     logger = sfsf->logAPI;
+    registrationAPI = sfsf->registrationAPI;
+
 
     // This will OVERWRITE existing entries, so you can fix or modify vanilla spelltypes and effects
     // 0xe and 0xeb are the Icestrike or Iceburst Spell
-    sfsf->registerSpellTypeHandler(0xe, &custom_spelltype_handler);
-    sfsf->registerSpellTypeHandler(0xeb, &custom_spelltype_handler);
-    sfsf->registerEffectHandler(0xf2, &custom_spelleffect_handler);
-    sfsf->registerSpellEndHandler(0xe, &custom_spellend_handler);
+    // sfsf->registerSpellTypeHandler(0xe, &custom_spelltype_handler);
+    // sfsf->registerSpellTypeHandler(0xeb, &custom_spelltype_handler);
+    // sfsf->registerEffectHandler(0xf2, &custom_spelleffect_handler);
+    // sfsf->registerSpellEndHandler(0xe, &custom_spellend_handler);
+
+    // New Style of registration?
+    uint16_t custom_spell_id = 0xe;
+    registrationAPI->registerSpell(custom_spell_id, 0xf2);
+    //registrationAPI->linkSpellTags(custom_spell_id, IsSummonSpellLine);
+    registrationAPI->linkTypeHandler(custom_spell_id, &custom_spelltype_handler);
+    registrationAPI->linkEffectHandler(custom_spell_id, &custom_spelleffect_handler);
+    //registrationAPI->linkEndHandler(custom_spell_id, &custom_spellend_handler);
 }
 
 extern "C" __declspec(dllexport) SFMod RegisterMod(SpellforceSpellFramework* framework) {

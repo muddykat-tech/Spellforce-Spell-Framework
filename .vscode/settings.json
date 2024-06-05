@@ -21,7 +21,11 @@
         "stdint.h": "c",
         "string.h": "c",
         "sfsf.h": "c",
-        "sf_general_structures.h": "c"
+        "sf_general_structures.h": "c",
+        "stdbool.h": "c",
+        "sf_spell_functions.h": "c",
+        "sf_figure_functions.h": "c",
+        "sf_registration_functions.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled",
     "makefile.makePath": "mingw32-make"
