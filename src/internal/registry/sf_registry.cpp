@@ -18,8 +18,6 @@ SFMod current_mod;
 // exposed in sf_registry.h
 void registerFrameworkAPI()
 {
-    
-
     frameworkAPI.figureAPI = &figureAPI;
     frameworkAPI.spellAPI = &spellAPI;
     frameworkAPI.toolboxAPI = &toolboxAPI;

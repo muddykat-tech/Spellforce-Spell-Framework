@@ -38,20 +38,22 @@ void register_vanilla_spell_end_handlers()
 {
     //As we define ALL of the end handlers ourself inside sf_spellend_handlers.cpp, we do NOT need to initialize them here. (unlike sf_spelleffect_registry.cpp)
 
-    // from 0x06 -> 0xda
-    registerSpellEndHandler(0x06, &invulnerability_end_handler);
-    registerSpellEndHandler(0xb, &illuminate_end_handler);
-    registerSpellEndHandler(0x29, &remediless_end_handler);
-    registerSpellEndHandler(0x55, &unkn_spell_end_handler);
-    registerSpellEndHandler(0x80, &demoralization_end_handler);
+    // invulnerability, illuminate, remediless, unkn (85) and demoralization
+    registerSpellEndHandler(0x06, &common_handler_check_battle);
+    registerSpellEndHandler(0xb,  &common_handler_check_battle);
+    registerSpellEndHandler(0x29, &common_handler_check_battle);
+    registerSpellEndHandler(0x55, &common_handler_check_battle);
+    registerSpellEndHandler(0x80, &common_handler_check_battle);
     
-    registerSpellEndHandler(0x09, &freeze_end_handler);
-    registerSpellEndHandler(0x19, &petrify_end_handler);
+    // Freeze, Petrify
+    registerSpellEndHandler(0x09, &common_handler_unfreeze);
+    registerSpellEndHandler(0x19, &common_handler_unfreeze);
     
     registerSpellEndHandler(0x0a, &fog_end_handler);
 
-    registerSpellEndHandler(0xc, &fireshield_end_handler);
-    registerSpellEndHandler(0x5d, &feign_death_end_handler);
-    registerSpellEndHandler(0xda, &manashield_end_handler);
+    // Fireshield, Fiegn Death and Manashield
+    registerSpellEndHandler(0xc,  &common_handler_job_battle_end_check);
+    registerSpellEndHandler(0x5d, &common_handler_job_battle_end_check);
+    registerSpellEndHandler(0xda, &common_handler_job_battle_end_check);
     
 }

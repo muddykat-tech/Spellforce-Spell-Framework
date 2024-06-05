@@ -12,9 +12,7 @@ typedef struct __attribute__((packed))
 	char mod_author[128];
 } SFMod;
 
-
 typedef void (*log_function_ptr)(const char*);
-
 typedef struct __attribute__((packed))
 {
 	log_function_ptr logError;
