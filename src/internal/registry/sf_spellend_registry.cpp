@@ -52,8 +52,8 @@ void register_vanilla_spell_end_handlers()
     registerSpellEndHandler(0x0a, &fog_end_handler);
 
     // Fireshield, Fiegn Death and Manashield
-    registerSpellEndHandler(0xc,  &common_handler_job_battle_end_check);
-    registerSpellEndHandler(0x5d, &common_handler_job_battle_end_check);
-    registerSpellEndHandler(0xda, &common_handler_job_battle_end_check);
+    registerSpellEndHandler(0xc,  &common_handler_job_battle_check);
+    registerSpellEndHandler(0x5d, &common_handler_job_battle_check);
+    registerSpellEndHandler(0xda, &common_handler_job_battle_check);
     
 }

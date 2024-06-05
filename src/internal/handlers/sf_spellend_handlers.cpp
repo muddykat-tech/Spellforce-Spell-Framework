@@ -394,7 +394,7 @@ void __thiscall fog_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 };
 
 // FOURTH BLOCK FigureTryClearCheckSpellsBeforeJob2 -> goto -> FigureClearCheckSpellsBeforeCheckBattle -> break;
-void __thiscall common_handler_job_battle_end_check(SF_CGdSpell *_this, uint16_t spell_index)
+void __thiscall common_handler_job_battle_check(SF_CGdSpell *_this, uint16_t spell_index)
 {
     spellClearFigureFlag(_this, spell_index, CHECK_SPELLS_BEFORE_JOB2);
     spellClearFigureFlag(_this, spell_index, CHECK_SPELLS_BEFORE_CHECK_BATTLE);
