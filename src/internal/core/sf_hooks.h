@@ -22,6 +22,7 @@ extern void __thiscall addBonusMultToStatistic(SF_CGdFigure *figure, StatisticDa
 extern void __thiscall spellClearFigureFlag(SF_CGdSpell *spell, uint16_t spell_index, SpellFlagKey key);
 
 extern SFMod createModInfo(const char *mod_id, const char* mod_version, const char *mod_author, const char *mod_description);
+
 extern FUN_0069eaf0_ptr FUN_0069eaf0;
 extern fidfree_ptr fidFree;
 extern menu_label_ptr initialize_menu_label;

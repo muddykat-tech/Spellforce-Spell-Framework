@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-/* |-========== Mod Loading Structures ==========-| */
+/* |-========== Mod Structures ==========-| */
 
 typedef struct __attribute__((packed))
 {
@@ -11,6 +11,16 @@ typedef struct __attribute__((packed))
 	char mod_description[128];
 	char mod_author[128];
 } SFMod;
+
+
+typedef void (*log_function_ptr)(const char*);
+
+typedef struct __attribute__((packed))
+{
+	log_function_ptr logError;
+	log_function_ptr logWarning;
+	log_function_ptr logInfo;
+} SFLog;
 
 /* |-========== General Structures ==========-| */
 

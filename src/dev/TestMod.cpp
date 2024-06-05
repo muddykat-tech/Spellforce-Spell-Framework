@@ -10,7 +10,7 @@ SpellforceSpellFramework *sfsf;
 SpellFunctions *spellAPI;
 ToolboxFunctions *toolboxAPI;
 FigureFunctions *figureAPI;
-
+SFLog *logger;
 // This custom spell type and custom spell effect need to be setup manually in the GameData.cff file currently
 
 // Spell index is the ID for the TYPE of spell being cast
@@ -22,21 +22,21 @@ void __thiscall custom_spelltype_handler(SF_CGdSpell * _this, uint16_t spell_ind
   // Required for the spell to be initialized as active
 	spellAPI->initializeSpellData(_this, spell_index, SPELL_TICK_COUNT);
 
-  sfsf->logInfo("Spell Handled");
-  sfsf->logWarning("Test Warning");
+  logger->logInfo("Spell Handled");
+  logger->logWarning("Test Warning");
 }
 
 void __thiscall custom_spellend_handler(SF_CGdSpell * _this, uint16_t spell_index){
-  sfsf->logInfo("END EFFECT HANDLED");
+  logger->logInfo("END EFFECT HANDLED");
   spellAPI->spellClearFigureFlag(_this, spell_index, UNFREEZE);
   spellAPI->removeDLLNode(_this, spell_index);
   spellAPI->setEffectDone(_this, spell_index, 0);
 }
 
 void __thiscall custom_spelleffect_handler(SF_CGdSpell * _this, uint16_t spell_index) {
-  sfsf->logInfo("Custom Effect Handled");
+  logger->logInfo("Custom Effect Handled");
   // Required for the spell to eventually become Inactive, without this and setEffectDone, you can't attack the same target again.
-  sfsf->logInfo("Grab Spell from list");
+  logger->logInfo("Grab Spell from list");
   SF_GdSpell *spell = &_this->active_spell_list[spell_index];
   uint8_t xdata_key = spell->xdata_key;
   uint8_t tick_count = spellAPI->getXData(_this, xdata_key, SPELL_TICK_COUNT);
@@ -78,6 +78,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework* frame
     spellAPI = sfsf->spellAPI;
     toolboxAPI = sfsf->toolboxAPI;
     figureAPI = sfsf->figureAPI;
+    logger = sfsf->logAPI;
 
     // This will OVERWRITE existing entries, so you can fix or modify vanilla spelltypes and effects
     // 0xe and 0xeb are the Icestrike or Iceburst Spell

@@ -28,6 +28,15 @@ void log_error(const char* message) {
     console_log(modifiedMessage);
 }
 
+SFLog* setup_logger()
+{
+    SFLog *sf_logger;
+    sf_logger->logError = &log_error;
+    sf_logger->logInfo = &log_info;
+    sf_logger->logWarning = &log_warning;
+    return sf_logger;
+}
+
 void __thiscall setupFigureIterator(CGdFigureIterator *iterator, SF_CGdSpell *spell)
 {
     iteratorAPI.figureIteratorInit(iterator, 0x0, 0x0, 0x3ff, 0x3ff);
@@ -121,13 +130,13 @@ void __thiscall spellClearFigureFlag(SF_CGdSpell* _this, uint16_t spell_id, Spel
         break;
     }
 }
+
 /*
 	char mod_id[64];
 	char mod_version[24];
 	char mod_description[128];
 	char mod_author[128];
 */
-
 SFMod createModInfo(const char* mod_id, const char* mod_version, const char* mod_author, const char* mod_description){
     // Sanitize the mod info, no buffer overflows for us!
     SFMod mod;

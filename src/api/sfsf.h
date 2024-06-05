@@ -14,7 +14,6 @@ typedef void (*initializeModule_ptr)(void*);
 typedef SFMod (*registerMod_ptr)(void*);
 typedef SFMod (*createModInfo_ptr)(const char *mod_id, const char* mod_version, const char *mod_author, const char *mod_description);
 
-typedef void (*log_warning_ptr)(const char*);
 typedef void (*logInfoFunc)(const char*);
 typedef void (__thiscall *handler_ptr) (SF_CGdSpell *, uint16_t);
 typedef void (*register_spelltype_handler_ptr)(uint16_t spell_index, handler_ptr handler);
@@ -33,9 +32,7 @@ struct SpellforceSpellFramework {
     FigureFunctions *figureAPI; 
     IteratorFunctions *iteratorAPI;
 
-    // Perhaps create a struct for a proper logger? 
-    log_warning_ptr logWarning;
-    logInfoFunc logInfo;
+    SFLog *logAPI;
 };
 
 typedef struct SpellforceSpellFramework FrameworkAPI;
