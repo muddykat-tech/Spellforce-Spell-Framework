@@ -88,11 +88,12 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework* frame
     registrationAPI = sfsf->registrationAPI;
     
     uint16_t custom_spell_id = 0xe;
-    registrationAPI->registerSpell(custom_spell_id, 0xf2);
-    //registrationAPI->linkSpellTags(custom_spell_id, IsSummonSpellLine);
-    registrationAPI->linkTypeHandler(custom_spell_id, &custom_spelltype_handler);
-    registrationAPI->linkEffectHandler(custom_spell_id, &custom_spelleffect_handler);
-    registrationAPI->linkEndHandler(custom_spell_id, &custom_spellend_handler);
+ 
+    SFSpell *custom_spell = registrationAPI->registerSpell(custom_spell_id);
+    //registrationAPI->linkSpellTags(custom_spell_id, IsSummonSpellLine); 
+    registrationAPI->linkTypeHandler(custom_spell, &custom_spelltype_handler);
+    registrationAPI->linkEffectHandler(custom_spell, 0xf2, &custom_spelleffect_handler);
+    registrationAPI->linkEndHandler(custom_spell, &custom_spellend_handler);
 }
 
 extern "C" __declspec(dllexport) SFMod* RegisterMod(SpellforceSpellFramework* framework)

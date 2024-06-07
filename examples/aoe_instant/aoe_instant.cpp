@@ -106,12 +106,13 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     iteratorAPI = sfsf->iteratorAPI;
     registrationAPI = sfsf->registrationAPI;
     // Here comes the spell type registration.
+    SFSpell* aoe_instant_spell = registrationAPI->registerSpell(242);
+    
     // Note: you need to pass pointer to function here
-    registrationAPI->registerSpell(242, 0xf2);
-    registrationAPI->linkTypeHandler(242, &aoe_lifetap_type_handler);
+    registrationAPI->linkTypeHandler(aoe_instant_spell, &aoe_lifetap_type_handler);
 
     // Here comes the spell logic (effect) registration; f2 = 242
-    registrationAPI->linkEffectHandler(0xf2, &aoe_lifetap_effect_handler);
+    registrationAPI->linkEffectHandler(aoe_instant_spell, 0xf2, &aoe_lifetap_effect_handler);
 }
 
 /***

@@ -99,13 +99,13 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     registrationAPI = sfsf->registrationAPI;
 
     // Here comes the spell type registration. Coose your spell_id and your spell_effect_id (spell_job);
-    registrationAPI->registerSpell(242, 0xf2);
+    SFSpell* simple_damage_spell = registrationAPI->registerSpell(242);
     
     // Note: you need to pass pointer to function here
-    registrationAPI->linkTypeHandler(242, &simple_damage_handler);
+    registrationAPI->linkTypeHandler(simple_damage_spell, &simple_damage_handler);
 
     // Here comes the spell logic (effect)
-    registrationAPI->linkEffectHandler(242, &simple_damage_effect_handler);
+    registrationAPI->linkEffectHandler(simple_damage_spell, 0xf2, &simple_damage_effect_handler);
 }
 
 /***

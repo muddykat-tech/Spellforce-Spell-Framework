@@ -23,16 +23,16 @@ typedef struct __attribute__((packed))
 } SFSpell;
 
 // Declare the function pointers for the RegistrationFunctions group
-DECLARE_FUNCTION(void, registerSpell, uint16_t spell_id, uint16_t spell_effect_id);
-DECLARE_FUNCTION(void, linkTypeHandler, uint16_t spell_id, handler_ptr typeHandler);
-DECLARE_FUNCTION(void, linkEffectHandler, uint16_t spell_id, handler_ptr effectHandler);
-DECLARE_FUNCTION(void, linkEndHandler, uint16_t spell_id, handler_ptr endHandler);
-DECLARE_FUNCTION(void, linkSpellTags, uint16_t spell_id, SpellTag tags, ...);
+DECLARE_FUNCTION(SFSpell*, registerSpell, uint16_t spell_id);
+DECLARE_FUNCTION(void, linkTypeHandler, SFSpell* spell, handler_ptr typeHandler);
+DECLARE_FUNCTION(void, linkEffectHandler, SFSpell* spell, uint16_t spell_effect_id, handler_ptr effectHandler);
+DECLARE_FUNCTION(void, linkEndHandler, SFSpell* spell, handler_ptr endHandler);
+DECLARE_FUNCTION(void, linkSpellTags, SFSpell* spell, SpellTag tags, ...);
 
 DECLARE_FUNCTION_GROUP(Registration,
     registerSpell_ptr registerSpell;
     linkTypeHandler_ptr linkTypeHandler;
-    linkEffectHandler_ptr linkEffectHandler;
+    linkEffectHandler_ptr linkEffectHandler; 
     linkEndHandler_ptr linkEndHandler;
 	linkSpellTags_ptr linkSpellTags;
 );

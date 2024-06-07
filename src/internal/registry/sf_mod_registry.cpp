@@ -7,60 +7,58 @@
 #include <windows.h>
 #include <iostream>
 #include <map>
+#include <list>
 #include <cstdint>
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdlib.h>
 #include <string.h>  
 
-std::map<uint16_t, SFSpell*> internal_spell_map; 
+std::list<SFSpell*> internal_spell_list; 
 
-void __thiscall registerSpell(uint16_t spell_id, uint16_t spell_effect_id)
+SFSpell* __thiscall registerSpell(uint16_t spell_id)
 { 
     SFSpell *sf_spell = new SFSpell;
     sf_spell->spell_id = spell_id;
-    sf_spell->spell_effect_id = spell_effect_id;
+    sf_spell->spell_effect_id = 0x00;       
     sf_spell->spell_type_handler = nullptr;
     sf_spell->spell_effect_handler = nullptr;
     sf_spell->spell_end_handler = nullptr;
     sf_spell->parent_mod = current_mod;
     
-    internal_spell_map[spell_id] = sf_spell;
+    internal_spell_list.push_back(sf_spell);
+
+    return sf_spell;
 }
 
-void __thiscall linkSpellTags(uint16_t spell_id, SpellTag tags, ...)
+void __thiscall linkSpellTags(SFSpell* spell, SpellTag tags, ...)
 {
-    auto it = internal_spell_map.find(spell_id);
-    SFSpell *spell = it->second;
-    va_list args;
-    va_start(args, tags);
-    SpellTag tag;
+    // auto it = internal_spell_map.find(spell_id);
+    // SFSpell *spell = it->second;
+    // va_list args;
+    // va_start(args, tags);
+    // SpellTag tag;
 
-    // Functions in using ... do not know how many have been parsed through, so we use this logic to go through all spell tags, check if the input is valid, if so set the tag true.
-    while ((tag = static_cast<SpellTag>(va_arg(args, int))) != SPELL_TAG_COUNT) {
-        spell->spell_tags[tag] = true;
-    }
-    va_end(args);
+    // // Functions in using ... do not know how many have been parsed through, so we use this logic to go through all spell tags, check if the input is valid, if so set the tag true.
+    // while ((tag = static_cast<SpellTag>(va_arg(args, int))) != SPELL_TAG_COUNT) {
+    //     spell->spell_tags[tag] = true;
+    // }
+    // va_end(args);
 }
 
-void __thiscall linkTypeHandler(uint16_t spell_id, handler_ptr typeHandler)
+void __thiscall linkTypeHandler(SFSpell* spell, handler_ptr typeHandler)
 {
-    auto it = internal_spell_map.find(spell_id);
-    SFSpell *spell = it->second;
     spell->spell_type_handler = typeHandler;
 }
 
-void __thiscall linkEffectHandler(uint16_t spell_id, handler_ptr effectHandler)
+void __thiscall linkEffectHandler(SFSpell* spell, uint16_t spell_effect_id, handler_ptr effectHandler)
 {
-    auto it = internal_spell_map.find(spell_id);
-    SFSpell *spell = it->second;
+    spell->spell_effect_id = spell_effect_id;
     spell->spell_effect_handler = effectHandler;
 }
 
-void __thiscall linkEndHandler(uint16_t spell_id, handler_ptr endHandler)
+void __thiscall linkEndHandler(SFSpell *spell, handler_ptr endHandler)
 {
-    auto it = internal_spell_map.find(spell_id);
-    SFSpell *spell = it->second;
     spell->spell_end_handler = endHandler;
 }
 
@@ -79,11 +77,9 @@ void register_mod_spells()
     std::map<uint16_t, SFMod*> spell_id_map;
     std::map<uint16_t, SFMod*> spell_effect_id_map;
 
-    for (const auto& entry : internal_spell_map)
+    for (SFSpell *spell_data: internal_spell_list)
     {
-        uint16_t spell_id = entry.first;
-        SFSpell *spell_data = entry.second;
-
+        uint16_t spell_id = spell_data->spell_id;
         uint16_t spell_effect_id = spell_data->spell_effect_id;
         handler_ptr spell_type_handler = spell_data->spell_type_handler;
         handler_ptr spell_effect_handler = spell_data->spell_effect_handler;
@@ -136,7 +132,7 @@ void register_mod_spells()
         }
         
         // This frees the memory that we allocate when we run registerSpell
-        delete entry.second;
+        delete spell_data;
     }
     
     log_info("-====== Mod Registration Phase End ======-");

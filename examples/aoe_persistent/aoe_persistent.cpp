@@ -125,12 +125,13 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     iteratorAPI = sfsf->iteratorAPI;
     registrationAPI = sfsf->registrationAPI;
     // Here comes the spell type registration.
+    SFSpell *aoe_persistent_spell = registrationAPI->registerSpell(242);
+    
     // Note: you need to pass pointer to function here
-    registrationAPI->registerSpell(242, 0xf2);
-    registrationAPI->linkTypeHandler(242, &thuderstorm_type_handler);
+    registrationAPI->linkTypeHandler(aoe_persistent_spell, &thuderstorm_type_handler);
 
     // Here comes the spell logic (effect) registration; f2 = 242
-    registrationAPI->linkEffectHandler(242, &thuderstorm_effect_handler);
+    registrationAPI->linkEffectHandler(aoe_persistent_spell, 0xf2, &thuderstorm_effect_handler);
 }
 
 /***
