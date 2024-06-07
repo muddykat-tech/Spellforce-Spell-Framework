@@ -27,7 +27,7 @@ void registerFrameworkAPI()
     frameworkAPI.iteratorAPI = &iteratorAPI;
     frameworkAPI.registrationAPI = &registrationAPI;
 
-	frameworkAPI.registerSpellTypeHandler = &registerSpellTypeHandler;
+    frameworkAPI.registerSpellTypeHandler = &registerSpellTypeHandler;
     frameworkAPI.registerEffectHandler = &registerEffectHandler;
     frameworkAPI.registerSpellEndHandler = &registerSpellEndHandler;
     frameworkAPI.createModInfo = &createModInfo;
@@ -36,17 +36,17 @@ void registerFrameworkAPI()
     current_mod = createModInfo("SFSF", "The Spellforce Spell Framework", "4.0.0", "Muddykat, UnSchtalch, shovel_knight");
 }
 
-void initialize_framework() 
+void initialize_framework()
 {
     log_info("Initializing Data Hooks");
 
-	initialize_data_hooks();
+    initialize_data_hooks();
 
     log_info("Linking API functions");
 
     // setup framework api structure references
     registerFrameworkAPI();
-    
+
     log_info("Registration of Vanilla Spelltype Handlers");
 
     // Setup Vanilla Spells -> see sf_spelltype_handler.h
@@ -59,7 +59,7 @@ void initialize_framework()
     log_info("Registration of Vanilla Spell End Handlers");
 
     register_vanilla_spell_end_handlers();
-    
+
     log_info("Initializing Mods");
 
     // Attempt to load all mods -> see sf_modloader.h

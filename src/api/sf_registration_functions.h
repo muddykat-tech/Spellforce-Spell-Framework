@@ -3,9 +3,9 @@
 #include <stdbool.h>
 #include "sf_general_structures.h"
 
-typedef void (__thiscall *handler_ptr) (SF_CGdSpell *, uint16_t);
+typedef void(__thiscall *handler_ptr)(SF_CGdSpell *, uint16_t);
 
-typedef enum 
+typedef enum
 {
 	IsSummonSpellLine,
 	SPELL_TAG_COUNT
@@ -23,16 +23,15 @@ typedef struct __attribute__((packed))
 } SFSpell;
 
 // Declare the function pointers for the RegistrationFunctions group
-DECLARE_FUNCTION(SFSpell*, registerSpell, uint16_t spell_id);
-DECLARE_FUNCTION(void, linkTypeHandler, SFSpell* spell, handler_ptr typeHandler);
-DECLARE_FUNCTION(void, linkEffectHandler, SFSpell* spell, uint16_t spell_effect_id, handler_ptr effectHandler);
-DECLARE_FUNCTION(void, linkEndHandler, SFSpell* spell, handler_ptr endHandler);
-DECLARE_FUNCTION(void, linkSpellTags, SFSpell* spell, SpellTag tags, ...);
+DECLARE_FUNCTION(SFSpell *, registerSpell, uint16_t spell_id);
+DECLARE_FUNCTION(void, linkTypeHandler, SFSpell *spell, handler_ptr typeHandler);
+DECLARE_FUNCTION(void, linkEffectHandler, SFSpell *spell, uint16_t spell_effect_id, handler_ptr effectHandler);
+DECLARE_FUNCTION(void, linkEndHandler, SFSpell *spell, handler_ptr endHandler);
+DECLARE_FUNCTION(void, linkSpellTags, SFSpell *spell, SpellTag tags, ...);
 
 DECLARE_FUNCTION_GROUP(Registration,
-    registerSpell_ptr registerSpell;
-    linkTypeHandler_ptr linkTypeHandler;
-    linkEffectHandler_ptr linkEffectHandler; 
-    linkEndHandler_ptr linkEndHandler;
-	linkSpellTags_ptr linkSpellTags;
-);
+					   registerSpell_ptr registerSpell;
+					   linkTypeHandler_ptr linkTypeHandler;
+					   linkEffectHandler_ptr linkEffectHandler;
+					   linkEndHandler_ptr linkEndHandler;
+					   linkSpellTags_ptr linkSpellTags;);

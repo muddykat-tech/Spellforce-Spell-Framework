@@ -126,7 +126,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     registrationAPI = sfsf->registrationAPI;
     // Here comes the spell type registration.
     SFSpell *aoe_persistent_spell = registrationAPI->registerSpell(242);
-    
+
     // Note: you need to pass pointer to function here
     registrationAPI->linkTypeHandler(aoe_persistent_spell, &thuderstorm_type_handler);
 
@@ -138,10 +138,11 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
  * This function MUST be present in your code with the exact declaration
  * otherwise the framework is unable to describe your mod in logs and mod info menu (menu not yet implemented)
  ***/
-extern "C" __declspec(dllexport) SFMod* RegisterMod(SpellforceSpellFramework* framework) {
+extern "C" __declspec(dllexport) SFMod *RegisterMod(SpellforceSpellFramework *framework)
+{
     return framework->createModInfo("Persistent AOE Example Mod", "1.0.0", "UnSchtalch", "A mod designed to provide an example of a Persistent AOE spell");
 }
- 
+
 // Required to be present, not required for any functionality
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 {

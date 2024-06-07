@@ -65,24 +65,24 @@ void __thiscall menu_trigger(uint32_t _CAppMenu)
     SF_String *test_label_string;
 
     construct_default_sf_string(test_label_string);
-    
+
     uint32_t CAppMenu_ptr = *(uint32_t *)(_CAppMenu);
     uint32_t CAppMenu_data = *(uint32_t *)(CAppMenu_ptr + 0x4);
     uint32_t CMnuScreen_ptr = *(uint32_t *)(CAppMenu_ptr + 0x68);
-    uint32_t screen_vftable_ptr = *(uint32_t *) (CMnuScreen_ptr); // First field is the vftable ptr
+    uint32_t screen_vftable_ptr = *(uint32_t *)(CMnuScreen_ptr); // First field is the vftable ptr
     // Ghidra Converts this in the following order: CMnuScreen_ptr -> CMnuContainer_ptr -> CMnuVisControl -> CMnuBase
     // The data structure that these have is aligned, best I can describe this is that it trims the data from the previous structure
     // EG. as screen ptr it has CMnuScreen_data, but as Container ptr it is missing CMnuScreen_data but everything else remains in same order and so on.
-    
+
     // This DOES work, it creates a new Container properly, but we now need to attach it somehow...
     new_operator = (new_operator_ptr)(ASI::AddrOf(0x675A9D));
-    CMnuContainer *new_cont_test = (CMnuContainer *) new_operator(0x340);
+    CMnuContainer *new_cont_test = (CMnuContainer *)new_operator(0x340);
     initialize_menu_container(new_cont_test);
 
     // I believe this is MAY be a method to asociate containers and screens in some manner, not sure yet.
     // This does weird shit, it draws the normal menu BEFORE it should now?
     new_cont_test->vftablePTR = screen_vftable_ptr;
-    
+
     // CMnuLabel * test_label;
     // test_label = (CMnuLabel *) new_operator(0x368);
 
@@ -98,7 +98,7 @@ void __thiscall menu_trigger(uint32_t _CAppMenu)
 
     log_info("Menu Trigger Was Called");
     original_menu_func(_CAppMenu);
-    
+
     log_info("Test String Dtor");
     SF_String_dtor(test_label_string);
     log_info("Jumping back to Normal Flow");
@@ -225,11 +225,11 @@ void initialize_data_hooks()
     figure_toolbox_get_unkn = (figure_toolbox_get_unkn_ptr)(ASI::AddrOf(0x2FE704));
     figure_toolbox_add_spell = (figure_toolbox_add_spell_ptr)(ASI::AddrOf(0x2F673A));
 
-    initialize_menu_label = (menu_label_ptr) (ASI::AddrOf(0x51a180));
-    menu_label_set_string = (menu_label_set_string_ptr) (ASI::AddrOf(0x52fab0));
+    initialize_menu_label = (menu_label_ptr)(ASI::AddrOf(0x51a180));
+    menu_label_set_string = (menu_label_set_string_ptr)(ASI::AddrOf(0x52fab0));
 
-    initialize_menu_container = (initialize_menu_container_ptr) (ASI::AddrOf(0x505780));
-    construct_default_sf_string = (construct_default_sf_string_ptr) (ASI::AddrOf(0x383900));
+    initialize_menu_container = (initialize_menu_container_ptr)(ASI::AddrOf(0x505780));
+    construct_default_sf_string = (construct_default_sf_string_ptr)(ASI::AddrOf(0x383900));
 
     // used in Iterator for AOE Spells Dispose
     FUN_0069eaf0 = (FUN_0069eaf0_ptr)(ASI::AddrOf(0x29EAF0));
@@ -263,7 +263,6 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(spell, figTryClrCHkSPlBfrJob2, 0x32a4f0);
     DEFINE_FUNCTION(spell, figTryUnfreeze, 0x32a5a0);
 
-
     DEFINE_FUNCTION(toolbox, dealDamage, 0x2f4a57);
     DEFINE_FUNCTION(toolbox, isTargetable, 0x2fe704);
     DEFINE_FUNCTION(toolbox, figuresCheckHostile, 0x2fe7b9);
@@ -292,7 +291,7 @@ void initialize_data_hooks()
     INCLUDE_FUNCTION(registration, registerSpell, &registerSpell);
     INCLUDE_FUNCTION(registration, linkTypeHandler, &linkTypeHandler);
     INCLUDE_FUNCTION(registration, linkEffectHandler, &linkEffectHandler);
-    INCLUDE_FUNCTION(registration, linkEndHandler, &linkEndHandler); 
+    INCLUDE_FUNCTION(registration, linkEndHandler, &linkEndHandler);
     INCLUDE_FUNCTION(registration, linkSpellTags, &linkSpellTags);
 }
 
@@ -324,13 +323,13 @@ void initialize_spellend_hook()
 }
 
 void initialize_spellrefresh_hook()
-{   
+{
     ASI::MemoryRegion refresh_spell_mreg(ASI::AddrOf(0x329f90), 9);
     ASI::BeginRewrite(refresh_spell_mreg);
-    *(unsigned char*)(ASI::AddrOf(0x329f90)) = 0x90;   // nop trail
-    *(unsigned char*)(ASI::AddrOf(0x329f91)) = 0x90;   // nop trail
-    *(unsigned char*)(ASI::AddrOf(0x329f92)) = 0x90;   // nop trail
-    *(unsigned char*)(ASI::AddrOf(0x329f93)) = 0x90;   // nop trail
+    *(unsigned char *)(ASI::AddrOf(0x329f90)) = 0x90; // nop trail
+    *(unsigned char *)(ASI::AddrOf(0x329f91)) = 0x90; // nop trail
+    *(unsigned char *)(ASI::AddrOf(0x329f92)) = 0x90; // nop trail
+    *(unsigned char *)(ASI::AddrOf(0x329f93)) = 0x90; // nop trail
     *(unsigned char *)(ASI::AddrOf(0x329f94)) = 0xE9; // jmp instruction
     *(int *)(ASI::AddrOf(0x329f95)) = (int)(&CheckCanApply_hook_beta) - ASI::AddrOf(0x329f99);
     ASI::EndRewrite(refresh_spell_mreg);
@@ -348,16 +347,16 @@ void __declspec(naked) menuload_hook_beta()
         "jmp *%1            \n\t" : : "i"(menu_trigger), "o"(menu_return_addr));
 }
 
-// Figure out later -> Function to add display in menu? 
+// Figure out later -> Function to add display in menu?
 // Would like to display version of Mod framework and perhaps mod page with loaded mods
 // NON Functional Hook, @TODO need to check if possible to hook this area [CUiStartMenu::~CUiStartMenu(CUiStartMenu *this, uint32_t param_1)]
-void initialize_menuload_hook() 
+void initialize_menuload_hook()
 {
     // setup original_menu_func
     // setup return_addr
     original_menu_func = (original_menu_func_ptr)(ASI::AddrOf(0x197b10));
     menu_return_addr = (ASI::AddrOf(0x182799));
-    
+
     ASI::MemoryRegion menu_load_mreg(ASI::AddrOf(0x182794), 5);
     ASI::BeginRewrite(menu_load_mreg);
     *(unsigned char *)(ASI::AddrOf(0x182794)) = 0xE9; // jmp instruction

@@ -2,7 +2,6 @@
 #include "../core/sf_wrappers.h"
 #include "../registry/sf_spelleffect_registry.h"
 
-
 handler_ptr effect_ability_benefactions_handler;
 handler_ptr effect_ability_berserk_handler;
 handler_ptr effect_ability_boons_handler;
@@ -335,5 +334,3 @@ void initialize_vanilla_effect_handlers()
     effect_weaken_handler = (handler_ptr)(ASI::AddrOf(0x34aa10));
     effect_weaken_area_handler = (handler_ptr)(ASI::AddrOf(0x34ac60));
 }
-
-
