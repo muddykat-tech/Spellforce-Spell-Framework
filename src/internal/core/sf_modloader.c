@@ -6,49 +6,54 @@
 #include "sf_wrappers.h"
 #include "sf_modloader.h"
 
-
 extern SpellforceSpellFramework frameworkAPI;
-typedef void (*InitModuleFunc)(void*);
-typedef SFMod* (*RegisterModFunc)(void*);
+typedef void (*InitModuleFunc)(void *);
+typedef SFMod *(*RegisterModFunc)(void *);
 int mod_count = 0;
 int error_count = 0;
 
-void cleanup(void* modHandle) {
+void cleanup(void *modHandle)
+{
     // Free resources (unload mod library using FreeLibrary)
-    if (modHandle) {
+    if (modHandle)
+    {
         FreeLibrary((HMODULE)modHandle);
     }
 }
 
 // Function to extract filename from the path
-const char* get_filename(const char* path) {
-    const char* filename = strrchr(path, '\\'); // Find the last occurrence of '\\' in the path
+const char *get_filename(const char *path)
+{
+    const char *filename = strrchr(path, '\\'); // Find the last occurrence of '\\' in the path
     return (filename) ? (filename + 1) : path;
 }
 
-void load_mod(const char* modPath, void* pFrameworkAPI) {
+void load_mod(const char *modPath, void *pFrameworkAPI)
+{
     HMODULE modHandle = LoadLibrary(modPath);
-    if (!modHandle) {
-        log_error("Failed to load mod library");
+    if (!modHandle)
+    {
+        log_error("| - Failed to load mod library (X_X)");
         return;
     }
 
     RegisterModFunc registerMod = (RegisterModFunc)GetProcAddress(modHandle, "RegisterMod");
     InitModuleFunc initModule = (InitModuleFunc)GetProcAddress(modHandle, "InitModule");
-     
-    if (!initModule) {
+
+    if (!initModule)
+    {
         log_warning(get_filename(modPath));
-        log_error("Failed to get address of InitModule");
+        log_error("| - Failed to get address of InitModule (X_X)");
         cleanup(modHandle);
         return;
     }
-    
-    if(!registerMod) 
+
+    if (!registerMod)
     {
         char warn[256];
-        snprintf(warn, sizeof(warn), "Failed to Initialize %s has erroneous mod data.", get_filename(modPath));
+        snprintf(warn, sizeof(warn), "| - Failed to Initialize %s has erroneous mod data. (0_0)", get_filename(modPath));
         log_warning(warn);
-        log_error("Failed to get address of RegisterMod");
+        log_error("| - Failed to get address of RegisterMod (X_X)");
         error_count += 1;
         return;
     }
@@ -57,12 +62,13 @@ void load_mod(const char* modPath, void* pFrameworkAPI) {
     initModule(pFrameworkAPI);
     mod_count += 1;
     char infomsg[256];
-    snprintf(infomsg, sizeof(infomsg), "[Initialized Mod: %s (Ver. %s)]", current_mod->mod_id, current_mod->mod_version);
+    snprintf(infomsg, sizeof(infomsg), "| - [Initialized Mod: %s (Ver. %s)]", current_mod->mod_id, current_mod->mod_version);
     log_info(infomsg);
     return;
 }
 
-void load_all_mods(const char* subfolder, void* pFrameworkAPI) {
+void load_all_mods(const char *subfolder, void *pFrameworkAPI)
+{
     char currentDir[MAX_PATH];
     GetCurrentDirectory(MAX_PATH, currentDir);
 
@@ -74,25 +80,28 @@ void load_all_mods(const char* subfolder, void* pFrameworkAPI) {
     snprintf(searchPath, sizeof(searchPath), "%s\\*.sfm", modDirectory);
 
     HANDLE hFind = FindFirstFile(searchPath, &findFileData);
-    if (hFind != INVALID_HANDLE_VALUE) {
-        do {
+    if (hFind != INVALID_HANDLE_VALUE)
+    {
+        do
+        {
             char modPath[MAX_PATH];
             snprintf(modPath, sizeof(modPath), "%s\\%s", modDirectory, findFileData.cFileName);
             load_mod(modPath, pFrameworkAPI);
         } while (FindNextFile(hFind, &findFileData) != 0);
         FindClose(hFind);
-    } else {
+    }
+    else
+    {
         char msgbuf[MAX_PATH];
-        snprintf(msgbuf, sizeof(msgbuf), "Failed to find mods in directory: %s", modDirectory);
+        snprintf(msgbuf, sizeof(msgbuf), "| - Failed to find mods in directory: %s", modDirectory);
         log_error(msgbuf);
     }
 }
 
-void initialize_mods() {    
-    log_info("--- Mod Loading Phase Start ---");
+void initialize_mods()
+{
     load_all_mods("sfsf", &frameworkAPI);
-    static char info_str[256]; 
-    snprintf(info_str, sizeof(info_str), "%d Mods Initialized with %d error(s)", mod_count, error_count);
+    static char info_str[256];
+    snprintf(info_str, sizeof(info_str), "| - %d Mods Initialized with %d error(s)", mod_count, error_count);
     log_info(info_str);
-    log_info("--- Mod Loading Phase End ---");
 }

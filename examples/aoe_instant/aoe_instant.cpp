@@ -29,7 +29,6 @@ void __thiscall aoe_lifetap_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
     // iteratorAPI->figureIteratorInit(&figure_iterator, 0x0, 0x0, 0x3ff, 0x3ff);
     // iteratorAPI->figureIteratorSetPointers(&figure_iterator, _this->SF_CGdFigure, _this->unkn3, _this->SF_CGdWorld);
 
-
     SF_SpellEffectInfo effect_info;
     SF_CGdResourceSpell spell_data;
     effect_info.spell_id = spell->spell_id;
@@ -50,9 +49,9 @@ void __thiscall aoe_lifetap_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
 
     while (target_index != 0)
     {
-        //If figure is not special unit
-        //not dead and is not friendly
-        //and is targetable - let's work with it
+        // If figure is not special unit
+        // not dead and is not friendly
+        // and is targetable - let's work with it
         if (((int16_t)(_this->SF_CGdFigure->figures[target_index].owner) != -1) &&
             (((uint8_t)(_this->SF_CGdFigure->figures[target_index].flags) & 0xa) == 0) &&
             (toolboxAPI->figuresCheckHostile(_this->SF_CGdFigureToolBox, source_index, target_index)) &&
@@ -106,8 +105,8 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     iteratorAPI = sfsf->iteratorAPI;
     registrationAPI = sfsf->registrationAPI;
     // Here comes the spell type registration.
-    SFSpell* aoe_instant_spell = registrationAPI->registerSpell(242);
-    
+    SFSpell *aoe_instant_spell = registrationAPI->registerSpell(242);
+
     // Note: you need to pass pointer to function here
     registrationAPI->linkTypeHandler(aoe_instant_spell, &aoe_lifetap_type_handler);
 
@@ -119,7 +118,8 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
  * This function MUST be present in your code with the exact declaration
  * otherwise the framework is unable to describe your mod in logs and mod info menu (menu not yet implemented)
  ***/
-extern "C" __declspec(dllexport) SFMod* RegisterMod(SpellforceSpellFramework* framework) {
+extern "C" __declspec(dllexport) SFMod *RegisterMod(SpellforceSpellFramework *framework)
+{
     return framework->createModInfo("Instant AOE Example Mod", "1.0.0", "UnSchtalch", "A mod designed to provide an example of a Instant AOE spell");
 }
 

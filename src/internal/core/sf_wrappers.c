@@ -6,21 +6,24 @@
 #include "sf_wrappers.h"
 #include "sf_hooks.h"
 
-void log_warning(const char *message) {
+void log_warning(const char *message)
+{
     // Logs a warning message to the console and the debug output
-    static char modifiedMessage[256]; 
+    static char modifiedMessage[256];
     snprintf(modifiedMessage, sizeof(modifiedMessage), "[WARNING] %s", message);
     console_log(modifiedMessage);
 }
 
-void log_info(const char *message) {
+void log_info(const char *message)
+{
     // Logs an informational message to the console and the debug output
-    static char modifiedMessage[256]; 
+    static char modifiedMessage[256];
     snprintf(modifiedMessage, sizeof(modifiedMessage), "[SFSF] %s", message);
     console_log(modifiedMessage);
 }
 
-void log_error(const char* message) {
+void log_error(const char *message)
+{
     // Logs an error message to the console and the debug output, including the last error code
     int lastError = GetLastError();
     static char modifiedMessage[256];
@@ -29,7 +32,7 @@ void log_error(const char* message) {
 }
 
 SFLog sf_logger;
-SFLog* setup_logger()
+SFLog *setup_logger()
 {
     sf_logger.logError = &log_error;
     sf_logger.logInfo = &log_info;
@@ -114,36 +117,36 @@ void __thiscall addBonusMultToStatistic(SF_CGdFigure *figure, StatisticDataKey k
     figureAPI.addBonusMult(statistic, value);
 }
 
-
-void __thiscall spellClearFigureFlag(SF_CGdSpell* _this, uint16_t spell_id, SpellFlagKey key)
+void __thiscall spellClearFigureFlag(SF_CGdSpell *_this, uint16_t spell_id, SpellFlagKey key)
 {
-    switch(key)
+    switch (key)
     {
-        case CHECK_SPELLS_BEFORE_CHECK_BATTLE:
-            spellAPI.figClrChkSplBfrChkBattle(_this, spell_id, 0);
+    case CHECK_SPELLS_BEFORE_CHECK_BATTLE:
+        spellAPI.figClrChkSplBfrChkBattle(_this, spell_id, 0);
         break;
-        case CHECK_SPELLS_BEFORE_JOB2:
-            spellAPI.figTryClrCHkSPlBfrJob2(_this, spell_id, 0);
+    case CHECK_SPELLS_BEFORE_JOB2:
+        spellAPI.figTryClrCHkSPlBfrJob2(_this, spell_id, 0);
         break;
-        case UNFREEZE:
-            spellAPI.figTryUnfreeze(_this, spell_id, 0);
+    case UNFREEZE:
+        spellAPI.figTryUnfreeze(_this, spell_id, 0);
         break;
     }
 }
 
 /*
-	char mod_id[64];
-	char mod_version[24];
-	char mod_description[128];
-	char mod_author[128];
+    char mod_id[64];
+    char mod_version[24];
+    char mod_description[128];
+    char mod_author[128];
 */
-SFMod *createModInfo(const char* mod_id, const char* mod_version, const char* mod_author, const char* mod_description){
+SFMod *createModInfo(const char *mod_id, const char *mod_version, const char *mod_author, const char *mod_description)
+{
     // Sanitize the mod info, no buffer overflows for us!
-    SFMod *mod = (SFMod*)malloc(sizeof(SFMod));
+    SFMod *mod = (SFMod *)malloc(sizeof(SFMod));
 
     strncpy(mod->mod_id, mod_id, 63);
     mod->mod_id[63] = '\0';
- 
+
     strncpy(mod->mod_version, mod_version, 23);
     mod->mod_version[23] = '\0';
 

@@ -99,8 +99,8 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     registrationAPI = sfsf->registrationAPI;
 
     // Here comes the spell type registration. Coose your spell_id and your spell_effect_id (spell_job);
-    SFSpell* simple_damage_spell = registrationAPI->registerSpell(242);
-    
+    SFSpell *simple_damage_spell = registrationAPI->registerSpell(242);
+
     // Note: you need to pass pointer to function here
     registrationAPI->linkTypeHandler(simple_damage_spell, &simple_damage_handler);
 
@@ -112,7 +112,8 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
  * This function MUST be present in your code with the exact declaration
  * otherwise the framework is unable to describe your mod in logs and mod info menu (menu not yet implemented)
  ***/
-extern "C" __declspec(dllexport) SFMod* RegisterMod(SpellforceSpellFramework* framework) {
+extern "C" __declspec(dllexport) SFMod *RegisterMod(SpellforceSpellFramework *framework)
+{
     return framework->createModInfo("Simple Damage Example Mod", "1.0.0", "UnSchtalch", "A mod designed to provide an example of a simple damage spell");
 }
 

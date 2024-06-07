@@ -12,7 +12,7 @@ typedef struct __attribute__((packed))
 	char mod_author[128];
 } SFMod;
 
-typedef void (*log_function_ptr)(const char*);
+typedef void (*log_function_ptr)(const char *);
 typedef struct __attribute__((packed))
 {
 	log_function_ptr logError;
@@ -36,35 +36,37 @@ typedef struct __attribute__((packed))
 
 typedef struct __attribute__((packed))
 {
-	uint8_t entity_type; //1 for figure, 2 for building, 3 for object
+	uint8_t entity_type; // 1 for figure, 2 for building, 3 for object
 	uint16_t entity_index;
 	SF_Coord position;
 } SF_CGdTargetData;
 
 typedef struct __attribute__((packed))
 {
-    void *raw_data;
-    uint32_t str_length;
-    uint32_t unknown_length_var;
-    char *data;
+	void *raw_data;
+	uint32_t str_length;
+	uint32_t unknown_length_var;
+	char *data;
 } SF_String;
 
 typedef struct __attribute__((packed))
 {
-    uint32_t partA;
-    uint32_t partB;
+	uint32_t partA;
+	uint32_t partB;
 } SF_Rectangle;
 
 /* |-========== Figure Start ==========-| */
 
-typedef struct __attribute__((packed)){
+typedef struct __attribute__((packed))
+{
 	uint32_t unknown1;
 	uint32_t unknown2;
 	uint32_t unknown3;
 	uint16_t unknown4;
 } CGdFigureWeaponStats;
 
-typedef struct __attribute__((packed)){
+typedef struct __attribute__((packed))
+{
 	uint16_t figure_index;
 	uint16_t agro_value;
 	uint16_t hate_value;
@@ -84,7 +86,7 @@ typedef struct __attribute__((packed))
 	uint16_t bonus_val;
 	uint8_t bonus_multiplier;
 	uint8_t statistic_type; // NOT CONFIRMED?
-	uint16_t missing_val; // No idea what this is
+	uint16_t missing_val;	// No idea what this is
 } FigureStatisticExt;
 
 typedef struct __attribute__((packed))
@@ -98,7 +100,7 @@ typedef struct __attribute__((packed))
 	uint8_t activity;
 	uint8_t unknown1;
 	uint16_t building;
-	uint32_t flags; //Actual Type CdFigureFlags
+	uint32_t flags; // Actual Type CdFigureFlags
 	uint8_t race;
 	uint8_t level;
 	uint16_t owner;
@@ -126,12 +128,12 @@ typedef struct __attribute__((packed))
 	FigureStatistic fight_speed;
 	FigureStatistic cast_speed;
 	uint8_t equipment[20]; // No idea how this works, may need a class (undefined2[16] in ghidra, but is 20 bytes FigureStatistic is 6 bytes)
-	uint16_t head; //Not sure what this does
-	uint32_t unknown2[3]; // three 4 byte data points in a row, no name known for these.
-	uint8_t unknown3[167]; // Many 1 byte sections in a row 
-	uint32_t unknown4[7]; // Many 4 byte sections in a row
+	uint16_t head;		   // Not sure what this does
+	uint32_t unknown2[3];  // three 4 byte data points in a row, no name known for these.
+	uint8_t unknown3[167]; // Many 1 byte sections in a row
+	uint32_t unknown4[7];  // Many 4 byte sections in a row
 	uint16_t unknown5;
-	uint8_t	unknown6[2];
+	uint8_t unknown6[2];
 	CGdFigureWeaponStats weapon_stats;
 	uint8_t unknown7[12];
 	uint8_t good; // I assume perhaps alignment?
@@ -195,17 +197,16 @@ typedef struct __attribute__((packed))
 {
 	uint16_t to_do_count;
 	uint16_t spell_id;
-	uint16_t spell_line; //aka spell type in shovel's editor
-	uint16_t spell_job; //aka spell line in older code
+	uint16_t spell_line; // aka spell type in shovel's editor
+	uint16_t spell_job;	 // aka spell line in older code
 	SF_CGdTargetData source;
 	SF_CGdTargetData target;
 	uint8_t xdata_key; // IDK (Seems to be used in ref for things, seen usage in getting target data and others)
 	uint8_t undefinded1;
 	uint8_t DLLNode;
-	uint8_t underfined2; 
+	uint8_t underfined2;
 	uint8_t flags;
 } SF_GdSpell;
-
 
 typedef struct __attribute__((packed))
 {
@@ -220,7 +221,7 @@ typedef struct __attribute__((packed))
 	void *SF_CGdFigureJobs;
 	void *SF_CGdFigureToolBox;
 	void *SF_CGdFormation;
-	void *unkn2; //Seems to be used as first param for GetChanceToResistSpell 
+	void *unkn2; // Seems to be used as first param for GetChanceToResistSpell
 	void *SF_CGdObject;
 	void *SF_CGdObjectToolBox;
 	void *SF_CGdPlayer;
@@ -244,7 +245,7 @@ typedef struct __attribute__((packed))
 	uint8_t CAppMenu_data[0x688];
 } CAppMenu;
 
-typedef struct __attribute__((packed)) 
+typedef struct __attribute__((packed))
 {
 	uint32_t vftablePTR;
 	uint8_t CMnuBase_data[0x208];
@@ -287,34 +288,35 @@ typedef struct __attribute__((packed))
 /* |-========== Internal Functions ==========-| */
 // These functions are used in SFSF internally, and may be moved.
 
-typedef void (__thiscall *console_print_ptr)(uint32_t, const char *);
-typedef uint16_t (__thiscall *get_spell_spell_line_ptr) (void *, uint16_t);
-typedef uint32_t (__thiscall *figure_toolbox_get_unkn_ptr)(void *, uint16_t);
-typedef void (__thiscall *figure_toolbox_add_spell_ptr)(void *, uint16_t, uint16_t);
-typedef bool (__thiscall *figure_toolbox_is_targetable_ptr)(void *CGdFigureToolbox, uint16_t figure_index);
-typedef uint32_t (__thiscall *FUN_0069eaf0_ptr)(void* ac69, void* ac69_2, void* ac69_3, void* ac69_4);
-typedef void (*fidfree_ptr)(uint32_t* memory_ptr);
-typedef void (__thiscall *menu_label_ptr)(CMnuLabel *_this);
-typedef void (__thiscall *menu_label_set_string_ptr)(CMnuLabel *_this, SF_String *string);
-typedef void (__thiscall *initialize_menu_container_ptr)(CMnuContainer *_this);
-typedef void (__thiscall *construct_default_sf_string_ptr)(SF_String *_this);
+typedef void(__thiscall *console_print_ptr)(uint32_t, const char *);
+typedef uint16_t(__thiscall *get_spell_spell_line_ptr)(void *, uint16_t);
+typedef uint32_t(__thiscall *figure_toolbox_get_unkn_ptr)(void *, uint16_t);
+typedef void(__thiscall *figure_toolbox_add_spell_ptr)(void *, uint16_t, uint16_t);
+typedef bool(__thiscall *figure_toolbox_is_targetable_ptr)(void *CGdFigureToolbox, uint16_t figure_index);
+typedef uint32_t(__thiscall *FUN_0069eaf0_ptr)(void *ac69, void *ac69_2, void *ac69_3, void *ac69_4);
+typedef void (*fidfree_ptr)(uint32_t *memory_ptr);
+typedef void(__thiscall *menu_label_ptr)(CMnuLabel *_this);
+typedef void(__thiscall *menu_label_set_string_ptr)(CMnuLabel *_this, SF_String *string);
+typedef void(__thiscall *initialize_menu_container_ptr)(CMnuContainer *_this);
+typedef void(__thiscall *construct_default_sf_string_ptr)(SF_String *_this);
 
-typedef void (__thiscall *construct_start_menu_ptr)(CUiStartMenu *_this, uint32_t p1);
+typedef void(__thiscall *construct_start_menu_ptr)(CUiStartMenu *_this, uint32_t p1);
 
-typedef void (__thiscall *message_box_ptr)(uint32_t CMnuScreen_ptr, SF_String *string_ptr);
+typedef void(__thiscall *message_box_ptr)(uint32_t CMnuScreen_ptr, SF_String *string_ptr);
 
-typedef void (__fastcall *original_menu_func_ptr)(uint32_t param1);
+typedef void(__fastcall *original_menu_func_ptr)(uint32_t param1);
 
-typedef void* (__cdecl *new_operator_ptr)(uint32_t param_1);
-typedef void (__thiscall *container_add_control_ptr)(CMnuContainer * _this, void *CMnuBase, uint8_t c1, uint8_t c2, uint32_t p4);
-typedef void (__thiscall *menu_label_set_data_ptr)(CMnuLabel *_this, uint32_t maybe_font, uint32_t maybe_color, uint32_t unkn1, uint8_t unknchar);
+typedef void *(__cdecl *new_operator_ptr)(uint32_t param_1);
+typedef void(__thiscall *container_add_control_ptr)(CMnuContainer *_this, void *CMnuBase, uint8_t c1, uint8_t c2, uint32_t p4);
+typedef void(__thiscall *menu_label_set_data_ptr)(CMnuLabel *_this, uint32_t maybe_font, uint32_t maybe_color, uint32_t unkn1, uint8_t unknchar);
 
 /* |-========== Macros ==========-| */
 // Here comes a better method for setting up our exposed functions, to define functions also check sf_hooks.h
 #define DECLARE_FUNCTION(type, name, ...) \
-    typedef type (__thiscall *name##_ptr)(__VA_ARGS__);
+	typedef type(__thiscall *name##_ptr)(__VA_ARGS__);
 
 #define DECLARE_FUNCTION_GROUP(group, ...) \
-    typedef struct { \
-        __VA_ARGS__ \
-    } group##Functions;
+	typedef struct                         \
+	{                                      \
+		__VA_ARGS__                        \
+	} group##Functions;

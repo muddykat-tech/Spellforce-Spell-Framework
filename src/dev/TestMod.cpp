@@ -17,19 +17,19 @@ SFLog *logger;
 
 // Spell index is the ID for the TYPE of spell being cast
 // Spell Job is the ID for the LOGIC (effect) handler that the spell uses when being cast.
-void __thiscall custom_spelltype_handler(SF_CGdSpell * _this, uint16_t spell_index) 
+void __thiscall custom_spelltype_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
-  //Effect ID is the spell_job (links to custom_spelleffect_handler)
-	_this->active_spell_list[spell_index].spell_job = 0xf2; 
+  // Effect ID is the spell_job (links to custom_spelleffect_handler)
+  _this->active_spell_list[spell_index].spell_job = 0xf2;
 
   // Required for the spell to be initialized as active
-	spellAPI->initializeSpellData(_this, spell_index, SPELL_TICK_COUNT);
+  spellAPI->initializeSpellData(_this, spell_index, SPELL_TICK_COUNT);
 
   logger->logInfo("Spell Handled");
   logger->logWarning("Test Warning");
 }
 
-void __thiscall custom_spellend_handler(SF_CGdSpell * _this, uint16_t spell_index)
+void __thiscall custom_spellend_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
   logger->logInfo("END EFFECT HANDLED");
   spellAPI->spellClearFigureFlag(_this, spell_index, UNFREEZE);
@@ -37,7 +37,7 @@ void __thiscall custom_spellend_handler(SF_CGdSpell * _this, uint16_t spell_inde
   spellAPI->setEffectDone(_this, spell_index, 0);
 }
 
-void __thiscall custom_spelleffect_handler(SF_CGdSpell * _this, uint16_t spell_index) 
+void __thiscall custom_spelleffect_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
   logger->logInfo("Custom Effect Handled");
   // Required for the spell to eventually become Inactive, without this and setEffectDone, you can't attack the same target again.
@@ -67,59 +67,59 @@ void __thiscall custom_spelleffect_handler(SF_CGdSpell * _this, uint16_t spell_i
 
   figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, WISDOM, source_index, 2);
 
-
-  if(resist_chance < random_roll) {
+  if (resist_chance < random_roll)
+  {
     toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index, target_index, damage, 1, 0, 0);
     return;
   }
 
   // Last Param for spell effect done should always be 0?
-  if(tick_count <= 1) 
-  spellAPI->setEffectDone(_this, spell_index, 0);
+  if (tick_count <= 1)
+    spellAPI->setEffectDone(_this, spell_index, 0);
 }
 
-extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework* framework) 
+extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *framework)
 {
-	  sfsf = framework;
-    spellAPI = sfsf->spellAPI;
-    toolboxAPI = sfsf->toolboxAPI;
-    figureAPI = sfsf->figureAPI;
-    logger = sfsf->logAPI;
-    registrationAPI = sfsf->registrationAPI;
-    
-    uint16_t custom_spell_id = 0xe;
- 
-    SFSpell *custom_spell = registrationAPI->registerSpell(custom_spell_id);
-    //registrationAPI->linkSpellTags(custom_spell_id, IsSummonSpellLine); 
-    registrationAPI->linkTypeHandler(custom_spell, &custom_spelltype_handler);
-    registrationAPI->linkEffectHandler(custom_spell, 0xf2, &custom_spelleffect_handler);
-    registrationAPI->linkEndHandler(custom_spell, &custom_spellend_handler);
+  sfsf = framework;
+  spellAPI = sfsf->spellAPI;
+  toolboxAPI = sfsf->toolboxAPI;
+  figureAPI = sfsf->figureAPI;
+  logger = sfsf->logAPI;
+  registrationAPI = sfsf->registrationAPI;
+
+  uint16_t custom_spell_id = 0xe;
+
+  SFSpell *custom_spell = registrationAPI->registerSpell(custom_spell_id);
+  // registrationAPI->linkSpellTags(custom_spell_id, IsSummonSpellLine);
+  registrationAPI->linkTypeHandler(custom_spell, &custom_spelltype_handler);
+  registrationAPI->linkEffectHandler(custom_spell, 0xf2, &custom_spelleffect_handler);
+  registrationAPI->linkEndHandler(custom_spell, &custom_spellend_handler);
 }
 
-extern "C" __declspec(dllexport) SFMod* RegisterMod(SpellforceSpellFramework* framework)
-{ 
-    return framework->createModInfo("Test Mod", "1.0.0", "Muddykat, UnSchtalch", "A mod designed to test in development functions exposed through the SFSF API");
+extern "C" __declspec(dllexport) SFMod *RegisterMod(SpellforceSpellFramework *framework)
+{
+  return framework->createModInfo("Test Mod", "1.0.0", "Muddykat, UnSchtalch", "A mod designed to test in development functions exposed through the SFSF API");
 }
 
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 {
   switch (fdwReason)
   {
-    case DLL_PROCESS_ATTACH:
-      /* Code path executed when DLL is loaded into a process's address space. */
-      break;
+  case DLL_PROCESS_ATTACH:
+    /* Code path executed when DLL is loaded into a process's address space. */
+    break;
 
-    case DLL_THREAD_ATTACH:
-      /* Code path executed when a new thread is created within the process. */
-      break;
+  case DLL_THREAD_ATTACH:
+    /* Code path executed when a new thread is created within the process. */
+    break;
 
-    case DLL_THREAD_DETACH:
-      /* Code path executed when a thread within the process has exited *cleanly*. */
-      break;
+  case DLL_THREAD_DETACH:
+    /* Code path executed when a thread within the process has exited *cleanly*. */
+    break;
 
-    case DLL_PROCESS_DETACH:
-      /* Code path executed when DLL is unloaded from a process's address space. */
-      break;
+  case DLL_PROCESS_DETACH:
+    /* Code path executed when DLL is unloaded from a process's address space. */
+    break;
   }
 
   return TRUE;

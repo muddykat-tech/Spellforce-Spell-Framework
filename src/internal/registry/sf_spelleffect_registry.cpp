@@ -9,10 +9,11 @@
 
 std::map<uint16_t, handler_ptr> effect_handler_map;
 
-void registerEffectHandler(uint16_t spell_job, handler_ptr handler) 
+void registerEffectHandler(uint16_t spell_job, handler_ptr handler)
 {
     auto check = effect_handler_map.find(spell_job);
-    if (check != effect_handler_map.end()){ 
+    if (check != effect_handler_map.end())
+    {
         char message[256];
         sprintf(message, "%s (v%s) has replaced an Effect Handler [%d] (Was this on purpose?)", current_mod->mod_id, current_mod->mod_version, spell_job);
         log_warning(message);
@@ -20,10 +21,11 @@ void registerEffectHandler(uint16_t spell_job, handler_ptr handler)
     effect_handler_map[spell_job] = handler;
 }
 
-handler_ptr get_spell_effect(uint16_t spell_job) 
+handler_ptr get_spell_effect(uint16_t spell_job)
 {
     auto it = effect_handler_map.find(spell_job);
-    if (it == effect_handler_map.end()) {
+    if (it == effect_handler_map.end())
+    {
         log_error("Unknown Job ID, No effect handler registered.");
         return NULL;
     }
