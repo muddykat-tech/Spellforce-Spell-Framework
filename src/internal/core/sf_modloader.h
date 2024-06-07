@@ -6,6 +6,6 @@
 extern "C" __declspec(dllexport) void initialize_mods();
 extern int mod_count; 
 extern int error_count;
-extern SFMod current_mod;
+extern SFMod* current_mod;
 
 #endif // MODLOADER_H

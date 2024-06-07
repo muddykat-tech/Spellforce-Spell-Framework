@@ -9,6 +9,7 @@ SpellforceSpellFramework *sfsf;
 SpellFunctions *spellAPI;
 ToolboxFunctions *toolboxAPI;
 FigureFunctions *figureAPI;
+RegistrationFunctions *registrationAPI;
 
 void __thiscall simple_damage_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
@@ -95,20 +96,23 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     spellAPI = sfsf->spellAPI;
     toolboxAPI = sfsf->toolboxAPI;
     figureAPI = sfsf->figureAPI;
+    registrationAPI = sfsf->registrationAPI;
 
-    // Here comes the spell type registration.
+    // Here comes the spell type registration. Coose your spell_id and your spell_effect_id (spell_job);
+    registrationAPI->registerSpell(242, 0xf2);
+    
     // Note: you need to pass pointer to function here
-    sfsf->registerSpellTypeHandler(242, &simple_damage_handler);
+    registrationAPI->linkTypeHandler(242, &simple_damage_handler);
 
-    // Here comes the spell logic (effect) registration; f2 = 242
-    sfsf->registerEffectHandler(0xf2, &simple_damage_effect_handler);
+    // Here comes the spell logic (effect)
+    registrationAPI->linkEffectHandler(242, &simple_damage_effect_handler);
 }
 
 /***
  * This function MUST be present in your code with the exact declaration
  * otherwise the framework is unable to describe your mod in logs and mod info menu (menu not yet implemented)
  ***/
-extern "C" __declspec(dllexport) SFMod RegisterMod(SpellforceSpellFramework* framework) {
+extern "C" __declspec(dllexport) SFMod* RegisterMod(SpellforceSpellFramework* framework) {
     return framework->createModInfo("Simple Damage Example Mod", "1.0.0", "UnSchtalch", "A mod designed to provide an example of a simple damage spell");
 }
 

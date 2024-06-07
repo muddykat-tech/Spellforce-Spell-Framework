@@ -12,8 +12,8 @@
 #include <stdint.h>
 
 typedef void (*initializeModule_ptr)(void*);
-typedef SFMod (*registerMod_ptr)(void*);
-typedef SFMod (*createModInfo_ptr)(const char *mod_id, const char* mod_version, const char *mod_author, const char *mod_description);
+typedef SFMod *(*registerMod_ptr)(void*);
+typedef SFMod *(*createModInfo_ptr)(const char *mod_id, const char* mod_version, const char *mod_author, const char *mod_description);
 
 typedef void (*logInfoFunc)(const char*);
 typedef void (__thiscall *handler_ptr) (SF_CGdSpell *, uint16_t);

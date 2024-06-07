@@ -30,7 +30,7 @@ extern void __thiscall linkTypeHandler(uint16_t spell_id, handler_ptr typeHandle
 extern void __thiscall linkEffectHandler(uint16_t spell_id, handler_ptr effectHandler); 
 extern void __thiscall linkEndHandler(uint16_t spell_id, handler_ptr endHandler); 
 
-extern SFMod createModInfo(const char *mod_id, const char* mod_version, const char *mod_author, const char *mod_description);
+extern SFMod* createModInfo(const char *mod_id, const char* mod_version, const char *mod_author, const char *mod_description);
 
 extern FUN_0069eaf0_ptr FUN_0069eaf0;
 extern fidfree_ptr fidFree;

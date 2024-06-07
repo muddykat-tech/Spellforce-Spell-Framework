@@ -9,7 +9,7 @@
 
 extern SpellforceSpellFramework frameworkAPI;
 typedef void (*InitModuleFunc)(void*);
-typedef SFMod (*RegisterModFunc)(void*);
+typedef SFMod* (*RegisterModFunc)(void*);
 int mod_count = 0;
 int error_count = 0;
 
@@ -35,31 +35,29 @@ void load_mod(const char* modPath, void* pFrameworkAPI) {
 
     RegisterModFunc registerMod = (RegisterModFunc)GetProcAddress(modHandle, "RegisterMod");
     InitModuleFunc initModule = (InitModuleFunc)GetProcAddress(modHandle, "InitModule");
-    
-    if(registerMod != NULL) current_mod = registerMod(pFrameworkAPI);
-
+     
     if (!initModule) {
         log_warning(get_filename(modPath));
         log_error("Failed to get address of InitModule");
         cleanup(modHandle);
         return;
     }
-
-    initModule(pFrameworkAPI);
-    mod_count += 1;
-
-    if(registerMod == NULL) 
+    
+    if(!registerMod) 
     {
         char warn[256];
-        snprintf(warn, sizeof(warn), "Initialized Mod has erroneous mod data, see file [%s]", get_filename(modPath));
+        snprintf(warn, sizeof(warn), "Failed to Initialize %s has erroneous mod data.", get_filename(modPath));
         log_warning(warn);
         log_error("Failed to get address of RegisterMod");
         error_count += 1;
         return;
     }
 
+    current_mod = registerMod(pFrameworkAPI);
+    initModule(pFrameworkAPI);
+    mod_count += 1;
     char infomsg[256];
-    snprintf(infomsg, sizeof(infomsg), "[Initialized Mod: %s (Ver. %s)]", current_mod.mod_id, current_mod.mod_version);
+    snprintf(infomsg, sizeof(infomsg), "[Initialized Mod: %s (Ver. %s)]", current_mod->mod_id, current_mod->mod_version);
     log_info(infomsg);
     return;
 }

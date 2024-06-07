@@ -10,7 +10,7 @@ SpellFunctions *spellAPI;
 ToolboxFunctions *toolboxAPI;
 FigureFunctions *figureAPI;
 IteratorFunctions *iteratorAPI;
-
+RegistrationFunctions *registrationAPI;
 
 void __thiscall thuderstorm_type_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
@@ -123,19 +123,21 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     toolboxAPI = sfsf->toolboxAPI;
     figureAPI = sfsf->figureAPI;
     iteratorAPI = sfsf->iteratorAPI;
+    registrationAPI = sfsf->registrationAPI;
     // Here comes the spell type registration.
     // Note: you need to pass pointer to function here
-    sfsf->registerSpellTypeHandler(242, &thuderstorm_type_handler);
+    registrationAPI->registerSpell(242, 0xf2);
+    registrationAPI->linkTypeHandler(242, &thuderstorm_type_handler);
 
     // Here comes the spell logic (effect) registration; f2 = 242
-    sfsf->registerEffectHandler(0xf2, &thuderstorm_effect_handler);
+    registrationAPI->linkEffectHandler(242, &thuderstorm_effect_handler);
 }
 
 /***
  * This function MUST be present in your code with the exact declaration
  * otherwise the framework is unable to describe your mod in logs and mod info menu (menu not yet implemented)
  ***/
-extern "C" __declspec(dllexport) SFMod RegisterMod(SpellforceSpellFramework* framework) {
+extern "C" __declspec(dllexport) SFMod* RegisterMod(SpellforceSpellFramework* framework) {
     return framework->createModInfo("Persistent AOE Example Mod", "1.0.0", "UnSchtalch", "A mod designed to provide an example of a Persistent AOE spell");
 }
  

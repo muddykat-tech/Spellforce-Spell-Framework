@@ -14,7 +14,7 @@ void registerEffectHandler(uint16_t spell_job, handler_ptr handler)
     auto check = effect_handler_map.find(spell_job);
     if (check != effect_handler_map.end()){ 
         char message[256];
-        sprintf(message, "%s (v%s) has replaced an Effect Handler [%d] (Was this on purpose?)", current_mod.mod_id, current_mod.mod_version, spell_job);
+        sprintf(message, "%s (v%s) has replaced an Effect Handler [%d] (Was this on purpose?)", current_mod->mod_id, current_mod->mod_version, spell_job);
         log_warning(message);
     }
     effect_handler_map[spell_job] = handler;

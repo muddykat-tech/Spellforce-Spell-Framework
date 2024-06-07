@@ -16,7 +16,7 @@ void registerSpellEndHandler(uint16_t spell_line, handler_ptr handler)
     if (check != spellend_handler_map.end())
     { 
         char message[256];
-        sprintf(message, "%s (v%s) has replaced an End Handler [%d] (Was this on purpose?)", current_mod.mod_id, current_mod.mod_version, spell_line);
+        sprintf(message, "%s (v%s) has replaced an End Handler [%d] (Was this on purpose?)", current_mod->mod_id, current_mod->mod_version, spell_line);
         log_warning(message);
     }
 

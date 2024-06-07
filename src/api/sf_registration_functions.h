@@ -19,6 +19,7 @@ typedef struct __attribute__((packed))
 	handler_ptr spell_type_handler;
 	handler_ptr spell_effect_handler;
 	handler_ptr spell_end_handler;
+	SFMod *parent_mod;
 } SFSpell;
 
 // Declare the function pointers for the RegistrationFunctions group

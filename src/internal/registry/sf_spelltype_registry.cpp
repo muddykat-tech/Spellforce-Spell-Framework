@@ -30,7 +30,7 @@ void registerSpellTypeHandler(uint16_t spell_index, handler_ptr handler) {
     if (check != handler_map.end()){ 
         if(check->second != &default_handler) {
             char message[256]; // Assuming a maximum message length of 255 characters
-            sprintf(message, "%s (v%s) has replaced a Spelltype Handler! [%d] (Was this on purpose?)", current_mod.mod_id, current_mod.mod_version, spell_index);
+            sprintf(message, "%s (v%s) has replaced a Spelltype Handler! [%d] (Was this on purpose?)", current_mod->mod_id, current_mod->mod_version, spell_index);
             log_warning(message);
         }
     }
