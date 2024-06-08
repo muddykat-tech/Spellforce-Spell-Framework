@@ -69,7 +69,7 @@ void __thiscall menu_trigger(uint32_t _CAppMenu)
     uint32_t CAppMenu_data = *(uint32_t *)(CAppMenu_ptr + 0x4);
     uint32_t CMnuScreen_ptr = *(uint32_t *)(CAppMenu_ptr + 0x68);
     uint32_t screen_vftable_ptr = *(uint32_t *)(CMnuScreen_ptr);
-    // First field is the vftable ptr
+
     // Ghidra Converts this in the following order: CMnuScreen_ptr -> CMnuContainer_ptr -> CMnuVisControl -> CMnuBase
     // The data structure that these have is aligned, best I can describe this is that it trims the data from the previous structure
     // EG. as screen ptr it has CMnuScreen_data, but as Container ptr it is missing CMnuScreen_data but everything else remains in same order and so on.
@@ -267,6 +267,7 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(spell, figTryUnfreeze, 0x32a5a0);
 
     log_info("| - ToolboxAPI Hooks");
+
     DEFINE_FUNCTION(toolbox, dealDamage, 0x2f4a57);
     DEFINE_FUNCTION(toolbox, isTargetable, 0x2fe704);
     DEFINE_FUNCTION(toolbox, figuresCheckHostile, 0x2fe7b9);
