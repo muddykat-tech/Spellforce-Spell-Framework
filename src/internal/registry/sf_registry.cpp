@@ -27,6 +27,14 @@ void registerFrameworkAPI()
     frameworkAPI.toolboxAPI = &toolboxAPI;
     frameworkAPI.iteratorAPI = &iteratorAPI;
     frameworkAPI.registrationAPI = &registrationAPI;
+<<<<<<< HEAD
+    == == == =
+
+                 frameworkAPI.registerSpellTypeHandler = &registerSpellTypeHandler;
+    frameworkAPI.registerEffectHandler = &registerEffectHandler;
+    frameworkAPI.registerSpellEndHandler = &registerSpellEndHandler;
+    frameworkAPI.createModInfo = &createModInfo;
+>>>>>>> 214f256369524a2776d092d9ffb9804c737f05eb
     frameworkAPI.logAPI = setup_logger();
     log_info("| - Loading framework with create_mod_info Address");
     frameworkAPI.createModInfo = &createModInfo;
@@ -38,7 +46,11 @@ void registerFrameworkAPI()
 void initialize_framework()
 {
 
+<<<<<<< HEAD
     log_info("|=====| Spellforce Spell Framework Configuration Phase Start |=====|");
+    == == == =
+                 initialize_data_hooks();
+>>>>>>> 214f256369524a2776d092d9ffb9804c737f05eb
 
     log_info("| - Initializing Data Hooks");
 
