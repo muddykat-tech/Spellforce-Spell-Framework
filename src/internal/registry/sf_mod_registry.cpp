@@ -98,16 +98,13 @@ void register_mod_spells()
 
         current_mod = spell_data->parent_mod;
 
+        // Check for conflicts
         if (spell_id_map.find(spell_id) != spell_id_map.end())
         {
             char error_msg[256];
             SFMod *conflict_mod = spell_id_map[spell_id];
             snprintf(error_msg, sizeof(error_msg), "| - Mod Conflict Detected [%s]: Spell ID [%d] is already registered by [%s]", parent_mod->mod_id, spell_id, conflict_mod->mod_id);
             log_error(error_msg);
-        }
-        else
-        {
-            spell_id_map[spell_id] = parent_mod;
         }
 
         if (spell_effect_id_map.find(spell_effect_id) != spell_effect_id_map.end())
@@ -117,11 +114,12 @@ void register_mod_spells()
             snprintf(error_msg, sizeof(error_msg), "| - Mod Conflict Detected [%s]: Spell Effect ID [%d] is already registered by [%s]", parent_mod, spell_effect_id, conflict_mod->mod_id);
             log_error(error_msg);
         }
-        else
-        {
-            spell_effect_id_map[spell_effect_id] = parent_mod;
-        }
 
+        // Update Conflict Maps
+        spell_id_map[spell_id] = parent_mod;
+        spell_effect_id_map[spell_effect_id] = parent_mod;
+
+        // Do Registration
         if (spell_type_handler)
         {
             registerSpellTypeHandler(spell_id, spell_type_handler);
@@ -136,8 +134,11 @@ void register_mod_spells()
         {
             registerSpellEndHandler(spell_id, spell_end_handler);
         }
+    }
 
-        // This frees the memory that we allocate when we run registerSpell
-        delete spell_data;
+    // Free Memory
+    for (SFSpell *spell_data : internal_spell_list)
+    {
+        free(spell_data);
     }
 }
