@@ -1,0 +1,18 @@
+#!/bin/bash
+
+function check_compile() {
+	mingw32-make > /dev/null;
+	if [ $? -ne 0 ]; then
+		echo "|=========== FAILED TO COMPILE ===========|"
+		exit 1;
+	else
+		echo "|============ Commit Accepted ============|"
+		exit 0;
+	fi
+}
+
+mingw32-make clean > /dev/null;
+
+echo "|=== Checking if Codebase will Compile ===|";
+
+check_compile
