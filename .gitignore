@@ -48,6 +48,7 @@
 .vscode/*
 .vscode
 .tmp_versions/
+examples-bin/
 modules.order
 Module.symvers
 Mkfile.old
