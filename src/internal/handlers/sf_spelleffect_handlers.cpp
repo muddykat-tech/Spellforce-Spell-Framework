@@ -167,6 +167,12 @@ handler_ptr effect_wave_handler;
 handler_ptr effect_weaken_handler;
 handler_ptr effect_weaken_area_handler;
 
+/**
+ * Initializes all the vanilla effect handlers with their respective addresses.
+ *
+ * This function assigns the addresses of various effect handlers to their respective variables.
+ * The addresses are obtained using Ghidra Reverse Engineering.
+ */
 void initialize_vanilla_effect_handlers()
 {
     effect_ability_benefactions_handler = (handler_ptr)(ASI::AddrOf(0x32c090));

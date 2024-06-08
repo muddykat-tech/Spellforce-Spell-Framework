@@ -11,7 +11,6 @@ void __thiscall default_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 }
 
 // Stat changing handlers
-
 void __thiscall slowness_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     SF_CGdResourceSpell spell_data;

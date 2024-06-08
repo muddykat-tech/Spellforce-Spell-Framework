@@ -33,11 +33,7 @@ void load_mod(const char *modPath, void *pFrameworkAPI)
     HMODULE modHandle = LoadLibrary(modPath);
     if (!modHandle)
     {
-<<<<<<< HEAD
         log_error("| - Failed to load mod library (X_X)");
-=======
-        log_error("Failed to load mod library");
->>>>>>> 214f256369524a2776d092d9ffb9804c737f05eb
         return;
     }
 
@@ -104,15 +100,8 @@ void load_all_mods(const char *subfolder, void *pFrameworkAPI)
 
 void initialize_mods()
 {
-<<<<<<< HEAD
     load_all_mods("sfsf", &frameworkAPI);
     static char info_str[256];
     snprintf(info_str, sizeof(info_str), "| - %d Mods Initialized with %d error(s)", mod_count, error_count);
-=======
-    log_info("--- Mod Loading Phase Start ---");
-    load_all_mods("sfsf", &frameworkAPI);
-    static char info_str[256];
-    snprintf(info_str, sizeof(info_str), "%d Mods Initialized with %d error(s)", mod_count, error_count);
->>>>>>> 214f256369524a2776d092d9ffb9804c737f05eb
     log_info(info_str);
 }

@@ -372,7 +372,6 @@ void initialize_menuload_hook()
     ASI::EndRewrite(menu_load_mreg);
 }
 
-// Exposed in sf_hooks.h
 void initialize_beta_hooks()
 {
     log_info("Hooking Game Console");

@@ -33,17 +33,18 @@ SFSpell *__thiscall registerSpell(uint16_t spell_id)
 
 void __thiscall linkSpellTags(SFSpell *spell, SpellTag tags, ...)
 {
-    // auto it = internal_spell_map.find(spell_id);
-    // SFSpell *spell = it->second;
-    // va_list args;
-    // va_start(args, tags);
-    // SpellTag tag;
+    va_list args;
+    va_start(args, tags);
 
-    // // Functions in using ... do not know how many have been parsed through, so we use this logic to go through all spell tags, check if the input is valid, if so set the tag true.
-    // while ((tag = static_cast<SpellTag>(va_arg(args, int))) != SPELL_TAG_COUNT) {
-    //     spell->spell_tags[tag] = true;
-    // }
-    // va_end(args);
+    // Always check if the tag is valid before using it
+    SpellTag tag = static_cast<SpellTag>(va_arg(args, int));
+    while (tag != SPELL_TAG_COUNT)
+    {
+        spell->spell_tags[tag] = true;
+        tag = static_cast<SpellTag>(va_arg(args, int));
+    }
+
+    va_end(args);
 }
 
 void __thiscall linkTypeHandler(SFSpell *spell, handler_ptr typeHandler)
@@ -62,14 +63,20 @@ void __thiscall linkEndHandler(SFSpell *spell, handler_ptr endHandler)
     spell->spell_end_handler = endHandler;
 }
 
-void formatSFSpell(const SFSpell *spell, char *buffer, size_t bufferSize)
-{
-    snprintf(buffer, bufferSize,
-             "SFSpell: { spell_id = %d, spell_effect_id = %d, spell_tags = [%d, %d, ...], spell_type_handler = %p, spell_effect_handler = %p, spell_end_handler = %p }",
-             spell->spell_id, spell->spell_effect_id, spell->spell_tags[0], spell->spell_tags[1],
-             spell->spell_type_handler, spell->spell_effect_handler, spell->spell_end_handler);
-}
-
+/**
+ * Registers the mod spells and performs basic conflict checking.
+ *
+ * This function iterates over the internal_spell_list and registers each spell by
+ * adding it to the spell_id_map and spell_effect_id_map. It checks for conflicts
+ * by checking if the spell_id or spell_effect_id is already registered by another
+ * mod. If a conflict is detected, an error message is logged. If no conflict is
+ * detected, the spell is added to the respective map.
+ *
+ * Additionally, it registers the spell type handler, spell effect handler, and spell
+ * end handler if the SFSpell struct has a non-null handler pointer.
+ *
+ * After registering all the spells, the memory allocated for each spell is freed.
+ */
 void register_mod_spells()
 {
     // Basic Conflict Checking
