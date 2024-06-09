@@ -39,6 +39,32 @@ void register_vanilla_spell_end_handlers()
 {
     // As we define ALL of the end handlers ourself inside sf_spellend_handlers.cpp, we do NOT need to initialize them here. (unlike sf_spelleffect_registry.cpp)
 
+    // Basic Spells that use OnSpellRemove and the default handlers
+    registerSpellEndHandler(0x04, &command_handler_removespell);
+    registerSpellEndHandler(0x10, &command_handler_removespell);
+    registerSpellEndHandler(0x22, &command_handler_removespell);
+    registerSpellEndHandler(0x23, &command_handler_removespell);
+    registerSpellEndHandler(0x30, &command_handler_removespell);
+    registerSpellEndHandler(0x32, &command_handler_removespell);
+    registerSpellEndHandler(0x34, &command_handler_removespell);
+    registerSpellEndHandler(0x40, &command_handler_removespell);
+    registerSpellEndHandler(0x41, &command_handler_removespell);
+    registerSpellEndHandler(0x63, &command_handler_removespell); // 99 and 100 in ghidra switch case respectivly
+    registerSpellEndHandler(0x64, &command_handler_removespell);
+    registerSpellEndHandler(0x65, &command_handler_removespell);
+    registerSpellEndHandler(0x74, &command_handler_removespell);
+    registerSpellEndHandler(0x75, &command_handler_removespell);
+    registerSpellEndHandler(0x76, &command_handler_removespell);
+    registerSpellEndHandler(0x7d, &command_handler_removespell);
+    registerSpellEndHandler(0x82, &command_handler_removespell);
+    registerSpellEndHandler(0x87, &command_handler_removespell);
+    registerSpellEndHandler(0x8a, &command_handler_removespell);
+    registerSpellEndHandler(0xae, &command_handler_removespell);
+    registerSpellEndHandler(0xb2, &command_handler_removespell);
+    registerSpellEndHandler(0xc7, &command_handler_removespell); // 199 in ghidra switch case
+    registerSpellEndHandler(0xe5, &command_handler_removespell);
+    registerSpellEndHandler(0xe9, &command_handler_removespell);
+
     // invulnerability, illuminate, remediless, unkn (85) and demoralization
     registerSpellEndHandler(0x06, &common_handler_check_battle);
     registerSpellEndHandler(0xb, &common_handler_check_battle);
@@ -47,8 +73,8 @@ void register_vanilla_spell_end_handlers()
     registerSpellEndHandler(0x80, &common_handler_check_battle);
 
     // Freeze, Petrify
-    registerSpellEndHandler(0x09, &common_handler_unfreeze);
-    registerSpellEndHandler(0x19, &common_handler_unfreeze);
+    registerSpellEndHandler(0x09, &common_handler_check_unfreeze);
+    registerSpellEndHandler(0x19, &common_handler_check_unfreeze);
 
     registerSpellEndHandler(0x0a, &fog_end_handler);
 
@@ -56,4 +82,12 @@ void register_vanilla_spell_end_handlers()
     registerSpellEndHandler(0xc, &common_handler_job_battle_check);
     registerSpellEndHandler(0x5d, &common_handler_job_battle_check);
     registerSpellEndHandler(0xda, &common_handler_job_battle_check);
+
+    // Next block in switch
+    registerSpellEndHandler(0xe, &common_handler_unfreeze);
+    registerSpellEndHandler(0x16, &common_handler_unfreeze);
+    registerSpellEndHandler(0x91, &common_handler_unfreeze);
+    registerSpellEndHandler(0xa8, &common_handler_unfreeze);
+    registerSpellEndHandler(0xa9, &common_handler_unfreeze);
+    registerSpellEndHandler(0xeb, &common_handler_unfreeze);
 }

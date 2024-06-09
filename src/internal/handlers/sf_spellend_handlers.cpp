@@ -5,7 +5,6 @@
 // default case
 void __thiscall default_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
-    log_info("Default End Handler");
     spellAPI.removeDLLNode(_this, spell_index);
     spellAPI.setEffectDone(_this, spell_index, 0);
 }
@@ -370,6 +369,11 @@ void __thiscall eternity_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 }
 
 // Muddykat Section:
+void __thiscall command_handler_removespell(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    spellAPI->onSpellRemove(_this, spell_index);
+    default_end_handler(_this, spell_index);
+}
 
 // FIRST BLOCK (has a goto, to FigureClearCheckSpellsBeforeCheckBattle; -> break;)
 void __thiscall common_handler_check_battle(SF_CGdSpell *_this, uint16_t spell_index)
@@ -379,6 +383,12 @@ void __thiscall common_handler_check_battle(SF_CGdSpell *_this, uint16_t spell_i
 }
 
 void __thiscall common_handler_unfreeze(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    spellClearFigureFlag(_this, spell_index, UNFREEZE);
+    default_end_handler(_this, spell_index);
+}
+
+void __thiscall common_handler_check_unfreeze(SF_CGdSpell *_this, uint16_t spell_index)
 {
     spellClearFigureFlag(_this, spell_index, CHECK_SPELLS_BEFORE_CHECK_BATTLE);
     spellClearFigureFlag(_this, spell_index, UNFREEZE);

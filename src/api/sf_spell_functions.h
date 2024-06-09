@@ -100,6 +100,7 @@ DECLARE_FUNCTION(uint32_t, getXData, SF_CGdSpell *_this, uint16_t spell_id, Spel
 DECLARE_FUNCTION(SF_Rectangle *, getTargetsRectangle, SF_CGdSpell *_this, SF_Rectangle *output, uint16_t spell_id, uint16_t radius, SF_Coord *center_maybe);
 DECLARE_FUNCTION(void, removeDLLNode, SF_CGdSpell *_this, uint16_t param_1);
 DECLARE_FUNCTION(void, spellClearFigureFlag, SF_CGdSpell *_this, uint16_t spell_id, SpellFlagKey key);
+DECLARE_FUNCTION(void, onSpellRemove, SF_CGdFigure *_this, uint16_t spell_id);
 
 DECLARE_FUNCTION(void, figClrChkSplBfrChkBattle, SF_CGdSpell *_this, uint16_t spell_id, uint16_t unk1);
 DECLARE_FUNCTION(void, figTryClrCHkSPlBfrJob2, SF_CGdSpell *_this, uint16_t spell_id, uint16_t unk1);
@@ -119,6 +120,8 @@ DECLARE_FUNCTION_GROUP(Spell,
                        getTargetsRectangle_ptr getTargetsRectangle;
                        removeDLLNode_ptr removeDLLNode;
                        spellClearFigureFlag_ptr spellClearFigureFlag;
+                       onSpellRemove_ptr onSpellRemove;
+
                        // flag clear function used inside spellClearFigureFlag Wrapper
                        figClrChkSplBfrChkBattle_ptr figClrChkSplBfrChkBattle;
                        figTryClrCHkSPlBfrJob2_ptr figTryClrCHkSPlBfrJob2;

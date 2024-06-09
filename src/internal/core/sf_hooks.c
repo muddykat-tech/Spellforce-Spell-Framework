@@ -265,6 +265,7 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(spell, figClrChkSplBfrChkBattle, 0x32a470);
     DEFINE_FUNCTION(spell, figTryClrCHkSPlBfrJob2, 0x32a4f0);
     DEFINE_FUNCTION(spell, figTryUnfreeze, 0x32a5a0);
+    DEFINE_FUNCTION(spell, onSpellRemove, 0x32b310);
 
     log_info("| - ToolboxAPI Hooks");
 

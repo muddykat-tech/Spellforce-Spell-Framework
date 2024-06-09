@@ -4,11 +4,13 @@
 #include "../../api/sf_general_structures.h"
 
 void __thiscall default_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
+void __thiscall command_handler_removespell(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall slowness_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall poison_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall common_handler_check_battle(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall cure_poison_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
-void __thiscall common_handler_unfreeze(SF_CGdSpell *_this, uint16_t spell_index); // For Freeze and Petrify
+void __thiscall common_handler_unfreeze(SF_CGdSpell *_this, uint16_t spell_index);
+void __thiscall common_handler_check_unfreeze(SF_CGdSpell *_this, uint16_t spell_index); // For Freeze and Petrify
 void __thiscall fog_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall common_handler_job_battle_check(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall fireball_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
