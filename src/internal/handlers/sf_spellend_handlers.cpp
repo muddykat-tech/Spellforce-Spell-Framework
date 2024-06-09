@@ -371,7 +371,7 @@ void __thiscall eternity_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 // Muddykat Section:
 void __thiscall command_handler_removespell(SF_CGdSpell *_this, uint16_t spell_index)
 {
-    spellAPI->onSpellRemove(_this, spell_index);
+    spellAPI.onSpellRemove(_this, spell_index);
     default_end_handler(_this, spell_index);
 }
 
