@@ -110,8 +110,8 @@ void register_mod_spells()
         if (spell_effect_id_map.find(spell_effect_id) != spell_effect_id_map.end())
         {
             char error_msg[256];
-            SFMod *conflict_mod = spell_effect_id_map[spell_id];
-            snprintf(error_msg, sizeof(error_msg), "| - Mod Conflict Detected [%s]: Spell Effect ID [%d] is already registered by [%s]", parent_mod, spell_effect_id, conflict_mod->mod_id);
+            SFMod *conflict_mod = spell_effect_id_map[spell_effect_id];
+            snprintf(error_msg, sizeof(error_msg), "| - Mod Conflict Detected [%s]: Spell Effect ID [%d] is already registered by [%s]", parent_mod->mod_id, spell_effect_id, conflict_mod->mod_id);
             log_error(error_msg);
         }
 
@@ -139,6 +139,7 @@ void register_mod_spells()
     // Free Memory
     for (SFSpell *spell_data : internal_spell_list)
     {
+        free(spell_data->parent_mod);
         free(spell_data);
     }
 }
