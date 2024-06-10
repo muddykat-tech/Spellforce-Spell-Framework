@@ -395,6 +395,13 @@ void __thiscall common_handler_check_unfreeze(SF_CGdSpell *_this, uint16_t spell
     default_end_handler(_this, spell_index);
 }
 
+void __thiscall common_handler_check_unfreeze2(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    spellClearFigureFlag(_this, spell_index, UNFREEZE);
+    spellClearFigureFlag(_this, spell_index, CHECK_SPELLS_BEFORE_CHECK_BATTLE);
+    default_end_handler(_this, spell_index);
+}
+
 // THIRD BLOCK FigureClearCheckSpellsBeforeCheckBattle -> Done -> Return;
 void __thiscall fog_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
@@ -407,6 +414,19 @@ void __thiscall common_handler_job_battle_check(SF_CGdSpell *_this, uint16_t spe
 {
     spellClearFigureFlag(_this, spell_index, CHECK_SPELLS_BEFORE_JOB2);
     spellClearFigureFlag(_this, spell_index, CHECK_SPELLS_BEFORE_CHECK_BATTLE);
+    default_end_handler(_this, spell_index);
+}
+
+void __thiscall common_handler_done(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    spellAPI.setEffectDone(_this, spell_index, 1);
+}
+
+// Not 100% sure if this is neccessary, however the order of operations may be important
+void __thiscall common_handler_job_battle_check2(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    spellClearFigureFlag(_this, spell_index, CHECK_SPELLS_BEFORE_CHECK_BATTLE);
+    spellClearFigureFlag(_this, spell_index, CHECK_SPELLS_BEFORE_JOB2);
     default_end_handler(_this, spell_index);
 }
 

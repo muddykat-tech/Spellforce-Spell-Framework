@@ -11,7 +11,10 @@ void __thiscall common_handler_check_battle(SF_CGdSpell *_this, uint16_t spell_i
 void __thiscall cure_poison_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall common_handler_unfreeze(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall common_handler_check_unfreeze(SF_CGdSpell *_this, uint16_t spell_index); // For Freeze and Petrify
+void __thiscall common_handler_check_unfreeze2(SF_CGdSpell *_this, uint16_t spell_index);
+void __thiscall common_handler_done(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall fog_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
+void __thiscall common_handler_job_battle_check2(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall common_handler_job_battle_check(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall fireball_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall iceshield_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
