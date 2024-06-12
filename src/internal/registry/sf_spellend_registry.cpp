@@ -64,6 +64,7 @@ void register_vanilla_spell_end_handlers()
     registerSpellEndHandler(0xc7, &mutation_end_handler); // 199 in ghidra switch case
     registerSpellEndHandler(0xe5, &eternity_end_handler);
     registerSpellEndHandler(0xe9, &mutation_end_handler);
+    registerSpellEndHandler(0xd2, &clay_feet_end_handler);
 
     // invulnerability, illuminate, remediless, unkn (85) and demoralization
     registerSpellEndHandler(0x06, &common_handler_check_battle);
