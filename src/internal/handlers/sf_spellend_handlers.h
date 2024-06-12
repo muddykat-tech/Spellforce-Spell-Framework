@@ -130,7 +130,7 @@ void __thiscall firebane_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall black_essence_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall white_essence_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall chain_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
-void __thiscall eternity_aura_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
+void __thiscall eternity_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall elemental_essence_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall mental_essence_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall black_almightness_end_handler(SF_CGdSpell *_this, uint16_t spell_index);
