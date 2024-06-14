@@ -43,7 +43,7 @@ int __thiscall CheckCanApply_hook_beta(SF_CGdSpell *_this, uint16_t spell_index)
     // We need a map of refresh handlers?
     // And a default handler that does nothing
     // handler takes (SF_CGdSpell *_this, uint16_t spell_index) as params
-    return 0;
+    return 1;
 }
 
 void __thiscall EndSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_index)
@@ -275,6 +275,7 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(toolbox, hasSpellOnHit, 0x2fe4ea);
     DEFINE_FUNCTION(toolbox, rescaleLevelStats, 0x2fff48);
     DEFINE_FUNCTION(toolbox, buildingDealDamage, 0x2d6d80);
+    DEFINE_FUNCTION(toolbox, addSpellToFigure, 0x2f673a);
 
     log_info("| - IteratorAPI Hooks");
     DEFINE_FUNCTION(iterator, figureIteratorInit, 0x3183f0);
