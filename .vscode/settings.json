@@ -27,7 +27,8 @@
         "sf_figure_functions.h": "c",
         "sf_registration_functions.h": "c",
         "new": "cpp",
-        "map": "cpp"
+        "map": "cpp",
+        "sf_iterator_functions.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled",
     "makefile.makePath": "mingw32-make"

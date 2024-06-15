@@ -285,6 +285,74 @@ typedef struct __attribute__((packed))
 	data_CUiStartMenu CUiStartMenu_data;
 } CUiStartMenu;
 
+typedef enum
+{
+    EFFECT_EFFECT_INDEX = 0x06,
+    EFFECT_SPELL_INDEX = 0x11,
+    EFFECT_SPELL_ID = 0x09,
+    EFFECT_SUBSPELL_ID = 0x1C,
+    EFFECT_ENTITY_INDEX = 0x2F,
+    EFFECT_ENTITY_INDEX2 = 0x1A,
+    EFFECT_ENTITY_INDEX3 = 0x2D,
+    EFFECT_ENTITY_TYPE = 0x30,
+    EFFECT_ENTITY_TYPE2 = 0x13,
+    EFFECT_DO_NOT_ADD_SUBSPELL = 0x33,
+    SPELL_TICK_COUNT_AUX = 0x05,
+    SPELL_TICK_COUNT = 0x12,
+    SPELL_DOUBLE_DAMAGE = 0x26,
+    SPELL_TARGET = 0x33,
+    SPELL_PESTILENCE_DAMAGE = 0x0E,
+    SPELL_STAT_MUL_MODIFIER = 0x0A,
+    SPELL_STAT_MUL_MODIFIER2 = 0x27,
+    SPELL_STAT_MUL_MODIFIER3 = 0x2B,
+    SPELL_STAT_MUL_MODIFIER4 = 0x2C,
+    SPELL_CONSERVATION_SHIELD = 0x0B
+} SpellDataKey;
+
+typedef enum
+{
+    kGdEffectNone = 0,
+    kGdEffectSpellCast = 1,
+    kGdEffectSpellHitWorld = 2,
+    kGdEffectSpellHitTarget = 3,
+    kGdEffectSpellDOTHitTarget = 4,
+    kGdEffectSpellMissTarget = 5,
+    kGdEffectSpellResolve = 6,
+    kGdEffectSummonWorker = 7,
+    kGdEffectWorkerAppears = 8,
+    kGdEffectSummonHero = 9,
+    kGdEffectHeroAppears = 10,
+    kGdEffectSpellTargetResisted = 11,
+    kGdEffectSpellResolveSelf = 12,
+    kGdEffectMeteorFall = 13,
+    kGdEffectMeteorHit = 14,
+    kGdEffectBlizzardFall = 15,
+    kGdEffectBlizzardHit = 16,
+    kGdEffectStoneFall = 17,
+    kGdEffectStoneHit = 18,
+    kGdEffectPetAppears = 19,
+    kGdEffectTest = 20,
+    kGdEffectMonumentClaimed = 21,
+    kGdEffectMonumentWorking = 22,
+    kGdEffectAuraResolve = 23,
+    kGdEffectProjectile = 24,
+    kGdEffectBuilding = 25,
+    kGdEffectPlayerBind = 26,
+    kGdEffectSummonMainChar = 27,
+    kGdEffectMainCharAppears = 28,
+    kGdEffectTitanProduction = 29,
+    kGdEffectTitanAppears = 30,
+    kGdEffectMentalTowerCast = 31,
+    kGdEffectMentalTowerIdle = 32,
+    kGdEffectMonumentBullet = 33,
+    kGdEffectMonumentHitFigure = 34,
+    kGdEffectSpellAssistanceHitFigure = 35,
+    kGdEffectChainResolve = 36,
+    kGdEffectSpellVoodooHitFigure = 37,
+    kGdEffectSpellManaShieldHitFigure = 38,
+    kGdEffectMax = 39
+} CGdEffectType;
+
 /* |-========== Internal Functions ==========-| */
 // These functions are used in SFSF internally, and may be moved.
 

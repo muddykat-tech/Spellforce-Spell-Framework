@@ -32,6 +32,7 @@ SF_String_ctor_ptr SF_String_ctor;
 SF_String_dtor_ptr SF_String_dtor;
 
 SpellFunctions spellAPI;
+EffectFunctions effectAPI;
 ToolboxFunctions toolboxAPI;
 FigureFunctions figureAPI;
 IteratorFunctions iteratorAPI;
@@ -265,7 +266,10 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(spell, figClrChkSplBfrChkBattle, 0x32a470);
     DEFINE_FUNCTION(spell, figTryClrCHkSPlBfrJob2, 0x32a4f0);
     DEFINE_FUNCTION(spell, figTryUnfreeze, 0x32a5a0);
-    DEFINE_FUNCTION(spell, onSpellRemove, 0x32b310);
+  //  DEFINE_FUNCTION(spell, onSpellRemove, 0x32b310);
+
+    DEFINE_FUNCTION(effect, addEffect, 0x2dc880);
+    DEFINE_FUNCTION(effect, setEffectXData, 0x2ddb30);
 
     log_info("| - ToolboxAPI Hooks");
 

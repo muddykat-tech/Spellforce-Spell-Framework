@@ -6,6 +6,7 @@
 #include "sf_figure_functions.h"
 #include "sf_iterator_functions.h"
 #include "sf_spell_functions.h"
+#include "sf_effect_functions.h"
 #include "sf_toolbox_functions.h"
 #include "sf_registration_functions.h"
 
