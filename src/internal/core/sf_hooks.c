@@ -148,6 +148,18 @@ void console_log(const char *message)
     }
 }
 
+void __thiscall add_spell_from_effect_hook_beta(SF_CGDEffect *_this, uint16_t effect_id)
+{
+    uint16_t spell_id = effectAPI.getEffectXData(_this, effect_id, EFFECT_SUBSPELL_ID);
+    if (spell_id)
+    {   
+        SF_CGdResourceSpell spell_data;
+        spellAPI.getResourceSpellData(_this->SF_CGdResource,&spell_data, spell_id);
+        //get handler from registry
+        //handler takes _this, effect_id
+    }
+}
+
 uint16_t __thiscall add_spell_hook_beta(SF_CGdSpell *_this, uint16_t spell_id, uint16_t param2, SF_CGdTargetData *source, SF_CGdTargetData *target, uint16_t param5)
 {
     uint16_t spell_index;
@@ -266,10 +278,11 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(spell, figClrChkSplBfrChkBattle, 0x32a470);
     DEFINE_FUNCTION(spell, figTryClrCHkSPlBfrJob2, 0x32a4f0);
     DEFINE_FUNCTION(spell, figTryUnfreeze, 0x32a5a0);
-  //  DEFINE_FUNCTION(spell, onSpellRemove, 0x32b310);
-
+    //  DEFINE_FUNCTION(spell, onSpellRemove, 0x32b310);
+    INCLUDE_FUNCTION(spell, addSpell, &add_spell_hook_beta);
     DEFINE_FUNCTION(effect, addEffect, 0x2dc880);
     DEFINE_FUNCTION(effect, setEffectXData, 0x2ddb30);
+    DEFINE_FUNCTION(effect, getEffectXData, 0x2dd730);
 
     log_info("| - ToolboxAPI Hooks");
 
