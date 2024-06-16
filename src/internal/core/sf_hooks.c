@@ -293,6 +293,7 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(toolbox, rescaleLevelStats, 0x2fff48);
     DEFINE_FUNCTION(toolbox, buildingDealDamage, 0x2d6d80);
     DEFINE_FUNCTION(toolbox, addSpellToFigure, 0x2f673a);
+    DEFINE_FUNCTION(toolbox, getFigureFromWorld, 0x34F160);
 
     log_info("| - IteratorAPI Hooks");
     DEFINE_FUNCTION(iterator, figureIteratorInit, 0x3183f0);

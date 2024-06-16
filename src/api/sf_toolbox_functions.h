@@ -12,6 +12,7 @@ DECLARE_FUNCTION(uint16_t, figuresCheckHostile, void *CGdFigureToolbox, uint16_t
 DECLARE_FUNCTION(uint32_t, hasSpellOnHit, void *CGdFigureToolbox, uint16_t figure_index, uint16_t spell_line_id);
 DECLARE_FUNCTION(void, rescaleLevelStats, void *CGdFigureToolbox, uint16_t figure_index);
 DECLARE_FUNCTION(void, addSpellToFigure, void *CGdFigureToolbox, uint16_t figure_index, uint16_t spell_index);
+DECLARE_FUNCTION(uint16_t, getFigureFromWorld, void* CGdWorldToolBox, uint16_t param1, uint16_t param2, uint32_t param3);
 
 DECLARE_FUNCTION_GROUP(Toolbox,
                        dealDamage_ptr dealDamage;
@@ -21,4 +22,5 @@ DECLARE_FUNCTION_GROUP(Toolbox,
                        buildingDealDamage_ptr buildingDealDamage;
                        rescaleLevelStats_ptr rescaleLevelStats;
                        addSpellToFigure_ptr addSpellToFigure;
+                       getFigureFromWorld_ptr getFigureFromWorld;
                        );

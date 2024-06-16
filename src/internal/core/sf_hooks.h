@@ -16,6 +16,7 @@ extern ToolboxFunctions toolboxAPI;
 extern FigureFunctions figureAPI;
 extern IteratorFunctions iteratorAPI;
 extern RegistrationFunctions registrationAPI;
+extern EffectFunctions effectAPI;
 
 extern void __thiscall setupFigureIterator(CGdFigureIterator *iterator, SF_CGdSpell *spell);
 extern void __thiscall disposeFigureIterator(CGdFigureIterator iterator);
