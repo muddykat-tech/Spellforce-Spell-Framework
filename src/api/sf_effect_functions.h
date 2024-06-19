@@ -1,6 +1,7 @@
 #pragma once
 #include "sf_general_structures.h"
 
+
 typedef struct __attribute__((packed))
 {
     uint16_t CGdEffectType;
@@ -38,6 +39,8 @@ typedef struct __attribute__((packed))
     SF_GdEffect active_effect_list[2000];
     uint16_t max_used;
 } SF_CGDEffect;
+
+typedef void(__thiscall *sub_effect_handler_ptr)(SF_GdEffect *, uint16_t effect_index);
 
 DECLARE_FUNCTION(void, setEffectXData, SF_CGDEffect *_this, SpellDataKey key, uint32_t value);
 DECLARE_FUNCTION(uint32_t, getEffectXData, SF_CGDEffect *_this, uint16_t effect_index, SpellDataKey key);

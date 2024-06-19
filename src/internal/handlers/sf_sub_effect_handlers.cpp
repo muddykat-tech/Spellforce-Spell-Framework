@@ -108,3 +108,8 @@ void __thiscall common_sub_effect_handler (SF_CGDEffect *_this, uint16_t effect_
     SF_CGdTargetData target = {figure_type2, figure_index2, {0, 0}};
     spellAPI.addSpell(_this->CGdSpell, spell_id, _this->OpaqueClass->current_step, &source, &target, 0);
 }
+
+void __thiscall default_sub_effect_handler(SF_CGDEffect *_this, uint16_t effect_index)
+{
+    return;
+}
