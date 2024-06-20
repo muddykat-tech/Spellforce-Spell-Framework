@@ -1,7 +1,6 @@
 #pragma once
 #include "sf_general_structures.h"
 
-
 typedef struct __attribute__((packed))
 {
     uint16_t CGdEffectType;
@@ -30,7 +29,7 @@ typedef struct __attribute__((packed))
     void *AutoClass34;
     void *SF_CGdObject;
     void *SF_CGdResource;
-    void *CGdSpell;
+    SF_CGdSpell *CGdSpell;
     void *AutoClass22;
     void *AutoClass50;
     void *SF_CGdWorld;

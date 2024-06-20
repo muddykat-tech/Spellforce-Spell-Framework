@@ -81,7 +81,7 @@ void __thiscall elemental_chain_sub_effect_handler(SF_CGDEffect *_this, uint16_t
     spellAPI.addSpell(_this->CGdSpell, spell_id, _this->OpaqueClass->current_step, &source, &target, figure_index3);
 }
 
-void __thiscall common_sub_effect_handler (SF_CGDEffect *_this, uint16_t effect_index)
+void __thiscall common_sub_effect_handler(SF_CGDEffect *_this, uint16_t effect_index)
 {
     uint16_t spell_id = effectAPI.getEffectXData(_this, effect_index, EFFECT_SUBSPELL_ID);
     uint16_t figure_index1 = effectAPI.getEffectXData(_this, effect_index, EFFECT_ENTITY_INDEX);

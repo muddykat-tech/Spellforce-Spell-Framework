@@ -152,12 +152,17 @@ void __thiscall add_spell_from_effect_hook_beta(SF_CGDEffect *_this, uint16_t ef
 {
     uint16_t spell_id = effectAPI.getEffectXData(_this, effect_id, EFFECT_SUBSPELL_ID);
     if (spell_id)
-    {   
+    {
         SF_CGdResourceSpell spell_data;
-        spellAPI.getResourceSpellData(_this->SF_CGdResource,&spell_data, spell_id);
-        //get handler from registry
-        //handler takes _this, effect_id
+        spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, spell_id);
+        // get handler from registry
+        // handler takes _this, effect_id
     }
+}
+
+void __thiscall dealdamage_hook_beta(void *figureToolbox, uint16_t dmg_source, uint16_t dmg_target, uint16_t damage_amount, uint16_t is_spell_damage, uint16_t param_5, void *unknown_6)
+{
+    log_info("Damage Hook Called");
 }
 
 uint16_t __thiscall add_spell_hook_beta(SF_CGdSpell *_this, uint16_t spell_id, uint16_t param2, SF_CGdTargetData *source, SF_CGdTargetData *target, uint16_t param5)
@@ -392,6 +397,18 @@ void initialize_menuload_hook()
     ASI::EndRewrite(menu_load_mreg);
 }
 
+void initialize_deal_damage_hook()
+{
+    ASI::MemoryRegion deal_damage_mreg(ASI::AddrOf(0x2f4a57), 9);
+    ASI::BeginRewrite(deal_damage_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x2f4a57)) = 0x90; // nop trail
+    *(unsigned char *)(ASI::AddrOf(0x2f4a58)) = 0x90; // nop trail
+    *(unsigned char *)(ASI::AddrOf(0x2f4a59)) = 0x90; // nop trail
+    *(unsigned char *)(ASI::AddrOf(0x2f4a5a)) = 0x90; // nop trail
+    *(unsigned char *)(ASI::AddrOf(0x2f4a5b)) = 0xE9; // JMP
+    *(int *)(ASI::AddrOf(0x2f4a5c)) = (int)(&dealdamage_hook_beta) - ASI::AddrOf(0x2F4A60);
+}
+
 void initialize_beta_hooks()
 {
     log_info("Hooking Game Console");
@@ -409,8 +426,9 @@ void initialize_beta_hooks()
     log_info("Hooking Spell End Triggers");
     initialize_spellend_hook();
 
-    log_info("(Not yet) Hooking Multi Stage Spell Handler");
+    log_info("Hooking Deal Damage Trigger");
+    initialize_deal_damage_hook();
 
-    log_info("Dirty Menu Loading Trigger Test");
-    initialize_menuload_hook();
+    // log_info("Dirty Menu Loading Trigger Test");
+    // initialize_menuload_hook();
 }
