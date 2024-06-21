@@ -160,9 +160,15 @@ void __thiscall add_spell_from_effect_hook_beta(SF_CGDEffect *_this, uint16_t ef
     }
 }
 
-void __thiscall dealdamage_hook_beta(void *figureToolbox, uint16_t dmg_source, uint16_t dmg_target, uint32_t damage_amount, uint32_t is_spell_damage, uint32_t param_5, uint32_t vry_unknown_6){
-    bool
-
+void __thiscall dealdamage_hook_beta(void *figureToolbox, uint16_t dmg_source, uint16_t dmg_target, uint32_t damage_amount, uint32_t is_spell_damage, uint32_t param_5, uint32_t vry_unknown_6)
+{
+    // First Call Section
+    // Checks if Source is still alive, and if source has spells on it
+    // Next it checks the Flag "CHECK_SPELLS_BEFORE_JOB"?
+    // If it's FALSE, it will then get the spell job starting node
+    // Strange check here, using Undefined 4, it then has a while loop while a field of undefined 4 is not 0
+    // This loop will then get the spell_index, to get the spell_line then it checks specific spells eg. 'endurance', if active specific damage calc for endurance.
+    // if not, it checks for invulnerability and so on.
 }
 
 uint16_t __thiscall add_spell_hook_beta(SF_CGdSpell *_this, uint16_t spell_id, uint16_t param2, SF_CGdTargetData *source, SF_CGdTargetData *target, uint16_t param5)
