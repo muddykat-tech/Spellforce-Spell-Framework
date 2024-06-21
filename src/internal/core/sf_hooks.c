@@ -160,9 +160,9 @@ void __thiscall add_spell_from_effect_hook_beta(SF_CGDEffect *_this, uint16_t ef
     }
 }
 
-void __thiscall dealdamage_hook_beta(void *figureToolbox, uint16_t dmg_source, uint16_t dmg_target, uint16_t damage_amount, uint16_t is_spell_damage, uint16_t param_5, void *unknown_6)
-{
-    log_info("Damage Hook Called");
+void __thiscall dealdamage_hook_beta(void *figureToolbox, uint16_t dmg_source, uint16_t dmg_target, uint32_t damage_amount, uint32_t is_spell_damage, uint32_t param_5, uint32_t vry_unknown_6){
+    bool
+
 }
 
 uint16_t __thiscall add_spell_hook_beta(SF_CGdSpell *_this, uint16_t spell_id, uint16_t param2, SF_CGdTargetData *source, SF_CGdTargetData *target, uint16_t param5)
