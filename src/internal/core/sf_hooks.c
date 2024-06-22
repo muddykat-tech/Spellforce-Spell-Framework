@@ -184,7 +184,7 @@ void __thiscall dealdamage_hook_beta(SF_CGdFigureToolbox *figureToolbox, uint16_
         while (job_start_node_index != 0)
         {
             // e get the spell index through CGdDoubleLinkList,
-            job_start_node_index = 0;
+            job_start_node_index = 0; // TEMP, just to ensure no infinity loop
         }
     }
     else
