@@ -160,8 +160,38 @@ void __thiscall add_spell_from_effect_hook_beta(SF_CGDEffect *_this, uint16_t ef
     }
 }
 
-void __thiscall dealdamage_hook_beta(void *figureToolbox, uint16_t dmg_source, uint16_t dmg_target, uint32_t damage_amount, uint32_t is_spell_damage, uint32_t param_5, uint32_t vry_unknown_6)
+void __thiscall dealdamage_hook_beta(SF_CGdFigureToolbox *figureToolbox, uint16_t dmg_source, uint16_t dmg_target, uint32_t damage_amount, uint32_t is_spell_damage, uint32_t param_5, uint32_t vry_unknown_6)
 {
+    uint16_t target_job = figureAPI.getJob(figureToolbox->CGdFigure, dmg_target);
+    bool unknown_job_flag_check = figureAPI.FUN_006e3a90(figureToolbox->CGdFigureJobs, target_job);
+    bool is_source_alive = figureAPI.isAlive(figureToolbox->CGdFigure, dmg_source);
+    bool spell_effecting_source = toolboxAPI.hasSpellOnIt(figureToolbox, dmg_source, 0xa5);
+    bool spell_effecting_target = toolboxAPI.hasSpellOnIt(figureToolbox, dmg_target, 0xa5);
+
+    bool spell_flag_check = dmg_source != 0 && is_source_alive && spell_effecting_source && spell_effecting_target;
+
+    if (unknown_job_flag_check != 0)
+    {
+        // Sets Job To Do Count
+        figureAPI.setJobToDoCount(figureToolbox->CGdFigure, dmg_target, 1);
+    }
+
+    bool check_spells_before_job = figureAPI.isFlagSet(figureToolbox->CGdFigure, dmg_target, F_CHECK_SPELLS_BEFORE_CHECK_BATTLE);
+    if (check_spells_before_job)
+    {
+        // Main Checks for Spell Cases... This would be where we may be able to implement a registry system of some sort.
+        uint32_t job_start_node_index = figureAPI.getSpellJobStartNode(figureToolbox->CGdFigure, dmg_target);
+        while (job_start_node_index != 0)
+        {
+            // e get the spell index through CGdDoubleLinkList,
+            job_start_node_index = 0;
+        }
+    }
+    else
+    {
+    }
+
+    log_info("Called into Overwritten Damage Function");
     // First Call Section
     // Checks if Source is still alive, and if source has spells on it
     // Next it checks the Flag "CHECK_SPELLS_BEFORE_JOB"?
@@ -272,6 +302,11 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(figure, rescaleMana, 0x2b5d50);
     DEFINE_FUNCTION(figure, getCurrentMaxHealth, 0x2b2970);
     DEFINE_FUNCTION(figure, rescaleHealth, 0x2b5cd0);
+    DEFINE_FUNCTION(figure, getJob, 0x279290);
+    DEFINE_FUNCTION(figure, FUN_006e3a90, 0x2e3a90);
+    DEFINE_FUNCTION(figure, setJobToDoCount, 0x300910);
+    DEFINE_FUNCTION(figure, isFlagSet, 0x279d20);
+    DEFINE_FUNCTION(figure, getSpellJobStartNode, 0x2b2de0);
 
     log_info("| - SpellAPI Hooks");
     // Define the function pointers for SpellFunctions group
@@ -300,7 +335,7 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(toolbox, dealDamage, 0x2f4a57);
     DEFINE_FUNCTION(toolbox, isTargetable, 0x2fe704);
     DEFINE_FUNCTION(toolbox, figuresCheckHostile, 0x2fe7b9);
-    DEFINE_FUNCTION(toolbox, hasSpellOnHit, 0x2fe4ea);
+    DEFINE_FUNCTION(toolbox, hasSpellOnIt, 0x2fe4ea);
     DEFINE_FUNCTION(toolbox, rescaleLevelStats, 0x2fff48);
     DEFINE_FUNCTION(toolbox, buildingDealDamage, 0x2d6d80);
     DEFINE_FUNCTION(toolbox, addSpellToFigure, 0x2f673a);

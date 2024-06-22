@@ -208,7 +208,45 @@ typedef struct __attribute__((packed))
     uint8_t flags;
 } SF_GdSpell;
 
-typedef struct __attribute__((packed))
+// Forward Declarations for looping struct declarations
+typedef struct SF_CGdSpell SF_CGdSpell;
+typedef struct SF_CGdFigureToolbox SF_CGdFigureToolbox;
+
+struct __attribute__((packed)) SF_CGdFigureToolbox
+{
+    uint32_t *CGdAIBattle;
+    uint32_t *CGdAIMain;
+    uint32_t *CGdAStar;
+    AutoClass14 *maybe_random; // Unconfirmed
+    uint32_t *CGdBuilding;
+    uint32_t *CGdBuildingToolbox;
+    uint32_t *CGdDoubleLinkedList;
+    uint32_t *CGdEffect;
+    uint32_t *autoclass30;
+    SF_CGdFigure *CGdFigure;
+    uint32_t *CGdFigureJobs;
+    uint32_t *CGdFormation;
+    uint32_t *autoclass34;
+    uint32_t *autoclass50;
+    uint32_t *CGdInfluenceMap;
+    uint32_t *autoclass36;
+    uint32_t *CGdObject;
+    uint32_t *CGdObjectToolBox;
+    uint32_t *CGdPlayer;
+    uint32_t *autoclass46;
+    uint32_t *CGdResource;
+    SF_CGdSpell *CGdSpell;
+    uint32_t *autoclass22;
+    uint32_t *CGdVisibility;
+    uint32_t *CGdWorld;
+    uint32_t *CGdWorldToolBox;
+    uint32_t *CGdXDataList;
+    uint32_t *undefined4_1;
+    uint32_t *undefined4_2;
+    uint32_t *undefined;
+};
+
+struct __attribute__((packed)) SF_CGdSpell
 {
     void *SF_CGdAiMain;
     AutoClass14 *OpaqueClass; // For Random
@@ -219,7 +257,7 @@ typedef struct __attribute__((packed))
     void *unkn1;
     SF_CGdFigure *SF_CGdFigure;
     void *SF_CGdFigureJobs;
-    void *SF_CGdFigureToolBox;
+    SF_CGdFigureToolbox *SF_CGdFigureToolBox;
     void *SF_CGdFormation;
     void *unkn2; // Seems to be used as first param for GetChanceToResistSpell
     void *SF_CGdObject;
@@ -235,7 +273,45 @@ typedef struct __attribute__((packed))
     SF_GdSpell active_spell_list[800];
     void *unkn5;
     uint32_t unkn6;
-} SF_CGdSpell;
+};
+
+typedef struct __attribute__((packed))
+{
+    uint16_t CGdEffectType;
+    SF_CGdTargetData source;
+    SF_CGdTargetData target;
+    SF_Coord position;
+    uint32_t start_step;
+    uint32_t unkn1;
+    uint16_t length;
+    uint16_t xdata_key; // IDK (Seems to be used in ref for things, seen usage in getting target data and others)
+    uint16_t unkn2;
+    uint16_t unkn3;
+    uint16_t unkn4;
+    uint16_t unkn5;
+    SF_Coord position2;
+} SF_GdEffect;
+
+typedef struct __attribute__((packed))
+{
+    AutoClass14 *OpaqueClass;
+    void *SF_CGdBuilding;
+    void *SF_CGdBuildingToolbox;
+    void *SF_CGdDoubleLinkedList;
+    SF_CGdFigure *SF_CGdFigure;
+    SF_CGdFigureToolbox *SF_CGdFigureToolBox;
+    void *AutoClass34;
+    void *SF_CGdObject;
+    void *SF_CGdResource;
+    SF_CGdSpell *CGdSpell;
+    void *AutoClass22;
+    void *AutoClass50;
+    void *SF_CGdWorld;
+    void *SF_CGdWorldToolBox;
+    void *SF_CGdXDataList;
+    SF_GdEffect active_effect_list[2000];
+    uint16_t max_used;
+} SF_CGDEffect;
 
 /* |-========== Internal Structures ==========-| */
 
