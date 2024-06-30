@@ -31,7 +31,8 @@
         "sf_iterator_functions.h": "c",
         "*.tcc": "cpp",
         "list": "cpp",
-        "sf_toolbox_functions.h": "c"
+        "sf_toolbox_functions.h": "c",
+        "sf_spellend_registry.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled",
     "makefile.makePath": "mingw32-make"

@@ -5,6 +5,7 @@
 #include "../registry/sf_spelltype_registry.h"
 #include "../registry/sf_spelleffect_registry.h"
 #include "../registry/sf_spellend_registry.h"
+#include "../registry/sf_subeffect_registry.h"
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -151,10 +152,17 @@ void console_log(const char *message)
 void __thiscall add_spell_from_effect_hook_beta(SF_CGDEffect *_this, uint16_t effect_id)
 {
     uint16_t spell_id = effectAPI.getEffectXData(_this, effect_id, EFFECT_SUBSPELL_ID);
+    log_info("Sub effect hook triggered");
     if (spell_id)
     {
         SF_CGdResourceSpell spell_data;
         spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, spell_id);
+        sub_effect_handler_ptr handler = get_sub_effect_handler(spell_data.spell_line_id);
+        if (handler != NULL)
+        {
+            log_info("Sub effect handler found");
+            handler(_this, effect_id);
+        }
         // get handler from registry
         // handler takes _this, effect_id
     }
@@ -388,6 +396,15 @@ void initialize_spell_trigger_hook()
     ASI::EndRewrite(add_spell_mreg);
 }
 
+void initialize_sub_effect_add_hook()
+{
+    ASI::MemoryRegion add_spell_mreg(ASI::AddrOf(0x2de3b7), 5);
+    ASI::BeginRewrite(add_spell_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x2de3b7)) = 0xE8; // CALL instruction
+    *(int *)(ASI::AddrOf(0x2de3b8)) = (int)(&add_spell_from_effect_hook_beta) - ASI::AddrOf(0x2de3bc);
+    ASI::EndRewrite(add_spell_mreg);
+}
+
 void initialize_spellend_hook()
 {
     ASI::MemoryRegion end_spell_mreg(ASI::AddrOf(0x34b0a0), 5);
@@ -471,6 +488,8 @@ void initialize_beta_hooks()
     log_info("Hooking Deal Damage Trigger");
     // initialize_deal_damage_hook();
 
+    log_info("Hooking AddSpellFromEffect function");
+    initialize_sub_effect_add_hook();
     // log_info("Dirty Menu Loading Trigger Test");
     // initialize_menuload_hook();
 }

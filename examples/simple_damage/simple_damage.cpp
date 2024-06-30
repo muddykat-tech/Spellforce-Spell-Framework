@@ -16,6 +16,7 @@ EffectFunctions *effectAPI;
 
 void __thiscall static_sub_effect_handler(SF_CGDEffect *_this, uint16_t effect_index)
 {
+    sfsf->logAPI->logInfo("Subeffect triggered");
     uint16_t spell_id = effectAPI->getEffectXData(_this, effect_index, EFFECT_SUBSPELL_ID);
     uint16_t figure_index1 = effectAPI->getEffectXData(_this, effect_index, EFFECT_ENTITY_INDEX);
     uint8_t figure_type1;
@@ -174,9 +175,10 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     // Here comes the spell logic (effect)
     registrationAPI->linkEffectHandler(simple_damage_spell, 0xf2, &simple_damage_effect_handler);
 
-    SFSpell *static_spell = registrationAPI->registerSpell(243);
+    SFSpell *static_spell = registrationAPI->registerSpell(STATIC_SPELL_LINE);
     registrationAPI->linkTypeHandler(static_spell, &static_handler);
     registrationAPI->linkEffectHandler(static_spell, 0xf1, &static_effect_handler);
+    registrationAPI->linkSubEffectHandler(static_spell, &static_sub_effect_handler);
 }
 
 /***
