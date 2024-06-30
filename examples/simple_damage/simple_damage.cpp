@@ -125,25 +125,30 @@ void __thiscall simple_damage_effect_handler(SF_CGdSpell *_this, uint16_t spell_
                 spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 0x19, &aux_data);
                 if (figureAPI->isAlive(_this->SF_CGdFigure, target_index))
                 {
-                    uint16_t damage =  spell_data.params[0];
+                    uint16_t damage = spell_data.params[0];
                     if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index, STATIC_SPELL_LINE))
                     {
                         damage *= 2;
                         sfsf->logAPI->logInfo("Static shock found");
+                        uint16_t static_spell_id = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, target_index, STATIC_SPELL_LINE, spell_index);
+                        spellAPI->setEffectDone(_this, static_spell_id, 0);
+                    }
+                    else
+                    {
+                        SF_CGdTargetData sourceData = {1, source_index, {0, 0}};
+                        SF_CGdTargetData targetData = {1, target_index, {0, 0}};
+
+                        // lets say effect lasts for 1000 ticks
+                        uint16_t effect_id = effectAPI->addEffect(_this->SF_CGdEffect, kGdEffectSpellDOTHitTarget, &sourceData, &targetData, _this->OpaqueClass->current_step, 5, &aux_data);
+                        effectAPI->setEffectXData(_this->SF_CGdEffect, effect_id, EFFECT_SPELL_INDEX, spell_index);
+                        effectAPI->setEffectXData(_this->SF_CGdEffect, effect_id, EFFECT_SPELL_ID, spell->spell_id);
+                        effectAPI->setEffectXData(_this->SF_CGdEffect, effect_id, EFFECT_SUBSPELL_ID, spell_data.params[4]);
+                        effectAPI->setEffectXData(_this->SF_CGdEffect, effect_id, EFFECT_ENTITY_INDEX, source_index);
+                        effectAPI->setEffectXData(_this->SF_CGdEffect, effect_id, EFFECT_ENTITY_TYPE, 1);
+                        effectAPI->setEffectXData(_this->SF_CGdEffect, effect_id, EFFECT_ENTITY_INDEX2, target_index);
+                        effectAPI->setEffectXData(_this->SF_CGdEffect, effect_id, EFFECT_ENTITY_TYPE2, 1);
                     }
                     toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index, target_index, damage, 1, 0, 0);
-                    SF_CGdTargetData sourceData = {1, source_index, {0, 0}};
-                    SF_CGdTargetData targetData = {1, target_index, {0, 0}};
-
-                    // lets say effect lasts for 1000 ticks
-                    uint16_t effect_id = effectAPI->addEffect(_this->SF_CGdEffect, kGdEffectSpellDOTHitTarget, &sourceData, &targetData, _this->OpaqueClass->current_step, 5, &aux_data);
-                    effectAPI->setEffectXData(_this->SF_CGdEffect, effect_id, EFFECT_SPELL_INDEX, spell_index);
-                    effectAPI->setEffectXData(_this->SF_CGdEffect, effect_id, EFFECT_SPELL_ID, spell->spell_id);
-                    effectAPI->setEffectXData(_this->SF_CGdEffect, effect_id, EFFECT_SUBSPELL_ID, spell_data.params[4]);
-                    effectAPI->setEffectXData(_this->SF_CGdEffect, effect_id, EFFECT_ENTITY_INDEX, source_index);
-                    effectAPI->setEffectXData(_this->SF_CGdEffect, effect_id, EFFECT_ENTITY_TYPE, 1);
-                    effectAPI->setEffectXData(_this->SF_CGdEffect, effect_id, EFFECT_ENTITY_INDEX2, target_index);
-                    effectAPI->setEffectXData(_this->SF_CGdEffect, effect_id, EFFECT_ENTITY_TYPE2, 1);
                 }
             }
             else
