@@ -10,6 +10,43 @@ SpellFunctions *spellAPI;
 ToolboxFunctions *toolboxAPI;
 FigureFunctions *figureAPI;
 RegistrationFunctions *registrationAPI;
+EffectFunctions *effectAPI;
+
+#define STATIC_SPELL_LINE = 0xf3;
+
+void __thiscall static_sub_effect_handler(SF_CGDEffect *_this, uint16_t effect_index)
+{
+    uint16_t spell_id = effectAPI.getEffectXData(_this, effect_index, EFFECT_SUBSPELL_ID);
+    uint16_t figure_index1 = effectAPI.getEffectXData(_this, effect_index, EFFECT_ENTITY_INDEX);
+    uint8_t figure_type1;
+    if (figure_index1)
+    {
+        figure_type1 = effectAPI.getEffectXData(_this, effect_index, EFFECT_ENTITY_TYPE);
+    }
+    uint16_t figure_index2 = effectAPI.getEffectXData(_this, effect_index, EFFECT_ENTITY_INDEX2);
+    uint8_t figure_type2 = 0;
+    if (figure_index2)
+    {
+        figure_type2 = effectAPI.getEffectXData(_this, effect_index, EFFECT_ENTITY_TYPE2);
+    }
+    if (!figure_type2 || !figure_index2)
+    {
+        return;
+    }
+    if (!figure_type1 || !figure_index1)
+    {
+        return;
+    }
+    SF_CGdTargetData source = {figure_type1, figure_index1, {0, 0}};
+    SF_CGdTargetData target = {figure_type2, figure_index2, {0, 0}};
+    spellAPI.addSpell(_this->CGdSpell, spell_id, _this->OpaqueClass->current_step, &source, &target, 0);
+}
+
+void __thiscall static_handler(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    _this->active_spell_list[spell_index].spell_job = 0xf1;
+    spellAPI->setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+}
 
 void __thiscall simple_damage_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
@@ -22,11 +59,36 @@ typedef struct
     uint32_t partB;
 } effect_aux_data;
 
+void __thiscall static_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    SF_GdSpell *spell = &_this->active_spell_list[spell_index];
+
+    SF_CGdResourceSpell spell_data;
+    spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+    uint32_t tick_current = spellAPI->getXData(_this, spell_index, SPELL_TICK_COUNT_AUX);
+    uint16_t ticks_passed = spellAPI->addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1);
+    uint16_t ticks_total = spell_data.params[2];
+    uint16_t ticks_interval = spell_data.params[3];
+
+    if (ticks_passed < ticks_total)
+    {
+        _this->active_spell_list[spell_index].to_do_count = (uint16_t)((ticks_interval * 10) / 1000);
+    }
+    else
+    {
+        spellAPI->setEffectDone(_this, spell_index, 0);
+    }
+}
 void __thiscall simple_damage_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
     uint16_t target_index = spell->target.entity_index;
     uint16_t source_index = spell->source.entity_index;
+    SF_SpellEffectInfo effect_info;
+    SF_CGdResourceSpell spell_data;
+    effect_info.spell_id = spell->spell_id;
+    effect_info.job_id = spell->spell_job;
+    spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, effect_info.spell_id);
     /***
      * If entity_type is 1 (unit) and index is not 0
      * and owner is not -1 (unit is not reserved one)
@@ -39,18 +101,12 @@ void __thiscall simple_damage_effect_handler(SF_CGdSpell *_this, uint16_t spell_
             (((uint8_t)(_this->SF_CGdFigure->figures[target_index].flags) & 0xa) == 0) &&
             (toolboxAPI->isTargetable(_this->SF_CGdFigureToolBox, target_index)))
         {
-            SF_SpellEffectInfo effect_info;
-            SF_CGdResourceSpell spell_data;
-            effect_info.spell_id = spell->spell_id;
-            effect_info.job_id = spell->spell_job;
-            spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, effect_info.spell_id);
 
             uint16_t random_roll = spellAPI->getRandom(_this->OpaqueClass, 100);
             uint32_t resist_chance = spellAPI->getChanceToResistSpell(_this->unkn2, source_index, target_index, effect_info);
             if ((uint32_t)resist_chance < random_roll)
             {
                 uint32_t unused;
-
                 // IDK, if this right, though
                 SF_CGdTargetData relative_data;
                 relative_data.position.X = 0;
@@ -64,7 +120,23 @@ void __thiscall simple_damage_effect_handler(SF_CGdSpell *_this, uint16_t spell_
                 spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 0x19, &aux_data);
                 if (figureAPI->isAlive(_this->SF_CGdFigure, target_index))
                 {
+                    if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index, STATIC_SPELL_LINE))
+                    {
+                        toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index, target_index, spell_data.params[0], 1, 0, 0);
+                    }
                     toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index, target_index, spell_data.params[0], 1, 0, 0);
+                    SF_CGdTargetData sourceData = {1, source_index, {0, 0}};
+                    SF_CGdTargetData targetData = {1, target_index, {0, 0}};
+
+                    // lets say effect lasts for 1000 ticks
+                    uint16_t effect_id = effectAPI->addEffect(_this->SF_CGdEffect, kGdEffectSpellDOTHitTarget, &sourceData, &targetData, _this->OpaqueClass->current_step, 5000, &aux_data);
+                    effectAPI->setEffectXData(_this->SF_CGdEffect, effect_id, EFFECT_SPELL_INDEX, spell_index);
+                    effectAPI->setEffectXData(_this->SF_CGdEffect, effect_id, EFFECT_SPELL_ID, spell->spell_id);
+                    effectAPI->setEffectXData(_this->SF_CGdEffect, effect_id, EFFECT_SUBSPELL_ID, spell_data.params[4]);
+                    effectAPI->setEffectXData(_this->SF_CGdEffect, effect_id, EFFECT_ENTITY_INDEX, source_index);
+                    effectAPI->setEffectXData(_this->SF_CGdEffect, effect_id, EFFECT_ENTITY_TYPE, 1);
+                    effectAPI->setEffectXData(_this->SF_CGdEffect, effect_id, EFFECT_ENTITY_INDEX2, target_index);
+                    effectAPI->setEffectXData(_this->SF_CGdEffect, effect_id, EFFECT_ENTITY_TYPE2, 1);
                 }
             }
             else
@@ -97,6 +169,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     toolboxAPI = sfsf->toolboxAPI;
     figureAPI = sfsf->figureAPI;
     registrationAPI = sfsf->registrationAPI;
+    effectAPI = sfsf->effectAPI;
 
     // Here comes the spell type registration. Coose your spell_id and your spell_effect_id (spell_job);
     SFSpell *simple_damage_spell = registrationAPI->registerSpell(242);
@@ -106,6 +179,10 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
 
     // Here comes the spell logic (effect)
     registrationAPI->linkEffectHandler(simple_damage_spell, 0xf2, &simple_damage_effect_handler);
+
+    SFSpell *static_spell = registrationAPI->registerSpell(243);
+    registrationAPI->linkTypeHandler(static_spell, &static_handler);
+    registrationAPI->linkEffectHandler(static_spell, 0xf1, &static_effect_handler);
 }
 
 /***

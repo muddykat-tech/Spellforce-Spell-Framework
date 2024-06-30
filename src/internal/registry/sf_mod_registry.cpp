@@ -3,6 +3,7 @@
 #include "sf_spelltype_registry.h"
 #include "sf_spelleffect_registry.h"
 #include "sf_spellend_registry.h"
+#include "sf_subeffect_registry.h"
 
 #include <windows.h>
 #include <iostream>
@@ -63,6 +64,11 @@ void __thiscall linkEndHandler(SFSpell *spell, handler_ptr endHandler)
     spell->spell_end_handler = endHandler;
 }
 
+void __thiscall linkSubEffectHandler(SFSpell *spell, sub_effect_handler_ptr handler)
+{
+    spell->sub_effect_handler = handler;
+}
+
 /**
  * Registers the mod spells and performs basic conflict checking.
  *
@@ -90,7 +96,7 @@ void register_mod_spells()
         handler_ptr spell_type_handler = spell_data->spell_type_handler;
         handler_ptr spell_effect_handler = spell_data->spell_effect_handler;
         handler_ptr spell_end_handler = spell_data->spell_end_handler;
-
+        sub_effect_handler_ptr sub_effect_handler = spell_data->sub_effect_handler;
         SFMod *parent_mod = spell_data->parent_mod;
         char info[256];
         snprintf(info, sizeof(info), "| - Registration of spell from %s", parent_mod->mod_id);
@@ -133,6 +139,10 @@ void register_mod_spells()
         if (spell_end_handler)
         {
             registerSpellEndHandler(spell_id, spell_end_handler);
+        }
+        if (sub_effect_handler)
+        {
+            registerSubEffectHandler(spell_id, sub_effect_handler);
         }
     }
 

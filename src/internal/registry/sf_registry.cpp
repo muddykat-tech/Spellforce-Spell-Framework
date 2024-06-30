@@ -7,6 +7,7 @@
 #include "sf_spelleffect_registry.h"
 #include "sf_spellend_registry.h"
 #include "sf_mod_registry.h"
+#include "sf_subeffect_registry.h"
 
 #include <windows.h>
 #include <iostream>
@@ -30,6 +31,7 @@ void registerFrameworkAPI()
     frameworkAPI.logAPI = setup_logger();
     log_info("| - Loading framework with create_mod_info Address");
     frameworkAPI.createModInfo = &createModInfo;
+    frameworkAPI.effectAPI = &effectAPI;
 
     log_info("| - Loading Default Mod Information");
     current_mod = createModInfo("SFSF", "The Spellforce Spell Framework", "4.0.0", "Muddykat, UnSchtalch, shovel_knight");
@@ -61,6 +63,10 @@ void initialize_framework()
     log_info("| - Registration of Vanilla Spell End Handlers");
 
     register_vanilla_spell_end_handlers();
+
+    log_info("| - Registration of Vanilla Sub Effect Handlers");
+
+    register_vanilla_sub_effect_handlers();
 
     log_info("|======| Spellforce Spell Framework Configuration Phase End |======|");
     log_info("|+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.|");

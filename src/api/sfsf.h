@@ -29,7 +29,7 @@ struct SpellforceSpellFramework
     FigureFunctions *figureAPI;
     IteratorFunctions *iteratorAPI;
     RegistrationFunctions *registrationAPI;
-
+    EffectFunctions *effectAPI;
     SFLog *logAPI;
 };
 

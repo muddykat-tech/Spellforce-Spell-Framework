@@ -367,6 +367,7 @@ void initialize_data_hooks()
     INCLUDE_FUNCTION(registration, linkEffectHandler, &linkEffectHandler);
     INCLUDE_FUNCTION(registration, linkEndHandler, &linkEndHandler);
     INCLUDE_FUNCTION(registration, linkSpellTags, &linkSpellTags);
+    INCLUDE_FUNCTION(registration, linkSubEffectHandler, &linkSubEffectHandler);
 }
 
 void initialize_spelltype_hook()
@@ -462,13 +463,13 @@ void initialize_beta_hooks()
     initialize_spell_trigger_hook();
 
     log_info("Hooking Spell Refresh Triggers");
-    initialize_spellrefresh_hook();
+    // initialize_spellrefresh_hook();
 
     log_info("Hooking Spell End Triggers");
     initialize_spellend_hook();
 
     log_info("Hooking Deal Damage Trigger");
-    initialize_deal_damage_hook();
+    // initialize_deal_damage_hook();
 
     // log_info("Dirty Menu Loading Trigger Test");
     // initialize_menuload_hook();

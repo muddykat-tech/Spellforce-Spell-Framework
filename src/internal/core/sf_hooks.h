@@ -30,7 +30,7 @@ typedef void(__thiscall *handler_ptr)(SF_CGdSpell *, uint16_t);
 extern void __thiscall linkTypeHandler(SFSpell *spell, handler_ptr typeHandler);
 extern void __thiscall linkEffectHandler(SFSpell *spell, uint16_t spell_effect_id, handler_ptr effectHandler);
 extern void __thiscall linkEndHandler(SFSpell *spell, handler_ptr endHandler);
-
+extern void __thiscall linkSubEffectHandler(SFSpell *spell, sub_effect_handler_ptr handler);
 extern SFMod *createModInfo(const char *mod_id, const char *mod_version, const char *mod_author, const char *mod_description);
 
 extern FUN_0069eaf0_ptr FUN_0069eaf0;
