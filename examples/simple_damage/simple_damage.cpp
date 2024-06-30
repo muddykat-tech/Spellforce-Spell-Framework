@@ -57,14 +57,24 @@ void __thiscall simple_damage_handler(SF_CGdSpell *_this, uint16_t spell_index)
 void __thiscall static_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
-
+    sfsf->logAPI->logInfo("Static shock alive");
     SF_CGdResourceSpell spell_data;
     spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
     uint32_t tick_current = spellAPI->getXData(_this, spell_index, SPELL_TICK_COUNT_AUX);
     uint16_t ticks_passed = spellAPI->addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1);
     uint16_t ticks_total = spell_data.params[2];
     uint16_t ticks_interval = spell_data.params[3];
-
+    uint16_t target_index = spell->target.entity_index;
+    uint16_t source_index = spell->source.entity_index;
+    if (tick_current == 0)
+    {
+        SF_CGdTargetData sourceData = {1, source_index, {0, 0}};
+        SF_CGdTargetData targetData = {1, target_index, {0, 0}};
+        SF_Rectangle aux_data;
+        aux_data.partA = 0;
+        aux_data.partB = 0;
+        uint16_t effect_id = effectAPI->addEffect(_this->SF_CGdEffect, kGdEffectSpellDOTHitTarget, &sourceData, &targetData, _this->OpaqueClass->current_step, (ticks_total * ticks_interval), &aux_data);
+    }
     if (ticks_passed < ticks_total)
     {
         _this->active_spell_list[spell_index].to_do_count = (uint16_t)((ticks_interval * 10) / 1000);
@@ -115,16 +125,18 @@ void __thiscall simple_damage_effect_handler(SF_CGdSpell *_this, uint16_t spell_
                 spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 0x19, &aux_data);
                 if (figureAPI->isAlive(_this->SF_CGdFigure, target_index))
                 {
+                    uint16_t damage =  spell_data.params[0];
                     if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index, STATIC_SPELL_LINE))
                     {
-                        toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index, target_index, spell_data.params[0], 1, 0, 0);
+                        damage *= 2;
+                        sfsf->logAPI->logInfo("Static shock found");
                     }
-                    toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index, target_index, spell_data.params[0], 1, 0, 0);
+                    toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index, target_index, damage, 1, 0, 0);
                     SF_CGdTargetData sourceData = {1, source_index, {0, 0}};
                     SF_CGdTargetData targetData = {1, target_index, {0, 0}};
 
                     // lets say effect lasts for 1000 ticks
-                    uint16_t effect_id = effectAPI->addEffect(_this->SF_CGdEffect, kGdEffectSpellDOTHitTarget, &sourceData, &targetData, _this->OpaqueClass->current_step, 5000, &aux_data);
+                    uint16_t effect_id = effectAPI->addEffect(_this->SF_CGdEffect, kGdEffectSpellDOTHitTarget, &sourceData, &targetData, _this->OpaqueClass->current_step, 5, &aux_data);
                     effectAPI->setEffectXData(_this->SF_CGdEffect, effect_id, EFFECT_SPELL_INDEX, spell_index);
                     effectAPI->setEffectXData(_this->SF_CGdEffect, effect_id, EFFECT_SPELL_ID, spell->spell_id);
                     effectAPI->setEffectXData(_this->SF_CGdEffect, effect_id, EFFECT_SUBSPELL_ID, spell_data.params[4]);
