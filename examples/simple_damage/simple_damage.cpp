@@ -12,22 +12,22 @@ FigureFunctions *figureAPI;
 RegistrationFunctions *registrationAPI;
 EffectFunctions *effectAPI;
 
-#define STATIC_SPELL_LINE = 0xf3;
+#define STATIC_SPELL_LINE 0xf3
 
 void __thiscall static_sub_effect_handler(SF_CGDEffect *_this, uint16_t effect_index)
 {
-    uint16_t spell_id = effectAPI.getEffectXData(_this, effect_index, EFFECT_SUBSPELL_ID);
-    uint16_t figure_index1 = effectAPI.getEffectXData(_this, effect_index, EFFECT_ENTITY_INDEX);
+    uint16_t spell_id = effectAPI->getEffectXData(_this, effect_index, EFFECT_SUBSPELL_ID);
+    uint16_t figure_index1 = effectAPI->getEffectXData(_this, effect_index, EFFECT_ENTITY_INDEX);
     uint8_t figure_type1;
     if (figure_index1)
     {
-        figure_type1 = effectAPI.getEffectXData(_this, effect_index, EFFECT_ENTITY_TYPE);
+        figure_type1 = effectAPI->getEffectXData(_this, effect_index, EFFECT_ENTITY_TYPE);
     }
-    uint16_t figure_index2 = effectAPI.getEffectXData(_this, effect_index, EFFECT_ENTITY_INDEX2);
+    uint16_t figure_index2 = effectAPI->getEffectXData(_this, effect_index, EFFECT_ENTITY_INDEX2);
     uint8_t figure_type2 = 0;
     if (figure_index2)
     {
-        figure_type2 = effectAPI.getEffectXData(_this, effect_index, EFFECT_ENTITY_TYPE2);
+        figure_type2 = effectAPI->getEffectXData(_this, effect_index, EFFECT_ENTITY_TYPE2);
     }
     if (!figure_type2 || !figure_index2)
     {
@@ -39,7 +39,7 @@ void __thiscall static_sub_effect_handler(SF_CGDEffect *_this, uint16_t effect_i
     }
     SF_CGdTargetData source = {figure_type1, figure_index1, {0, 0}};
     SF_CGdTargetData target = {figure_type2, figure_index2, {0, 0}};
-    spellAPI.addSpell(_this->CGdSpell, spell_id, _this->OpaqueClass->current_step, &source, &target, 0);
+    spellAPI->addSpell(_this->CGdSpell, spell_id, _this->OpaqueClass->current_step, &source, &target, 0);
 }
 
 void __thiscall static_handler(SF_CGdSpell *_this, uint16_t spell_index)
@@ -52,12 +52,6 @@ void __thiscall simple_damage_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     _this->active_spell_list[spell_index].spell_job = 0xf2;
 }
-
-typedef struct
-{
-    uint32_t partA;
-    uint32_t partB;
-} effect_aux_data;
 
 void __thiscall static_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
@@ -114,7 +108,7 @@ void __thiscall simple_damage_effect_handler(SF_CGdSpell *_this, uint16_t spell_
                 relative_data.entity_type = 1;
                 relative_data.entity_index = target_index;
                 // IDK what that structure
-                effect_aux_data aux_data;
+                SF_Rectangle aux_data;
                 aux_data.partA = 0;
                 aux_data.partB = 0;
                 spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 0x19, &aux_data);
@@ -149,7 +143,7 @@ void __thiscall simple_damage_effect_handler(SF_CGdSpell *_this, uint16_t spell_
                 relative_data.entity_type = 1;
                 relative_data.entity_index = target_index;
                 // IDK what that structure
-                effect_aux_data aux_data;
+                SF_Rectangle aux_data;
                 aux_data.partA = 0;
                 aux_data.partB = 0;
                 spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellTargetResisted, &unused, &relative_data, _this->OpaqueClass->current_step, 10, &aux_data);

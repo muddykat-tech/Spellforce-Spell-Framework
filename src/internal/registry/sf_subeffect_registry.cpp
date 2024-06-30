@@ -1,22 +1,24 @@
 #include "../../api/sf_effect_functions.h"
 #include "../handlers/sf_sub_effect_handlers.h"
-
+#include "../core/sf_hooks.h"
 #include "../core/sf_wrappers.h"
+#include "../core/sf_modloader.h"
 
+#include "sf_registry.h"
 #include <map>
-#include <cstdint>
+#include <cstdio>
 
 std::map<uint16_t, sub_effect_handler_ptr> sub_effect_handler_map;
 
 void registerSubEffectHandler(uint16_t spell_line, sub_effect_handler_ptr handler)
 {
     auto check = sub_effect_handler_map.find(spell_line);
-    /*if (check != sub_effect_handler_map.end())
+    if (check != sub_effect_handler_map.end())
     {
         char message[256];
         sprintf(message, "%s (v%s) has replaced a Subeffect Handler [%d] (Was this on purpose?)", current_mod->mod_id, current_mod->mod_version, spell_line);
         log_warning(message);
-    }*/
+    }
 
     sub_effect_handler_map[spell_line] = handler;
 }

@@ -211,6 +211,8 @@ typedef struct __attribute__((packed))
 // Forward Declarations for looping struct declarations
 typedef struct SF_CGdSpell SF_CGdSpell;
 typedef struct SF_CGdFigureToolbox SF_CGdFigureToolbox;
+typedef struct SF_GdEffect SF_GdEffect;
+typedef struct SF_CGDEffect SF_CGDEffect;
 
 struct __attribute__((packed)) SF_CGdFigureToolbox
 {
@@ -253,7 +255,7 @@ struct __attribute__((packed)) SF_CGdSpell
     void *SF_CGdBuilding;
     void *SF_CGdBuildingToolbox;
     void *SF_CGdDoubleLinkedList;
-    void *SF_CGdEffect;
+    SF_CGDEffect *SF_CGdEffect;
     void *unkn1;
     SF_CGdFigure *SF_CGdFigure;
     void *SF_CGdFigureJobs;
@@ -275,7 +277,7 @@ struct __attribute__((packed)) SF_CGdSpell
     uint32_t unkn6;
 };
 
-typedef struct __attribute__((packed))
+struct __attribute__((packed)) SF_GdEffect
 {
     uint16_t CGdEffectType;
     SF_CGdTargetData source;
@@ -290,9 +292,9 @@ typedef struct __attribute__((packed))
     uint16_t unkn4;
     uint16_t unkn5;
     SF_Coord position2;
-} SF_GdEffect;
+};
 
-typedef struct __attribute__((packed))
+struct __attribute__((packed)) SF_CGDEffect
 {
     AutoClass14 *OpaqueClass;
     void *SF_CGdBuilding;
@@ -311,7 +313,7 @@ typedef struct __attribute__((packed))
     void *SF_CGdXDataList;
     SF_GdEffect active_effect_list[2000];
     uint16_t max_used;
-} SF_CGDEffect;
+};
 
 /* |-========== Internal Structures ==========-| */
 
