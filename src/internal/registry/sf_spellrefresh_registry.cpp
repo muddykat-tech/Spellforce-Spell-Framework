@@ -3,15 +3,15 @@
 #include "../core/sf_modloader.h"
 #include "../handlers/sf_spellrefresh_handlers.h"
 
-#include "sf_spellrefreash.h"
+#include "sf_spellrefresh_registry.h"
 #include "sf_spelltype_registry.h"
 #include "sf_registry.h"
 #include <map>
 #include <cstdio>
 
-std::map<uint16_t, handler_ptr> spellrefresh_handler_map;
+std::map<uint16_t, refresh_handler_ptr> spellrefresh_handler_map;
 
-void registerSpellRefreshHandler(uint16_t spell_line_id, handler_ptr handler)
+void registerSpellRefreshHandler(uint16_t spell_line_id, refresh_handler_ptr handler)
 {
     auto check = spellrefresh_handler_map.find(spell_line_id);
     if (check != spellrefresh_handler_map.end())
@@ -24,14 +24,14 @@ void registerSpellRefreshHandler(uint16_t spell_line_id, handler_ptr handler)
     spellrefresh_handler_map[spell_line_id] = handler;
 }
 
-void get_spell_refresh(uint16_t spell_line_id)
+refresh_handler_ptr get_spell_refresh(uint16_t spell_line_id)
 {
-    auto it = spellrefresh_handler_map.find(spell_line);
+    auto it = spellrefresh_handler_map.find(spell_line_id);
     if (it == spellrefresh_handler_map.end())
     {
         // Element doesn't exist, insert the default value
         log_warning("Unknown Job ID for Spell Refresh Handler, Assigning the default handler.");
-        it = spellrefresh_handler_map.emplace(spell_line, &default_refresh_handler).first;
+        it = spellrefresh_handler_map.emplace(spell_line_id, &first_block_refresh_handler).first;
     }
     return it->second;
 }
@@ -62,4 +62,8 @@ void register_vanilla_spell_refresh_handlers()
     }
 
     registerSpellRefreshHandler(0xda, &case_da_refresh_handler);
+
+    // These are not Vanilla Entries, testing only
+    registerSpellRefreshHandler(0x0e, &first_block_refresh_handler);
+    registerSpellRefreshHandler(0xeb, &first_block_refresh_handler);
 }

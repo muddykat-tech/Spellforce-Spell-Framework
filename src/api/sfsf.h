@@ -18,6 +18,7 @@ typedef SFMod *(*createModInfo_ptr)(const char *mod_id, const char *mod_version,
 
 typedef void (*logInfoFunc)(const char *);
 typedef void(__thiscall *handler_ptr)(SF_CGdSpell *, uint16_t);
+typedef int(__thiscall *refresh_handler_ptr)(SF_CGdSpell *, uint16_t);
 
 // Declare the structure
 struct SpellforceSpellFramework

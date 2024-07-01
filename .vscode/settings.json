@@ -32,7 +32,9 @@
         "*.tcc": "cpp",
         "list": "cpp",
         "sf_toolbox_functions.h": "c",
-        "sf_spellend_registry.h": "c"
+        "sf_spellend_registry.h": "c",
+        "sf_spellrefresh_registry.h": "c",
+        "xtree": "cpp"
     },
     "C_Cpp.errorSquiggles": "disabled",
     "makefile.makePath": "mingw32-make"

@@ -4,6 +4,7 @@
 #include "sf_general_structures.h"
 #include "sf_effect_functions.h"
 typedef void(__thiscall *handler_ptr)(SF_CGdSpell *, uint16_t);
+typedef int(__thiscall *refresh_handler_ptr)(SF_CGdSpell *, uint16_t);
 
 typedef enum
 {
@@ -19,7 +20,7 @@ typedef struct __attribute__((packed))
 	handler_ptr spell_type_handler;
 	handler_ptr spell_effect_handler;
 	handler_ptr spell_end_handler;
-    sub_effect_handler_ptr sub_effect_handler;
+	sub_effect_handler_ptr sub_effect_handler;
 	SFMod *parent_mod;
 } SFSpell;
 
@@ -36,5 +37,4 @@ DECLARE_FUNCTION_GROUP(Registration,
 					   linkEffectHandler_ptr linkEffectHandler;
 					   linkEndHandler_ptr linkEndHandler;
 					   linkSpellTags_ptr linkSpellTags;
-                       linkSubEffectHandler_ptr linkSubEffectHandler;
-                       );
+					   linkSubEffectHandler_ptr linkSubEffectHandler;);

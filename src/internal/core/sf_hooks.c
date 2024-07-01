@@ -6,6 +6,7 @@
 #include "../registry/sf_spelleffect_registry.h"
 #include "../registry/sf_spellend_registry.h"
 #include "../registry/sf_subeffect_registry.h"
+#include "../registry/sf_spellrefresh_registry.h"
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -45,6 +46,14 @@ int __thiscall CheckCanApply_hook_beta(SF_CGdSpell *_this, uint16_t spell_index)
     // We need a map of refresh handlers?
     // And a default handler that does nothing
     // handler takes (SF_CGdSpell *_this, uint16_t spell_index) as params
+
+    // We need to parse in spell_index as it's used in the handler itself
+    refresh_handler_ptr spellrefresh_handler = get_spell_refresh(spell_index);
+    if (spellrefresh_handler != NULL)
+    {
+        return spellrefresh_handler(_this, spell_index);
+    }
+    // Default return is 1, it can be 0
     return 1;
 }
 
@@ -332,7 +341,7 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(spell, figClrChkSplBfrChkBattle, 0x32a470);
     DEFINE_FUNCTION(spell, figTryClrCHkSPlBfrJob2, 0x32a4f0);
     DEFINE_FUNCTION(spell, figTryUnfreeze, 0x32a5a0);
-    //  DEFINE_FUNCTION(spell, onSpellRemove, 0x32b310);
+    DEFINE_FUNCTION(spell, onSpellRemove, 0x32b310); // We may need to hook this?
     INCLUDE_FUNCTION(spell, addSpell, &add_spell_hook_beta);
     DEFINE_FUNCTION(effect, addEffect, 0x2dc880);
     DEFINE_FUNCTION(effect, setEffectXData, 0x2ddb30);
@@ -481,16 +490,17 @@ void initialize_beta_hooks()
     initialize_spell_trigger_hook();
 
     log_info("Hooking Spell Refresh Triggers");
-    // initialize_spellrefresh_hook();
+    initialize_spellrefresh_hook();
 
     log_info("Hooking Spell End Triggers");
     initialize_spellend_hook();
 
-    log_info("Hooking Deal Damage Trigger");
+    // log_info("Hooking Deal Damage Trigger");
     // initialize_deal_damage_hook();
 
     log_info("Hooking AddSpellFromEffect function");
     initialize_sub_effect_add_hook();
+
     // log_info("Dirty Menu Loading Trigger Test");
     // initialize_menuload_hook();
 }
