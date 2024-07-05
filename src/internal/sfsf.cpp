@@ -3,6 +3,7 @@
 #include "core/sf_wrappers.h"
 #include "registry/sf_registry.h"
 #include "../asi/sf_asi.h"
+#include <stdio.h>
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)
 {
@@ -19,6 +20,9 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
         }
         else
         {
+            FILE *file = fopen("sfsf.log", "w");
+            fclose(file);
+
             log_info("Spellforce Version Accepted; Starting SFSF");
             // Initialize Framework -> see sf_registry.h
             initialize_framework();

@@ -32,20 +32,8 @@ SFSpell *__thiscall registerSpell(uint16_t spell_id)
     return sf_spell;
 }
 
-void __thiscall linkSpellTags(SFSpell *spell, SpellTag tags, ...)
+void __thiscall applySpellTag(SFSpell *spell, SpellTag tag)
 {
-    va_list args;
-    va_start(args, tags);
-
-    // Always check if the tag is valid before using it
-    SpellTag tag = static_cast<SpellTag>(va_arg(args, int));
-    while (tag != SPELL_TAG_COUNT)
-    {
-        spell->spell_tags[tag] = true;
-        tag = static_cast<SpellTag>(va_arg(args, int));
-    }
-
-    va_end(args);
 }
 
 void __thiscall linkTypeHandler(SFSpell *spell, handler_ptr typeHandler)
@@ -67,6 +55,11 @@ void __thiscall linkEndHandler(SFSpell *spell, handler_ptr endHandler)
 void __thiscall linkSubEffectHandler(SFSpell *spell, sub_effect_handler_ptr handler)
 {
     spell->sub_effect_handler = handler;
+}
+
+void __thiscall linkRefreshHandler(SFSpell *spell, refresh_handler_ptr handler)
+{
+    spell->spell_refresh_handler = handler;
 }
 
 /**
@@ -140,6 +133,7 @@ void register_mod_spells()
         {
             registerSpellEndHandler(spell_id, spell_end_handler);
         }
+
         if (sub_effect_handler)
         {
             registerSubEffectHandler(spell_id, sub_effect_handler);

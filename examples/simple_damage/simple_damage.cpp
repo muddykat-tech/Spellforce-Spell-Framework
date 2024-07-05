@@ -196,6 +196,10 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     registrationAPI->linkTypeHandler(static_spell, &static_handler);
     registrationAPI->linkEffectHandler(static_spell, 0xf1, &static_effect_handler);
     registrationAPI->linkSubEffectHandler(static_spell, &static_sub_effect_handler);
+
+    // Do we allow devs to register custom tags?
+    // How should the linking of tags apply to custom spells?
+    // Can / Should the developer have access to CHECK for these tags?
 }
 
 /***

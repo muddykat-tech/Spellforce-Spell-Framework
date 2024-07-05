@@ -10,6 +10,7 @@
 
 #include <stdint.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
 console_print_ptr console_print;
@@ -80,19 +81,20 @@ void __thiscall menu_trigger(uint32_t _CAppMenu)
     uint32_t CAppMenu_data = *(uint32_t *)(CAppMenu_ptr + 0x4);
     uint32_t CMnuScreen_ptr = *(uint32_t *)(CAppMenu_ptr + 0x68);
     uint32_t screen_vftable_ptr = *(uint32_t *)(CMnuScreen_ptr);
-
     // Ghidra Converts this in the following order: CMnuScreen_ptr -> CMnuContainer_ptr -> CMnuVisControl -> CMnuBase
     // The data structure that these have is aligned, best I can describe this is that it trims the data from the previous structure
     // EG. as screen ptr it has CMnuScreen_data, but as Container ptr it is missing CMnuScreen_data but everything else remains in same order and so on.
 
-    // This DOES work, it creates a new Container properly, but we now need to attach it somehow...
-    new_operator = (new_operator_ptr)(ASI::AddrOf(0x675A9D));
-    CMnuContainer *new_cont_test = (CMnuContainer *)new_operator(0x340);
-    initialize_menu_container(new_cont_test);
+    uint32_t _application = ASI::AddrOf(0x925C64);
+    // show_message_box(_application, 0, test_label_string, 1);
+    //  This DOES work, it creates a new Container properly, but we now need to attach it somehow...
+    //  new_operator = (new_operator_ptr)(ASI::AddrOf(0x675A9D));
+    //  CMnuContainer *new_cont_test = (CMnuContainer *)new_operator(0x340);
+    //  initialize_menu_container(new_cont_test);
 
     // I believe this is MAY be a method to asociate containers and screens in some manner, not sure yet.
     // This does weird shit, it draws the normal menu BEFORE it should now?
-    new_cont_test->vftablePTR = screen_vftable_ptr;
+    // new_cont_test->vftablePTR = screen_vftable_ptr;
 
     // CMnuLabel * test_label;
     // test_label = (CMnuLabel *) new_operator(0x368);
@@ -145,17 +147,29 @@ void __thiscall effect_trigger_hook(SF_CGdSpell *_this)
     }
 }
 
+void log_message(const char *filename, const char *message)
+{
+    FILE *file = fopen(filename, "a");
+    if (file != NULL)
+    {
+        fprintf(file, "%s\n", message);
+        fclose(file);
+    }
+}
+
 void console_log(const char *message)
 {
     if (console_print != NULL)
     {
-        uint32_t _appication = ASI::AddrOf(0x925C64);
-        console_print(_appication, message);
+        uint32_t _application = ASI::AddrOf(0x925C64);
+        console_print(_application, message);
     }
     else
     {
         OutputDebugStringA(message);
     }
+    // Appened to log file
+    log_message("sfsf.log", message);
 }
 
 void __thiscall add_spell_from_effect_hook_beta(SF_CGDEffect *_this, uint16_t effect_id)
@@ -384,8 +398,9 @@ void initialize_data_hooks()
     INCLUDE_FUNCTION(registration, linkTypeHandler, &linkTypeHandler);
     INCLUDE_FUNCTION(registration, linkEffectHandler, &linkEffectHandler);
     INCLUDE_FUNCTION(registration, linkEndHandler, &linkEndHandler);
-    INCLUDE_FUNCTION(registration, linkSpellTags, &linkSpellTags);
+    INCLUDE_FUNCTION(registration, applySpellTag, &applySpellTag);
     INCLUDE_FUNCTION(registration, linkSubEffectHandler, &linkSubEffectHandler);
+    INCLUDE_FUNCTION(registration, linkRefreshHandler, &linkRefreshHandler);
 }
 
 void initialize_spelltype_hook()
@@ -459,6 +474,8 @@ void initialize_menuload_hook()
     original_menu_func = (original_menu_func_ptr)(ASI::AddrOf(0x197b10));
     menu_return_addr = (ASI::AddrOf(0x182799));
 
+    show_message_box = (message_box_ptr)(ASI::AddrOf(0x198660));
+
     ASI::MemoryRegion menu_load_mreg(ASI::AddrOf(0x182794), 5);
     ASI::BeginRewrite(menu_load_mreg);
     *(unsigned char *)(ASI::AddrOf(0x182794)) = 0xE9; // jmp instruction
@@ -501,6 +518,6 @@ void initialize_beta_hooks()
     log_info("Hooking AddSpellFromEffect function");
     initialize_sub_effect_add_hook();
 
-    // log_info("Dirty Menu Loading Trigger Test");
-    // initialize_menuload_hook();
+    log_info("Dirty Menu Loading Trigger Test");
+    initialize_menuload_hook();
 }

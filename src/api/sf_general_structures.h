@@ -448,7 +448,7 @@ typedef void(__thiscall *construct_default_sf_string_ptr)(SF_String *_this);
 
 typedef void(__thiscall *construct_start_menu_ptr)(CUiStartMenu *_this, uint32_t p1);
 
-typedef void(__thiscall *message_box_ptr)(uint32_t CMnuScreen_ptr, SF_String *string_ptr);
+typedef void(__thiscall *message_box_ptr)(uint32_t CAppMenu, uint16_t description_id, SF_String *string_ptr, uint16_t hasOffset);
 
 typedef void(__fastcall *original_menu_func_ptr)(uint32_t param1);
 
