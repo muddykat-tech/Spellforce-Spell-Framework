@@ -20,7 +20,7 @@ typedef struct __attribute__((packed))
 {
 	uint16_t spell_id;
 	uint16_t spell_effect_id;
-	bool spell_tags[SPELL_TAG_COUNT];
+	SpellTag spell_tag;
 	handler_ptr spell_type_handler;
 	handler_ptr spell_effect_handler;
 	handler_ptr spell_end_handler;

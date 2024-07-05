@@ -6,6 +6,7 @@
 #include "sf_spelltype_registry.h"
 #include "sf_spelleffect_registry.h"
 #include "sf_spellend_registry.h"
+#include "sf_spellrefresh_registry.h"
 #include "sf_mod_registry.h"
 #include "sf_subeffect_registry.h"
 
@@ -37,6 +38,23 @@ void registerFrameworkAPI()
     current_mod = createModInfo("SFSF", "The Spellforce Spell Framework", "4.0.0", "Muddykat, UnSchtalch, shovel_knight");
 }
 
+void register_metadata_spell(uint16_t id, SpellTag tag)
+{
+    SFSpell *spell = registrationAPI.registerSpell(id);
+    registrationAPI.applySpellTag(spell, tag);
+}
+
+void register_vanilla_spell_metadata()
+{
+    log_info("| - Domination Spell Metadata");
+    register_metadata_spell(0x7a, SpellTag::DOMINATION_SPELL);
+    register_metadata_spell(0xed, SpellTag::DOMINATION_SPELL);
+    register_metadata_spell(0x2e, SpellTag::DOMINATION_SPELL);
+    register_metadata_spell(0x78, SpellTag::DOMINATION_SPELL);
+    register_metadata_spell(0xc5, SpellTag::DOMINATION_SPELL);
+    register_metadata_spell(0x6c, SpellTag::DOMINATION_SPELL);
+}
+
 void initialize_framework()
 {
 
@@ -50,6 +68,10 @@ void initialize_framework()
 
     // setup framework api structure references
     registerFrameworkAPI();
+
+    log_info("| - Registration of Vanilla Spell Metadata");
+
+    register_vanilla_spell_metadata();
 
     log_info("| - Registration of Vanilla Spelltype Handlers");
 
@@ -67,6 +89,10 @@ void initialize_framework()
     log_info("| - Registration of Vanilla Sub Effect Handlers");
 
     register_vanilla_sub_effect_handlers();
+
+    log_info("| - Registration of Vanilla Spell Refresh Handlers");
+
+    register_vanilla_spell_refresh_handlers();
 
     log_info("|======| Spellforce Spell Framework Configuration Phase End |======|");
     log_info("|+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.|");

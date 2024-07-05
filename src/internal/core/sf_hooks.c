@@ -49,7 +49,12 @@ int __thiscall CheckCanApply_hook_beta(SF_CGdSpell *_this, uint16_t spell_index)
     // handler takes (SF_CGdSpell *_this, uint16_t spell_index) as params
 
     // We need to parse in spell_index as it's used in the handler itself
-    refresh_handler_ptr spellrefresh_handler = get_spell_refresh(spell_index);
+    uint16_t spell_line = _this->active_spell_list[spell_index].spell_line;
+    refresh_handler_ptr spellrefresh_handler = get_spell_refresh(spell_line);
+    char message[256];
+    sprintf(message, "Spell Refresh Hook: [%d]", spell_index);
+    log_info(message);
+
     if (spellrefresh_handler != NULL)
     {
         return spellrefresh_handler(_this, spell_index);

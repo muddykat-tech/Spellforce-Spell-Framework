@@ -29,8 +29,9 @@ refresh_handler_ptr get_spell_refresh(uint16_t spell_line_id)
     auto it = spellrefresh_handler_map.find(spell_line_id);
     if (it == spellrefresh_handler_map.end())
     {
-        // Element doesn't exist, insert the default value
-        log_warning("Unknown Job ID for Spell Refresh Handler, Assigning the default handler.");
+        char message[256];
+        sprintf(message, "Unknown Job ID [%d] for Spell Refresh Handler", spell_line_id);
+        log_warning(message);
         it = spellrefresh_handler_map.emplace(spell_line_id, &first_block_refresh_handler).first;
     }
     return it->second;
@@ -46,7 +47,7 @@ void register_vanilla_spell_refresh_handlers()
         0x8a, 0x8c, 0x95, 0x99, 0x9c, 0x9d, 0x9e, 0xa1, 0xa4, 0xa7, 0xaf, 0xb3, 0xbd, 199,
         0xd5, 0xdd, 0xde, 0xe5, 0xe9};
 
-    int secondblock_cases[] = {0x2e, 0x6c, 0x78, 0x7a, 0xc5, 0xed};
+    int vanilla_domination_cases[] = {0x2e, 0x6c, 0x78, 0x7a, 0xc5, 0xed};
 
     for (int i = 0; i < sizeof(firstblock_cases) / sizeof(firstblock_cases[0]); i++)
     {
@@ -64,9 +65,9 @@ void register_vanilla_spell_refresh_handlers()
 
     registerSpellRefreshHandler(0x17, &case_17_refresh_handler);
 
-    for (int i = 0; i < sizeof(secondblock_cases) / sizeof(secondblock_cases[0]); i++)
+    for (int i = 0; i < sizeof(vanilla_domination_cases) / sizeof(vanilla_domination_cases[0]); i++)
     {
-        registerSpellRefreshHandler(secondblock_cases[i], &second_block_refresh_handler);
+        registerSpellRefreshHandler(vanilla_domination_cases[i], &domination_spell_refresh_handler);
     }
 
     registerSpellRefreshHandler(0xda, &case_da_refresh_handler);

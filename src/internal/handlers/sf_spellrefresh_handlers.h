@@ -10,6 +10,6 @@ int __thiscall warcry_berserk_refresh_handler(SF_CGdSpell *_this, uint16_t spell
 int __thiscall patronize_shelter_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index);
 int __thiscall endurence_durability_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index);
 
-int __thiscall second_block_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index);
+int __thiscall domination_spell_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index);
 int __thiscall case_da_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index);
 int __thiscall case_17_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index);

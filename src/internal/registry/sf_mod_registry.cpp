@@ -4,6 +4,7 @@
 #include "sf_spelleffect_registry.h"
 #include "sf_spellend_registry.h"
 #include "sf_subeffect_registry.h"
+#include "sf_spellrefresh_registry.h"
 
 #include <windows.h>
 #include <iostream>
@@ -25,6 +26,8 @@ SFSpell *__thiscall registerSpell(uint16_t spell_id)
     sf_spell->spell_type_handler = nullptr;
     sf_spell->spell_effect_handler = nullptr;
     sf_spell->spell_end_handler = nullptr;
+    sf_spell->spell_refresh_handler = nullptr;
+    sf_spell->sub_effect_handler = nullptr;
     sf_spell->parent_mod = current_mod;
 
     internal_spell_list.push_back(sf_spell);
@@ -34,6 +37,7 @@ SFSpell *__thiscall registerSpell(uint16_t spell_id)
 
 void __thiscall applySpellTag(SFSpell *spell, SpellTag tag)
 {
+    spell->spell_tag = tag;
 }
 
 void __thiscall linkTypeHandler(SFSpell *spell, handler_ptr typeHandler)
@@ -89,6 +93,7 @@ void register_mod_spells()
         handler_ptr spell_type_handler = spell_data->spell_type_handler;
         handler_ptr spell_effect_handler = spell_data->spell_effect_handler;
         handler_ptr spell_end_handler = spell_data->spell_end_handler;
+        refresh_handler_ptr spell_refresh_handler = spell_data->spell_refresh_handler;
         sub_effect_handler_ptr sub_effect_handler = spell_data->sub_effect_handler;
         SFMod *parent_mod = spell_data->parent_mod;
         char info[256];
@@ -116,34 +121,43 @@ void register_mod_spells()
 
         // Update Conflict Maps
         spell_id_map[spell_id] = parent_mod;
-        spell_effect_id_map[spell_effect_id] = parent_mod;
+
+        if (spell_effect_id != 0x00)
+        {
+            spell_effect_id_map[spell_effect_id] = parent_mod;
+        }
 
         // Do Registration
-        if (spell_type_handler)
+        if (spell_type_handler != nullptr)
         {
             registerSpellTypeHandler(spell_id, spell_type_handler);
         }
 
-        if (spell_effect_handler)
+        if (spell_effect_handler != nullptr)
         {
             registerEffectHandler(spell_effect_id, spell_effect_handler);
         }
 
-        if (spell_end_handler)
+        if (spell_refresh_handler != nullptr)
+        {
+            registerSpellRefreshHandler(spell_effect_id, spell_refresh_handler);
+        }
+
+        if (spell_end_handler != nullptr)
         {
             registerSpellEndHandler(spell_id, spell_end_handler);
         }
 
-        if (sub_effect_handler)
+        if (sub_effect_handler != nullptr)
         {
             registerSubEffectHandler(spell_id, sub_effect_handler);
         }
     }
 
-    // Free Memory
-    for (SFSpell *spell_data : internal_spell_list)
-    {
-        free(spell_data->parent_mod);
-        free(spell_data);
-    }
+    // Free Memory; No, we need this stuff now
+    // for (SFSpell *spell_data : internal_spell_list)
+    // {
+    //     free(spell_data->parent_mod);
+    //     free(spell_data);
+    // }
 }
