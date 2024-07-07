@@ -170,7 +170,7 @@ int __thiscall flexibility_refresh_handler(SF_CGdSpell *_this, uint16_t spell_in
     return 1;
 }
 
-//case 0x34
+// case 0x34
 int __thiscall strength_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     uint16_t spell_line = _this->active_spell_list[spell_index].spell_line;
@@ -192,7 +192,7 @@ int __thiscall strength_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index
     }
     return 1;
 }
-//case 0x40, 0x41
+// case 0x40, 0x41
 int __thiscall brilliance_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     uint16_t spell_line = _this->active_spell_list[spell_index].spell_line;
@@ -219,7 +219,7 @@ int __thiscall brilliance_refresh_handler(SF_CGdSpell *_this, uint16_t spell_ind
     return 1;
 }
 
-//case 99 (0x63)
+// case 99 (0x63)
 int __thiscall suffocation_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     uint16_t spell_line = _this->active_spell_list[spell_index].spell_line;
@@ -239,6 +239,53 @@ int __thiscall suffocation_refresh_handler(SF_CGdSpell *_this, uint16_t spell_in
             figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, STAMINA, target_entity_index, spell_data.params[0]);
             toolboxAPI.rescaleLevelStats(_this->SF_CGdFigureToolBox, target_entity_index);
             figureAPI.rescaleHealth(_this->SF_CGdFigure, target_entity_index, max_health);
+
+            spellAPI.setEffectDone(_this, spell_index_of_type, 0);
+        }
+    }
+    return 1;
+}
+
+// case 0x64 (100)
+int __thiscall inablility_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    uint16_t spell_line = _this->active_spell_list[spell_index].spell_line;
+    uint16_t target_entity_index = _this->active_spell_list[spell_index].target.entity_index;
+    bool hasSpell = toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_entity_index, spell_line);
+
+    if (hasSpell)
+    {
+        uint16_t spell_index_of_type = toolboxAPI.getSpellIndexOfType(_this->SF_CGdFigureToolBox, target_entity_index, spell_line, spell_index);
+        if (spell_index_of_type)
+        {
+            spellAPI.removeDLLNode(_this, spell_index_of_type);
+
+            SF_CGdResourceSpell spell_data;
+            spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index_of_type].spell_id);
+            figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, DEXTERITY, target_entity_index, spell_data.params[0]);
+
+            spellAPI.setEffectDone(_this, spell_index_of_type, 0);
+        }
+    }
+    return 1;
+}
+
+int __thiscall slow_fighting_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    uint16_t spell_line = _this->active_spell_list[spell_index].spell_line;
+    uint16_t target_entity_index = _this->active_spell_list[spell_index].target.entity_index;
+    bool hasSpell = toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_entity_index, spell_line);
+
+    if (hasSpell)
+    {
+        uint16_t spell_index_of_type = toolboxAPI.getSpellIndexOfType(_this->SF_CGdFigureToolBox, target_entity_index, spell_line, spell_index);
+        if (spell_index_of_type)
+        {
+            spellAPI.removeDLLNode(_this, spell_index_of_type);
+
+            SF_CGdResourceSpell spell_data;
+            spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index_of_type].spell_id);
+            figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, FIGHT_SPEED, target_entity_index, spell_data.params[0]);
 
             spellAPI.setEffectDone(_this, spell_index_of_type, 0);
         }
