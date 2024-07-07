@@ -12,4 +12,4 @@ int __thiscall endurence_durability_refresh_handler(SF_CGdSpell *_this, uint16_t
 
 int __thiscall domination_spell_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index);
 int __thiscall case_da_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index);
-int __thiscall case_17_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index);
+int __thiscall pestilence_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index);

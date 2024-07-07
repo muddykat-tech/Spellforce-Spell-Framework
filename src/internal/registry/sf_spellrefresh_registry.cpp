@@ -63,7 +63,7 @@ void register_vanilla_spell_refresh_handlers()
     registerSpellRefreshHandler(0x97, &endurence_durability_refresh_handler);
     registerSpellRefreshHandler(0x9b, &endurence_durability_refresh_handler);
 
-    registerSpellRefreshHandler(0x17, &case_17_refresh_handler);
+    registerSpellRefreshHandler(0x17, &pestilence_refresh_handler);
 
     for (int i = 0; i < sizeof(vanilla_domination_cases) / sizeof(vanilla_domination_cases[0]); i++)
     {
