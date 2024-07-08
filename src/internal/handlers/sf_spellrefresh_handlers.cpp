@@ -20,8 +20,8 @@ int __thiscall first_block_refresh_handler(SF_CGdSpell *_this, uint16_t spell_in
         uint16_t spell_index_of_type = toolboxAPI.getSpellIndexOfType(_this->SF_CGdFigureToolBox, target_entity_index, spell_line, spell_index);
         if (spell_index_of_type)
         {
-            spellAPI.removeDLLNode(_this, spell_line);
-            spellAPI.setEffectDone(_this, spell_line, 0);
+            spellAPI.removeDLLNode(_this, spell_index_of_type);
+            spellAPI.setEffectDone(_this, spell_index_of_type, 0);
         }
     }
 
