@@ -33,6 +33,7 @@ FUN_0069eaf0_ptr FUN_0069eaf0;
 fidfree_ptr fidFree;
 SF_String_ctor_ptr SF_String_ctor;
 SF_String_dtor_ptr SF_String_dtor;
+mnu_label_init_data_ptr init_menu_element;
 
 SpellFunctions spellAPI;
 EffectFunctions effectAPI;
@@ -80,39 +81,63 @@ void __thiscall menu_trigger(uint32_t _CAppMenu)
 {
     SF_String *test_label_string;
 
-    construct_default_sf_string(test_label_string);
+    log_info("New Constructor Test");
+    test_label_string = SF_String_ctor(test_label_string, "Spellforce Spell Framework Version 4.0.0");
 
-    uint32_t CAppMenu_ptr = *(uint32_t *)(_CAppMenu);
-    uint32_t CAppMenu_data = *(uint32_t *)(CAppMenu_ptr + 0x4);
-    uint32_t CMnuScreen_ptr = *(uint32_t *)(CAppMenu_ptr + 0x68);
-    uint32_t screen_vftable_ptr = *(uint32_t *)(CMnuScreen_ptr);
+    uint32_t CAppMenu_data = *(uint32_t *)(_CAppMenu + 0x4);
+    log_info("Menu Init 1");
+    uint32_t CMnuScreen_ptr = *(uint32_t *)(CAppMenu_data + 0x68);
+    uint32_t container_hack_ptr = *(uint32_t *)(_CAppMenu + 0x58);
+    CMnuContainer *container_hack = (CMnuContainer *)container_hack_ptr;
+    log_info("Menu Init 2");
+    uint32_t screen_vftable_ptr = CMnuScreen_ptr;
+
     // Ghidra Converts this in the following order: CMnuScreen_ptr -> CMnuContainer_ptr -> CMnuVisControl -> CMnuBase
     // The data structure that these have is aligned, best I can describe this is that it trims the data from the previous structure
     // EG. as screen ptr it has CMnuScreen_data, but as Container ptr it is missing CMnuScreen_data but everything else remains in same order and so on.
 
     uint32_t _application = ASI::AddrOf(0x925C64);
+
+    log_info("New Container Test");
     // show_message_box(_application, 0, test_label_string, 1);
-    //  This DOES work, it creates a new Container properly, but we now need to attach it somehow...
-    //  new_operator = (new_operator_ptr)(ASI::AddrOf(0x675A9D));
-    //  CMnuContainer *new_cont_test = (CMnuContainer *)new_operator(0x340);
-    //  initialize_menu_container(new_cont_test);
+    //   This DOES work, it creates a new Container properly, but we now need to attach it somehow...
+    new_operator = (new_operator_ptr)(ASI::AddrOf(0x675A9D));
 
-    // I believe this is MAY be a method to asociate containers and screens in some manner, not sure yet.
-    // This does weird shit, it draws the normal menu BEFORE it should now?
-    // new_cont_test->vftablePTR = screen_vftable_ptr;
+    log_info("New Container Test 2");
+    CMnuContainer *new_cont_test = (CMnuContainer *)new_operator(0x340);
 
-    // CMnuLabel * test_label;
-    // test_label = (CMnuLabel *) new_operator(0x368);
+    log_info("container init");
+    initialize_menu_container(new_cont_test);
+    // Probs not best practice to manually set it's parent, there should be some function to do this properly (like container_add_control)
+    new_cont_test->CMnuBase_data.parent_ptr = CMnuScreen_ptr;
+    log_info("Label Creation");
+    CMnuLabel *test_label;
+    test_label = (CMnuLabel *)new_operator(0x368);
 
-    // menu_label_set_data = (menu_label_set_data_ptr) (ASI::AddrOf(0x530330));
-    // // CMnuLabel::FUN_00930330
-    // uint64_t RG_Color = 0xf32f32;
-    // uint64_t color = 0xf32f32f32;
+    menu_label_constructor_ptr menu_label_constructor = (menu_label_constructor_ptr)(ASI::AddrOf(0x51a180));
+    menu_label_constructor(test_label);
+    log_info("Label Setup");
+    // setup menu label data
+    mnu_label_init_data_ptr init_menu_element = (mnu_label_init_data_ptr)(ASI::AddrOf(0x52cfe0));
 
-    // menu_label_set_data(test_label, RG_Color, (RG_Color >> 0x20), 0x0000f32, '\x01');
-    // menu_label_set_string(test_label, test_label_string);
-    // container_add_control = (container_add_control_ptr) (ASI::AddrOf(0x506f30));
-    // container_add_control(new_cont_test, test_label, '\x01', '\x01', 0);
+    log_info("Label Setup 1.5");
+
+    init_menu_element(test_label, 10, 10, 100, 100, test_label_string);
+
+    log_info("Label Setup 2");
+    menu_label_set_data = (menu_label_set_data_ptr)(ASI::AddrOf(0x530330));
+    // CMnuLabel::FUN_00930330
+    uint64_t RG_Color = 0xf32f32;
+    uint64_t color = 0xf32f32f32;
+
+    log_info("Label Setup 3");
+    menu_label_set_data(test_label, RG_Color, (RG_Color >> 0x20), 0x0000f32, '\x02');
+    menu_label_set_string(test_label, test_label_string);
+
+    log_info("Label Attach Test");
+    container_add_control = (container_add_control_ptr)(ASI::AddrOf(0x506f30));
+    container_add_control(container_hack, test_label, '\x02', '\x02', 3);
+    // test_label->CMnuBase_data.parent_ptr = new_cont_test;
 
     log_info("Menu Trigger Was Called");
     original_menu_func(_CAppMenu);
@@ -478,7 +503,6 @@ void initialize_menuload_hook()
     // setup return_addr
     original_menu_func = (original_menu_func_ptr)(ASI::AddrOf(0x197b10));
     menu_return_addr = (ASI::AddrOf(0x182799));
-
     show_message_box = (message_box_ptr)(ASI::AddrOf(0x198660));
 
     ASI::MemoryRegion menu_load_mreg(ASI::AddrOf(0x182794), 5);

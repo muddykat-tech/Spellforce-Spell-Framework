@@ -325,8 +325,15 @@ typedef struct __attribute__((packed))
 
 typedef struct __attribute__((packed))
 {
+    uint8_t data[0x128];
+    uint32_t parent_ptr;
+    uint8_t data2[0xdc];
+} CMnuBase_data;
+
+typedef struct __attribute__((packed))
+{
     uint32_t vftablePTR;
-    uint8_t CMnuBase_data[0x208];
+    CMnuBase_data CMnuBase_data;
     uint8_t CMnuVisControl_data[0x9C];
     uint8_t CMnuLabel_data[0xc0];
 } CMnuLabel;
@@ -334,7 +341,7 @@ typedef struct __attribute__((packed))
 typedef struct __attribute__((packed))
 {
     uint32_t vftablePTR;
-    uint8_t CMnuBase_data[0x208];
+    CMnuBase_data CMnuBase_data;
     uint8_t CMnuVisControl_data[0x9C];
     uint8_t CMnuContainer_data[0x98];
 } CMnuContainer;
@@ -444,11 +451,14 @@ typedef void (*fidfree_ptr)(uint32_t *memory_ptr);
 typedef void(__thiscall *menu_label_ptr)(CMnuLabel *_this);
 typedef void(__thiscall *menu_label_set_string_ptr)(CMnuLabel *_this, SF_String *string);
 typedef void(__thiscall *initialize_menu_container_ptr)(CMnuContainer *_this);
-typedef void(__thiscall *construct_default_sf_string_ptr)(SF_String *_this);
+typedef SF_String *(__thiscall *construct_default_sf_string_ptr)(SF_String *_this);
 
 typedef void(__thiscall *construct_start_menu_ptr)(CUiStartMenu *_this, uint32_t p1);
 
+typedef void(__thiscall *mnu_label_init_data_ptr)(CMnuLabel *_this, float xpos, float ypos, float width, float height, SF_String *string);
 typedef void(__thiscall *message_box_ptr)(uint32_t CAppMenu, uint16_t description_id, SF_String *string_ptr, uint16_t hasOffset);
+
+typedef void(__thiscall *menu_label_constructor_ptr)(CMnuLabel *_this);
 
 typedef void(__fastcall *original_menu_func_ptr)(uint32_t param1);
 

@@ -35,7 +35,7 @@ void registerFrameworkAPI()
     frameworkAPI.effectAPI = &effectAPI;
 
     log_info("| - Loading Default Mod Information");
-    current_mod = createModInfo("SFSF", "The Spellforce Spell Framework", "4.0.0", "Muddykat, UnSchtalch, shovel_knight");
+    current_mod = createModInfo("SFSF", "4.0.0", "Muddykat, UnSchtalch, shovel_knight", "The Spellforce Spell Framework");
 }
 
 void register_metadata_spell(uint16_t id, SpellTag tag)
@@ -46,13 +46,18 @@ void register_metadata_spell(uint16_t id, SpellTag tag)
 
 void register_vanilla_spell_metadata()
 {
-    log_info("| - Domination Spell Metadata");
+    log_info("|     - Domination Spell Metadata");
     register_metadata_spell(0x7a, SpellTag::DOMINATION_SPELL);
     register_metadata_spell(0xed, SpellTag::DOMINATION_SPELL);
     register_metadata_spell(0x2e, SpellTag::DOMINATION_SPELL);
     register_metadata_spell(0x78, SpellTag::DOMINATION_SPELL);
     register_metadata_spell(0xc5, SpellTag::DOMINATION_SPELL);
     register_metadata_spell(0x6c, SpellTag::DOMINATION_SPELL);
+
+    log_info("|     - Chain Spell Metadata");
+    log_info("|     - Summon Spell Metadata");
+    log_info("|     - Black Aura Spell Metadata");
+    log_info("|     - White Aura Spell Metadata");
 }
 
 void initialize_framework()

@@ -10,7 +10,7 @@ int __thiscall first_block_refresh_handler(SF_CGdSpell *_this, uint16_t spell_in
 {
     log_info("first block refresh handler called");
     // This is the first block of spells in Ghidra, however we've made exceptions to this rule, by moving warcry, patronize, and endurence to a specific handler
-    // moving stuff covered bu "onSpellRemove" to specific handlers ~UnSchtalch
+    // moving stuff covered by "onSpellRemove" to specific handlers ~UnSchtalch
     uint16_t spell_line = _this->active_spell_list[spell_index].spell_line;
     uint16_t target_entity_index = _this->active_spell_list[spell_index].target.entity_index;
     bool hasSpell = toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_entity_index, spell_line);
@@ -170,7 +170,7 @@ int __thiscall flexibility_refresh_handler(SF_CGdSpell *_this, uint16_t spell_in
     return 1;
 }
 
-//case 0x34
+// case 0x34
 int __thiscall strength_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     uint16_t spell_line = _this->active_spell_list[spell_index].spell_line;
@@ -192,7 +192,7 @@ int __thiscall strength_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index
     }
     return 1;
 }
-//case 0x40, 0x41
+// case 0x40, 0x41
 int __thiscall brilliance_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     uint16_t spell_line = _this->active_spell_list[spell_index].spell_line;
@@ -219,7 +219,7 @@ int __thiscall brilliance_refresh_handler(SF_CGdSpell *_this, uint16_t spell_ind
     return 1;
 }
 
-//case 99 (0x63)
+// case 99 (0x63)
 int __thiscall suffocation_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     uint16_t spell_line = _this->active_spell_list[spell_index].spell_line;
