@@ -36,7 +36,7 @@ void registerFrameworkAPI()
     frameworkAPI.effectAPI = &effectAPI;
 
     log_info("| - Loading Default Mod Information");
-    framework_mod = createModInfo("SFSF", "4.0.0", "Muddykat, UnSchtalch, shovel_knight", "The Spellforce Spell Framework");
+    framework_mod = createModInfo("SFSF", "v4.0.0-alpha", "Muddykat, UnSchtalch and shovel_knight", "The Spellforce Spell Framework");
     current_mod = framework_mod;
 }
 

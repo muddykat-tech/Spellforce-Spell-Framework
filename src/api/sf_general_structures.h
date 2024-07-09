@@ -494,6 +494,8 @@ typedef SF_FontStruct *(__thiscall *get_smth_fonts_ptr)(void);
 typedef SF_Font *(__thiscall *get_font_ptr)(SF_FontStruct *_this, uint32_t font_id);
 typedef void(__thiscall *menu_label_set_font_ptr)(void *_this, SF_Font *font);
 
+extern void __thiscall attach_new_label(CMnuContainer *parent, char *label_text, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height);
+
 /* |-========== Macros ==========-| */
 // Here comes a better method for setting up our exposed functions, to define functions also check sf_hooks.h
 #define DECLARE_FUNCTION(type, name, ...) \
