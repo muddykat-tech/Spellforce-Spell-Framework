@@ -135,43 +135,31 @@ void __thiscall spellClearFigureFlag(SF_CGdSpell *_this, uint16_t spell_id, Spel
 
 void __thiscall attach_new_label(CMnuContainer *parent, char *label_chars, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height)
 {
-    // log_info("Attaching New Label");
-
     SF_String *label_string;
     CMnuLabel *new_label;
     SF_FontStruct *fonts = get_smth_fonts();
 
-    // log_info("Creating String");
     label_string = SF_String_ctor(label_string, label_chars);
-    // log_info("Creating Label");
     new_label = (CMnuLabel *)new_operator(0x368);
 
-    // log_info("checking font index");
     if (font_index > 32)
     {
         log_error("Invalid font index 0~32, defaulting to font 6");
         font_index = 6;
     }
 
-    // log_info("Selecting font");
-    SF_Font *selected_font = get_font(fonts, font_index); // Select font 6 (there are 32 from what I can tell)
+    SF_Font *selected_font = get_font(fonts, font_index);
 
-    // log_info("label_constructor");
     menu_label_constructor(new_label);
 
-    // log_info("init_menu_element");
     init_menu_element(new_label, x_pos, y_pos, width, height, label_string);
 
-    // log_info("menu_label_set_font");
     menu_label_set_font(new_label, selected_font);
 
-    // log_info("container_add_control");
     container_add_control(parent, new_label, '\0', '\0', 0);
 
-    // log_info("menu_label_set_string");
     menu_label_set_string(new_label, label_string);
 
-    // log_info("string destory");
     SF_String_dtor(label_string);
 }
 
