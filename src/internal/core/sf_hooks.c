@@ -87,10 +87,9 @@ void __thiscall EndSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_index)
 void __thiscall menu_trigger(uint32_t _CAppMenu)
 {
     // Messy and ugly Code below, you have been warned. ~Muddykat
-    // SF_String *test_label_string;
+
     char sfsf_info[256];
-    sprintf(sfsf_info, "Spellforce Spell Framework %s\n%d Mod(s) Loaded with %d Error(s)", framework_mod->mod_version, mod_count, error_count);
-    // test_label_string = SF_String_ctor(test_label_string, sfsf_info);
+    sprintf(sfsf_info, "Spell Framework %s\n%d Mod(s) Loaded with %d Error(s)", framework_mod->mod_version, mod_count, error_count);
 
     uint32_t CAppMenu_data = *(uint32_t *)(_CAppMenu + 0x4);
     uint32_t CMnuScreen_ptr = *(uint32_t *)(CAppMenu_data + 0x68);
@@ -98,7 +97,7 @@ void __thiscall menu_trigger(uint32_t _CAppMenu)
     CMnuContainer *container_hack = (CMnuContainer *)container_hack_ptr;
     uint32_t screen_vftable_ptr = CMnuScreen_ptr;
 
-    attach_new_label(container_hack, sfsf_info, 6, 10, 10, 100, 100);
+    attach_new_label(container_hack, sfsf_info, 6, 10, 729, 100, 100);
 
     // Call original menu func
     original_menu_func(_CAppMenu);
