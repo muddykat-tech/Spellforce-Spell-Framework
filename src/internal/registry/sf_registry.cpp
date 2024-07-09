@@ -16,6 +16,7 @@
 // Exposed in sfsf.h
 SpellforceSpellFramework frameworkAPI;
 SFMod *current_mod;
+SFMod *framework_mod;
 
 // We can include pointers to our own functions we define.
 // Note these functions are ASSIGNED to a function group when we DEFINE said group, names are VERY important.
@@ -35,7 +36,8 @@ void registerFrameworkAPI()
     frameworkAPI.effectAPI = &effectAPI;
 
     log_info("| - Loading Default Mod Information");
-    current_mod = createModInfo("SFSF", "4.0.0", "Muddykat, UnSchtalch, shovel_knight", "The Spellforce Spell Framework");
+    framework_mod = createModInfo("SFSF", "4.0.0", "Muddykat, UnSchtalch, shovel_knight", "The Spellforce Spell Framework");
+    current_mod = framework_mod;
 }
 
 void register_metadata_spell(uint16_t id, SpellTag tag)

@@ -79,10 +79,15 @@ void __thiscall EndSpell_hook_beta(SF_CGdSpell *_this, uint16_t spell_index)
 
 void __thiscall menu_trigger(uint32_t _CAppMenu)
 {
+    // Messy and ugly Code below, you have been warned. ~Muddykat
+
     SF_String *test_label_string;
 
     log_info("New Constructor Test");
-    test_label_string = SF_String_ctor(test_label_string, "Spellforce Spell Framework Version 4.0.0");
+    char sfsf_info[256];
+
+    sprintf(sfsf_info, "Spellforce Spell Framework %s\n%d Mod(s) Loaded with %d Error(s)", framework_mod->mod_version, mod_count, error_count);
+    test_label_string = SF_String_ctor(test_label_string, sfsf_info);
 
     uint32_t CAppMenu_data = *(uint32_t *)(_CAppMenu + 0x4);
     log_info("Menu Init 1");
@@ -91,11 +96,6 @@ void __thiscall menu_trigger(uint32_t _CAppMenu)
     CMnuContainer *container_hack = (CMnuContainer *)container_hack_ptr;
     log_info("Menu Init 2");
     uint32_t screen_vftable_ptr = CMnuScreen_ptr;
-
-    // Ghidra Converts this in the following order: CMnuScreen_ptr -> CMnuContainer_ptr -> CMnuVisControl -> CMnuBase
-    // The data structure that these have is aligned, best I can describe this is that it trims the data from the previous structure
-    // EG. as screen ptr it has CMnuScreen_data, but as Container ptr it is missing CMnuScreen_data but everything else remains in same order and so on.
-
     uint32_t _application = ASI::AddrOf(0x925C64);
 
     log_info("New Container Test");
@@ -125,19 +125,44 @@ void __thiscall menu_trigger(uint32_t _CAppMenu)
     init_menu_element(test_label, 10, 10, 100, 100, test_label_string);
 
     log_info("Label Setup 2");
-    menu_label_set_data = (menu_label_set_data_ptr)(ASI::AddrOf(0x530330));
+    menu_label_set_data_ptr menu_label_set_color = (menu_label_set_data_ptr)(ASI::AddrOf(0x530330));
+
+    log_info("Label Setup 2.1");
     // CMnuLabel::FUN_00930330
-    uint64_t RG_Color = 0xf32f32;
-    uint64_t color = 0xf32f32f32;
+    uint32_t color = 0xD5C98F;
+
+    get_sf_color_ptr get_sf_color = (get_sf_color_ptr)(ASI::AddrOf(0x619670));
+
+    log_info("Label Setup 2.2");
+    // get_sf_color(test_label_string, 0x100);
+
+    // SF_Color *sf_color;
+    // sf_color->R = ((float)(color >> 0x10 & 0xff) + 0.0) / 255.0;
+    // sf_color->G = ((float)(color >> 8 & 0xff) + 0.0) / 255.0;
+    // sf_color->B = ((float)(color & 0xff) + 0.0) / 255.0;
 
     log_info("Label Setup 3");
-    menu_label_set_data(test_label, RG_Color, (RG_Color >> 0x20), 0x0000f32, '\x02');
-    menu_label_set_string(test_label, test_label_string);
+
+    // get fonts
+    get_smth_fonts_ptr get_smth_fonts = (get_smth_fonts_ptr)(ASI::AddrOf(0x5357b0));
+    SF_FontStruct *fonts = get_smth_fonts();
+    get_font_ptr get_font = (get_font_ptr)(ASI::AddrOf(0x535180));
+    SF_Font *selected_font = get_font(fonts, 6); // Select font 6 (there are 32 from what I can tell)
+
+    log_info("Label Setup 3.1");
+    menu_label_set_font_ptr menu_label_set_font = (menu_label_set_font_ptr)(ASI::AddrOf(0x530e00));
+
+    log_info("Label Setup 3.2");
+    menu_label_set_font(test_label, selected_font);
+
+    log_info("Label Setup 3.3");
+    // menu_label_set_color(test_label, sf_color->R, sf_color->G, sf_color->B, '\x01');
 
     log_info("Label Attach Test");
     container_add_control = (container_add_control_ptr)(ASI::AddrOf(0x506f30));
-    container_add_control(container_hack, test_label, '\x02', '\x02', 3);
-    // test_label->CMnuBase_data.parent_ptr = new_cont_test;
+    container_add_control(container_hack, test_label, '\0', '\0', 0);
+
+    menu_label_set_string(test_label, test_label_string);
 
     log_info("Menu Trigger Was Called");
     original_menu_func(_CAppMenu);

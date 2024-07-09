@@ -30,6 +30,12 @@ typedef struct __attribute__((packed))
 
 typedef struct __attribute__((packed))
 {
+    uint32_t R;
+    uint32_t G;
+} SF_RGColor;
+
+typedef struct __attribute__((packed))
+{
     uint16_t spell_id;
     uint16_t job_id;
 } SF_SpellEffectInfo;
@@ -325,6 +331,24 @@ typedef struct __attribute__((packed))
 
 typedef struct __attribute__((packed))
 {
+    uint8_t font_data[0x1fa0];
+} SF_Font;
+
+typedef struct __attribute__((packed))
+{
+    SF_Font *smth_font[32];
+    uint8_t unkn_data[0x8];
+} SF_FontStruct;
+
+typedef struct __attribute__((packed))
+{
+    uint32_t R;
+    uint32_t G;
+    uint32_t B;
+} SF_Color;
+
+typedef struct __attribute__((packed))
+{
     uint8_t data[0x128];
     uint32_t parent_ptr;
     uint8_t data2[0xdc];
@@ -464,7 +488,11 @@ typedef void(__fastcall *original_menu_func_ptr)(uint32_t param1);
 
 typedef void *(__cdecl *new_operator_ptr)(uint32_t param_1);
 typedef void(__thiscall *container_add_control_ptr)(CMnuContainer *_this, void *CMnuBase, uint8_t c1, uint8_t c2, uint32_t p4);
-typedef void(__thiscall *menu_label_set_data_ptr)(CMnuLabel *_this, uint32_t maybe_font, uint32_t maybe_color, uint32_t unkn1, uint8_t unknchar);
+typedef void(__thiscall *menu_label_set_data_ptr)(CMnuLabel *_this, uint32_t color_red, uint32_t color_green, uint32_t color_blue, uint8_t unknchar);
+typedef void(__thiscall *get_sf_color_ptr)(SF_String *_this, uint32_t color_id);
+typedef SF_FontStruct *(__thiscall *get_smth_fonts_ptr)(void);
+typedef SF_Font *(__thiscall *get_font_ptr)(SF_FontStruct *_this, uint32_t font_id);
+typedef void(__thiscall *menu_label_set_font_ptr)(void *_this, SF_Font *font);
 
 /* |-========== Macros ==========-| */
 // Here comes a better method for setting up our exposed functions, to define functions also check sf_hooks.h
