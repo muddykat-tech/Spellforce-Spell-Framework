@@ -30,6 +30,12 @@ typedef struct __attribute__((packed))
 
 typedef struct __attribute__((packed))
 {
+    uint32_t R;
+    uint32_t G;
+} SF_RGColor;
+
+typedef struct __attribute__((packed))
+{
     uint16_t spell_id;
     uint16_t job_id;
 } SF_SpellEffectInfo;
@@ -325,8 +331,33 @@ typedef struct __attribute__((packed))
 
 typedef struct __attribute__((packed))
 {
+    uint8_t font_data[0x1fa0];
+} SF_Font;
+
+typedef struct __attribute__((packed))
+{
+    SF_Font *smth_font[32];
+    uint8_t unkn_data[0x8];
+} SF_FontStruct;
+
+typedef struct __attribute__((packed))
+{
+    uint32_t R;
+    uint32_t G;
+    uint32_t B;
+} SF_Color;
+
+typedef struct __attribute__((packed))
+{
+    uint8_t data[0x128];
+    uint32_t parent_ptr;
+    uint8_t data2[0xdc];
+} CMnuBase_data;
+
+typedef struct __attribute__((packed))
+{
     uint32_t vftablePTR;
-    uint8_t CMnuBase_data[0x208];
+    CMnuBase_data CMnuBase_data;
     uint8_t CMnuVisControl_data[0x9C];
     uint8_t CMnuLabel_data[0xc0];
 } CMnuLabel;
@@ -334,7 +365,7 @@ typedef struct __attribute__((packed))
 typedef struct __attribute__((packed))
 {
     uint32_t vftablePTR;
-    uint8_t CMnuBase_data[0x208];
+    CMnuBase_data CMnuBase_data;
     uint8_t CMnuVisControl_data[0x9C];
     uint8_t CMnuContainer_data[0x98];
 } CMnuContainer;
@@ -444,17 +475,26 @@ typedef void (*fidfree_ptr)(uint32_t *memory_ptr);
 typedef void(__thiscall *menu_label_ptr)(CMnuLabel *_this);
 typedef void(__thiscall *menu_label_set_string_ptr)(CMnuLabel *_this, SF_String *string);
 typedef void(__thiscall *initialize_menu_container_ptr)(CMnuContainer *_this);
-typedef void(__thiscall *construct_default_sf_string_ptr)(SF_String *_this);
+typedef SF_String *(__thiscall *construct_default_sf_string_ptr)(SF_String *_this);
 
 typedef void(__thiscall *construct_start_menu_ptr)(CUiStartMenu *_this, uint32_t p1);
 
+typedef void(__thiscall *mnu_label_init_data_ptr)(CMnuLabel *_this, float xpos, float ypos, float width, float height, SF_String *string);
 typedef void(__thiscall *message_box_ptr)(uint32_t CAppMenu, uint16_t description_id, SF_String *string_ptr, uint16_t hasOffset);
+
+typedef void(__thiscall *menu_label_constructor_ptr)(CMnuLabel *_this);
 
 typedef void(__fastcall *original_menu_func_ptr)(uint32_t param1);
 
 typedef void *(__cdecl *new_operator_ptr)(uint32_t param_1);
 typedef void(__thiscall *container_add_control_ptr)(CMnuContainer *_this, void *CMnuBase, uint8_t c1, uint8_t c2, uint32_t p4);
-typedef void(__thiscall *menu_label_set_data_ptr)(CMnuLabel *_this, uint32_t maybe_font, uint32_t maybe_color, uint32_t unkn1, uint8_t unknchar);
+typedef void(__thiscall *menu_label_set_data_ptr)(CMnuLabel *_this, uint32_t color_red, uint32_t color_green, uint32_t color_blue, uint8_t unknchar);
+typedef void(__thiscall *get_sf_color_ptr)(SF_String *_this, uint32_t color_id);
+typedef SF_FontStruct *(__thiscall *get_smth_fonts_ptr)(void);
+typedef SF_Font *(__thiscall *get_font_ptr)(SF_FontStruct *_this, uint32_t font_id);
+typedef void(__thiscall *menu_label_set_font_ptr)(void *_this, SF_Font *font);
+
+extern void __thiscall attach_new_label(CMnuContainer *parent, char *label_text, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height);
 
 /* |-========== Macros ==========-| */
 // Here comes a better method for setting up our exposed functions, to define functions also check sf_hooks.h

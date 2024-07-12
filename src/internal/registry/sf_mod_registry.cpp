@@ -86,6 +86,8 @@ void register_mod_spells()
     std::map<uint16_t, SFMod *> spell_id_map;
     std::map<uint16_t, SFMod *> spell_effect_id_map;
 
+    SFMod *temp = current_mod;
+
     for (SFSpell *spell_data : internal_spell_list)
     {
         uint16_t spell_id = spell_data->spell_id;
@@ -96,11 +98,16 @@ void register_mod_spells()
         refresh_handler_ptr spell_refresh_handler = spell_data->spell_refresh_handler;
         sub_effect_handler_ptr sub_effect_handler = spell_data->sub_effect_handler;
         SFMod *parent_mod = spell_data->parent_mod;
-        char info[256];
-        snprintf(info, sizeof(info), "| - Registration of spell from %s", parent_mod->mod_id);
-        log_info(info);
 
         current_mod = spell_data->parent_mod;
+
+        if (temp != current_mod)
+        {
+            char info[256];
+            snprintf(info, sizeof(info), "| - Spell Registration for [%s by %s]", parent_mod->mod_id, parent_mod->mod_author);
+            log_info(info);
+            temp = current_mod;
+        }
 
         // Check for conflicts
         if (spell_id_map.find(spell_id) != spell_id_map.end())
@@ -109,6 +116,7 @@ void register_mod_spells()
             SFMod *conflict_mod = spell_id_map[spell_id];
             snprintf(error_msg, sizeof(error_msg), "| - Mod Conflict Detected [%s]: Spell ID [%d] is already registered by [%s]", parent_mod->mod_id, spell_id, conflict_mod->mod_id);
             log_error(error_msg);
+            error_count = error_count + 1;
         }
 
         if (spell_effect_id_map.find(spell_effect_id) != spell_effect_id_map.end())
@@ -117,6 +125,7 @@ void register_mod_spells()
             SFMod *conflict_mod = spell_effect_id_map[spell_effect_id];
             snprintf(error_msg, sizeof(error_msg), "| - Mod Conflict Detected [%s]: Spell Effect ID [%d] is already registered by [%s]", parent_mod->mod_id, spell_effect_id, conflict_mod->mod_id);
             log_error(error_msg);
+            error_count = error_count + 1;
         }
 
         // Update Conflict Maps

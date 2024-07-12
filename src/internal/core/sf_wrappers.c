@@ -6,6 +6,30 @@
 #include "sf_wrappers.h"
 #include "sf_hooks.h"
 
+#include "hooks/sf_menu_hook.h"
+#include "hooks/sf_console_hook.h"
+
+FUN_0069eaf0_ptr FUN_0069eaf0;
+fidfree_ptr fidFree;
+SF_String_ctor_ptr SF_String_ctor;
+SF_String_dtor_ptr SF_String_dtor;
+
+void initialize_wrapper_data_hooks()
+{
+    FUN_0069eaf0 = (FUN_0069eaf0_ptr)(ASI::AddrOf(0x29EAF0));
+    fidFree = (fidfree_ptr)(ASI::AddrOf(0x6B6E25));
+}
+
+void log_message(const char *filename, const char *message)
+{
+    FILE *file = fopen(filename, "a");
+    if (file != NULL)
+    {
+        fprintf(file, "%s\n", message);
+        fclose(file);
+    }
+}
+
 void log_warning(const char *message)
 {
     // Logs a warning message to the console and the debug output
@@ -131,6 +155,36 @@ void __thiscall spellClearFigureFlag(SF_CGdSpell *_this, uint16_t spell_id, Spel
         spellAPI.figTryUnfreeze(_this, spell_id, 0);
         break;
     }
+}
+
+void __thiscall attach_new_label(CMnuContainer *parent, char *label_chars, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height)
+{
+    SF_String *label_string;
+    CMnuLabel *new_label;
+    SF_FontStruct *fonts = get_smth_fonts();
+
+    label_string = SF_String_ctor(label_string, label_chars);
+    new_label = (CMnuLabel *)new_operator(0x368);
+
+    if (font_index > 32)
+    {
+        log_error("Invalid font index 0~32, defaulting to font 6");
+        font_index = 6;
+    }
+
+    SF_Font *selected_font = get_font(fonts, font_index);
+
+    menu_label_constructor(new_label);
+
+    init_menu_element(new_label, x_pos, y_pos, width, height, label_string);
+
+    menu_label_set_font(new_label, selected_font);
+
+    container_add_control(parent, new_label, '\0', '\0', 0);
+
+    menu_label_set_string(new_label, label_string);
+
+    SF_String_dtor(label_string);
 }
 
 /*
