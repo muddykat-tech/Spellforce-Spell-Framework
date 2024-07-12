@@ -15,14 +15,18 @@ clean() {
 }
 
 function check_compile() {
-	mingw32-make > /dev/null;
-	if [ $? -ne 0 ]; then
-		echo "|=========== FAILED TO COMPILE ===========|"
-		exit 1;
-	else
-		echo "|============= Push Accepted =============|"
-		exit 0;
-	fi
+  powershell -Command {
+    $process = Start-Process -FilePath "mingw32-make" -NoNewWindow -PassThru -Wait
+    exit $process.ExitCode
+  }
+  
+  if [ $? -ne 0 ]; then
+    echo "|=========== FAILED TO COMPILE ===========|"
+    exit 1
+  else
+    echo "|============= Push Accepted =============|"
+    exit 0
+  fi
 }
 
 echo "|======== Cleaning Compile Output ========|"

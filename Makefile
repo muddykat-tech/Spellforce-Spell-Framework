@@ -18,7 +18,7 @@ CORE_SRC = ${INTERNALS_SRC}/core
 HOOKS_SRC = ${CORE_SRC}/hooks
 REGISTRY_SRC = ${INTERNALS_SRC}/registry
 HANDLERS_SRC = ${INTERNALS_SRC}/handlers
-
+# Check if running in PowerShell
 # Phony targets
 .PHONY: all clean mods
 
@@ -176,6 +176,7 @@ bin/testmod.sfm: ${TEST_MOD_OBJ} | bin lib
 
 # Target for building the Spellforce framework
 bin/sfsf.asi: $(NTERNALS_OBJ) | bin lib
-	${CC} -o "$@" ${NTERNALS_OBJ} ${FW_LDFLAGS}
 	@cls
 	@echo Build Complete :)
+	@echo 
+	${CC} -o "$@" ${NTERNALS_OBJ} ${FW_LDFLAGS}
