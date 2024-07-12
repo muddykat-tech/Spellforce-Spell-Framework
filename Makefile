@@ -13,7 +13,7 @@ DLL_LDFLAGS = -shared -static-libgcc -static-libstdc++ -s -Wl,-Bstatic,--whole-a
 FW_LDFLAGS = -shared -static-libgcc -static-libstdc++ -s -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive -Wl,--subsystem,windows,--out-implib,lib/sfsf.a
 
 # Object files for the new architecture
-HOOK_OBJ = obj/sf_refresh_hook.o obj/sf_endspell_hook.o obj/sf_menu_hook.o obj/sf_spelleffect_hook.o obj/sf_subeffect_hook.o obj/sf_spelltype_hook.o obj/sf_damage_hook.o obj/sf_hooks.o 
+HOOK_OBJ = obj/sf_refresh_hook.o obj/sf_endspell_hook.o obj/sf_menu_hook.o obj/sf_spelleffect_hook.o obj/sf_subeffect_hook.o obj/sf_spelltype_hook.o obj/sf_damage_hook.o obj/sf_console_hook.o obj/sf_hooks.o 
 REGISTRY_OBJ = obj/sf_registry.o obj/sf_mod_registry.o obj/sf_spelltype_registry.o obj/sf_spelleffect_registry.o obj/sf_spellend_registry.o obj/sf_subeffect_registry.o obj/sf_spellrefresh_registry.o 
 HANDLER_OBJ = obj/sf_spelltype_handlers.o obj/sf_spelleffect_handlers.o obj/sf_spellend_handlers.o obj/sf_sub_effect_handlers.o obj/sf_spellrefresh_handlers.o
 
@@ -98,9 +98,14 @@ obj/sf_damage_hook.o: ${HOOKS_SRC}/sf_damage_hook.c | obj
 	@echo Building Hooks [   o]
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
-obj/sf_hooks.o: ${CORE_SRC}/sf_hooks.c src/asi/sf_asi.h | obj
+obj/sf_console_hook.o: ${HOOKS_SRC}/sf_console_hook.c | obj
 	${CLR}
 	@echo Building Hooks [  o ]
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
+
+obj/sf_hooks.o: ${CORE_SRC}/sf_hooks.c src/asi/sf_asi.h | obj
+	${CLR}
+	@echo Building Hooks [ o  ]
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 # Mod Loader

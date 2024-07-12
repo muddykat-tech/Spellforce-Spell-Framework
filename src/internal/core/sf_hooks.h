@@ -33,6 +33,4 @@ extern SFMod *createModInfo(const char *mod_id, const char *mod_version, const c
 void initialize_beta_hooks();
 void initialize_data_hooks();
 
-void console_log(const char *);
-
 #endif

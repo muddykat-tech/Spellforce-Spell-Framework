@@ -7,6 +7,7 @@
 #include "sf_hooks.h"
 
 #include "hooks/sf_menu_hook.h"
+#include "hooks/sf_console_hook.h"
 
 FUN_0069eaf0_ptr FUN_0069eaf0;
 fidfree_ptr fidFree;
