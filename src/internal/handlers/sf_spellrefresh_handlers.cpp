@@ -293,6 +293,327 @@ int __thiscall slow_fighting_refresh_handler(SF_CGdSpell *_this, uint16_t spell_
     return 1;
 }
 
+int __thiscall dexterity_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    uint16_t spell_line = _this->active_spell_list[spell_index].spell_line;
+    uint16_t target_entity_index = _this->active_spell_list[spell_index].target.entity_index;
+    bool hasSpell = toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_entity_index, spell_line);
+
+    if (hasSpell)
+    {
+        uint16_t spell_index_of_type = toolboxAPI.getSpellIndexOfType(_this->SF_CGdFigureToolBox, target_entity_index, spell_line, spell_index);
+        if (spell_index_of_type)
+        {
+            spellAPI.removeDLLNode(_this, spell_index_of_type);
+
+            int8_t bonus = (int8_t)(-spellAPI.getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER));
+            figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, DEXTERITY, target_entity_index, bonus);
+
+            spellAPI.setEffectDone(_this, spell_index_of_type, 0);
+        }
+    }
+    return 1;
+}
+
+int __thiscall endurance_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    uint16_t spell_line = _this->active_spell_list[spell_index].spell_line;
+    uint16_t target_entity_index = _this->active_spell_list[spell_index].target.entity_index;
+    bool hasSpell = toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_entity_index, spell_line);
+
+    if (hasSpell)
+    {
+        uint16_t spell_index_of_type = toolboxAPI.getSpellIndexOfType(_this->SF_CGdFigureToolBox, target_entity_index, spell_line, spell_index);
+        if (spell_index_of_type)
+        {
+            spellAPI.removeDLLNode(_this, spell_index_of_type);
+
+            uint16_t max_health = figureAPI.getCurrentMaxHealth(_this->SF_CGdFigure, target_entity_index);
+            int8_t bonus = (int8_t)(-spellAPI.getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER));
+            figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, STAMINA, target_entity_index, bonus);
+            toolboxAPI.rescaleLevelStats(_this->SF_CGdFigureToolBox, target_entity_index);
+            figureAPI.rescaleHealth(_this->SF_CGdFigure, target_entity_index, max_health);
+
+            spellAPI.setEffectDone(_this, spell_index_of_type, 0);
+        }
+    }
+    return 1;
+}
+
+int __thiscall fast_fighting_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    uint16_t spell_line = _this->active_spell_list[spell_index].spell_line;
+    uint16_t target_entity_index = _this->active_spell_list[spell_index].target.entity_index;
+    bool hasSpell = toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_entity_index, spell_line);
+
+    if (hasSpell)
+    {
+        uint16_t spell_index_of_type = toolboxAPI.getSpellIndexOfType(_this->SF_CGdFigureToolBox, target_entity_index, spell_line, spell_index);
+        if (spell_index_of_type)
+        {
+            spellAPI.removeDLLNode(_this, spell_index_of_type);
+
+            SF_CGdResourceSpell spell_data;
+            spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index_of_type].spell_id);
+            figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, FIGHT_SPEED, target_entity_index, -spell_data.params[0]);
+
+            spellAPI.setEffectDone(_this, spell_index_of_type, 0);
+        }
+    }
+    return 1;
+}
+
+int __thiscall charisma_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    uint16_t spell_line = _this->active_spell_list[spell_index].spell_line;
+    uint16_t target_entity_index = _this->active_spell_list[spell_index].target.entity_index;
+    bool hasSpell = toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_entity_index, spell_line);
+
+    if (hasSpell)
+    {
+        uint16_t spell_index_of_type = toolboxAPI.getSpellIndexOfType(_this->SF_CGdFigureToolBox, target_entity_index, spell_line, spell_index);
+        if (spell_index_of_type)
+        {
+            spellAPI.removeDLLNode(_this, spell_index_of_type);
+
+            SF_CGdResourceSpell spell_data;
+            spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index_of_type].spell_id);
+            figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, CHARISMA, target_entity_index, -spell_data.params[0]);
+
+            spellAPI.setEffectDone(_this, spell_index_of_type, 0);
+        }
+    }
+    return 1;
+}
+
+int __thiscall enlightenment_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    uint16_t spell_line = _this->active_spell_list[spell_index].spell_line;
+    uint16_t target_entity_index = _this->active_spell_list[spell_index].target.entity_index;
+    bool hasSpell = toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_entity_index, spell_line);
+
+    if (hasSpell)
+    {
+        uint16_t spell_index_of_type = toolboxAPI.getSpellIndexOfType(_this->SF_CGdFigureToolBox, target_entity_index, spell_line, spell_index);
+        if (spell_index_of_type)
+        {
+            spellAPI.removeDLLNode(_this, spell_index_of_type);
+
+            SF_CGdResourceSpell spell_data;
+            spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index_of_type].spell_id);
+            uint16_t max_mana = figureAPI.getCurrentMaxMana(_this->SF_CGdFigure, target_entity_index);
+            int8_t bonus = (int8_t)(-spellAPI.getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER));
+            figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, INTELLIGENCE, target_entity_index, bonus);
+            bonus = (int8_t)(-spellAPI.getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER2));
+            figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, WISDOM, target_entity_index, bonus);
+            toolboxAPI.rescaleLevelStats(_this->SF_CGdFigureToolBox, target_entity_index);
+            figureAPI.rescaleMana(_this->SF_CGdFigure, target_entity_index, max_mana);
+
+            spellAPI.setEffectDone(_this, spell_index_of_type, 0);
+        }
+    }
+    return 1;
+}
+
+int __thiscall melt_resistance_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    uint16_t spell_line = _this->active_spell_list[spell_index].spell_line;
+    uint16_t target_entity_index = _this->active_spell_list[spell_index].target.entity_index;
+    bool hasSpell = toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_entity_index, spell_line);
+
+    if (hasSpell)
+    {
+        uint16_t spell_index_of_type = toolboxAPI.getSpellIndexOfType(_this->SF_CGdFigureToolBox, target_entity_index, spell_line, spell_index);
+        if (spell_index_of_type)
+        {
+            spellAPI.removeDLLNode(_this, spell_index_of_type);
+
+            SF_CGdResourceSpell spell_data;
+            spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index_of_type].spell_id);
+            figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, RESISTANCE_ICE, target_entity_index, spell_data.params[0]);
+
+            spellAPI.setEffectDone(_this, spell_index_of_type, 0);
+        }
+    }
+    return 1;
+}
+
+int __thiscall chill_resistance_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    uint16_t spell_line = _this->active_spell_list[spell_index].spell_line;
+    uint16_t target_entity_index = _this->active_spell_list[spell_index].target.entity_index;
+    bool hasSpell = toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_entity_index, spell_line);
+
+    if (hasSpell)
+    {
+        uint16_t spell_index_of_type = toolboxAPI.getSpellIndexOfType(_this->SF_CGdFigureToolBox, target_entity_index, spell_line, spell_index);
+        if (spell_index_of_type)
+        {
+            spellAPI.removeDLLNode(_this, spell_index_of_type);
+
+            SF_CGdResourceSpell spell_data;
+            spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index_of_type].spell_id);
+            figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, RESISTANCE_FIRE, target_entity_index, spell_data.params[0]);
+
+            spellAPI.setEffectDone(_this, spell_index_of_type, 0);
+        }
+    }
+    return 1;
+}
+
+int __thiscall white_almightness_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    uint16_t spell_line = _this->active_spell_list[spell_index].spell_line;
+    uint16_t target_entity_index = _this->active_spell_list[spell_index].target.entity_index;
+    bool hasSpell = toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_entity_index, spell_line);
+
+    if (hasSpell)
+    {
+        uint16_t spell_index_of_type = toolboxAPI.getSpellIndexOfType(_this->SF_CGdFigureToolBox, target_entity_index, spell_line, spell_index);
+        if (spell_index_of_type)
+        {
+            spellAPI.removeDLLNode(_this, spell_index_of_type);
+
+            SF_CGdResourceSpell spell_data;
+            spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index_of_type].spell_id);
+            figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, FIGHT_SPEED, target_entity_index, -spell_data.params[3]);
+            figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, DEXTERITY, target_entity_index, -spell_data.params[2]);
+            spellAPI.setEffectDone(_this, spell_index_of_type, 0);
+        }
+    }
+    return 1;
+}
+
+int __thiscall black_almightness_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    uint16_t spell_line = _this->active_spell_list[spell_index].spell_line;
+    uint16_t target_entity_index = _this->active_spell_list[spell_index].target.entity_index;
+    bool hasSpell = toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_entity_index, spell_line);
+
+    if (hasSpell)
+    {
+        uint16_t spell_index_of_type = toolboxAPI.getSpellIndexOfType(_this->SF_CGdFigureToolBox, target_entity_index, spell_line, spell_index);
+        if (spell_index_of_type)
+        {
+            spellAPI.removeDLLNode(_this, spell_index_of_type);
+
+            SF_CGdResourceSpell spell_data;
+            spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, _this->active_spell_list[spell_index_of_type].spell_id);
+            figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, FIGHT_SPEED, target_entity_index, spell_data.params[3]);
+            figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, AGILITY, target_entity_index, spell_data.params[2]);
+            spellAPI.setEffectDone(_this, spell_index_of_type, 0);
+        }
+    }
+    return 1;
+}
+
+int __thiscall mutation_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    uint16_t spell_line = _this->active_spell_list[spell_index].spell_line;
+    uint16_t target_entity_index = _this->active_spell_list[spell_index].target.entity_index;
+    bool hasSpell = toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_entity_index, spell_line);
+
+    if (hasSpell)
+    {
+        uint16_t spell_index_of_type = toolboxAPI.getSpellIndexOfType(_this->SF_CGdFigureToolBox, target_entity_index, spell_line, spell_index);
+        if (spell_index_of_type)
+        {
+            spellAPI.removeDLLNode(_this, spell_index_of_type);
+
+            int8_t bonus = spellAPI.getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER);
+            uint16_t stat_value = _this->SF_CGdFigure->figures[target_entity_index].resistance_fire.base_val;
+            int8_t recalc_value = stat_value - ((bonus * stat_value) / 100);
+            figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, RESISTANCE_FIRE, target_entity_index, recalc_value);
+
+            stat_value = _this->SF_CGdFigure->figures[target_entity_index].fight_speed.base_val;
+            recalc_value = stat_value - ((bonus * stat_value) / 100);
+            figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, FIGHT_SPEED, target_entity_index, recalc_value);
+
+            stat_value = _this->SF_CGdFigure->figures[target_entity_index].intelligence.base_val;
+            recalc_value = stat_value - ((bonus * stat_value) / 100);
+            figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, INTELLIGENCE, target_entity_index, recalc_value);
+
+            stat_value = _this->SF_CGdFigure->figures[target_entity_index].stamina.base_val;
+            recalc_value = stat_value - ((bonus * stat_value) / 100);
+            figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, STAMINA, target_entity_index, recalc_value);
+
+            bonus = spellAPI.getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER2);
+            stat_value = _this->SF_CGdFigure->figures[target_entity_index].resistance_ice.base_val;
+            recalc_value = stat_value - ((bonus * stat_value) / 100);
+            figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, RESISTANCE_ICE, target_entity_index, recalc_value);
+
+            stat_value = _this->SF_CGdFigure->figures[target_entity_index].cast_speed.base_val;
+            recalc_value = stat_value - ((bonus * stat_value) / 100);
+            figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, CAST_SPEED, target_entity_index, recalc_value);
+
+            stat_value = _this->SF_CGdFigure->figures[target_entity_index].wisdom.base_val;
+            recalc_value = stat_value - ((bonus * stat_value) / 100);
+            figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, WISDOM, target_entity_index, recalc_value);
+
+            bonus = spellAPI.getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER3);
+            stat_value = _this->SF_CGdFigure->figures[target_entity_index].resistance_black.base_val;
+            recalc_value = stat_value - ((bonus * stat_value) / 100);
+            figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, RESISTANCE_BLACK, target_entity_index, recalc_value);
+
+            stat_value = _this->SF_CGdFigure->figures[target_entity_index].walk_speed.base_val;
+            recalc_value = stat_value - ((bonus * stat_value) / 100);
+            figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, WALK_SPEED, target_entity_index, recalc_value);
+
+            stat_value = _this->SF_CGdFigure->figures[target_entity_index].charisma.base_val;
+            recalc_value = stat_value - ((bonus * stat_value) / 100);
+            figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, CHARISMA, target_entity_index, recalc_value);
+
+            stat_value = _this->SF_CGdFigure->figures[target_entity_index].dexterity.base_val;
+            recalc_value = stat_value - ((bonus * stat_value) / 100);
+            figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, DEXTERITY, target_entity_index, recalc_value);
+
+            bonus = spellAPI.getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER4);
+            stat_value = _this->SF_CGdFigure->figures[target_entity_index].resistance_mental.base_val;
+            recalc_value = stat_value - ((bonus * stat_value) / 100);
+            figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, RESISTANCE_MENTAL, target_entity_index, recalc_value);
+
+            stat_value = _this->SF_CGdFigure->figures[target_entity_index].strength.base_val;
+            recalc_value = stat_value - ((bonus * stat_value) / 100);
+            figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, STRENGTH, target_entity_index, recalc_value);
+
+            stat_value = _this->SF_CGdFigure->figures[target_entity_index].agility.base_val;
+            recalc_value = stat_value - ((bonus * stat_value) / 100);
+            figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, AGILITY, target_entity_index, recalc_value);
+
+            spellAPI.setEffectDone(_this, spell_index_of_type, 0);
+        }
+    }
+    return 1;
+}
+
+int __thiscall eternity_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    uint16_t spell_line = _this->active_spell_list[spell_index].spell_line;
+    uint16_t target_entity_index = _this->active_spell_list[spell_index].target.entity_index;
+    bool hasSpell = toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_entity_index, spell_line);
+
+    if (hasSpell)
+    {
+        uint16_t spell_index_of_type = toolboxAPI.getSpellIndexOfType(_this->SF_CGdFigureToolBox, target_entity_index, spell_line, spell_index);
+        if (spell_index_of_type)
+        {
+            spellAPI.removeDLLNode(_this, spell_index_of_type);
+
+            int8_t bonus = (int8_t)(-spellAPI.getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER));
+            figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, DEXTERITY, target_entity_index, bonus);
+            bonus = (int8_t)(-spellAPI.getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER2));
+            figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, AGILITY, target_entity_index, bonus);
+            bonus = (int8_t)(-spellAPI.getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER3));
+            figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, FIGHT_SPEED, target_entity_index, bonus);
+            bonus = (int8_t)(-spellAPI.getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER4));
+            figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, WALK_SPEED, target_entity_index, bonus);
+
+            spellAPI.setEffectDone(_this, spell_index_of_type, 0);
+        }
+    }
+    return 1;
+}
+
 int __thiscall warcry_berserk_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
 
