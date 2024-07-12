@@ -33,8 +33,11 @@ void initialize_data_hooks()
     // Required for internal use
     initialize_spelltype_data_hooks();
 
-    // used in Iterator for AOE Spells Dispose
+    // Used in Iterator for AOE Spells Dispose
     initialize_wrapper_data_hooks();
+
+    // Used to print to the game console
+    initialize_console_data_hooks();
 
     log_info("| - FigureAPI Hooks");
     // More defined for external use in api
@@ -200,9 +203,6 @@ void initialize_deal_damage_hook()
 
 void initialize_beta_hooks()
 {
-    log_info("Hooking Game Console");
-    initialize_console_data_hooks();
-
     log_info("Hooking Spell Types");
     initialize_spelltype_hook();
 

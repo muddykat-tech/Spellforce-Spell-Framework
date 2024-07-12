@@ -162,11 +162,4 @@ void register_mod_spells()
             registerSubEffectHandler(spell_id, sub_effect_handler);
         }
     }
-
-    // Free Memory; No, we need this stuff now
-    // for (SFSpell *spell_data : internal_spell_list)
-    // {
-    //     free(spell_data->parent_mod);
-    //     free(spell_data);
-    // }
 }
