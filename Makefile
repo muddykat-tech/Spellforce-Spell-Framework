@@ -1,10 +1,11 @@
-# Compiler and linker options
+# Git Hook Compat
 ifeq ($(SHELL),sh.exe)
     CLR = cls
 else
     CLR = clear
 endif
 
+# Compiler and linker options
 CC = g++
 RC = windres
 DLL_CFLAGS = -O0 -g -std=c++11 ${WARNS} -Iinclude -DADD_EXPORTS -fpermissive
