@@ -15,7 +15,6 @@ void __thiscall sf_damage_hook(SF_CGdFigureToolbox *figureToolbox, uint16_t dmg_
     bool is_source_alive = figureAPI.isAlive(figureToolbox->CGdFigure, dmg_source);
     bool spell_effecting_source = toolboxAPI.hasSpellOnIt(figureToolbox, dmg_source, 0xa5);
     bool spell_effecting_target = toolboxAPI.hasSpellOnIt(figureToolbox, dmg_target, 0xa5);
-
     bool spell_flag_check = dmg_source != 0 && is_source_alive && spell_effecting_source && spell_effecting_target;
 
     if (unknown_job_flag_check != 0)

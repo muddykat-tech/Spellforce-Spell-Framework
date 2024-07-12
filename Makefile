@@ -1,12 +1,12 @@
 # Git Hook Compat
 ifeq ($(SHELL),sh.exe)
-    CLR = cls
+    CLR = @cls
 else
     CLR = clear
 endif
 
 # Compiler and linker options
-CC = g++
+CC = @g++
 RC = windres
 DLL_CFLAGS = -O0 -g -std=c++11 ${WARNS} -Iinclude -DADD_EXPORTS -fpermissive
 DLL_LDFLAGS = -shared -static-libgcc -static-libstdc++ -s -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive -Wl,--subsystem,windows,--out-implib,lib/testmod.a
@@ -66,7 +66,6 @@ obj/sf_wrappers.o: ${CORE_SRC}/sf_wrappers.c | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 # Hooks
-
 obj/sf_refresh_hook.o: ${HOOKS_SRC}/sf_refresh_hook.c | obj
 	${CLR}
 	@echo Building Hooks [   o]
@@ -108,14 +107,12 @@ obj/sf_hooks.o: ${CORE_SRC}/sf_hooks.c src/asi/sf_asi.h | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 # Mod Loader
-
 obj/sf_modloader.o: ${CORE_SRC}/sf_modloader.c | obj
 	${CLR}
 	@echo Compiling Framework [ o  ]
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 # Registry and Handlers
-
 obj/sf_registry.o: ${REGISTRY_SRC}/sf_registry.cpp | obj
 	${CLR}
 	@echo Building Registry [  o ]
@@ -176,7 +173,7 @@ obj/sf_spellrefresh_registry.o: ${REGISTRY_SRC}/sf_spellrefresh_registry.cpp | o
 	@echo Building Registry [  o ]
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
-#mod build
+# Mod build
 obj/TestMod.o: src/dev/TestMod.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
