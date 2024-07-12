@@ -40,7 +40,6 @@ extern fidfree_ptr fidFree;
 extern menu_label_ptr initialize_menu_label;
 extern menu_label_set_string_ptr menu_label_set_string;
 extern message_box_ptr show_message_box;
-extern original_menu_func_ptr original_menu_func;
 
 extern new_operator_ptr new_operator;
 extern menu_label_constructor_ptr menu_label_constructor;

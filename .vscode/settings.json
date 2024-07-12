@@ -34,7 +34,21 @@
         "sf_toolbox_functions.h": "c",
         "sf_spellend_registry.h": "c",
         "sf_spellrefresh_registry.h": "c",
-        "xtree": "cpp"
+        "xtree": "cpp",
+        "stdio.h": "c",
+        "sf_spelltype_handlers.h": "c",
+        "sf_endspell_hook.h": "c",
+        "sf_refresh_hook.h": "c",
+        "sf_wrappers.h": "c",
+        "sf_menu_hook.h": "c",
+        "sf_asi.h": "c",
+        "sf_effect_functions.h": "c",
+        "stdlib.h": "c",
+        "sf_modloader.h": "c",
+        "sf_spelleffect_hook.h": "c",
+        "sf_subeffect_hook.h": "c",
+        "sf_spelltype_hook.h": "c",
+        "sf_damage_hook.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled",
     "makefile.makePath": "mingw32-make"
