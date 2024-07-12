@@ -53,9 +53,6 @@ obj/sf_asi.o: src/asi/sf_asi.cpp src/asi/sf_asi.h | obj
 	
 
 obj/sfsf.o: ${INTERNALS_SRC}/sfsf.cpp src/asi/sf_asi.h | obj
-	@echo "TESTING"
-	@echo $(SHELL) 
-	@echo $(OS) 
 	${CLR}
 	@echo Compiling Framework [o   ]
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"

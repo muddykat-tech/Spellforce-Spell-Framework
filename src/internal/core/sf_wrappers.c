@@ -6,6 +6,29 @@
 #include "sf_wrappers.h"
 #include "sf_hooks.h"
 
+#include "hooks/sf_menu_hook.h"
+
+FUN_0069eaf0_ptr FUN_0069eaf0;
+fidfree_ptr fidFree;
+SF_String_ctor_ptr SF_String_ctor;
+SF_String_dtor_ptr SF_String_dtor;
+
+void initialize_wrapper_data_hooks()
+{
+    FUN_0069eaf0 = (FUN_0069eaf0_ptr)(ASI::AddrOf(0x29EAF0));
+    fidFree = (fidfree_ptr)(ASI::AddrOf(0x6B6E25));
+}
+
+void log_message(const char *filename, const char *message)
+{
+    FILE *file = fopen(filename, "a");
+    if (file != NULL)
+    {
+        fprintf(file, "%s\n", message);
+        fclose(file);
+    }
+}
+
 void log_warning(const char *message)
 {
     // Logs a warning message to the console and the debug output

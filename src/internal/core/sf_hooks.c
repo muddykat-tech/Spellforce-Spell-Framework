@@ -17,31 +17,6 @@
 #include <stdio.h>
 #include <string.h>
 
-console_print_ptr console_print;
-figure_toolbox_is_targetable_ptr figure_toolbox_is_targetable;
-
-menu_label_ptr initialize_menu_label;
-menu_label_set_string_ptr menu_label_set_string;
-message_box_ptr show_message_box;
-initialize_menu_container_ptr initialize_menu_container;
-construct_default_sf_string_ptr construct_default_sf_string;
-
-// Internal data hooks
-uint32_t menu_return_addr;
-new_operator_ptr new_operator;
-menu_label_constructor_ptr menu_label_constructor;
-mnu_label_init_data_ptr init_menu_element;
-menu_label_set_data_ptr menu_label_set_color;
-get_smth_fonts_ptr get_smth_fonts;
-menu_label_set_font_ptr menu_label_set_font;
-get_font_ptr get_font;
-container_add_control_ptr container_add_control;
-
-FUN_0069eaf0_ptr FUN_0069eaf0;
-fidfree_ptr fidFree;
-SF_String_ctor_ptr SF_String_ctor;
-SF_String_dtor_ptr SF_String_dtor;
-
 SpellFunctions spellAPI;
 EffectFunctions effectAPI;
 ToolboxFunctions toolboxAPI;
@@ -49,15 +24,7 @@ FigureFunctions figureAPI;
 IteratorFunctions iteratorAPI;
 RegistrationFunctions registrationAPI;
 
-void log_message(const char *filename, const char *message)
-{
-    FILE *file = fopen(filename, "a");
-    if (file != NULL)
-    {
-        fprintf(file, "%s\n", message);
-        fclose(file);
-    }
-}
+console_print_ptr console_print;
 
 void console_log(const char *message)
 {
@@ -74,9 +41,6 @@ void console_log(const char *message)
     log_message("sfsf.log", message);
 }
 
-/*
-    These functions, and future types, will eventually be moved into "sf_api" or some such
-*/
 void initialize_console_hook()
 {
     uint32_t CAppMain_ptr = ASI::AddrOf(0x9229A8);
@@ -90,36 +54,13 @@ void initialize_console_hook()
 void initialize_data_hooks()
 {
     log_info("| - Internal Use Hooks");
+    initialize_menu_data_hooks();
+
     // Required for internal use
-    get_spell_spell_line = (get_spell_spell_line_ptr)(ASI::AddrOf(0x26E100));
-    figure_toolbox_get_unkn = (figure_toolbox_get_unkn_ptr)(ASI::AddrOf(0x2FE704));
-    figure_toolbox_add_spell = (figure_toolbox_add_spell_ptr)(ASI::AddrOf(0x2F673A));
-
-    initialize_menu_label = (menu_label_ptr)(ASI::AddrOf(0x51a180));
-    menu_label_set_string = (menu_label_set_string_ptr)(ASI::AddrOf(0x52fab0));
-
-    initialize_menu_container = (initialize_menu_container_ptr)(ASI::AddrOf(0x505780));
-    construct_default_sf_string = (construct_default_sf_string_ptr)(ASI::AddrOf(0x383900));
-
-    original_menu_func = (original_menu_func_ptr)(ASI::AddrOf(0x197b10));
-    menu_return_addr = (ASI::AddrOf(0x182799));
-    show_message_box = (message_box_ptr)(ASI::AddrOf(0x198660));
-
-    // uint32_t _application = ASI::AddrOf(0x925C64);
-    new_operator = (new_operator_ptr)(ASI::AddrOf(0x675A9D));
-    menu_label_constructor = (menu_label_constructor_ptr)(ASI::AddrOf(0x51a180));
-    init_menu_element = (mnu_label_init_data_ptr)(ASI::AddrOf(0x52cfe0));
-    // This does seem to work, but has some strange behaviour, the color format is strange
-    menu_label_set_color = (menu_label_set_data_ptr)(ASI::AddrOf(0x530330));
-
-    get_smth_fonts = (get_smth_fonts_ptr)(ASI::AddrOf(0x5357b0));
-    menu_label_set_font = (menu_label_set_font_ptr)(ASI::AddrOf(0x530e00));
-    get_font = (get_font_ptr)(ASI::AddrOf(0x535180));
-    container_add_control = (container_add_control_ptr)(ASI::AddrOf(0x506f30));
+    initialize_spelltype_data_hooks();
 
     // used in Iterator for AOE Spells Dispose
-    FUN_0069eaf0 = (FUN_0069eaf0_ptr)(ASI::AddrOf(0x29EAF0));
-    fidFree = (fidfree_ptr)(ASI::AddrOf(0x6B6E25));
+    initialize_wrapper_data_hooks();
 
     log_info("| - FigureAPI Hooks");
     // More defined for external use in api

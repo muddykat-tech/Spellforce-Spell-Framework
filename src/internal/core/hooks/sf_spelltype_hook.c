@@ -8,6 +8,13 @@ figure_toolbox_get_unkn_ptr figure_toolbox_get_unkn;
 get_spell_spell_line_ptr get_spell_spell_line;
 figure_toolbox_add_spell_ptr figure_toolbox_add_spell;
 
+void initialize_spelltype_data_hooks()
+{
+    get_spell_spell_line = (get_spell_spell_line_ptr)(ASI::AddrOf(0x26E100));
+    figure_toolbox_get_unkn = (figure_toolbox_get_unkn_ptr)(ASI::AddrOf(0x2FE704));
+    figure_toolbox_add_spell = (figure_toolbox_add_spell_ptr)(ASI::AddrOf(0x2F673A));
+}
+
 uint16_t __thiscall sf_spelltype_hook(SF_CGdSpell *_this, uint16_t spell_id, uint16_t param2, SF_CGdTargetData *source, SF_CGdTargetData *target, uint16_t param5)
 {
     uint16_t spell_index;

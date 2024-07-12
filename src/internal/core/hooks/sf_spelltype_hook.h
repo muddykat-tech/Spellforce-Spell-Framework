@@ -9,5 +9,6 @@ extern get_spell_spell_line_ptr get_spell_spell_line;
 extern figure_toolbox_add_spell_ptr figure_toolbox_add_spell;
 
 uint16_t __thiscall sf_spelltype_hook(SF_CGdSpell *_this, uint16_t spell_id, uint16_t param2, SF_CGdTargetData *source, SF_CGdTargetData *target, uint16_t param5);
+void initialize_spelltype_data_hooks();
 
 #endif

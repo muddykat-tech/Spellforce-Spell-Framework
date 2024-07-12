@@ -48,7 +48,8 @@
         "sf_spelleffect_hook.h": "c",
         "sf_subeffect_hook.h": "c",
         "sf_spelltype_hook.h": "c",
-        "sf_damage_hook.h": "c"
+        "sf_damage_hook.h": "c",
+        "windows.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled",
     "makefile.makePath": "mingw32-make"
