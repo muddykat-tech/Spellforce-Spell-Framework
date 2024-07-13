@@ -45,131 +45,131 @@ void registerSpellTypeHandler(uint16_t spell_index, handler_ptr handler)
 
 void register_vanilla_spelltype_handlers()
 {
-	// Setup Vanilla Spell Handling!
-	registerSpellTypeHandler(0x01, &fireburst_handler);
-	registerSpellTypeHandler(0x02, &healing_handler);
-	registerSpellTypeHandler(0x03, &death_handler);
-	registerSpellTypeHandler(0x04, &slowness_handler);
-	registerSpellTypeHandler(0x05, &poison_handler);
-	registerSpellTypeHandler(0x06, &invulnerability_handler);
-	registerSpellTypeHandler(0x07, &cure_poison_handler);
-	registerSpellTypeHandler(0x08, &default_handler); // empty spell line slot
-	registerSpellTypeHandler(0x09, &freeze_handler);
-	registerSpellTypeHandler(0x0a, &fog_handler);
-	registerSpellTypeHandler(0x0b, &illuminate_handler);
-	registerSpellTypeHandler(0x0c, &fireshield_handler);
-	registerSpellTypeHandler(0x0d, &fireball_handler);
-	registerSpellTypeHandler(0x0e, &icestrike_handler);
-	registerSpellTypeHandler(0x0f, &iceshield_handler);
+	// // Setup Vanilla Spell Handling!
+	// registerSpellTypeHandler(0x01, &fireburst_handler);
+	// registerSpellTypeHandler(0x02, &healing_handler);
+	// registerSpellTypeHandler(0x03, &death_handler);
+	// registerSpellTypeHandler(0x04, &slowness_handler);
+	// registerSpellTypeHandler(0x05, &poison_handler);
+	// registerSpellTypeHandler(0x06, &invulnerability_handler);
+	// registerSpellTypeHandler(0x07, &cure_poison_handler);
+	// registerSpellTypeHandler(0x08, &default_handler); // empty spell line slot
+	// registerSpellTypeHandler(0x09, &freeze_handler);
+	// registerSpellTypeHandler(0x0a, &fog_handler);
+	// registerSpellTypeHandler(0x0b, &illuminate_handler);
+	// registerSpellTypeHandler(0x0c, &fireshield_handler);
+	// registerSpellTypeHandler(0x0d, &fireball_handler);
+	// registerSpellTypeHandler(0x0e, &icestrike_handler);
+	// registerSpellTypeHandler(0x0f, &iceshield_handler);
 
-	registerSpellTypeHandler(0x10, &decay1_handler);
-	registerSpellTypeHandler(0x11, &decay2_handler);
-	registerSpellTypeHandler(0x12, &pain_handler);
-	registerSpellTypeHandler(0x13, &lifetap_handler);
-	registerSpellTypeHandler(0x14, &summons_handler);
-	registerSpellTypeHandler(0x15, &hypnotize_handler);
-	registerSpellTypeHandler(0x16, &iceshield2_handler);
-	registerSpellTypeHandler(0x17, &pestilence_handler);
-	registerSpellTypeHandler(0x18, &cure_disease_handler);
-	registerSpellTypeHandler(0x19, &petrify_handler);
-	registerSpellTypeHandler(0x1a, &default_handler); // empty spell line slot
-	registerSpellTypeHandler(0x1b, &default_handler); // empty spell line slot
-	registerSpellTypeHandler(0x1c, &area_pain_handler);
-	registerSpellTypeHandler(0x1d, &summons_handler);
-	registerSpellTypeHandler(0x1e, &raise_dead_handler);
-	registerSpellTypeHandler(0x1f, &summons_handler);
+	// registerSpellTypeHandler(0x10, &decay1_handler);
+	// registerSpellTypeHandler(0x11, &decay2_handler);
+	// registerSpellTypeHandler(0x12, &pain_handler);
+	// registerSpellTypeHandler(0x13, &lifetap_handler);
+	// registerSpellTypeHandler(0x14, &summons_handler);
+	// registerSpellTypeHandler(0x15, &hypnotize_handler);
+	// registerSpellTypeHandler(0x16, &iceshield2_handler);
+	// registerSpellTypeHandler(0x17, &pestilence_handler);
+	// registerSpellTypeHandler(0x18, &cure_disease_handler);
+	// registerSpellTypeHandler(0x19, &petrify_handler);
+	// registerSpellTypeHandler(0x1a, &default_handler); // empty spell line slot
+	// registerSpellTypeHandler(0x1b, &default_handler); // empty spell line slot
+	// registerSpellTypeHandler(0x1c, &area_pain_handler);
+	// registerSpellTypeHandler(0x1d, &summons_handler);
+	// registerSpellTypeHandler(0x1e, &raise_dead_handler);
+	// registerSpellTypeHandler(0x1f, &summons_handler);
 
-	registerSpellTypeHandler(0x20, &death_grasp_handler);
-	registerSpellTypeHandler(0x21, &summons_handler);
-	registerSpellTypeHandler(0x22, &inflexibility_handler);
-	registerSpellTypeHandler(0x23, &weaken_handler);
-	registerSpellTypeHandler(0x24, &dark_banishing_handler);
-	registerSpellTypeHandler(0x25, &area_slowness_handler);
-	registerSpellTypeHandler(0x26, &area_inflexibility_handler);
-	registerSpellTypeHandler(0x27, &area_weaken_handler);
-	registerSpellTypeHandler(0x28, &area_plague_handler);
-	registerSpellTypeHandler(0x29, &remediless_handler);
-	registerSpellTypeHandler(0x2a, &default_handler); // dark might
-	registerSpellTypeHandler(0x2b, &area_healing_handler);
-	registerSpellTypeHandler(0x2c, &sentinel_healing_handler);
-	registerSpellTypeHandler(0x2d, &healing_handler);
-	registerSpellTypeHandler(0x2e, &charm_animal_handler);
-	registerSpellTypeHandler(0x2f, &thorn_shield_handler);
+	// registerSpellTypeHandler(0x20, &death_grasp_handler);
+	// registerSpellTypeHandler(0x21, &summons_handler);
+	// registerSpellTypeHandler(0x22, &inflexibility_handler);
+	// registerSpellTypeHandler(0x23, &weaken_handler);
+	// registerSpellTypeHandler(0x24, &dark_banishing_handler);
+	// registerSpellTypeHandler(0x25, &area_slowness_handler);
+	// registerSpellTypeHandler(0x26, &area_inflexibility_handler);
+	// registerSpellTypeHandler(0x27, &area_weaken_handler);
+	// registerSpellTypeHandler(0x28, &area_plague_handler);
+	// registerSpellTypeHandler(0x29, &remediless_handler);
+	// registerSpellTypeHandler(0x2a, &default_handler); // dark might
+	// registerSpellTypeHandler(0x2b, &area_healing_handler);
+	// registerSpellTypeHandler(0x2c, &sentinel_healing_handler);
+	// registerSpellTypeHandler(0x2d, &healing_handler);
+	// registerSpellTypeHandler(0x2e, &charm_animal_handler);
+	// registerSpellTypeHandler(0x2f, &thorn_shield_handler);
 
-	registerSpellTypeHandler(0x30, &quickness_handler);
-	registerSpellTypeHandler(0x31, &area_quickness_handler);
-	registerSpellTypeHandler(0x32, &flexibility_handler);
-	registerSpellTypeHandler(0x33, &area_flexibility_handler);
-	registerSpellTypeHandler(0x34, &strength_handler);
-	registerSpellTypeHandler(0x35, &area_strength_handler);
-	registerSpellTypeHandler(0x36, &guard_handler);
-	registerSpellTypeHandler(0x37, &remove_curse_handler);
-	registerSpellTypeHandler(0x38, &regenerate_handler);
-	registerSpellTypeHandler(0x39, &default_handler); // holy might
-	registerSpellTypeHandler(0x3a, &hallow_handler);
-	registerSpellTypeHandler(0x3b, &default_handler); // empty slot
-	registerSpellTypeHandler(0x3c, &fireshield2_handler);
-	registerSpellTypeHandler(0x3d, &thorn_shield2_handler);
-	registerSpellTypeHandler(0x3e, &forget_handler);
-	registerSpellTypeHandler(0x3f, &self_illusion_handler);
+	// registerSpellTypeHandler(0x30, &quickness_handler);
+	// registerSpellTypeHandler(0x31, &area_quickness_handler);
+	// registerSpellTypeHandler(0x32, &flexibility_handler);
+	// registerSpellTypeHandler(0x33, &area_flexibility_handler);
+	// registerSpellTypeHandler(0x34, &strength_handler);
+	// registerSpellTypeHandler(0x35, &area_strength_handler);
+	// registerSpellTypeHandler(0x36, &guard_handler);
+	// registerSpellTypeHandler(0x37, &remove_curse_handler);
+	// registerSpellTypeHandler(0x38, &regenerate_handler);
+	// registerSpellTypeHandler(0x39, &default_handler); // holy might
+	// registerSpellTypeHandler(0x3a, &hallow_handler);
+	// registerSpellTypeHandler(0x3b, &default_handler); // empty slot
+	// registerSpellTypeHandler(0x3c, &fireshield2_handler);
+	// registerSpellTypeHandler(0x3d, &thorn_shield2_handler);
+	// registerSpellTypeHandler(0x3e, &forget_handler);
+	// registerSpellTypeHandler(0x3f, &self_illusion_handler);
 
-	registerSpellTypeHandler(0x40, &retention_handler);
-	registerSpellTypeHandler(0x41, &brilliance_handler);
-	registerSpellTypeHandler(0x42, &sacrifice_mana_handler);
-	registerSpellTypeHandler(0x43, &manatap_handler);
-	registerSpellTypeHandler(0x44, &manadrain_handler);
-	registerSpellTypeHandler(0x45, &shock_handler);
-	registerSpellTypeHandler(0x46, &disrupt_handler);
-	registerSpellTypeHandler(0x47, &default_handler); // empty slot
-	registerSpellTypeHandler(0x48, &confuse_handler);
-	registerSpellTypeHandler(0x49, &rain_of_fire_handler);
-	registerSpellTypeHandler(0x4a, &blizzard_handler);
-	registerSpellTypeHandler(0x4b, &acid_cloud_handler);
-	registerSpellTypeHandler(0x4c, &stone_rain_handler);
-	registerSpellTypeHandler(0x4d, &default_handler); // empty slot
-	registerSpellTypeHandler(0x4e, &default_handler); // empty slot
-	registerSpellTypeHandler(0x4f, &amok_handler);
+	// registerSpellTypeHandler(0x40, &retention_handler);
+	// registerSpellTypeHandler(0x41, &brilliance_handler);
+	// registerSpellTypeHandler(0x42, &sacrifice_mana_handler);
+	// registerSpellTypeHandler(0x43, &manatap_handler);
+	// registerSpellTypeHandler(0x44, &manadrain_handler);
+	// registerSpellTypeHandler(0x45, &shock_handler);
+	// registerSpellTypeHandler(0x46, &disrupt_handler);
+	// registerSpellTypeHandler(0x47, &default_handler); // empty slot
+	// registerSpellTypeHandler(0x48, &confuse_handler);
+	// registerSpellTypeHandler(0x49, &rain_of_fire_handler);
+	// registerSpellTypeHandler(0x4a, &blizzard_handler);
+	// registerSpellTypeHandler(0x4b, &acid_cloud_handler);
+	// registerSpellTypeHandler(0x4c, &stone_rain_handler);
+	// registerSpellTypeHandler(0x4d, &default_handler); // empty slot
+	// registerSpellTypeHandler(0x4e, &default_handler); // empty slot
+	// registerSpellTypeHandler(0x4f, &amok_handler);
 
-	registerSpellTypeHandler(0x50, &default_handler); // empty spell line slot
-	registerSpellTypeHandler(0x51, &extinct_handler);
-	registerSpellTypeHandler(0x52, &detect_metal_handler);
-	registerSpellTypeHandler(0x53, &detect_magic_handler);
-	registerSpellTypeHandler(0x54, &default_handler);	 // unnamed spell 84
-	registerSpellTypeHandler(0x55, &unkn_spell_handler); // unnamed spell 85
-	registerSpellTypeHandler(0x56, &invisibility_handler);
-	registerSpellTypeHandler(0x57, &stone_handler);
-	registerSpellTypeHandler(0x58, &aura_handler);
-	registerSpellTypeHandler(0x59, &aura_handler);
-	registerSpellTypeHandler(0x5a, &suicide_death_handler);
-	registerSpellTypeHandler(0x5b, &aura_handler);
-	registerSpellTypeHandler(0x5c, &summons_handler);
-	registerSpellTypeHandler(0x5d, &feign_death_handler);
-	registerSpellTypeHandler(0x5e, &aura_handler);
-	registerSpellTypeHandler(0x5f, &aura_handler);
+	// registerSpellTypeHandler(0x50, &default_handler); // empty spell line slot
+	// registerSpellTypeHandler(0x51, &extinct_handler);
+	// registerSpellTypeHandler(0x52, &detect_metal_handler);
+	// registerSpellTypeHandler(0x53, &detect_magic_handler);
+	// registerSpellTypeHandler(0x54, &default_handler);	 // unnamed spell 84
+	// registerSpellTypeHandler(0x55, &unkn_spell_handler); // unnamed spell 85
+	// registerSpellTypeHandler(0x56, &invisibility_handler);
+	// registerSpellTypeHandler(0x57, &stone_handler);
+	// registerSpellTypeHandler(0x58, &aura_handler);
+	// registerSpellTypeHandler(0x59, &aura_handler);
+	// registerSpellTypeHandler(0x5a, &suicide_death_handler);
+	// registerSpellTypeHandler(0x5b, &aura_handler);
+	// registerSpellTypeHandler(0x5c, &summons_handler);
+	// registerSpellTypeHandler(0x5d, &feign_death_handler);
+	// registerSpellTypeHandler(0x5e, &aura_handler);
+	// registerSpellTypeHandler(0x5f, &aura_handler);
 
-	registerSpellTypeHandler(0x60, &dispel_white_aura_handler);
-	registerSpellTypeHandler(0x61, &aura_handler);
-	registerSpellTypeHandler(0x62, &aura_handler);
-	registerSpellTypeHandler(0x63, &suffocation_handler);
-	registerSpellTypeHandler(0x64, &inablility_handler);
-	registerSpellTypeHandler(0x65, &slow_fighting_handler);
-	registerSpellTypeHandler(0x66, &aura_handler);
-	registerSpellTypeHandler(0x67, &aura_handler);
-	registerSpellTypeHandler(0x68, &aura_handler);
-	registerSpellTypeHandler(0x69, &suicide_heal_handler);
-	registerSpellTypeHandler(0x6a, &summons_handler);
-	registerSpellTypeHandler(0x6b, &aura_handler);
-	registerSpellTypeHandler(0x6c, &dominate_animal_handler);
-	registerSpellTypeHandler(0x6d, &summons_handler);
-	registerSpellTypeHandler(0x6e, &aura_handler);
-	registerSpellTypeHandler(0x6f, &aura_handler);
+	// registerSpellTypeHandler(0x60, &dispel_white_aura_handler);
+	// registerSpellTypeHandler(0x61, &aura_handler);
+	// registerSpellTypeHandler(0x62, &aura_handler);
+	// registerSpellTypeHandler(0x63, &suffocation_handler);
+	// registerSpellTypeHandler(0x64, &inablility_handler);
+	// registerSpellTypeHandler(0x65, &slow_fighting_handler);
+	// registerSpellTypeHandler(0x66, &aura_handler);
+	// registerSpellTypeHandler(0x67, &aura_handler);
+	// registerSpellTypeHandler(0x68, &aura_handler);
+	// registerSpellTypeHandler(0x69, &suicide_heal_handler);
+	// registerSpellTypeHandler(0x6a, &summons_handler);
+	// registerSpellTypeHandler(0x6b, &aura_handler);
+	// registerSpellTypeHandler(0x6c, &dominate_animal_handler);
+	// registerSpellTypeHandler(0x6d, &summons_handler);
+	// registerSpellTypeHandler(0x6e, &aura_handler);
+	// registerSpellTypeHandler(0x6f, &aura_handler);
 
 	registerSpellTypeHandler(0x70, &dispel_black_aura_handler);
 	registerSpellTypeHandler(0x71, &aura_handler);
 	registerSpellTypeHandler(0x72, &aura_handler);
 	registerSpellTypeHandler(0x73, &aura_handler);
 	registerSpellTypeHandler(0x74, &dexterity_handler);
-	registerSpellTypeHandler(0x75, &edurance_handler);
+	registerSpellTypeHandler(0x75, &endurance_handler);
 	registerSpellTypeHandler(0x76, &fast_fighting_handler);
 	registerSpellTypeHandler(0x77, &distract_handler);
 	registerSpellTypeHandler(0x78, &dominate_handler);

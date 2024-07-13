@@ -496,7 +496,7 @@ void __thiscall dexterity_handler(SF_CGdSpell *_this, uint16_t spell_index)
 	initializeSpellData(_this, spell_index, SPELL_STAT_MUL_MODIFIER);
 }
 
-void __thiscall edurance_handler(SF_CGdSpell *_this, uint16_t spell_index)
+void __thiscall endurance_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
 	_this->active_spell_list[spell_index].spell_job = 0x4e;
 	initializeSpellData(_this, spell_index, SPELL_TICK_COUNT_AUX);

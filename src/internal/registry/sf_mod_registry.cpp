@@ -87,7 +87,7 @@ void register_mod_spells()
     std::map<uint16_t, SFMod *> spell_effect_id_map;
 
     SFMod *temp = current_mod;
-
+    uint8_t spell_count_for_mod = 0;
     for (SFSpell *spell_data : internal_spell_list)
     {
         uint16_t spell_id = spell_data->spell_id;
@@ -103,10 +103,22 @@ void register_mod_spells()
 
         if (temp != current_mod)
         {
+            if (spell_count_for_mod != 0)
+            {
+                char spell_count_info[256];
+                snprintf(spell_count_info, sizeof(spell_count_info), "| - Finished Registration of %d spells for %s", spell_count_for_mod, temp->mod_id);
+                log_info(spell_count_info);
+                spell_count_for_mod = 0;
+            }
+
             char info[256];
-            snprintf(info, sizeof(info), "| - Spell Registration for [%s by %s]", parent_mod->mod_id, parent_mod->mod_author);
+            snprintf(info, sizeof(info), "| - Starting Registration for [%s by %s]", parent_mod->mod_id, parent_mod->mod_author);
             log_info(info);
             temp = current_mod;
+        }
+        else
+        {
+            spell_count_for_mod = spell_count_for_mod + 1;
         }
 
         // Check for conflicts
@@ -161,5 +173,13 @@ void register_mod_spells()
         {
             registerSubEffectHandler(spell_id, sub_effect_handler);
         }
+    }
+
+    if (spell_count_for_mod != 0)
+    {
+        char spell_count_info[256];
+        snprintf(spell_count_info, sizeof(spell_count_info), "| - Finished Registration of %d spells for %s", spell_count_for_mod, temp->mod_id);
+        log_info(spell_count_info);
+        spell_count_for_mod = 0;
     }
 }

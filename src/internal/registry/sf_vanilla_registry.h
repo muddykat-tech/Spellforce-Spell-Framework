@@ -10,6 +10,6 @@
 #include "../handlers/sf_spellrefresh_handlers.h"
 #include "../handlers/sf_sub_effect_handlers.h"
 
-void initialize_vanilla_registry();
+void initialize_vanilla_spells();
 
 #endif
