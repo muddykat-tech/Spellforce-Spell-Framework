@@ -329,7 +329,7 @@ void initialize_vanilla_spells()
     SFSpell *aura13 = registrationAPI.registerSpell(0x6f); // TODO Find spell name
     registrationAPI.linkTypeHandler(aura13, &aura_handler);
 
-    SFspell *dispel_black_aura = registrationAPI.registerSpell(0x70);
+    SFSpell *dispel_black_aura = registrationAPI.registerSpell(0x70);
     registrationAPI.linkTypeHandler(dispel_black_aura, &dispel_black_aura_handler);
 
     SFSpell *aura14 = registrationAPI.registerSpell(0x71); // TODO Find spell name
@@ -452,8 +452,8 @@ void initialize_vanilla_spells()
     SFSpell *ability_endurance = registrationAPI.registerSpell(0x97);
     registrationAPI.linkTypeHandler(ability_endurance, &ability_endurance_handler);
 
-    SFSpell *ability_beserk = registrationAPI.registerSpell(0x98);
-    registrationAPI.linkTypeHandler(ability_beserk, &ability_beserk_handler);
+    SFSpell *ability_berserk = registrationAPI.registerSpell(0x98);
+    registrationAPI.linkTypeHandler(ability_berserk, &ability_berserk_handler);
 
     SFSpell *ability_boons = registrationAPI.registerSpell(0x99);
     registrationAPI.linkTypeHandler(ability_boons, &ability_boons_handler);
@@ -464,8 +464,8 @@ void initialize_vanilla_spells()
     SFSpell *ability_durability = registrationAPI.registerSpell(0x9b);
     registrationAPI.linkTypeHandler(ability_durability, &ability_durability_handler);
 
-    SFSpell *ability_trueshort = registrationAPI.registerSpell(0x9c);
-    registrationAPI.linkTypeHandler(ability_trueshort, &ability_trueshort_handler);
+    SFSpell *ability_trueshot = registrationAPI.registerSpell(0x9c);
+    registrationAPI.linkTypeHandler(ability_trueshot, &ability_trueshot_handler);
 
     SFSpell *ability_steelskin = registrationAPI.registerSpell(0x9d);
     registrationAPI.linkTypeHandler(ability_steelskin, &ability_steelskin_handler);
@@ -473,8 +473,8 @@ void initialize_vanilla_spells()
     SFSpell *ability_salvo = registrationAPI.registerSpell(0x9e);
     registrationAPI.linkTypeHandler(ability_salvo, &ability_salvo_handler);
 
-    SFSpell *fireburst = registrationAPI.registerSpell(0x9f);
-    registrationAPI.linkTypeHandler(fireburst, &fireburst_handler);
+    SFSpell *fireburst2 = registrationAPI.registerSpell(0x9f);
+    registrationAPI.linkTypeHandler(fireburst2, &fireburst_handler);
 
     // Next Spell Block
 
@@ -494,7 +494,7 @@ void initialize_vanilla_spells()
     registrationAPI.linkTypeHandler(cloak_of_nor, &cloak_of_nor_handler);
 
     SFSpell *unkn_spell2 = registrationAPI.registerSpell(0xa5);
-    registrationAPI.linkTypeHandler(unkn_spell1, &unkn_spell2_handler);
+    registrationAPI.linkTypeHandler(unkn_spell2, &unkn_spell2_handler);
 
     SFSpell *healing3 = registrationAPI.registerSpell(0xa6);
     registrationAPI.linkTypeHandler(healing3, &healing_handler);
