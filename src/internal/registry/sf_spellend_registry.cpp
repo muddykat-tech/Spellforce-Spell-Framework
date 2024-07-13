@@ -60,6 +60,8 @@ void register_vanilla_spell_end_handlers()
     registerSpellEndHandler(0x87, &melt_resistance_end_handler);
     registerSpellEndHandler(0x8a, &chill_resistance_end_handler);
     registerSpellEndHandler(0xae, &black_almightness_end_handler);
+    registerSpellEndHandler(0xaf, &white_almightness_end_handler);
+    registerSpellEndHandler(0xb3, &white_almightness_end_handler);
     registerSpellEndHandler(0xb2, &black_almightness_end_handler);
     registerSpellEndHandler(0xc7, &mutation_end_handler); // 199 in ghidra switch case
     registerSpellEndHandler(0xe5, &eternity_end_handler);

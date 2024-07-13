@@ -697,7 +697,7 @@ int __thiscall patronize_shelter_refresh_handler(SF_CGdSpell *_this, uint16_t sp
     return returnValue;
 }
 
-int __thiscall endurence_durability_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index)
+int __thiscall endurance_durability_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     // Essentially, prevents warcry from being used if Berserk is active.
     uint16_t spell_line = _this->active_spell_list[spell_index].spell_line;

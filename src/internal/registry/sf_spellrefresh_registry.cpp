@@ -41,11 +41,8 @@ void register_vanilla_spell_refresh_handlers()
 {
     // Vanilla spell refresh handlers
     int firstblock_cases[] = {
-        4, 6, 0xc, 0xf, 0x10, 0x15, 0x19, 0x20, 0x22, 0x23,
-        0x24, 0x29, 0x2f, 0x30, 0x32, 0x34, 0x38, 0x40, 0x41, 0x48,
-        0x4f, 99, 100, 0x65, 0x74, 0x75, 0x76, 0x7d, 0x82, 0x87,
-        0x8a, 0x8c, 0x95, 0x99, 0x9c, 0x9d, 0x9e, 0xa1, 0xa4, 0xa7, 0xaf, 0xb3, 0xbd, 199,
-        0xd5, 0xdd, 0xde, 0xe5, 0xe9};
+        0x06, 0x0c, 0x0f, 0x15, 0x19, 0x20, 0x24, 0x29, 0x2f, 0x38, 0x48,
+        0x4f, 0x8c, 0x95, 0x99, 0x9c, 0x9d, 0x9e, 0xa1, 0xa4, 0xa7, 0xbd, 0xd5, 0xdd, 0xde,};
 
     int vanilla_domination_cases[] = {0x2e, 0x6c, 0x78, 0x7a, 0xc5, 0xed};
 
@@ -54,14 +51,41 @@ void register_vanilla_spell_refresh_handlers()
         registerSpellRefreshHandler(firstblock_cases[i], &first_block_refresh_handler);
     }
 
+    registerSpellRefreshHandler(0x04, &slowness_refresh_handler);
+    registerSpellRefreshHandler(0x10, &decay_refresh_handler);
+    registerSpellRefreshHandler(0x22, &inflexibility_refresh_handler);
+    registerSpellRefreshHandler(0x23, &weaken_refresh_handler);
+    registerSpellRefreshHandler(0x30, &quickness_refresh_handler);
+    registerSpellRefreshHandler(0x32, &flexibility_refresh_handler);
+    registerSpellRefreshHandler(0x34, &strength_refresh_handler);
+    registerSpellRefreshHandler(0x40, &brilliance_refresh_handler);
+    registerSpellRefreshHandler(0x41, &brilliance_refresh_handler);
+    registerSpellRefreshHandler(0x63, &suffocation_refresh_handler); // 99 and 100 in ghidra switch case respectivly
+    registerSpellRefreshHandler(0x64, &inablility_refresh_handler); // ^
+    registerSpellRefreshHandler(0x65, &slow_fighting_refresh_handler);
+    registerSpellRefreshHandler(0x74, &dexterity_refresh_handler);
+    registerSpellRefreshHandler(0x75, &endurance_refresh_handler);
+    registerSpellRefreshHandler(0x76, &fast_fighting_refresh_handler);
+    registerSpellRefreshHandler(0x7d, &charisma_refresh_handler);
+    registerSpellRefreshHandler(0x82, &enlightenment_refresh_handler);
+    registerSpellRefreshHandler(0x87, &melt_resistance_refresh_handler);
+    registerSpellRefreshHandler(0x8a, &chill_resistance_refresh_handler);
+    registerSpellRefreshHandler(0xae, &black_almightness_refresh_handler);
+    registerSpellRefreshHandler(0xaf, &white_almightness_refresh_handler);
+    registerSpellRefreshHandler(0xb2, &black_almightness_refresh_handler);
+    registerSpellRefreshHandler(0xb3, &white_almightness_refresh_handler);
+    registerSpellRefreshHandler(0xc7, &mutation_refresh_handler); // 199 in ghidra switch case
+    registerSpellRefreshHandler(0xe5, &eternity_refresh_handler);
+    registerSpellRefreshHandler(0xe9, &mutation_refresh_handler);
+
     registerSpellRefreshHandler(0x94, &warcry_berserk_refresh_handler);
     registerSpellRefreshHandler(0x98, &warcry_berserk_refresh_handler);
 
     registerSpellRefreshHandler(0x96, &patronize_shelter_refresh_handler);
     registerSpellRefreshHandler(0x9a, &patronize_shelter_refresh_handler);
 
-    registerSpellRefreshHandler(0x97, &endurence_durability_refresh_handler);
-    registerSpellRefreshHandler(0x9b, &endurence_durability_refresh_handler);
+    registerSpellRefreshHandler(0x97, &endurance_durability_refresh_handler);
+    registerSpellRefreshHandler(0x9b, &endurance_durability_refresh_handler);
 
     registerSpellRefreshHandler(0x17, &pestilence_refresh_handler);
 
