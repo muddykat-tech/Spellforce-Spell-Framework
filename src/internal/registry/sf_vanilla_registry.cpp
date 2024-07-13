@@ -663,4 +663,73 @@ void initialize_vanilla_spells()
 
     SFSpell *shift_mana = registrationAPI.registerSpell(0xdb);
     registrationAPI.linkTypeHandler(shift_mana, &shift_mana_handler);
+
+    SFSpell *ability_shift_life = registrationAPI.registerSpell(0xdc);
+    registrationAPI.linkTypeHandler(ability_shift_life, &ability_shift_life_handler);
+
+    SFSpell *ability_riposte = registrationAPI.registerSpell(0xdd);
+    registrationAPI.linkTypeHandler(ability_riposte, &ability_riposte_handler);
+
+    SFSpell *ability_critical_hits = registrationAPI.registerSpell(0xde);
+    registrationAPI.linkTypeHandler(ability_critical_hits, &ability_critical_hits_handler);
+
+    SFSpell *aura21 = registrationAPI.registerSpell(0xdf); // TODO Find Spell Name
+    registrationAPI.linkTypeHandler(aura21, &aura_handler);
+
+    // Next Spell Block
+
+    // Unused Spell Here
+
+    SFSpell *aura22 = registrationAPI.registerSpell(0xe1); // TODO Find Spell Name
+    registrationAPI.linkTypeHandler(aura22, &aura_handler);
+
+    SFSpell *aura23 = registrationAPI.registerSpell(0xe2); // TODO Find Spell Name
+    registrationAPI.linkTypeHandler(aura23, &aura_handler);
+
+    SFSpell *aura24 = registrationAPI.registerSpell(0xe3); // TODO Find Spell Name
+    registrationAPI.linkTypeHandler(aura24, &aura_handler);
+
+    SFSpell *aura25 = registrationAPI.registerSpell(0xe4); // TODO Find Spell Name
+    registrationAPI.linkTypeHandler(aura25, &aura_handler);
+
+    SFSpell *eternity_aura = registrationAPI.registerSpell(0xe5);
+    registrationAPI.linkTypeHandler(eternity_aura, &eternity_aura_handler);
+
+    SFSpell *hallow2 = registrationAPI.registerSpell(0xe6);
+    registrationAPI.linkTypeHandler(hallow2, &hallow_handler);
+
+    SFSpell *lifetap2 = registrationAPI.registerSpell(0xe7);
+    registrationAPI.linkTypeHandler(lifetap2, &lifetap_handler);
+
+    SFSpell *manatap2 = registrationAPI.registerSpell(0xe8);
+    registrationAPI.linkTypeHandler(manatap2, &manatap_handler);
+
+    SFSpell *mutation2 = registrationAPI.registerSpell(0xe9);
+    registrationAPI.linkTypeHandler(mutation2, &mutation_handler);
+
+    SFSpell *fireburst3 = registrationAPI.registerSpell(0xea);
+    registrationAPI.linkTypeHandler(fireburst3, &fireburst_handler);
+
+    SFSpell *icestrike2 = registrationAPI.registerSpell(0xeb);
+    registrationAPI.linkTypeHandler(icestrike2, &icestrike_handler);
+
+    SFSpell *rock_bullet2 = registrationAPI.registerSpell(0xec);
+    registrationAPI.linkTypeHandler(rock_bullet2, &rock_bullet_handler);
+
+    SFSpell *charm2 = registrationAPI.registerSpell(0xed);
+    registrationAPI.linkTypeHandler(charm2, &charm_handler);
+
+    SFSpell *shock2 = registrationAPI.registerSpell(0xee);
+    registrationAPI.linkTypeHandler(shock2, &shock_handler);
+
+    SFSpell *fireball3 = registrationAPI.registerSpell(0xef);
+    registrationAPI.linkTypeHandler(fireball3, &fireball_handler);
+
+    // Next Spell Block
+
+    SFSpell *pain2 = registrationAPI.registerSpell(0xf0);
+    registrationAPI.linkTypeHandler(pain2, &pain_handler);
+
+    SFSpell *belial_effect = registrationAPI.registerSpell(0xf1);
+    registrationAPI.linkTypeHandler(belial_effect, &belial_effect_handler);
 }
