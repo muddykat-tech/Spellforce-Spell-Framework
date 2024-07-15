@@ -190,15 +190,13 @@ void initialize_menuload_hook()
 
 void initialize_deal_damage_hook()
 {
-    uint32_t flag_pointer = *(uint32_t *)(ASI::AddrOf(0x2f4b56));
-    ASI::MemoryRegion deal_damage_mreg(ASI::AddrOf(0x2f4a57), 9);
+    //uint32_t flag_pointer = *(uint32_t *)(ASI::AddrOf());
+    sf_damage_return_addr = ASI::AddrOf(0x2f5465);
+    ASI::MemoryRegion deal_damage_mreg(ASI::AddrOf(0x2f4af3), );
     ASI::BeginRewrite(deal_damage_mreg);
-    *(unsigned char *)(ASI::AddrOf(0x2f4a57)) = 0x90; // nop trail
-    *(unsigned char *)(ASI::AddrOf(0x2f4a58)) = 0x90; // nop trail
-    *(unsigned char *)(ASI::AddrOf(0x2f4a59)) = 0x90; // nop trail
-    *(unsigned char *)(ASI::AddrOf(0x2f4a5a)) = 0x90; // nop trail
-    *(unsigned char *)(ASI::AddrOf(0x2f4a5b)) = 0xE9; // JMP
-    *(int *)(ASI::AddrOf(0x2f4a5c)) = (int)(&sf_damage_hook) - ASI::AddrOf(0x2F4A60);
+    *(unsigned char *)(ASI::AddrOf(0x2f4af3)) = 0x90; // nop trail
+    *(unsigned char *)(ASI::AddrOf(0x2f4af4)) = 0xE9; // JMP
+    *(int *)(ASI::AddrOf(0x2f4af5)) = (int)(&sf_damage_hook) - ASI::AddrOf(0x2f4af9);
 }
 
 void initialize_beta_hooks()

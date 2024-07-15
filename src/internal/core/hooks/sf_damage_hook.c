@@ -7,9 +7,32 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+uint32_t sf_damage_return_addr;
 
-void __thiscall sf_damage_hook(SF_CGdFigureToolbox *figureToolbox, uint16_t dmg_source, uint16_t dmg_target, uint32_t damage_amount, uint32_t is_spell_damage, uint32_t param_5, uint32_t vry_unknown_6)
+void __attribute__((no_caller_saved_registers, thiscall)) sf_deal_damage(SF_CGdFigureToolbox *figureToolbox, uint16_t dmg_source, uint16_t dmg_target, uint32_t damage_amount, uint32_t is_spell_damage, uint32_t param_5, uint32_t vry_unknown_6)
 {
+
+
+    /* rewrite this
+      if ((((source != 0) && (iVar6 = CGdFigure::IsAlive(local_270->gd_figure,source), iVar6 != 0)) &&
+      (iVar6 = HasSpellOnIt(local_270,source,0xa5), iVar6 != 0)) ||
+     (iVar6 = HasSpellOnIt(local_270,target,0xa5), iVar6 != 0)) {
+    local_29c = 1;
+    }
+    */
+
+
+    /* call this
+      iVar6 = CGdFigure::IsFlagSet(local_270->gd_figure,target,CHECK_SPELLS_BEFORE_JOB);
+  if (iVar6 != 0) {
+    uVar3 = CGdFigure::GetSpellJobStartNode(local_270->gd_figure,target);
+    local_28c = CONCAT22(local_28c._2_2_,uVar3);
+    */
+
+
+   /*   here comes them handlers */
+
+   //all code below is obsolete
     uint16_t target_job = figureAPI.getJob(figureToolbox->CGdFigure, dmg_target);
     bool unknown_job_flag_check = figureAPI.FUN_006e3a90(figureToolbox->CGdFigureJobs, target_job);
     bool is_source_alive = figureAPI.isAlive(figureToolbox->CGdFigure, dmg_source);
@@ -43,4 +66,17 @@ void __thiscall sf_damage_hook(SF_CGdFigureToolbox *figureToolbox, uint16_t dmg_
     }
 
     log_info("Called into Overwritten Damage Function");
+}
+
+void __declspec(naked) sf_damage_hook_beta()
+{
+    asm("push 0x08(%%ebp)        \n\t"
+        "push 0x0с(%%ebp)        \n\t"
+        "push 0x10(%%ebp)        \n\t"
+        "push 0x14(%%ebp)        \n\t"
+        "push 0x18(%%ebp)        \n\t"
+        "push 0x1с(%%ebp)        \n\t"
+        "mov 0x26c(%%ebp), %%ecx \n\t"
+        "call %P0                \n\t"
+        "jmp *%1                 \n\t" : : "i"(sf_deal_damage), "o"(sf_damage_return_addr));
 }
