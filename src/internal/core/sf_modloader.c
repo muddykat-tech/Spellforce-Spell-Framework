@@ -6,11 +6,12 @@
 #include "sf_wrappers.h"
 #include "sf_modloader.h"
 
-extern SpellforceSpellFramework frameworkAPI;
+#include "../registry/sf_registry.h"
+
 typedef void (*InitModuleFunc)(void *);
 typedef SFMod *(*RegisterModFunc)(void *);
-int mod_count = 0;
-int error_count = 0;
+int g_mod_count = 0;
+int g_error_count = 0;
 
 void cleanup(void *modHandle)
 {
@@ -54,15 +55,15 @@ void load_mod(const char *modPath, void *pFrameworkAPI)
         snprintf(warn, sizeof(warn), "| - Failed to Initialize %s has erroneous mod data. (0_0)", get_filename(modPath));
         log_warning(warn);
         log_error("| - Failed to get address of RegisterMod (X_X)");
-        error_count += 1;
+        g_error_count += 1;
         return;
     }
 
-    current_mod = registerMod(pFrameworkAPI);
+    g_current_mod = registerMod(pFrameworkAPI);
     initModule(pFrameworkAPI);
-    mod_count += 1;
+    g_mod_count += 1;
     char infomsg[256];
-    snprintf(infomsg, sizeof(infomsg), "| - [Initialized Mod: %s (Ver. %s)]", current_mod->mod_id, current_mod->mod_version);
+    snprintf(infomsg, sizeof(infomsg), "| - [Initialized Mod: %s (Ver. %s)]", g_current_mod->mod_id, g_current_mod->mod_version);
     log_info(infomsg);
     return;
 }
@@ -102,6 +103,6 @@ void initialize_mods()
 {
     load_all_mods("sfsf", &frameworkAPI);
     static char info_str[256];
-    snprintf(info_str, sizeof(info_str), "| - %d Mods Initialized with %d error(s)", mod_count, error_count);
+    snprintf(info_str, sizeof(info_str), "| - %d Mods Initialized with %d error(s)", g_mod_count, g_error_count);
     log_info(info_str);
 }

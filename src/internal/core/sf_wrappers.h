@@ -15,10 +15,8 @@ extern void __thiscall addBonusMultToStatistic(SF_CGdFigure *figure, StatisticDa
 extern void __thiscall spellClearFigureFlag(SF_CGdSpell *spell, uint16_t spell_index, SpellFlagKey key);
 
 extern SFLog *setup_logger();
-extern "C" SF_String_ctor_ptr SF_String_ctor;
-extern "C" SF_String_dtor_ptr SF_String_dtor;
-extern FUN_0069eaf0_ptr FUN_0069eaf0;
-extern fidfree_ptr fidFree;
+extern SF_String_ctor_ptr g_create_sf_string;
+extern SF_String_dtor_ptr g_destroy_sf_string;
 
 extern "C" void log_warning(const char *message);
 extern "C" void log_info(const char *message);

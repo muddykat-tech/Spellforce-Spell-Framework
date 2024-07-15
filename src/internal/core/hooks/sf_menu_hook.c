@@ -9,52 +9,53 @@
 #include <stdio.h>
 #include <string.h>
 
-menu_label_ptr initialize_menu_label;
-initialize_menu_container_ptr initialize_menu_container;
-original_menu_func_ptr original_menu_func;
-construct_default_sf_string_ptr construct_default_sf_string;
-uint32_t menu_return_addr;
-new_operator_ptr new_operator;
-message_box_ptr show_message_box;
-menu_label_constructor_ptr menu_label_constructor;
-mnu_label_init_data_ptr init_menu_element;
-menu_label_set_data_ptr menu_label_set_color;
-get_smth_fonts_ptr get_smth_fonts;
-menu_label_set_font_ptr menu_label_set_font;
-get_font_ptr get_font;
-container_add_control_ptr container_add_control;
-menu_label_set_string_ptr menu_label_set_string;
+static menu_label_ptr s_initialize_menu_label;
+static initialize_menu_container_ptr s_initialize_menu_container;
+static original_menu_func_ptr s_menu_func;
+static construct_default_sf_string_ptr s_construct_default_sf_string;
+static message_box_ptr s_show_message_box;
+static menu_label_set_data_ptr s_menu_label_set_color;
+
+container_add_control_ptr g_container_add_control;
+uint32_t g_menu_return_addr;
+new_operator_ptr g_new_operator;
+menu_label_constructor_ptr g_menu_label_constructor;
+mnu_label_init_data_ptr g_init_menu_element;
+get_smth_fonts_ptr g_get_smth_fonts;
+menu_label_set_font_ptr g_menu_label_set_font;
+get_font_ptr g_get_font;
+menu_label_set_string_ptr g_menu_label_set_string;
 
 void initialize_menu_data_hooks()
 {
-    initialize_menu_label = (menu_label_ptr)(ASI::AddrOf(0x51a180));
-    menu_label_set_string = (menu_label_set_string_ptr)(ASI::AddrOf(0x52fab0));
+    // Retrieve function pointers using the Memory Address of Intercepted Function
+    // These addresses are found using a Reverse Engineering program called Ghidra
 
-    initialize_menu_container = (initialize_menu_container_ptr)(ASI::AddrOf(0x505780));
-    construct_default_sf_string = (construct_default_sf_string_ptr)(ASI::AddrOf(0x383900));
+    s_initialize_menu_label = (menu_label_ptr)(ASI::AddrOf(0x51a180));
+    s_initialize_menu_container = (initialize_menu_container_ptr)(ASI::AddrOf(0x505780));
+    s_construct_default_sf_string = (construct_default_sf_string_ptr)(ASI::AddrOf(0x383900));
+    s_menu_func = (original_menu_func_ptr)(ASI::AddrOf(0x197b10));
+    s_menu_label_set_color = (menu_label_set_data_ptr)(ASI::AddrOf(0x530330));
+    s_show_message_box = (message_box_ptr)(ASI::AddrOf(0x198660));
 
-    original_menu_func = (original_menu_func_ptr)(ASI::AddrOf(0x197b10));
-    menu_return_addr = (ASI::AddrOf(0x182799));
-    show_message_box = (message_box_ptr)(ASI::AddrOf(0x198660));
-
-    new_operator = (new_operator_ptr)(ASI::AddrOf(0x675A9D));
-    menu_label_constructor = (menu_label_constructor_ptr)(ASI::AddrOf(0x51a180));
-    init_menu_element = (mnu_label_init_data_ptr)(ASI::AddrOf(0x52cfe0));
-
-    // This does seem to work, but has some strange behaviour, the color format is strange
-    menu_label_set_color = (menu_label_set_data_ptr)(ASI::AddrOf(0x530330));
-
-    get_smth_fonts = (get_smth_fonts_ptr)(ASI::AddrOf(0x5357b0));
-    menu_label_set_font = (menu_label_set_font_ptr)(ASI::AddrOf(0x530e00));
-    get_font = (get_font_ptr)(ASI::AddrOf(0x535180));
-    container_add_control = (container_add_control_ptr)(ASI::AddrOf(0x506f30));
+    g_menu_label_set_string = (menu_label_set_string_ptr)(ASI::AddrOf(0x52fab0));
+    g_menu_return_addr = (ASI::AddrOf(0x182799));
+    g_new_operator = (new_operator_ptr)(ASI::AddrOf(0x675A9D));
+    g_menu_label_constructor = (menu_label_constructor_ptr)(ASI::AddrOf(0x51a180));
+    g_init_menu_element = (mnu_label_init_data_ptr)(ASI::AddrOf(0x52cfe0));
+    g_get_smth_fonts = (get_smth_fonts_ptr)(ASI::AddrOf(0x5357b0));
+    g_menu_label_set_font = (menu_label_set_font_ptr)(ASI::AddrOf(0x530e00));
+    g_get_font = (get_font_ptr)(ASI::AddrOf(0x535180));
+    g_container_add_control = (container_add_control_ptr)(ASI::AddrOf(0x506f30));
 }
 
 void __thiscall sf_menu_hook(uint32_t _CAppMenu)
 {
-    // Messy and ugly Code below, you have been warned. ~Muddykat
+    // String to display in the new label we're attaching to the menu
     char sfsf_info[256];
-    sprintf(sfsf_info, "Spell Framework %s\n%d Mod(s) Loaded with %d Error(s)", framework_mod->mod_version, mod_count, error_count);
+    sprintf(sfsf_info, "Spell Framework %s\n%d Mod(s) Loaded with %d Error(s)", g_framework_mod->mod_version, g_mod_count, g_error_count);
+
+    // Manually move the pointer in order to access the CMNuContainer
     uint32_t CAppMenu_data = *(uint32_t *)(_CAppMenu + 0x4);
     uint32_t CMnuScreen_ptr = *(uint32_t *)(CAppMenu_data + 0x68);
     uint32_t container_hack_ptr = *(uint32_t *)(_CAppMenu + 0x58);
@@ -63,6 +64,6 @@ void __thiscall sf_menu_hook(uint32_t _CAppMenu)
 
     attach_new_label(container_hack, sfsf_info, 6, 10, 729, 100, 100);
 
-    // Call original menu func
-    original_menu_func(_CAppMenu);
+    // Call original menu function to show the menu
+    s_menu_func(_CAppMenu);
 }

@@ -4,7 +4,6 @@
 #include <stdint.h>
 #include "../../api/sfsf.h"
 
-extern void register_vanilla_spelltype_handlers();
 extern void __thiscall initializeSpellData(SF_CGdSpell *_this, uint16_t spell_id, SpellDataKey key);
 extern handler_ptr get_spell_handler(const uint16_t key);
 extern void registerSpellTypeHandler(uint16_t spell_index, handler_ptr handler);

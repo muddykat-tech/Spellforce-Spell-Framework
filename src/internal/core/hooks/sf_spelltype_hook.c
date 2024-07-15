@@ -4,15 +4,15 @@
 
 #include "sf_spelltype_hook.h"
 
-figure_toolbox_get_unkn_ptr figure_toolbox_get_unkn;
-get_spell_spell_line_ptr get_spell_spell_line;
-figure_toolbox_add_spell_ptr figure_toolbox_add_spell;
+static figure_toolbox_get_unkn_ptr s_figure_toolbox_get_unkn;
+static get_spell_spell_line_ptr s_get_spell_spell_line;
+static figure_toolbox_add_spell_ptr s_figure_toolbox_add_spell;
 
 void initialize_spelltype_data_hooks()
 {
-    get_spell_spell_line = (get_spell_spell_line_ptr)(ASI::AddrOf(0x26E100));
-    figure_toolbox_get_unkn = (figure_toolbox_get_unkn_ptr)(ASI::AddrOf(0x2FE704));
-    figure_toolbox_add_spell = (figure_toolbox_add_spell_ptr)(ASI::AddrOf(0x2F673A));
+    s_get_spell_spell_line = (get_spell_spell_line_ptr)(ASI::AddrOf(0x26E100));
+    s_figure_toolbox_get_unkn = (figure_toolbox_get_unkn_ptr)(ASI::AddrOf(0x2FE704));
+    s_figure_toolbox_add_spell = (figure_toolbox_add_spell_ptr)(ASI::AddrOf(0x2F673A));
 }
 
 uint16_t __thiscall sf_spelltype_hook(SF_CGdSpell *_this, uint16_t spell_id, uint16_t param2, SF_CGdTargetData *source, SF_CGdTargetData *target, uint16_t param5)
@@ -21,7 +21,7 @@ uint16_t __thiscall sf_spelltype_hook(SF_CGdSpell *_this, uint16_t spell_id, uin
     uint16_t spell_line;
     if (target->entity_type == 1)
     {
-        if (!figure_toolbox_get_unkn(_this->SF_CGdFigureToolBox, target->entity_index))
+        if (!s_figure_toolbox_get_unkn(_this->SF_CGdFigureToolBox, target->entity_index))
         {
             return 0;
         }
@@ -48,7 +48,7 @@ uint16_t __thiscall sf_spelltype_hook(SF_CGdSpell *_this, uint16_t spell_id, uin
 
     // somewhere here is smth goes south
     _this->active_spell_list[spell_index].spell_id = spell_id;
-    spell_line = get_spell_spell_line(_this->SF_CGdResource, spell_id);
+    spell_line = s_get_spell_spell_line(_this->SF_CGdResource, spell_id);
     _this->active_spell_list[spell_index].spell_line = spell_line;
     _this->active_spell_list[spell_index].source.entity_type = source->entity_type;
     _this->active_spell_list[spell_index].source.entity_index = source->entity_index;
@@ -67,7 +67,7 @@ uint16_t __thiscall sf_spelltype_hook(SF_CGdSpell *_this, uint16_t spell_id, uin
     {
         if (spell_line != 0x5A)
         {
-            figure_toolbox_add_spell(_this->SF_CGdFigureToolBox, target->entity_index, spell_index);
+            s_figure_toolbox_add_spell(_this->SF_CGdFigureToolBox, target->entity_index, spell_index);
         }
     }
     return spell_index;

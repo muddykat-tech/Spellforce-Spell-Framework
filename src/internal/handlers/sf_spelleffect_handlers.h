@@ -4,7 +4,7 @@
 #include "../../api/sfsf.h"
 #include "../../asi/sf_asi.h"
 
-void initialize_vanilla_effect_handlers();
+void initialize_vanilla_effect_handler_hooks();
 
 extern handler_ptr effect_ability_benefactions_handler;
 extern handler_ptr effect_ability_berserk_handler;

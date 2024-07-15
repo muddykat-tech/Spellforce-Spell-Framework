@@ -8,29 +8,29 @@
 #include <map>
 #include <cstdint>
 
-std::map<uint16_t, handler_ptr> spellend_handler_map;
+static std::map<uint16_t, handler_ptr> s_spellend_handler_map;
 
 void registerSpellEndHandler(uint16_t spell_line, handler_ptr handler)
 {
-    auto check = spellend_handler_map.find(spell_line);
-    if (check != spellend_handler_map.end())
+    auto check = s_spellend_handler_map.find(spell_line);
+    if (check != s_spellend_handler_map.end())
     {
         char message[256];
-        sprintf(message, "%s (v%s) has replaced an End Handler [%d] (Was this on purpose?)", current_mod->mod_id, current_mod->mod_version, spell_line);
+        sprintf(message, "%s (v%s) has replaced an End Handler [%d] (Was this on purpose?)", g_current_mod->mod_id, g_current_mod->mod_version, spell_line);
         log_warning(message);
     }
 
-    spellend_handler_map[spell_line] = handler;
+    s_spellend_handler_map[spell_line] = handler;
 }
 
 handler_ptr get_spell_end(uint16_t spell_line)
 {
-    auto it = spellend_handler_map.find(spell_line);
-    if (it == spellend_handler_map.end())
+    auto it = s_spellend_handler_map.find(spell_line);
+    if (it == s_spellend_handler_map.end())
     {
         // Element doesn't exist, insert the default value
         log_warning("Unknown Job ID for Spell End Effect, Assigning a default handler.");
-        it = spellend_handler_map.emplace(spell_line, &default_end_handler).first;
+        it = s_spellend_handler_map.emplace(spell_line, &default_end_handler).first;
     }
     return it->second;
 }
@@ -50,7 +50,7 @@ void register_vanilla_spell_end_handlers()
     registerSpellEndHandler(0x40, &brilliance_end_handler);
     registerSpellEndHandler(0x41, &brilliance_end_handler);
     registerSpellEndHandler(0x63, &suffocation_end_handler); // 99 and 100 in ghidra switch case respectivly
-    registerSpellEndHandler(0x64, &inablility_end_handler); // ^
+    registerSpellEndHandler(0x64, &inablility_end_handler);  // ^
     registerSpellEndHandler(0x65, &slow_fighting_end_handler);
     registerSpellEndHandler(0x74, &dexterity_end_handler);
     registerSpellEndHandler(0x75, &edurance_end_handler);
