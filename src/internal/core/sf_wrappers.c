@@ -9,10 +9,11 @@
 #include "hooks/sf_menu_hook.h"
 #include "hooks/sf_console_hook.h"
 
-FUN_0069eaf0_ptr FUN_0069eaf0;
-fidfree_ptr fidFree;
-SF_String_ctor_ptr SF_String_ctor;
-SF_String_dtor_ptr SF_String_dtor;
+static FUN_0069eaf0_ptr FUN_0069eaf0;
+static fidfree_ptr fidFree;
+
+SF_String_ctor_ptr g_create_sf_string;
+SF_String_dtor_ptr g_destroy_sf_string;
 
 void initialize_wrapper_data_hooks()
 {
@@ -163,7 +164,7 @@ void __thiscall attach_new_label(CMnuContainer *parent, char *label_chars, uint8
     CMnuLabel *new_label;
     SF_FontStruct *fonts = g_get_smth_fonts();
 
-    label_string = SF_String_ctor(label_string, label_chars);
+    label_string = g_create_sf_string(label_string, label_chars);
     new_label = (CMnuLabel *)g_new_operator(0x368);
 
     if (font_index > 32)
@@ -184,7 +185,7 @@ void __thiscall attach_new_label(CMnuContainer *parent, char *label_chars, uint8
 
     g_menu_label_set_string(new_label, label_string);
 
-    SF_String_dtor(label_string);
+    g_destroy_sf_string(label_string);
 }
 
 /*

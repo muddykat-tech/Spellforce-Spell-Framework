@@ -9,30 +9,30 @@
 #include <map>
 #include <cstdio>
 
-std::map<uint16_t, refresh_handler_ptr> spellrefresh_handler_map;
+static std::map<uint16_t, refresh_handler_ptr> s_spellrefresh_handler_map;
 
 void registerSpellRefreshHandler(uint16_t spell_line_id, refresh_handler_ptr handler)
 {
-    auto check = spellrefresh_handler_map.find(spell_line_id);
-    if (check != spellrefresh_handler_map.end())
+    auto check = s_spellrefresh_handler_map.find(spell_line_id);
+    if (check != s_spellrefresh_handler_map.end())
     {
         char message[256];
         sprintf(message, "%s (v%s) has replaced an Spell Refresh Handler [%d] (Was this on purpose?)", g_current_mod->mod_id, g_current_mod->mod_version, spell_line_id);
         log_warning(message);
     }
 
-    spellrefresh_handler_map[spell_line_id] = handler;
+    s_spellrefresh_handler_map[spell_line_id] = handler;
 }
 
 refresh_handler_ptr get_spell_refresh(uint16_t spell_line_id)
 {
-    auto it = spellrefresh_handler_map.find(spell_line_id);
-    if (it == spellrefresh_handler_map.end())
+    auto it = s_spellrefresh_handler_map.find(spell_line_id);
+    if (it == s_spellrefresh_handler_map.end())
     {
         char message[256];
         sprintf(message, "Unknown Job ID [%d] for Spell Refresh Handler", spell_line_id);
         log_warning(message);
-        it = spellrefresh_handler_map.emplace(spell_line_id, &first_block_refresh_handler).first;
+        it = s_spellrefresh_handler_map.emplace(spell_line_id, &first_block_refresh_handler).first;
     }
     return it->second;
 }
@@ -41,8 +41,32 @@ void register_vanilla_spell_refresh_handlers()
 {
     // Vanilla spell refresh handlers
     int firstblock_cases[] = {
-        0x06, 0x0c, 0x0f, 0x15, 0x19, 0x20, 0x24, 0x29, 0x2f, 0x38, 0x48,
-        0x4f, 0x8c, 0x95, 0x99, 0x9c, 0x9d, 0x9e, 0xa1, 0xa4, 0xa7, 0xbd, 0xd5, 0xdd, 0xde,};
+        0x06,
+        0x0c,
+        0x0f,
+        0x15,
+        0x19,
+        0x20,
+        0x24,
+        0x29,
+        0x2f,
+        0x38,
+        0x48,
+        0x4f,
+        0x8c,
+        0x95,
+        0x99,
+        0x9c,
+        0x9d,
+        0x9e,
+        0xa1,
+        0xa4,
+        0xa7,
+        0xbd,
+        0xd5,
+        0xdd,
+        0xde,
+    };
 
     int vanilla_domination_cases[] = {0x2e, 0x6c, 0x78, 0x7a, 0xc5, 0xed};
 
@@ -61,7 +85,7 @@ void register_vanilla_spell_refresh_handlers()
     registerSpellRefreshHandler(0x40, &brilliance_refresh_handler);
     registerSpellRefreshHandler(0x41, &brilliance_refresh_handler);
     registerSpellRefreshHandler(0x63, &suffocation_refresh_handler); // 99 and 100 in ghidra switch case respectivly
-    registerSpellRefreshHandler(0x64, &inablility_refresh_handler); // ^
+    registerSpellRefreshHandler(0x64, &inablility_refresh_handler);  // ^
     registerSpellRefreshHandler(0x65, &slow_fighting_refresh_handler);
     registerSpellRefreshHandler(0x74, &dexterity_refresh_handler);
     registerSpellRefreshHandler(0x75, &endurance_refresh_handler);

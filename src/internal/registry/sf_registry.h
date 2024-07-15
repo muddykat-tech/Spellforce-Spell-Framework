@@ -5,5 +5,6 @@
 
 // Function prototypes for mod loader.
 extern void initialize_framework();
+extern SpellforceSpellFramework frameworkAPI;
 
 #endif // REGISTRY_H

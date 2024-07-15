@@ -6,7 +6,8 @@
 #include "sf_wrappers.h"
 #include "sf_modloader.h"
 
-extern SpellforceSpellFramework frameworkAPI;
+#include "../registry/sf_registry.h"
+
 typedef void (*InitModuleFunc)(void *);
 typedef SFMod *(*RegisterModFunc)(void *);
 int g_mod_count = 0;

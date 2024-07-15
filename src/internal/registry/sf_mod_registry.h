@@ -6,7 +6,7 @@
 #include "../core/sf_hooks.h"
 #include <list>
 
-extern std::list<SFSpell *> internal_spell_list;
+extern std::list<SFSpell *> g_internal_spell_list;
 extern void register_mod_spells();
 
 #endif // MOD_REGISTRY_H

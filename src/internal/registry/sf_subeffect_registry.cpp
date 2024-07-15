@@ -8,29 +8,29 @@
 #include <map>
 #include <cstdio>
 
-std::map<uint16_t, sub_effect_handler_ptr> sub_effect_handler_map;
+static std::map<uint16_t, sub_effect_handler_ptr> s_sub_effect_handler_map;
 
 void registerSubEffectHandler(uint16_t spell_line, sub_effect_handler_ptr handler)
 {
-    auto check = sub_effect_handler_map.find(spell_line);
-    if (check != sub_effect_handler_map.end())
+    auto check = s_sub_effect_handler_map.find(spell_line);
+    if (check != s_sub_effect_handler_map.end())
     {
         char message[256];
         sprintf(message, "%s (v%s) has replaced a Subeffect Handler [%d] (Was this on purpose?)", g_current_mod->mod_id, g_current_mod->mod_version, spell_line);
         log_warning(message);
     }
 
-    sub_effect_handler_map[spell_line] = handler;
+    s_sub_effect_handler_map[spell_line] = handler;
 }
 
 sub_effect_handler_ptr get_sub_effect_handler(uint16_t spell_line)
 {
-    auto it = sub_effect_handler_map.find(spell_line);
-    if (it == sub_effect_handler_map.end())
+    auto it = s_sub_effect_handler_map.find(spell_line);
+    if (it == s_sub_effect_handler_map.end())
     {
         // Element doesn't exist, insert the default value
         log_warning("Unknown Job ID for Spell End Effect, Assigning a default handler.");
-        it = sub_effect_handler_map.emplace(spell_line, &default_sub_effect_handler).first;
+        it = s_sub_effect_handler_map.emplace(spell_line, &default_sub_effect_handler).first;
     }
     return it->second;
 }

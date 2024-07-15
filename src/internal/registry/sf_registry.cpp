@@ -14,7 +14,7 @@
 #include <windows.h>
 #include <iostream>
 
-// Exposed in sfsf.h
+// Exposed in sfsf.
 SpellforceSpellFramework frameworkAPI;
 SFMod *g_current_mod;
 SFMod *g_framework_mod;

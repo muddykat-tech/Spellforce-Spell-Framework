@@ -779,7 +779,7 @@ int __thiscall domination_spell_refresh_handler(SF_CGdSpell *_this, uint16_t spe
 
     // we need to get the spell ids of all spells with the internal tag 'DOMINATION'
     std::list<uint16_t> domination_spell_ids;
-    for (SFSpell *spell : internal_spell_list)
+    for (SFSpell *spell : g_internal_spell_list)
     {
         if (spell->spell_tag == SpellTag::DOMINATION_SPELL)
         {

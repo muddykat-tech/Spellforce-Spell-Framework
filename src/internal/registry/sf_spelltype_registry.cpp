@@ -8,20 +8,20 @@
 #include <map>
 #include <cstdio>
 
+static std::map<uint16_t, handler_ptr> s_handler_map;
+
 void __thiscall initializeSpellData(SF_CGdSpell *_this, uint16_t spell_id, SpellDataKey key)
 {
 	spellAPI.setXData(_this, spell_id, key, 0);
 }
 
-std::map<uint16_t, handler_ptr> handler_map;
-
 handler_ptr get_spell_handler(const uint16_t key)
 {
-	auto it = handler_map.find(key);
-	if (it == handler_map.end())
+	auto it = s_handler_map.find(key);
+	if (it == s_handler_map.end())
 	{
 		// Element doesn't exist, insert the default value
-		it = handler_map.emplace(key, &default_handler).first;
+		it = s_handler_map.emplace(key, &default_handler).first;
 	}
 	return it->second;
 }
@@ -29,8 +29,8 @@ handler_ptr get_spell_handler(const uint16_t key)
 // Exposed in sf_registry.h
 void registerSpellTypeHandler(uint16_t spell_index, handler_ptr handler)
 {
-	auto check = handler_map.find(spell_index);
-	if (check != handler_map.end())
+	auto check = s_handler_map.find(spell_index);
+	if (check != s_handler_map.end())
 	{
 		if (check->second != &default_handler)
 		{
@@ -40,5 +40,5 @@ void registerSpellTypeHandler(uint16_t spell_index, handler_ptr handler)
 		}
 	}
 
-	handler_map[spell_index] = handler;
+	s_handler_map[spell_index] = handler;
 }
