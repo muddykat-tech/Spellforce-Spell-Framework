@@ -190,8 +190,8 @@ static void initialize_menuload_hook()
 static void initialize_deal_damage_hook()
 {
     //uint32_t flag_pointer = *(uint32_t *)(ASI::AddrOf());
-    sf_damage_return_addr = ASI::AddrOf(0x2f5465);
-    ASI::MemoryRegion deal_damage_mreg(ASI::AddrOf(0x2f4af3), );
+    g_damage_return_addr = ASI::AddrOf(0x2f5465);
+    ASI::MemoryRegion deal_damage_mreg(ASI::AddrOf(0x2f4af3), 6);
     ASI::BeginRewrite(deal_damage_mreg);
     *(unsigned char *)(ASI::AddrOf(0x2f4af3)) = 0x90; // nop trail
     *(unsigned char *)(ASI::AddrOf(0x2f4af4)) = 0xE9; // JMP

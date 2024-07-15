@@ -96,7 +96,7 @@ obj/sf_spelltype_hook.o: ${HOOKS_SRC}/sf_spelltype_hook.c | obj
 obj/sf_damage_hook.o: ${HOOKS_SRC}/sf_damage_hook.c | obj
 	${CLR}
 	@echo Building Hooks [   o]
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
+	${CC} -mgeneral-regs-only ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_console_hook.o: ${HOOKS_SRC}/sf_console_hook.c | obj
 	${CLR}

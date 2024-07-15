@@ -7,7 +7,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-uint32_t sf_damage_return_addr;
+
+uint32_t g_damage_return_addr;
 
 void __attribute__((no_caller_saved_registers, thiscall)) sf_deal_damage(SF_CGdFigureToolbox *figureToolbox, uint16_t dmg_source, uint16_t dmg_target, uint32_t damage_amount, uint32_t is_spell_damage, uint32_t param_5, uint32_t vry_unknown_6)
 {
@@ -68,15 +69,15 @@ void __attribute__((no_caller_saved_registers, thiscall)) sf_deal_damage(SF_CGdF
     log_info("Called into Overwritten Damage Function");
 }
 
-void __declspec(naked) sf_damage_hook_beta()
+void __declspec(naked) sf_damage_hook()
 {
     asm("push 0x08(%%ebp)        \n\t"
-        "push 0x0с(%%ebp)        \n\t"
+        "push 0x0c(%%ebp)        \n\t"
         "push 0x10(%%ebp)        \n\t"
         "push 0x14(%%ebp)        \n\t"
         "push 0x18(%%ebp)        \n\t"
-        "push 0x1с(%%ebp)        \n\t"
+        "push 0x1c(%%ebp)        \n\t"
         "mov 0x26c(%%ebp), %%ecx \n\t"
         "call %P0                \n\t"
-        "jmp *%1                 \n\t" : : "i"(sf_deal_damage), "o"(sf_damage_return_addr));
+        "jmp *%1                     " : : "i"(sf_deal_damage), "o"(g_damage_return_addr));
 }
