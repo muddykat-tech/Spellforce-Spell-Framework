@@ -17,7 +17,7 @@ void registerSpellRefreshHandler(uint16_t spell_line_id, refresh_handler_ptr han
     if (check != spellrefresh_handler_map.end())
     {
         char message[256];
-        sprintf(message, "%s (v%s) has replaced an Spell Refresh Handler [%d] (Was this on purpose?)", current_mod->mod_id, current_mod->mod_version, spell_line_id);
+        sprintf(message, "%s (v%s) has replaced an Spell Refresh Handler [%d] (Was this on purpose?)", g_current_mod->mod_id, g_current_mod->mod_version, spell_line_id);
         log_warning(message);
     }
 

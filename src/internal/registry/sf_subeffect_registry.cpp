@@ -16,7 +16,7 @@ void registerSubEffectHandler(uint16_t spell_line, sub_effect_handler_ptr handle
     if (check != sub_effect_handler_map.end())
     {
         char message[256];
-        sprintf(message, "%s (v%s) has replaced a Subeffect Handler [%d] (Was this on purpose?)", current_mod->mod_id, current_mod->mod_version, spell_line);
+        sprintf(message, "%s (v%s) has replaced a Subeffect Handler [%d] (Was this on purpose?)", g_current_mod->mod_id, g_current_mod->mod_version, spell_line);
         log_warning(message);
     }
 

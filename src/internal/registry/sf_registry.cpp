@@ -16,8 +16,8 @@
 
 // Exposed in sfsf.h
 SpellforceSpellFramework frameworkAPI;
-SFMod *current_mod;
-SFMod *framework_mod;
+SFMod *g_current_mod;
+SFMod *g_framework_mod;
 
 // We can include pointers to our own functions we define.
 // Note these functions are ASSIGNED to a function group when we DEFINE said group, names are VERY important.
@@ -37,8 +37,8 @@ void registerFrameworkAPI()
     frameworkAPI.effectAPI = &effectAPI;
 
     log_info("| - Loading Default Mod Information");
-    framework_mod = createModInfo("SFSF", "v4.0.0-alpha", "Muddykat, UnSchtalch and shovel_knight", "The Spellforce Spell Framework");
-    current_mod = framework_mod;
+    g_framework_mod = createModInfo("SFSF", "v4.0.0-alpha", "Muddykat, UnSchtalch and shovel_knight", "The Spellforce Spell Framework");
+    g_current_mod = g_framework_mod;
 }
 
 void register_metadata_spell(uint16_t id, SpellTag tag)
@@ -77,17 +77,11 @@ void initialize_framework()
     // setup framework api structure references
     registerFrameworkAPI();
 
-    log_info("| - Registration of Vanilla Spell Metadata");
+    log_info("| - Initialization of Vanilla Spells");
 
-    // register_vanilla_spell_metadata();
     initialize_vanilla_spells();
 
-    log_info("| - Registration of Vanilla Spelltype Handlers");
-
-    // Setup Vanilla Spells -> see sf_spelltype_handler.h
-    register_vanilla_spelltype_handlers();
-
-    log_info("| - Registration of Vanilla Effect Handlers");
+    log_info("| - Effect Handlers");
 
     register_vanilla_effect_handlers();
 

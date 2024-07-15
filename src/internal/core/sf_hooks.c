@@ -121,7 +121,7 @@ void initialize_data_hooks()
     INCLUDE_FUNCTION(registration, linkRefreshHandler, &linkRefreshHandler);
 }
 
-void initialize_spelltype_hook()
+static void initialize_spelltype_hook()
 {
     ASI::MemoryRegion add_spell_mreg(ASI::AddrOf(0x328d60), 5);
     ASI::BeginRewrite(add_spell_mreg);
@@ -130,7 +130,7 @@ void initialize_spelltype_hook()
     ASI::EndRewrite(add_spell_mreg);
 }
 
-void initialize_spell_trigger_hook()
+static void initialize_spell_trigger_hook()
 {
     ASI::MemoryRegion add_spell_mreg(ASI::AddrOf(0x278773), 5);
     ASI::BeginRewrite(add_spell_mreg);
@@ -139,7 +139,7 @@ void initialize_spell_trigger_hook()
     ASI::EndRewrite(add_spell_mreg);
 }
 
-void initialize_subeffect_add_hook()
+static void initialize_subeffect_add_hook()
 {
     ASI::MemoryRegion add_spell_mreg(ASI::AddrOf(0x2de3b7), 5);
     ASI::BeginRewrite(add_spell_mreg);
@@ -148,7 +148,7 @@ void initialize_subeffect_add_hook()
     ASI::EndRewrite(add_spell_mreg);
 }
 
-void initialize_spellend_hook()
+static void initialize_spellend_hook()
 {
     ASI::MemoryRegion end_spell_mreg(ASI::AddrOf(0x34b0a0), 5);
     ASI::BeginRewrite(end_spell_mreg);
@@ -157,7 +157,7 @@ void initialize_spellend_hook()
     ASI::EndRewrite(end_spell_mreg);
 }
 
-void initialize_spellrefresh_hook()
+static void initialize_spellrefresh_hook()
 {
     ASI::MemoryRegion refresh_spell_mreg(ASI::AddrOf(0x329f90), 9);
     ASI::BeginRewrite(refresh_spell_mreg);
@@ -170,16 +170,15 @@ void initialize_spellrefresh_hook()
     ASI::EndRewrite(refresh_spell_mreg);
 }
 
-// Figure out later -> Function (Siege Handler for Multi Effect Spells)
-void __declspec(naked) menuload_hook_beta()
+static void __declspec(naked) menuload_hook_beta()
 {
     asm("push %%edi         \n\t"
         "call %P0           \n\t"
         "pop %%edi          \n\t"
-        "jmp *%1            \n\t" : : "i"(sf_menu_hook), "o"(menu_return_addr));
+        "jmp *%1            \n\t" : : "i"(sf_menu_hook), "o"(g_menu_return_addr));
 }
 
-void initialize_menuload_hook()
+static void initialize_menuload_hook()
 {
     ASI::MemoryRegion menu_load_mreg(ASI::AddrOf(0x182794), 5);
     ASI::BeginRewrite(menu_load_mreg);
@@ -188,7 +187,7 @@ void initialize_menuload_hook()
     ASI::EndRewrite(menu_load_mreg);
 }
 
-void initialize_deal_damage_hook()
+static void initialize_deal_damage_hook()
 {
     uint32_t flag_pointer = *(uint32_t *)(ASI::AddrOf(0x2f4b56));
     ASI::MemoryRegion deal_damage_mreg(ASI::AddrOf(0x2f4a57), 9);

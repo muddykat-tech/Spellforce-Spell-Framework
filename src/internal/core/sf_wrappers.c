@@ -161,10 +161,10 @@ void __thiscall attach_new_label(CMnuContainer *parent, char *label_chars, uint8
 {
     SF_String *label_string;
     CMnuLabel *new_label;
-    SF_FontStruct *fonts = get_smth_fonts();
+    SF_FontStruct *fonts = g_get_smth_fonts();
 
     label_string = SF_String_ctor(label_string, label_chars);
-    new_label = (CMnuLabel *)new_operator(0x368);
+    new_label = (CMnuLabel *)g_new_operator(0x368);
 
     if (font_index > 32)
     {
@@ -172,17 +172,17 @@ void __thiscall attach_new_label(CMnuContainer *parent, char *label_chars, uint8
         font_index = 6;
     }
 
-    SF_Font *selected_font = get_font(fonts, font_index);
+    SF_Font *selected_font = g_get_font(fonts, font_index);
 
-    menu_label_constructor(new_label);
+    g_menu_label_constructor(new_label);
 
-    init_menu_element(new_label, x_pos, y_pos, width, height, label_string);
+    g_init_menu_element(new_label, x_pos, y_pos, width, height, label_string);
 
-    menu_label_set_font(new_label, selected_font);
+    g_menu_label_set_font(new_label, selected_font);
 
-    container_add_control(parent, new_label, '\0', '\0', 0);
+    g_container_add_control(parent, new_label, '\0', '\0', 0);
 
-    menu_label_set_string(new_label, label_string);
+    g_menu_label_set_string(new_label, label_string);
 
     SF_String_dtor(label_string);
 }

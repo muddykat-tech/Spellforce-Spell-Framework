@@ -15,7 +15,7 @@ void registerEffectHandler(uint16_t spell_job, handler_ptr handler)
     if (check != effect_handler_map.end())
     {
         char message[256];
-        sprintf(message, "%s (v%s) has replaced an Effect Handler [%d] (Was this on purpose?)", current_mod->mod_id, current_mod->mod_version, spell_job);
+        sprintf(message, "%s (v%s) has replaced an Effect Handler [%d] (Was this on purpose?)", g_current_mod->mod_id, g_current_mod->mod_version, spell_job);
         log_warning(message);
     }
     effect_handler_map[spell_job] = handler;
@@ -35,7 +35,6 @@ handler_ptr get_spell_effect(uint16_t spell_job)
 void register_vanilla_effect_handlers()
 {
     // initialize the functions see sf_spelleffect_handlers
-    initialize_vanilla_effect_handlers();
 
     registerEffectHandler(1, effect_fireburst_handler);
     registerEffectHandler(2, effect_healing_handler);
