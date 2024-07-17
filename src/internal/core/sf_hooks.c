@@ -75,9 +75,10 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(spell, figTryUnfreeze, 0x32a5a0);
     DEFINE_FUNCTION(spell, onSpellRemove, 0x32b310);
     INCLUDE_FUNCTION(spell, addSpell, &sf_spelltype_hook);
+    DEFINE_FUNCTION(spell, getSpellLine, 0x32a980);
+
     DEFINE_FUNCTION(effect, addEffect, 0x2dc880);
     DEFINE_FUNCTION(effect, setEffectXData, 0x2ddb30);
-    DEFINE_FUNCTION(effect, getEffectXData, 0x2dd730);
 
     log_info("| - ToolboxAPI Hooks");
 
@@ -90,6 +91,7 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(toolbox, addSpellToFigure, 0x2f673a);
     DEFINE_FUNCTION(toolbox, getFigureFromWorld, 0x34F160);
     DEFINE_FUNCTION(toolbox, getSpellIndexOfType, 0x2fd939);
+    DEFINE_FUNCTION(toolbox, getSpellIndexFromDLL, 0x2fdd90);
 
     log_info("| - IteratorAPI Hooks");
     DEFINE_FUNCTION(iterator, figureIteratorInit, 0x3183f0);
@@ -189,7 +191,7 @@ static void initialize_menuload_hook()
 
 static void initialize_deal_damage_hook()
 {
-    //uint32_t flag_pointer = *(uint32_t *)(ASI::AddrOf());
+    // uint32_t flag_pointer = *(uint32_t *)(ASI::AddrOf());
     g_damage_return_addr = ASI::AddrOf(0x2f5465);
     ASI::MemoryRegion deal_damage_mreg(ASI::AddrOf(0x2f4af3), 6);
     ASI::BeginRewrite(deal_damage_mreg);

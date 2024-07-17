@@ -97,7 +97,8 @@
         "memory_resource": "cpp",
         "numeric": "cpp",
         "random": "cpp",
-        "numbers": "cpp"
+        "numbers": "cpp",
+        "sf_spelldamage_registry.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled",
     "makefile.makePath": "mingw32-make"

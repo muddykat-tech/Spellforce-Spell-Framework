@@ -14,6 +14,7 @@ DECLARE_FUNCTION(void, rescaleLevelStats, SF_CGdFigureToolbox *CGdFigureToolbox,
 DECLARE_FUNCTION(void, addSpellToFigure, SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t figure_index, uint16_t spell_index);
 DECLARE_FUNCTION(uint16_t, getFigureFromWorld, void *CGdWorldToolBox, uint16_t param1, uint16_t param2, uint32_t param3);
 DECLARE_FUNCTION(uint16_t, getSpellIndexOfType, SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t target_index, uint16_t spell_line, uint16_t last_known_index);
+DECLARE_FUNCTION(uint16_t, getSpellIndexFromDLL, uint32_t *CGdDoubleLinkedList, uint16_t spell_job_start_node);
 
 DECLARE_FUNCTION_GROUP(Toolbox,
                        dealDamage_ptr dealDamage;
@@ -24,4 +25,5 @@ DECLARE_FUNCTION_GROUP(Toolbox,
                        rescaleLevelStats_ptr rescaleLevelStats;
                        addSpellToFigure_ptr addSpellToFigure;
                        getFigureFromWorld_ptr getFigureFromWorld;
-                       getSpellIndexOfType_ptr getSpellIndexOfType;);
+                       getSpellIndexOfType_ptr getSpellIndexOfType;
+                       getSpellIndexFromDLL_ptr getSpellIndexFromDLL;);
