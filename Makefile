@@ -8,7 +8,7 @@ endif
 # Compiler and linker options
 CC = @g++
 RC = windres
-DLL_CFLAGS = -O0 -g -std=c++11 ${WARNS} -Iinclude -DADD_EXPORTS -fpermissive
+DLL_CFLAGS = -O2 -g -std=c++11 ${WARNS} -Iinclude -DADD_EXPORTS -fpermissive
 DLL_LDFLAGS = -shared -static-libgcc -static-libstdc++ -s -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive -Wl,--subsystem,windows,--out-implib,lib/testmod.a
 FW_LDFLAGS = -shared -static-libgcc -static-libstdc++ -s -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive -Wl,--subsystem,windows,--out-implib,lib/sfsf.a
 
@@ -76,7 +76,7 @@ obj/sf_endspell_hook.o: ${HOOKS_SRC}/sf_endspell_hook.c | obj
 obj/sf_menu_hook.o: ${HOOKS_SRC}/sf_menu_hook.c | obj
 	${CLR}
 	@echo Building Hooks [ o  ]
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
+	${CC} -mgeneral-regs-only ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_spelleffect_hook.o: ${HOOKS_SRC}/sf_spelleffect_hook.c | obj
 	${CLR}

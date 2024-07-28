@@ -160,11 +160,11 @@ void __thiscall spellClearFigureFlag(SF_CGdSpell *_this, uint16_t spell_id, Spel
 
 void __thiscall attach_new_label(CMnuContainer *parent, char *label_chars, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height)
 {
-    SF_String *label_string;
+    SF_String label_string;
     CMnuLabel *new_label;
     SF_FontStruct *fonts = g_get_smth_fonts();
 
-    label_string = g_create_sf_string(label_string, label_chars);
+    g_create_sf_string(&label_string, label_chars);
     new_label = (CMnuLabel *)g_new_operator(0x368);
 
     if (font_index > 32)
@@ -177,15 +177,15 @@ void __thiscall attach_new_label(CMnuContainer *parent, char *label_chars, uint8
 
     g_menu_label_constructor(new_label);
 
-    g_init_menu_element(new_label, x_pos, y_pos, width, height, label_string);
+    g_init_menu_element(new_label, x_pos, y_pos, width, height, &label_string);
 
     g_menu_label_set_font(new_label, selected_font);
 
     g_container_add_control(parent, new_label, '\0', '\0', 0);
 
-    g_menu_label_set_string(new_label, label_string);
+    g_menu_label_set_string(new_label, &label_string);
 
-    g_destroy_sf_string(label_string);
+    g_destroy_sf_string(&label_string);
 }
 
 /*

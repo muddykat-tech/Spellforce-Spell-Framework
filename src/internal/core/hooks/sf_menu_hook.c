@@ -49,7 +49,7 @@ void initialize_menu_data_hooks()
     g_container_add_control = (container_add_control_ptr)(ASI::AddrOf(0x506f30));
 }
 
-void __thiscall sf_menu_hook(uint32_t _CAppMenu)
+void __attribute__((no_caller_saved_registers, thiscall)) sf_menu_hook(uint32_t _CAppMenu)
 {
     // String to display in the new label we're attaching to the menu
     char sfsf_info[256];
