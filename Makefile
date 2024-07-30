@@ -76,7 +76,7 @@ obj/sf_endspell_hook.o: ${HOOKS_SRC}/sf_endspell_hook.c | obj
 obj/sf_menu_hook.o: ${HOOKS_SRC}/sf_menu_hook.c | obj
 	${CLR}
 	@echo Building Hooks [ o  ]
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
+	${CC} -mgeneral-regs-only ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_spelleffect_hook.o: ${HOOKS_SRC}/sf_spelleffect_hook.c | obj
 	${CLR}
