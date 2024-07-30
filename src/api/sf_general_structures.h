@@ -420,6 +420,14 @@ typedef enum
 
 typedef enum
 {
+    PRE,
+    DEFAULT,
+    POST,
+    COUNT
+} SpellDamagePhase;
+
+typedef enum
+{
     kGdEffectNone = 0,
     kGdEffectSpellCast = 1,
     kGdEffectSpellHitWorld = 2,

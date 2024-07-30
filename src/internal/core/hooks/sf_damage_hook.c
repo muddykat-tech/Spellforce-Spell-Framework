@@ -4,6 +4,7 @@
 #include "../sf_hooks.h"
 
 #include "../../registry/sf_spelldamage_registry.h"
+#include "../../../api/sf_general_structures.h"
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -27,25 +28,47 @@ void __attribute__((no_caller_saved_registers, thiscall)) sf_deal_damage(SF_CGdF
     bool check_spells_before_job = figureAPI.isFlagSet(figureToolbox->CGdFigure, dmg_target, F_CHECK_SPELLS_BEFORE_JOB);
 
     log_info("Sanity Check 1");
-
+    bool figure_set_new_job = false;
     if (check_spells_before_job)
     {
         uint16_t spell_job_start_node = figureAPI.getSpellJobStartNode(figureToolbox->CGdFigure, dmg_target);
+        uint16_t current_list_size = 0;
 
-        log_info("Sanity Check 2");
+        uint16_t ids_by_phase[COUNT][799];
+        size_t sizes_by_phase[COUNT] = {0};
+
         while (spell_job_start_node != 0)
         {
             uint16_t spell_index = toolboxAPI.getSpellIndexFromDLL(figureToolbox->CGdDoubleLinkedList, spell_job_start_node);
             uint16_t spell_line_id = spellAPI.getSpellLine(figureToolbox->CGdSpell, spell_index);
+            // collect spell_line_id & spell_index here to list
 
-            damage_handler_ptr spell_damage_func = get_spell_damage(spell_line_id);
-            if (spell_damage_func != NULL)
+            for (int i = PRE; i < COUNT; ++i)
             {
-                spell_damage_func(figureToolbox, dmg_source, dmg_target, damage_amount);
+                SpellDamagePhase phase = (SpellDamagePhase)i;
+                damage_handler_ptr exists = get_spell_damage(spell_line_id, phase);
+                if (exists != NULL)
+                {
+                    ids_by_phase[phase][sizes_by_phase[phase]++] = spell_line_id;
+                    current_list_size++;
+                }
             }
+            spell_job_start_node = toolboxAPI.getNextNode(figureToolbox->CGdDoubleLinkedList, spell_job_start_node);
+        }
 
-            log_info("Manual Exit REMOVE ME");
-            spell_job_start_node = 0;
+        for (int i = PRE; i < COUNT; ++i)
+        {
+            SpellDamagePhase phase = (SpellDamagePhase)i;
+            char phase_data[256];
+            sprintf(phase_data, "Phase: %d, Size: %d", phase, sizes_by_phase[phase]);
+            log_info(phase_data);
+
+            for (size_t i = 0; i < sizes_by_phase[phase]; ++i)
+            {
+                uint16_t spell_line_id = ids_by_phase[phase][i];
+                damage_handler_ptr spell_damage_func = get_spell_damage(spell_line_id, phase);
+                damage_amount = spell_damage_func(figureToolbox, dmg_source, dmg_target, damage_amount);
+            }
         }
     }
 

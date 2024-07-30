@@ -92,6 +92,7 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(toolbox, getFigureFromWorld, 0x34F160);
     DEFINE_FUNCTION(toolbox, getSpellIndexOfType, 0x2fd939);
     DEFINE_FUNCTION(toolbox, getSpellIndexFromDLL, 0x2fdd90);
+    DEFINE_FUNCTION(toolbox, getNextNode, 0x2fe240);
 
     log_info("| - IteratorAPI Hooks");
     DEFINE_FUNCTION(iterator, figureIteratorInit, 0x3183f0);
