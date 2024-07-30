@@ -67,7 +67,7 @@ void __attribute__((no_caller_saved_registers, thiscall)) sf_deal_damage(SF_CGdF
             {
                 uint16_t spell_line_id = ids_by_phase[phase][i];
                 damage_handler_ptr spell_damage_func = get_spell_damage(spell_line_id, phase);
-                damage_amount = spell_damage_func(figureToolbox, dmg_source, dmg_target, damage_amount);
+                damage_amount = spell_damage_func(figureToolbox, dmg_source, dmg_target, damage_amount, is_spell_damage, param_5, vry_unknown_6);
             }
         }
     }
