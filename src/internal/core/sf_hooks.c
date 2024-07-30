@@ -79,7 +79,7 @@ void initialize_data_hooks()
 
     DEFINE_FUNCTION(effect, addEffect, 0x2dc880);
     DEFINE_FUNCTION(effect, setEffectXData, 0x2ddb30);
-
+    DEFINE_FUNCTION(effect, getEffectXData, 0x2dd730);
     log_info("| - ToolboxAPI Hooks");
 
     DEFINE_FUNCTION(toolbox, dealDamage, 0x2f4a57);
