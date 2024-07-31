@@ -13,7 +13,7 @@
 
 uint32_t g_damage_return_addr;
 
-void __attribute__((no_caller_saved_registers, thiscall)) sf_deal_damage(SF_CGdFigureToolbox *figureToolbox, uint16_t dmg_source, uint16_t dmg_target, uint32_t damage_amount, uint32_t is_spell_damage, uint32_t param_5, uint32_t vry_unknown_6)
+uint32_t __attribute__((no_caller_saved_registers, thiscall)) sf_deal_damage(SF_CGdFigureToolbox *figureToolbox, uint16_t dmg_source, uint16_t dmg_target, uint32_t damage_amount, uint32_t is_spell_damage, uint32_t param_5, uint32_t vry_unknown_6)
 {
 
     log_info("Called into Overwritten Damage Function Start");
@@ -73,6 +73,7 @@ void __attribute__((no_caller_saved_registers, thiscall)) sf_deal_damage(SF_CGdF
     }
 
     log_info("Called into Overwritten Damage Function End");
+    return damage_amount;
 }
 
 void __declspec(naked) sf_damage_hook()
