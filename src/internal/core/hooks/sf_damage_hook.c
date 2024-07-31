@@ -85,5 +85,6 @@ void __declspec(naked) sf_damage_hook()
         "push 0x1c(%%ebp)          \n\t"
         "mov  -0x26c(%%ebp), %%ecx \n\t"
         "call %P0                  \n\t"
+        "movw %%ax, 0x10(%%ebp)    \n\t"
         "jmp *%1                     " : : "i"(sf_deal_damage), "o"(g_damage_return_addr));
 }
