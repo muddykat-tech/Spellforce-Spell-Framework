@@ -13,7 +13,8 @@
 
 uint32_t g_damage_return_addr;
 
-uint32_t __attribute__((no_caller_saved_registers, thiscall)) sf_deal_damage(SF_CGdFigureToolbox *figureToolbox, uint16_t dmg_source, uint16_t dmg_target, uint32_t damage_amount, uint32_t is_spell_damage, uint32_t param_5, uint32_t vry_unknown_6)
+uint32_t __attribute__((no_caller_saved_registers, thiscall)) sf_deal_damage(SF_CGdFigureToolbox *figureToolbox,
+    uint16_t dmg_source, uint16_t dmg_target, uint32_t damage_amount, uint32_t is_spell_damage, uint32_t is_ranged_damage, uint32_t vry_unknown_6)
 {
 
     log_info("Called into Overwritten Damage Function Start");
@@ -67,7 +68,11 @@ uint32_t __attribute__((no_caller_saved_registers, thiscall)) sf_deal_damage(SF_
             {
                 uint16_t spell_line_id = ids_by_phase[phase][i];
                 damage_handler_ptr spell_damage_func = get_spell_damage(spell_line_id, phase);
-                damage_amount = spell_damage_func(figureToolbox, dmg_source, dmg_target, damage_amount, is_spell_damage, param_5, vry_unknown_6);
+
+                //FIXME -- we need id of specific spell we are handling here. 
+                uint16_t spell_id = 0;
+                damage_amount = spell_damage_func(figureToolbox, dmg_source, dmg_target, damage_amount,
+                                                        is_spell_damage, is_ranged_damage, spell_id);
             }
         }
     }

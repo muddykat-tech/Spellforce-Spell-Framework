@@ -3,7 +3,9 @@
 #include <stdbool.h>
 #include "sf_general_structures.h"
 #include "sf_effect_functions.h"
-typedef uint16_t(__thiscall *damage_handler_ptr)(SF_CGdFigureToolbox *_toolbox, uint16_t source, uint16_t target, uint16_t current_damage, uint16_t is_spell_damage, uint32_t param5, uint32_t param6);
+typedef uint16_t(__thiscall *damage_handler_ptr)(SF_CGdFigureToolbox *_toolbox, uint16_t source, uint16_t target,
+                        uint16_t current_damage, uint16_t is_spell_damage, uint32_t is_ranged_damage, uint16_t spell_id);
+
 typedef void(__thiscall *handler_ptr)(SF_CGdSpell *, uint16_t);
 typedef int(__thiscall *refresh_handler_ptr)(SF_CGdSpell *, uint16_t);
 
