@@ -150,7 +150,7 @@ void __thiscall spellClearFigureFlag(SF_CGdSpell *_this, uint16_t spell_id, Spel
         spellAPI.figClrChkSplBfrChkBattle(_this, spell_id, 0);
         break;
     case CHECK_SPELLS_BEFORE_JOB2:
-        spellAPI.figTryClrCHkSPlBfrJob2(_this, spell_id, 0);
+        spellAPI.figTryClrCHkSPlBfrJob2(_this, spell_id);
         break;
     case UNFREEZE:
         spellAPI.figTryUnfreeze(_this, spell_id, 0);
