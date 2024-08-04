@@ -89,5 +89,52 @@ uint16_t feign_death_dmg_handler(SF_CGdFigureToolbox *_this, uint16_t source, ui
 uint16_t feedback_dmg_handler(SF_CGdFigureToolbox *_this, uint16_t source, uint16_t target,
                     uint16_t current_damage, uint16_t is_spell_damage, uint32_t is_ranged_damage, uint16_t spell_id)
 {
+    if (is_spell_damage)
+    {
+        SF_CGdResourceSpell spell_data;
+        spellAPI.getResourceSpellData(_this->CGdResource,&spell_data,spell_id);
+        uint16_t reflect_amount = (uint16_t)((current_damage * spell_data.params[0])/100);
+        if (current_damage < reflect_amount)
+        {
+            current_damage = 0;
+            reflect_amount = current_damage;
+        }
+        else
+        {
+            current_damage = current_damage - reflect_amount;
+        }
+        toolboxAPI.dealDamage(_this, target, source, reflect_amount, 1, 0, 0);
+        SF_CGdTargetData source_data = {1, source, {0,0}};
+        SF_CGdTargetData target_data = {1, target, {0,0}};
+        SF_Rectangle rect = {0, 0};
+        effectAPI.addEffect(_this->CGdEffect, kGdEffectSpellVoodooHitFigure,
+                            &source_data, &target_data, _this->maybe_random->current_step, 10, &rect);
+    }
+    return current_damage;
+}
+
+uint16_t death_grasp_dmg_handler(SF_CGdFigureToolbox *_this, uint16_t source, uint16_t target,
+                    uint16_t current_damage, uint16_t is_spell_damage, uint32_t is_ranged_damage, uint16_t spell_id)
+{
+    SF_CGdResourceSpell spell_data;
+    spellAPI.getResourceSpellData(_this->CGdResource,&spell_data,spell_id);
+    uint16_t roll_value = spellAPI.getRandom(_this->maybe_random, 100);
+    uint16_t current_health = figureAPI.getCurrentHealth(_this->CGdFigure, target);
+    if (current_health <= current_damage)
+    {
+        if (roll_value <= spell_data.params[2])
+        {
+            current_damage = current_health - 1;
+        }
+    }
+    return current_damage;
+}
+
+
+//Need passthough for figureAPI GetCurrentMana, SubMana here. 
+uint16_t mana_shield_dmg_handler(SF_CGdFigureToolbox *_this, uint16_t source, uint16_t target,
+                    uint16_t current_damage, uint16_t is_spell_damage, uint32_t is_ranged_damage, uint16_t spell_id)
+{
+
     return current_damage;
 }
