@@ -16,7 +16,7 @@ DECLARE_FUNCTION(uint16_t, getFigureFromWorld, void *CGdWorldToolBox, uint16_t p
 DECLARE_FUNCTION(uint16_t, getSpellIndexOfType, SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t target_index, uint16_t spell_line, uint16_t last_known_index);
 DECLARE_FUNCTION(uint16_t, getSpellIndexFromDLL, uint32_t *CGdDoubleLinkedList, uint16_t spell_job_start_node);
 DECLARE_FUNCTION(uint16_t, getNextNode, uint32_t *CGdDoubleLinkedList, uint16_t current_node);
-DECLARE_FUNCTION(void, figureSetNewJob, void *CGdFigureJobs, uint32_t *param_1, uint32_t new_job, uint32_t param_3, uint32_t param_4, uint32_t param_5);
+DECLARE_FUNCTION(void, figureSetNewJob, void *CGdFigureJobs, uint32_t figure_id, uint32_t new_job, uint32_t param_3, uint32_t param_4, uint32_t param_5);
 
 DECLARE_FUNCTION_GROUP(Toolbox,
                        dealDamage_ptr dealDamage;

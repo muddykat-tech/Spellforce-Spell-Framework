@@ -82,7 +82,7 @@ uint16_t conservation_dmg_handler(SF_CGdFigureToolbox *_this, uint16_t source, u
 uint16_t feign_death_dmg_handler(SF_CGdFigureToolbox *_this, uint16_t source, uint16_t target,
                                  uint16_t current_damage, uint16_t is_spell_damage, uint32_t is_ranged_damage, uint16_t spell_id)
 {
-    // need FigureSetNewJob passed through here
+    toolboxAPI.figureSetNewJob(_this->CGdFigureJobs, target, 3, 1, 0, 0);
     return current_damage;
 }
 
@@ -134,6 +134,21 @@ uint16_t death_grasp_dmg_handler(SF_CGdFigureToolbox *_this, uint16_t source, ui
 uint16_t mana_shield_dmg_handler(SF_CGdFigureToolbox *_this, uint16_t source, uint16_t target,
                                  uint16_t current_damage, uint16_t is_spell_damage, uint32_t is_ranged_damage, uint16_t spell_id)
 {
-
+    uint16_t mana_left = figureAPI.getManaCurrent(_this->CGdFigure, target);
+    if (mana_left < current_damage)
+    {
+        current_damage = current_damage - mana_left;
+        figureAPI.subMana(_this->CGdFigure, target, mana_left);
+    }
+    else
+    {
+        figureAPI.subMana(_this->CGdFigure, target, current_damage);
+        current_damage = 0;
+    }
+    SF_CGdTargetData source_data = {0, 0, {0, 0}};
+    SF_CGdTargetData target_data = {1, target, {0, 0}};
+    SF_Rectangle rect = {0, 0};
+    effectAPI.addEffect(_this->CGdEffect, kGdEffectSpellManaShieldHitFigure,
+                        &source_data, &target_data, _this->maybe_random->current_step, 0x14, &rect);
     return current_damage;
 }
