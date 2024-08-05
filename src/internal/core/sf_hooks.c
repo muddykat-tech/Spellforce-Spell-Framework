@@ -56,6 +56,8 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(figure, setJobToDoCount, 0x300910);
     DEFINE_FUNCTION(figure, isFlagSet, 0x279d20);
     DEFINE_FUNCTION(figure, getSpellJobStartNode, 0x2b2de0);
+    DEFINE_FUNCTION(figure, subMana, 0x2b5b60);
+    DEFINE_FUNCTION(figure, getManaCurrent, 0x2b29c0);
 
     log_info("| - SpellAPI Hooks");
     // Define the function pointers for SpellFunctions group
@@ -74,12 +76,12 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(spell, figTryClrCHkSPlBfrJob2, 0x32a4f0);
     DEFINE_FUNCTION(spell, figTryUnfreeze, 0x32a5a0);
     DEFINE_FUNCTION(spell, onSpellRemove, 0x32b310);
-    INCLUDE_FUNCTION(spell, addSpell, &sf_spelltype_hook);
     DEFINE_FUNCTION(spell, getSpellLine, 0x32a980);
 
     DEFINE_FUNCTION(effect, addEffect, 0x2dc880);
     DEFINE_FUNCTION(effect, setEffectXData, 0x2ddb30);
     DEFINE_FUNCTION(effect, getEffectXData, 0x2dd730);
+
     log_info("| - ToolboxAPI Hooks");
 
     DEFINE_FUNCTION(toolbox, dealDamage, 0x2f4a57);
@@ -93,6 +95,7 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(toolbox, getSpellIndexOfType, 0x2fd939);
     DEFINE_FUNCTION(toolbox, getSpellIndexFromDLL, 0x2fdd90);
     DEFINE_FUNCTION(toolbox, getNextNode, 0x2fe240);
+    DEFINE_FUNCTION(toolbox, figureSetNewJob, 0x2f0ef0);
 
     log_info("| - IteratorAPI Hooks");
     DEFINE_FUNCTION(iterator, figureIteratorInit, 0x3183f0);
@@ -106,6 +109,8 @@ void initialize_data_hooks()
     // Method to include functions WE define in the Internal code.
     INCLUDE_FUNCTION(spell, initializeSpellData, &initializeSpellData);
     INCLUDE_FUNCTION(spell, spellClearFigureFlag, &spellClearFigureFlag);
+    INCLUDE_FUNCTION(spell, addSpell, &sf_spelltype_hook);
+    INCLUDE_FUNCTION(spell, getSpellID, &sf_get_spell_id);
 
     log_info("| - FigureAPI Wrappers");
     INCLUDE_FUNCTION(figure, addBonusMultToStatistic, &addBonusMultToStatistic);

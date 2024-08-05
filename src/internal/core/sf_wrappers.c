@@ -188,6 +188,11 @@ void __thiscall attach_new_label(CMnuContainer *parent, char *label_chars, uint8
     g_destroy_sf_string(&label_string);
 }
 
+uint16_t __thiscall sf_get_spell_id(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    return _this->active_spell_list[spell_index].spell_id;
+}
+
 /*
     char mod_id[64];
     char mod_version[24];

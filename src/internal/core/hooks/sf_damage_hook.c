@@ -14,7 +14,7 @@
 uint32_t g_damage_return_addr;
 
 uint32_t __attribute__((no_caller_saved_registers, thiscall)) sf_deal_damage(SF_CGdFigureToolbox *figureToolbox,
-    uint16_t dmg_source, uint16_t dmg_target, uint32_t damage_amount, uint32_t is_spell_damage, uint32_t is_ranged_damage, uint32_t vry_unknown_6)
+                                                                             uint16_t dmg_source, uint16_t dmg_target, uint32_t damage_amount, uint32_t is_spell_damage, uint32_t is_ranged_damage, uint32_t vry_unknown_6)
 {
 
     log_info("Called into Overwritten Damage Function Start");
@@ -35,7 +35,7 @@ uint32_t __attribute__((no_caller_saved_registers, thiscall)) sf_deal_damage(SF_
         uint16_t spell_job_start_node = figureAPI.getSpellJobStartNode(figureToolbox->CGdFigure, dmg_target);
         uint16_t current_list_size = 0;
 
-        uint16_t ids_by_phase[COUNT][799];
+        uint32_t ids_by_phase[COUNT][799];
         size_t sizes_by_phase[COUNT] = {0};
 
         while (spell_job_start_node != 0)
@@ -50,7 +50,7 @@ uint32_t __attribute__((no_caller_saved_registers, thiscall)) sf_deal_damage(SF_
                 damage_handler_ptr exists = get_spell_damage(spell_line_id, phase);
                 if (exists != NULL)
                 {
-                    ids_by_phase[phase][sizes_by_phase[phase]++] = spell_line_id;
+                    ids_by_phase[phase][sizes_by_phase[phase]++] = (spell_index << 0x10) | spell_line_id;
                     current_list_size++;
                 }
             }
@@ -66,13 +66,14 @@ uint32_t __attribute__((no_caller_saved_registers, thiscall)) sf_deal_damage(SF_
 
             for (size_t i = 0; i < sizes_by_phase[phase]; ++i)
             {
-                uint16_t spell_line_id = ids_by_phase[phase][i];
+                uint32_t packed_id = ids_by_phase[phase][i];
+                uint16_t spell_line_id = packed_id & 0xffff;
+                uint16_t spell_index = (packed_id >> 0x10);
+                uint16_t spell_id = spellAPI.getSpellID(figureToolbox->CGdSpell, spell_index);
                 damage_handler_ptr spell_damage_func = get_spell_damage(spell_line_id, phase);
 
-                //FIXME -- we need id of specific spell we are handling here. 
-                uint16_t spell_id = 0;
                 damage_amount = spell_damage_func(figureToolbox, dmg_source, dmg_target, damage_amount,
-                                                        is_spell_damage, is_ranged_damage, spell_id);
+                                                  is_spell_damage, is_ranged_damage, spell_id);
             }
         }
     }
