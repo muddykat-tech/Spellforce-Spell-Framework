@@ -43,4 +43,20 @@ damage_handler_ptr get_spell_damage(const uint16_t spell_line_id, SpellDamagePha
 
 void __thiscall register_vanilla_spell_damage_handlers()
 {
+    registerSpellDamageHandler(0x06, &invulnerability_dmg_handler, SpellDamagePhase::PRE);
+    registerSpellDamageHandler(0x97, &durability_dmg_handler, SpellDamagePhase::PRE);
+    registerSpellDamageHandler(0x9b, &durability_dmg_handler, SpellDamagePhase::PRE);
+    registerSpellDamageHandler(0x9d, &steelskin_dmg_handler, SpellDamagePhase::PRE);
+    registerSpellDamageHandler(0xd5, &feedback_dmg_handler, SpellDamagePhase::PRE);
+
+    registerSpellDamageHandler(0x0c, &dmg_shield_dmg_handler, SpellDamagePhase::DEFAULT);
+    registerSpellDamageHandler(0x0f, &dmg_shield_dmg_handler, SpellDamagePhase::DEFAULT);
+    registerSpellDamageHandler(0x2f, &dmg_shield_dmg_handler, SpellDamagePhase::DEFAULT);
+    registerSpellDamageHandler(0xaf, &dmg_shield_dmg_handler, SpellDamagePhase::DEFAULT);
+    registerSpellDamageHandler(0xb9, &dmg_shield_dmg_handler, SpellDamagePhase::DEFAULT);
+
+    registerSpellDamageHandler(0x20, &death_grasp_dmg_handler, SpellDamagePhase::POST);
+    registerSpellDamageHandler(0x5d, &feign_death_dmg_handler, SpellDamagePhase::POST);
+    registerSpellDamageHandler(0x8c, &conservation_dmg_handler, SpellDamagePhase::POST);
+    registerSpellDamageHandler(0xda, &mana_shield_dmg_handler, SpellDamagePhase::POST);
 }

@@ -35,8 +35,8 @@ uint16_t invulnerability_dmg_handler(SF_CGdFigureToolbox *_this, uint16_t source
 
 // fire shield, ice shield, thorn shield, white essence and allmight
 //  0xc, 0xf, 0x2f, 0xaf, 0xb3
-uint16_t dmg_shield_dmg_handler(SF_CGdFigureToolbox *_this, uint16_t source, uint16_t target,
-                                uint16_t current_damage, uint16_t is_spell_damage, uint32_t is_ranged_damage, uint16_t spell_id)
+uint16_t __thiscall dmg_shield_dmg_handler(SF_CGdFigureToolbox *_this, uint16_t source, uint16_t target,
+                                           uint16_t current_damage, uint16_t is_spell_damage, uint32_t is_ranged_damage, uint16_t spell_id)
 {
     if ((!is_ranged_damage) && (!is_spell_damage) && (source != 0))
     {
@@ -50,8 +50,8 @@ uint16_t dmg_shield_dmg_handler(SF_CGdFigureToolbox *_this, uint16_t source, uin
     return current_damage;
 }
 
-uint16_t conservation_dmg_handler(SF_CGdFigureToolbox *_this, uint16_t source, uint16_t target,
-                                  uint16_t current_damage, uint16_t is_spell_damage, uint32_t is_ranged_damage, uint16_t spell_id)
+uint16_t __thiscall conservation_dmg_handler(SF_CGdFigureToolbox *_this, uint16_t source, uint16_t target,
+                                             uint16_t current_damage, uint16_t is_spell_damage, uint32_t is_ranged_damage, uint16_t spell_id)
 {
     if (!is_spell_damage)
     {
@@ -79,15 +79,15 @@ uint16_t conservation_dmg_handler(SF_CGdFigureToolbox *_this, uint16_t source, u
     return current_damage;
 }
 
-uint16_t feign_death_dmg_handler(SF_CGdFigureToolbox *_this, uint16_t source, uint16_t target,
-                                 uint16_t current_damage, uint16_t is_spell_damage, uint32_t is_ranged_damage, uint16_t spell_id)
+uint16_t __thiscall feign_death_dmg_handler(SF_CGdFigureToolbox *_this, uint16_t source, uint16_t target,
+                                            uint16_t current_damage, uint16_t is_spell_damage, uint32_t is_ranged_damage, uint16_t spell_id)
 {
     toolboxAPI.figureSetNewJob(_this->CGdFigureJobs, target, 3, 1, 0, 0);
     return current_damage;
 }
 
-uint16_t feedback_dmg_handler(SF_CGdFigureToolbox *_this, uint16_t source, uint16_t target,
-                              uint16_t current_damage, uint16_t is_spell_damage, uint32_t is_ranged_damage, uint16_t spell_id)
+uint16_t __thiscall feedback_dmg_handler(SF_CGdFigureToolbox *_this, uint16_t source, uint16_t target,
+                                         uint16_t current_damage, uint16_t is_spell_damage, uint32_t is_ranged_damage, uint16_t spell_id)
 {
     if (is_spell_damage)
     {
@@ -113,8 +113,8 @@ uint16_t feedback_dmg_handler(SF_CGdFigureToolbox *_this, uint16_t source, uint1
     return current_damage;
 }
 
-uint16_t death_grasp_dmg_handler(SF_CGdFigureToolbox *_this, uint16_t source, uint16_t target,
-                                 uint16_t current_damage, uint16_t is_spell_damage, uint32_t is_ranged_damage, uint16_t spell_id)
+uint16_t __thiscall death_grasp_dmg_handler(SF_CGdFigureToolbox *_this, uint16_t source, uint16_t target,
+                                            uint16_t current_damage, uint16_t is_spell_damage, uint32_t is_ranged_damage, uint16_t spell_id)
 {
     SF_CGdResourceSpell spell_data;
     spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
@@ -131,8 +131,8 @@ uint16_t death_grasp_dmg_handler(SF_CGdFigureToolbox *_this, uint16_t source, ui
 }
 
 // Need passthough for figureAPI GetCurrentMana, SubMana here.
-uint16_t mana_shield_dmg_handler(SF_CGdFigureToolbox *_this, uint16_t source, uint16_t target,
-                                 uint16_t current_damage, uint16_t is_spell_damage, uint32_t is_ranged_damage, uint16_t spell_id)
+uint16_t __thiscall mana_shield_dmg_handler(SF_CGdFigureToolbox *_this, uint16_t source, uint16_t target,
+                                            uint16_t current_damage, uint16_t is_spell_damage, uint32_t is_ranged_damage, uint16_t spell_id)
 {
     uint16_t mana_left = figureAPI.getManaCurrent(_this->CGdFigure, target);
     if (mana_left < current_damage)
