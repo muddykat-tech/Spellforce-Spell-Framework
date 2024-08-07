@@ -10,6 +10,7 @@
 #include "sf_mod_registry.h"
 #include "sf_subeffect_registry.h"
 #include "sf_vanilla_registry.h"
+#include "sf_spelldamage_registry.h"
 
 #include <windows.h>
 #include <iostream>
@@ -96,6 +97,10 @@ void initialize_framework()
     log_info("| - Registration of Vanilla Spell Refresh Handlers");
 
     register_vanilla_spell_refresh_handlers();
+
+    log_info("| - Registration of Vanilla Spell Deal Damage Handlers");
+
+    register_vanilla_spell_damage_handlers();
 
     log_info("|======| Spellforce Spell Framework Configuration Phase End |======|");
     log_info("|+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.|");
