@@ -55,8 +55,12 @@ void __thiscall register_vanilla_spell_damage_handlers()
     registerSpellDamageHandler(0xaf, &dmg_shield_dmg_handler, SpellDamagePhase::DEFAULT);
     registerSpellDamageHandler(0xb9, &dmg_shield_dmg_handler, SpellDamagePhase::DEFAULT);
 
+    registerSpellDamageHandler(0x15, &hypnotize_dmg_handler, SpellDamagePhase::POST);
     registerSpellDamageHandler(0x20, &death_grasp_dmg_handler, SpellDamagePhase::POST);
     registerSpellDamageHandler(0x5d, &feign_death_dmg_handler, SpellDamagePhase::POST);
     registerSpellDamageHandler(0x8c, &conservation_dmg_handler, SpellDamagePhase::POST);
+    registerSpellDamageHandler(0xa1, &hypnotize_dmg_handler, SpellDamagePhase::POST);
+    registerSpellDamageHandler(0xa7, &hypnotize_dmg_handler, SpellDamagePhase::POST);
+    registerSpellDamageHandler(0xd7, &hypnotize_dmg_handler, SpellDamagePhase::POST);
     registerSpellDamageHandler(0xda, &mana_shield_dmg_handler, SpellDamagePhase::POST);
 }

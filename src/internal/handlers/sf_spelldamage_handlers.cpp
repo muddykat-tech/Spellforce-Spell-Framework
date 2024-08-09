@@ -130,6 +130,24 @@ uint16_t __thiscall death_grasp_dmg_handler(SF_CGdFigureToolbox *_this, uint16_t
     return current_damage;
 }
 
+uint16_t __thiscall hypnotize_dmg_handler(SF_CGdFigureToolbox *_this, uint16_t source, uint16_t target,
+                                          uint16_t current_damage, uint16_t is_spell_damage, uint32_t is_ranged_damage, uint16_t spell_id)
+{
+    SF_CGdResourceSpell spell_data;
+    spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
+    uint16_t spell_index = toolboxAPI.getSpellIndexOfType(_this, target, spell_data.spell_line_id, 0);
+    while (spell_index != 0)
+    {
+        spellAPI.figTryUnfreeze(_this->CGdSpell, spell_index, 0);
+        spellAPI.figTryClrCHkSPlBfrJob2(_this->CGdSpell, spell_index);
+        spellAPI.figClrChkSplBfrChkBattle(_this->CGdSpell, spell_index, 0);
+        spellAPI.removeDLLNode(_this->CGdSpell, spell_index);
+        spellAPI.setEffectDone(_this->CGdSpell, spell_index, 0);
+        spell_index = toolboxAPI.getSpellIndexOfType(_this, target, spell_data.spell_line_id, 0);
+    }
+    return current_damage;
+}
+
 // Need passthough for figureAPI GetCurrentMana, SubMana here.
 uint16_t __thiscall mana_shield_dmg_handler(SF_CGdFigureToolbox *_this, uint16_t source, uint16_t target,
                                             uint16_t current_damage, uint16_t is_spell_damage, uint32_t is_ranged_damage, uint16_t spell_id)
