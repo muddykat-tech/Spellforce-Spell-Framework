@@ -12,6 +12,7 @@
 #include "hooks/sf_damage_hook.h"
 #include "hooks/sf_spelltype_hook.h"
 #include "hooks/sf_console_hook.h"
+#include "hooks/sf_onhit_hook.h"
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -206,6 +207,15 @@ static void initialize_deal_damage_hook()
     *(int *)(ASI::AddrOf(0x2f4af5)) = (int)(&sf_damage_hook) - ASI::AddrOf(0x2f4af9);
 }
 
+static void initialize_onhit_hook()
+{
+    ASI::MemoryRegion onhit_mreg(ASI::AddrOf(0x2e0b00), 5);
+    ASI::BeginRewrite(onhit_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x2e0b00)) = 0xE9; // jmp instruction
+    *(int *)(ASI::AddrOf(0x2e0b01)) = (int)(&sf_onhit_hook) - ASI::AddrOf(0x2e0b05);
+    ASI::EndRewrite(onhit_mreg);
+}
+
 void initialize_beta_hooks()
 {
     log_info("Hooking Spell Types");
@@ -228,4 +238,7 @@ void initialize_beta_hooks()
 
     log_info("Dirty Menu Loading Trigger Test");
     initialize_menuload_hook();
+
+    log_info("Hooking On Hit Trigger");
+    initialize_onhit_hook();
 }

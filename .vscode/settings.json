@@ -98,7 +98,8 @@
         "numeric": "cpp",
         "random": "cpp",
         "numbers": "cpp",
-        "sf_spelldamage_registry.h": "c"
+        "sf_spelldamage_registry.h": "c",
+        "sf_onhit_hook.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled",
     "makefile.makePath": "mingw32-make"
