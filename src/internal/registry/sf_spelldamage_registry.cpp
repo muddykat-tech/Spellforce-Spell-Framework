@@ -35,7 +35,6 @@ damage_handler_ptr get_spell_damage(const uint16_t spell_line_id, SpellDamagePha
     auto it = phase_map.find(spell_line_id);
     if (it == phase_map.end())
     {
-        log_error("Unknown Spell Line ID, No damage handler has been registered for this spell.");
         return NULL;
     }
     return it->second;

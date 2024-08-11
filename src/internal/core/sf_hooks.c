@@ -240,5 +240,5 @@ void initialize_beta_hooks()
     initialize_menuload_hook();
 
     log_info("Hooking On Hit Trigger");
-    initialize_onhit_hook();
+//    initialize_onhit_hook();
 }

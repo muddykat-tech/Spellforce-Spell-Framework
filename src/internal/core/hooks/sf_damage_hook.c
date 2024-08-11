@@ -17,7 +17,9 @@ uint32_t __attribute__((no_caller_saved_registers, thiscall)) sf_deal_damage(SF_
                                                                              uint16_t dmg_source, uint16_t dmg_target, uint32_t damage_amount, uint32_t is_spell_damage, uint32_t is_ranged_damage, uint32_t vry_unknown_6)
 {
 
-    log_info("Called into Overwritten Damage Function Start");
+    char phase_data[256];
+    sprintf(phase_data, "source: %d, dmg_target : %d, amount: %d, flags: %u %u %u", dmg_source, dmg_target, damage_amount, is_spell_damage, is_ranged_damage, vry_unknown_6);
+    log_info(phase_data);
     /* TODO - rewrite this for later use after spell damage function call
       if ((((source != 0) && (iVar6 = CGdFigure::IsAlive(local_270->gd_figure,source), iVar6 != 0)) &&
         (iVar6 = HasSpellOnIt(local_270,source,0xa5), iVar6 != 0)) ||
@@ -28,7 +30,6 @@ uint32_t __attribute__((no_caller_saved_registers, thiscall)) sf_deal_damage(SF_
 
     bool check_spells_before_job = figureAPI.isFlagSet(figureToolbox->CGdFigure, dmg_target, F_CHECK_SPELLS_BEFORE_JOB);
 
-    log_info("Sanity Check 1");
     bool figure_set_new_job = false;
     if (check_spells_before_job)
     {
@@ -50,6 +51,9 @@ uint32_t __attribute__((no_caller_saved_registers, thiscall)) sf_deal_damage(SF_
                 damage_handler_ptr exists = get_spell_damage(spell_line_id, phase);
                 if (exists != NULL)
                 {
+                    char message[256];
+                    sprintf(message,"Found Spell Line ID: %d", spell_line_id);
+                    log_error(message);
                     ids_by_phase[phase][sizes_by_phase[phase]++] = (spell_index << 0x10) | spell_line_id;
                     current_list_size++;
                 }
@@ -60,9 +64,6 @@ uint32_t __attribute__((no_caller_saved_registers, thiscall)) sf_deal_damage(SF_
         for (int i = PRE; i < COUNT; ++i)
         {
             SpellDamagePhase phase = (SpellDamagePhase)i;
-            char phase_data[256];
-            sprintf(phase_data, "Phase: %d, Size: %d", phase, sizes_by_phase[phase]);
-            log_info(phase_data);
 
             for (size_t i = 0; i < sizes_by_phase[phase]; ++i)
             {
@@ -77,19 +78,17 @@ uint32_t __attribute__((no_caller_saved_registers, thiscall)) sf_deal_damage(SF_
             }
         }
     }
-
-    log_info("Called into Overwritten Damage Function End");
     return damage_amount;
 }
 
 void __declspec(naked) sf_damage_hook()
 {
-    asm("push 0x08(%%ebp)          \n\t"
-        "push 0x0c(%%ebp)          \n\t"
-        "push 0x10(%%ebp)          \n\t"
-        "push 0x14(%%ebp)          \n\t"
+    asm("push 0x1c(%%ebp)          \n\t"
         "push 0x18(%%ebp)          \n\t"
-        "push 0x1c(%%ebp)          \n\t"
+        "push 0x14(%%ebp)          \n\t"
+        "push 0x10(%%ebp)          \n\t"
+        "push 0x0c(%%ebp)          \n\t"
+        "push 0x08(%%ebp)          \n\t"
         "mov  -0x26c(%%ebp), %%ecx \n\t"
         "call %P0                  \n\t"
         "movw %%ax, 0x10(%%ebp)    \n\t"
