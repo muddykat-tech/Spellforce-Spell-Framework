@@ -27,6 +27,7 @@ void __thiscall lifetap_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall summons_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall hypnotize_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall iceshield2_handler(SF_CGdSpell *_this, uint16_t spell_index);
+void __thiscall iceshield3_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall pestilence_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall cure_disease_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall petrify_handler(SF_CGdSpell *_this, uint16_t spell_index);

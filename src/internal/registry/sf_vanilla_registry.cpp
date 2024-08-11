@@ -47,7 +47,7 @@ void initialize_vanilla_spells()
     SFSpell *icestrike = registrationAPI.registerSpell(0x0e);
     registrationAPI.linkTypeHandler(icestrike, &icestrike_handler);
 
-    SFSpell *iceshield = registrationAPI.registerSpell(0x0f);
+    SFSpell *iceshield = registrationAPI.registerSpell(0xf);
     registrationAPI.linkTypeHandler(iceshield, &iceshield_handler);
 
     // next block
@@ -187,7 +187,7 @@ void initialize_vanilla_spells()
     registrationAPI.linkTypeHandler(fireshield2, &fireshield2_handler);
 
     SFSpell *thorn_shield2 = registrationAPI.registerSpell(0x3d);
-    registrationAPI.linkTypeHandler(thorn_shield2, &thorn_shield_handler);
+    registrationAPI.linkTypeHandler(thorn_shield2, &thorn_shield2_handler);
 
     SFSpell *forget = registrationAPI.registerSpell(0x3e);
     registrationAPI.linkTypeHandler(forget, &forget_handler);

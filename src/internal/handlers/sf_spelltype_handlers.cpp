@@ -130,7 +130,13 @@ void __thiscall hypnotize_handler(SF_CGdSpell *_this, uint16_t spell_index)
 
 void __thiscall iceshield2_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
-	_this->active_spell_list[spell_index].spell_job = 0x12;
+	_this->active_spell_list[spell_index].spell_job = 0x16;
+	initializeSpellData(_this, spell_index, SPELL_TICK_COUNT_AUX);
+}
+
+void __thiscall iceshield3_handler(SF_CGdSpell *_this, uint16_t spell_index)
+{
+	_this->active_spell_list[spell_index].spell_job = 0x16;
 	initializeSpellData(_this, spell_index, SPELL_TICK_COUNT_AUX);
 }
 
