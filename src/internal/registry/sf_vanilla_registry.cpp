@@ -42,7 +42,7 @@ void initialize_vanilla_spells()
     registrationAPI.linkTypeHandler(fireshield, &fireshield_handler);
 
     SFSpell *fireball = registrationAPI.registerSpell(0x0d);
-    registrationAPI.linkTypeHandler(fireshield, &fireball_handler);
+    registrationAPI.linkTypeHandler(fireball, &fireball_handler);
 
     SFSpell *icestrike = registrationAPI.registerSpell(0x0e);
     registrationAPI.linkTypeHandler(icestrike, &icestrike_handler);
