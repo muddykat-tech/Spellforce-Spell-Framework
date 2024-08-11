@@ -184,7 +184,7 @@ void initialize_vanilla_spells()
     // Unused spell here
 
     SFSpell *fireshield2 = registrationAPI.registerSpell(0x3c);
-    registrationAPI.linkTypeHandler(fireshield2, &fireshield_handler);
+    registrationAPI.linkTypeHandler(fireshield2, &fireshield2_handler);
 
     SFSpell *thorn_shield2 = registrationAPI.registerSpell(0x3d);
     registrationAPI.linkTypeHandler(thorn_shield2, &thorn_shield_handler);
