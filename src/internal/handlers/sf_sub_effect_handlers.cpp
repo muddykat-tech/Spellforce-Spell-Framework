@@ -1,12 +1,13 @@
 #include "sf_sub_effect_handlers.h"
 #include "../core/sf_hooks.h"
 #include "../core/sf_wrappers.h"
+#include <cstdio>
 
 void __thiscall elemental_sub_effect_handler(SF_CGDEffect *_this, uint16_t effect_index)
 {
     uint16_t spell_id = effectAPI.getEffectXData(_this, effect_index, EFFECT_SUBSPELL_ID);
     uint16_t figure_index1 = effectAPI.getEffectXData(_this, effect_index, EFFECT_ENTITY_INDEX);
-    uint8_t figure_type1;
+    uint8_t figure_type1 = 0;
     if (figure_index1)
     {
         figure_type1 = effectAPI.getEffectXData(_this, effect_index, EFFECT_ENTITY_TYPE);
@@ -16,7 +17,7 @@ void __thiscall elemental_sub_effect_handler(SF_CGDEffect *_this, uint16_t effec
     {
         // here comes the black magic
         // CGdWorld structure is annotated badly, so offsets we use
-        uint32_t world = *(uint32_t *)_this->SF_CGdWorld;
+        uint32_t world = (uint32_t)(_this->SF_CGdWorld);
         uint16_t map_size = *(uint16_t *)(world + 0x11187);
         for (uint16_t i = 0, j = 9; j != 0; j--, i += 7)
         {
@@ -85,7 +86,7 @@ void __thiscall common_sub_effect_handler(SF_CGDEffect *_this, uint16_t effect_i
 {
     uint16_t spell_id = effectAPI.getEffectXData(_this, effect_index, EFFECT_SUBSPELL_ID);
     uint16_t figure_index1 = effectAPI.getEffectXData(_this, effect_index, EFFECT_ENTITY_INDEX);
-    uint8_t figure_type1;
+    uint8_t figure_type1 = 0;
     if (figure_index1)
     {
         figure_type1 = effectAPI.getEffectXData(_this, effect_index, EFFECT_ENTITY_TYPE);
