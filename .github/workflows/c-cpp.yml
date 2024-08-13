@@ -28,3 +28,13 @@ jobs:
         mingw32-make --version
         mingw32-make clean
         mingw32-make --debug
+        
+    - name: Zip compiled file
+      run: |
+        zip bin/sfsf.zip bin/sfsf.asi  # Zip the compiled file in the 'bin' directory
+
+    - name: Upload zipped artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: sfsf-artifact
+        path: bin/sfsf.zip 
