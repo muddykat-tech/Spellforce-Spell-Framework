@@ -16,7 +16,6 @@ jobs:
     - name: Set up MinGW
       uses: egor-tensin/setup-mingw@v1
       with:
-        arch: x86
-
+        platform: x86  # Set this to x64 for 64-bit or x86 for 32-bit
     - name: Compile Project
       run: mingw32-make
