@@ -13,12 +13,9 @@ jobs:
     - name: checkout code
       uses: actions/checkout@v4
       
-    - name: Install MinGW with Chocolatey
-      run: |
-        choco install mingw -y --x86
-
-    - name: Add MinGW 32-bit to PATH
-      run: echo "C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw32\bin" >> $GITHUB_PATH
-        
+    - name: Install MinGW 32-bit with Chocolatey
+      run: choco install mingw -y
+      
     - name: Compile Project
-      run: mingw32-make
+      run: |
+        mingw32-make
