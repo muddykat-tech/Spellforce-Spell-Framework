@@ -13,9 +13,11 @@ jobs:
     - name: checkout code
       uses: actions/checkout@v4
       
-    - name: Install MinGW 32-bit with Chocolatey
-      run: choco install mingw
-      
+    - name: Set up MinGW
+      uses: egor-tensin/setup-mingw@v2
+      with:
+        platform: x32
+
     - name: "Setup"
       run: |
         gcc --version
@@ -24,4 +26,4 @@ jobs:
       run: |
         mingw32-make --version
         mingw32-make clean
-        mingw32-make -m32 --debug
+        mingw32-make --debug
