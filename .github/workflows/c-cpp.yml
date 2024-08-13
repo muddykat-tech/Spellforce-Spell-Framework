@@ -11,13 +11,14 @@ jobs:
     runs-on: windows-2019
     defaults:
       run:
-        shell: bash
+        shell: cmd
     steps:
     - name: checkout code
       uses: actions/checkout@v4
       
     - name: Install MinGW 32-bit with Chocolatey
-      run: choco install mingw -y=
+      run: choco install mingw -y
+      
     - name: "Setup"
       run: |
         gcc --version
@@ -27,4 +28,3 @@ jobs:
         mingw32-make --version
         mingw32-make clean
         mingw32-make --debug
-      shell: cmd
