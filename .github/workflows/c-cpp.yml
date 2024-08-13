@@ -17,7 +17,7 @@ jobs:
       uses: actions/checkout@v4
       
     - name: Install MinGW 32-bit with Chocolatey
-      run: choco install mingw -y
+      run: choco install mingw --version=12.2.0
       
     - name: "Setup"
       run: |
