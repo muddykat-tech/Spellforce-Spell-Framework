@@ -1,0 +1,22 @@
+name: mingw32-make
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: windows
+    steps:
+    - name: checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up MinGW
+      uses: egor-tensin/setup-mingw@v1
+      with:
+        arch: x86
+
+    - name: Compile Project
+      run: mingw32-make
