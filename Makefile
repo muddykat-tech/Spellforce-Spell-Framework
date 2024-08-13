@@ -1,9 +1,9 @@
 # Compiler and linker options
 CC = g++
 RC = windres
-DLL_CFLAGS = -O0 -g -std=c++11 ${WARNS} -Iinclude -DADD_EXPORTS -fpermissive
-DLL_LDFLAGS = -shared -static-libgcc -static-libstdc++ -s -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive -Wl,--subsystem,windows,--out-implib,lib/testmod.a
-FW_LDFLAGS = -shared -static-libgcc -static-libstdc++ -s -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive -Wl,--subsystem,windows,--out-implib,lib/sfsf.a
+DLL_CFLAGS = -O0 -g -std=c++11 ${WARNS} -Iinclude -DADD_EXPORTS -fpermissive -m32
+DLL_LDFLAGS = -m32 -shared -static-libgcc -static-libstdc++ -s -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive -Wl,--subsystem,windows,--out-implib,lib/testmod.a
+FW_LDFLAGS = -m32 -shared -static-libgcc -static-libstdc++ -s -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive -Wl,--subsystem,windows,--out-implib,lib/sfsf.a
 
 # Object files for the new architecture
 HOOK_OBJ = obj/sf_onhit_hook.o obj/sf_refresh_hook.o obj/sf_endspell_hook.o obj/sf_menu_hook.o obj/sf_spelleffect_hook.o obj/sf_subeffect_hook.o obj/sf_spelltype_hook.o obj/sf_damage_hook.o obj/sf_console_hook.o obj/sf_hooks.o
