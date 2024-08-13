@@ -1,12 +1,5 @@
-# Git Hook Compat
-ifeq ($(SHELL),sh.exe)
-    CLR = @cls
-else
-    CLR = clear
-endif
-
 # Compiler and linker options
-CC = @g++
+CC = g++
 RC = windres
 DLL_CFLAGS = -O0 -g -std=c++11 ${WARNS} -Iinclude -DADD_EXPORTS -fpermissive
 DLL_LDFLAGS = -shared -static-libgcc -static-libstdc++ -s -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive -Wl,--subsystem,windows,--out-implib,lib/testmod.a
@@ -47,152 +40,94 @@ bin lib obj:
 
 # Internals build
 obj/sf_asi.o: src/asi/sf_asi.cpp src/asi/sf_asi.h | obj
-	${CLR}
-	@echo Compiling Framework [  o ]
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 	
 
 obj/sfsf.o: ${INTERNALS_SRC}/sfsf.cpp src/asi/sf_asi.h | obj
-	${CLR}
-	@echo Compiling Framework [o   ]
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_wrappers.o: ${CORE_SRC}/sf_wrappers.c | obj
-	${CLR}
-	@echo Compiling Framework [   o]
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 # Hooks
 obj/sf_onhit_hook.o: ${HOOKS_SRC}/sf_onhit_hook.c | obj
-	${CLR}
-	@echo Building Hooks [   o]
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_refresh_hook.o: ${HOOKS_SRC}/sf_refresh_hook.c | obj
-	${CLR}
-	@echo Building Hooks [   o]
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_endspell_hook.o: ${HOOKS_SRC}/sf_endspell_hook.c | obj
-	${CLR}
-	@echo Building Hooks [  o ]
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_menu_hook.o: ${HOOKS_SRC}/sf_menu_hook.c | obj
-	${CLR}
-	@echo Building Hooks [ o  ]
 	${CC} -mgeneral-regs-only ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_spelleffect_hook.o: ${HOOKS_SRC}/sf_spelleffect_hook.c | obj
-	${CLR}
-	@echo Building Hooks [o   ]
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_subeffect_hook.o: ${HOOKS_SRC}/sf_subeffect_hook.c | obj
-	${CLR}
-	@echo Building Hooks [ o  ]
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_spelltype_hook.o: ${HOOKS_SRC}/sf_spelltype_hook.c | obj
-	${CLR}
-	@echo Building Hooks [  o ]
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_damage_hook.o: ${HOOKS_SRC}/sf_damage_hook.c | obj
-	${CLR}
-	@echo Building Hooks [   o]
 	${CC} -mgeneral-regs-only ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_console_hook.o: ${HOOKS_SRC}/sf_console_hook.c | obj
-	${CLR}
-	@echo Building Hooks [  o ]
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_hooks.o: ${CORE_SRC}/sf_hooks.c src/asi/sf_asi.h | obj
-	${CLR}
-	@echo Building Hooks [ o  ]
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 # Mod Loader
 obj/sf_modloader.o: ${CORE_SRC}/sf_modloader.c | obj
-	${CLR}
-	@echo Compiling Framework [ o  ]
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 # Registry and Handlers
 obj/sf_registry.o: ${REGISTRY_SRC}/sf_registry.cpp | obj
-	${CLR}
-	@echo Building Registry [  o ]
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
 
 obj/sf_mod_registry.o: ${REGISTRY_SRC}/sf_mod_registry.cpp | obj
-	${CLR}
-	@echo Building Registry [ o  ]
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
 
 obj/sf_spelltype_handlers.o: ${HANDLERS_SRC}/sf_spelltype_handlers.cpp | obj
-	${CLR}
-	@echo Building Handlers [ o  ]
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
 
 obj/sf_spelltype_registry.o: ${REGISTRY_SRC}/sf_spelltype_registry.cpp | obj
-	${CLR}
-	@echo Building Registry [o   ]
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
 
 obj/sf_spelleffect_handlers.o: ${HANDLERS_SRC}/sf_spelleffect_handlers.cpp | obj
-	${CLR}
-	@echo Building Handlers [o   ]	
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
 
 obj/sf_spelleffect_registry.o: ${REGISTRY_SRC}/sf_spelleffect_registry.cpp | obj
-	${CLR}
-	@echo Building Registry [ o  ]
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
 
 obj/sf_spellend_handlers.o: ${HANDLERS_SRC}/sf_spellend_handlers.cpp | obj
-	${CLR}
-	@echo Building Handlers [ o  ]	
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_sub_effect_handlers.o: ${HANDLERS_SRC}/sf_sub_effect_handlers.cpp | obj
-	${CLR}
-	@echo Building Handlers [  o ]	
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_spellend_registry.o: ${REGISTRY_SRC}/sf_spellend_registry.cpp | obj
-	${CLR}
-	@echo Building Registry [  o ]
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
 
 obj/sf_subeffect_registry.o: ${REGISTRY_SRC}/sf_subeffect_registry.cpp | obj
-	${CLR}
-	@echo Building Registry [   o]
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_spellrefresh_handlers.o: ${HANDLERS_SRC}/sf_spellrefresh_handlers.cpp | obj
-	${CLR}
-	@echo Building Handlers [   o]	
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_spellrefresh_registry.o: ${REGISTRY_SRC}/sf_spellrefresh_registry.cpp | obj
-	${CLR}
-	@echo Building Registry [  o ]
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_vanilla_registry.o: ${REGISTRY_SRC}/sf_vanilla_registry.cpp | obj
-	${CLR}
-	@echo Building Registry [ o  ]
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_spelldamage_handlers.o: ${HANDLERS_SRC}/sf_spelldamage_handlers.cpp | obj
-	${CLR}
-	@echo Building Handlers [ o  ]
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
 
 obj/sf_spelldamage_registry.o: ${REGISTRY_SRC}/sf_spelldamage_registry.cpp | obj
-	${CLR}
-	@echo Building Registry [o   ]
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
 
 # Mod build
@@ -205,6 +140,4 @@ bin/testmod.sfm: ${TEST_MOD_OBJ} | bin lib
 
 # Target for building the Spellforce framework
 bin/sfsf.asi: $(NTERNALS_OBJ) | bin lib
-	${CLR}
-	@echo Build Complete
 	${CC} -o "$@" ${NTERNALS_OBJ} ${FW_LDFLAGS}
