@@ -31,7 +31,7 @@ jobs:
         
     - name: Zip compiled file
       run: |
-        zip bin/sfsf.zip bin/sfsf.asi -r
+        tar -cvzf bin/sfsf.asi bin/sfsf.zip
 
     - name: Upload zipped artifact
       uses: actions/upload-artifact@v3
