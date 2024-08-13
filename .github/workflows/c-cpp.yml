@@ -13,9 +13,10 @@ jobs:
     - name: checkout code
       uses: actions/checkout@v4
       
-    - name: Set up MinGW
-      uses: egor-tensin/setup-mingw@v1
-      with:
-        platform: x86  # Set this to x64 for 64-bit or x86 for 32-bit
+    - name: Install MinGW with Chocolatey
+      run: |
+        choco install mingw -y
+        refreshenv  # Refresh environment variables so the new MinGW path is recognized
+        
     - name: Compile Project
       run: mingw32-make
