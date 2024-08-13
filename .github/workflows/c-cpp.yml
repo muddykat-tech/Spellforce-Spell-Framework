@@ -34,3 +34,25 @@ jobs:
       with:
         name: sfsf-artifact
         path: bin/sfsf.asi
+        
+    - name: Create Release
+      uses: actions/create-release@v1
+      id: create_release
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: ${{ steps.version.outputs.version }}
+        draft: true
+        prerelease: false
+        body_path: CHANGELOG.md
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: bin/sfsf.asi
+        asset_name: sfsf.asi
+        asset_content_type: application/octet-stream
