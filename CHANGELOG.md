@@ -1,3 +1,20 @@
+# Overview
+List of the events, available for developer to put spell logic on:
+Spell application, 2 places
+One for the money spell logic selection and extra data setup, two for the  show  spell logic itself.
+Spell ending and refreshing on target
+Now you can prevent spell clipping last ticks of damage
+Now you can have you buffs and debuffs restore target to preexisting state
+Now you can have specific logic of overwriting instances of the same spell with different levels
+Spells sub effects
+Now you can implement rain, wave and chain spells of your liking
+Target gets damaged.
+Wanna have "shield wall", that substracts flat damage amount from damage taken? Now you can make it.
+A lot of API functions available for developer to mess with. 
+Documentation coming soon (TM) 
+
+# Commit Log
+
 ## 2024-08-13
 
 - updated syntax on makefile again (muddykat-tech)
