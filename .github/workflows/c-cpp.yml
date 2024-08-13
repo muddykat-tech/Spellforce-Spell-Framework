@@ -23,6 +23,9 @@ jobs:
       run: |
         gcc --version
     
+    - name: Install zip
+      run: sudo apt-get update && sudo apt-get install -y zip
+    
     - name: Compile Project
       run: |
         mingw32-make --version
@@ -31,7 +34,7 @@ jobs:
         
     - name: Zip compiled file
       run: |
-        zip bin/sfsf.zip bin/sfsf.asi  # Zip the compiled file in the 'bin' directory
+        zip bin/sfsf.zip bin/sfsf.asi
 
     - name: Upload zipped artifact
       uses: actions/upload-artifact@v3
