@@ -30,10 +30,8 @@ mods: bin/testmod.sfm
 
 # Target for cleaning up
 clean:
-    @echo "Cleaning up..."
-    if [ -d "bin" ]; then rm -rf bin/*; fi
-    if [ -d "lib" ]; then rm -rf lib/*; fi
-    if [ -d "obj" ]; then rm -rf obj/*; fi
+	@echo "Cleaning Files"
+	rm -rf bin/* lib/* obj/*
 
 
 # Target for creating directories
