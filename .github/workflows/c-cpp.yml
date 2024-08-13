@@ -15,8 +15,13 @@ jobs:
       
     - name: Install MinGW with Chocolatey
       run: |
-        choco install mingw -y
-        refreshenv  # Refresh environment variables so the new MinGW path is recognized
+        choco install mingw -y --x86
+
+    - name: Add MinGW 32-bit to PATH
+      shell: powershell
+      run: |
+        $mingwPath = "C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw32\bin"
+        echo "##[add-path]$mingwPath"
         
     - name: Compile Project
       run: mingw32-make
