@@ -46,7 +46,7 @@ jobs:
         body_path: CHANGELOG.md
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+    - name: Checking Locations
     - name: Upload Release Asset
       uses: actions/upload-release-asset@v1
       env:
@@ -55,4 +55,4 @@ jobs:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: bin/sfsf.asi
         asset_name: sfsf.asi
-        asset_content_type: application/octet-stream
+        asset_content_type: application/zip
