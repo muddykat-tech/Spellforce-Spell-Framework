@@ -18,10 +18,7 @@ jobs:
         choco install mingw -y --x86
 
     - name: Add MinGW 32-bit to PATH
-      shell: powershell
-      run: |
-        $mingwPath = "C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw32\bin"
-        echo "##[add-path]$mingwPath"
+      run: echo "C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw32\bin" >> $GITHUB_PATH
         
     - name: Compile Project
       run: mingw32-make
