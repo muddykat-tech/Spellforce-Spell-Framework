@@ -30,7 +30,7 @@ mods: bin/testmod.sfm
 
 # Target for cleaning up
 clean:
-	@echo "Cleaning Files"
+	@echo "Cleaning Files" 
 	if exist bin\* del /q bin\*
 	if exist lib\* del /q lib\*
 	if exist obj\* del /q obj\*
