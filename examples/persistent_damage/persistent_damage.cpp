@@ -19,7 +19,7 @@ void __thiscall ignite_spelltype_handler(SF_CGdSpell *_this, uint16_t spell_inde
 
     // here we link certain spell with its spell index to its spell type
     _this->active_spell_list[spell_index].spell_job = 0xf2;
-    // here we make sure that our persistent spell starts tracking ticks passed at 0
+    // here we make sure that our spell begins tracking its ticks starting at 0
     spellAPI->setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
     // here we just put message to log for debug purpose
     logger->logInfo("IGNITE SPELL ACTIVATED");
@@ -39,14 +39,14 @@ void __thiscall ignite_spelleffect_handler(SF_CGdSpell *_this, uint16_t spell_in
     logger->logInfo("IGNITE EFFECT HANDLED");
     // Required for the spell to eventually become Inactive, without this and setEffectDone, you can't attack the same target again.
 
-    // we pull spell data from spell list. We use spell index which was acquired by effect handler, when it got called.
+    // we pull spell data from spell list.
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
 
-    // we store source of a spell (a spell caster) and target of a spell (within this example it will be a hostile creature)
+    // we store source of the spell (a spellcaster) and a target of the spell (a hostile creature)
     uint16_t target_index = spell->target.entity_index;
     uint16_t source_index = spell->source.entity_index;
 
-    // grabbing spell and spell effect (logic) id
+    // grabbing spell id and the id of its job (logic)
     SF_SpellEffectInfo effect_info;
     effect_info.spell_id = spell->spell_id;
     effect_info.job_id = spell->spell_job;
@@ -56,19 +56,19 @@ void __thiscall ignite_spelleffect_handler(SF_CGdSpell *_this, uint16_t spell_in
     // pulling spell parameters into local structure
     spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
 
-    // we declare local variable for damage dealt, later we'll pull there initial damage value or persistent damage value from spell_data
+    // we declare local variable for damage dealt, we'll use it later
     uint16_t damage;
 
-    // spell is persistent, we check how many ticks it should have and how long a single tick lasts (milliseconds)
+    // spell is persistent, we check how many ticks it should have and how long a single tick lasts (in milliseconds)
     uint16_t ticks_total = spell_data.params[2];
     uint16_t ticks_interval = spell_data.params[3];
 
 
     // we get current tick of our spell, it should be 0 at the start
     uint32_t tick_current = spellAPI->getXData(_this, spell_index, SPELL_TICK_COUNT_AUX);
-    // addToXData adds a specified (?) value to actual spell data
-    // also, addToXData returns new value as an integer
-    // we update amount of ticks passed, but then we return to our current tick, because we hasn't executed logic for current tick yet
+    // addToXData adds a specified value to actual spell data
+    // and immediately returns new value as an integer, so we can put it in local variable
+    // we update amount of ticks passed, but then we return to our current tick, because we haven't executed logic for current tick yet
     uint16_t ticks_passed = spellAPI->addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1) - 1;
 
 
@@ -103,7 +103,7 @@ void __thiscall ignite_spelleffect_handler(SF_CGdSpell *_this, uint16_t spell_in
                 spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 10, &aux_data);
                 // all this data is necessary to center visual effect on the unit
 
-                // we pull initial damage
+                // we get initial damage of the spell
                 damage = spell_data.params[0];
                 // we apply damage to figure (an object which stores unit stats)
                 toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index, target_index, damage, 1, 0, 0);
@@ -112,7 +112,7 @@ void __thiscall ignite_spelleffect_handler(SF_CGdSpell *_this, uint16_t spell_in
             }
             else
             {
-                //the spell was resisted, but creature notices it was attacked
+                //the spell was resisted, but creature notices it was attacked and must become aggroed
                 spellAPI->figureAggro(_this, spell_index, target_index);
                 uint32_t unused;
                 SF_CGdTargetData relative_data;
@@ -125,7 +125,7 @@ void __thiscall ignite_spelleffect_handler(SF_CGdSpell *_this, uint16_t spell_in
                 aux_data.partB = 0;
                 spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellTargetResisted,
                                           &unused, &relative_data, _this->OpaqueClass->current_step, 10, &aux_data);
-                spellAPI->setEffectDone(_this, spell_index, 0); // we stop the spell, it doesn't linger on creature
+                spellAPI->setEffectDone(_this, spell_index, 0); // we stop the spell, so it doesn't linger on creature
              }
             return;
         }
@@ -151,7 +151,7 @@ void __thiscall ignite_spelleffect_handler(SF_CGdSpell *_this, uint16_t spell_in
             }
             else
             {
-                // spell worked for specified amount of ticks plus one for applying initial damage, it should be stopped now
+                // spell worked for specified amount of ticks plus one tick for applying initial damage, it should be stopped now
                 // Last Param for spell effect done should always be 0?
                 spellAPI->setEffectDone(_this, spell_index, 0);
             }
@@ -180,7 +180,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     // Here we link our custom spell to main handlers.
     // Spell type handler is called when a spell of a certain spell type was cast. It's called only once at the start of the spell.
     // Spell effect handler applies logic of the custom spell type to game world. Effect handler is repeatedly called as long as the spell remains active.
-    // Spell end handler is called after the spell ended. Its functions can be imitated within spell effect handler.
+    // Spell end handler is called when the spell ends. This handler's functions can be imitated within spell effect handler.
     registrationAPI->linkTypeHandler(ignite_spell, &ignite_spelltype_handler);
     registrationAPI->linkEffectHandler(ignite_spell, 0xf2, &ignite_spelleffect_handler); // 0xf2 = 242 = custom spell type in Gamedata.cff
     registrationAPI->linkEndHandler(ignite_spell, &ignite_spellend_handler);
