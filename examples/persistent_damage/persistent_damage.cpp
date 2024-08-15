@@ -9,7 +9,8 @@ ToolboxFunctions *toolboxAPI;
 FigureFunctions *figureAPI;
 RegistrationFunctions *registrationAPI;
 SFLog *logger;
-// This custom spell type and custom spell effect has to be setup manually in the GameData.cff file currently
+// This custom spell type and custom spell effect has to be setup both here (to provide logic)
+// And in GameData.cff (to provide data and spell stats)
 
 // Spell index is the ID for the TYPE of spell being cast
 // Spell Job is the ID for the LOGIC (effect) handler that the spell uses when being cast.
@@ -17,7 +18,7 @@ void __thiscall ignite_spelltype_handler(SF_CGdSpell *_this, uint16_t spell_inde
 {
     // Effect ID is the spell_job; Free slots starts from a6. slots 1 to a5 are reserved for vanilla spells
 
-    // here we link certain spell with its spell index to its spell type
+    // here we link certain spell with its spell index to its spell_job
     _this->active_spell_list[spell_index].spell_job = 0xf2;
     // here we make sure that our spell begins tracking its ticks starting at 0
     spellAPI->setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
@@ -27,6 +28,7 @@ void __thiscall ignite_spelltype_handler(SF_CGdSpell *_this, uint16_t spell_inde
 
 
 //could be imitated within spelleffect_handler, when the spell should end according to its logic
+//It is not necessary in this case, but will play it's role in later chapters
 void __thiscall ignite_spellend_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     logger->logInfo("IGNITE HAS ENDED");
@@ -37,7 +39,6 @@ void __thiscall ignite_spellend_handler(SF_CGdSpell *_this, uint16_t spell_index
 void __thiscall ignite_spelleffect_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     logger->logInfo("IGNITE EFFECT HANDLED");
-    // Required for the spell to eventually become Inactive, without this and setEffectDone, you can't attack the same target again.
 
     // we pull spell data from spell list.
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
@@ -125,7 +126,8 @@ void __thiscall ignite_spelleffect_handler(SF_CGdSpell *_this, uint16_t spell_in
                 aux_data.partB = 0;
                 spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellTargetResisted,
                                           &unused, &relative_data, _this->OpaqueClass->current_step, 10, &aux_data);
-                spellAPI->setEffectDone(_this, spell_index, 0); // we stop the spell, so it doesn't linger on creature
+                // we stop the spell, so it doesn't linger on creature
+                spellAPI->setEffectDone(_this, spell_index, 0);
              }
             return;
         }
@@ -145,14 +147,16 @@ void __thiscall ignite_spelleffect_handler(SF_CGdSpell *_this, uint16_t spell_in
                 aux_data.partB = 0;
                 spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellDOTHitTarget,
                                           &unused, &relative_data, _this->OpaqueClass->current_step, 10, &aux_data);
-                damage = spell_data.params[1]; // we pull persistent damage value from spell data, it's lesser than initial damage was
-                _this->active_spell_list[spell_index].to_do_count = (uint16_t)((ticks_interval * 10) / 1000); // we make spell "sleeping" until it's a proper time for next tick to work
+                // we pull persistent damage value from spell data, it's lesser than initial damage was
+                damage = spell_data.params[1];
+                // we make spell "sleeping" until it's a proper time for next tick to work
+                _this->active_spell_list[spell_index].to_do_count = (uint16_t)((ticks_interval * 10) / 1000);
                 toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index, target_index, damage, 1, 0, 0);
             }
             else
             {
                 // spell worked for specified amount of ticks plus one tick for applying initial damage, it should be stopped now
-                // Last Param for spell effect done should always be 0?
+                // Last Param for spell effect done should always be 0
                 spellAPI->setEffectDone(_this, spell_index, 0);
             }
         }
@@ -188,13 +192,13 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
 
 
 // This function registers the mod within the framework. It's critical for the mod to work.
-
+// Basically framework call this function and one above when loading mods
 extern "C" __declspec(dllexport) SFMod *RegisterMod(SpellforceSpellFramework *framework)
 {
     return framework->createModInfo("SF First Spell", "1.0.0", "S'Baad", "How-to guide to create the first custom Spellforce spell");
 }
 
-//This function initializes the framework library. It's critical for the mod to work.
+//This function is required for OS to recognize our mod as loadable library. Let it be.
 
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 {
