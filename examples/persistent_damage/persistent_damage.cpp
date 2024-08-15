@@ -17,7 +17,7 @@ void __thiscall ignite_spelltype_handler(SF_CGdSpell *_this, uint16_t spell_inde
 {
     // Effect ID is the spell_job; Free slots starts from a6. slots 1 to a5 are reserved for vanilla spells
 
-    // here we link certain spell using its spell index to its game logic corresponding to its spell type
+    // here we link certain spell with its spell index to its spell type
     _this->active_spell_list[spell_index].spell_job = 0xf2;
     // here we make sure that our persistent spell starts tracking ticks passed at 0
     spellAPI->setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
