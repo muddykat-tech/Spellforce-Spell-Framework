@@ -20,7 +20,9 @@ void __thiscall ignite_spelltype_handler(SF_CGdSpell *_this, uint16_t spell_inde
 
     // here we link certain spell with its spell index to its spell_job
     _this->active_spell_list[spell_index].spell_job = 0xf2;
-    // here we make sure that our spell begins tracking its ticks starting at 0
+    // our spell affects the target multiple ticks (times),
+    // each new tick happens after a delay defined in the spell data in milliseconds.
+    // we need to make sure that our spell begins tracking its ticks starting at 0
     spellAPI->setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
     // here we just put message to log for debug purpose
     logger->logInfo("IGNITE SPELL ACTIVATED");
@@ -32,7 +34,7 @@ void __thiscall ignite_spelltype_handler(SF_CGdSpell *_this, uint16_t spell_inde
 void __thiscall ignite_spellend_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     logger->logInfo("IGNITE HAS ENDED");
-    spellAPI->removeDLLNode(_this, spell_index);
+    spellAPI->removeDLLNode(_this, spell_index); // this command removes spell from active spells, hence it can be casted on the same target again
     spellAPI->setEffectDone(_this, spell_index, 0); // this function actually ends a spell and can be used within any other handler in order to end a spell
 }
 
@@ -54,7 +56,7 @@ void __thiscall ignite_spelleffect_handler(SF_CGdSpell *_this, uint16_t spell_in
 
     // declaring local structure for spell data
     SF_CGdResourceSpell spell_data;
-    // pulling spell parameters into local structure
+    // we pull spell paraemters into spell_data from GameData.cff
     spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
 
     // we declare local variable for damage dealt, we'll use it later
@@ -77,6 +79,7 @@ void __thiscall ignite_spelleffect_handler(SF_CGdSpell *_this, uint16_t spell_in
     uint16_t isAlive = figureAPI->isAlive(_this->SF_CGdFigure, target_index);
     uint16_t isTargetable = toolboxAPI->isTargetable(_this->SF_CGdFigureToolBox, target_index);
     uint16_t isHostile = toolboxAPI->figuresCheckHostile(_this->SF_CGdFigureToolBox, source_index, target_index);
+    // we also can check figure properties by directly accessing them instead of using a function
     uint16_t isOwner = _this->SF_CGdFigure->figures[target_index].owner;
 
     // we've got a lot of technical conditions which can prevent spell cast, so if we don't meet at least one of them, spell fails
@@ -147,9 +150,10 @@ void __thiscall ignite_spelleffect_handler(SF_CGdSpell *_this, uint16_t spell_in
                 aux_data.partB = 0;
                 spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellDOTHitTarget,
                                           &unused, &relative_data, _this->OpaqueClass->current_step, 10, &aux_data);
-                // we pull persistent damage value from spell data, it's lesser than initial damage was
+                // we pull persistent damage value from spell data, it's supposed to be lesser than initial damage was
                 damage = spell_data.params[1];
-                // we make spell "sleeping" until it's a proper time for next tick to work
+                // with the next command we make the game to ignore the spell effect handler for a specified amount of internal ticks until it's a proper time for the next spell tick to happen
+                // please note that internal ticks aren't the same as spell ticks (they're shorter by a magnitudes)
                 _this->active_spell_list[spell_index].to_do_count = (uint16_t)((ticks_interval * 10) / 1000);
                 toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index, target_index, damage, 1, 0, 0);
             }
