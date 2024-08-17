@@ -112,6 +112,7 @@ void initialize_data_hooks()
     INCLUDE_FUNCTION(spell, spellClearFigureFlag, &spellClearFigureFlag);
     INCLUDE_FUNCTION(spell, addSpell, &sf_spelltype_hook);
     INCLUDE_FUNCTION(spell, getSpellID, &sf_get_spell_id);
+    INCLUDE_FUNCTION(spell, checkCanApply, &sf_refresh_hook)
 
     log_info("| - FigureAPI Wrappers");
     INCLUDE_FUNCTION(figure, addBonusMultToStatistic, &addBonusMultToStatistic);
@@ -240,5 +241,5 @@ void initialize_beta_hooks()
     initialize_menuload_hook();
 
     log_info("Hooking On Hit Trigger");
-//    initialize_onhit_hook();
+    //    initialize_onhit_hook();
 }
