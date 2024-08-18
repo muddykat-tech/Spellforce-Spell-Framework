@@ -34,7 +34,7 @@ void __thiscall ignite_spelltype_handler(SF_CGdSpell *_this, uint16_t spell_inde
 void __thiscall ignite_spellend_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     logger->logInfo("IGNITE HAS ENDED");
-    spellAPI->removeDLLNode(_this, spell_index); // this command removes spell from active spells, hence it can be casted on the same target again
+    spellAPI->removeDLLNode(_this, spell_index); // this command removes spell from active spells list
     spellAPI->setEffectDone(_this, spell_index, 0); // this function actually ends a spell and can be used within any other handler in order to end a spell
 }
 
