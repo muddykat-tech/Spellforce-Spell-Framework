@@ -80,7 +80,7 @@ DECLARE_FUNCTION(bool, isFlagSet, SF_CGdFigure *figure, uint16_t figure_index, G
 DECLARE_FUNCTION(uint16_t, getSpellJobStartNode, SF_CGdFigure *figure, uint16_t figure_index);
 DECLARE_FUNCTION(void, subMana, SF_CGdFigure *_this, uint16_t param_1, uint32_t param_2);
 DECLARE_FUNCTION(uint16_t, getManaCurrent, SF_CGdFigure *figure, uint16_t figure_id);
-
+DECLARE_FUNCTION(SF_Coord, getPosition, SF_CGdFigure *figure, SF_Coord * position ,uint16_t figure_id);
 // Unknown Functons
 DECLARE_FUNCTION(bool, FUN_006e3a90, uint32_t *CGdFigureJobs, uint16_t figure_id);
 
@@ -113,4 +113,6 @@ DECLARE_FUNCTION_GROUP(Figure,
 					   setJobToDoCount_ptr setJobToDoCount;
 					   FUN_006e3a90_ptr FUN_006e3a90;
 					   subMana_ptr subMana;
-					   getManaCurrent_ptr getManaCurrent;);
+					   getManaCurrent_ptr getManaCurrent;
+                       getPosition_ptr getPosition;
+                       );

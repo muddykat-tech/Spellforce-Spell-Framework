@@ -133,15 +133,15 @@ typedef struct __attribute__((packed))
     FigureStatistic walk_speed;
     FigureStatistic fight_speed;
     FigureStatistic cast_speed;
-    uint8_t equipment[20]; // No idea how this works, may need a class (undefined2[16] in ghidra, but is 20 bytes FigureStatistic is 6 bytes)
+    uint16_t equipment[16]; // No idea how this works, may need a class (undefined2[16] in ghidra, but is 20 bytes FigureStatistic is 6 bytes)
     uint16_t head;         // Not sure what this does
     uint32_t unknown2[3];  // three 4 byte data points in a row, no name known for these.
-    uint8_t unknown3[167]; // Many 1 byte sections in a row
+    uint8_t unknown3[168]; // Many 1 byte sections in a row
     uint32_t unknown4[7];  // Many 4 byte sections in a row
     uint16_t unknown5;
     uint8_t unknown6[2];
     CGdFigureWeaponStats weapon_stats;
-    uint8_t unknown7[12];
+    uint8_t unknown7[13];
     uint8_t good; // I assume perhaps alignment?
     uint8_t direction;
     uint8_t unknown8;
@@ -151,14 +151,14 @@ typedef struct __attribute__((packed))
     uint8_t unknown9;
     uint32_t unknown10[3];
     uint16_t unknown11;
-    CGdFigureHateEntry hate_entry;
+    CGdFigureHateEntry hate_entry[10];
     uint8_t debug_flags;
     uint8_t unknown12;
     uint16_t formation;
     uint8_t faction;
     uint8_t unknown13;
     uint32_t clan_relations;
-    uint8_t unknown14[170]; // Skipping some variable sections, contains differences Also Check what AutoClass24 is, it's used multiple times in this section
+    uint8_t unknown14[174]; // Skipping some variable sections, contains differences Also Check what AutoClass24 is, it's used multiple times in this section
     uint8_t dwarf_rank;
     uint8_t set_type;
 } GdFigure;

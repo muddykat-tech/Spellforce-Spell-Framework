@@ -31,7 +31,9 @@ mods: bin/testmod.sfm
 # Target for cleaning up
 clean:
 	@echo "Cleaning Files" 
-	rm -rf bin/* lib/* obj/*
+	if exist bin\* del /q bin\*
+	if exist lib\* del /q lib\*
+	if exist obj\* del /q obj\*
 
 # Target for creating directories
 bin lib obj:
