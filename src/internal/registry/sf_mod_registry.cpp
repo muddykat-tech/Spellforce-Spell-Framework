@@ -161,7 +161,8 @@ void register_mod_spells()
 
         if (spell_refresh_handler != nullptr)
         {
-            registerSpellRefreshHandler(spell_effect_id, spell_refresh_handler);
+
+            registerSpellRefreshHandler(spell_id, spell_refresh_handler);
         }
 
         if (spell_end_handler != nullptr)
