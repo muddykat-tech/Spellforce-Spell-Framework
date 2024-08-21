@@ -134,10 +134,10 @@ typedef struct __attribute__((packed))
     FigureStatistic fight_speed;
     FigureStatistic cast_speed;
     uint16_t equipment[16]; // No idea how this works, may need a class (undefined2[16] in ghidra, but is 20 bytes FigureStatistic is 6 bytes)
-    uint16_t head;         // Not sure what this does
-    uint32_t unknown2[3];  // three 4 byte data points in a row, no name known for these.
-    uint8_t unknown3[168]; // Many 1 byte sections in a row
-    uint32_t unknown4[7];  // Many 4 byte sections in a row
+    uint16_t head;          // Not sure what this does
+    uint32_t unknown2[3];   // three 4 byte data points in a row, no name known for these.
+    uint8_t unknown3[168];  // Many 1 byte sections in a row
+    uint32_t unknown4[7];   // Many 4 byte sections in a row
     uint16_t unknown5;
     uint8_t unknown6[2];
     CGdFigureWeaponStats weapon_stats;
@@ -207,10 +207,8 @@ typedef struct __attribute__((packed))
     uint16_t spell_job;  // aka spell line in older code
     SF_CGdTargetData source;
     SF_CGdTargetData target;
-    uint8_t xdata_key; // IDK (Seems to be used in ref for things, seen usage in getting target data and others)
-    uint8_t undefinded1;
-    uint8_t DLLNode;
-    uint8_t underfined2;
+    uint16_t xdata_key; // IDK (Seems to be used in ref for things, seen usage in getting target data and others)
+    uint16_t DLLNode;
     uint8_t flags;
 } SF_GdSpell;
 
