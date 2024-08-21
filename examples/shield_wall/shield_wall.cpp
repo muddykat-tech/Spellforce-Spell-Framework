@@ -3,10 +3,11 @@
 #include <stdio.h>
 
 
-//we declare macros for Spell Type and Spell Job of both spells
-//it will be very unhandy to keep them in mind to use in forward functions, so we just declare them here
-//we use a new set of numbers to avoid interfering with previous examples
-//0xf3 = 243, 0xaa = 170, 0xf4 = 244, 0xab = 171
+// We declare macros for Spell Type and Spell Job of both spells
+// it is very unhandy to keep them in mind, so we just declare them here
+// we use a new set of numbers to avoid interfering with previous examples
+// 0xf3 = 243, 0xaa = 170, 0xf4 = 244, 0xab = 171
+
 // The custom Spell Types (243 and 244) also must be defined within GameData.cff
 // and provided with at least one spell corresponding each Spell Type
 
@@ -31,28 +32,28 @@ sprintf(aliveInfo, "Flags list: Target %hd \n", target_index);
 logger->logInfo(aliveInfo);
 */
 
-//we declare spell type handler for PARRY
-//PARRY is a secondary component of an AoE spell
-//it implements an armor buff lasting on a single target
-//it is triggered individually for each target when the AoE spell affects them
+// we declare spell type handler for PARRY
+// PARRY is a second component of an AoE spell
+// it implements an armor buff for a single target
+// it is triggered individually for each target when the AoE spell affects them
 void __thiscall parry_type_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
-    //we associate spell type with a spell job
+    // we associate spell type with a spell job
     _this->active_spell_list[spell_index].spell_job = PARRY_JOB;
-    //we initialize values for a spell, SPELL_TICK_COUNT_AUX is familiar from previous example, it controls amount of spell ticks passed for this specific spell
-    //ticks stand for multiple times when the same spell affects the target
-    //however, this spell will need to use only two ticks at all
-    //0 for beginning to apply buff
-    //1 for ending to remove effect
+    // we initialize values for a spell, SPELL_TICK_COUNT_AUX is familiar from previous example, it controls amount of spell ticks passed for this specific spell
+    // ticks stand for multiple times when the same spell affects the target
+    // however, this spell will use only two ticks at all
+    // 0 for beginning to apply buff
+    // 1 for ending to remove effect
     spellAPI->setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
 
-    //SPELL_STAT_MUL_MODIFIER will store a percentage by which the target's armor was increased
-    //the percentage will be individual for every figure depending on its previous armor rating
+    // SPELL_STAT_MUL_MODIFIER will store a percentage by which the target's armor was increased
+    // the percentage will be individual for every figure depending on its previous armor rating
     spellAPI->setXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER, 0);
 }
 
-//we declare spell end handler for parry
-//this handler would work in case a spell wasn't finished correctly
+// we declare spell end handler for PARRY
+// this handler would work in case a spell wasn't finished correctly
 void __thiscall parry_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
@@ -98,7 +99,7 @@ void __thiscall parry_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
 
     if (current_tick == 0)
     // this is the first tick
-    // we going to add buff to a target and then make the spell to wait for specified amount of time time
+    // we're going to add buff to a target and then make the spell to wait for specified amount of time
     {
 
         // the default armor rating is defined by base armor rating and bonus armor rating
@@ -109,8 +110,8 @@ void __thiscall parry_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
         double recalc_temp = spell_data.params[0] - figure_ac;
         recalc_temp = recalc_temp / figure_ac * 100;
 
-        // however, game engine uses percentiles in their natural expression, like 80 instead of 0.8
-        // that's why we multiply them by 100 above and transform into integer then
+        // however, game engine uses percentiles in their natural expression, e.g. 80 instead of 0.8
+        // that's why we multiply them by 100 above and transform into integer thereafter
         uint16_t recalc_value = uint16_t (recalc_temp);
 
         // due to engine limitations, maximum bonus multiplier is limited by uint8_t range, hence by {-127%, 128%}
@@ -122,7 +123,7 @@ void __thiscall parry_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
         recalc_value = -100;
 
 
-        // we're adding calculated bonus to figure
+        // we're adding the bonus to figure statistic
         // game automatically calculates multiplied armor rating value in the next game tick (not to be confused with spell tick)
         figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, target_index, recalc_value);
 
@@ -166,10 +167,10 @@ void __thiscall shield_wall_type_handler(SF_CGdSpell *_this, uint16_t spell_inde
     _this->active_spell_list[spell_index].spell_job = SHIELD_WALL_JOB;
 }
 
-//we declare spell effect handler which implements game logic of the AoE spell
-//the AoE checks for a specified amount of targets in a certain radius around the spellcaster
-//if the spell happens to affect again before the previous instance expired, it resets its duration
-//spell effect is simulated by individual instances of PARRY spell applied to every target affected
+// we declare spell effect handler which implements game logic of the AoE spell
+// the AoE checks for a specified amount of targets in a certain radius around the spellcaster
+// if the spell happens to affect again before the previous instance expired, it resets its duration
+// spell effect is simulated by individual instances of PARRY spell applied to every target affected
 
 void __thiscall shield_wall_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
@@ -185,52 +186,52 @@ void __thiscall shield_wall_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
     spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
 
 
-    //we declare structure to specify the area affected by the AoE effect
+    // we declare structure to specify the area affected by the AoE effect
     SF_Rectangle hit_area;
 
-    //we declare structure to store the center of the spell
+    // we declare structure to store the center of the spell
     SF_Coord cast_center;
-    //we get XY coordinates of the spell center with API function
-    //basically, we just center the spell around its spellcaster (source)
+    // we get XY coordinates of the spell center with API function
+    // basically, we just center the spell around its spellcaster (source)
     figureAPI->getPosition(_this->SF_CGdFigure, &cast_center, source_index);
 
-    //we declare structure for relative position of visual effect
+    // we declare structure for relative position of visual effect
     SF_CGdTargetData relative_data;
     relative_data.position = {_this->active_spell_list[spell_index].source.position.X, _this->active_spell_list[spell_index].source.position.Y};
     relative_data.entity_type = 4;
     relative_data.entity_index = 0;
     uint32_t unused;
 
-    //we get coordinates of area affected and record them as a squared circle
-    //spell_data.params[0] stands for a spell radius
-    //the radius is measured in game units, 10-15 is enough for quite big spell area
+    // we get coordinates of area affected and record them as a squared circle
+    // spell_data.params[0] stands for a spell radius
+    // the radius is measured in game units, 10-15 is enough for quite big spell area
     spellAPI->getTargetsRectangle(_this, &hit_area, spell_index, spell_data.params[0], &cast_center);
 
-    //we apply the visual effect filling the area which we specified above
+    // we apply the visual effect filling the area which we specified above
     spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitWorld, &unused, &relative_data, _this->OpaqueClass->current_step, 0x19, &hit_area);
 
 
-    //we declare an iterator
-    //iterator is a class which searches for targets (figures) in certain area
-    //iterators are opaque from the user perspective.
-    //just give enough memory and don't bother what's inside
+    // we declare an iterator
+    // iterator is a class which searches for targets (figures) in certain area
+    // iterators are opaque from the user perspective.
+    // just give enough memory and don't bother what's inside
     CGdFigureIterator figure_iterator;
     iteratorAPI->setupFigureIterator(&figure_iterator, _this);
-    //we set iterator area as a circle of specific radius (defined in spell data) with the spellcaster being at its center
+    // we set iterator area as a circle of specific radius (defined in spell data) with the spellcaster being at its center
     iteratorAPI->iteratorSetArea(&figure_iterator, &cast_center, spell_data.params[0]);
-    //we search for the closest target with iterator API function
+    // we search for the closest target with iterator API function
     uint16_t target_index = iteratorAPI->getNextFigure(&figure_iterator);
 
-    //the spell can affect only certain amount of figures
-    //we load this amount from spell parameters in GameData.cff
+    // the spell can affect only certain amount of figures
+    // we load this amount from spell parameters in GameData.cff
     uint16_t figure_count = spell_data.params[1];
 
     while (target_index != 0 && figure_count != 0)
-    //we apply the spell as long as there are viable targets around and as long as we didn't exceed figures limit
+    // we apply the spell as long as there are viable targets around and as long as we didn't exceed figures limit
     {
-        //we apply the spell only to living figures belonging to our own faction, as long as those figures are targetable
-        //notice that we affect those flags directly via respective structures rather than with API functions as in previous example
-        //both options are allowable
+        // we apply the spell only to living figures belonging to our own faction, as long as those figures are targetable
+        // notice that we affect those flags directly via respective structures rather than with API functions as in previous example
+        // both options are allowable
         if (((int16_t)(_this->SF_CGdFigure->figures[target_index].owner) == (int16_t)(_this->SF_CGdFigure->figures[source_index].owner)) &&
             (((uint8_t)(_this->SF_CGdFigure->figures[target_index].flags) & 0xa) == 0) &&
             (toolboxAPI->isTargetable(_this->SF_CGdFigureToolBox, target_index)))
@@ -270,8 +271,8 @@ void __thiscall shield_wall_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
 }
 
 
-//we declare refresh handler for AoE spell
-//this handler will be called whenever we're casting shieldwall, and will remove previously casted shieldwall if there is any
+// we declare refresh handler for AoE spell
+// this handler will be called whenever we're casting shieldwall, and will remove previously casted shieldwall if there is any
 int __thiscall shield_wall_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index) //we casted shieldwall again before the previous expired
 {
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
