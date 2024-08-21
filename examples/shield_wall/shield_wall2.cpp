@@ -1,4 +1,4 @@
-#include "api/sfsf.h"
+#include "../../src/api/sfsf.h"
 #include <windows.h>
 #include <stdio.h>
 
@@ -15,18 +15,15 @@ IteratorFunctions *iteratorAPI;
 RegistrationFunctions *registrationAPI;
 SFLog *logger;
 
-
-
-            /* debug output example
-            Let it be here
-            char aliveInfo[256];
-            sprintf(aliveInfo, "Flags list: Target %hd \n", target_index);
-            sfsf->logInfo(aliveInfo);
-            */
+/* debug output example
+Let it be here
+char aliveInfo[256];
+sprintf(aliveInfo, "Flags list: Target %hd \n", target_index);
+sfsf->logInfo(aliveInfo);
+*/
 
 void __thiscall parry_type_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
-    logger->logInfo("PARRY INITIALIZED");
     _this->active_spell_list[spell_index].spell_job = PARRY_JOB;
     spellAPI->setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
     spellAPI->setXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER, 0);
@@ -34,7 +31,6 @@ void __thiscall parry_type_handler(SF_CGdSpell *_this, uint16_t spell_index)
 
 void __thiscall parry_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
-    logger->logInfo("PARRY HAS ENDED");
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
     uint16_t target_index = spell->target.entity_index;
     spellAPI->removeDLLNode(_this, spell_index);
@@ -45,6 +41,7 @@ void __thiscall parry_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 
 void __thiscall parry_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
+    logger->logInfo("PARRY EFFECT PROCCED");
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
     uint16_t source_index = spell->source.entity_index;
     uint16_t target_index = spell->target.entity_index;
@@ -57,11 +54,11 @@ void __thiscall parry_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
 
     if (current_tick == 0)
     {
-    figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, target_index, spell_data.params[0]);
-    uint16_t recalc_value = spell_data.params[0]; //how much percent we need to decrease armour later on
-    spellAPI->setXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER, recalc_value);
-    _this->active_spell_list[spell_index].to_do_count = (uint16_t)((ticks_interval * 10) / 1000);
-    //trick with todocount
+        figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, target_index, spell_data.params[0]);
+        uint16_t recalc_value = spell_data.params[0]; // how much percent we need to decrease armour later on
+        spellAPI->setXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER, recalc_value);
+        _this->active_spell_list[spell_index].to_do_count = (uint16_t)((ticks_interval * 10) / 1000);
+        // trick with todocount
         return;
     }
     else
@@ -69,7 +66,6 @@ void __thiscall parry_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
         uint16_t recalc_value = spellAPI->getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER);
         figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, target_index, -recalc_value);
         spellAPI->setEffectDone(_this, spell_index, 0);
-        logger->logInfo("PARRY EFFECT HAS FINISHED");
         return;
     }
 }
@@ -83,104 +79,91 @@ void __thiscall shield_wall_type_handler(SF_CGdSpell *_this, uint16_t spell_inde
 void __thiscall shield_wall_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
-    logger->logInfo("SHIELDWALL GRABBED");
-    // Iterators are opaque from the user perspective.
-    // Just give enough memory and don't bother what's inside
-    CGdFigureIterator figure_iterator;
-    iteratorAPI->setupFigureIterator(&figure_iterator, _this);
+
 
     SF_SpellEffectInfo effect_info;
     SF_CGdResourceSpell spell_data;
     effect_info.spell_id = spell->spell_id;
     effect_info.job_id = spell->spell_job;
     SF_Rectangle hit_area;
-    SF_Coord cast_center = _this->active_spell_list[spell_index].source.position;
+    uint16_t source_index = _this->active_spell_list[spell_index].source.entity_index;
+    SF_Coord cast_center = {_this->active_spell_list[spell_index].source.position.X, _this->active_spell_list[spell_index].source.position.Y};
+    char aliveInfo[256];
+    sprintf(aliveInfo, "Caster %d Position %hd %hd \n",source_index ,cast_center.X, cast_center.Y);
+    logger->logWarning(aliveInfo);
+
     // SF_Coord
     spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
-    spellAPI->getTargetsRectangle(_this, &hit_area, spell_index, spell_data.params[0], &cast_center);
     SF_CGdTargetData relative_data;
-    relative_data.position = cast_center;
+    relative_data.position = {_this->active_spell_list[spell_index].source.position.X, _this->active_spell_list[spell_index].source.position.Y};
     relative_data.entity_type = 4;
     relative_data.entity_index = 0;
     uint32_t unused;
+    spellAPI->getTargetsRectangle(_this, &hit_area, spell_index, spell_data.params[0], &cast_center);
     spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitWorld, &unused, &relative_data, _this->OpaqueClass->current_step, 0x19, &hit_area);
-    iteratorAPI->iteratorSetArea(&figure_iterator, &cast_center, spell_data.params[0]); //radius should be really big, 150 higher
+
     uint16_t figure_count = spell_data.params[1];
 
+  
 
-    uint16_t source_index = spell->source.entity_index;
-
-    //let's apply a spell to caster as well
-    toolboxAPI->addSpellToFigure(_this->SF_CGdFigureToolBox, source_index, spell_data.params[3]);
+    // let's apply a spell to caster as well
+    SF_CGdTargetData source = {spell->source.entity_type, source_index, {0, 0}};
+    SF_CGdTargetData target = {spell->target.entity_type, source_index, {0, 0}};
+    spellAPI->addSpell(_this, spell_data.params[3], 0, &source, &target, 0);
     figure_count--;
 
+    // Iterators are opaque from the user perspective.
+    // Just give enough memory and don't bother what's inside
+    CGdFigureIterator figure_iterator;
+    iteratorAPI->setupFigureIterator(&figure_iterator, _this);
+    iteratorAPI->iteratorSetArea(&figure_iterator, &cast_center, spell_data.params[0]); // radius should be really big, 150 higher
     uint16_t target_index = iteratorAPI->getNextFigure(&figure_iterator);
-
-    /*char aliveInfo[256];
-    sprintf(aliveInfo, "First target index according to iterator is %hd \n", target_index);
-    logger->logInfo(aliveInfo);*/
-
+    sprintf(aliveInfo, "Iterator Set up at %hd %hd \n", cast_center.X, cast_center.Y );
+    logger->logWarning(aliveInfo);
     while (target_index != 0 && figure_count != 0)
     {
-        //SF_CGdResourceSpell spell_data_2;
-        //uint16_t, getSpellID, SF_CGdSpell *_this, uint16_t spell_index);
-        //spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data_2, spell_data.params[3]);
-        logger->logInfo("SHIELDWALL ITERATOR WORKING");
-
-        //if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index, spell_data_2.spell_line_id))
-
-        //turned it off for debug purposes
-        /*if (spellAPI->checkCanApply(_this, spell_index) == 0)
-        {
-            target_index = iteratorAPI->getNextFigure(&figure_iterator);
-            continue;
-        }*/
-
-        // If figure is not special unit
-        // not dead and belongs to us
-        // and is targetable - let's work with it
-
+        char aliveInfo[256];
+        sprintf(aliveInfo, "figure check %hd \n", target_index);
+        logger->logWarning(aliveInfo);
+        sprintf(aliveInfo, "figure check %hd\n",
+                sizeof(_this->SF_CGdFigure->figures[target_index]));
+                
+        logger->logWarning(aliveInfo);
         if (((int16_t)(_this->SF_CGdFigure->figures[target_index].owner) == (int16_t)(_this->SF_CGdFigure->figures[source_index].owner)) &&
             (((uint8_t)(_this->SF_CGdFigure->figures[target_index].flags) & 0xa) == 0) &&
             (toolboxAPI->isTargetable(_this->SF_CGdFigureToolBox, target_index)))
         {
-            logger->logInfo("ADDING SHIELDWALL SPELL TO SUFFICIENT FIGURE");
-            toolboxAPI->addSpellToFigure(_this->SF_CGdFigureToolBox, target_index, spell_data.params[3]);
-
-            // this line somehow doesn't add any spells to character, had to replace it with addSpell, which is much more crude
-
-
-            /*SF_CGdTargetData source = {spell->source.entity_type, source_index, {0, 0}};
+            char aliveInfo[256];
+            sprintf(aliveInfo, "ADDING SHIELDWALL SPELL TO SUFFICIENT FIGURE %hd \n", target_index);
+            logger->logInfo(aliveInfo);
+            SF_CGdTargetData source = {spell->source.entity_type, source_index, {0, 0}};
             SF_CGdTargetData target = {spell->target.entity_type, target_index, {0, 0}};
-            spellAPI->addSpell(_this, spell_data.params[3], 0, &source, &target, 0);*/
+            spellAPI->addSpell(_this, spell_data.params[3], 0, &source, &target, 0);
             figure_count--;
         }
         target_index = iteratorAPI->getNextFigure(&figure_iterator);
-        spell->target.entity_index = target_index;
     }
     spellAPI->setEffectDone(_this, spell_index, 0);
 
-   iteratorAPI->disposeFigureIterator(figure_iterator);
+    iteratorAPI->disposeFigureIterator(figure_iterator);
 }
 
-int __thiscall shield_wall_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index) //we casted shieldwall again before the previous expired
+int __thiscall shield_wall_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index) // we casted shieldwall again before the previous expired
 {
 
- SF_GdSpell *spell = &_this->active_spell_list[spell_index];
- uint16_t target_index = spell->target.entity_index;
- SF_CGdResourceSpell spell_data;
- spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
- SF_CGdResourceSpell spell_data_2;
- spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data_2, spell_data.params[3]);
+    SF_GdSpell *spell = &_this->active_spell_list[spell_index];
+    uint16_t target_index = spell->target.entity_index;
+    SF_CGdResourceSpell spell_data;
+    spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+    SF_CGdResourceSpell spell_data_2;
+    spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data_2, spell_data.params[3]);
 
-
- if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index, spell_data_2.spell_line_id))
+    if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index, spell_data_2.spell_line_id))
     {
         logger->logInfo("ALREADY HAS PARRY");
         return 0;
-
     }
- else
+    else
     {
         logger->logInfo("CAN APPLY PARRY TO FIGURE");
         return 1;
@@ -204,7 +187,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     SFSpell *shield_wall_spell = registrationAPI->registerSpell(SHIELD_WALL_LINE);
     registrationAPI->linkTypeHandler(shield_wall_spell, &shield_wall_type_handler);
     registrationAPI->linkEffectHandler(shield_wall_spell, SHIELD_WALL_JOB, &shield_wall_effect_handler);
-    registrationAPI->linkRefreshHandler(shield_wall_spell,&shield_wall_refresh_handler);
+    registrationAPI->linkRefreshHandler(shield_wall_spell, &shield_wall_refresh_handler);
 
     SFSpell *parry_spell = registrationAPI->registerSpell(PARRY_LINE);
     registrationAPI->linkTypeHandler(parry_spell, &parry_type_handler);

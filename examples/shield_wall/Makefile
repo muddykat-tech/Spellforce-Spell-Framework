@@ -19,7 +19,7 @@ bin lib obj:
 	@if not exist "$@" mkdir "$@"
 
 #mod build
-obj/shield_wall.o: shield_wall.cpp | obj
+obj/shield_wall.o: shield_wall2.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 bin/shield_wall.sfm: ${MOD_OBJ} | bin lib
