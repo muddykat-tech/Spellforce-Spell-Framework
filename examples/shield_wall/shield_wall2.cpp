@@ -85,7 +85,7 @@ void __thiscall parry_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
             recalc_value = 100;
         else
             if (recalc_value < - 100)
-        recalc_value = -100;
+            recalc_value = -100;
 
 
 
@@ -122,34 +122,6 @@ void __thiscall shield_wall_type_handler(SF_CGdSpell *_this, uint16_t spell_inde
 {
     _this->active_spell_list[spell_index].spell_job = SHIELD_WALL_JOB;
     spellAPI->setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
-}
-
-
-int __thiscall shield_wall_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index) //we casted shieldwall again before the previous expired
-{
- _this->active_spell_list[spell_index].spell_job = PARRY_JOB;
- SF_GdSpell *spell = &_this->active_spell_list[spell_index];
- uint16_t target_index = spell->target.entity_index;
- SF_CGdResourceSpell spell_data;
- spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
- SF_CGdResourceSpell spell_data_2;
- spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data_2, spell_data.params[3]);
-
-uint16_t spell_line = _this->active_spell_list[spell_index].spell_line;
-
- if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index, spell_data_2.spell_line_id))
-    {
-        logger->logInfo("ALREADY HAS PARRY, REMOVING IT TO MAKE SPACE FOR NEW ONE");
-        uint16_t parry_spell_id = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, target_index, PARRY_LINE, spell_index);
-        spellAPI->setEffectDone(_this, parry_spell_id, 0);
-        return 0;
-
-    }
- else
-    {
-        logger->logInfo("CAN APPLY PARRY TO FIGURE");
-        return 1;
-    }
 }
 
 void __thiscall shield_wall_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
@@ -203,7 +175,6 @@ void __thiscall shield_wall_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
         if (((int16_t)(_this->SF_CGdFigure->figures[target_index].owner) == (int16_t)(_this->SF_CGdFigure->figures[source_index].owner)) &&
             (((uint8_t)(_this->SF_CGdFigure->figures[target_index].flags) & 0xa) == 0) &&
             (toolboxAPI->isTargetable(_this->SF_CGdFigureToolBox, target_index)))
-        //if (isAlive == 1 && isTargetable == 1 && isO)
         {
             SF_CGdTargetData source = {spell->source.entity_type, source_index, {0, 0}};
             SF_CGdTargetData target = {spell->target.entity_type, target_index, {0, 0}};
@@ -215,6 +186,33 @@ void __thiscall shield_wall_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
     spellAPI->setEffectDone(_this, spell_index, 0);
 
     iteratorAPI->disposeFigureIterator(figure_iterator);
+}
+
+int __thiscall shield_wall_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index) //we casted shieldwall again before the previous expired
+{
+ _this->active_spell_list[spell_index].spell_job = PARRY_JOB;
+ SF_GdSpell *spell = &_this->active_spell_list[spell_index];
+ uint16_t target_index = spell->target.entity_index;
+ SF_CGdResourceSpell spell_data;
+ spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+ SF_CGdResourceSpell spell_data_2;
+ spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data_2, spell_data.params[3]);
+
+uint16_t spell_line = _this->active_spell_list[spell_index].spell_line;
+
+ if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index, spell_data_2.spell_line_id))
+    {
+        logger->logInfo("ALREADY HAS PARRY, REMOVING IT TO MAKE SPACE FOR NEW ONE");
+        uint16_t parry_spell_id = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, target_index, PARRY_LINE, spell_index);
+        spellAPI->setEffectDone(_this, parry_spell_id, 0);
+        return 0;
+
+    }
+ else
+    {
+        logger->logInfo("CAN APPLY PARRY TO FIGURE");
+        return 1;
+    }
 }
 
 
