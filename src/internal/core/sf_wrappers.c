@@ -82,50 +82,50 @@ void __thiscall disposeFigureIterator(CGdFigureIterator iterator)
 void __thiscall addBonusMultToStatistic(SF_CGdFigure *figure, StatisticDataKey key, uint16_t target, int8_t value)
 {
     bool invalid = FALSE;
-    FigureStatistic statistic;
+    FigureStatistic *statistic;
     switch (key)
     {
     case ARMOR:
-        statistic = figure->figures[target].armor;
+        statistic = &(figure->figures[target].armor);
         break;
     case AGILITY:
-        statistic = figure->figures[target].agility;
+        statistic = &(figure->figures[target].agility);
         break;
     case CHARISMA:
-        statistic = figure->figures[target].charisma;
+        statistic = &(figure->figures[target].charisma);
         break;
     case DEXTERITY:
-        statistic = figure->figures[target].dexterity;
+        statistic = &(figure->figures[target].dexterity);
         break;
     case INTELLIGENCE:
-        statistic = figure->figures[target].intelligence;
+        statistic = &(figure->figures[target].intelligence);
         break;
     case STRENGTH:
-        statistic = figure->figures[target].strength;
+        statistic = &(figure->figures[target].strength);
         break;
     case WISDOM:
-        statistic = figure->figures[target].wisdom;
+        statistic = &(figure->figures[target].wisdom);
         break;
     case RESISTANCE_FIRE:
-        statistic = figure->figures[target].resistance_fire;
+        statistic = &(figure->figures[target].resistance_fire);
         break;
     case RESISTANCE_ICE:
-        statistic = figure->figures[target].resistance_ice;
+        statistic = &(figure->figures[target].resistance_ice);
         break;
     case RESISTANCE_MENTAL:
-        statistic = figure->figures[target].resistance_mental;
+        statistic = &(figure->figures[target].resistance_mental);
         break;
     case RESISTANCE_BLACK:
-        statistic = figure->figures[target].resistance_black;
+        statistic = &(figure->figures[target].resistance_black);
         break;
     case WALK_SPEED:
-        statistic = figure->figures[target].walk_speed;
+        statistic = &(figure->figures[target].walk_speed);
         break;
     case FIGHT_SPEED:
-        statistic = figure->figures[target].fight_speed;
+        statistic = &(figure->figures[target].fight_speed);
         break;
     case CAST_SPEED:
-        statistic = figure->figures[target].cast_speed;
+        statistic = &(figure->figures[target].cast_speed);
         break;
     default:
         // Handle default case if needed
