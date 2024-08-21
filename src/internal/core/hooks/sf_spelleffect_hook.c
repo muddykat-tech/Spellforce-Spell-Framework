@@ -1,7 +1,6 @@
 #include "../sf_wrappers.h"
 #include "../sf_hooks.h"
 #include "../../registry/sf_spelleffect_registry.h"
-#include <cstdio>
 #include "sf_spelleffect_hook.h"
 
 void __thiscall sf_spelleffect_hook(SF_CGdSpell *_this)
