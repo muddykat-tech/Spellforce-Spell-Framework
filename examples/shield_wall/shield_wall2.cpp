@@ -87,10 +87,8 @@ void __thiscall shield_wall_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
     effect_info.job_id = spell->spell_job;
     SF_Rectangle hit_area;
     uint16_t source_index = _this->active_spell_list[spell_index].source.entity_index;
-    SF_Coord cast_center = {_this->active_spell_list[spell_index].source.position.X, _this->active_spell_list[spell_index].source.position.Y};
-    char aliveInfo[256];
-    sprintf(aliveInfo, "Caster %d Position %hd %hd \n",source_index ,cast_center.X, cast_center.Y);
-    logger->logWarning(aliveInfo);
+    SF_Coord cast_center;
+    figureAPI->getPosition(_this->SF_CGdFigure, &cast_center, source_index);
 
     // SF_Coord
     spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
@@ -118,27 +116,17 @@ void __thiscall shield_wall_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
     iteratorAPI->setupFigureIterator(&figure_iterator, _this);
     iteratorAPI->iteratorSetArea(&figure_iterator, &cast_center, spell_data.params[0]); // radius should be really big, 150 higher
     uint16_t target_index = iteratorAPI->getNextFigure(&figure_iterator);
-    sprintf(aliveInfo, "Iterator Set up at %hd %hd \n", cast_center.X, cast_center.Y );
-    logger->logWarning(aliveInfo);
+
     while (target_index != 0 && figure_count != 0)
     {
-        char aliveInfo[256];
-        sprintf(aliveInfo, "figure check %hd \n", target_index);
-        logger->logWarning(aliveInfo);
-        sprintf(aliveInfo, "figure check %hd\n",
-                sizeof(_this->SF_CGdFigure->figures[target_index]));
-                
         logger->logWarning(aliveInfo);
         if (((int16_t)(_this->SF_CGdFigure->figures[target_index].owner) == (int16_t)(_this->SF_CGdFigure->figures[source_index].owner)) &&
             (((uint8_t)(_this->SF_CGdFigure->figures[target_index].flags) & 0xa) == 0) &&
             (toolboxAPI->isTargetable(_this->SF_CGdFigureToolBox, target_index)))
         {
-            char aliveInfo[256];
-            sprintf(aliveInfo, "ADDING SHIELDWALL SPELL TO SUFFICIENT FIGURE %hd \n", target_index);
-            logger->logInfo(aliveInfo);
             SF_CGdTargetData source = {spell->source.entity_type, source_index, {0, 0}};
             SF_CGdTargetData target = {spell->target.entity_type, target_index, {0, 0}};
-            spellAPI->addSpell(_this, spell_data.params[3], 0, &source, &target, 0);
+            spellAPI->addSpell(_this, spell_data.params[3], _this->OpaqueClass->current_step, &source, &target, 0);
             figure_count--;
         }
         target_index = iteratorAPI->getNextFigure(&figure_iterator);

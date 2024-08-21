@@ -1,7 +1,7 @@
 #include "../sf_wrappers.h"
 #include "../sf_hooks.h"
 #include "../../registry/sf_spelleffect_registry.h"
-
+#include <cstdio>
 #include "sf_spelleffect_hook.h"
 
 void __thiscall sf_spelleffect_hook(SF_CGdSpell *_this)
@@ -12,7 +12,7 @@ void __thiscall sf_spelleffect_hook(SF_CGdSpell *_this)
         if (_this->active_spell_list[spell_index].spell_id != 0)
         {
             short to_do_count = _this->active_spell_list[spell_index].to_do_count;
-            if (to_do_count == 0)
+            if (to_do_count <= 0)
             {
                 to_do_count = 0;
             }
