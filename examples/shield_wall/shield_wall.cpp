@@ -58,13 +58,14 @@ void __thiscall shield_wall_end_handler(SF_CGdSpell *_this, uint16_t spell_index
 {
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
     uint16_t target_index = spell->target.entity_index;
-    spellAPI->removeDLLNode(_this, spell_index); // we remove spell from the list of active spells over the target
-    spellAPI->setEffectDone(_this, spell_index, 0); // we end a spell
 
     // we pull the percentage by which the target's armor rating was increased
     uint16_t recalc_value = spellAPI->getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER);
     // we remove the bonus to target's armor rating by adding negative amount of this value
     figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, target_index, -recalc_value);
+
+    spellAPI->removeDLLNode(_this, spell_index); // we remove spell from the list of active spells over the target
+    spellAPI->setEffectDone(_this, spell_index, 0); // we end a spell
 
     // here you might see the legacy of attempt to implement flat bonus to armor
     // it's not functional because armor.bonus_val can be overwritten by worn armor whenever you reequip it
