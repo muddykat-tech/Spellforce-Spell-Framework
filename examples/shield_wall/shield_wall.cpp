@@ -32,7 +32,7 @@ sprintf(aliveInfo, "Flags list: Target %hd \n", target_index);
 logger->logInfo(aliveInfo);
 */
 
-// we declare spell type handler for PARRY
+// we declare spell type handler for Shieldwall
 // SHIELDWALL is a second component of an AoE spell
 // it implements an armor buff for a single target
 // it is triggered individually for each target when the AoE spell affects them
@@ -52,7 +52,7 @@ void __thiscall shield_wall_type_handler(SF_CGdSpell *_this, uint16_t spell_inde
     spellAPI->setXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER, 0);
 }
 
-// we declare spell end handler for PARRY
+// we declare spell end handler for Shieldwall
 // this handler would work in case a spell wasn't finished correctly
 void __thiscall shield_wall_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
