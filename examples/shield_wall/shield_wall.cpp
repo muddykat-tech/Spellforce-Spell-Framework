@@ -219,12 +219,20 @@ void __thiscall shield_wall_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
     iteratorAPI->setupFigureIterator(&figure_iterator, _this);
     // we set iterator area as a circle of specific radius (defined in spell data) with the spellcaster being at its center
     iteratorAPI->iteratorSetArea(&figure_iterator, &cast_center, spell_data.params[0]);
-    // we search for the closest target with iterator API function
-    uint16_t target_index = iteratorAPI->getNextFigure(&figure_iterator);
+
+    // let's make spellcaster our first target and give them spell effect for free
+    // we could initiate the search for the first target with iterator API function
+    // target_index = iteratorAPI->getNextFigure(&figure_iterator);
+    // but getNextFigure not always gives the source as first result, so let's add some safeguard here
+
+    uint16_t target_index = source_index;
 
     // the spell can affect only certain amount of figures
     // we load this amount from spell parameters in GameData.cff
     uint16_t figure_count = spell_data.params[1];
+
+    //we promised to give spellcaster effect for free, let's increase the amount of affected figures by 1
+    figure_count++;
 
     while (target_index != 0 && figure_count != 0)
     // we apply the spell as long as there are viable targets around and as long as we didn't exceed figures limit
@@ -235,32 +243,33 @@ void __thiscall shield_wall_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
         if (((int16_t)(_this->SF_CGdFigure->figures[target_index].owner) == (int16_t)(_this->SF_CGdFigure->figures[source_index].owner)) &&
             (((uint8_t)(_this->SF_CGdFigure->figures[target_index].flags) & 0xa) == 0) &&
             (toolboxAPI->isTargetable(_this->SF_CGdFigureToolBox, target_index)))
-
         {
-
-            // checkCanApply addresses the same spell which we're currently working with
-            // we need this function to know index of current target we're going to upcast
-            // because we can't pass target index directly, we change target index within the spell itself
+            // we also can't apply the spell to target if the target is already affected with another instance of the spell
+            // checkCanApply triggers the refresh handler for a spell specified via its spell_index (SHIELDWALL in this case)
+            // if checkCanApply returns false, it means the PARRY already affects the target
             spell->target.entity_index = target_index;
-            // checkCanApply triggers the refresh handler, and we specify that it must be the handler for this very specific instance of SHIELDWALL spell
-            // if the spell is affecting the target currently, refresh handler will remove it to prevent spell from stacking
-            spellAPI->checkCanApply(_this, spell_index);
+            // checkCanApply addresses the same spell which we're currently working with (SHIELDWALL)
+            // however, we have to know the index of the target which the iterator returned for us
+            // because we can't pass target index directly, we change target index within the spell itself
+                if (spellAPI->checkCanApply(_this, spell_index))
+                {
+                    // checkCanApply returned 1 here, so we add the spell to a long validated target
+                    // to do this, we declare structures for source and target to trigger another component (wrapped as its own spell) within the AoE spell
+                    SF_CGdTargetData source = {spell->source.entity_type, source_index, {0, 0}};
+                    SF_CGdTargetData target = {spell->source.entity_type, target_index, {0, 0}};
+                    // we apply PARRY spell to a single specific target (the spellcaster)
+                    // we have equated a source and a target in this case
+                    // spell_data.params[3] stands for PARRY spell data id which we're going to apply to the target
+                    // _this->OpaqueClass->current_step stands for the spell starting tick (meaning game ticks, not spell tick)
+                    // it's unknown what's the last parameter is standing for
+                    spellAPI->addSpell(_this, spell_data.params[3], _this->OpaqueClass->current_step, &source, &target, 0);
 
-
-
-            // we declare structures for source and target to trigger another component (wrapped as its own spell) within the AoE spell
-            SF_CGdTargetData source = {spell->source.entity_type, source_index, {0, 0}};
-            SF_CGdTargetData target = {spell->target.entity_type, target_index, {0, 0}};
-            // we apply PARRY spell to specific target
-            // spell_data.params[3] stands for PARRY spell data id which we're going to apply to the target
-            // _this->OpaqueClass->current_step stands for the spell starting tick (meaning game ticks, not spell tick)
-            // it's unknown what's the last parameter is standing for
-            spellAPI->addSpell(_this, spell_data.params[3], _this->OpaqueClass->current_step, &source, &target, 0);
-
-            // we spent one usage of the spell, hence we decrease the possible limit by one
-            figure_count--;
+                    // we spent one usage of the spell, hence we decrease the possible limit by one
+                    // but if we applied the spell to a spellcaster, let's give it for free
+                    figure_count--;
+                }
         }
-        // iterator finds the next target in radius for us
+        // we search for the next target with iterator API function
         target_index = iteratorAPI->getNextFigure(&figure_iterator);
     }
     // all figures in radius were checked or all usages of spell was spent, we finish the SHIELDWALL spell
@@ -279,7 +288,7 @@ int __thiscall shield_wall_refresh_handler(SF_CGdSpell *_this, uint16_t spell_in
     // we declare target index with value which we stored into SHIELDWALL spell above
     uint16_t target_index = spell->target.entity_index;
 
-    // we declare spell_data for SHIELDWALL spell, because we need to pull the spell id of linked PARRY spell
+    // we declare spell_data for SHIELDWALL spell, because we need to pull the spell id of PARRY spell linked with SHIELDWALL spell
     SF_CGdResourceSpell spell_data;
     spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
 
@@ -288,9 +297,17 @@ int __thiscall shield_wall_refresh_handler(SF_CGdSpell *_this, uint16_t spell_in
     spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data_2, spell_data.params[3]);
 
     // we check whether the figure has the PARRY spell applied to it already
+    // method hasSpellOnIt accepts spell_line_id property of spell data as argument in order to idenfity the spell
     if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index, spell_data_2.spell_line_id))
        // the PARRY spell already exists on the target
         {
+
+            /***
+            * This is outdated implementation of refresh_handler
+            * it could be used to automatically remove a previous instance of PARRY spell
+            * so the spell will effectively reset its duration on a recast
+            ***/
+            /*
             // here comes the magic
             // we can get the spell index from the list of active spells affecting the target by knowing this spell's spell job id
             // we pass SHIELDWALL spell_index as the last known spell index for this figure, but this value is insignificant (used for optimizing search purposes?)
@@ -303,6 +320,7 @@ int __thiscall shield_wall_refresh_handler(SF_CGdSpell *_this, uint16_t spell_in
             figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, target_index, -recalc_value);
             // we finish the PARRY spell using its spell index
             spellAPI->setEffectDone(_this, parry_spell_index, 0);
+            */
             return 0;
         }
     else
@@ -325,7 +343,7 @@ int __thiscall shield_wall_refresh_handler(SF_CGdSpell *_this, uint16_t spell_in
  ***/
 extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *framework)
 {
-    //we pull pointers to framework methods and structures
+    // we pull pointers to framework methods and structures
     sfsf = framework;
     spellAPI = sfsf->spellAPI;
     toolboxAPI = sfsf->toolboxAPI;
@@ -334,16 +352,17 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     registrationAPI = sfsf->registrationAPI;
 
 
-    //we register handlers for AoE component of the spell
-    //in this example we introduce new handler - spell refresh handler
-    //this handler will be called to implement game logic for situations when we cast spell on a unit which is already affected by this spell
+    // we register handlers for AoE component of the spell
+    // in this example we introduce new handler - spell refresh handler
+    // this handler will be called to implement game logic for situations when we cast spell on a unit which is already affected by this spell
     SFSpell *shield_wall_spell = registrationAPI->registerSpell(SHIELD_WALL_LINE);
     registrationAPI->linkTypeHandler(shield_wall_spell, &shield_wall_type_handler);
     registrationAPI->linkEffectHandler(shield_wall_spell, SHIELD_WALL_JOB, &shield_wall_effect_handler);
     registrationAPI->linkRefreshHandler(shield_wall_spell, &shield_wall_refresh_handler);
 
-    //we register handlers for target component of the spell
-    //notice, that in Ignite example we
+    // we register handlers for target component of the spell
+    // notice, that in Ignite example we defined Spell Type (PARRY_LINE) and Spell Job (PARRY_JOB) with real numbers
+    // here we just use macros to automatize the assignation
     SFSpell *parry_spell = registrationAPI->registerSpell(PARRY_LINE);
     registrationAPI->linkTypeHandler(parry_spell, &parry_type_handler);
     registrationAPI->linkEffectHandler(parry_spell, PARRY_JOB, &parry_effect_handler);
