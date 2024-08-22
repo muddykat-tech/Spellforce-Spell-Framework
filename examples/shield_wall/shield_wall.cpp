@@ -182,7 +182,7 @@ void __thiscall melee_group_ability_effect_handler(SF_CGdSpell *_this, uint16_t 
 
     // we declare structure for relative position of visual effect
     SF_CGdTargetData relative_data;
-    relative_data.position = {_this->active_spell_list[spell_index].source.position.X, _this->active_spell_list[spell_index].source.position.Y};
+    figureAPI->getPosition(_this->SF_CGdFigure, &relative_data.position, source_index);
     relative_data.entity_type = 4;
     relative_data.entity_index = 0;
     uint32_t unused;
@@ -267,7 +267,7 @@ void __thiscall melee_group_ability_effect_handler(SF_CGdSpell *_this, uint16_t 
 
 // we declare refresh handler for AoE spell
 // this handler is called whenever we're casting shieldwall group, and will return 0 if the spell is already present or 1 when it's not
-// this handler can be used as a template for any other spell which also might trigger refresh check
+// this handler can be used as a snippet for any other similar spell which can be refreshed
 
 int __thiscall shield_wall_group_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index) //we casted shieldwall group again before the previous expired
 {
