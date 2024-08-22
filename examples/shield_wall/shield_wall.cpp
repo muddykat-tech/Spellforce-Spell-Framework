@@ -11,10 +11,10 @@
 // The custom Spell Types (243 and 244) also must be defined within GameData.cff
 // and provided with at least one spell corresponding each Spell Type
 
-#define SHIELD_WALL_LINE 0xf3
-#define SHIELD_WALL_JOB 0xaa
-#define PARRY_LINE 0xf4
-#define PARRY_JOB 0xab
+#define SHIELD_WALL_GROUP_LINE 0xf3
+#define SHIELD_WALL_GROUP_JOB 0xaa
+#define SHIELD_WALL_LINE 0xf4
+#define SHIELD_WALL_JOB 0xab
 
 
 SpellforceSpellFramework *sfsf;
@@ -33,13 +33,13 @@ logger->logInfo(aliveInfo);
 */
 
 // we declare spell type handler for PARRY
-// PARRY is a second component of an AoE spell
+// SHIELDWALL is a second component of an AoE spell
 // it implements an armor buff for a single target
 // it is triggered individually for each target when the AoE spell affects them
-void __thiscall parry_type_handler(SF_CGdSpell *_this, uint16_t spell_index)
+void __thiscall shield_wall_type_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     // we associate spell type with a spell job
-    _this->active_spell_list[spell_index].spell_job = PARRY_JOB;
+    _this->active_spell_list[spell_index].spell_job = SHIELD_WALL_JOB;
     // we initialize values for a spell, SPELL_TICK_COUNT_AUX is familiar from previous example, it controls amount of spell ticks passed for this specific spell
     // ticks stand for multiple times when the same spell affects the target
     // however, this spell will use only two ticks at all
@@ -54,7 +54,7 @@ void __thiscall parry_type_handler(SF_CGdSpell *_this, uint16_t spell_index)
 
 // we declare spell end handler for PARRY
 // this handler would work in case a spell wasn't finished correctly
-void __thiscall parry_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
+void __thiscall shield_wall_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
     uint16_t target_index = spell->target.entity_index;
@@ -72,14 +72,14 @@ void __thiscall parry_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 }
 
 
-//we declare effect handler which implements game logic for parry effect
-void __thiscall parry_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
+//we declare effect handler which implements game logic for shieldwall effect
+void __thiscall shield_wall_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
 
-    //the PARRY spell is directly applied to a figure
+    //the SHIELDWALL spell is directly applied to a figure
     //we get the target index of affected figure
-    //however, it's worth of mentioning, that the source_index would return the index of a figure which casted SHIELDWALL (initial component implementing AoE logic of the spell) in case we want to do something with a caster
+    //however, it's worth of mentioning, that the source_index would return the index of a figure which casted SHIELDWALL GROUP (initial component implementing AoE logic of the spell) in case we want to do something with a caster
 
     uint16_t target_index = spell->target.entity_index;
 
@@ -160,19 +160,19 @@ void __thiscall parry_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
 
 
 //we declare spell type handler for AoE spell
-//the SHIELDWALL is supposed to be triggered first, it initializes spell AoE logic
-void __thiscall shield_wall_type_handler(SF_CGdSpell *_this, uint16_t spell_index)
+//the SHIELDWALL GROUP is supposed to be triggered first, it initializes spell AoE logic
+void __thiscall shield_wall_group_type_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     // we link the specific spell type with its own spell job
-    _this->active_spell_list[spell_index].spell_job = SHIELD_WALL_JOB;
+    _this->active_spell_list[spell_index].spell_job = SHIELD_WALL_GROUP_JOB;
 }
 
-// we declare spell effect handler which implements game logic of the AoE spell
+// we declare spell effect handler which implements spell affecting an area
 // the AoE checks for a specified amount of targets in a certain radius around the spellcaster
 // if the spell happens to affect again before the previous instance expired, it resets its duration
-// spell effect is simulated by individual instances of PARRY spell applied to every target affected
+// spell effect is simulated by individual instances of SHIELDWALL spell applied to every target affected
 
-void __thiscall shield_wall_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
+void __thiscall shield_wall_group_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     // we pull the pointer for this instance of spell
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
@@ -245,10 +245,10 @@ void __thiscall shield_wall_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
             (toolboxAPI->isTargetable(_this->SF_CGdFigureToolBox, target_index)))
         {
             // we also can't apply the spell to target if the target is already affected with another instance of the spell
-            // checkCanApply triggers the refresh handler for a spell specified via its spell_index (SHIELDWALL in this case)
-            // if checkCanApply returns false, it means the PARRY already affects the target
+            // checkCanApply triggers the refresh handler for a spell specified via its spell_index (SHIELDWALL GROUP in this case)
+            // if checkCanApply returns false, it means the SHIELDWALL already affects the target
             spell->target.entity_index = target_index;
-            // checkCanApply addresses the same spell which we're currently working with (SHIELDWALL)
+            // checkCanApply addresses the same spell which we're currently working with (SHIELDWALL GROUP)
             // however, we have to know the index of the target which the iterator returned for us
             // because we can't pass target index directly, we change target index within the spell itself
                 if (spellAPI->checkCanApply(_this, spell_index))
@@ -257,9 +257,9 @@ void __thiscall shield_wall_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
                     // to do this, we declare structures for source and target to trigger another component (wrapped as its own spell) within the AoE spell
                     SF_CGdTargetData source = {spell->source.entity_type, source_index, {0, 0}};
                     SF_CGdTargetData target = {spell->source.entity_type, target_index, {0, 0}};
-                    // we apply PARRY spell to a single specific target (the spellcaster)
+                    // we apply SHIELDWALL spell to a single specific target (the spellcaster)
                     // we have equated a source and a target in this case
-                    // spell_data.params[3] stands for PARRY spell data id which we're going to apply to the target
+                    // spell_data.params[3] stands for SHIELDWALL spell data id which we're going to apply to the target
                     // _this->OpaqueClass->current_step stands for the spell starting tick (meaning game ticks, not spell tick)
                     // it's unknown what's the last parameter is standing for
                     spellAPI->addSpell(_this, spell_data.params[3], _this->OpaqueClass->current_step, &source, &target, 0);
@@ -272,7 +272,7 @@ void __thiscall shield_wall_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
         // we search for the next target with iterator API function
         target_index = iteratorAPI->getNextFigure(&figure_iterator);
     }
-    // all figures in radius were checked or all usages of spell was spent, we finish the SHIELDWALL spell
+    // all figures in radius were checked or all usages of spell was spent, we finish the SHIELDWALL GROUP spell
     spellAPI->setEffectDone(_this, spell_index, 0);
 
     // we release the memory which we allocated for iterator
@@ -281,55 +281,57 @@ void __thiscall shield_wall_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
 
 
 // we declare refresh handler for AoE spell
-// this handler will be called whenever we're casting shieldwall, and will remove previously casted shieldwall if there is any
-int __thiscall shield_wall_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index) //we casted shieldwall again before the previous expired
+// we use standard handler for such type of abilities, this handler can be applied for any other similar spell
+// this handler is called whenever we're casting shieldwall group, and will return 0 if the spell is already present or 1 when it's not
+
+int __thiscall melee_group_ability_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index) //we casted shieldwall group again before the previous expired
 {
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
-    // we declare target index with value which we stored into SHIELDWALL spell above
+    // we declare target index with value which we stored into SHIELDWALL GROUP spell above
     uint16_t target_index = spell->target.entity_index;
 
-    // we declare spell_data for SHIELDWALL spell, because we need to pull the spell id of PARRY spell linked with SHIELDWALL spell
+    // we declare spell_data for SHIELDWALL GROUP spell, because we need to pull the spell id of SHIELDWALL spell linked with SHIELDWALL GROUP spell
     SF_CGdResourceSpell spell_data;
     spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
 
-    // we declare own spell_data for PARRY spell
+    // we declare own spell_data for SHIELDWALL spell
     SF_CGdResourceSpell spell_data_2;
     spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data_2, spell_data.params[3]);
 
-    // we check whether the figure has the PARRY spell applied to it already
+    // we check whether the figure has the SHIELDWALL spell applied to it already
     // method hasSpellOnIt accepts spell_line_id property of spell data as argument in order to idenfity the spell
     if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index, spell_data_2.spell_line_id))
-       // the PARRY spell already exists on the target
+       // the SHIELDWALL spell already exists on the target
         {
 
             /***
             * This is outdated implementation of refresh_handler
-            * it could be used to automatically remove a previous instance of PARRY spell
+            * it could be used to automatically remove a previous instance of SHIELDWALL spell
             * so the spell will effectively reset its duration on a recast
             ***/
             /*
             // here comes the magic
             // we can get the spell index from the list of active spells affecting the target by knowing this spell's spell job id
-            // we pass SHIELDWALL spell_index as the last known spell index for this figure, but this value is insignificant (used for optimizing search purposes?)
-            uint16_t parry_spell_index = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, target_index, PARRY_LINE, spell_index);
+            // we pass SHIELDWALL GROUP spell_index as the last known spell index for this figure, but this value is insignificant (used for optimizing search purposes?)
+            uint16_t shield_wall_spell_index = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, target_index, SHIELD_WALL_LINE, spell_index);
 
             // we should remove the bonus provided with the instance of the spell we're going to remove
             // knowing spell index, we can get the bonus multiplier to the armor rating
-            uint16_t recalc_value = spellAPI->getXData(_this, parry_spell_index, SPELL_STAT_MUL_MODIFIER);
+            uint16_t recalc_value = spellAPI->getXData(_this, shield_wall_spell_index, SPELL_STAT_MUL_MODIFIER);
             // we remove it in the usual way, by adding its negative value to figure's statistic
             figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, target_index, -recalc_value);
-            // we finish the PARRY spell using its spell index
-            spellAPI->setEffectDone(_this, parry_spell_index, 0);
+            // we finish the SHIELDWALL spell using its spell index
+            spellAPI->setEffectDone(_this, shield_wall_spell_index, 0);
             */
             return 0;
         }
     else
-        // the target isn't affected by the PARRY spell
+        // the target isn't affected by the SHIELDWALL spell
         {
             // we return true for checkCanApply()
             // we leave this block empty, because we actually had to check for another spell within the initial one (the one which triggered the refresh handler)
             // however, in case we had to check only for the one spell, we could use checkCanApply() function as a real condition check
-            // or we could forbid the SHIELDWALL from being reset
+            // or we could forbid the SHIELDWALL GROUP from being reset
             // and make it to be allowed to cast on target, only in case checkCanApply() returned 1
             return 1;
         }
@@ -355,18 +357,18 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     // we register handlers for AoE component of the spell
     // in this example we introduce new handler - spell refresh handler
     // this handler will be called to implement game logic for situations when we cast spell on a unit which is already affected by this spell
+    SFSpell *shield_wall_group_spell = registrationAPI->registerSpell(SHIELD_WALL_GROUP_LINE);
+    registrationAPI->linkTypeHandler(shield_wall_group_spell, &shield_wall_group_type_handler);
+    registrationAPI->linkEffectHandler(shield_wall_group_spell, SHIELD_WALL_GROUP_JOB, &shield_wall_group_effect_handler);
+    registrationAPI->linkRefreshHandler(shield_wall_group_spell, &melee_group_ability_refresh_handler);
+
+    // we register handlers for target component of the spell
+    // notice, that in example of Ignite we defined Spell Type (SHIELD_WALL_LINE) and Spell Job (SHIELD_WALL_JOB) with straightly given numbers
+    // here we just use macros to automatize the assignation
     SFSpell *shield_wall_spell = registrationAPI->registerSpell(SHIELD_WALL_LINE);
     registrationAPI->linkTypeHandler(shield_wall_spell, &shield_wall_type_handler);
     registrationAPI->linkEffectHandler(shield_wall_spell, SHIELD_WALL_JOB, &shield_wall_effect_handler);
-    registrationAPI->linkRefreshHandler(shield_wall_spell, &shield_wall_refresh_handler);
-
-    // we register handlers for target component of the spell
-    // notice, that in Ignite example we defined Spell Type (PARRY_LINE) and Spell Job (PARRY_JOB) with real numbers
-    // here we just use macros to automatize the assignation
-    SFSpell *parry_spell = registrationAPI->registerSpell(PARRY_LINE);
-    registrationAPI->linkTypeHandler(parry_spell, &parry_type_handler);
-    registrationAPI->linkEffectHandler(parry_spell, PARRY_JOB, &parry_effect_handler);
-    registrationAPI->linkEndHandler(parry_spell, &parry_end_handler);
+    registrationAPI->linkEndHandler(shield_wall_spell, &shield_wall_end_handler);
 }
 
 /***
