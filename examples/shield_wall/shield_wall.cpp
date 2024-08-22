@@ -267,7 +267,7 @@ void __thiscall melee_group_ability_effect_handler(SF_CGdSpell *_this, uint16_t 
 
 // we declare refresh handler for AoE spell
 // this handler is called whenever we're casting shieldwall group, and will return 0 if the spell is already present or 1 when it's not
-// this handler can be used as a snippet for any other similar spell which can be refreshed
+// this handler can be used as a template for any other spell which also might trigger refresh check
 
 int __thiscall shield_wall_group_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index) //we casted shieldwall group again before the previous expired
 {
