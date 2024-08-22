@@ -102,26 +102,10 @@ void __thiscall shield_wall_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
     // we're going to add buff to a target and then make the spell to wait for specified amount of time
     {
 
-        // the default armor rating is defined by base armor rating and bonus armor rating
-        // worn armor actually changes bonus armor rating, so to make spell work properly we have to sum both values
-        uint16_t figure_ac = _this->SF_CGdFigure->figures[target_index].armor.base_val + _this->SF_CGdFigure->figures[target_index].armor.bonus_val;
-
-        // we're going to work with percentile values, so it's better to temporarily record them to float variable
-        double recalc_temp = spell_data.params[0] - figure_ac;
-        recalc_temp = recalc_temp / figure_ac * 100;
-
-        // however, game engine uses percentiles in their natural expression, e.g. 80 instead of 0.8
-        // that's why we multiply them by 100 above and transform into integer thereafter
-        uint16_t recalc_value = uint16_t (recalc_temp);
-
-        // due to engine limitations, maximum bonus multiplier is limited by uint8_t range, hence by {-127%, 128%}
-        // to prevent our argument going overflow, let's nudge it to something smaller
-        if (recalc_value > 100)
-            recalc_value = 100;
-        else
-            if (recalc_value < - 100)
-        recalc_value = -100;
-
+        // let's load the percentage by which the spell is going to increase target's armor rating
+        // sadly, the game doesn't operate with big modifiers as the general rule this parameter shouldn't be higher than 100
+        // this number is expressed in integer within game engine, hence it takes value from 1 to 100, not 0 to 1
+        uint16_t recalc_value = spell_data.params[0];
 
         // we're adding the bonus to figure statistic
         // game automatically calculates multiplied armor rating value in the next game tick (not to be confused with spell tick)
