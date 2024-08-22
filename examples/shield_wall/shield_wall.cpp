@@ -155,8 +155,9 @@ void __thiscall shield_wall_group_type_handler(SF_CGdSpell *_this, uint16_t spel
 // the AoE checks for a specified amount of targets in a certain radius around the spellcaster
 // if the spell happens to affect again before the previous instance expired, it resets its duration
 // spell effect is simulated by individual instances of SHIELDWALL spell applied to every target affected
+// this code can be used as snippet for any melee group ability that affects the caster and up to N targets nearby
 
-void __thiscall shield_wall_group_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
+void __thiscall melee_group_ability_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     // we pull the pointer for this instance of spell
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
@@ -265,10 +266,10 @@ void __thiscall shield_wall_group_effect_handler(SF_CGdSpell *_this, uint16_t sp
 
 
 // we declare refresh handler for AoE spell
-// we use standard handler for such type of abilities, this handler can be applied for any other similar spell
 // this handler is called whenever we're casting shieldwall group, and will return 0 if the spell is already present or 1 when it's not
+// this handler can be used as a snippet for any other similar spell which can be refreshed
 
-int __thiscall melee_group_ability_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index) //we casted shieldwall group again before the previous expired
+int __thiscall shield_wall_group_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index) //we casted shieldwall group again before the previous expired
 {
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
     // we declare target index with value which we stored into SHIELDWALL GROUP spell above
@@ -343,8 +344,8 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     // this handler will be called to implement game logic for situations when we cast spell on a unit which is already affected by this spell
     SFSpell *shield_wall_group_spell = registrationAPI->registerSpell(SHIELD_WALL_GROUP_LINE);
     registrationAPI->linkTypeHandler(shield_wall_group_spell, &shield_wall_group_type_handler);
-    registrationAPI->linkEffectHandler(shield_wall_group_spell, SHIELD_WALL_GROUP_JOB, &shield_wall_group_effect_handler);
-    registrationAPI->linkRefreshHandler(shield_wall_group_spell, &melee_group_ability_refresh_handler);
+    registrationAPI->linkEffectHandler(shield_wall_group_spell, SHIELD_WALL_GROUP_JOB, &melee_group_ability_effect_handler);
+    registrationAPI->linkRefreshHandler(shield_wall_group_spell, &shield_wall_group_refresh_handler);
 
     // we register handlers for target component of the spell
     // notice, that in example of Ignite we defined Spell Type (SHIELD_WALL_LINE) and Spell Job (SHIELD_WALL_JOB) with straightly given numbers
