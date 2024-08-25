@@ -242,13 +242,14 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     registrationAPI->linkEffectHandler(interference_spell, INTERFERENCE_JOB, &interference_effect_handler);
     registrationAPI->linkRefreshHandler(interference_spell, &interference_patronize_shelter_refresh_handler);
     registrationAPI->linkDealDamageHandler(interference_spell, &interference_deal_damage_handler, SpellDamagePhase::PRE);
-    registrationAPI->linkEndHandler(interference_spell, &interference_end_handler);
-
-    // SpellDamagePhase::PRE controls when damage is registered
+    // SpellDamagePhase controls when damage is registered
     // there are three possible phases: PRE, default, post
     // PRE stands for initial damage, not modified by any other spells
     // default stands for damage modified by other spells
     // post stands for the damage in the end of all calculations, after other spells and armor reductions were applied
+    registrationAPI->linkEndHandler(interference_spell, &interference_end_handler);
+
+
 
 
     // the Interference might interfere (pun was not intended) with the effect provided with Shelter or Patronize vanilla spells
