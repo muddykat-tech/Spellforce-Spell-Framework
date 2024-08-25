@@ -59,14 +59,14 @@ void __thiscall interference_end_handler(SF_CGdSpell *_this, uint16_t spell_inde
 // we used that spell logic is implemented within the spell effect handler
 // however, interference is very special, its main logic will be trigged in deal_damage handler
 
-void __thiscall interference_damage_handler(SF_CGdFigureToolbox *_toolbox, uint16_t source, uint16_t target,
+uint16_t __thiscall interference_deal_damage_handler(SF_CGdFigureToolbox *_toolbox, uint16_t source, uint16_t target,
                                     uint16_t current_damage, uint16_t is_spell_damage, uint32_t is_ranged_damage, uint16_t spell_id)
 {
 
     if (is_spell_damage)
     {
         SF_CGdResourceSpell spell_data;
-        spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
+        spellAPI->getResourceSpellData(_toolbox->CGdResource, &spell_data, spell_id);
         current_damage = (uint16_t)((current_damage * spell_data.params[1]) / 100);
         return current_damage;
     }
@@ -102,7 +102,7 @@ void __thiscall interference_effect_handler(SF_CGdSpell *_this, uint16_t spell_i
 
 
 
-    if (tick_current == 0)
+    if (current_tick == 0)
         //spell start
         {
             // let's trigger refresh for interference or other vanilla spells which work in the same way
@@ -125,7 +125,7 @@ void __thiscall interference_effect_handler(SF_CGdSpell *_this, uint16_t spell_i
 
 
             // let's get spell duration from game data
-            ticks_interval = spell_data.params[1];
+            uint16_t ticks_interval = spell_data.params[1];
             // we disable the spell from being triggered for a specified number of internal game ticks, and after a specified in ticks_interval amount of time has passed, we may remove the spell
             _this->active_spell_list[spell_index].to_do_count = (uint16_t)((ticks_interval * 10) / 1000);
         }
@@ -167,14 +167,14 @@ int __thiscall interference_patronize_shelter_refresh_handler(SF_CGdSpell *_this
             spellAPI->setEffectDone(_this, pruned_spell_index, 0);
         }
 
-    if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, source_index, ENDURANCE_LINE))
+    if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, source_index, PATRONIZE_LINE))
        // the PATRONIZE spell already exists on the target
         {
             uint16_t pruned_spell_index = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, source_index, PATRONIZE_LINE, spell_index);
             spellAPI->setEffectDone(_this, pruned_spell_index, 0);
         }
 
-    if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, source_index, DURABILITY_LINE))
+    if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, source_index, SHELTER_LINE))
        // the SHELTER spell already exists on the target
         {
             uint16_t pruned_spell_index = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, source_index, SHELTER_LINE, spell_index);
@@ -206,9 +206,9 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     // this handler will be called to implement game logic for situations when we cast spell on a unit which is already affected by this spell
     SFSpell *interference_spell = registrationAPI->registerSpell(INTERFERENCE_LINE);
     registrationAPI->linkTypeHandler(interference_spell, &interference_type_handler);
-    registrationAPI->linkEffectHandler(interference_spell, INTERFERENCE_JOB, &melee_group_ability_effect_handler);
+    registrationAPI->linkEffectHandler(interference_spell, INTERFERENCE_JOB, &interference_effect_handler);
     registrationAPI->linkRefreshHandler(interference_spell, &interference_patronize_shelter_refresh_handler);
-    registrationAPI->linkDamageHandler(damage_spell, &interference_damage_deal_handler);
+    registrationAPI->linkDealDamageHandler(interference_spell, &interference_deal_damage_handler, SpellDamagePhase::PRE);
     registrationAPI->linkEndHandler(interference_spell, &interference_end_handler);
 
 
