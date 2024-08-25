@@ -67,7 +67,7 @@ uint16_t __thiscall interference_deal_damage_handler(SF_CGdFigureToolbox *_toolb
     {
         SF_CGdResourceSpell spell_data;
         spellAPI->getResourceSpellData(_toolbox->CGdResource, &spell_data, spell_id);
-        current_damage = (uint16_t)((current_damage * spell_data.params[1]) / 100);
+        current_damage = (uint16_t)((current_damage * spell_data.params[3]) / 100);
         return current_damage;
     }
 
