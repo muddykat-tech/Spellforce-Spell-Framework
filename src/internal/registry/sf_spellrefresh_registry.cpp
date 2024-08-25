@@ -30,7 +30,7 @@ refresh_handler_ptr get_spell_refresh(uint16_t spell_line_id)
     if (it == s_spellrefresh_handler_map.end())
     {
         char message[256];
-        sprintf(message, "Unknown Job ID [%d] for Spell Refresh Handler", spell_line_id);
+        sprintf(message, "Unknown Spell Line ID [%d] for Spell Refresh Handler", spell_line_id);
         log_warning(message);
         it = s_spellrefresh_handler_map.emplace(spell_line_id, &first_block_refresh_handler).first;
     }

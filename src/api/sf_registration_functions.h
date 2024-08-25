@@ -29,6 +29,8 @@ typedef struct __attribute__((packed))
 	handler_ptr spell_end_handler;
 	refresh_handler_ptr spell_refresh_handler;
 	sub_effect_handler_ptr sub_effect_handler;
+    damage_handler_ptr deal_damage_handler;
+    SpellDamagePhase damage_phase;
 	SFMod *parent_mod;
 } SFSpell;
 
@@ -40,6 +42,8 @@ DECLARE_FUNCTION(void, linkEndHandler, SFSpell *spell, handler_ptr endHandler);
 DECLARE_FUNCTION(void, applySpellTag, SFSpell *spell, SpellTag tag);
 DECLARE_FUNCTION(void, linkSubEffectHandler, SFSpell *spell, sub_effect_handler_ptr handler);
 DECLARE_FUNCTION(void, linkRefreshHandler, SFSpell *spell, refresh_handler_ptr handler);
+DECLARE_FUNCTION(void, linkDealDamageHandler, SFSpell *spell, damage_handler_ptr handler, SpellDamagePhase phase);
+
 DECLARE_FUNCTION_GROUP(Registration,
 					   registerSpell_ptr registerSpell;
 					   linkTypeHandler_ptr linkTypeHandler;
@@ -47,4 +51,6 @@ DECLARE_FUNCTION_GROUP(Registration,
 					   linkEndHandler_ptr linkEndHandler;
 					   applySpellTag_ptr applySpellTag;
 					   linkSubEffectHandler_ptr linkSubEffectHandler;
-					   linkRefreshHandler_ptr linkRefreshHandler;);
+					   linkRefreshHandler_ptr linkRefreshHandler;
+                       linkDealDamageHandler_ptr linkDealDamageHandler;
+                       );
