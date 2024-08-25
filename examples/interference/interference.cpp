@@ -31,7 +31,7 @@ RegistrationFunctions *registrationAPI;
 SFLog *logger;
 
 
-//we declare Interference Spell Type handler
+//we declare spell type handler for Interference
 void __thiscall interference_type_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     // we link the specific spell type with its own spell job
@@ -49,8 +49,13 @@ void __thiscall interference_end_handler(SF_CGdSpell *_this, uint16_t spell_inde
 }
 
 
-// we used that spell logic is implemented within the spell effect handler
-// however, interference is very special, its main logic will be trigged with Damage handler
+// we are used to the fact that spell logic is implemented within the spell effect handler
+// however, interference is very special, its main logic (reducing incoming damage) will be trigged within Damage handler
+// it's declared in the following way
+// the handler intercepts the incoming damage, we can modify it and return the new value
+// then the game will proceed with applying the modified damage to the target's health as usual
+// if we don't modify the damage due to some reasons (for example, the spell doesn't absorb damage from ranged attacks), we still should return the initial value with the function
+// otherwise the damage will be lost
 
 uint16_t __thiscall interference_deal_damage_handler(SF_CGdFigureToolbox *_toolbox, uint16_t source, uint16_t target,
                                     uint16_t current_damage, uint16_t is_spell_damage, uint32_t is_ranged_damage, uint16_t spell_id)
@@ -232,6 +237,12 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     registrationAPI->linkDealDamageHandler(interference_spell, &interference_deal_damage_handler, SpellDamagePhase::PRE);
     registrationAPI->linkEndHandler(interference_spell, &interference_end_handler);
 
+    // SpellDamagePhase::PRE controls when damage is registered
+    // there are three possible phases: PRE, default, post
+    // PRE stands for initial damage, not modified by any other spells
+    // default stands for damage modified by other spells
+    // post stands for the damage in the end of all calculations, after other spells and armor reductions were applied
+
 
     // the Interference might interfere (pun was not intended) with the effect provided with Shelter or Patronize vanilla spells
     // those spells already have own refresh handler, which can be checked in
@@ -248,10 +259,6 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
 
     SFSpell *shelter_spell = registrationAPI->registerSpell(SHELTER_LINE);
     registrationAPI->linkRefreshHandler(shelter_spell, &interference_patronize_shelter_refresh_handler);
-
-
-
-
 }
 
 /***
