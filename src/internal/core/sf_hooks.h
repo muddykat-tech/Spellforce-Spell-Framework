@@ -27,6 +27,7 @@ extern void __thiscall linkEffectHandler(SFSpell *spell, uint16_t spell_effect_i
 extern void __thiscall linkEndHandler(SFSpell *spell, handler_ptr endHandler);
 extern void __thiscall linkSubEffectHandler(SFSpell *spell, sub_effect_handler_ptr handler);
 extern void __thiscall linkRefreshHandler(SFSpell *spell, refresh_handler_ptr handler);
+extern void __thiscall linkDealDamageHandler(SFSpell *spell, damage_handler_ptr handler, SpellDamagePhase phase);
 
 extern SFMod *createModInfo(const char *mod_id, const char *mod_version, const char *mod_author, const char *mod_description);
 

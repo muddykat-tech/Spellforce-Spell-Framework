@@ -130,6 +130,7 @@ void initialize_data_hooks()
     INCLUDE_FUNCTION(registration, applySpellTag, &applySpellTag);
     INCLUDE_FUNCTION(registration, linkSubEffectHandler, &linkSubEffectHandler);
     INCLUDE_FUNCTION(registration, linkRefreshHandler, &linkRefreshHandler);
+    INCLUDE_FUNCTION(registration, linkDealDamageHandler, &linkDealDamageHandler);
 }
 
 static void initialize_spelltype_hook()
