@@ -28,8 +28,7 @@ ToolboxFunctions *toolboxAPI;
 FigureFunctions *figureAPI;
 IteratorFunctions *iteratorAPI;
 RegistrationFunctions *registrationAPI;
-
-//SFLog *logger
+SFLog *logger;
 
 /* debug output example
 Let it be here
@@ -71,6 +70,9 @@ uint16_t __thiscall interference_deal_damage_handler(SF_CGdFigureToolbox *_toolb
         return current_damage;
     }
 
+    // made it 0 for all kinds of damage just for debug purpose
+    current_damage = 0;
+
     return current_damage;
 }
 
@@ -86,7 +88,7 @@ void __thiscall interference_effect_handler(SF_CGdSpell *_this, uint16_t spell_i
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
 
     // we store index of the spellcaster, we won't need target index for this spell
-    uint16_t source_index = _this->active_spell_list[spell_index].source.entity_index;
+    uint16_t source_index = _this->active_spell_list[spell_index].target.entity_index;
 
     // we get the current tick of the spell, should be 0 at the beginning, and 1 in the end
     uint32_t current_tick = spellAPI->getXData(_this, spell_index, SPELL_TICK_COUNT_AUX);
@@ -106,8 +108,9 @@ void __thiscall interference_effect_handler(SF_CGdSpell *_this, uint16_t spell_i
         //spell start
         {
             // let's trigger refresh for interference or other vanilla spells which work in the same way
-            // the refresh handler will clear them from the target if either of them is currently affecting the target
             spellAPI->checkCanApply(_this, spell_index);
+            // the refresh handler will clear them from the target if either of them is currently affecting the target
+
 
             // we declare structures to store relative position of visual effect
             SF_CGdTargetData relative_data;
@@ -121,22 +124,21 @@ void __thiscall interference_effect_handler(SF_CGdSpell *_this, uint16_t spell_i
             aux_data.partB = 0;
 
             // we apply the visual effect filling the area which we specified above
-            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitWorld, &unused, &relative_data, _this->OpaqueClass->current_step, 0x19, &aux_data);
+            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitWorld, &unused, &relative_data, _this->OpaqueClass->current_step, 0x5, &aux_data);
 
 
             // let's get spell duration from game data
-            uint16_t ticks_interval = spell_data.params[1];
+            uint16_t ticks_interval = spell_data.params[3];
             // we disable the spell from being triggered for a specified number of internal game ticks, and after a specified in ticks_interval amount of time has passed, we may remove the spell
             _this->active_spell_list[spell_index].to_do_count = (uint16_t)((ticks_interval * 10) / 1000);
+            logger->logInfo("INTERFERENCE ACTIVATED");
         }
     else
         //spell end, main spell logic is implemented with another handler, so in this block we have only to stop the spell
         {
             spellAPI->setEffectDone(_this, spell_index, 0); // we end a spell
+            logger->logInfo("INTERFERENCE FINISHED");
         }
-
-
-    spellAPI->setEffectDone(_this, spell_index, 0);
 }
 
 
@@ -147,9 +149,10 @@ void __thiscall interference_effect_handler(SF_CGdSpell *_this, uint16_t spell_i
 int __thiscall interference_patronize_shelter_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index) //we casted shieldwall group again before the previous expired
 {
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
+
     // the spell is cast on self, we can use the source index
     uint16_t source_index = spell->source.entity_index;
-
+    logger->logInfo("TRIPLE CHECK ACTIVATED");
     // we check whether the figure has the SHIELDWALL spell applied to it already
     // method hasSpellOnIt accepts spell_line_id property of spell data as argument in order to idenfity the spell
     // spell_line_id corresponds to Spell Type ID
@@ -162,23 +165,29 @@ int __thiscall interference_patronize_shelter_refresh_handler(SF_CGdSpell *_this
 
             uint16_t pruned_spell_index = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, source_index, INTERFERENCE_LINE, spell_index);
 
-            // we finish the SHIELDWALL spell using its spell index
-
+            // we finish the INTERFERENCE spell using its spell index
+            // we should remove the spell correctly, so we remove both Effect and DLLNode here
+            spellAPI->removeDLLNode(_this, pruned_spell_index);
             spellAPI->setEffectDone(_this, pruned_spell_index, 0);
+            logger->logInfo("INTERFERENCE WAS REFRESHED");
         }
 
     if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, source_index, PATRONIZE_LINE))
        // the PATRONIZE spell already exists on the target
         {
             uint16_t pruned_spell_index = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, source_index, PATRONIZE_LINE, spell_index);
+            spellAPI->removeDLLNode(_this, pruned_spell_index);
             spellAPI->setEffectDone(_this, pruned_spell_index, 0);
+            logger->logInfo("PATRONIZE WAS REFRESHED");
         }
 
     if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, source_index, SHELTER_LINE))
        // the SHELTER spell already exists on the target
         {
             uint16_t pruned_spell_index = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, source_index, SHELTER_LINE, spell_index);
+            spellAPI->removeDLLNode(_this, pruned_spell_index);
             spellAPI->setEffectDone(_this, pruned_spell_index, 0);
+            logger->logInfo("SHELTER WAS REFRESHED");
         }
 
     return 1;
@@ -199,6 +208,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     figureAPI = sfsf->figureAPI;
     iteratorAPI = sfsf->iteratorAPI;
     registrationAPI = sfsf->registrationAPI;
+    logger = sfsf->logAPI;
 
 
     // we register handlers for AoE component of the spell
@@ -212,14 +222,14 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     registrationAPI->linkEndHandler(interference_spell, &interference_end_handler);
 
 
-    // the Parry might interfere with the effect bestowed by Endurance or Durability vanilla spells
+    // the Interference might interfere (pun was not intended) with the effect bestowed by Shelter or Patronize vanilla spells
     // we're not planning
 
-    SFSpell *endurance_spell = registrationAPI->registerSpell(PATRONIZE_LINE);
-    registrationAPI->linkRefreshHandler(endurance_spell, &interference_patronize_shelter_refresh_handler);
+    SFSpell *patronize_spell = registrationAPI->registerSpell(PATRONIZE_LINE);
+    registrationAPI->linkRefreshHandler(patronize_spell, &interference_patronize_shelter_refresh_handler);
 
-    SFSpell *durability_spell = registrationAPI->registerSpell(SHELTER_LINE);
-    registrationAPI->linkRefreshHandler(endurance_spell, &interference_patronize_shelter_refresh_handler);
+    SFSpell *shelter_spell = registrationAPI->registerSpell(SHELTER_LINE);
+    registrationAPI->linkRefreshHandler(shelter_spell, &interference_patronize_shelter_refresh_handler);
 
 
 }
