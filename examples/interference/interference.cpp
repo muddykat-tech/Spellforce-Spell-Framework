@@ -6,15 +6,15 @@
 // We declare macros for Spell Type and Spell Job of both spells
 // it is very unhandy to keep them in mind, so we just declare them here
 // we use a new set of numbers to avoid interfering with previous examples
-// 0xf3 = 243, 0xaa = 170, 0xf4 = 244, 0xab = 171
 
-// The custom Spell Types (243 and 244) also must be defined within GameData.cff
+// New Spell Type will be 0xf5 (245), it must be defined within GameData.cff
 // and provided with at least one spell corresponding each Spell Type
+// new Spell Job will be 0xac (172) to avoid interfering with numbers used in previous examples
 
 #define INTERFERENCE_LINE 0xf5
 #define INTERFERENCE_JOB 0xac
 
-// we also need to know Spell Types for vanilla spells which will be mutually exclusive with interference
+// we also need to know Spell Types for vanilla spells which will be mutually exclusive with Interference
 // let's get them from GameData.cff and write down as hexadecimals
 
 #define PATRONIZE_LINE 0x96 // 150
@@ -30,57 +30,65 @@ IteratorFunctions *iteratorAPI;
 RegistrationFunctions *registrationAPI;
 SFLog *logger;
 
-/* debug output example
-Let it be here
-char aliveInfo[256];
-sprintf(aliveInfo, "Flags list: Target %hd \n", target_index);
-logger->logInfo(aliveInfo);
-*/
 
-//we declare Parry Spell Type handler
+//we declare Interference Spell Type handler
 void __thiscall interference_type_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     // we link the specific spell type with its own spell job
     _this->active_spell_list[spell_index].spell_job = INTERFERENCE_JOB;
-    // we initialize ticks counter
+    // we initialize spell duration timer
     spellAPI->setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
 }
 
-// we declare spell end handler for Parry
+// we declare spell end handler for Interference
 // this handler would work in case a spell wasn't finished correctly
 void __thiscall interference_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
-    spellAPI->removeDLLNode(_this, spell_index); // we remove spell from the list of active spells over the target
+    spellAPI->removeDLLNode(_this, spell_index); // we remove spell from the list of active spells affecting the target
     spellAPI->setEffectDone(_this, spell_index, 0); // we end a spell
 }
 
 
 // we used that spell logic is implemented within the spell effect handler
-// however, interference is very special, its main logic will be trigged in deal_damage handler
+// however, interference is very special, its main logic will be trigged with Damage handler
 
 uint16_t __thiscall interference_deal_damage_handler(SF_CGdFigureToolbox *_toolbox, uint16_t source, uint16_t target,
                                     uint16_t current_damage, uint16_t is_spell_damage, uint32_t is_ranged_damage, uint16_t spell_id)
 {
 
+// _toolbox stands for the unit which is affected with our spell and got damaged with any means
+// source specifies the figure_index of a damaging figure
+// target specifies the figure_index of a damaged figure
+// current_damage specifies the amount of damage
+// is_spell_damage and is_ranged_damage specify the damage origin
+// spell_id returns an ID of the spell which triggered the Damage handler
+
     if (is_spell_damage)
+        //we check if the damage which trigged Damage handler comes from the spell
     {
+        // we load spell_data of Interference spell, spell_id stands for the ID of the spell which governs the Damage handler
         SF_CGdResourceSpell spell_data;
         spellAPI->getResourceSpellData(_toolbox->CGdResource, &spell_data, spell_id);
-        current_damage = (uint16_t)((current_damage * spell_data.params[3]) / 100);
+
+
+        // we decrease damage by the percentage stated in spell parameters
+        current_damage = (uint16_t)((current_damage * spell_data.params[0]) / 100);
+        // we return the modified damage value and game engine uses the modified value as usual
         return current_damage;
     }
 
     // made it 0 for all kinds of damage just for debug purpose
     current_damage = 0;
 
+    logger->logInfo("INTERFERENCE REGISTERED DAMAGE");
+
+    // the damage wasn't caused with the spell, we return damage value to game engine unchanged
     return current_damage;
 }
 
-// we declare spell effect handler which implements spell affecting an area
-// the AoE checks for a specified amount of targets in a certain radius around the spellcaster
-// if the spell happens to affect again before the previous instance expired, it resets its duration
-// spell effect is simulated by individual instances of SHIELDWALL spell applied to every target affected
-// this code can be used as snippet for any melee group ability that affects the caster and up to N targets nearby
+// we declare effect handler for the Interference
+// in this case effect handler will only govern the spell duration, and will remove the spell when the specified amount of time passes
+// the bulk of spell logic is implemented in damage handler above
 
 void __thiscall interference_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
@@ -88,7 +96,7 @@ void __thiscall interference_effect_handler(SF_CGdSpell *_this, uint16_t spell_i
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
 
     // we store index of the spellcaster, we won't need target index for this spell
-    uint16_t source_index = _this->active_spell_list[spell_index].target.entity_index;
+    uint16_t source_index = _this->active_spell_list[spell_index].source.entity_index;
 
     // we get the current tick of the spell, should be 0 at the beginning, and 1 in the end
     uint32_t current_tick = spellAPI->getXData(_this, spell_index, SPELL_TICK_COUNT_AUX);
@@ -96,8 +104,7 @@ void __thiscall interference_effect_handler(SF_CGdSpell *_this, uint16_t spell_i
     spellAPI->addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1);
 
 
-    // we load the spell parameters from GameData.cff
-    // we'll use them later
+    // we load the spell from GameData.cff in order to get tick_interval
     SF_CGdResourceSpell spell_data;
     spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
 
@@ -134,7 +141,7 @@ void __thiscall interference_effect_handler(SF_CGdSpell *_this, uint16_t spell_i
             logger->logInfo("INTERFERENCE ACTIVATED");
         }
     else
-        //spell end, main spell logic is implemented with another handler, so in this block we have only to stop the spell
+        //spell end, main spell logic is implemented with another handler, so we have only to stop the spell in this block
         {
             spellAPI->setEffectDone(_this, spell_index, 0); // we end a spell
             logger->logInfo("INTERFERENCE FINISHED");
@@ -142,9 +149,11 @@ void __thiscall interference_effect_handler(SF_CGdSpell *_this, uint16_t spell_i
 }
 
 
-// we declare refresh handler for AoE spell
-// this handler is called whenever we're casting shieldwall group, and will return 0 if the spell is already present or 1 when it's not
-// this handler can be used as a snippet for any other similar spell which can be refreshed
+// we declare refresh handler for group of three spells: Interference, Patronize, Shelter
+// they provide the same effect, hence we have to prevent them from stacking
+// in the previous example we implemented that the mechanics according to which spell blocks the casting if it's already affecting the target
+// here we will remove already affecting spells and make the figure clear for applying new spell
+// the handler is the same for all three spells: custom one, and shelter and patronize from vanilla
 
 int __thiscall interference_patronize_shelter_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index) //we casted shieldwall group again before the previous expired
 {
@@ -153,15 +162,16 @@ int __thiscall interference_patronize_shelter_refresh_handler(SF_CGdSpell *_this
     // the spell is cast on self, we can use the source index
     uint16_t source_index = spell->source.entity_index;
     logger->logInfo("TRIPLE CHECK ACTIVATED");
-    // we check whether the figure has the SHIELDWALL spell applied to it already
-    // method hasSpellOnIt accepts spell_line_id property of spell data as argument in order to idenfity the spell
-    // spell_line_id corresponds to Spell Type ID
+
+    // below we'll check spells over the target one by one and remove them
+    // function hasSpellOnIt requires Spell Type ID to identify the spell
+    // we have Spell Types defind with macros, so we don't need any additional steps to get it
     if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, source_index, INTERFERENCE_LINE))
        // the INTERFERENCE spell already exists on the target
         {
             // here comes the magic
             // we can get the spell index from the list of active spells affecting the target by knowing this spell's spell job id
-            // we pass SHIELDWALL GROUP spell_index as the last known spell index for this figure, but this value is insignificant (used for optimizing search purposes?)
+            // we pass spell_index given with the refresh handler as the last known spell index for this figure, but this value is insignificant (used for optimizing search purposes?)
 
             uint16_t pruned_spell_index = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, source_index, INTERFERENCE_LINE, spell_index);
 
@@ -190,6 +200,7 @@ int __thiscall interference_patronize_shelter_refresh_handler(SF_CGdSpell *_this
             logger->logInfo("SHELTER WAS REFRESHED");
         }
 
+    // we return 1 to show that the refresh function allows to apply the new spell to the target
     return 1;
 }
 
@@ -211,7 +222,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     logger = sfsf->logAPI;
 
 
-    // we register handlers for AoE component of the spell
+    // we register handlers for the new custom spell
     // in this example we introduce new handler - deal damage handler
     // this handler will be called to implement game logic for situations when we cast spell on a unit which is already affected by this spell
     SFSpell *interference_spell = registrationAPI->registerSpell(INTERFERENCE_LINE);
@@ -222,14 +233,23 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     registrationAPI->linkEndHandler(interference_spell, &interference_end_handler);
 
 
-    // the Interference might interfere (pun was not intended) with the effect bestowed by Shelter or Patronize vanilla spells
-    // we're not planning
+    // the Interference might interfere (pun was not intended) with the effect provided with Shelter or Patronize vanilla spells
+    // those spells already have own refresh handler, which can be checked in
+    // https://github.com/muddykat-tech/Spellforce-Spell-Framework/blob/master/src/internal/handlers/sf_spellrefresh_handlers.cpp
+
+    // however, this handler won't check for the Interference spell
+    // to fix this omission, we must use the custom refresh handler for the interferring vanilla spells
+    // because all three spells will adhere to the same logic, we can link the same refresh handler which we linked above
+    // we don't have to touch all other handlers like Spell Type, it's enough only to link only the refresh handler
+    // it's worth of mentioning that the custom refresh handler will replace the existing vanilla handler, they won't work simultaneously
 
     SFSpell *patronize_spell = registrationAPI->registerSpell(PATRONIZE_LINE);
     registrationAPI->linkRefreshHandler(patronize_spell, &interference_patronize_shelter_refresh_handler);
 
     SFSpell *shelter_spell = registrationAPI->registerSpell(SHELTER_LINE);
     registrationAPI->linkRefreshHandler(shelter_spell, &interference_patronize_shelter_refresh_handler);
+
+
 
 
 }
@@ -240,7 +260,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
  ***/
 extern "C" __declspec(dllexport) SFMod *RegisterMod(SpellforceSpellFramework *framework)
 {
-    return framework->createModInfo("Parry mod", "1.0.0", "S'Baad", "This mod provides an example of a Parry spell which negates 20% of incoming damage to a target.");
+    return framework->createModInfo("Interference mod", "1.0.0", "S'Baad", "This mod provides an example of an Interference which negates 20% of incoming damage from all spells.");
 }
 
 // Required to be present by, not required for any functionality
