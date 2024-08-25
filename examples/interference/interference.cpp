@@ -77,15 +77,16 @@ uint16_t __thiscall interference_deal_damage_handler(SF_CGdFigureToolbox *_toolb
 
 
         // we decrease damage by the percentage stated in spell parameters
-        current_damage = (uint16_t)((current_damage * spell_data.params[0]) / 100);
+        current_damage += -(uint16_t)((current_damage * spell_data.params[0]) / 100);
         // we return the modified damage value and game engine uses the modified value as usual
+        logger->logInfo("INTERFERENCE REDUCED DAMAGE");
         return current_damage;
     }
 
     // made it 0 for all kinds of damage just for debug purpose
-    current_damage = 0;
+    //current_damage = 0;
 
-    logger->logInfo("INTERFERENCE REGISTERED DAMAGE");
+    logger->logInfo("INTERFERENCE REGISTERED FULL DAMAGE");
 
     // the damage wasn't caused with the spell, we return damage value to game engine unchanged
     return current_damage;
@@ -103,6 +104,10 @@ void __thiscall interference_effect_handler(SF_CGdSpell *_this, uint16_t spell_i
     // we store index of the spellcaster, we won't need target index for this spell
     uint16_t source_index = _this->active_spell_list[spell_index].source.entity_index;
 
+    // we have to activate the flag F_CHECK_SPELLS_BEFORE_JOB in order to make it possible for Deal Damage handler to trigger when the damage is received
+    _this->SF_CGdFigure->figures[source_index].flags |= F_CHECK_SPELLS_BEFORE_JOB;
+    //bool check_spells_before_job = figureAPI->isFlagSet(figureToolbox->CGdFigure, source_index, F_CHECK_SPELLS_BEFORE_JOB);
+
     // we get the current tick of the spell, should be 0 at the beginning, and 1 in the end
     uint32_t current_tick = spellAPI->getXData(_this, spell_index, SPELL_TICK_COUNT_AUX);
     // we increase amount of ticks passed by 1
@@ -112,7 +117,6 @@ void __thiscall interference_effect_handler(SF_CGdSpell *_this, uint16_t spell_i
     // we load the spell from GameData.cff in order to get tick_interval
     SF_CGdResourceSpell spell_data;
     spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
-
 
 
 
@@ -146,8 +150,11 @@ void __thiscall interference_effect_handler(SF_CGdSpell *_this, uint16_t spell_i
             logger->logInfo("INTERFERENCE ACTIVATED");
         }
     else
-        //spell end, main spell logic is implemented with another handler, so we have only to stop the spell in this block
+        // spell end, main spell logic is implemented with another handlerso we have only to clear flag which allowed triggering damage handler and stop the spell in this block
         {
+            // it's better to clear two of the following flags for the sake of optimization
+            spellAPI->figTryClrCHkSPlBfrJob2(_this, spell_index);
+            spellAPI->figClrChkSplBfrChkBattle(_this, spell_index, 0);
             spellAPI->setEffectDone(_this, spell_index, 0); // we end a spell
             logger->logInfo("INTERFERENCE FINISHED");
         }
