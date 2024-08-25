@@ -5,6 +5,7 @@
 #include "sf_spellend_registry.h"
 #include "sf_subeffect_registry.h"
 #include "sf_spellrefresh_registry.h"
+#include "sf_spelldamage_registry.h"
 
 #include <windows.h>
 #include <iostream>
@@ -29,7 +30,8 @@ SFSpell *__thiscall registerSpell(uint16_t spell_id)
     sf_spell->spell_refresh_handler = nullptr;
     sf_spell->sub_effect_handler = nullptr;
     sf_spell->parent_mod = g_current_mod;
-
+    sf_spell->deal_damage_handler = nullptr;
+    sf_spell->damage_phase = SpellDamagePhase::DEFAULT;
     g_internal_spell_list.push_back(sf_spell);
 
     return sf_spell;
@@ -66,6 +68,11 @@ void __thiscall linkRefreshHandler(SFSpell *spell, refresh_handler_ptr handler)
     spell->spell_refresh_handler = handler;
 }
 
+void __thiscall linkDealDamageHandler(SFSpell *spell, damage_handler_ptr handler, SpellDamagePhase phase)
+{
+    spell->deal_damage_handler = handler;
+    spell->damage_phase = phase;
+}
 /**
  * Registers the mod spells and performs basic conflict checking.
  *
@@ -97,6 +104,8 @@ void register_mod_spells()
         handler_ptr spell_end_handler = spell_data->spell_end_handler;
         refresh_handler_ptr spell_refresh_handler = spell_data->spell_refresh_handler;
         sub_effect_handler_ptr sub_effect_handler = spell_data->sub_effect_handler;
+        damage_handler_ptr deal_damage_handler = spell_data->deal_damage_handler;
+        SpellDamagePhase phase = spell_data->damage_phase;
         SFMod *parent_mod = spell_data->parent_mod;
 
         g_current_mod = spell_data->parent_mod;
@@ -173,6 +182,11 @@ void register_mod_spells()
         if (sub_effect_handler != nullptr)
         {
             registerSubEffectHandler(spell_id, sub_effect_handler);
+        }
+
+        if (deal_damage_handler != nullptr) 
+        {
+            registerSpellDamageHandler(spell_id, deal_damage_handler, phase);
         }
     }
 
