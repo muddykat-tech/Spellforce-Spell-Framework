@@ -102,5 +102,6 @@
         "sf_onhit_hook.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled",
-    "makefile.makePath": "mingw32-make"
+    "makefile.makePath": "mingw32-make",
+    "makefile.configureOnOpen": false
 }
