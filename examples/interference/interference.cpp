@@ -166,20 +166,29 @@ void __thiscall interference_effect_handler(SF_CGdSpell *_this, uint16_t spell_i
         }
 }
 
-void ClearPatronizeOverSecondaryTargets (SF_CGdSpell *_this, uint16_t spell_index, uint16_t figure_amount)
+void ClearPatronizeInArea (SF_CGdSpell *_this, uint16_t spell_index, uint16_t figure_amount)
 {
 
 SF_GdSpell *spell = &_this->active_spell_list[spell_index];
 
+// the spellcaster gets spell for free on spell cast
+// but since his spell effect is removed altogether with other creatures, have to expand figures amount by one
+figure_amount++;
 
 for ( uint16_t target_index = 0; figure_amount > 0 && target_index < 1000; target_index++ )
     {
-        if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index, PATRONIZE_LINE) && target_index != spell->source.entity_index)
+        if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index, PATRONIZE_LINE))
             {
                 toolboxAPI->removeSpellFromList(_this->SF_CGdFigureToolBox, target_index, spell_index);
                 figure_amount--;
+                char aliveInfo[256];
+                sprintf(aliveInfo, "PATRONIZE WAS REMOVED FROM FIGURE %hd \n", target_index);
+                logger->logInfo(aliveInfo);
             }
     }
+
+spellAPI->removeDLLNode(_this, spell_index); // we remove spell from the list of active spells affecting the target
+spellAPI->setEffectDone(_this, spell_index, 0); // we end a spell
 
 }
 
@@ -298,9 +307,9 @@ void __thiscall patronize_effect_handler(SF_CGdSpell *_this, uint16_t spell_inde
 
             }*/
             // it's better to clear two of the following flags for the sake of optimization
-            ClearPatronizeOverSecondaryTargets (_this, spell_index, spell_data.params[3]);
-            spellAPI->removeDLLNode(_this, spell_index);
-            spellAPI->setEffectDone(_this, spell_index, 0); // we end a spell
+            ClearPatronizeInArea (_this, spell_index, spell_data.params[3]);
+            //spellAPI->removeDLLNode(_this, spell_index);
+            //spellAPI->setEffectDone(_this, spell_index, 0); // we end a spell
             logger->logInfo("PATRONIZE FINISHED");
         }
 }
@@ -424,9 +433,9 @@ if (scenario == 1)
                 {
                     SF_CGdResourceSpell spell_data_2;
                     spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data_2, _this->active_spell_list[pruned_spell_index].spell_id);
-                    ClearPatronizeOverSecondaryTargets (_this, spell_index, spell_data_2.params[3]);
-                    spellAPI->removeDLLNode(_this, pruned_spell_index);
-                    spellAPI->setEffectDone(_this, pruned_spell_index, 0);
+                    ClearPatronizeInArea (_this, pruned_spell_index, spell_data_2.params[3]);
+                    //spellAPI->removeDLLNode(_this, pruned_spell_index);
+                    //spellAPI->setEffectDone(_this, pruned_spell_index, 0);
                     logger->logInfo("INTERFERENCE WAS REFRESHED");
 
                 }
@@ -453,10 +462,10 @@ if (scenario == 1)
                 {
                     SF_CGdResourceSpell spell_data_2;
                     spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data_2, _this->active_spell_list[pruned_spell_index].spell_id);
-                    ClearPatronizeOverSecondaryTargets (_this, spell_index, spell_data_2.params[3]);
+                    ClearPatronizeInArea (_this, pruned_spell_index, spell_data_2.params[3]);
 
-                    spellAPI->removeDLLNode(_this, pruned_spell_index);
-                    spellAPI->setEffectDone(_this, pruned_spell_index, 0);
+                    //spellAPI->removeDLLNode(_this, pruned_spell_index);
+                    //spellAPI->setEffectDone(_this, pruned_spell_index, 0);
                     logger->logInfo("PATRONIZE WAS OVERLAPPED WITH INTERFERENCE");
                 }
         }
@@ -472,10 +481,10 @@ else if (scenario == 2)
                 {
                     SF_CGdResourceSpell spell_data_2;
                     spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data_2, _this->active_spell_list[pruned_spell_index].spell_id);
-                    ClearPatronizeOverSecondaryTargets (_this, spell_index, spell_data_2.params[3]);
+                    ClearPatronizeInArea (_this, pruned_spell_index, spell_data_2.params[3]);
 
-                    spellAPI->removeDLLNode(_this, pruned_spell_index);
-                    spellAPI->setEffectDone(_this, pruned_spell_index, 0);
+                    //spellAPI->removeDLLNode(_this, pruned_spell_index);
+                    //spellAPI->setEffectDone(_this, pruned_spell_index, 0);
                     logger->logInfo("PATRONIZE WAS REFRESHED");
                 }
         }
@@ -520,10 +529,10 @@ else if (scenario == 3)
                 {
                     SF_CGdResourceSpell spell_data_2;
                     spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data_2, _this->active_spell_list[pruned_spell_index].spell_id);
-                    ClearPatronizeOverSecondaryTargets (_this, spell_index, spell_data_2.params[3]);
+                    ClearPatronizeInArea (_this, pruned_spell_index, spell_data_2.params[3]);
 
-                    spellAPI->removeDLLNode(_this, pruned_spell_index);
-                    spellAPI->setEffectDone(_this, pruned_spell_index, 0);
+                    //spellAPI->removeDLLNode(_this, pruned_spell_index);
+                    //spellAPI->setEffectDone(_this, pruned_spell_index, 0);
                     logger->logInfo("PATRONIZE WAS OVERLAPPED WITH SHELTER");
                 }
         }
