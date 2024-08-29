@@ -177,7 +177,12 @@ figure_amount++;
 
 for ( uint16_t target_index = 0; figure_amount > 0 && target_index < 1000; target_index++ )
     {
-        if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index, PATRONIZE_LINE))
+        if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index, PATRONIZE_LINE) &&
+            ((int16_t)(_this->SF_CGdFigure->figures[target_index].owner) == (int16_t)(_this->SF_CGdFigure->figures[target_index].owner)) &&
+            (((uint8_t)(_this->SF_CGdFigure->figures[target_index].flags) & 0xa) == 0) &&
+            (toolboxAPI->isTargetable(_this->SF_CGdFigureToolBox, target_index)) &&
+            (figureAPI->getSpellJobStartNode(_this->SF_CGdFigure, target_index) != 0)
+            )
             {
                 toolboxAPI->removeSpellFromList(_this->SF_CGdFigureToolBox, target_index, spell_index);
                 figure_amount--;
@@ -186,10 +191,8 @@ for ( uint16_t target_index = 0; figure_amount > 0 && target_index < 1000; targe
                 logger->logInfo(aliveInfo);
             }
     }
-
 spellAPI->removeDLLNode(_this, spell_index); // we remove spell from the list of active spells affecting the target
 spellAPI->setEffectDone(_this, spell_index, 0); // we end a spell
-
 }
 
 void __thiscall patronize_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
