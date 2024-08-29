@@ -98,6 +98,7 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(toolbox, getSpellIndexFromDLL, 0x2fdd90);
     DEFINE_FUNCTION(toolbox, getNextNode, 0x2fe240);
     DEFINE_FUNCTION(toolbox, figureSetNewJob, 0x2f0ef0);
+    DEFINE_FUNCTION(toolbox, removeSpellFromList, 0x2fad57);
 
     log_info("| - IteratorAPI Hooks");
     DEFINE_FUNCTION(iterator, figureIteratorInit, 0x3183f0);

@@ -135,18 +135,34 @@ void register_mod_spells()
         {
             char error_msg[256];
             SFMod *conflict_mod = spell_id_map[spell_id];
-            snprintf(error_msg, sizeof(error_msg), "| - Mod Conflict Detected [%s]: Spell ID [%d] is already registered by [%s]", parent_mod->mod_id, spell_id, conflict_mod->mod_id);
-            log_error(error_msg);
-            g_error_count = g_error_count + 1;
+            if (spell_id < 242)
+            {
+                snprintf(error_msg, sizeof(error_msg), "| - %s has Overwritten a vanilla spell ID [%d], this was previously registered by [%s]", parent_mod->mod_id, spell_id, conflict_mod->mod_id);
+                log_warning(error_msg);
+            }
+            else
+            {
+                snprintf(error_msg, sizeof(error_msg), "| - Mod Conflict Detected [%s]: Spell ID [%d] is already registered by [%s]", parent_mod->mod_id, spell_id, conflict_mod->mod_id);
+                log_error(error_msg);
+                g_error_count = g_error_count + 1;
+            }
         }
 
         if (spell_effect_id_map.find(spell_effect_id) != spell_effect_id_map.end())
         {
             char error_msg[256];
             SFMod *conflict_mod = spell_effect_id_map[spell_effect_id];
-            snprintf(error_msg, sizeof(error_msg), "| - Mod Conflict Detected [%s]: Spell Effect ID [%d] is already registered by [%s]", parent_mod->mod_id, spell_effect_id, conflict_mod->mod_id);
-            log_error(error_msg);
-            g_error_count = g_error_count + 1;
+            if (spell_effect_id < 0xa6)
+            {
+                snprintf(error_msg, sizeof(error_msg), "| - %s has Overwritten a vanilla spell effect ID [%d] this was previously registered by [%s]", parent_mod->mod_id, spell_effect_id, conflict_mod->mod_id);
+                log_warning(error_msg);
+            }
+            else
+            {
+                snprintf(error_msg, sizeof(error_msg), "| - Mod Conflict Detected [%s]: Spell Effect ID [%d] is already registered by [%s]", parent_mod->mod_id, spell_effect_id, conflict_mod->mod_id);
+                log_error(error_msg);
+                g_error_count = g_error_count + 1;
+            }
         }
 
         // Update Conflict Maps
@@ -184,7 +200,7 @@ void register_mod_spells()
             registerSubEffectHandler(spell_id, sub_effect_handler);
         }
 
-        if (deal_damage_handler != nullptr) 
+        if (deal_damage_handler != nullptr)
         {
             registerSpellDamageHandler(spell_id, deal_damage_handler, phase);
         }
