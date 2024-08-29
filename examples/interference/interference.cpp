@@ -143,7 +143,7 @@ void __thiscall interference_effect_handler(SF_CGdSpell *_this, uint16_t spell_i
             aux_data.partB = 0;
 
             // we apply the visual effect filling the area which we specified above
-            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitWorld, &unused, &relative_data, _this->OpaqueClass->current_step, 0x5, &aux_data);
+            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused + 1, &relative_data, _this->OpaqueClass->current_step, 0x96, &aux_data);
             // the parameter before the last stands for spell area, effects affecting single target usually have this parameter set to 0
             // but if we want to make the effect look cool, we could put the number above 0 and it will look like an AoE spell on activation
 
@@ -191,6 +191,10 @@ for ( uint16_t target_index = 0; figure_amount > 0 && target_index < 1000; targe
                 logger->logInfo(aliveInfo);
             }
     }
+
+spellAPI->figTryClrCHkSPlBfrJob2(_this, spell_index);
+spellAPI->figClrChkSplBfrChkBattle(_this, spell_index, 0);
+
 spellAPI->removeDLLNode(_this, spell_index); // we remove spell from the list of active spells affecting the target
 spellAPI->setEffectDone(_this, spell_index, 0); // we end a spell
 }
@@ -251,7 +255,7 @@ void __thiscall patronize_effect_handler(SF_CGdSpell *_this, uint16_t spell_inde
             spellAPI->getTargetsRectangle(_this, &hit_area, spell_index, spell_data.params[0], &cast_center);
 
             // we apply the visual effect filling the area which we specified above
-            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitWorld, &unused + 1, &relative_data, _this->OpaqueClass->current_step, 0, &hit_area);
+            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused + 1, &relative_data, _this->OpaqueClass->current_step, 0x96, &hit_area);
 
 
             CGdFigureIterator figure_iterator;
@@ -343,8 +347,8 @@ void __thiscall shelter_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
 
 
     if (current_tick == 0)
+       //spell start
         {
-        //spell start
         if (spellAPI->checkCanApply(_this, spell_index))
             {
             // let's trigger refresh for interference or other vanilla spells which work in the same way
@@ -364,7 +368,7 @@ void __thiscall shelter_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
             aux_data.partB = 0;
 
             // we apply the visual effect filling the area which we specified above
-            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitWorld, &unused, &relative_data, _this->OpaqueClass->current_step, 0, &aux_data);
+            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused + 1, &relative_data, _this->OpaqueClass->current_step, 0x96, &aux_data);
 
 
             // let's get spell duration from game data
