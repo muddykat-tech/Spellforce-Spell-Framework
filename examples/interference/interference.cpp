@@ -264,7 +264,22 @@ void __thiscall patronize_effect_handler(SF_CGdSpell *_this, uint16_t spell_inde
                     spell->target.entity_index = target_index;
                 if (spellAPI->checkCanApply(_this, spell_index))
                 {
-                    toolboxAPI->addSpellToFigure(_this->SF_CGdFigureToolBox, target_index, /*spell->spell_id*/ spell_index);
+                    SF_CGdTargetData relative_data;
+                    relative_data.position = {0, 0};
+                    relative_data.entity_type = 1;
+                    relative_data.entity_index = target_index;
+                    uint32_t unused;
+
+                    SF_Rectangle aux_data;
+                    aux_data.partA = 0;
+                    aux_data.partB = 0;
+
+                    // we apply the visual effect filling the area which we specified above
+                    spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 0x96, &aux_data);
+                    toolboxAPI->addSpellToFigure(_this->SF_CGdFigureToolBox, target_index, spell_index);
+
+                    _this->SF_CGdFigure->figures[target_index].flags |= F_CHECK_SPELLS_BEFORE_JOB;
+
                     figure_count--;
                     char aliveInfo[256];
                     sprintf(aliveInfo, "Patronize added to target index: %hd \n", target_index);
@@ -661,5 +676,7 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
         break;
     }
 
+    return TRUE;
+}
     return TRUE;
 }
