@@ -18,6 +18,8 @@ DECLARE_FUNCTION(uint16_t, getSpellIndexFromDLL, uint32_t *CGdDoubleLinkedList, 
 DECLARE_FUNCTION(uint16_t, getNextNode, uint32_t *CGdDoubleLinkedList, uint16_t current_node);
 DECLARE_FUNCTION(void, figureSetNewJob, void *CGdFigureJobs, uint32_t figure_id, uint32_t new_job, uint32_t param_3, uint32_t param_4, uint32_t param_5);
 DECLARE_FUNCTION(uint32_t, removeSpellFromList, SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t param_1, uint16_t param_2);
+DECLARE_FUNCTION(uint16_t, addUnit, SF_CGdFigureToolbox *_this, uint16_t posX, uint16_t posY, uint16_t owner, uint16_t figure_type,
+                    short param_5, int param_6, int param_7, int param_8);
 
 DECLARE_FUNCTION_GROUP(Toolbox,
                        dealDamage_ptr dealDamage;
@@ -32,4 +34,5 @@ DECLARE_FUNCTION_GROUP(Toolbox,
                        getSpellIndexFromDLL_ptr getSpellIndexFromDLL;
                        getNextNode_ptr getNextNode;
                        figureSetNewJob_ptr figureSetNewJob;
-                       removeSpellFromList_ptr removeSpellFromList;);
+                       removeSpellFromList_ptr removeSpellFromList;
+                       addUnit_ptr addUnit;);
