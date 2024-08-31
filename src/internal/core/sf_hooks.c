@@ -100,6 +100,7 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(toolbox, figureSetNewJob, 0x2f0ef0);
     DEFINE_FUNCTION(toolbox, removeSpellFromList, 0x2fad57);
     DEFINE_FUNCTION(toolbox, addUnit, 0x2f749a);
+    DEFINE_FUNCTION(toolbox, findClosestFreePosition_ptr, 0x34e9a0);
 
     log_info("| - IteratorAPI Hooks");
     DEFINE_FUNCTION(iterator, figureIteratorInit, 0x3183f0);

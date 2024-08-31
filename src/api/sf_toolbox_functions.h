@@ -20,6 +20,8 @@ DECLARE_FUNCTION(void, figureSetNewJob, void *CGdFigureJobs, uint32_t figure_id,
 DECLARE_FUNCTION(uint32_t, removeSpellFromList, SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t param_1, uint16_t param_2);
 DECLARE_FUNCTION(uint16_t, addUnit, SF_CGdFigureToolbox *_this, uint16_t posX, uint16_t posY, uint16_t owner, uint16_t figure_type,
                     short param_5, int param_6, int param_7, int param_8);
+DECLARE_FUNCTION(bool, findClosestFreePosition, SF_CGdWorldToolBox* _this, SF_Coord *param_1,SF_Coord *param_2,
+                    uint16_t radius, SF_Coord *return_value)
 
 DECLARE_FUNCTION_GROUP(Toolbox,
                        dealDamage_ptr dealDamage;
@@ -35,4 +37,6 @@ DECLARE_FUNCTION_GROUP(Toolbox,
                        getNextNode_ptr getNextNode;
                        figureSetNewJob_ptr figureSetNewJob;
                        removeSpellFromList_ptr removeSpellFromList;
-                       addUnit_ptr addUnit;);
+                       addUnit_ptr addUnit;
+                       findClosestFreePosition_ptr findClosestFreePosition;
+                       );
