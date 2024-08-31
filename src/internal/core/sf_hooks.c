@@ -89,6 +89,8 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(toolbox, dealDamage, 0x2f4a57);
     DEFINE_FUNCTION(toolbox, isTargetable, 0x2fe704);
     DEFINE_FUNCTION(toolbox, figuresCheckHostile, 0x2fe7b9);
+    DEFINE_FUNCTION(toolbox, figuresCheckNeutral, 0x2feba4);
+    DEFINE_FUNCTION(toolbox, figuresCheckFriendly, 0x2fe953);
     DEFINE_FUNCTION(toolbox, hasSpellOnIt, 0x2fe4ea);
     DEFINE_FUNCTION(toolbox, rescaleLevelStats, 0x2fff48);
     DEFINE_FUNCTION(toolbox, buildingDealDamage, 0x2d6d80);
