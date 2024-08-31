@@ -75,6 +75,12 @@ void __thiscall shieldwall_universal_effect_handler(SF_CGdSpell *_this, uint16_t
     spellAPI->addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1);
 
 
+    // let's apply visual effects and extend the spell to surrounding figures, and also make the spell last no more than its duration
+    if (current_tick == 0)
+    {
+    // we load the spell parameters from GameData.cff
+    SF_CGdResourceSpell spell_data;
+    spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
 
     // it's worth of mentioning, that in case of single spell type spell, the spell is going to be automatically applied to the spellcaster when it's casted
     // however, we shouldn't be able to apply the shieldwall to the target until the previous instance of the spell is expired
@@ -85,14 +91,6 @@ void __thiscall shieldwall_universal_effect_handler(SF_CGdSpell *_this, uint16_t
     // here specify the caster as the target and launch refresh check to remove the new instance of shieldwall from the caster if there is any
     spell->target.entity_index = source_index;
     spellAPI->checkCanApply(_this, spell_index);
-
-    // the new instance was pruned, let's apply visual effects and extend the spell to surrounding figures, and also make the spell last no more than its duration
-    if (current_tick == 0)
-    {
-    // we load the spell parameters from GameData.cff
-    // we'll use them later
-    SF_CGdResourceSpell spell_data;
-    spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
 
 
     // we declare structure to specify the area affected by the AoE effect
@@ -161,7 +159,7 @@ void __thiscall shieldwall_universal_effect_handler(SF_CGdSpell *_this, uint16_t
                     // spell_data.params[3] stands for SHIELDWALL spell data id which we're going to apply to the target
                     // _this->OpaqueClass->current_step stands for the spell starting tick (meaning game ticks, not spell tick)
                     // it's unknown what's the last parameter is standing for
-                    toolboxAPI->addSpellToFigure(_this, spell_index, _this->OpaqueClass->current_step, &source, &target, 0);
+                    toolboxAPI->addSpellToFigure(_this->SF_CGdFigureToolBox, target_index, spell_index);
 
                     spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 0x19, &hit_area);
                     // we spent one usage of the spell, hence we decrease the possible limit by one
