@@ -8,7 +8,8 @@ DECLARE_FUNCTION(void, dealDamage, SF_CGdFigureToolbox *CGdFigureToolbox, uint16
 DECLARE_FUNCTION(bool, isTargetable, SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t figure_index);
 DECLARE_FUNCTION(uint16_t, figuresCheckHostile, SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t source_index, uint16_t target_index);
 DECLARE_FUNCTION(void, buildingDealDamage, SF_CGdFigureToolbox *CGdBuildingToolBox, uint16_t figure_id, uint16_t building_id, uint16_t damage, uint32_t is_spell_damage);
-DECLARE_FUNCTION(uint16_t, figuresCheckHostile, SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t source_index, uint16_t target_index);
+DECLARE_FUNCTION(uint16_t, figuresCheckNeutral, SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t source_index, uint16_t target_index);
+DECLARE_FUNCTION(uint16_t, figuresCheckFriendly, SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t source_index, uint16_t target_index);
 DECLARE_FUNCTION(uint32_t, hasSpellOnIt, SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t figure_index, uint16_t spell_line_id);
 DECLARE_FUNCTION(void, rescaleLevelStats, SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t figure_index);
 DECLARE_FUNCTION(void, addSpellToFigure, SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t figure_index, uint16_t spell_index);
@@ -27,6 +28,8 @@ DECLARE_FUNCTION_GROUP(Toolbox,
                        dealDamage_ptr dealDamage;
                        isTargetable_ptr isTargetable;
                        figuresCheckHostile_ptr figuresCheckHostile;
+                       figuresCheckNeutral_ptr figuresCheckNeutral;
+                       figuresCheckFriendly_ptr figuresCheckFriendly;
                        hasSpellOnIt_ptr hasSpellOnIt;
                        buildingDealDamage_ptr buildingDealDamage;
                        rescaleLevelStats_ptr rescaleLevelStats;
