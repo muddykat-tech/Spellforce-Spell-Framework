@@ -99,8 +99,7 @@ void __thiscall interference_effect_handler(SF_CGdSpell *_this, uint16_t spell_i
     // we store index of the spellcaster, we won't need target index for this spell
     uint16_t source_index = _this->active_spell_list[spell_index].source.entity_index;
 
-    // we have to activate the flag F_CHECK_SPELLS_BEFORE_JOB in order to make it possible for Deal Damage handler to trigger when the damage is received
-    _this->SF_CGdFigure->figures[source_index].flags |= F_CHECK_SPELLS_BEFORE_JOB;
+
     // bool check_spells_before_job = figureAPI->isFlagSet(figureToolbox->CGdFigure, source_index, F_CHECK_SPELLS_BEFORE_JOB);
 
     // we get the current tick of the spell, should be 0 at the beginning, and 1 in the end
@@ -132,15 +131,19 @@ void __thiscall interference_effect_handler(SF_CGdSpell *_this, uint16_t spell_i
             aux_data.partB = 0;
 
             // we apply the visual effect filling the area which we specified above
-            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 0x96, &aux_data);
+            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 0x5, &aux_data);
             // the parameter before the last stands for spell area, effects affecting single target usually have this parameter set to 0
             // but if we want to make the effect look cool, we could put the number above 0 and it will look like an AoE spell on activation
+
+            // we have to activate the flag F_CHECK_SPELLS_BEFORE_JOB in order to make it possible for Deal Damage handler to trigger when the damage is received
+            _this->SF_CGdFigure->figures[source_index].flags |= F_CHECK_SPELLS_BEFORE_JOB;
+
+            _this->active_spell_list[spell_index].flags |= 2;
 
             // let's get spell duration from game data
             uint16_t ticks_interval = spell_data.params[0];
             // we disable the spell from being triggered for a specified number of internal game ticks, and after a specified in ticks_interval amount of time has passed, we may remove the spell
             _this->active_spell_list[spell_index].to_do_count = (uint16_t)((ticks_interval * 10) / 1000);
-            logger->logInfo("INTERFERENCE ACTIVATED");
         }
     }
     else
@@ -150,26 +153,23 @@ void __thiscall interference_effect_handler(SF_CGdSpell *_this, uint16_t spell_i
         spellAPI->figTryClrCHkSPlBfrJob2(_this, spell_index);
         spellAPI->figClrChkSplBfrChkBattle(_this, spell_index, 0);
         spellAPI->setEffectDone(_this, spell_index, 0); // we end a spell
-        logger->logInfo("INTERFERENCE FINISHED");
     }
 }
 
-void ClearPatronizeInArea(SF_CGdSpell *_this, uint16_t spell_index, uint16_t figure_amount)
+void ClearPatronizeInArea(SF_CGdSpell *_this, uint16_t spell_index)
 {
 
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
 
     // the spellcaster gets spell for free on spell cast
     // but since his spell effect is removed altogether with other creatures, have to expand figures amount by one
-    figure_amount++;
 
-    for (uint16_t target_index = 1; target_index < _this->SF_CGdFigure->max_used; target_index++)
+    for (uint16_t target_index = 0; target_index <= _this->SF_CGdFigure->max_used; target_index++)
     {
         if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index, PATRONIZE_LINE) &&
             (figureAPI->getSpellJobStartNode(_this->SF_CGdFigure, target_index) != 0))
         {
             toolboxAPI->removeSpellFromList(_this->SF_CGdFigureToolBox, target_index, spell_index);
-            figure_amount--;
             char aliveInfo[256];
             sprintf(aliveInfo, "PATRONIZE WAS REMOVED FROM FIGURE %hd \n", target_index);
             logger->logInfo(aliveInfo);
@@ -252,10 +252,6 @@ void __thiscall patronize_effect_handler(SF_CGdSpell *_this, uint16_t spell_inde
                 target_index = iteratorAPI->getNextFigure(&figure_iterator);
             }
 
-            char aliveInfo[256];
-            sprintf(aliveInfo, "PATRONIZE WAS ADDED TO SOURCE %hd \n", toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, source_index, PATRONIZE_LINE));
-            logger->logInfo(aliveInfo);
-
             while (figure_count != 0 && target_index != 0)
             {
                 if (((int16_t)(_this->SF_CGdFigure->figures[target_index].owner) == (int16_t)(_this->SF_CGdFigure->figures[source_index].owner)) &&
@@ -307,7 +303,7 @@ void __thiscall patronize_effect_handler(SF_CGdSpell *_this, uint16_t spell_inde
 
         }*/
         // it's better to clear two of the following flags for the sake of optimization
-        ClearPatronizeInArea(_this, spell_index, spell_data.params[3]);
+        ClearPatronizeInArea(_this, spell_index);
         // spellAPI->removeDLLNode(_this, spell_index);
         // spellAPI->setEffectDone(_this, spell_index, 0); // we end a spell
         logger->logInfo("PATRONIZE FINISHED");
@@ -425,9 +421,7 @@ int __thiscall interference_patronize_shelter_refresh_handler(SF_CGdSpell *_this
             // we should remove the spell correctly, so we remove both Effect and DLLNode here
             if (spell_index != pruned_spell_index)
             {
-                SF_CGdResourceSpell spell_data_2;
-                spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data_2, _this->active_spell_list[pruned_spell_index].spell_id);
-                ClearPatronizeInArea(_this, pruned_spell_index, spell_data_2.params[3]);
+                ClearPatronizeInArea(_this, pruned_spell_index);
                 // spellAPI->removeDLLNode(_this, pruned_spell_index);
                 // spellAPI->setEffectDone(_this, pruned_spell_index, 0);
                 logger->logInfo("INTERFERENCE WAS REFRESHED");
@@ -452,9 +446,7 @@ int __thiscall interference_patronize_shelter_refresh_handler(SF_CGdSpell *_this
             uint16_t pruned_spell_index = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, spell->target.entity_index, PATRONIZE_LINE, spell_index);
             if (spell_index != pruned_spell_index)
             {
-                SF_CGdResourceSpell spell_data_2;
-                spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data_2, _this->active_spell_list[pruned_spell_index].spell_id);
-                ClearPatronizeInArea(_this, pruned_spell_index, spell_data_2.params[3]);
+                ClearPatronizeInArea(_this, pruned_spell_index);
 
                 // spellAPI->removeDLLNode(_this, pruned_spell_index);
                 // spellAPI->setEffectDone(_this, pruned_spell_index, 0);
@@ -471,9 +463,7 @@ int __thiscall interference_patronize_shelter_refresh_handler(SF_CGdSpell *_this
             uint16_t pruned_spell_index = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, spell->target.entity_index, PATRONIZE_LINE, spell_index);
             if (spell_index != pruned_spell_index)
             {
-                SF_CGdResourceSpell spell_data_2;
-                spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data_2, _this->active_spell_list[pruned_spell_index].spell_id);
-                ClearPatronizeInArea(_this, pruned_spell_index, spell_data_2.params[3]);
+                ClearPatronizeInArea(_this, pruned_spell_index);
 
                 // spellAPI->removeDLLNode(_this, pruned_spell_index);
                 // spellAPI->setEffectDone(_this, pruned_spell_index, 0);
@@ -518,9 +508,7 @@ int __thiscall interference_patronize_shelter_refresh_handler(SF_CGdSpell *_this
             uint16_t pruned_spell_index = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, spell->target.entity_index, PATRONIZE_LINE, spell_index);
             if (spell_index != pruned_spell_index)
             {
-                SF_CGdResourceSpell spell_data_2;
-                spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data_2, _this->active_spell_list[pruned_spell_index].spell_id);
-                ClearPatronizeInArea(_this, pruned_spell_index, spell_data_2.params[3]);
+                ClearPatronizeInArea(_this, pruned_spell_index);
 
                 // spellAPI->removeDLLNode(_this, pruned_spell_index);
                 // spellAPI->setEffectDone(_this, pruned_spell_index, 0);
@@ -677,6 +665,4 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
     }
 
     return TRUE;
-}
-return TRUE;
 }
