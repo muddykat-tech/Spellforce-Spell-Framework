@@ -60,6 +60,21 @@ typedef enum
 	SPAWN = 0x40000000
 } GdFigureFlags;
 
+typedef enum
+{
+    TASK_WORKER = 2,
+    TASK_WOODCUTTER = 3,
+    TASK_QUARRY = 4,
+    TASK_MINE = 5,
+    TASK_FORGE = 6,
+    TASK_HERO = 9,
+    TASK_MAINCHAR = 10,
+    TASK_NPC = 11,
+    TASK_PET = 12,
+    TASK_HUNTING_LODGE = 14,
+    TASK_MERCHANT = 17
+} CGdFigureTask;
+
 // Declare the function pointers for the FigureFunctions group
 DECLARE_FUNCTION(bool, isAlive, SF_CGdFigure *figure, uint16_t target);
 DECLARE_FUNCTION(bool, setWalkSpeed, SF_CGdFigure *figure, uint16_t target, uint16_t value);
@@ -81,6 +96,8 @@ DECLARE_FUNCTION(uint16_t, getSpellJobStartNode, SF_CGdFigure *figure, uint16_t 
 DECLARE_FUNCTION(void, subMana, SF_CGdFigure *_this, uint16_t param_1, uint32_t param_2);
 DECLARE_FUNCTION(uint16_t, getManaCurrent, SF_CGdFigure *figure, uint16_t figure_id);
 DECLARE_FUNCTION(SF_Coord, getPosition, SF_CGdFigure *figure, SF_Coord *position, uint16_t figure_id);
+//TODO passthough enum
+DECLARE_FUNCTION(void, setTask, SF_CGdFigure *_figure, uint16_t figure_index, CGdFigureTask figureTask);
 // Unknown Functons
 DECLARE_FUNCTION(bool, FUN_006e3a90, uint32_t *CGdFigureJobs, uint16_t figure_id);
 
@@ -114,4 +131,6 @@ DECLARE_FUNCTION_GROUP(Figure,
 					   FUN_006e3a90_ptr FUN_006e3a90;
 					   subMana_ptr subMana;
 					   getManaCurrent_ptr getManaCurrent;
-					   getPosition_ptr getPosition;);
+					   getPosition_ptr getPosition;
+                       setTask_ptr setTask;
+                       );
