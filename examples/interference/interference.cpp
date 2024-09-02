@@ -640,7 +640,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
  ***/
 extern "C" __declspec(dllexport) SFMod *RegisterMod(SpellforceSpellFramework *framework)
 {
-    return framework->createModInfo("Interference mod", "1.0.0", "S'Baad", "This mod provides an example of an Interference which negates 20% of incoming damage from all spells.");
+    return framework->createModInfo("Interference mod", "1.0.0", "Teekius", "This mod provides an example of an Interference which negates 20% of incoming damage from all spells.");
 }
 
 // Required to be present by, not required for any functionality
