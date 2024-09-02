@@ -199,7 +199,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
 // Basically framework call this function and one above when loading mods
 extern "C" __declspec(dllexport) SFMod *RegisterMod(SpellforceSpellFramework *framework)
 {
-    return framework->createModInfo("SF First Spell", "1.0.0", "S'Baad", "How-to guide to create the first custom Spellforce spell");
+    return framework->createModInfo("SF First Spell", "1.0.0", "Teekius", "How-to guide to create the first custom Spellforce spell");
 }
 
 //This function is required for OS to recognize our mod as loadable library. Let it be.
