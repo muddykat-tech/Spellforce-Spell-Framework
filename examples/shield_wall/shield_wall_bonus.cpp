@@ -50,20 +50,29 @@ void __thiscall shield_wall_universal_end_handler(SF_CGdSpell *_this, uint16_t s
     SF_CGdResourceSpell spell_data;
     spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
 
-    uint16_t figure_count = spell_data.params[1] + 1;
-
-    for (uint16_t target_index = 0; target_index < _this->SF_CGdFigure->max_used && figure_count > 0; target_index++)
+    for (uint16_t target_index = 0; target_index <= _this->SF_CGdFigure->max_used; target_index++)
         {
+            // this code reiterates what we're doing at the tick 1 when the spell duration ends
+            // we scan for all figures present, and check whether they're affected with Shieldwall spell
+            // if it shows they're affected, we check a spell index of the spell affecting them and compare it to the spell index of the spell which triggered the Spell End handler
+            // if those indexes match, we remove the spell from the target and remove the bonus modifier from figure's statistic
+            uint16_t spell_index_current = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, target_index, SHIELD_WALL_UNIVERSAL_LINE, 0);
+
+            // we check whether the target is affected with the Shieldwall
             if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index, SHIELD_WALL_UNIVERSAL_LINE))
-                if (figureAPI->getSpellJobStartNode(_this->SF_CGdFigure, target_index) != 0)
-                    {
-                        toolboxAPI->removeSpellFromList(_this->SF_CGdFigureToolBox, target_index, spell_index);
-                        figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, target_index, -spell_data.params[2]);
-                        figure_count--;
-                    }
+                // we check whether the spell indexes match
+                if (spell_index_current == spell_index)
+                    if (figureAPI->getSpellJobStartNode(_this->SF_CGdFigure, target_index) != 0)
+                        {
+                            // we remove the spell from the target
+                            toolboxAPI->removeSpellFromList(_this->SF_CGdFigureToolBox, target_index, spell_index);
+                            // we substract bonus modifier from the target's armor rating
+                            figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, target_index, -spell_data.params[2]);
+                        }
         }
-    spellAPI->removeDLLNode(_this, spell_index); // we remove spell from the list of active spells over the target
-    spellAPI->setEffectDone(_this, spell_index, 0); // we end a spell
+    // we end the spell itself after we finished scanning AoE
+    spellAPI->removeDLLNode(_this, spell_index);
+    spellAPI->setEffectDone(_this, spell_index, 0);
 }
 
 
@@ -233,8 +242,6 @@ void __thiscall shield_wall_universal_effect_handler(SF_CGdSpell *_this, uint16_
         else
         // current_tick == 1, it's time to end the spell
         {
-
-
             // we check through all figures for the Shieldwall effect
             // we can't use the iterator to determine search area, because targets might move too far away from the source which provided them with the Shieldwall
             for (uint16_t target_index = 0; target_index <= _this->SF_CGdFigure->max_used; target_index++)
