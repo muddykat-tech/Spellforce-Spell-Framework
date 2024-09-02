@@ -1,5 +1,4 @@
 #include "../../src/api/sfsf.h"
-#include "api/sfsf.h"
 #include <windows.h>
 #include <stdio.h>
 
@@ -320,6 +319,13 @@ void __thiscall patronize_effect_handler(SF_CGdSpell *_this, uint16_t spell_inde
             _this->active_spell_list[spell_index].to_do_count = (uint16_t)((ticks_interval * 10) / 1000);
             logger->logInfo("PATRONIZE ACTIVATED");
         }
+        else
+        // the Patronize can't be applied to the spellcaster due to some reasons
+        // let's finish the spell to avoid it going for the tick 1
+        {
+            spellAPI->setEffectDone(_this, spell_index, 0);
+            logger->logInfo("PATRONIZE CAN'T BE APPLIED");
+        }
     }
     else
     // spell end, main spell logic is implemented within another functions, let's just clear the spell from targets
@@ -389,6 +395,13 @@ void __thiscall shelter_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
             _this->active_spell_list[spell_index].to_do_count = (uint16_t)((ticks_interval * 10) / 1000);
             logger->logInfo("SHELTER ACTIVATED");
         }
+        else
+        {
+        // the Shelter can't be applied to the spellcaster being under the Interference
+        // let's finish the spell to avoid it going for the tick 1
+        spellAPI->setEffectDone(_this, spell_index, 0); // we end a spell
+        logger->logInfo("SHELTER CAN'T BE APPLIED");
+        }
     }
     else
     // spell stops, main spell logic is implemented within another functions, so let's just end the spell
@@ -453,7 +466,7 @@ int __thiscall interference_patronize_shelter_refresh_handler(SF_CGdSpell *_this
 
             // we finish the INTERFERENCE spell using its spell index
             // we should remove the spell correctly, so we remove both Effect and DLLNode here
-            
+
             if (spell_index != pruned_spell_index)
             {
                 spellAPI->removeDLLNode(_this, pruned_spell_index);
