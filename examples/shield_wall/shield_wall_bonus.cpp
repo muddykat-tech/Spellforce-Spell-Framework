@@ -7,7 +7,7 @@
 // such implementation is closer to vanilla implementation of AoE buffs
 
 // We declare macros for Shieldwall Spell Type and Spell Job
-// Spell Type 0xf3 = 246, Spell Job 0xad = 173
+// Spell Type 0xf6 = 246, Spell Job 0xad = 173
 
 // The custom Spell Type also must be defined within GameData.cff
 // and provided with at least one spell corresponding to it
