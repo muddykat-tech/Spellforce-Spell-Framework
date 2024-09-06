@@ -467,7 +467,7 @@ int __thiscall interference_patronize_shelter_refresh_handler(SF_CGdSpell *_this
             // we finish the INTERFERENCE spell using its spell index
             // we should remove the spell correctly, so we remove both Effect and DLLNode here
 
-            if (spell_index != pruned_spell_index)
+            if (spell_index != pruned_spell_index && pruned_spell_index != 0)
             {
                 spellAPI->removeDLLNode(_this, pruned_spell_index);
                 spellAPI->setEffectDone(_this, pruned_spell_index, 0);
@@ -480,24 +480,18 @@ int __thiscall interference_patronize_shelter_refresh_handler(SF_CGdSpell *_this
         // it must be cleared, because the Interference takes the precedence
         {
             uint16_t pruned_spell_index = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, source_index, SHELTER_LINE, 0);
-            if (spell_index != pruned_spell_index)
-            {
-                spellAPI->removeDLLNode(_this, pruned_spell_index);
-                spellAPI->setEffectDone(_this, pruned_spell_index, 0);
-                logger->logInfo("SHELTER WAS OVERLAPPED WITH INTERFERENCE");
-            }
+            spellAPI->removeDLLNode(_this, pruned_spell_index);
+            spellAPI->setEffectDone(_this, pruned_spell_index, 0);
+            logger->logInfo("SHELTER WAS OVERLAPPED WITH INTERFERENCE");
         }
 
-        if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, spell->target.entity_index, PATRONIZE_LINE))
+        if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, source_index, PATRONIZE_LINE))
         // the PATRONIZE spell already exists on the target
         // it must be cleared, because the Interference has the precedence over it
         {
             uint16_t pruned_spell_index = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, spell->target.entity_index, PATRONIZE_LINE, 0);
-            if (spell_index != pruned_spell_index)
-            {
-                ClearPatronizeInArea(_this, pruned_spell_index);
-                logger->logInfo("PATRONIZE WAS OVERLAPPED WITH INTERFERENCE");
-            }
+            ClearPatronizeInArea(_this, pruned_spell_index);
+            logger->logInfo("PATRONIZE WAS OVERLAPPED WITH INTERFERENCE");
         }
 
         // as you might notice, the Interference spell could never return 0
@@ -509,18 +503,6 @@ int __thiscall interference_patronize_shelter_refresh_handler(SF_CGdSpell *_this
     else if (scenario == 2)
     // we run checks for patronize spell
     {
-        if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, spell->target.entity_index, PATRONIZE_LINE))
-        // the PATRONIZE spell already exists on the target
-        // we must remove the previous instance of the Patronize from the spellcaster and from the targets around it
-        {
-            uint16_t pruned_spell_index = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, spell->target.entity_index, PATRONIZE_LINE, spell_index);
-            if (spell_index != pruned_spell_index)
-            {
-                ClearPatronizeInArea(_this, pruned_spell_index);
-                logger->logInfo("PATRONIZE WAS REFRESHED");
-            }
-        }
-
         if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, spell->target.entity_index, INTERFERENCE_LINE))
         // the INTERFERENCE spell already exists on the target
         // it blocks the Patronize spell from being applied
@@ -535,6 +517,28 @@ int __thiscall interference_patronize_shelter_refresh_handler(SF_CGdSpell *_this
         {
             logger->logInfo("CAN'T CAST PATRONIZE ON TARGET AFFECTED BY SHELTER");
             return 0;
+        }
+
+        if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, spell->target.entity_index, PATRONIZE_LINE))
+        // the PATRONIZE spell already exists on the target
+        // we must remove the previous instance of the Patronize from the spellcaster and from the targets around it
+        {
+            uint16_t pruned_spell_index = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, spell->target.entity_index, PATRONIZE_LINE, spell_index);
+            if (spell_index != pruned_spell_index && pruned_spell_index != 0)
+                // the Patronize was detected
+                // let's check whether we remove the spell from the source or from the secondary target
+                if (source_index == spell->target.entity_index)
+                    // we update the spell over the source, and hence remove all secondary instances of this spell from other targets
+                    {
+                        ClearPatronizeInArea(_this, pruned_spell_index);
+                        logger->logInfo("PATRONIZE WAS REFRESHED OVER THE SOURCE");
+                    }
+                else
+                    // we remove the secondary instance of the spell from specific target, but we don't terminate the spell and don't touch other targets
+                    {
+                        toolboxAPI->removeSpellFromList(_this->SF_CGdFigureToolBox, target_index, spell_index);
+                        logger->logInfo("PATRONIZE WAS REFRESHED OVER THE TARGET");
+                    }
         }
 
         // the Patronize wasn't interruped, we return true for 'checkCanApply'
@@ -570,11 +574,8 @@ int __thiscall interference_patronize_shelter_refresh_handler(SF_CGdSpell *_this
         // it must be cleared, because the Shelter has the precedence over it
         {
             uint16_t pruned_spell_index = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, spell->target.entity_index, PATRONIZE_LINE, 0);
-            if (spell_index != pruned_spell_index)
-            {
-                ClearPatronizeInArea(_this, pruned_spell_index);
-                logger->logInfo("PATRONIZE WAS OVERLAPPED WITH SHELTER");
-            }
+            ClearPatronizeInArea(_this, pruned_spell_index);
+            logger->logInfo("PATRONIZE WAS OVERLAPPED WITH SHELTER");
         }
 
         // nothing interrupted the new instance of the SHELTER from being applied
@@ -640,7 +641,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
  ***/
 extern "C" __declspec(dllexport) SFMod *RegisterMod(SpellforceSpellFramework *framework)
 {
-    return framework->createModInfo("Interference mod", "1.0.0", "Teekius", "This mod provides an example of an Interference which negates 20% of incoming damage from all spells.");
+    return framework->createModInfo("Interference mod", "1.0.0", "S'Baad", "This mod provides an example of an Interference which negates 20% of incoming damage from all spells.");
 }
 
 // Required to be present by, not required for any functionality
