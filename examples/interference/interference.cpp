@@ -560,20 +560,22 @@ int __thiscall interference_patronize_shelter_refresh_handler(SF_CGdSpell *_this
         // the SHELTER spell already exists on the target
         // we must remove the previous instance in order to refresh the spell
         {
+
             uint16_t pruned_spell_index = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, source_index, SHELTER_LINE, spell_index);
-            if (spell_index != pruned_spell_index)
-            {
-                spellAPI->removeDLLNode(_this, pruned_spell_index);
-                spellAPI->setEffectDone(_this, pruned_spell_index, 0);
-                logger->logInfo("SHELTER WAS REFRESHED");
-            }
+
+            if (spell_index != pruned_spell_index && pruned_spell_index != 0)
+                {
+                    spellAPI->removeDLLNode(_this, pruned_spell_index);
+                    spellAPI->setEffectDone(_this, pruned_spell_index, 0);
+                    logger->logInfo("SHELTER WAS REFRESHED");
+                }
         }
 
-        if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, spell->target.entity_index, PATRONIZE_LINE))
+        if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, source_index, PATRONIZE_LINE))
         // the PATRONIZE spell already exists on the target
         // it must be cleared, because the Shelter has the precedence over it
         {
-            uint16_t pruned_spell_index = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, spell->target.entity_index, PATRONIZE_LINE, 0);
+            uint16_t pruned_spell_index = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, source_index, PATRONIZE_LINE, 0);
             ClearPatronizeInArea(_this, pruned_spell_index);
             logger->logInfo("PATRONIZE WAS OVERLAPPED WITH SHELTER");
         }
