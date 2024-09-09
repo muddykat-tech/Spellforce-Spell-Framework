@@ -248,9 +248,9 @@ void __thiscall patronize_effect_handler(SF_CGdSpell *_this, uint16_t spell_inde
             spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitWorld, &unused, &relative_data, _this->OpaqueClass->current_step, 0x25, &hit_area);
 
 
-            hit_area.pathA = 0;
-            hit_area.pathB = 0;
-            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 0x96, &aux_data);
+            hit_area.partA = 0;
+            hit_area.partB = 0;
+            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 0x96, &hit_area);
 
             CGdFigureIterator figure_iterator;
             iteratorAPI->setupFigureIterator(&figure_iterator, _this);
@@ -541,7 +541,7 @@ int __thiscall interference_patronize_shelter_refresh_handler(SF_CGdSpell *_this
                 else
                     // we remove the secondary instance of the spell from specific target, but we don't terminate the spell and don't touch other targets
                     {
-                        toolboxAPI->removeSpellFromList(_this->SF_CGdFigureToolBox, target_index, spell_index);
+                        toolboxAPI->removeSpellFromList(_this->SF_CGdFigureToolBox, spell->target.entity_index, spell_index);
                         logger->logInfo("PATRONIZE WAS REFRESHED OVER THE TARGET");
                     }
         }
