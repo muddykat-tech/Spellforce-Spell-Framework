@@ -210,15 +210,16 @@ void __thiscall patronize_effect_handler(SF_CGdSpell *_this, uint16_t spell_inde
     // we increase amount of ticks passed by 1
     spellAPI->addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1);
 
-    // we load the spell from GameData.cff in order to get tick_interval
-    SF_CGdResourceSpell spell_data;
-    spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
-
     if (current_tick == 0)
     {
         // spell start
         if (spellAPI->checkCanApply(_this, spell_index))
         {
+
+
+            // we load the spell from GameData.cff in order to get tick_interval
+            SF_CGdResourceSpell spell_data;
+            spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
 
             // key for spell radius of Patronize is 2
             // key for amount of figures affected is 3
@@ -233,7 +234,6 @@ void __thiscall patronize_effect_handler(SF_CGdSpell *_this, uint16_t spell_inde
 
             // we declare structures to store relative position of visual effect
             SF_CGdTargetData relative_data;
-            // figureAPI->getPosition(_this->SF_CGdFigure, &relative_data.position, source_index);
             relative_data.position = {0, 0};
             relative_data.entity_type = 1;
             relative_data.entity_index = source_index;
@@ -245,7 +245,12 @@ void __thiscall patronize_effect_handler(SF_CGdSpell *_this, uint16_t spell_inde
             spellAPI->getTargetsRectangle(_this, &hit_area, spell_index, spell_data.params[0], &cast_center);
 
             // we apply the visual effect filling the area which we specified above
-            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 0x96, &hit_area);
+            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitWorld, &unused, &relative_data, _this->OpaqueClass->current_step, 0x25, &hit_area);
+
+
+            hit_area.pathA = 0;
+            hit_area.pathB = 0;
+            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 0x96, &aux_data);
 
             CGdFigureIterator figure_iterator;
             iteratorAPI->setupFigureIterator(&figure_iterator, _this);
