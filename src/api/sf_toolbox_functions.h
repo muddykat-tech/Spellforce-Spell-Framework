@@ -20,7 +20,7 @@ DECLARE_FUNCTION(uint16_t, getNextNode, uint32_t *CGdDoubleLinkedList, uint16_t 
 DECLARE_FUNCTION(void, figureSetNewJob, void *CGdFigureJobs, uint32_t figure_id, uint32_t new_job, uint32_t param_3, uint32_t param_4, uint32_t param_5);
 DECLARE_FUNCTION(uint32_t, removeSpellFromList, SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t param_1, uint16_t param_2);
 DECLARE_FUNCTION(uint16_t, addUnit, SF_CGdFigureToolbox *_this, uint16_t posX, uint16_t posY, uint16_t owner, uint16_t figure_type,
-                    short param_5, int param_6, int param_7, int param_8);
+                    uint16_t spawn_effect, int npc_id, int faction, int disable_ai);
 DECLARE_FUNCTION(bool, findClosestFreePosition, SF_CGdWorldToolBox* _this, SF_Coord *param_1,SF_Coord *param_2,
                     uint16_t sector, SF_Coord *return_value)
 

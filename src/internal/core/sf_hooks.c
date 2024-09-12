@@ -60,6 +60,7 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(figure, subMana, 0x2b5b60);
     DEFINE_FUNCTION(figure, getManaCurrent, 0x2b29c0);
     DEFINE_FUNCTION(figure, getPosition, 0x2caaf0);
+    DEFINE_FUNCTION(figure, setTask, 0x2b7110);
 
     log_info("| - SpellAPI Hooks");
     // Define the function pointers for SpellFunctions group
