@@ -22,7 +22,6 @@ ToolboxFunctions *toolboxAPI;
 FigureFunctions *figureAPI;
 IteratorFunctions *iteratorAPI;
 RegistrationFunctions *registrationAPI;
-SFLog *logger;
 
 // we declare spell type handler for Shieldwall, it must initialize ticks and bonus modifier values
 
@@ -67,7 +66,7 @@ void __thiscall shield_wall_universal_end_handler(SF_CGdSpell *_this, uint16_t s
                             // we remove the spell from the target
                             toolboxAPI->removeSpellFromList(_this->SF_CGdFigureToolBox, target_index, spell_index);
                             // we substract bonus modifier from the target's armor rating
-                            figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, target_index, -spell_data.params[2]);
+                            figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, target_index, -recalc_value);
                         }
         }
     // we end the spell itself after we finished scanning AoE
@@ -87,13 +86,6 @@ void __thiscall shield_wall_universal_effect_handler(SF_CGdSpell *_this, uint16_
     // we pull the pointer for this instance of spell
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
 
-    // we load the spell parameters from GameData.cff
-    // we'll use them later
-    SF_CGdResourceSpell spell_data;
-    spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
-
-
-
     // we store index of the spellcaster
     uint16_t source_index = _this->active_spell_list[spell_index].source.entity_index;
 
@@ -105,6 +97,19 @@ void __thiscall shield_wall_universal_effect_handler(SF_CGdSpell *_this, uint16_
 
     if (current_tick == 0)
         {
+            // we load the spell parameters from GameData.cff
+            // we'll need them only in tick 0
+            // we will access armor bonus directly with spell xData in tick 1
+            SF_CGdResourceSpell spell_data;
+            spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+
+            // we pull bonus modifier to armor rating from spell data into local variable
+            uint8_t recalc_value = spell_data.params[2];
+
+            // we store bonus modifier directly within spell xData to be able to access it in the subsequent tick
+            spellAPI->setXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER, recalc_value);
+
+
             // the game automatically adds the spell to a source on cast
             // in previous implementation we controlled that, because the actual spell effect was related to the second spell type
             // and we decided ourselves whether we should apply the second spell type to a target/source
@@ -112,7 +117,7 @@ void __thiscall shield_wall_universal_effect_handler(SF_CGdSpell *_this, uint16_
 
             // because it's already applied, let's change the source's armor rating
             // we'll deal with effect stacking below
-            figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, source_index, spell_data.params[2]);
+            figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, source_index, recalc_value);
 
             // the shieldwall shouldn't be able to stack over the same target
             // let's check whether there are more than one instance of a shieldwall over the target
@@ -137,7 +142,7 @@ void __thiscall shield_wall_universal_effect_handler(SF_CGdSpell *_this, uint16_
                         if (figureAPI->getSpellJobStartNode(_this->SF_CGdFigure, source_index) != 0)
                             {
                                 // we remove bonus armor which we apply with a tick 0
-                                figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, source_index, -spell_data.params[2]);
+                                figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, source_index, -recalc_value);
                                 // we remove the new spell (the one which triggered the Spell Effect handler) from the list of the spells affecting the spellcaster
                                 toolboxAPI->removeSpellFromList(_this->SF_CGdFigureToolBox, source_index, spell_index);
                             }
@@ -222,7 +227,7 @@ void __thiscall shield_wall_universal_effect_handler(SF_CGdSpell *_this, uint16_
                             // it's unknown what's the last parameter is standing for
                             toolboxAPI->addSpellToFigure(_this->SF_CGdFigureToolBox, target_index, spell_index);
 
-                            figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, target_index, spell_data.params[2]);
+                            figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, target_index, recalc_value);
 
                             spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 0x19, &hit_area);
                             // we spent one usage of the spell, hence we decrease the possible limit by one
@@ -242,6 +247,10 @@ void __thiscall shield_wall_universal_effect_handler(SF_CGdSpell *_this, uint16_
         else
         // current_tick == 1, it's time to end the spell
         {
+            // we recall armor rating bonus modifier from spell xData
+            // because this value is the same for every target affected, we should do it here instead of doing it within the loop below
+            uint16_t recalc_value = spellAPI->getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER);
+
             // we check through all figures for the Shieldwall effect
             // we can't use the iterator to determine search area, because targets might move too far away from the source which provided them with the Shieldwall
             for (uint16_t target_index = 0; target_index <= _this->SF_CGdFigure->max_used; target_index++)
@@ -261,7 +270,7 @@ void __thiscall shield_wall_universal_effect_handler(SF_CGdSpell *_this, uint16_
                                 // we remove the spell from the target
                                 toolboxAPI->removeSpellFromList(_this->SF_CGdFigureToolBox, target_index, spell_index);
                                 // we substract bonus modifier from the target's armor rating
-                                figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, target_index, -spell_data.params[2]);
+                                figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, target_index, -recalc_value);
                             }
                 }
 
@@ -312,11 +321,9 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     figureAPI = sfsf->figureAPI;
     iteratorAPI = sfsf->iteratorAPI;
     registrationAPI = sfsf->registrationAPI;
-    logger = sfsf->logAPI;
 
 
     // we register handlers for custom spell
-    //
     SFSpell *shield_wall_universal_spell = registrationAPI->registerSpell(SHIELD_WALL_UNIVERSAL_LINE);
     registrationAPI->linkTypeHandler(shield_wall_universal_spell, &shield_wall_universal_type_handler);
     registrationAPI->linkEffectHandler(shield_wall_universal_spell, SHIELD_WALL_UNIVERSAL_JOB, &shield_wall_universal_effect_handler);
