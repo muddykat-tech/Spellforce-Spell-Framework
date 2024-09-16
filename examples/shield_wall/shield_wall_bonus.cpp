@@ -86,9 +86,6 @@ void __thiscall shield_wall_universal_effect_handler(SF_CGdSpell *_this, uint16_
     // we pull the pointer for this instance of spell
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
 
-    // we store index of the spellcaster
-    uint16_t source_index = _this->active_spell_list[spell_index].source.entity_index;
-
     // we initiate ticks counter which is necessary to emulate spell duration
     uint32_t current_tick = spellAPI->getXData(_this, spell_index, SPELL_TICK_COUNT_AUX);
     // we increase amount of ticks passed by 1
@@ -102,6 +99,9 @@ void __thiscall shield_wall_universal_effect_handler(SF_CGdSpell *_this, uint16_
             // we will access armor bonus directly with spell xData in tick 1
             SF_CGdResourceSpell spell_data;
             spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+
+            // we store index of the spellcaster
+            uint16_t source_index = _this->active_spell_list[spell_index].source.entity_index;
 
             // we pull bonus modifier to armor rating from spell data into local variable
             uint8_t recalc_value = spell_data.params[2];
@@ -285,7 +285,7 @@ void __thiscall shield_wall_universal_effect_handler(SF_CGdSpell *_this, uint16_
 // this handler is called whenever we're casting shieldwall universal, and will return 0 if the spell is already present or 1 when it's not
 // this handler can be used as a snippet for any other similar spell which can be refreshed
 
-int __thiscall shield_wall_universal_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index) //we casted shieldwall group again before the previous expired
+int __thiscall shield_wall_universal_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index) // we casted shieldwall group again before the previous expired
 {
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
     // we declare target index with value which we stored into SHIELDWALL UNIVERSAL spell above
