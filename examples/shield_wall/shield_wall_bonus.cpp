@@ -252,21 +252,18 @@ void __thiscall shield_wall_universal_effect_handler(SF_CGdSpell *_this, uint16_
                 {
                     // we launch the same check as we did in the tick 0
                     // we want to be sure that the Shieldwall over the target is the same Shieldwall as we're planning to remove
-                    // please note, that the last argument for 'getSpellIndexOfType' should be 0
-                    // if you put spell_index there, it would be blind for the Shieldwall we're looking for
-                    uint16_t spell_index_current = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, target_index, SHIELD_WALL_UNIVERSAL_LINE, 0);
+                    uint16_t spell_index_current = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, target_index, SHIELD_WALL_UNIVERSAL_LINE, spell_index);
 
                         // we check whether the target is affected with the Shieldwall
                         if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index, SHIELD_WALL_UNIVERSAL_LINE))
-                            // we check whether the spell indice match
-                            if (spell_index_current == spell_index)
-                                if (figureAPI->getSpellJobStartNode(_this->SF_CGdFigure, target_index) != 0)
-                            {
-                                // we remove the spell from the target
-                                toolboxAPI->removeSpellFromList(_this->SF_CGdFigureToolBox, target_index, spell_index);
-                                // we substract bonus modifier from the target's armor rating
-                                figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, target_index, -recalc_value);
-                            }
+                            // if the target is affected with the Shieldwall and 'getSpellIndexOfType' returned 0, it means the target is affected with the spell we're looking for
+                            if (spell_index_current == 0)
+                                {
+                                    // we remove the spell from the target
+                                    toolboxAPI->removeSpellFromList(_this->SF_CGdFigureToolBox, target_index, spell_index);
+                                    // we substract bonus modifier from the target's armor rating
+                                    figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, target_index, -recalc_value);
+                                }
                 }
 
         // we finish the spell and remove it from the active spells list
@@ -332,7 +329,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
  ***/
 extern "C" __declspec(dllexport) SFMod *RegisterMod(SpellforceSpellFramework *framework)
 {
-    return framework->createModInfo("Shield wall Mod", "1.0.0", "Teekius", "A mod designed to demonstrate spell providing temporary AoE buff to player-controlled units. This version implements AoE spell using the single Spell Type instead of two interrelated spells.");
+    return framework->createModInfo("Shieldwall Mod", "1.0.0", "Teekius", "A mod designed to demonstrate spell providing temporary AoE buff to player-controlled units. This version implements AoE spell using the single Spell Type instead of two interrelated spells.");
 }
 
 // Required to be present by, not required for any functionality
