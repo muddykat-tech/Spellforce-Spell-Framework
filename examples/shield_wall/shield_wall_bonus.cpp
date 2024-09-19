@@ -54,21 +54,20 @@ void __thiscall shield_wall_universal_end_handler(SF_CGdSpell *_this, uint16_t s
         {
             // this code reiterates what we're doing at the tick 1 when the spell duration ends
             // we scan for all figures present, and check whether they're affected with Shieldwall spell
-            // if it shows they're affected, we check a spell index of the spell affecting them and compare it to the spell index of the spell which triggered the Spell End handler
-            // if those indexes match, we remove the spell from the target and remove the bonus modifier from figure's statistic
-            uint16_t spell_index_current = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, target_index, SHIELD_WALL_UNIVERSAL_LINE, 0);
+            // if they're affected, and 'getSpellIndexOfType' which is ordered to ignore the given spell_index returns 0, it means they're affected only with the instance of Shieldwall we're searching for
+            // then we remove the spell from the target's spell list and fix the target's statistic
+            uint16_t spell_index_current = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, target_index, SHIELD_WALL_UNIVERSAL_LINE, spell_index);
 
             // we check whether the target is affected with the Shieldwall
             if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index, SHIELD_WALL_UNIVERSAL_LINE))
-                // we check whether the spell indexes match
-                if (spell_index_current == spell_index)
-                    if (figureAPI->getSpellJobStartNode(_this->SF_CGdFigure, target_index) != 0)
-                        {
-                            // we remove the spell from the target
-                            toolboxAPI->removeSpellFromList(_this->SF_CGdFigureToolBox, target_index, spell_index);
-                            // we substract bonus modifier from the target's armor rating
-                            figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, target_index, -recalc_value);
-                        }
+                // if the target is affected with the Shieldwall and 'getSpellIndexOfType' returned 0, it means the target is affected with the spell we're looking for
+                if (spell_index_current == 0)
+                                {
+                                    // we remove the spell from the target
+                                    toolboxAPI->removeSpellFromList(_this->SF_CGdFigureToolBox, target_index, spell_index);
+                                    // we substract bonus modifier from the target's armor rating
+                                    figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, target_index, -recalc_value);
+                                }
         }
     // we end the spell itself after we finished scanning AoE
     spellAPI->removeDLLNode(_this, spell_index);
