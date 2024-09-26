@@ -131,9 +131,55 @@ bool isActionMelee(SF_SGtFigureAction *_this)
     return 0;
 }
 
-void handle_riposte_set (SF_CGdFigureJobs *_this,uint16_t source_index, uint16_t target_index)
+uint16_t handle_riposte_set(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t weapon_damage)
 {
+    bool apply_set = false;
+    if (_this->CGdFigure->figures[target_index].set_type == 0x03)
+    {
+        uint16_t counter = spellAPI.getRandom(_this->OpaqueClass, 100);
+        apply_set = (counter < 0x0b);
+    }
+    if (apply_set)
+    {
+        uint16_t damage = g_get_reduced_damage(_this->AutoClass34, source_index, source_index, weapon_damage);
+        toolboxAPI.dealDamage(_this->CGdFigureToolBox, source_index, source_index, damage, 0, 0, 0);
+        return 0;
+    }
+    return weapon_damage;
+}
 
+uint16_t handle_berserk_set(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t weapon_damage)
+{
+    bool apply_set = false;
+    if (_this->CGdFigure->figures[source_index].set_type == 0x04)
+    {
+        uint16_t counter = spellAPI.getRandom(_this->OpaqueClass, 100);
+        apply_set = (counter < 0x0b);
+    }
+    //7FFF is one-shot magic number
+    if ((apply_set) && (weapon_damage != 0x7FFF))
+    {
+        uint16_t damage = weapon_damage * 3;
+        return damage;
+    }
+    return weapon_damage;
+}
+
+uint16_t handle_trueshot_set(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t weapon_damage)
+{
+    bool apply_set = false;
+    if (_this->CGdFigure->figures[source_index].set_type == 0x05)
+    {
+        uint16_t counter = spellAPI.getRandom(_this->OpaqueClass, 100);
+        apply_set = (counter < 0x0b);
+    }
+    //7FFF is one-shot magic number
+    if ((apply_set) && (weapon_damage != 0x7FFF))
+    {
+        uint16_t damage = weapon_damage * 4;
+        return damage;
+    }
+    return weapon_damage;
 }
 
 void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, uint32_t param_2, uint8_t param_3)
@@ -153,12 +199,7 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
     if (target.entity_type == 1)
     {
         // counter hits set
-        bool apply_counter = false;
-        if (_this->CGdFigure->figures[target.entity_index].set_type == 0x03)
-        {
-            uint16_t counter = spellAPI.getRandom(_this->OpaqueClass, 100);
-            apply_counter = (counter < 0x0b);
-        }
+
         if (_this->CGdFigure->figures[target.entity_index].flags & F_CHECK_SPELLS_BEFORE_JOB != 0)
         {
             // riposte handler
@@ -270,13 +311,12 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
                 }
             }
 
-            //logic here: 
-            // calculate modification from spells that increase damage
+            // logic here:
+            //  calculate modification from spells that increase damage
 
             // apply set changes
             // check critical hits and riposte
-            // apply 
-
+            // apply
         }
     }
 }
