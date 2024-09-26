@@ -1,12 +1,14 @@
 #include "../../api/sfsf.h"
+#include "../../src/api/sfsf.h"
 #include <windows.h>
 #include <stdio.h>
 
 
 // We declare macros for Spell Type and Spell Job of both spells
 // it is very unhandy to keep them in mind, so we just declare them here
-// we use a new set of numbers to avoid interfering with previous examples
-// 0xf3 = 243, 0xaa = 170, 0xf4 = 244, 0xab = 171
+// we will use a new set of numbers to avoid interfering with previous examples
+// Shieldwall Group will use 0xf3 = 243 as Spell Type; 0xaa = 170 as Spell Job
+// Shieldwall will use 0xf4 = 244 as Spell Type; 0xab = 171 as Spell Job
 
 // The custom Spell Types (243 and 244) also must be defined within GameData.cff
 // and provided with at least one spell corresponding each Spell Type
@@ -23,19 +25,19 @@ ToolboxFunctions *toolboxAPI;
 FigureFunctions *figureAPI;
 IteratorFunctions *iteratorAPI;
 RegistrationFunctions *registrationAPI;
-//SFLog *logger
+//SFLog *logger;
 
-/* debug output example
-Let it be here
+/* debug output example, you can print variables to game console with that
+provided you initialized framework logger within mod initialization function
 char aliveInfo[256];
 sprintf(aliveInfo, "Flags list: Target %hd \n", target_index);
 logger->logInfo(aliveInfo);
 */
 
 // we declare spell type handler for Shieldwall
-// SHIELDWALL is a second component of an AoE spell
-// it implements an armor buff for a single target
-// it is triggered individually for each target when the AoE spell affects them
+// Shieldwall is a second component of an AoE spell
+// it provides an armor buff to a single target
+// it is triggered individually for each target which was affected with AoE component of the spell (Shieldwall Group)
 void __thiscall shield_wall_type_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     // we associate spell type with a spell job
@@ -48,7 +50,8 @@ void __thiscall shield_wall_type_handler(SF_CGdSpell *_this, uint16_t spell_inde
     spellAPI->setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
 
     // SPELL_STAT_MUL_MODIFIER will store a percentage by which the target's armor was increased
-    // the percentage will be individual for every figure depending on its previous armor rating
+    // the percentage is pulled from game data
+    // however, after we get it, we will write it directly to spell to avoid loading game data twice
     spellAPI->setXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER, 0);
 }
 
@@ -58,14 +61,13 @@ void __thiscall shield_wall_end_handler(SF_CGdSpell *_this, uint16_t spell_index
 {
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
     uint16_t target_index = spell->target.entity_index;
+    spellAPI->removeDLLNode(_this, spell_index); // we remove spell from the list of active spells over the target
+    spellAPI->setEffectDone(_this, spell_index, 0); // we end a spell
 
     // we pull the percentage by which the target's armor rating was increased
     uint16_t recalc_value = spellAPI->getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER);
     // we remove the bonus to target's armor rating by adding negative amount of this value
     figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, target_index, -recalc_value);
-
-    spellAPI->removeDLLNode(_this, spell_index); // we remove spell from the list of active spells over the target
-    spellAPI->setEffectDone(_this, spell_index, 0); // we end a spell
 
     // here you might see the legacy of attempt to implement flat bonus to armor
     // it's not functional because armor.bonus_val can be overwritten by worn armor whenever you reequip it
@@ -89,11 +91,11 @@ void __thiscall shield_wall_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
     // we increase amount of ticks passed by 1
     spellAPI->addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1);
 
-    //we declare a structure for spell to store spell parameters which we will load from GameData.cff
+    // we declare a structure for spell to store spell parameters which we will load from GameData.cff
     SF_CGdResourceSpell spell_data;
     spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
 
-    //we load interval specified in milliseconds between the beginning and the ending ticks from GameData.cff
+    // we load interval specified in milliseconds between the beginning and the ending ticks from GameData.cff
     uint16_t ticks_interval = spell_data.params[1];
 
 
@@ -207,6 +209,7 @@ void __thiscall melee_group_ability_effect_handler(SF_CGdSpell *_this, uint16_t 
     iteratorAPI->iteratorSetArea(&figure_iterator, &cast_center, spell_data.params[0]);
 
     // let's make spellcaster our first target and give them spell effect for free
+
     // we could initiate the search for the first target with iterator API function
     // target_index = iteratorAPI->getNextFigure(&figure_iterator);
     // but getNextFigure not always gives the source as first result, so let's add some safeguard here
@@ -216,9 +219,6 @@ void __thiscall melee_group_ability_effect_handler(SF_CGdSpell *_this, uint16_t 
     // the spell can affect only certain amount of figures
     // we load this amount from spell parameters in GameData.cff
     uint16_t figure_count = spell_data.params[1];
-
-    //we promised to give spellcaster effect for free, let's increase the amount of affected figures by 1
-    figure_count++;
 
     while (target_index != 0 && figure_count != 0)
     // we apply the spell as long as there are viable targets around and as long as we didn't exceed figures limit
@@ -252,7 +252,8 @@ void __thiscall melee_group_ability_effect_handler(SF_CGdSpell *_this, uint16_t 
 
                     // we spent one usage of the spell, hence we decrease the possible limit by one
                     // but if we applied the spell to a spellcaster, let's give it for free
-                    figure_count--;
+                    if (target_index != source_index)
+                        figure_count--;
                 }
         }
         // we search for the next target with iterator API function

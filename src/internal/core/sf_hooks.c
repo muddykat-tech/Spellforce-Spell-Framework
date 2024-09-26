@@ -61,7 +61,11 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(figure, getManaCurrent, 0x2b29c0);
     DEFINE_FUNCTION(figure, getPosition, 0x2caaf0);
     DEFINE_FUNCTION(figure, setTask, 0x2b7110);
-
+    DEFINE_FUNCTION(figure, getWeaponStats, 0x2b30a0);
+    DEFINE_FUNCTION(figure, getTargetAction, 0x2b2f50);
+    DEFINE_FUNCTION(figure, getAggroValue, 0x2b1ab0);
+    DEFINE_FUNCTION(figure, setAggroValue, 0x2b6670);
+    
     log_info("| - SpellAPI Hooks");
     // Define the function pointers for SpellFunctions group
     DEFINE_FUNCTION(spell, setXData, 0x329C40);
