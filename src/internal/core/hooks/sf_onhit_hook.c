@@ -131,7 +131,7 @@ bool isActionMelee(SF_SGtFigureAction *_this)
     return 0;
 }
 
-uint16_t handle_riposte_set(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t weapon_damage)
+uint16_t __thiscall handle_riposte_set(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t weapon_damage)
 {
     bool apply_set = false;
     if (_this->CGdFigure->figures[target_index].set_type == 0x03)
@@ -148,7 +148,7 @@ uint16_t handle_riposte_set(SF_CGdFigureJobs *_this, uint16_t source_index, uint
     return weapon_damage;
 }
 
-uint16_t handle_berserk_set(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t weapon_damage)
+uint16_t __thiscall handle_berserk_set(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t weapon_damage)
 {
     bool apply_set = false;
     if (_this->CGdFigure->figures[source_index].set_type == 0x04)
@@ -165,7 +165,7 @@ uint16_t handle_berserk_set(SF_CGdFigureJobs *_this, uint16_t source_index, uint
     return weapon_damage;
 }
 
-uint16_t handle_trueshot_set(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t weapon_damage)
+uint16_t __thiscall handle_trueshot_set(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t weapon_damage)
 {
     bool apply_set = false;
     if (_this->CGdFigure->figures[source_index].set_type == 0x05)
