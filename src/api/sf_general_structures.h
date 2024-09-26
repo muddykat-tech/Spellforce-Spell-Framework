@@ -198,6 +198,37 @@ typedef struct __attribute__((packed))
     uint8_t unknown_field_19;
 } AutoClass14;
 
+
+typedef struct __attribute__((packed))
+{
+    uint16_t uknwn1;
+    uint16_t uknwn2;
+    uint16_t uknwn3;
+    uint8_t uknwn4;
+} SF_world_unkn_1;
+
+typedef struct __attribute__((packed))
+{
+    uint16_t world_cell_flags;
+    uint16_t sector;
+    uint8_t uknwn2;
+    uint8_t tile_type;
+} SF_world_unkn_2;
+
+typedef struct __attribute__((packed))
+{
+    uint8_t uknwn1[10];
+    uint8_t block_value;
+    uint8_t uknwn2[3];
+} SF_world_unkn_3;
+
+typedef struct __attribute__((packed))
+{
+    SF_Rectangle rect;
+    uint8_t unkn1;
+} SF_world_unkn_4;
+
+
 /* |-========== Spell Start ==========-| */
 typedef struct __attribute__((packed))
 {
@@ -217,6 +248,9 @@ typedef struct SF_CGdSpell SF_CGdSpell;
 typedef struct SF_CGdFigureToolbox SF_CGdFigureToolbox;
 typedef struct SF_GdEffect SF_GdEffect;
 typedef struct SF_CGDEffect SF_CGDEffect;
+typedef struct SF_CGdWorld SF_CGdWorld;
+typedef struct SF_CGdWorldToolBox SF_CGdWorldToolBox;
+
 
 struct __attribute__((packed)) SF_CGdFigureToolbox
 {
@@ -244,12 +278,51 @@ struct __attribute__((packed)) SF_CGdFigureToolbox
     SF_CGdSpell *CGdSpell;
     uint32_t *autoclass22;
     uint32_t *CGdVisibility;
-    uint32_t *CGdWorld;
-    uint32_t *CGdWorldToolBox;
+    SF_CGdWorld *CGdWorld;
+    SF_CGdWorldToolBox *CGdWorldToolBox;
     uint32_t *CGdXDataList;
     uint32_t *undefined4_1;
     uint32_t *undefined4_2;
     uint32_t *undefined;
+};
+
+struct __attribute__((packed)) SF_CGdWorld
+{
+    SF_world_unkn_1 unknown1[10001];
+    SF_String map_name;
+    uint16_t map_size;
+    uint8_t unknown2;
+    SF_world_unkn_2 cells[1048576];
+    uint16_t heightmap[1048576];
+    uint16_t unknown3;
+    uint8_t unknown4[131070];
+    SF_world_unkn_4 unknown5[100];
+    uint16_t change_count;
+    SF_world_unkn_3 unknown6[255];
+    uint8_t unknown7[63];
+};
+
+
+struct __attribute__((packed)) SF_CGdWorldToolBox
+{
+    uint32_t *CGdAStar;
+    AutoClass14 *OpaqueClass; // Unconfirmed
+    uint32_t *CGdBuilding;
+    uint32_t *CGdBuildingToolbox;
+    uint32_t *CGdDoubleLinkedList;
+    SF_CGDEffect *CGdEffect;
+    SF_CGdFigure *CGdFigure;
+    uint32_t *CGdFigureJobs;
+    uint32_t *autoclass47;
+    uint32_t *CGdObject;
+    uint32_t *CGdObjectToolBox;
+    uint32_t *CGdResource;
+    uint32_t *autoclass22;
+    SF_CGdWorld *SF_CGdWorld;
+    uint32_t *CGdXDataList;
+    uint32_t data[10000];
+    uint32_t uknown1; //4x uint8_t
+    uint32_t unknown2;
 };
 
 struct __attribute__((packed)) SF_CGdSpell
@@ -272,8 +345,8 @@ struct __attribute__((packed)) SF_CGdSpell
     void *SF_CGdResource;
     void *unkn3;
     void *unkn4;
-    void *SF_CGdWorld;
-    void *SF_CGdWorldToolBox;
+    SF_CGdWorld *SF_CGdWorld;
+    SF_CGdWorldToolBox *SF_CGdWorldToolBox;
     void *SF_CGdXDataList;
     uint16_t max_used;
     SF_GdSpell active_spell_list[800];
@@ -312,8 +385,8 @@ struct __attribute__((packed)) SF_CGDEffect
     SF_CGdSpell *CGdSpell;
     void *AutoClass22;
     void *AutoClass50;
-    void *SF_CGdWorld;
-    void *SF_CGdWorldToolBox;
+    SF_CGdWorld *SF_CGdWorld;
+    SF_CGdWorldToolBox *SF_CGdWorldToolBox;
     void *SF_CGdXDataList;
     SF_GdEffect active_effect_list[2000];
     uint16_t max_used;

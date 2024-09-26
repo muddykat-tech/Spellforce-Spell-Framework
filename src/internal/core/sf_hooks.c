@@ -60,6 +60,7 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(figure, subMana, 0x2b5b60);
     DEFINE_FUNCTION(figure, getManaCurrent, 0x2b29c0);
     DEFINE_FUNCTION(figure, getPosition, 0x2caaf0);
+    DEFINE_FUNCTION(figure, setTask, 0x2b7110);
 
     log_info("| - SpellAPI Hooks");
     // Define the function pointers for SpellFunctions group
@@ -89,6 +90,8 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(toolbox, dealDamage, 0x2f4a57);
     DEFINE_FUNCTION(toolbox, isTargetable, 0x2fe704);
     DEFINE_FUNCTION(toolbox, figuresCheckHostile, 0x2fe7b9);
+    DEFINE_FUNCTION(toolbox, figuresCheckNeutral, 0x2feba4);
+    DEFINE_FUNCTION(toolbox, figuresCheckFriendly, 0x2fe953);
     DEFINE_FUNCTION(toolbox, hasSpellOnIt, 0x2fe4ea);
     DEFINE_FUNCTION(toolbox, rescaleLevelStats, 0x2fff48);
     DEFINE_FUNCTION(toolbox, buildingDealDamage, 0x2d6d80);
@@ -99,6 +102,8 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(toolbox, getNextNode, 0x2fe240);
     DEFINE_FUNCTION(toolbox, figureSetNewJob, 0x2f0ef0);
     DEFINE_FUNCTION(toolbox, removeSpellFromList, 0x2fad57);
+    DEFINE_FUNCTION(toolbox, addUnit, 0x2f749a);
+    DEFINE_FUNCTION(toolbox, findClosestFreePosition, 0x34e9a0);
 
     log_info("| - IteratorAPI Hooks");
     DEFINE_FUNCTION(iterator, figureIteratorInit, 0x3183f0);

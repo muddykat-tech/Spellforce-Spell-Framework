@@ -79,6 +79,7 @@ void __thiscall disposeFigureIterator(CGdFigureIterator iterator)
     fidFree(iterator.data.offset_0x30.ac69_ptr1);
 }
 
+
 void __thiscall addBonusMultToStatistic(SF_CGdFigure *figure, StatisticDataKey key, uint16_t target, int8_t value)
 {
     bool invalid = FALSE;
