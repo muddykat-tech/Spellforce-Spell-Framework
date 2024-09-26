@@ -489,11 +489,12 @@ typedef void(__thiscall *mnu_label_init_data_ptr)(CMnuLabel *_this, float xpos, 
 typedef void(__thiscall *message_box_ptr)(uint32_t CAppMenu, uint16_t description_id, SF_String *string_ptr, uint16_t hasOffset);
 
 typedef void(__thiscall *menu_label_constructor_ptr)(CMnuLabel *_this);
+typedef void(__thiscall *set_label_flags_ptr)(CMnuLabel *_this, uint32_t flags);
 
 typedef void(__fastcall *original_menu_func_ptr)(uint32_t param1);
 
 typedef void *(__cdecl *new_operator_ptr)(uint32_t param_1);
-typedef void(__thiscall *container_add_control_ptr)(CMnuContainer *_this, void *CMnuBase, uint8_t c1, uint8_t c2, uint32_t p4);
+typedef void(__thiscall *container_add_control_ptr)(CMnuContainer *_this, void *CMnuBase, char *c1, char *c2, uint32_t p4);
 typedef void(__thiscall *menu_label_set_data_ptr)(CMnuLabel *_this, uint32_t color_red, uint32_t color_green, uint32_t color_blue, uint8_t unknchar);
 typedef void(__thiscall *get_sf_color_ptr)(SF_String *_this, uint32_t color_id);
 typedef SF_FontStruct *(__thiscall *get_smth_fonts_ptr)(void);

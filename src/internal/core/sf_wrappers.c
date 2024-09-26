@@ -158,13 +158,21 @@ void __thiscall spellClearFigureFlag(SF_CGdSpell *_this, uint16_t spell_id, Spel
     }
 }
 
+// Temp
+typedef void(__thiscall *vfunction_ptr)(void *label, char *p1);
+typedef void(__thiscall *vfunction12_ptr)(void *container, void *test, char *p1);
+
+vfunction_ptr vfunction176;
+vfunction_ptr vfunction25;
+vfunction12_ptr vfunction12;
+
 void __thiscall attach_new_label(CMnuContainer *parent, char *label_chars, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height)
 {
-    SF_String label_string;
+    SF_String m_label_string;
     CMnuLabel *new_label;
     SF_FontStruct *fonts = g_get_smth_fonts();
 
-    g_create_sf_string(&label_string, label_chars);
+    SF_String *label_string = g_create_sf_string(&m_label_string, label_chars);
     new_label = (CMnuLabel *)g_new_operator(0x368);
 
     if (font_index > 32)
@@ -177,15 +185,26 @@ void __thiscall attach_new_label(CMnuContainer *parent, char *label_chars, uint8
 
     g_menu_label_constructor(new_label);
 
-    g_init_menu_element(new_label, x_pos, y_pos, width, height, &label_string);
+    // Start setting flags to tell Spellforce what this label is used for.
+    g_set_label_flags(new_label, 7);
+
+    g_init_menu_element(new_label, x_pos, y_pos, width, height, label_string);
+
+    vfunction176 = (vfunction_ptr)(ASI::AddrOf(0x52f520));
+    vfunction176(new_label, (char *)0x1);
+
+    vfunction25 = (vfunction_ptr)(ASI::AddrOf(0x511ae0));
+    vfunction25(new_label, (char *)0x0);
 
     g_menu_label_set_font(new_label, selected_font);
 
-    g_container_add_control(parent, new_label, '\0', '\0', 0);
+    g_container_add_control(parent, new_label, (char *)0x01, (char *)0x01, 0);
 
-    g_menu_label_set_string(new_label, &label_string);
+    vfunction12 = (vfunction12_ptr)(ASI::AddrOf(0x511ae0));
+    vfunction12(parent, new_label, (char *)0x0);
+    g_menu_label_set_string(new_label, label_string);
 
-    g_destroy_sf_string(&label_string);
+    g_destroy_sf_string(label_string);
 }
 
 uint16_t __thiscall sf_get_spell_id(SF_CGdSpell *_this, uint16_t spell_index)

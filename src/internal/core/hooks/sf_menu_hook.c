@@ -3,6 +3,7 @@
 #include "sf_menu_hook.h"
 #include "../sf_hooks.h"
 #include "../sf_modloader.h"
+#include "../../registry/sf_mod_registry.h"
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -20,6 +21,7 @@ container_add_control_ptr g_container_add_control;
 uint32_t g_menu_return_addr;
 new_operator_ptr g_new_operator;
 menu_label_constructor_ptr g_menu_label_constructor;
+set_label_flags_ptr g_set_label_flags;
 mnu_label_init_data_ptr g_init_menu_element;
 get_smth_fonts_ptr g_get_smth_fonts;
 menu_label_set_font_ptr g_menu_label_set_font;
@@ -38,6 +40,7 @@ void initialize_menu_data_hooks()
     s_menu_label_set_color = (menu_label_set_data_ptr)(ASI::AddrOf(0x530330));
     s_show_message_box = (message_box_ptr)(ASI::AddrOf(0x198660));
 
+    g_set_label_flags = (set_label_flags_ptr)(ASI::AddrOf(0x52f1d0));
     g_menu_label_set_string = (menu_label_set_string_ptr)(ASI::AddrOf(0x52fab0));
     g_menu_return_addr = (ASI::AddrOf(0x182799));
     g_new_operator = (new_operator_ptr)(ASI::AddrOf(0x675A9D));
@@ -64,6 +67,22 @@ void __attribute__((no_caller_saved_registers, thiscall)) sf_menu_hook(uint32_t 
 
     attach_new_label(container_hack, sfsf_info, 6, 10, 729, 100, 100);
 
+    log_info("-==== Mod Information Start ====-");
+    SFMod *old_parent;
+    for (SFSpell *spell_data : g_internal_spell_list)
+    {
+        // Let's add mod information into the console
+        SFMod *parent_mod = spell_data->parent_mod;
+        if (old_parent != parent_mod)
+        {
+            log_info(parent_mod->mod_id);
+            log_info(parent_mod->mod_version);
+            log_info(parent_mod->mod_author);
+            log_info(parent_mod->mod_description);
+            old_parent = parent_mod;
+        }
+    }
+    log_info("-==== Mod Information End ====-");
     // Call original menu function to show the menu
     s_menu_func(_CAppMenu);
 }
