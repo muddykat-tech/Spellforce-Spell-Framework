@@ -2,11 +2,15 @@
 #include "../sf_wrappers.h"
 #include "../sf_hooks.h"
 #include "../sf_modloader.h"
+#include "../../registry/sf_onhit_registry.h"
+#include "../../registry/sf_mod_registry.h"
 
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <list>
+#include <utility>
 
 typedef uint16_t(__thiscall *get_reduced_damage_ptr)(void *AutoClass34, uint16_t source_index, uint16_t target_index, uint16_t unkn);
 typedef uint16_t(__thiscall *get_hit_chance_ptr)(void *AutoClass34, uint16_t source_index, uint16_t target_index);
@@ -16,7 +20,7 @@ typedef void(__thiscall *FUN_006c3a60_ptr)(void *AutoClass30, uint16_t source_in
 get_reduced_damage_ptr g_get_reduced_damage;
 get_hit_chance_ptr g_get_hit_chance;
 FUN_006c3a60_ptr g_FUN_006c3a60;
-void initialize_on_hit_data_hooks()
+void initialize_onhit_data_hooks()
 {
     g_get_reduced_damage = (get_reduced_damage_ptr)(ASI::AddrOf(0x3177d0));
     g_get_hit_chance = (get_hit_chance_ptr)(ASI::AddrOf(0x317860));
@@ -122,15 +126,6 @@ uint16_t __thiscall getAttackInterruptionChance(SF_CGdFigure *_this, uint16_t so
     return (target_index - source_index) * -2 + 0xf;
 }
 
-bool isActionMelee(SF_SGtFigureAction *_this)
-{
-    if ((_this->type == 10000) || (_this->type == 0x2711))
-    {
-        return 1;
-    }
-    return 0;
-}
-
 uint16_t handle_riposte_set(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t weapon_damage)
 {
     bool apply_set = false;
@@ -156,7 +151,7 @@ uint16_t handle_berserk_set(SF_CGdFigureJobs *_this, uint16_t source_index, uint
         uint16_t counter = spellAPI.getRandom(_this->OpaqueClass, 100);
         apply_set = (counter < 0x0b);
     }
-    //7FFF is one-shot magic number
+    // 7FFF is one-shot magic number
     if ((apply_set) && (weapon_damage != 0x7FFF))
     {
         uint16_t damage = weapon_damage * 3;
@@ -173,7 +168,7 @@ uint16_t handle_trueshot_set(SF_CGdFigureJobs *_this, uint16_t source_index, uin
         uint16_t counter = spellAPI.getRandom(_this->OpaqueClass, 100);
         apply_set = (counter < 0x0b);
     }
-    //7FFF is one-shot magic number
+    // 7FFF is one-shot magic number
     if ((apply_set) && (weapon_damage != 0x7FFF))
     {
         uint16_t damage = weapon_damage * 4;
@@ -184,10 +179,12 @@ uint16_t handle_trueshot_set(SF_CGdFigureJobs *_this, uint16_t source_index, uin
 
 void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, uint32_t param_2, uint8_t param_3)
 {
+    log_info("Called Into On Hit");
     if ((_this->CGdFigure->figures[source_index].owner == -1) || (_this->CGdFigure->figures[source_index].flags & 10))
     {
         return;
     }
+
     SF_CGdFigureWeaponStats weapon_stats;
     SF_CGdTargetData target;
     SF_SGtFigureAction action;
@@ -196,14 +193,9 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
     weapon_damage += weapon_stats.min_dmg;
     getTargetData(&_this->CGdFigure->figures[source_index].ac_1, &target);
     figureAPI.getTargetAction(_this->CGdFigure, &action, source_index);
+
     if (target.entity_type == 1)
     {
-        // counter hits set
-
-        if (_this->CGdFigure->figures[target.entity_index].flags & F_CHECK_SPELLS_BEFORE_JOB != 0)
-        {
-            // riposte handler
-        }
         // donnoe wtf is it, looks like shooting?
         if (action.type == 0x2712)
         {
@@ -261,6 +253,7 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
             effectAPI.setEffectXData(_this->CGdEffect, effect_id, EFFECT_DO_NOT_ADD_SUBSPELL, 1);
             effectAPI.setEffectXData(_this->CGdEffect, effect_id, EFFECT_PHYSICAL_DAMAGE, 0);
         }
+
         if ((_this->CGdFigure->figures[target.entity_index].owner == -1) ||
             (_this->CGdFigure->figures[target.entity_index].flags & 10 != 0) ||
             (!toolboxAPI.isTargetable(_this->CGdFigureToolBox, target.entity_index)))
@@ -269,6 +262,7 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
         }
 
         uint16_t hit_chance = g_get_hit_chance(_this->AutoClass34, source_index, target.entity_index);
+
         // miss handling
         if ((hit_chance < spellAPI.getRandom(_this->OpaqueClass, 100)) && (param_2 == 0))
         {
@@ -279,6 +273,7 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
                 figureAPI.setAggroValue(_this->CGdFigure, target.entity_index, source_index, 12000, 0);
             }
             uint16_t job_id = figureAPI.getJob(_this->CGdFigure, target.entity_index);
+
             if (isJobDoNothing(job_id))
             {
                 _this->CGdFigure->figures[target.entity_index].to_do_count = 1;
@@ -311,12 +306,62 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
                 }
             }
 
-            // logic here:
-            //  calculate modification from spells that increase damage
+            for (int i = PHASE_0; i < OnHitEnd; ++i)
+            {
+                std::list<std::pair<uint16_t, onhit_handler_ptr>> onhit_list = get_onhit_phase(static_cast<OnHitPhase>(i));
 
-            // apply set changes
-            // check critical hits and riposte
-            // apply
+                uint16_t list_size = onhit_list.size();
+
+                char ogdamage_info[128];
+                snprintf(ogdamage_info, sizeof(ogdamage_info), "Before OnHit: %d", weapon_damage);
+                log_info(ogdamage_info);
+
+                for (auto it = onhit_list.crbegin(); it != onhit_list.crend(); ++it)
+                {
+                    std::pair<uint16_t, onhit_handler_ptr> entry = *it;
+
+                    uint16_t spell_line_id = entry.first;
+                    SpellTag spell_tag = static_cast<SpellTag>(getSpellTag(spell_line_id));
+
+                    char buffer[128];
+                    snprintf(buffer, sizeof(buffer), "Found On Hit Handler: %d, %d", spell_line_id, spell_tag);
+                    log_info(buffer);
+
+                    if (spell_tag == TARGET_ONHIT_SPELL)
+                    {
+                        if ((_this->CGdFigure->figures[target.entity_index].flags & F_CHECK_SPELLS_BEFORE_JOB) != 0)
+                        {
+                            if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, target.entity_index, spell_line_id))
+                            {
+                                onhit_handler_ptr onhit_func = entry.second;
+                                weapon_damage = onhit_func(_this, source_index, target.entity_index, weapon_damage);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if ((_this->CGdFigure->figures[source_index].flags & F_CHECK_SPELLS_BEFORE_JOB) != 0)
+                        {
+                            if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, source_index, spell_line_id))
+                            {
+                                onhit_handler_ptr onhit_func = entry.second;
+                                weapon_damage = onhit_func(_this, source_index, target.entity_index, weapon_damage);
+                            }
+                        }
+                    }
+                }
+
+                char damage_info[128];
+                snprintf(damage_info, sizeof(damage_info), "OnHit: %d", weapon_damage);
+                log_info(damage_info);
+                toolboxAPI.dealDamage(_this->CGdFigureToolBox, source_index, target.entity_index, weapon_damage, weapon_damage, 0, 0);
+                // logic here:
+                //  calculate modification from spells that increase damage
+
+                // apply set changes
+                // check critical hits and riposte
+                // apply
+            }
         }
     }
 }

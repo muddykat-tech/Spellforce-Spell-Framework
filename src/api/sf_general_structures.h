@@ -46,6 +46,17 @@ typedef enum : uint8_t
     TASK_MERCHANT = 17
 } CGdFigureTask;
 
+typedef enum
+{
+    PHASE_0 = 0,
+    PHASE_1,
+    PHASE_2,
+    PHASE_3,
+    PHASE_4,
+    PHASE_5,
+    OnHitEnd
+} OnHitPhase;
+
 // Game Formated them for bitwise operations, hence the magic numbers
 typedef enum
 {

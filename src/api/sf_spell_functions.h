@@ -247,7 +247,7 @@ typedef enum
     kGdSpellLineFireBallChained = 239,
     kGdSpellLinePainChained = 240,
     kGdSpellLineFakeSpellOneFigure = 241
-}  GdSpellLine;
+} GdSpellLine;
 
 typedef struct __attribute__((packed))
 {
@@ -287,6 +287,7 @@ DECLARE_FUNCTION(void, figClrChkSplBfrChkBattle, SF_CGdSpell *_this, uint16_t sp
 DECLARE_FUNCTION(void, figTryClrCHkSPlBfrJob2, SF_CGdSpell *_this, uint16_t spell_id);
 DECLARE_FUNCTION(void, figTryUnfreeze, SF_CGdSpell *_this, uint16_t spell_id, uint16_t unk1);
 DECLARE_FUNCTION(uint16_t, getSpellID, SF_CGdSpell *_this, uint16_t spell_index);
+DECLARE_FUNCTION(int, getSpellTag, uint16_t spell_index);
 
 DECLARE_FUNCTION(int, checkCanApply, SF_CGdSpell *_this, uint16_t index);
 
@@ -309,6 +310,7 @@ DECLARE_FUNCTION_GROUP(Spell,
                        onSpellRemove_ptr onSpellRemove;
                        getSpellID_ptr getSpellID;
                        checkCanApply_ptr checkCanApply;
+                       getSpellTag_ptr getSpellTag;
 
                        // flag clear function used inside spellClearFigureFlag Wrapper
                        figClrChkSplBfrChkBattle_ptr figClrChkSplBfrChkBattle;

@@ -4,18 +4,22 @@
 #include "sf_general_structures.h"
 #include "sf_effect_functions.h"
 typedef uint16_t(__thiscall *damage_handler_ptr)(SF_CGdFigureToolbox *_toolbox, uint16_t source, uint16_t target,
-                        uint16_t current_damage, uint16_t is_spell_damage, uint32_t is_ranged_damage, uint16_t spell_id);
+												 uint16_t current_damage, uint16_t is_spell_damage, uint32_t is_ranged_damage, uint16_t spell_id);
 
 typedef void(__thiscall *handler_ptr)(SF_CGdSpell *, uint16_t);
+
+typedef uint16_t(__thiscall *onhit_handler_ptr)(SF_CGdFigureJobs *, uint16_t source, uint16_t target, uint16_t damage);
 typedef int(__thiscall *refresh_handler_ptr)(SF_CGdSpell *, uint16_t);
 
 typedef enum
 {
+	NONE = 0,
 	SUMMON_SPELL,
 	DOMINATION_SPELL,
 	CHAIN_SPELL,
 	WHITE_AURA_SPELL, // In Future versions, we may be able to refactor AURA tags to be more dynamic
 	BLACK_AURA_SPELL,
+	TARGET_ONHIT_SPELL,
 	SPELL_TAG_COUNT
 } SpellTag;
 
@@ -27,10 +31,12 @@ typedef struct __attribute__((packed))
 	handler_ptr spell_type_handler;
 	handler_ptr spell_effect_handler;
 	handler_ptr spell_end_handler;
+	onhit_handler_ptr spell_onhit_handler;
 	refresh_handler_ptr spell_refresh_handler;
 	sub_effect_handler_ptr sub_effect_handler;
-    damage_handler_ptr deal_damage_handler;
-    SpellDamagePhase damage_phase;
+	damage_handler_ptr deal_damage_handler;
+	SpellDamagePhase damage_phase;
+	OnHitPhase hit_phase;
 	SFMod *parent_mod;
 } SFSpell;
 
@@ -39,6 +45,7 @@ DECLARE_FUNCTION(SFSpell *, registerSpell, uint16_t spell_id);
 DECLARE_FUNCTION(void, linkTypeHandler, SFSpell *spell, handler_ptr typeHandler);
 DECLARE_FUNCTION(void, linkEffectHandler, SFSpell *spell, uint16_t spell_effect_id, handler_ptr effectHandler);
 DECLARE_FUNCTION(void, linkEndHandler, SFSpell *spell, handler_ptr endHandler);
+DECLARE_FUNCTION(void, linkOnHitHandler, SFSpell *spell, onhit_handler_ptr onhitHandler, OnHitPhase phase);
 DECLARE_FUNCTION(void, applySpellTag, SFSpell *spell, SpellTag tag);
 DECLARE_FUNCTION(void, linkSubEffectHandler, SFSpell *spell, sub_effect_handler_ptr handler);
 DECLARE_FUNCTION(void, linkRefreshHandler, SFSpell *spell, refresh_handler_ptr handler);
@@ -52,5 +59,5 @@ DECLARE_FUNCTION_GROUP(Registration,
 					   applySpellTag_ptr applySpellTag;
 					   linkSubEffectHandler_ptr linkSubEffectHandler;
 					   linkRefreshHandler_ptr linkRefreshHandler;
-                       linkDealDamageHandler_ptr linkDealDamageHandler;
-                       );
+					   linkDealDamageHandler_ptr linkDealDamageHandler;
+					   linkOnHitHandler_ptr linkOnHitHandler;);

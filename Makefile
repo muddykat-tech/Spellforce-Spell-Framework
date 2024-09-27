@@ -7,8 +7,8 @@ FW_LDFLAGS = -m32 -shared -static-libgcc -static-libstdc++ -s -Wl,-Bstatic,--who
 
 # Object files for the new architecture
 HOOK_OBJ = obj/sf_onhit_hook.o obj/sf_refresh_hook.o obj/sf_endspell_hook.o obj/sf_menu_hook.o obj/sf_spelleffect_hook.o obj/sf_subeffect_hook.o obj/sf_spelltype_hook.o obj/sf_damage_hook.o obj/sf_console_hook.o obj/sf_hooks.o
-REGISTRY_OBJ = obj/sf_registry.o obj/sf_mod_registry.o obj/sf_spelltype_registry.o obj/sf_spelleffect_registry.o obj/sf_spellend_registry.o obj/sf_subeffect_registry.o obj/sf_spellrefresh_registry.o obj/sf_vanilla_registry.o obj/sf_spelldamage_registry.o
-HANDLER_OBJ = obj/sf_spelltype_handlers.o obj/sf_spelleffect_handlers.o obj/sf_spellend_handlers.o obj/sf_sub_effect_handlers.o obj/sf_spellrefresh_handlers.o obj/sf_spelldamage_handlers.o
+REGISTRY_OBJ = obj/sf_registry.o obj/sf_mod_registry.o obj/sf_spelltype_registry.o obj/sf_spelleffect_registry.o obj/sf_spellend_registry.o obj/sf_subeffect_registry.o obj/sf_spellrefresh_registry.o obj/sf_vanilla_registry.o obj/sf_spelldamage_registry.o obj/sf_onhit_registry.o
+HANDLER_OBJ = obj/sf_spelltype_handlers.o obj/sf_spelleffect_handlers.o obj/sf_spellend_handlers.o obj/sf_sub_effect_handlers.o obj/sf_spellrefresh_handlers.o obj/sf_spelldamage_handlers.o obj/sf_onhit_handlers.o
 
 NTERNALS_OBJ = obj/sfsf.o obj/sf_modloader.o obj/sf_asi.o obj/sf_wrappers.o ${REGISTRY_OBJ} ${HANDLER_OBJ} ${HOOK_OBJ}
 TEST_MOD_OBJ = obj/TestMod.o
@@ -93,6 +93,9 @@ obj/sf_mod_registry.o: ${REGISTRY_SRC}/sf_mod_registry.cpp | obj
 obj/sf_spelltype_handlers.o: ${HANDLERS_SRC}/sf_spelltype_handlers.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
 
+obj/sf_onhit_handlers.o: ${HANDLERS_SRC}/sf_onhit_handlers.cpp | obj
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+
 obj/sf_spelltype_registry.o: ${REGISTRY_SRC}/sf_spelltype_registry.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
 
@@ -100,6 +103,9 @@ obj/sf_spelleffect_handlers.o: ${HANDLERS_SRC}/sf_spelleffect_handlers.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
 
 obj/sf_spelleffect_registry.o: ${REGISTRY_SRC}/sf_spelleffect_registry.cpp | obj
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+
+obj/sf_onhit_registry.o: ${REGISTRY_SRC}/sf_onhit_registry.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
 
 obj/sf_spellend_handlers.o: ${HANDLERS_SRC}/sf_spellend_handlers.cpp | obj

@@ -65,6 +65,16 @@ SFLog *setup_logger()
     return &sf_logger;
 }
 
+// TODO: Parse me through an as an ActionAPI Wrapped Function
+bool __thiscall isActionMelee(SF_SGtFigureAction *_this)
+{
+    if ((_this->type == 10000) || (_this->type == 0x2711))
+    {
+        return 1;
+    }
+    return 0;
+}
+
 void __thiscall setupFigureIterator(CGdFigureIterator *iterator, SF_CGdSpell *spell)
 {
     iteratorAPI.figureIteratorInit(iterator, 0x0, 0x0, 0x3ff, 0x3ff);
@@ -78,7 +88,6 @@ void __thiscall disposeFigureIterator(CGdFigureIterator iterator)
     FUN_0069eaf0(&iterator.data.offset_0x30, &unused, ((AutoClass69 *)iterator.data.offset_0x30.ac69_ptr1)->ac69_ptr1, iterator.data.offset_0x30.ac69_ptr1);
     fidFree(iterator.data.offset_0x30.ac69_ptr1);
 }
-
 
 void __thiscall addBonusMultToStatistic(SF_CGdFigure *figure, StatisticDataKey key, uint16_t target, int8_t value)
 {

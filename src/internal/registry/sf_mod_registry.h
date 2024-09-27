@@ -9,4 +9,7 @@
 extern std::list<SFSpell *> g_internal_spell_list;
 extern void register_mod_spells();
 
+// TODO Clean this up, move to spell API
+extern int __thiscall getSpellTag(uint16_t spell_line_id);
+
 #endif // MOD_REGISTRY_H
