@@ -316,6 +316,8 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
                 snprintf(ogdamage_info, sizeof(ogdamage_info), "Before OnHit: %d", weapon_damage);
                 log_info(ogdamage_info);
 
+                int return_damage = weapon_damage;
+
                 for (auto it = onhit_list.crbegin(); it != onhit_list.crend(); ++it)
                 {
                     std::pair<uint16_t, onhit_handler_ptr> entry = *it;
@@ -334,7 +336,7 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
                             if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, target.entity_index, spell_line_id))
                             {
                                 onhit_handler_ptr onhit_func = entry.second;
-                                weapon_damage = onhit_func(_this, source_index, target.entity_index, weapon_damage);
+                                return_damage = onhit_func(_this, source_index, target.entity_index, weapon_damage);
                             }
                         }
                     }
@@ -345,16 +347,17 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
                             if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, source_index, spell_line_id))
                             {
                                 onhit_handler_ptr onhit_func = entry.second;
-                                weapon_damage = onhit_func(_this, source_index, target.entity_index, weapon_damage);
+                                return_damage = onhit_func(_this, source_index, target.entity_index, weapon_damage);
                             }
                         }
                     }
                 }
 
                 char damage_info[128];
-                snprintf(damage_info, sizeof(damage_info), "OnHit: %d", weapon_damage);
+                snprintf(damage_info, sizeof(damage_info), "OnHit: %d", return_damage);
                 log_info(damage_info);
-                toolboxAPI.dealDamage(_this->CGdFigureToolBox, source_index, target.entity_index, weapon_damage, weapon_damage, 0, 0);
+
+                toolboxAPI.dealDamage(_this->CGdFigureToolBox, source_index, target.entity_index, return_damage, 0, 0, 0);
                 // logic here:
                 //  calculate modification from spells that increase damage
 
