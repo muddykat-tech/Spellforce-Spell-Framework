@@ -687,7 +687,9 @@ void initialize_vanilla_spells()
     registrationAPI.linkTypeHandler(ability_shift_life, &ability_shift_life_handler);
 
     SFSpell *ability_riposte = registrationAPI.registerSpell(kGdSpellLineAbilityRiposte);
+    registrationAPI.applySpellTag(ability_riposte, SpellTag::TARGET_ONHIT_SPELL);
     registrationAPI.linkTypeHandler(ability_riposte, &ability_riposte_handler);
+    registrationAPI.linkOnHitHandler(ability_riposte, &riposte_onhit_handler, PHASE_3);
 
     SFSpell *ability_critical_hits = registrationAPI.registerSpell(kGdSpellLineAbilityCriticalHits);
     registrationAPI.linkTypeHandler(ability_critical_hits, &ability_critical_hits_handler);

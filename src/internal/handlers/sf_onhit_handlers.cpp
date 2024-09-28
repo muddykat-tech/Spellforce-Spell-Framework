@@ -25,26 +25,27 @@ uint16_t __thiscall riposte_onhit_handler(SF_CGdFigureJobs *_this, uint16_t sour
 {
     log_info("Riposte Handler Called");
     // Check if it is source_index passed to the function or target_index
+    SF_SGtFigureAction action;
+    figureAPI.getTargetAction(_this->CGdFigure, &action, source_index);
+    bool isMeleeAttack = isActionMelee(&action);
 
-    CGdResourceSpell spell_data;
-    uint16_t start_node = figureAPI.getSpellJobStartNode(_this->CGdFigure, source_index);
-    for (; start_node != 0; start_node = figureAPI.getSpellJobNextNode(_this->CGdFigure, start_node))
+    if (isMeleeAttack)
     {
-        uint16_t spell_index = toolboxAPI.getSpellIndexFromDLL(_this->CGdDoubleLinkList, start_node);
-        uint16_t spell_id = spellAPI.getSpellID(_this->CGdSpell, spell_index);
-        uint16_t spell_line_id = spellAPI.getSpellLine(_this->CGdSpell, spell_id);
-        if (spell_linde_id == kGdSpellLineAbilityRiposte)
-        {
-            spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
-        }
+        return damage;
     }
 
-    if (spell_data != nullptr)
+    SF_CGdResourceSpell spell_data;
+    uint16_t spell_index = toolboxAPI.getSpellIndexOfType(_this->CGdFigureToolBox, target_index, kGdSpellLineAbilityRiposte, 0);
+    uint16_t spell_id = spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell_index)->spell_id;
+
+    uint16_t return_damage = (damage * spell_data.params[0]) / 100;
+
+    // Lower the damage by the amount that will be reflected
+    uint16_t final_damage = (damage - return_damage);
+    if (final_damage != 0)
     {
-        uint16_t return_damage = (damage * spell_data.params[0]) / 100;
-        // Lower the damage by the amount that will be reflected
-        toolboxAPI.dealDamage(_this->CGdFigureToolBox, source_index, target_index, (damage - return_damage), 0, 0, 0);
+        toolboxAPI.dealDamage(_this->CGdFigureToolBox, target_index, source_index, return_damage, 0, 0, 0);
     }
 
-    return damage;
+    return final_damage;
 }
