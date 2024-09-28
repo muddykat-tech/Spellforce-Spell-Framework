@@ -29,14 +29,15 @@ uint16_t __thiscall riposte_onhit_handler(SF_CGdFigureJobs *_this, uint16_t sour
     figureAPI.getTargetAction(_this->CGdFigure, &action, source_index);
     bool isMeleeAttack = isActionMelee(&action);
 
-    if (isMeleeAttack)
+    if (!isMeleeAttack)
     {
         return damage;
     }
 
     SF_CGdResourceSpell spell_data;
     uint16_t spell_index = toolboxAPI.getSpellIndexOfType(_this->CGdFigureToolBox, target_index, kGdSpellLineAbilityRiposte, 0);
-    uint16_t spell_id = spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell_index)->spell_id;
+    uint16_t spell_id = spellAPI.getSpellID(_this->CGdSpell, spell_index);
+    spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
 
     uint16_t return_damage = (damage * spell_data.params[0]) / 100;
 

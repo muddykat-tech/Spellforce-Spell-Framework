@@ -251,15 +251,15 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
                 }
             }
 
+            char ogdamage_info[128];
+            snprintf(ogdamage_info, sizeof(ogdamage_info), "Before OnHit: %d", damage);
+            log_info(ogdamage_info);
+
             for (int i = PHASE_0; i < OnHitEnd; ++i)
             {
                 std::list<std::pair<uint16_t, onhit_handler_ptr>> onhit_list = get_onhit_phase(static_cast<OnHitPhase>(i));
 
                 uint16_t list_size = onhit_list.size();
-
-                char ogdamage_info[128];
-                snprintf(ogdamage_info, sizeof(ogdamage_info), "Before OnHit: %d", damage);
-                log_info(ogdamage_info);
 
                 int return_damage = weapon_damage;
 
@@ -269,10 +269,6 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
 
                     uint16_t spell_line_id = entry.first;
                     SpellTag spell_tag = static_cast<SpellTag>(getSpellTag(spell_line_id));
-
-                    char buffer[128];
-                    snprintf(buffer, sizeof(buffer), "Found On Hit Handler: %d, %d", spell_line_id, spell_tag);
-                    log_info(buffer);
 
                     if (spell_tag == TARGET_ONHIT_SPELL)
                     {
