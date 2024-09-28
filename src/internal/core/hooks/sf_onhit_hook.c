@@ -272,11 +272,11 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
 
                     if (spell_tag == TARGET_ONHIT_SPELL)
                     {
-                        log_info("Target On Hit spell");
                         if ((_this->CGdFigure->figures[target.entity_index].flags & F_CHECK_SPELLS_BEFORE_JOB) != 0)
                         {
                             if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, target.entity_index, spell_line_id))
                             {
+                                log_info("Target On Hit spell");
                                 onhit_handler_ptr onhit_func = entry.second;
                                 damage = onhit_func(_this, source_index, target.entity_index, damage);
                             }
@@ -284,11 +284,11 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
                     }
                     else
                     {
-                        log_info("Source on hit spell");
                         if ((_this->CGdFigure->figures[source_index].flags & F_CHECK_SPELLS_BEFORE_JOB) != 0)
                         {
                             if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, source_index, spell_line_id))
                             {
+                                log_info("Source on hit spell");
                                 onhit_handler_ptr onhit_func = entry.second;
                                 damage = onhit_func(_this, source_index, target.entity_index, damage);
                             }
@@ -391,6 +391,22 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
             }
             else
             {
+                uint16_t subspell_id = 0;
+                // Havoc & DeathKnight upgrade
+                if ((_this->CGdFigure->figures[target.entity_index].unit_data_id == 0x510)
+                        || (_this->CGdFigure->figures[target.entity_index].unit_data_id == 0x513))
+                {
+                    // NOT a bug, but feature. The higher the level of enemy, the stronger curse gets.
+                    uint16_t spell_id = g_get_leveled_spell(_this->CGdResource, 0x167, _this->CGdFigure->figures[source_index].level);
+                    if (spell_id != 0)
+                    {
+                        SF_CGdTargetData t_data;
+                        t_data.entity_index = source_index;
+                        t_data.entity_type = 1;
+                        t_data.position = {0, 0};
+                        spellAPI.addSpell(_this->CGdSpell, spell_id, _this->OpaqueClass->current_step, &target, &t_data, 0);
+                    }
+                }
                 toolboxAPI.dealDamage(_this->CGdFigureToolBox, source_index, target.entity_index, damage, 0, 0, 0);
             }
         }
