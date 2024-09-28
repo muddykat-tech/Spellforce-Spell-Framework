@@ -15,9 +15,9 @@ uint16_t __thiscall trueshot_onhit_handler(SF_CGdFigureJobs *_this, uint16_t sou
 
     uint16_t spell_index_of_type = toolboxAPI.getSpellIndexOfType(_this->CGdFigureToolBox, source_index, kGdSpellLineAbilityTrueShot, 0);
     SF_CGdResourceSpell spell_data;
-    spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell_index_of_type);
+    uint16_t spell_id = spellAPI.getSpellID(_this->CGdSpell, spell_index_of_type);
+    spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
     uint16_t current_damage = (spell_data.params[1] * damage) / 100;
-
     return current_damage;
 }
 
