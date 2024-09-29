@@ -20,6 +20,7 @@ typedef void(__thiscall *FUN_006c3a60_ptr)(void *AutoClass30, uint16_t source_in
 typedef uint32_t(__thiscall *FUN_0071d7b0_ptr)(void *CGdObject, uint16_t object_index);
 typedef uint32_t(__thiscall *FUN_00755180_ptr)(uint32_t param1);
 typedef uint32_t(__thiscall *objectDealDamage_ptr)(void *CGdObjectToolBox, uint16_t source_index, uint16_t target_index, uint16_t damage, uint32_t unknown);
+typedef uint32_t(__thiscall *getWeaponEffects_ptr)(void *CGdResource, uint32_t *param1, uint16_t weapon_id);
 
 get_reduced_damage_ptr g_get_reduced_damage;
 get_hit_chance_ptr g_get_hit_chance;
@@ -29,7 +30,43 @@ get_reduced_building_damage_ptr g_get_reduced_building_damage;
 FUN_0071d7b0_ptr g_FUN_0071d7b0;
 FUN_00755180_ptr g_FUN_00755180;
 objectDealDamage_ptr g_objectDealDamage;
+getWeaponEffects_ptr g_getWeaponEffects;
 
+// TODO PassThrough GET CURRENT STAT
+
+uint16_t __thiscall getCurrentDex(SF_CGdFigure *_this, uint16_t figure_index)
+{
+    uint16_t base_val = _this->figures[figure_index].dexterity.base_val;
+    uint16_t bonus_val = _this->figures[figure_index].dexterity.bonus_val;
+    uint16_t multiplier = _this->figures[figure_index].dexterity.bonus_multiplier + 100;
+    if (base_val + bonus_val > 0)
+    {
+        return ((base_val + bonus_val) * multiplier) / 100;
+    }
+    return 0;
+}
+
+uint16_t __thiscall getCurrentInt(SF_CGdFigure *_this, uint16_t figure_index)
+{
+    uint16_t base_val = _this->figures[figure_index].intelligence.base_val;
+    uint16_t bonus_val = _this->figures[figure_index].intelligence.bonus_val;
+    uint16_t multiplier = _this->figures[figure_index].intelligence.bonus_multiplier + 100;
+    if (base_val + bonus_val > 0)
+    {
+        return ((base_val + bonus_val) * multiplier) / 100;
+    }
+    return 0;
+}
+// End TODO
+
+uint16_t get_effect_chance(uint16_t dex_val, uint16_t int_val, uint16_t spell_line)
+{
+    if (spell_line != kGdSpellLinePoison)
+    {
+        return (dex_val + int_val + 100) * 5;
+    }
+    return dex_val * 8 + int_val * 5 + 0x578;
+}
 void initialize_onhit_data_hooks()
 {
     g_get_reduced_damage = (get_reduced_damage_ptr)(ASI::AddrOf(0x3177d0));
@@ -40,6 +77,7 @@ void initialize_onhit_data_hooks()
     g_FUN_0071d7b0 = (FUN_0071d7b0_ptr)(ASI::AddrOf(0x31d7b0));
     g_FUN_00755180 = (FUN_00755180_ptr)(ASI::AddrOf(0x355180));
     g_objectDealDamage = (objectDealDamage_ptr)(ASI::AddrOf(0x2b7d70));
+    g_getWeaponEffects = (getWeaponEffects_ptr)(ASI::AddrOf(0x2693b0));
 }
 
 void __thiscall getTargetData(AutoClass24 *_this, SF_CGdTargetData *target)
@@ -155,6 +193,7 @@ uint16_t __thiscall handle_riposte_set(SF_CGdFigureJobs *_this, uint16_t source_
         toolboxAPI.dealDamage(_this->CGdFigureToolBox, source_index, source_index, damage, 0, 0, 0);
         return 0;
     }
+    // TODO: fix enchatments on weapon applying with reflected hit
     return weapon_damage;
 }
 
@@ -372,9 +411,6 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
                 effectAPI.setEffectXData(_this->CGdEffect, effect_id, EFFECT_DO_NOT_ADD_SUBSPELL, 1);
                 effectAPI.setEffectXData(_this->CGdEffect, effect_id, EFFECT_PHYSICAL_DAMAGE, damage);
 
-                char damage_info[128];
-                snprintf(damage_info, sizeof(damage_info), "Final Damage: %d", damage);
-                log_info(damage_info);
                 uint16_t subspell_id = 0;
                 // troll fire thrower
                 if (_this->CGdFigure->figures[source_index].unit_data_id == 0x508)
@@ -419,6 +455,53 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
                     }
                 }
                 toolboxAPI.dealDamage(_this->CGdFigureToolBox, source_index, target.entity_index, damage, 0, 0, 0);
+            }
+            if (figureAPI.isAlive(_this->CGdFigure, target.entity_index))
+            {
+                uint16_t weapon_id = _this->CGdFigure->figures[source_index].equipment[(action.type != 10000) * 2 + 1];
+                // can't make heads or tails here
+
+                uint32_t puVar15[2];
+                g_getWeaponEffects(_this->CGdResource, puVar15, weapon_id);
+                char damage_info[128];
+                snprintf(damage_info, sizeof(damage_info), "Enchant info: %d %d %d", weapon_id, puVar15[0], puVar15[1]);
+                log_info(damage_info);
+                if (puVar15[0] != 0)
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        uint16_t enchant_id = *(uint16_t *)(&puVar15[0] + i * 2 + 2);
+
+                        if (enchant_id == 0)
+                            break;
+                        SF_CGdResourceSpell spell_data;
+                        spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, enchant_id);
+                        uint16_t curr_dex = getCurrentDex(_this->CGdFigure, source_index);
+                        uint16_t curr_int = getCurrentInt(_this->CGdFigure, source_index);
+                        snprintf(damage_info, sizeof(damage_info), "Enchant Spell Line: %d", spell_data.spell_line_id);
+                        log_info(damage_info);
+                        uint16_t chance = get_effect_chance(curr_dex, curr_int, spell_data.spell_line_id);
+                        if (spellAPI.getRandom(_this->OpaqueClass, 10000) < chance)
+                        {
+                            if ((_this->CGdFigure->figures[source_index].race != 0) && (_this->CGdFigure->figures[source_index].race < 7))
+                            {
+                                if (_this->CGdFigure->figures[source_index].owner != 0)
+                                {
+                                    enchant_id = g_get_leveled_spell(_this->CGdResource, enchant_id, _this->CGdFigure->figures[source_index].level);
+                                }
+                            }
+                            if (enchant_id != 0)
+                            {
+                                // FIXME reflect enchants as well in riposte set handler;
+                                SF_CGdTargetData source;
+                                source.entity_type = 1;
+                                source.entity_index = source_index;
+                                source.position = {0, 0};
+                                spellAPI.addSpell(_this->CGdSpell, enchant_id, _this->OpaqueClass->current_step, &source, &target, 0);
+                            }
+                        }
+                    }
+                }
             }
         }
     }
