@@ -13,21 +13,33 @@
 #include <utility>
 
 typedef uint16_t(__thiscall *get_reduced_damage_ptr)(void *AutoClass34, uint16_t source_index, uint16_t target_index, uint16_t unkn);
+typedef uint16_t(__thiscall *get_reduced_building_damage_ptr)(void *AutoClass32, uint16_t source_index, uint16_t target_index, uint16_t damage);
 typedef uint16_t(__thiscall *get_hit_chance_ptr)(void *AutoClass34, uint16_t source_index, uint16_t target_index);
 typedef uint16_t(__thiscall *get_leveled_spell_ptr)(void *CGdResource, uint16_t source_spell_id, uint16_t spell_level);
-
 typedef void(__thiscall *FUN_006c3a60_ptr)(void *AutoClass30, uint16_t source_index, uint16_t target_index, uint8_t unkn, uint32_t unkn2);
+typedef uint32_t(__thiscall *FUN_0071d7b0_ptr)(void *CGdObject, uint16_t object_index);
+typedef uint32_t(__thiscall *FUN_00755180_ptr)(uint32_t param1);
+typedef uint32_t(__thiscall *objectDealDamage_ptr)(void *CGdObjectToolBox, uint16_t source_index, uint16_t target_index, uint16_t damage, uint32_t unknown);
 
 get_reduced_damage_ptr g_get_reduced_damage;
 get_hit_chance_ptr g_get_hit_chance;
 get_leveled_spell_ptr g_get_leveled_spell;
 FUN_006c3a60_ptr g_FUN_006c3a60;
+get_reduced_building_damage_ptr g_get_reduced_building_damage;
+FUN_0071d7b0_ptr g_FUN_0071d7b0;
+FUN_00755180_ptr g_FUN_00755180;
+objectDealDamage_ptr g_objectDealDamage;
+
 void initialize_onhit_data_hooks()
 {
     g_get_reduced_damage = (get_reduced_damage_ptr)(ASI::AddrOf(0x3177d0));
     g_get_hit_chance = (get_hit_chance_ptr)(ASI::AddrOf(0x317860));
     g_get_leveled_spell = (get_leveled_spell_ptr)(ASI::AddrOf(0x26de20));
     g_FUN_006c3a60 = (FUN_006c3a60_ptr)(ASI::AddrOf(0x2c3a60));
+    g_get_reduced_building_damage = (get_reduced_building_damage_ptr)(ASI::AddrOf(0x317740));
+    g_FUN_0071d7b0 = (FUN_0071d7b0_ptr)(ASI::AddrOf(0x31d7b0));
+    g_FUN_00755180 = (FUN_00755180_ptr)(ASI::AddrOf(0x355180));
+    g_objectDealDamage = (objectDealDamage_ptr)(ASI::AddrOf(0x2b7d70));
 }
 
 void __thiscall getTargetData(AutoClass24 *_this, SF_CGdTargetData *target)
@@ -393,8 +405,7 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
             {
                 uint16_t subspell_id = 0;
                 // Havoc & DeathKnight upgrade
-                if ((_this->CGdFigure->figures[target.entity_index].unit_data_id == 0x510)
-                        || (_this->CGdFigure->figures[target.entity_index].unit_data_id == 0x513))
+                if ((_this->CGdFigure->figures[target.entity_index].unit_data_id == 0x510) || (_this->CGdFigure->figures[target.entity_index].unit_data_id == 0x513))
                 {
                     // NOT a bug, but feature. The higher the level of enemy, the stronger curse gets.
                     uint16_t spell_id = g_get_leveled_spell(_this->CGdResource, 0x167, _this->CGdFigure->figures[source_index].level);
@@ -408,6 +419,25 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
                     }
                 }
                 toolboxAPI.dealDamage(_this->CGdFigureToolBox, source_index, target.entity_index, damage, 0, 0, 0);
+            }
+        }
+    }
+    if (target.entity_type == 2)
+    {
+        uint16_t damage = g_get_reduced_building_damage(_this->AutoClass34, source_index, target.entity_index, weapon_damage);
+        if ((target.entity_index != 0) && (_this->CGdBuilding->buildings[target.entity_index].health_current != 0))
+        {
+            toolboxAPI.buildingDealDamage(_this->CGdBuildingToolBox, source_index, target.entity_index, damage, 0);
+        }
+    }
+    if (target.entity_type == 3)
+    {
+        if (target.entity_index != 0)
+        {
+            uint32_t value_1 = g_FUN_0071d7b0(_this->CGdObject, target.entity_index);
+            if ((value_1 != 0) && (g_FUN_00755180(value_1) != 0))
+            {
+                g_objectDealDamage(_this->CGdObjectToolBox, source_index, target.entity_index, weapon_damage, 0);
             }
         }
     }

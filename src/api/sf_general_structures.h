@@ -30,7 +30,7 @@ typedef struct SF_CGDEffect SF_CGDEffect;
 typedef struct SF_CGdWorld SF_CGdWorld;
 typedef struct SF_CGdWorldToolBox SF_CGdWorldToolBox;
 typedef struct SF_CGdFigureJobs SF_CGdFigureJobs;
-
+typedef struct SF_CGdBuilding SF_CGdBuilding;
 typedef enum : uint8_t
 {
     TASK_WORKER = 2,
@@ -373,7 +373,7 @@ struct __attribute__((packed)) SF_CGdFigureJobs
     uint32_t *CGdAStar;
     uint32_t *CGdAiBattle;
     AutoClass14 *OpaqueClass;
-    uint32_t *CGdBuilding;
+    SF_CGdBuilding *CGdBuilding;
     uint32_t *CGdBuildingToolBox;
     uint32_t *CGdDoubleLinkList;
     SF_CGDEffect *CGdEffect;
@@ -413,7 +413,7 @@ struct __attribute__((packed)) SF_CGdFigureToolbox
     uint32_t *CGdAIMain;
     uint32_t *CGdAStar;
     AutoClass14 *maybe_random; // Unconfirmed
-    uint32_t *CGdBuilding;
+    SF_CGdBuilding *CGdBuilding;
     uint32_t *CGdBuildingToolbox;
     uint32_t *CGdDoubleLinkedList;
     SF_CGDEffect *CGdEffect;
@@ -461,7 +461,7 @@ struct __attribute__((packed)) SF_CGdWorldToolBox
 {
     uint32_t *CGdAStar;
     AutoClass14 *OpaqueClass; // Unconfirmed
-    uint32_t *CGdBuilding;
+    SF_CGdBuilding *CGdBuilding;
     uint32_t *CGdBuildingToolbox;
     uint32_t *CGdDoubleLinkedList;
     SF_CGDEffect *CGdEffect;
@@ -483,7 +483,7 @@ struct __attribute__((packed)) SF_CGdSpell
 {
     void *SF_CGdAiMain;
     AutoClass14 *OpaqueClass; // For Random
-    void *SF_CGdBuilding;
+    SF_CGdBuilding *CGdBuilding;
     void *SF_CGdBuildingToolbox;
     void *SF_CGdDoubleLinkedList;
     SF_CGDEffect *SF_CGdEffect;
@@ -528,7 +528,7 @@ struct __attribute__((packed)) SF_GdEffect
 struct __attribute__((packed)) SF_CGDEffect
 {
     AutoClass14 *OpaqueClass;
-    void *SF_CGdBuilding;
+    SF_CGdBuilding *CGdBuilding;
     void *SF_CGdBuildingToolbox;
     void *SF_CGdDoubleLinkedList;
     SF_CGdFigure *SF_CGdFigure;
@@ -544,6 +544,40 @@ struct __attribute__((packed)) SF_CGDEffect
     void *SF_CGdXDataList;
     SF_GdEffect active_effect_list[2000];
     uint16_t max_used;
+};
+/* |-============= Buildings Structures ==========- |*/
+
+typedef struct __attribute__ ((packed))
+{
+    SF_Coord position;
+    uint16_t owner;
+    uint8_t type;
+    uint8_t race;
+    uint8_t flags;
+    uint16_t build_up;
+    uint16_t build_max;
+    uint16_t health_current;
+    uint16_t life_current_max;
+    uint16_t health_max;
+    uint16_t DLLNode;
+    uint16_t xdata_key;
+    uint16_t angle;
+    uint32_t unknown[5];
+    uint8_t worker_count;
+    uint8_t worker_count_max;
+    uint8_t level;
+    uint32_t unknown2;
+} GdBuilding;
+
+struct __attribute__((packed)) SF_CGdBuilding
+{
+    AutoClass14 *autoClass14;
+    GdBuilding buildings[1000];
+    uint16_t max_used;
+    void *astruct_31;
+    uint32_t unknown1;
+    void *astruct_39;
+    uint32_t unknown2;
 };
 
 /* |-========== Internal Structures ==========-| */
