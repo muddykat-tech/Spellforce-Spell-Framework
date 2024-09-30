@@ -87,32 +87,6 @@ void __thiscall getTargetData(AutoClass24 *_this, SF_CGdTargetData *target)
     target->position = _this->target.position;
 }
 
-uint32_t getDistange(SF_Coord *pointA, SF_Coord *pointB)
-{
-
-    uint32_t delta;
-    uint32_t uVar1;
-    uint32_t uVar2;
-    uint32_t uVar3;
-    uint32_t uVar4;
-
-    delta = (uint32_t)(uint16_t)pointA->X - (uint32_t)(uint16_t)pointB->X;
-    uVar2 = (int)delta >> 0x1f;
-    uVar2 = (delta ^ uVar2) - uVar2;
-    uVar4 = uVar2 & 0xffff;
-    delta = (uint32_t)(uint16_t)pointA->Y - (uint32_t)(uint16_t)pointB->Y;
-    uVar3 = (int)delta >> 0x1f;
-    uVar3 = (delta ^ uVar3) - uVar3;
-    uVar1 = uVar3 & 0xffff;
-    delta = uVar1;
-    if ((uint16_t)uVar2 < (uint16_t)uVar3)
-    {
-        delta = uVar4;
-        uVar4 = uVar1;
-    }
-    return ((delta * 0xd) >> 5) + uVar4;
-}
-
 bool isJobDoNothing(uint16_t job_id)
 {
     if ((job_id == kGdJobGroupNothing) || (job_id == kGdJobWarriorNothing) ||
@@ -399,7 +373,7 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
                 vector.partA = p1.Y << 0x10 | p1.X;
                 vector.partB = p2.Y << 0x10 | p2.X;
 
-                uint32_t distance = getDistange(&_this->CGdFigure->figures[source_index].position, &_this->CGdFigure->figures[target.entity_index].position);
+                uint32_t distance = getDistance(&_this->CGdFigure->figures[source_index].position, &_this->CGdFigure->figures[target.entity_index].position);
                 distance = ((distance & 0xffff) * 0x578) / 3000;
                 SF_CGdTargetData source = {1, source_index, {0, 0}};
                 uint16_t effect_id = effectAPI.addEffect(_this->CGdEffect, kGdEffectProjectile, &source, &target,

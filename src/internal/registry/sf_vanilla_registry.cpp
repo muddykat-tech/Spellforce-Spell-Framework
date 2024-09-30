@@ -572,6 +572,8 @@ void initialize_vanilla_spells()
     registrationAPI.linkTypeHandler(elemental_essence2, &elemental_essence2_handler);
 
     SFSpell *assistance = registrationAPI.registerSpell(kGdSpellLineAssistance);
+    registrationAPI.linkOnHitHandler(assistance, &assistance_onhit_handler, PHASE_2);
+    registrationAPI.applySpellTag(assistance, TARGET_ONHIT_SPELL);
     registrationAPI.linkTypeHandler(assistance, &assistance_handler);
 
     SFSpell *holy_touch = registrationAPI.registerSpell(kGdSpellLineHolyTouch);
