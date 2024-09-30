@@ -16,10 +16,6 @@ uint32_t g_damage_return_addr;
 uint32_t __attribute__((no_caller_saved_registers, thiscall)) sf_deal_damage(SF_CGdFigureToolbox *figureToolbox,
                                                                              uint16_t dmg_source, uint16_t dmg_target, uint32_t damage_amount, uint32_t is_spell_damage, uint32_t is_ranged_damage, uint32_t vry_unknown_6)
 {
-
-    char phase_data[256];
-    sprintf(phase_data, "source: %d, dmg_target : %d, amount: %d, flags: %u %u %u", dmg_source, dmg_target, damage_amount, is_spell_damage, is_ranged_damage, vry_unknown_6);
-    log_info(phase_data);
     /* TODO - rewrite this for later use after spell damage function call
       if ((((source != 0) && (iVar6 = CGdFigure::IsAlive(local_270->gd_figure,source), iVar6 != 0)) &&
         (iVar6 = HasSpellOnIt(local_270,source,0xa5), iVar6 != 0)) ||

@@ -48,12 +48,12 @@ std::list<std::pair<uint16_t, onhit_handler_ptr>> get_onhit_phase(OnHitPhase pha
     if (it == s_onhit_handler_map.end())
     {
         // Element doesn't exist, log a warning and return an empty list
-        log_warning("Unknown Phase ID for On Hit Handler.");
+    //    log_warning("Unknown Phase ID for On Hit Handler.");
         return {}; // Return an empty list
     }
-    char info_msg[50];
+  /*  char info_msg[50];
     sprintf(info_msg, "On Hit Handler Phase: %d", enumValue);
-    log_info(info_msg);
+    log_info(info_msg); */
     return it->second; // Return the list associated with the phase
 }
 

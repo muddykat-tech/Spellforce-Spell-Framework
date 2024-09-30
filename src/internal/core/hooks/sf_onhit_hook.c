@@ -463,14 +463,11 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
 
                 uint32_t puVar15[2];
                 g_getWeaponEffects(_this->CGdResource, puVar15, weapon_id);
-                char damage_info[128];
-                snprintf(damage_info, sizeof(damage_info), "Enchant info: %d %d %d", weapon_id, puVar15[0], puVar15[1]);
-                log_info(damage_info);
                 if (puVar15[0] != 0)
                 {
                     for (int i = 0; i < 3; i++)
                     {
-                        uint16_t enchant_id = *(uint16_t *)(&puVar15[0] + i * 2 + 2);
+                        uint16_t enchant_id = *(uint16_t *)((uint32_t)(&puVar15[0]) + i * 2 + 2);
 
                         if (enchant_id == 0)
                             break;
@@ -478,8 +475,6 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
                         spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, enchant_id);
                         uint16_t curr_dex = getCurrentDex(_this->CGdFigure, source_index);
                         uint16_t curr_int = getCurrentInt(_this->CGdFigure, source_index);
-                        snprintf(damage_info, sizeof(damage_info), "Enchant Spell Line: %d", spell_data.spell_line_id);
-                        log_info(damage_info);
                         uint16_t chance = get_effect_chance(curr_dex, curr_int, spell_data.spell_line_id);
                         if (spellAPI.getRandom(_this->OpaqueClass, 10000) < chance)
                         {
