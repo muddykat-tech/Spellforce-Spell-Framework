@@ -207,7 +207,6 @@ uint16_t __thiscall handle_trueshot_set(SF_CGdFigureJobs *_this, uint16_t source
 
 void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, uint32_t param_2, uint8_t param_3)
 {
-    log_info("Called Into On Hit");
     if ((_this->CGdFigure->figures[source_index].owner == -1) || (_this->CGdFigure->figures[source_index].flags & 10))
     {
         return;
@@ -228,6 +227,7 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
             (_this->CGdFigure->figures[target.entity_index].flags & 10 != 0) ||
             (!toolboxAPI.isTargetable(_this->CGdFigureToolBox, target.entity_index)))
         {
+            log_info("Untargetable");
             return;
         }
 
@@ -275,13 +275,20 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
                     }
                 }
             }
-
-            char ogdamage_info[128];
-            snprintf(ogdamage_info, sizeof(ogdamage_info), "Before OnHit: %d", damage);
-            log_info(ogdamage_info);
-
             for (int i = PHASE_0; i < OnHitEnd; ++i)
             {
+                if (i == PHASE_0)
+                {
+                    if (isActionMelee(&action))
+                    {
+                        damage = handle_berserk_set(_this, source_index, target.entity_index, damage);
+                        damage = handle_riposte_set(_this, source_index, target.entity_index, damage);
+                    }
+                    else
+                    {
+                        damage = handle_trueshot_set(_this, source_index, target.entity_index, damage);
+                    }
+                }
                 std::list<std::pair<uint16_t, onhit_handler_ptr>> onhit_list = get_onhit_phase(static_cast<OnHitPhase>(i));
 
                 uint16_t list_size = onhit_list.size();
@@ -301,7 +308,6 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
                         {
                             if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, target.entity_index, spell_line_id))
                             {
-                                log_info("Target On Hit spell");
                                 onhit_handler_ptr onhit_func = entry.second;
                                 damage = onhit_func(_this, source_index, target.entity_index, damage);
                             }
@@ -313,7 +319,6 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
                         {
                             if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, source_index, spell_line_id))
                             {
-                                log_info("Source on hit spell");
                                 onhit_handler_ptr onhit_func = entry.second;
                                 damage = onhit_func(_this, source_index, target.entity_index, damage);
                             }
@@ -322,13 +327,6 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
                 }
             }
             // donnoe wtf is it, looks like shooting?
-
-            // logic here:
-            //  calculate modification from spells that increase damage
-
-            // apply set changes
-            // check critical hits and riposte
-            // apply
             if (action.type == 0x2712)
             {
                 uint16_t maxY = (_this->CGdFigure->figures[source_index].position.Y <= _this->CGdFigure->figures[target.entity_index].position.Y)
