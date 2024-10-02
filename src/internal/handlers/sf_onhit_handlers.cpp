@@ -24,8 +24,6 @@ uint16_t __thiscall trueshot_onhit_handler(SF_CGdFigureJobs *_this, uint16_t sou
 
 uint16_t __thiscall riposte_onhit_handler(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t damage)
 {
-    log_info("Riposte Handler Called");
-    // Check if it is source_index passed to the function or target_index
     SF_SGtFigureAction action;
     figureAPI.getTargetAction(_this->CGdFigure, &action, source_index);
     bool isMeleeAttack = isActionMelee(&action);
@@ -52,9 +50,143 @@ uint16_t __thiscall riposte_onhit_handler(SF_CGdFigureJobs *_this, uint16_t sour
     return final_damage;
 }
 
+uint16_t __thiscall durability_onhit_handler(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t damage)
+{
+    SF_SGtFigureAction action;
+    figureAPI.getTargetAction(_this->CGdFigure, &action, source_index);
+    bool isMeleeAttack = isActionMelee(&action);
+
+    if (!isMeleeAttack)
+    {
+        return damage;
+    }
+
+    SF_CGdResourceSpell spell_data;
+    uint16_t spell_index = toolboxAPI.getSpellIndexOfType(_this->CGdFigureToolBox, target_index, kGdSpellLineAbilityDurability, 0);
+    uint16_t spell_id = spellAPI.getSpellID(_this->CGdSpell, spell_index);
+    spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
+    return (damage * spell_data.params[1]) / 100;
+}
+
+uint16_t __thiscall critical_hits_onhit_handler(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t damage)
+{
+    // no need to calculate damage in this cases
+    if (damage == 0)
+    {
+        return damage;
+    }
+    uint16_t target_level = _this->CGdFigure->figures[target_index].level;
+    uint16_t source_level = _this->CGdFigure->figures[source_index].level;
+    // not proccing on targets 5+ levels above source
+    if (source_level + 5 <= target_level)
+    {
+        return damage;
+    }
+    // outright killing targets 15+ levels below
+    if (source_level - 0xf > target_level)
+    {
+        return 0x7fff;
+    }
+    SF_CGdResourceSpell spell_data;
+    uint16_t spell_index = toolboxAPI.getSpellIndexOfType(_this->CGdFigureToolBox, target_index, kGdSpellLineAbilityCriticalHits, 0);
+    uint16_t spell_id = spellAPI.getSpellID(_this->CGdSpell, spell_index);
+    spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
+
+    uint16_t tmp_damage = damage * spell_data.params[1];
+    uint16_t hp_left = figureAPI.getCurrentHealth(_this->CGdFigure, target_index);
+    if (tmp_damage < hp_left)
+    {
+        return damage;
+    }
+
+    tmp_damage = ((tmp_damage - hp_left) * 100) / tmp_damage;
+    uint16_t chance = 5 * tmp_damage * (5 + (int16_t)(source_level - target_level));
+    if (spellAPI.getRandom(_this->OpaqueClass, 10000) > chance)
+    {
+        return damage;
+    }
+    return 0x7fff;
+}
+
+uint16_t __thiscall endurance_onhit_handler(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t damage)
+{
+    SF_SGtFigureAction action;
+    figureAPI.getTargetAction(_this->CGdFigure, &action, source_index);
+    bool isMeleeAttack = isActionMelee(&action);
+
+    if (!isMeleeAttack)
+    {
+        return damage;
+    }
+    if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, source_index, kGdSpellLineAbilityDurability))
+    {
+        return damage;
+    }
+
+    SF_CGdResourceSpell spell_data;
+    uint16_t spell_index = toolboxAPI.getSpellIndexOfType(_this->CGdFigureToolBox, target_index, kGdSpellLineAbilityEndurance, 0);
+    uint16_t spell_id = spellAPI.getSpellID(_this->CGdSpell, spell_index);
+    spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
+    return (damage * spell_data.params[1]) / 100;
+}
+
+uint16_t __thiscall berserk_onhit_handler(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t damage)
+{
+    SF_SGtFigureAction action;
+    figureAPI.getTargetAction(_this->CGdFigure, &action, source_index);
+    bool isMeleeAttack = isActionMelee(&action);
+
+    if (!isMeleeAttack)
+    {
+        return damage;
+    }
+    if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, source_index, kGdSpellLineAbilityEndurance))
+    {
+        return damage;
+    }
+    if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, source_index, kGdSpellLineAbilityDurability))
+    {
+        return damage;
+    }
+    SF_CGdResourceSpell spell_data;
+    uint16_t spell_index = toolboxAPI.getSpellIndexOfType(_this->CGdFigureToolBox, target_index, kGdSpellLineAbilityBerserk, 0);
+    uint16_t spell_id = spellAPI.getSpellID(_this->CGdSpell, spell_index);
+    spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
+    return (damage * spell_data.params[1]) / 100;
+}
+
+uint16_t __thiscall warcry_onhit_handler(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t damage)
+{
+    SF_SGtFigureAction action;
+    figureAPI.getTargetAction(_this->CGdFigure, &action, source_index);
+    bool isMeleeAttack = isActionMelee(&action);
+
+    if (!isMeleeAttack)
+    {
+        return damage;
+    }
+    if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, source_index, kGdSpellLineAbilityEndurance))
+    {
+        return damage;
+    }
+    if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, source_index, kGdSpellLineAbilityDurability))
+    {
+        return damage;
+    }
+    if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, source_index, kGdSpellLineAbilityBerserk))
+    {
+        return damage;
+    }
+    SF_CGdResourceSpell spell_data;
+    uint16_t spell_index = toolboxAPI.getSpellIndexOfType(_this->CGdFigureToolBox, target_index, kGdSpellLineAbilityWarCry, 0);
+    uint16_t spell_id = spellAPI.getSpellID(_this->CGdSpell, spell_index);
+    spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
+    return (damage * spell_data.params[1]) / 100;
+}
+
 uint16_t __thiscall assistance_onhit_handler(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t damage)
 {
-    //oneshot or zero damage
+    // oneshot or zero damage
     if (damage == 0x7fff || damage == 0)
     {
         return damage;

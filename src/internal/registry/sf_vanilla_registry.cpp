@@ -458,6 +458,7 @@ void initialize_vanilla_spells()
     registrationAPI.linkTypeHandler(fireball2, &fireball2_handler);
 
     SFSpell *ability_warcry = registrationAPI.registerSpell(kGdSpellLineAbilityWarCry);
+    registrationAPI.linkOnHitHandler(ability_warcry, &warcry_onhit_handler, PHASE_0);
     registrationAPI.linkTypeHandler(ability_warcry, &ability_warcry_handler);
 
     SFSpell *ability_benefactions = registrationAPI.registerSpell(kGdSpellLineAbilityBenefactions);
@@ -468,8 +469,10 @@ void initialize_vanilla_spells()
 
     SFSpell *ability_endurance = registrationAPI.registerSpell(kGdSpellLineAbilityEndurance);
     registrationAPI.linkTypeHandler(ability_endurance, &ability_endurance_handler);
+    registrationAPI.linkOnHitHandler(ability_endurance, &endurance_onhit_handler, PHASE_0);
 
     SFSpell *ability_berserk = registrationAPI.registerSpell(kGdSpellLineAbilityBerserk);
+    registrationAPI.linkOnHitHandler(ability_berserk, &berserk_onhit_handler, PHASE_0);
     registrationAPI.linkTypeHandler(ability_berserk, &ability_berserk_handler);
 
     SFSpell *ability_boons = registrationAPI.registerSpell(kGdSpellLineAbilityBlessing);
@@ -480,6 +483,7 @@ void initialize_vanilla_spells()
 
     SFSpell *ability_durability = registrationAPI.registerSpell(kGdSpellLineAbilityDurability);
     registrationAPI.linkTypeHandler(ability_durability, &ability_durability_handler);
+    registrationAPI.linkOnHitHandler(ability_durability, &durability_onhit_handler, PHASE_0);
 
     SFSpell *ability_trueshot = registrationAPI.registerSpell(kGdSpellLineAbilityTrueShot);
     registrationAPI.linkTypeHandler(ability_trueshot, &ability_trueshot_handler);
@@ -695,6 +699,7 @@ void initialize_vanilla_spells()
 
     SFSpell *ability_critical_hits = registrationAPI.registerSpell(kGdSpellLineAbilityCriticalHits);
     registrationAPI.linkTypeHandler(ability_critical_hits, &ability_critical_hits_handler);
+    registrationAPI.linkOnHitHandler(ability_critical_hits, &critical_hits_onhit_handler, PHASE_2);
 
     SFSpell *aura21 = registrationAPI.registerSpell(kGdSpellLineAuraSiegeHuman);
     registrationAPI.linkTypeHandler(aura21, &aura_handler);

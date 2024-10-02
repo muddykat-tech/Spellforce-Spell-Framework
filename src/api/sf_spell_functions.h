@@ -91,7 +91,7 @@ typedef enum
     kGdSpellLineDetectMetal = 82,
     kGdSpellLineDetectMagic = 83,
     kGdSpellLineArrow = 84,
-    kGdSpellLineBerserk = 85,
+    kGdSpellLineBerserk = 85, //FAKE BERSERK
     kGdSpellLineInvisibility = 86,
     kGdSpellLineStone = 87,
     kGdSpellLineAuraWeakness = 88,
