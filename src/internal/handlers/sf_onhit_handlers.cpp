@@ -2,7 +2,6 @@
 #include "../core/sf_wrappers.h"
 #include "../core/sf_hooks.h"
 #include <list>
-#include <cstdio>
 
 uint16_t __thiscall trueshot_onhit_handler(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t damage)
 {    SF_SGtFigureAction action;
