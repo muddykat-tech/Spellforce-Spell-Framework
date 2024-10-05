@@ -22,7 +22,6 @@ ToolboxFunctions *toolboxAPI;
 FigureFunctions *figureAPI;
 IteratorFunctions *iteratorAPI;
 RegistrationFunctions *registrationAPI;
-SFLog *logger;
 
 // we declare spell type handler for Shieldwall, it must initialize ticks and bonus modifier values
 
@@ -47,28 +46,28 @@ void __thiscall shield_wall_universal_end_handler(SF_CGdSpell *_this, uint16_t s
 {
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
 
-    SF_CGdResourceSpell spell_data;
-    spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+    // we recall armor rating bonus modifier from spell XData
+    // because this value is the same for every target affected, we should do it here instead of doing it within the loop below
+    uint16_t recalc_value = spellAPI->getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER);
 
     for (uint16_t target_index = 0; target_index <= _this->SF_CGdFigure->max_used; target_index++)
         {
             // this code reiterates what we're doing at the tick 1 when the spell duration ends
             // we scan for all figures present, and check whether they're affected with Shieldwall spell
-            // if it shows they're affected, we check a spell index of the spell affecting them and compare it to the spell index of the spell which triggered the Spell End handler
-            // if those indexes match, we remove the spell from the target and remove the bonus modifier from figure's statistic
-            uint16_t spell_index_current = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, target_index, SHIELD_WALL_UNIVERSAL_LINE, 0);
+            // if they're affected, and 'getSpellIndexOfType' which is ordered to ignore the given spell_index returns 0, it means they're affected only with the instance of Shieldwall we're searching for
+            // then we remove the spell from the target's spell list and fix the target's statistic
+            uint16_t spell_index_current = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, target_index, SHIELD_WALL_UNIVERSAL_LINE, spell_index);
 
             // we check whether the target is affected with the Shieldwall
             if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index, SHIELD_WALL_UNIVERSAL_LINE))
-                // we check whether the spell indexes match
-                if (spell_index_current == spell_index)
-                    if (figureAPI->getSpellJobStartNode(_this->SF_CGdFigure, target_index) != 0)
-                        {
-                            // we remove the spell from the target
-                            toolboxAPI->removeSpellFromList(_this->SF_CGdFigureToolBox, target_index, spell_index);
-                            // we substract bonus modifier from the target's armor rating
-                            figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, target_index, -spell_data.params[2]);
-                        }
+                // if the target is affected with the Shieldwall and 'getSpellIndexOfType' returned 0, it means the target is affected with the spell we're looking for
+                if (spell_index_current == 0)
+                                {
+                                    // we remove the spell from the target
+                                    toolboxAPI->removeSpellFromList(_this->SF_CGdFigureToolBox, target_index, spell_index);
+                                    // we substract bonus modifier from the target's armor rating
+                                    figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, target_index, -recalc_value);
+                                }
         }
     // we end the spell itself after we finished scanning AoE
     spellAPI->removeDLLNode(_this, spell_index);
@@ -87,16 +86,6 @@ void __thiscall shield_wall_universal_effect_handler(SF_CGdSpell *_this, uint16_
     // we pull the pointer for this instance of spell
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
 
-    // we load the spell parameters from GameData.cff
-    // we'll use them later
-    SF_CGdResourceSpell spell_data;
-    spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
-
-
-
-    // we store index of the spellcaster
-    uint16_t source_index = _this->active_spell_list[spell_index].source.entity_index;
-
     // we initiate ticks counter which is necessary to emulate spell duration
     uint32_t current_tick = spellAPI->getXData(_this, spell_index, SPELL_TICK_COUNT_AUX);
     // we increase amount of ticks passed by 1
@@ -105,48 +94,58 @@ void __thiscall shield_wall_universal_effect_handler(SF_CGdSpell *_this, uint16_
 
     if (current_tick == 0)
         {
-            // the game automatically adds the spell to a source on cast
-            // in previous implementation we controlled that, because the actual spell effect was related to the second spell type
-            // and we decided ourselves whether we should apply the second spell type to a target/source
-            // however, with a single spell type the shieldwall is automatically applied to the spellcaster
+        // we load the spell parameters from GameData.cff
+        // we'll need them only in tick 0
+        // we will access armor bonus directly with spell XData in tick 1
+        SF_CGdResourceSpell spell_data;
+        spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
 
-            // because it's already applied, let's change the source's armor rating
-            // we'll deal with effect stacking below
-            figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, source_index, spell_data.params[2]);
+        // we store index of the spellcaster
+        uint16_t source_index = _this->active_spell_list[spell_index].source.entity_index;
 
-            // the shieldwall shouldn't be able to stack over the same target
-            // let's check whether there are more than one instance of a shieldwall over the target
-            // we can do it in the following way
-            // we get a spell index for the spell of the same Spell Type with 'getSpellIndexOfType'
-            // if this function returns another index than the spell_index which we got as the part of Spell Effect handler
-            // it means that there are two instances of the same spell
-            // if there is only one instance of the Shieldwall Universal, it would return 0
+        // we pull bonus modifier to armor rating from spell data into local variable
+        uint8_t recalc_value = spell_data.params[2];
 
-            // if there are two instances, we remove the latter one (spell_index) and retain the former one (spell_index_current)
-            // we also substract armor bonus modifier which we automatically apply at the start of tick 0
+        // we store bonus modifier directly within spell XData to be able to access it in the subsequent tick
+        spellAPI->setXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER, recalc_value);
 
-            if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, source_index, SHIELD_WALL_UNIVERSAL_LINE))
+
+        // the game automatically adds the spell to a source on cast
+        // in previous implementation we controlled that, because the actual spell effect was related to the second spell type
+        // and we decided ourselves whether we should apply the spell which provides bonus armor modifier to a target/source
+        // however, when we use a single spell type, the shieldwall is automatically applied to the spellcaster
+
+        // let's check whether the spell we're currently handling is the first instance of shieldwall over the target
+        // and if that's true, we'll add bonus modifier to spellcaster's armor rating
+        // to do so we should obtain the index of a Shieldwall spell affecting the target
+
+        uint16_t spell_index_current = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, source_index, SHIELD_WALL_UNIVERSAL_LINE, spell_index);
+
+        // getSpellIndexOfType returns the spell index of a spell with specific Spell Type
+        // it returns the spell index it gets first, if there are more than one instance of specific Spell Type
+
+        // it's possible to make it ignore the specific spell index when it's searching for the spell
+        // so it would return 0, if the target is affected only with the current instance of Shieldwall
+
+        if (spell_index_current == 0)
+            // if spell_index_current returns 0, it means there were no other instances of Shieldwall over a creature
+            // it indicates that the instance we're currently handling is new
+            // we're allowed to apply the spell logic to spellcaster
             {
-
-                // we get the spell index of a Shieldwall currently affecting the source
-                uint16_t spell_index_current = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, source_index, SHIELD_WALL_UNIVERSAL_LINE, spell_index);
-
-                // we check whether spell indice match
-                    if (spell_index_current != spell_index && spell_index_current != 0)
-                // we additionally check whether there is an active spell list on the target for safety
-                        if (figureAPI->getSpellJobStartNode(_this->SF_CGdFigure, source_index) != 0)
-                            {
-                                // we remove bonus armor which we apply with a tick 0
-                                figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, source_index, -spell_data.params[2]);
-                                // we remove the new spell (the one which triggered the Spell Effect handler) from the list of the spells affecting the spellcaster
-                                toolboxAPI->removeSpellFromList(_this->SF_CGdFigureToolBox, source_index, spell_index);
-                            }
+                figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, source_index, recalc_value);
             }
 
-        // however, we wouldn't interrupt the Spell Effect handler as the whole
-        // it still might apply its effect to other unaffected targets in area
-        // we go as usual with adding visuals to the spellcaster and activate the iterator to check possible targets in area
+        else
+            // in case spell_index_current returns other value than 0, it means we're working with the additional instance of Shieldwall
+            // we shouldn't add bonus modifier to the spellcaster's armor rating
+            // but since the spell is treated as already applied to the source by game engine, we should remove it from the source's UI
+            // however, we shouldn't stop the spell overall
+            // it will continue working with other creatures in area through iterator
+            {
+                toolboxAPI->removeSpellFromList(_this->SF_CGdFigureToolBox, source_index, spell_index);
+            }
 
+        // we go as usual with adding area visual effect centered on spellcaster
         // we declare structure to specify the area affected by the AoE effect
         SF_Rectangle hit_area;
 
@@ -222,7 +221,7 @@ void __thiscall shield_wall_universal_effect_handler(SF_CGdSpell *_this, uint16_
                             // it's unknown what's the last parameter is standing for
                             toolboxAPI->addSpellToFigure(_this->SF_CGdFigureToolBox, target_index, spell_index);
 
-                            figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, target_index, spell_data.params[2]);
+                            figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, target_index, recalc_value);
 
                             spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 0x19, &hit_area);
                             // we spent one usage of the spell, hence we decrease the possible limit by one
@@ -242,27 +241,28 @@ void __thiscall shield_wall_universal_effect_handler(SF_CGdSpell *_this, uint16_
         else
         // current_tick == 1, it's time to end the spell
         {
+            // we recall armor rating bonus modifier from spell XData
+            // because this value is the same for every target affected, we should do it here instead of doing it within the loop below
+            uint16_t recalc_value = spellAPI->getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER);
+
             // we check through all figures for the Shieldwall effect
             // we can't use the iterator to determine search area, because targets might move too far away from the source which provided them with the Shieldwall
             for (uint16_t target_index = 0; target_index <= _this->SF_CGdFigure->max_used; target_index++)
                 {
                     // we launch the same check as we did in the tick 0
                     // we want to be sure that the Shieldwall over the target is the same Shieldwall as we're planning to remove
-                    // please note, that the last argument for 'getSpellIndexOfType' should be 0
-                    // if you put spell_index there, it would be blind for the Shieldwall we're looking for
-                    uint16_t spell_index_current = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, target_index, SHIELD_WALL_UNIVERSAL_LINE, 0);
+                    uint16_t spell_index_current = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, target_index, SHIELD_WALL_UNIVERSAL_LINE, spell_index);
 
                         // we check whether the target is affected with the Shieldwall
                         if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index, SHIELD_WALL_UNIVERSAL_LINE))
-                            // we check whether the spell indice match
-                            if (spell_index_current == spell_index)
-                                if (figureAPI->getSpellJobStartNode(_this->SF_CGdFigure, target_index) != 0)
-                            {
-                                // we remove the spell from the target
-                                toolboxAPI->removeSpellFromList(_this->SF_CGdFigureToolBox, target_index, spell_index);
-                                // we substract bonus modifier from the target's armor rating
-                                figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, target_index, -spell_data.params[2]);
-                            }
+                            // if the target is affected with the Shieldwall and 'getSpellIndexOfType' returned 0, it means the target is affected with the spell we're looking for
+                            if (spell_index_current == 0)
+                                {
+                                    // we remove the spell from the target
+                                    toolboxAPI->removeSpellFromList(_this->SF_CGdFigureToolBox, target_index, spell_index);
+                                    // we substract bonus modifier from the target's armor rating
+                                    figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, target_index, -recalc_value);
+                                }
                 }
 
         // we finish the spell and remove it from the active spells list
@@ -276,7 +276,7 @@ void __thiscall shield_wall_universal_effect_handler(SF_CGdSpell *_this, uint16_
 // this handler is called whenever we're casting shieldwall universal, and will return 0 if the spell is already present or 1 when it's not
 // this handler can be used as a snippet for any other similar spell which can be refreshed
 
-int __thiscall shield_wall_universal_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index) //we casted shieldwall group again before the previous expired
+int __thiscall shield_wall_universal_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index) // we casted shieldwall group again before the previous expired
 {
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
     // we declare target index with value which we stored into SHIELDWALL UNIVERSAL spell above
@@ -312,11 +312,9 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     figureAPI = sfsf->figureAPI;
     iteratorAPI = sfsf->iteratorAPI;
     registrationAPI = sfsf->registrationAPI;
-    logger = sfsf->logAPI;
 
 
     // we register handlers for custom spell
-    //
     SFSpell *shield_wall_universal_spell = registrationAPI->registerSpell(SHIELD_WALL_UNIVERSAL_LINE);
     registrationAPI->linkTypeHandler(shield_wall_universal_spell, &shield_wall_universal_type_handler);
     registrationAPI->linkEffectHandler(shield_wall_universal_spell, SHIELD_WALL_UNIVERSAL_JOB, &shield_wall_universal_effect_handler);
@@ -330,7 +328,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
  ***/
 extern "C" __declspec(dllexport) SFMod *RegisterMod(SpellforceSpellFramework *framework)
 {
-    return framework->createModInfo("Shield wall Mod", "1.0.0", "Teekius", "A mod designed to demonstrate spell providing temporary AoE buff to player-controlled units. This version implements AoE spell using the single Spell Type instead of two interrelated spells.");
+    return framework->createModInfo("Shieldwall Mod", "1.0.0", "Teekius", "A mod designed to demonstrate spell providing temporary AoE buff to player-controlled units. This version implements AoE spell using the single Spell Type instead of two interrelated spells.");
 }
 
 // Required to be present by, not required for any functionality
