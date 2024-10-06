@@ -1,5 +1,4 @@
 #include "../../src/api/sfsf.h"
-#include "api/sfsf.h"
 #include <windows.h>
 #include <stdio.h>
 
