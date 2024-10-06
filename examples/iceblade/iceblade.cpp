@@ -1,4 +1,5 @@
 #include "../../src/api/sfsf.h"
+#include "api/sfsf.h"
 #include <windows.h>
 #include <stdio.h>
 
@@ -37,6 +38,8 @@ void __thiscall iceblade_type_handler(SF_CGdSpell *_this, uint16_t spell_index)
 // this handler would work in case a spell wasn't finished correctly
 void __thiscall iceblade_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
+    spellAPI->figTryClrCHkSPlBfrJob2(_this, spell_index);
+    spellAPI->figClrChkSplBfrChkBattle(_this, spell_index, 0);
     spellAPI->removeDLLNode(_this, spell_index);
     spellAPI->setEffectDone(_this, spell_index, 0);
 }
@@ -47,8 +50,6 @@ uint16_t __thiscall iceblade_onhit_handler(SF_CGdFigureJobs *_this, uint16_t sou
     uint16_t spell_index = toolboxAPI->getSpellIndexOfType(_this->CGdFigureToolBox, source_index, ICEBLADE_LINE, 0);
 
     SF_GdSpell *spell = &_this->CGdSpell->active_spell_list[spell_index];
-
-    //uint16_t spell_id = spellAPI->getSpellID(_this->CGdSpell, spell_index);
 
     char aliveInfo[256];
     sprintf(aliveInfo, "Full damage is: %hd \n", damage);
@@ -72,19 +73,19 @@ uint16_t __thiscall iceblade_onhit_handler(SF_CGdFigureJobs *_this, uint16_t sou
     SF_SGtFigureAction action;
     figureAPI->getTargetAction(_this->CGdFigure, &action, source_index);
 
+    bool isMeleeAttack = 0;
 
     if ((action.type == 10000) || (action.type == 0x2711))
     {
-         bool isMeleeAttack = 1;
+        isMeleeAttack = 1;
     }
-     bool isMeleeAttack = 0;
 
 
     if (isMeleeAttack)
     {
         // we declare structure for relative position of visual effect
         SF_CGdTargetData relative_data;
-        figureAPI->getPosition(_this->CGdFigure, &relative_data.position, source_index);
+        figureAPI->getPosition(_this->CGdFigure, &relative_data.position, target_index);
         relative_data.entity_type = 4;
         relative_data.entity_index = 0;
         uint32_t unused;
@@ -95,18 +96,20 @@ uint16_t __thiscall iceblade_onhit_handler(SF_CGdFigureJobs *_this, uint16_t sou
         aux_data.partB = 0;
 
         // we apply the visual effect filling the area which we specified above
-        spellAPI->addVisualEffect(_this->CGdSpell, spell_index, kGdEffectSpellDOTHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 0x19, &aux_data);
+        spellAPI->addVisualEffect(_this->CGdSpell, spell_index, kGdEffectSpellDOTHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 0x15, &aux_data);
 
-        uint32_t frost_resistance = spellAPI->getChanceToResistSpell(_this->unkn2, source_index, target_index, effect_info);
+        uint16_t frost_resistance = spellAPI->getChanceToResistSpell(_this->CGdSpell->unkn2, source_index, target_index, effect_info);
 
-        uint16_t ice_damage = uint16_t(damage * spell_data.params[2] / 100);
+        uint16_t ice_damage = uint16_t(damage * spell_data.params[0] / 100);
 
         damage -= ice_damage;
+
+        ice_damage -= uint16_t(ice_damage * frost_resistance / 100);
 
         toolboxAPI->dealDamage(_this->CGdFigureToolBox, source_index, target_index, ice_damage, 1, 0, 0);
 
         char aliveInfo[256];
-        sprintf(aliveInfo, "Physical damage is: %hd \n", ice_damage);
+        sprintf(aliveInfo, "Physical damage is: %hd \n", damage);
         logger->logInfo(aliveInfo);
 
         sprintf(aliveInfo, "Ice damage is: %hd \n", ice_damage);
@@ -154,7 +157,7 @@ void __thiscall iceblade_effect_handler(SF_CGdSpell *_this, uint16_t spell_index
             aux_data.partB = 0;
 
             // we apply the visual effect filling the area which we specified above
-            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 0x19, &aux_data);
+            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 0, &aux_data);
 
 
             // we disable the spell effect from being triggered until specified amount of time passes
@@ -171,6 +174,8 @@ void __thiscall iceblade_effect_handler(SF_CGdSpell *_this, uint16_t spell_index
         // current_tick == 1 or spellCheckCanApply == 0, either way, the spell has come to end
         {
             // we finish the spell and remove it from the active spells list
+            spellAPI->figTryClrCHkSPlBfrJob2(_this, spell_index);
+            spellAPI->figClrChkSplBfrChkBattle(_this, spell_index, 0);
             spellAPI->removeDLLNode(_this, spell_index);
             spellAPI->setEffectDone(_this, spell_index, 0);
         }
@@ -217,7 +222,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     figureAPI = sfsf->figureAPI;
     iteratorAPI = sfsf->iteratorAPI;
     registrationAPI = sfsf->registrationAPI;
-    SFLog *logger;
+    logger = sfsf->logAPI;
 
 
     // we register handlers for custom spell
@@ -225,7 +230,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     registrationAPI->linkTypeHandler(iceblade_spell, &iceblade_type_handler);
     registrationAPI->linkEffectHandler(iceblade_spell, ICEBLADE_JOB, &iceblade_effect_handler);
     registrationAPI->linkRefreshHandler(iceblade_spell, &iceblade_refresh_handler);
-    registrationAPI->linkOnHitHandler(iceblade_spell, &iceblade_onhit_handler, PHASE_1);
+    registrationAPI->linkOnHitHandler(iceblade_spell, &iceblade_onhit_handler, PHASE_4);
     registrationAPI->linkEndHandler(iceblade_spell, &iceblade_end_handler);
 }
 
@@ -262,3 +267,4 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 
     return TRUE;
 }
+
