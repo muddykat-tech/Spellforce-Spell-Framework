@@ -7,7 +7,7 @@
 DECLARE_FUNCTION(void, dealDamage, SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t source_index, uint16_t target_index, uint32_t damage, uint32_t is_spell_damage, uint32_t param5, uint32_t param6);
 DECLARE_FUNCTION(bool, isTargetable, SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t figure_index);
 DECLARE_FUNCTION(uint16_t, figuresCheckHostile, SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t source_index, uint16_t target_index);
-DECLARE_FUNCTION(void, buildingDealDamage, SF_CGdFigureToolbox *CGdBuildingToolBox, uint16_t figure_id, uint16_t building_id, uint16_t damage, uint32_t is_spell_damage);
+DECLARE_FUNCTION(void, buildingDealDamage, void *CGdBuildingToolBox, uint16_t figure_id, uint16_t building_id, uint16_t damage, uint32_t is_spell_damage);
 DECLARE_FUNCTION(uint16_t, figuresCheckNeutral, SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t source_index, uint16_t target_index);
 DECLARE_FUNCTION(uint16_t, figuresCheckFriendly, SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t source_index, uint16_t target_index);
 DECLARE_FUNCTION(uint32_t, hasSpellOnIt, SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t figure_index, uint16_t spell_line_id);

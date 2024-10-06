@@ -65,10 +65,46 @@ SFLog *setup_logger()
     return &sf_logger;
 }
 
+// TODO: Parse me through an as an ActionAPI Wrapped Function
+bool __thiscall isActionMelee(SF_SGtFigureAction *_this)
+{
+    if ((_this->type == 10000) || (_this->type == 0x2711))
+    {
+        return 1;
+    }
+    return 0;
+}
+
 void __thiscall setupFigureIterator(CGdFigureIterator *iterator, SF_CGdSpell *spell)
 {
     iteratorAPI.figureIteratorInit(iterator, 0x0, 0x0, 0x3ff, 0x3ff);
     iteratorAPI.figureIteratorSetPointers(iterator, spell->SF_CGdFigure, spell->unkn3, spell->SF_CGdWorld);
+}
+
+uint32_t getDistance(SF_Coord *pointA, SF_Coord *pointB)
+{
+
+    uint32_t delta;
+    uint32_t uVar1;
+    uint32_t uVar2;
+    uint32_t uVar3;
+    uint32_t uVar4;
+
+    delta = (uint32_t)(uint16_t)pointA->X - (uint32_t)(uint16_t)pointB->X;
+    uVar2 = (int)delta >> 0x1f;
+    uVar2 = (delta ^ uVar2) - uVar2;
+    uVar4 = uVar2 & 0xffff;
+    delta = (uint32_t)(uint16_t)pointA->Y - (uint32_t)(uint16_t)pointB->Y;
+    uVar3 = (int)delta >> 0x1f;
+    uVar3 = (delta ^ uVar3) - uVar3;
+    uVar1 = uVar3 & 0xffff;
+    delta = uVar1;
+    if ((uint16_t)uVar2 < (uint16_t)uVar3)
+    {
+        delta = uVar4;
+        uVar4 = uVar1;
+    }
+    return ((delta * 0xd) >> 5) + uVar4;
 }
 
 // Some funky stuff to clean up Iterator memory, not 100% sure if correct
@@ -78,7 +114,6 @@ void __thiscall disposeFigureIterator(CGdFigureIterator iterator)
     FUN_0069eaf0(&iterator.data.offset_0x30, &unused, ((AutoClass69 *)iterator.data.offset_0x30.ac69_ptr1)->ac69_ptr1, iterator.data.offset_0x30.ac69_ptr1);
     fidFree(iterator.data.offset_0x30.ac69_ptr1);
 }
-
 
 void __thiscall addBonusMultToStatistic(SF_CGdFigure *figure, StatisticDataKey key, uint16_t target, int8_t value)
 {
@@ -159,13 +194,21 @@ void __thiscall spellClearFigureFlag(SF_CGdSpell *_this, uint16_t spell_id, Spel
     }
 }
 
+// Temp
+typedef void(__thiscall *vfunction_ptr)(void *label, char *p1);
+typedef void(__thiscall *vfunction12_ptr)(void *container, void *test, char *p1);
+
+vfunction_ptr vfunction176;
+vfunction_ptr vfunction25;
+vfunction12_ptr vfunction12;
+
 void __thiscall attach_new_label(CMnuContainer *parent, char *label_chars, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height)
 {
-    SF_String label_string;
+    SF_String m_label_string;
     CMnuLabel *new_label;
     SF_FontStruct *fonts = g_get_smth_fonts();
 
-    g_create_sf_string(&label_string, label_chars);
+    SF_String *label_string = g_create_sf_string(&m_label_string, label_chars);
     new_label = (CMnuLabel *)g_new_operator(0x368);
 
     if (font_index > 32)
@@ -178,15 +221,26 @@ void __thiscall attach_new_label(CMnuContainer *parent, char *label_chars, uint8
 
     g_menu_label_constructor(new_label);
 
-    g_init_menu_element(new_label, x_pos, y_pos, width, height, &label_string);
+    // Start setting flags to tell Spellforce what this label is used for.
+    g_set_label_flags(new_label, 7);
+
+    g_init_menu_element(new_label, x_pos, y_pos, width, height, label_string);
+
+    vfunction176 = (vfunction_ptr)(ASI::AddrOf(0x52f520));
+    vfunction176(new_label, (char *)0x1);
+
+    vfunction25 = (vfunction_ptr)(ASI::AddrOf(0x511ae0));
+    vfunction25(new_label, (char *)0x0);
 
     g_menu_label_set_font(new_label, selected_font);
 
-    g_container_add_control(parent, new_label, '\0', '\0', 0);
+    g_container_add_control(parent, new_label, (char *)0x01, (char *)0x01, 0);
 
-    g_menu_label_set_string(new_label, &label_string);
+    vfunction12 = (vfunction12_ptr)(ASI::AddrOf(0x511ae0));
+    vfunction12(parent, new_label, (char *)0x0);
+    g_menu_label_set_string(new_label, label_string);
 
-    g_destroy_sf_string(&label_string);
+    g_destroy_sf_string(label_string);
 }
 
 uint16_t __thiscall sf_get_spell_id(SF_CGdSpell *_this, uint16_t spell_index)

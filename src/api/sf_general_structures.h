@@ -22,6 +22,95 @@ typedef struct __attribute__((packed))
 
 /* |-========== General Structures ==========-| */
 
+// Forward Declarations for looping struct declarations
+typedef struct SF_CGdSpell SF_CGdSpell;
+typedef struct SF_CGdFigureToolbox SF_CGdFigureToolbox;
+typedef struct SF_GdEffect SF_GdEffect;
+typedef struct SF_CGDEffect SF_CGDEffect;
+typedef struct SF_CGdWorld SF_CGdWorld;
+typedef struct SF_CGdWorldToolBox SF_CGdWorldToolBox;
+typedef struct SF_CGdFigureJobs SF_CGdFigureJobs;
+typedef struct SF_CGdBuilding SF_CGdBuilding;
+typedef enum : uint8_t
+{
+    TASK_WORKER = 2,
+    TASK_WOODCUTTER = 3,
+    TASK_QUARRY = 4,
+    TASK_MINE = 5,
+    TASK_FORGE = 6,
+    TASK_HERO = 9,
+    TASK_MAINCHAR = 10,
+    TASK_NPC = 11,
+    TASK_PET = 12,
+    TASK_HUNTING_LODGE = 14,
+    TASK_MERCHANT = 17
+} CGdFigureTask;
+
+typedef enum
+{
+    PHASE_0 = 0,
+    PHASE_1,
+    PHASE_2,
+    PHASE_3,
+    PHASE_4,
+    PHASE_5,
+    OnHitEnd
+} OnHitPhase;
+
+// Game Formated them for bitwise operations, hence the magic numbers
+typedef enum
+{
+    UNDEAD = 0x1,
+    RESESRVED_ONLY = 0x2,
+    AGGROED = 0x4,
+    IS_DEAD = 0x8,
+    REDO = 0x10,
+    F_CHECK_SPELLS_BEFORE_JOB = 0x20,
+    F_CHECK_SPELLS_BEFORE_CHECK_BATTLE = 0x40, // May need to be changed as it could be used inplace of a spell key perhaps?
+    WALK_JOB_WAIT = 0x80,
+    FREEZED = 0x100,
+    HAS_LOOT = 0x200,
+    HAS_DIALOG = 0x400,
+    FEMALE = 0x800,
+    GOT_AGGRO = 0x1000,
+    RETREAT = 0x2000,
+    NO_WAY_TO_TARGET = 0x4000,
+    AURA_RUNNING = 0x8000,
+    AI_BLOCKED = 0x10000,
+    TOWER = 0x20000,
+    IS_SWAPPING = 0x40000,
+    CUR_ACTIVE_DIALOG = 0x80000,
+    IS_IN_FIGHT = 0x100000,
+    VIEW_MODE_1ST_3RD = 0x200000,
+    IS_TALKING = 0x400000,
+    IS_IMPORTANT_DIALOG = 0x800000,
+    UNKILLABLE = 0x1000000,
+    FOLLOW_MODE = 0x2000000,
+    HIT_LEFT_HAND_NEXT = 0x4000000,
+    FOREST_SPIRIT = 0x8000000,
+    VIP = 0x10000000,
+    ILLUSION = 0x20000000,
+    SPAWN = 0x40000000
+} GdFigureFlags;
+
+typedef enum : uint16_t
+{
+    MANUAL_JOB_CHANGE = 1,
+    SKIP_ONCE = 2,
+    MANUAL_HIT_TARGET = 4,
+    CORPSE_CANT_ROT = 8,
+    START_WALK = 16,
+    RUN_MODE = 32,
+    WAR = 64,
+    CHECK_BATTLE = 128,
+    PATROL_MODE = 256,
+    WAY_POINTS_READ_REVERSE = 512,
+    SUPERIOR_PATHING = 1024,
+    ROUND_HIT = 2048,
+    DEATH_BLOW = 4096,
+    START_WORK_AT_BUILDING_FORCE_JOB = 8192,
+} CGdFigureJobFlags;
+
 typedef struct __attribute__((packed))
 {
     uint16_t X;
@@ -65,18 +154,21 @@ typedef struct __attribute__((packed))
 
 typedef struct __attribute__((packed))
 {
-    uint32_t unknown1;
-    uint32_t unknown2;
-    uint32_t unknown3;
-    uint16_t unknown4;
-} CGdFigureWeaponStats;
-
-typedef struct __attribute__((packed))
-{
     uint16_t figure_index;
     uint16_t agro_value;
     uint16_t hate_value;
 } CGdFigureHateEntry;
+
+typedef struct __attribute__((packed))
+{
+    uint16_t min_dmg;
+    uint16_t max_dmg;
+    uint16_t min_rng;
+    uint16_t max_rng;
+    uint16_t wpn_spd;
+    uint16_t wpn_type;
+    uint16_t wpn_mat;
+} SF_CGdFigureWeaponStats;
 
 typedef struct __attribute__((packed))
 {
@@ -97,6 +189,33 @@ typedef struct __attribute__((packed))
 
 typedef struct __attribute__((packed))
 {
+    uint16_t type;
+    uint16_t unkn1;
+    uint16_t unkn2;
+    uint16_t unkn3;
+    uint16_t unkn4;
+    uint16_t unkn5;
+} SF_SGtFigureAction;
+
+typedef struct __attribute__((packed))
+{
+    uint16_t GdJobId;
+    CGdFigureTask task;
+    uint8_t padding;
+    CGdFigureJobFlags flags;
+    uint8_t pathing_mode;
+    SF_CGdTargetData target; // it is stored WEIRDLY
+    uint8_t SGtFigureAction[0xc];
+    uint16_t xdata_key;
+    uint8_t walking_mode;
+    uint8_t padding2;
+    SF_Coord walk_to_pos;
+    uint8_t unknown[14];
+    uint8_t current_waypoint;
+} AutoClass24;
+
+typedef struct __attribute__((packed))
+{
     SF_Coord position;
     SF_Coord destination;
     uint16_t to_do_count;
@@ -106,7 +225,7 @@ typedef struct __attribute__((packed))
     uint8_t activity;
     uint8_t unknown1;
     uint16_t building;
-    uint32_t flags; // Actual Type CdFigureFlags
+    GdFigureFlags flags;
     uint8_t race;
     uint8_t level;
     uint16_t owner;
@@ -140,7 +259,7 @@ typedef struct __attribute__((packed))
     uint32_t unknown4[7];   // Many 4 byte sections in a row
     uint16_t unknown5;
     uint8_t unknown6[2];
-    CGdFigureWeaponStats weapon_stats;
+    SF_CGdFigureWeaponStats weapon_stats;
     uint8_t unknown7[13];
     uint8_t good; // I assume perhaps alignment?
     uint8_t direction;
@@ -158,7 +277,15 @@ typedef struct __attribute__((packed))
     uint8_t faction;
     uint8_t unknown13;
     uint32_t clan_relations;
-    uint8_t unknown14[174]; // Skipping some variable sections, contains differences Also Check what AutoClass24 is, it's used multiple times in this section
+    uint16_t unknown14;
+    uint32_t padding1;
+    AutoClass24 ac_1;
+    uint8_t padding2[3];
+    AutoClass24 ac_2;
+    uint8_t padding3[3];
+    AutoClass24 ac_4;
+    uint8_t padding4[3];
+    uint32_t unknown15[3]; // Skipping some variable sections, contains differences Also Check what AutoClass24 is, it's used multiple times in this section
     uint8_t dwarf_rank;
     uint8_t set_type;
 } GdFigure;
@@ -198,7 +325,6 @@ typedef struct __attribute__((packed))
     uint8_t unknown_field_19;
 } AutoClass14;
 
-
 typedef struct __attribute__((packed))
 {
     uint16_t uknwn1;
@@ -228,7 +354,6 @@ typedef struct __attribute__((packed))
     uint8_t unkn1;
 } SF_world_unkn_4;
 
-
 /* |-========== Spell Start ==========-| */
 typedef struct __attribute__((packed))
 {
@@ -243,14 +368,44 @@ typedef struct __attribute__((packed))
     uint8_t flags;
 } SF_GdSpell;
 
-// Forward Declarations for looping struct declarations
-typedef struct SF_CGdSpell SF_CGdSpell;
-typedef struct SF_CGdFigureToolbox SF_CGdFigureToolbox;
-typedef struct SF_GdEffect SF_GdEffect;
-typedef struct SF_CGDEffect SF_CGDEffect;
-typedef struct SF_CGdWorld SF_CGdWorld;
-typedef struct SF_CGdWorldToolBox SF_CGdWorldToolBox;
-
+struct __attribute__((packed)) SF_CGdFigureJobs
+{
+    uint32_t *CGdAStar;
+    uint32_t *CGdAiBattle;
+    AutoClass14 *OpaqueClass;
+    SF_CGdBuilding *CGdBuilding;
+    uint32_t *CGdBuildingToolBox;
+    uint32_t *CGdDoubleLinkList;
+    SF_CGDEffect *CGdEffect;
+    uint32_t *AutoClass30;
+    SF_CGdFigure *CGdFigure;
+    SF_CGdFigureToolbox *CGdFigureToolBox;
+    uint32_t *CGdFormation;
+    uint32_t *AutoClass34;
+    uint32_t *CGdObject;
+    uint32_t *CGdObjectToolBox;
+    uint32_t *CGdPlayer;
+    uint32_t *AutoClass46;
+    uint32_t *AutoClass47;
+    uint32_t *CGdResource;
+    SF_CGdSpell *CGdSpell;
+    uint32_t *AutoClass48;
+    uint32_t *AutoClass22;
+    uint32_t *AutoClass50;
+    uint32_t *CGdVisibility;
+    SF_CGdWorld *CGdWorld;
+    SF_CGdWorldToolBox *CGdWorldToolBox;
+    uint32_t *CGdXDataList;
+    uint8_t padding[572];
+    uint32_t noManaUsage;
+    void *unkn1;
+    void *unkn2;
+    uint32_t padding2;
+    void *unkn3;
+    uint32_t padding3;
+    void *unkn4;
+    uint32_t padding4;
+};
 
 struct __attribute__((packed)) SF_CGdFigureToolbox
 {
@@ -258,7 +413,7 @@ struct __attribute__((packed)) SF_CGdFigureToolbox
     uint32_t *CGdAIMain;
     uint32_t *CGdAStar;
     AutoClass14 *maybe_random; // Unconfirmed
-    uint32_t *CGdBuilding;
+    SF_CGdBuilding *CGdBuilding;
     uint32_t *CGdBuildingToolbox;
     uint32_t *CGdDoubleLinkedList;
     SF_CGDEffect *CGdEffect;
@@ -302,12 +457,11 @@ struct __attribute__((packed)) SF_CGdWorld
     uint8_t unknown7[63];
 };
 
-
 struct __attribute__((packed)) SF_CGdWorldToolBox
 {
     uint32_t *CGdAStar;
     AutoClass14 *OpaqueClass; // Unconfirmed
-    uint32_t *CGdBuilding;
+    SF_CGdBuilding *CGdBuilding;
     uint32_t *CGdBuildingToolbox;
     uint32_t *CGdDoubleLinkedList;
     SF_CGDEffect *CGdEffect;
@@ -321,7 +475,7 @@ struct __attribute__((packed)) SF_CGdWorldToolBox
     SF_CGdWorld *SF_CGdWorld;
     uint32_t *CGdXDataList;
     uint32_t data[10000];
-    uint32_t uknown1; //4x uint8_t
+    uint32_t uknown1; // 4x uint8_t
     uint32_t unknown2;
 };
 
@@ -329,7 +483,7 @@ struct __attribute__((packed)) SF_CGdSpell
 {
     void *SF_CGdAiMain;
     AutoClass14 *OpaqueClass; // For Random
-    void *SF_CGdBuilding;
+    SF_CGdBuilding *CGdBuilding;
     void *SF_CGdBuildingToolbox;
     void *SF_CGdDoubleLinkedList;
     SF_CGDEffect *SF_CGdEffect;
@@ -374,7 +528,7 @@ struct __attribute__((packed)) SF_GdEffect
 struct __attribute__((packed)) SF_CGDEffect
 {
     AutoClass14 *OpaqueClass;
-    void *SF_CGdBuilding;
+    SF_CGdBuilding *CGdBuilding;
     void *SF_CGdBuildingToolbox;
     void *SF_CGdDoubleLinkedList;
     SF_CGdFigure *SF_CGdFigure;
@@ -390,6 +544,40 @@ struct __attribute__((packed)) SF_CGDEffect
     void *SF_CGdXDataList;
     SF_GdEffect active_effect_list[2000];
     uint16_t max_used;
+};
+/* |-============= Buildings Structures ==========- |*/
+
+typedef struct __attribute__ ((packed))
+{
+    SF_Coord position;
+    uint16_t owner;
+    uint8_t type;
+    uint8_t race;
+    uint8_t flags;
+    uint16_t build_up;
+    uint16_t build_max;
+    uint16_t health_current;
+    uint16_t life_current_max;
+    uint16_t health_max;
+    uint16_t DLLNode;
+    uint16_t xdata_key;
+    uint16_t angle;
+    uint32_t unknown[5];
+    uint8_t worker_count;
+    uint8_t worker_count_max;
+    uint8_t level;
+    uint32_t unknown2;
+} GdBuilding;
+
+struct __attribute__((packed)) SF_CGdBuilding
+{
+    AutoClass14 *autoClass14;
+    GdBuilding buildings[1000];
+    uint16_t max_used;
+    void *astruct_31;
+    uint32_t unknown1;
+    void *astruct_39;
+    uint32_t unknown2;
 };
 
 /* |-========== Internal Structures ==========-| */
@@ -470,9 +658,10 @@ typedef enum
     EFFECT_EFFECT_INDEX = 0x06,
     EFFECT_SPELL_INDEX = 0x11,
     EFFECT_SPELL_ID = 0x09,
-    EFFECT_SUBSPELL_ID = 0x1C,
-    EFFECT_ENTITY_INDEX = 0x2F,
     EFFECT_ENTITY_INDEX2 = 0x1A,
+    EFFECT_SUBSPELL_ID = 0x1C,
+    EFFECT_PHYSICAL_DAMAGE = 0x1E,
+    EFFECT_ENTITY_INDEX = 0x2F,
     EFFECT_ENTITY_INDEX3 = 0x2D,
     EFFECT_ENTITY_TYPE = 0x30,
     EFFECT_ENTITY_TYPE2 = 0x13,
@@ -562,11 +751,12 @@ typedef void(__thiscall *mnu_label_init_data_ptr)(CMnuLabel *_this, float xpos, 
 typedef void(__thiscall *message_box_ptr)(uint32_t CAppMenu, uint16_t description_id, SF_String *string_ptr, uint16_t hasOffset);
 
 typedef void(__thiscall *menu_label_constructor_ptr)(CMnuLabel *_this);
+typedef void(__thiscall *set_label_flags_ptr)(CMnuLabel *_this, uint32_t flags);
 
 typedef void(__fastcall *original_menu_func_ptr)(uint32_t param1);
 
 typedef void *(__cdecl *new_operator_ptr)(uint32_t param_1);
-typedef void(__thiscall *container_add_control_ptr)(CMnuContainer *_this, void *CMnuBase, uint8_t c1, uint8_t c2, uint32_t p4);
+typedef void(__thiscall *container_add_control_ptr)(CMnuContainer *_this, void *CMnuBase, char *c1, char *c2, uint32_t p4);
 typedef void(__thiscall *menu_label_set_data_ptr)(CMnuLabel *_this, uint32_t color_red, uint32_t color_green, uint32_t color_blue, uint8_t unknchar);
 typedef void(__thiscall *get_sf_color_ptr)(SF_String *_this, uint32_t color_id);
 typedef SF_FontStruct *(__thiscall *get_smth_fonts_ptr)(void);

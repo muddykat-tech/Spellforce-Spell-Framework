@@ -3,6 +3,7 @@
 #include "sf_hooks.h"
 #include "../handlers/sf_spelltype_handlers.h"
 #include "../registry/sf_spelltype_registry.h"
+#include "../registry/sf_mod_registry.h"
 
 #include "hooks/sf_refresh_hook.h"
 #include "hooks/sf_endspell_hook.h"
@@ -37,6 +38,8 @@ void initialize_data_hooks()
     // Used in Iterator for AOE Spells Dispose
     initialize_wrapper_data_hooks();
 
+    initialize_onhit_data_hooks();
+
     // Used to print to the game console
     initialize_console_data_hooks();
 
@@ -61,6 +64,10 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(figure, getManaCurrent, 0x2b29c0);
     DEFINE_FUNCTION(figure, getPosition, 0x2caaf0);
     DEFINE_FUNCTION(figure, setTask, 0x2b7110);
+    DEFINE_FUNCTION(figure, getWeaponStats, 0x2b30a0);
+    DEFINE_FUNCTION(figure, getTargetAction, 0x2b2f50);
+    DEFINE_FUNCTION(figure, getAggroValue, 0x2b1ab0);
+    DEFINE_FUNCTION(figure, setAggroValue, 0x2b6670);
 
     log_info("| - SpellAPI Hooks");
     // Define the function pointers for SpellFunctions group
@@ -120,6 +127,7 @@ void initialize_data_hooks()
     INCLUDE_FUNCTION(spell, addSpell, &sf_spelltype_hook);
     INCLUDE_FUNCTION(spell, getSpellID, &sf_get_spell_id);
     INCLUDE_FUNCTION(spell, checkCanApply, &sf_refresh_hook)
+    INCLUDE_FUNCTION(spell, getSpellTag, &getSpellTag);
 
     log_info("| - FigureAPI Wrappers");
     INCLUDE_FUNCTION(figure, addBonusMultToStatistic, &addBonusMultToStatistic);
@@ -133,6 +141,7 @@ void initialize_data_hooks()
     INCLUDE_FUNCTION(registration, linkTypeHandler, &linkTypeHandler);
     INCLUDE_FUNCTION(registration, linkEffectHandler, &linkEffectHandler);
     INCLUDE_FUNCTION(registration, linkEndHandler, &linkEndHandler);
+    INCLUDE_FUNCTION(registration, linkOnHitHandler, &linkOnHitHandler);
     INCLUDE_FUNCTION(registration, applySpellTag, &applySpellTag);
     INCLUDE_FUNCTION(registration, linkSubEffectHandler, &linkSubEffectHandler);
     INCLUDE_FUNCTION(registration, linkRefreshHandler, &linkRefreshHandler);
@@ -249,5 +258,5 @@ void initialize_beta_hooks()
     initialize_menuload_hook();
 
     log_info("Hooking On Hit Trigger");
-    //    initialize_onhit_hook();
+    initialize_onhit_hook();
 }

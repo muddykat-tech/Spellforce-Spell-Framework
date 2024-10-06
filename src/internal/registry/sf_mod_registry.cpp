@@ -5,6 +5,7 @@
 #include "sf_spellend_registry.h"
 #include "sf_subeffect_registry.h"
 #include "sf_spellrefresh_registry.h"
+#include "sf_onhit_registry.h"
 #include "sf_spelldamage_registry.h"
 
 #include <windows.h>
@@ -24,14 +25,17 @@ SFSpell *__thiscall registerSpell(uint16_t spell_id)
     SFSpell *sf_spell = new SFSpell;
     sf_spell->spell_id = spell_id;
     sf_spell->spell_effect_id = 0x00;
+    sf_spell->spell_tag = SpellTag::NONE;
     sf_spell->spell_type_handler = nullptr;
     sf_spell->spell_effect_handler = nullptr;
     sf_spell->spell_end_handler = nullptr;
+    sf_spell->spell_onhit_handler = nullptr;
     sf_spell->spell_refresh_handler = nullptr;
     sf_spell->sub_effect_handler = nullptr;
     sf_spell->parent_mod = g_current_mod;
     sf_spell->deal_damage_handler = nullptr;
     sf_spell->damage_phase = SpellDamagePhase::DEFAULT;
+    sf_spell->hit_phase = OnHitPhase::PHASE_5;
     g_internal_spell_list.push_back(sf_spell);
 
     return sf_spell;
@@ -45,6 +49,12 @@ void __thiscall applySpellTag(SFSpell *spell, SpellTag tag)
 void __thiscall linkTypeHandler(SFSpell *spell, handler_ptr typeHandler)
 {
     spell->spell_type_handler = typeHandler;
+}
+
+void __thiscall linkOnHitHandler(SFSpell *spell, onhit_handler_ptr onhitHandler, OnHitPhase phase)
+{
+    spell->spell_onhit_handler = onhitHandler;
+    spell->hit_phase = phase;
 }
 
 void __thiscall linkEffectHandler(SFSpell *spell, uint16_t spell_effect_id, handler_ptr effectHandler)
@@ -73,6 +83,19 @@ void __thiscall linkDealDamageHandler(SFSpell *spell, damage_handler_ptr handler
     spell->deal_damage_handler = handler;
     spell->damage_phase = phase;
 }
+
+int __thiscall getSpellTag(uint16_t spell_line_id)
+{
+    for (auto &entry : g_internal_spell_list)
+    {
+        if (entry->spell_id == spell_line_id)
+        {
+            return entry->spell_tag;
+        }
+    }
+    return SpellTag::NONE;
+}
+
 /**
  * Registers the mod spells and performs basic conflict checking.
  *
@@ -104,8 +127,10 @@ void register_mod_spells()
         handler_ptr spell_end_handler = spell_data->spell_end_handler;
         refresh_handler_ptr spell_refresh_handler = spell_data->spell_refresh_handler;
         sub_effect_handler_ptr sub_effect_handler = spell_data->sub_effect_handler;
+        onhit_handler_ptr onhit_handler = spell_data->spell_onhit_handler;
         damage_handler_ptr deal_damage_handler = spell_data->deal_damage_handler;
-        SpellDamagePhase phase = spell_data->damage_phase;
+        SpellDamagePhase damage_phase = spell_data->damage_phase;
+        OnHitPhase onhit_phase = spell_data->hit_phase;
         SFMod *parent_mod = spell_data->parent_mod;
 
         g_current_mod = spell_data->parent_mod;
@@ -186,7 +211,6 @@ void register_mod_spells()
 
         if (spell_refresh_handler != nullptr)
         {
-
             registerSpellRefreshHandler(spell_id, spell_refresh_handler);
         }
 
@@ -200,9 +224,14 @@ void register_mod_spells()
             registerSubEffectHandler(spell_id, sub_effect_handler);
         }
 
+        if (onhit_handler != nullptr)
+        {
+            registerOnHitHandler(spell_id, onhit_handler, onhit_phase);
+        }
+
         if (deal_damage_handler != nullptr)
         {
-            registerSpellDamageHandler(spell_id, deal_damage_handler, phase);
+            registerSpellDamageHandler(spell_id, deal_damage_handler, damage_phase);
         }
     }
 
