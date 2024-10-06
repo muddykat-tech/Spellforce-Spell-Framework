@@ -45,7 +45,15 @@ void __thiscall iceblade_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 
 uint16_t __thiscall iceblade_onhit_handler(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t damage)
 {
+    // 0x7fff is an amount of damage which critical hits ability deals to as part of instant kill logic
+    // instead of checking for spell effect, we can determine it with damage comparison
+    // such implementation would also automatically handle other abilities which work as critical hits, in case we make any
+    // if there was no damage or damage was supposed to insta-kill, we interrupt the handler, because further calculations will be made in vain
 
+    if (damage == 0 || damage == 0x7fff)
+    {
+        return damage;
+    }
     uint16_t spell_index = toolboxAPI->getSpellIndexOfType(_this->CGdFigureToolBox, source_index, ICEBLADE_LINE, 0);
 
     SF_GdSpell *spell = &_this->CGdSpell->active_spell_list[spell_index];
@@ -62,63 +70,46 @@ uint16_t __thiscall iceblade_onhit_handler(SF_CGdFigureJobs *_this, uint16_t sou
 
     spellAPI->getResourceSpellData(_this->CGdResource, &spell_data, effect_info.spell_id);
 
-    // 0x7fff is an amount of damage which critical hits ability deals to as part of instant kill logic
-    // instead of checking for spell effect, we can determine it with damage comparison
-    // such implementation would also automatically handle other abilities which work as critical hits, in case we make any
-    // if there was no damage or damage was supposed to insta-kill, we interrupt the handler, because further calculations will be made in vain
-    if (damage == 0 || damage == 0x7fff)
-        return damage;
-
     SF_SGtFigureAction action;
     figureAPI->getTargetAction(_this->CGdFigure, &action, source_index);
 
+    // Pass though is WIP, so we inline the function here
     bool isMeleeAttack = 0;
-
     if ((action.type == 10000) || (action.type == 0x2711))
     {
         isMeleeAttack = 1;
     }
 
-
     if (isMeleeAttack)
     {
-        // we declare structure for relative position of visual effect
-        SF_CGdTargetData relative_data;
-        figureAPI->getPosition(_this->CGdFigure, &relative_data.position, target_index);
-        relative_data.entity_type = 4;
-        relative_data.entity_index = 0;
-        uint32_t unused;
-
-
-        SF_Rectangle aux_data;
-        aux_data.partA = 0;
-        aux_data.partB = 0;
-
-        // we apply the visual effect filling the area which we specified above
-        spellAPI->addVisualEffect(_this->CGdSpell, spell_index, kGdEffectSpellDOTHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 0x15, &aux_data);
-
         uint16_t frost_resistance = spellAPI->getChanceToResistSpell(_this->CGdSpell->unkn2, source_index, target_index, effect_info);
 
-        uint16_t ice_damage = uint16_t(damage * spell_data.params[0] / 100);
+        uint16_t ice_damage = uint16_t((damage * spell_data.params[0]) / 100);
 
-        damage -= ice_damage;
+        if (damage >= ice_damage)
+        {
+            damage -= ice_damage;
+        }
+        else
+        {
+            damage = 0;
+        }
 
-        ice_damage -= uint16_t(ice_damage * frost_resistance / 100);
+        ice_damage -= uint16_t((ice_damage * frost_resistance) / 100);
 
         toolboxAPI->dealDamage(_this->CGdFigureToolBox, source_index, target_index, ice_damage, 1, 0, 0);
+        /*
+                char aliveInfo[256];
+                sprintf(aliveInfo, "Physical damage is: %hd \n", damage);
+                logger->logInfo(aliveInfo);
 
-        char aliveInfo[256];
-        sprintf(aliveInfo, "Physical damage is: %hd \n", damage);
-        logger->logInfo(aliveInfo);
-
-        sprintf(aliveInfo, "Ice damage is: %hd \n", ice_damage);
-        logger->logInfo(aliveInfo);
+                sprintf(aliveInfo, "Ice damage is: %hd \n", ice_damage);
+                logger->logInfo(aliveInfo);
+        */
     }
-
 
     return damage;
 }
-
 
 void __thiscall iceblade_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
@@ -131,56 +122,51 @@ void __thiscall iceblade_effect_handler(SF_CGdSpell *_this, uint16_t spell_index
     // we increase amount of ticks passed by 1
     spellAPI->addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1);
 
-
     if (current_tick == 0 && spellAPI->checkCanApply(_this, spell_index))
-        {
-            // we load the spell parameters from GameData.cff
-            // we'll need them only in tick 0
-            // we will access armor bonus directly with spell XData in tick 1
-            SF_CGdResourceSpell spell_data;
-            spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+    {
+        // we load the spell parameters from GameData.cff
+        // we'll need them only in tick 0
+        // we will access armor bonus directly with spell XData in tick 1
+        SF_CGdResourceSpell spell_data;
+        spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
 
-            // we store index of the spellcaster
-            uint16_t source_index = _this->active_spell_list[spell_index].source.entity_index;
+        // we store index of the spellcaster
+        uint16_t source_index = _this->active_spell_list[spell_index].source.entity_index;
 
-            // we declare structure for relative position of visual effect
-            SF_CGdTargetData relative_data;
-            figureAPI->getPosition(_this->SF_CGdFigure, &relative_data.position, source_index);
-            relative_data.entity_type = 4;
-            relative_data.entity_index = 0;
-            uint32_t unused;
+        // we declare structure for relative position of visual effect
+        SF_CGdTargetData relative_data;
+        figureAPI->getPosition(_this->SF_CGdFigure, &relative_data.position, source_index);
+        relative_data.entity_type = 4;
+        relative_data.entity_index = 0;
+        uint32_t unused;
 
+        SF_Rectangle aux_data;
+        aux_data.partA = 0;
+        aux_data.partB = 0;
 
-            SF_Rectangle aux_data;
-            aux_data.partA = 0;
-            aux_data.partB = 0;
+        // we apply the visual effect filling the area which we specified above
+        spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 0, &aux_data);
 
-            // we apply the visual effect filling the area which we specified above
-            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 0, &aux_data);
+        // we disable the spell effect from being triggered until specified amount of time passes
+        uint16_t ticks_interval = spell_data.params[1];
+        _this->active_spell_list[spell_index].to_do_count = (uint16_t)((ticks_interval * 10) / 1000);
 
+        // we have to activate the flag F_CHECK_SPELLS_BEFORE_JOB in order to make it possible for Deal Damage handler to trigger when the damage is received
+        _this->SF_CGdFigure->figures[source_index].flags |= F_CHECK_SPELLS_BEFORE_JOB;
 
-            // we disable the spell effect from being triggered until specified amount of time passes
-            uint16_t ticks_interval = spell_data.params[1];
-            _this->active_spell_list[spell_index].to_do_count = (uint16_t)((ticks_interval * 10) / 1000);
-
-            // we have to activate the flag F_CHECK_SPELLS_BEFORE_JOB in order to make it possible for Deal Damage handler to trigger when the damage is received
-            _this->SF_CGdFigure->figures[source_index].flags |= F_CHECK_SPELLS_BEFORE_JOB;
-
-            // we activate the flag F_CHECK_SPELLS_BEFORE_BATTLE for the sake of optimization
-            _this->active_spell_list[spell_index].flags |= 2;
-        }
-        else
-        // current_tick == 1 or spellCheckCanApply == 0, either way, the spell has come to end
-        {
-            // we finish the spell and remove it from the active spells list
-            spellAPI->figTryClrCHkSPlBfrJob2(_this, spell_index);
-            spellAPI->figClrChkSplBfrChkBattle(_this, spell_index, 0);
-            spellAPI->removeDLLNode(_this, spell_index);
-            spellAPI->setEffectDone(_this, spell_index, 0);
-        }
+        // we activate the flag F_CHECK_SPELLS_BEFORE_BATTLE for the sake of optimization
+        _this->active_spell_list[spell_index].flags |= 2;
+    }
+    else
+    // current_tick == 1 or spellCheckCanApply == 0, either way, the spell has come to end
+    {
+        // we finish the spell and remove it from the active spells list
+        spellAPI->figTryClrCHkSPlBfrJob2(_this, spell_index);
+        spellAPI->figClrChkSplBfrChkBattle(_this, spell_index, 0);
+        spellAPI->removeDLLNode(_this, spell_index);
+        spellAPI->setEffectDone(_this, spell_index, 0);
+    }
 }
-
-
 
 int __thiscall iceblade_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index) // we casted shieldwall universal again before the previous expired
 {
@@ -193,20 +179,17 @@ int __thiscall iceblade_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index
     uint16_t spell_index_current = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, target_index, ICEBLADE_LINE, spell_index);
 
     if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index, ICEBLADE_LINE) && spell_index_current != 0)
-       // the ICEBLADE spell already exists over the target and target isn't the spellcaster
-       // we return 0, because the spell can't be applied to target at this moment
-        {
-            return 0;
-        }
+    // the ICEBLADE spell already exists over the target and target isn't the spellcaster
+    // we return 0, because the spell can't be applied to target at this moment
+    {
+        return 0;
+    }
     else
-        // the target isn't affected by the ICEBLADE spell, we allow to apply the spell effect to target
-        {
-            return 1;
-        }
+    // the target isn't affected by the ICEBLADE spell, we allow to apply the spell effect to target
+    {
+        return 1;
+    }
 }
-
-
-
 
 /***
  * This function MUST be present in your code with the exact declaration
@@ -222,7 +205,6 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     iteratorAPI = sfsf->iteratorAPI;
     registrationAPI = sfsf->registrationAPI;
     logger = sfsf->logAPI;
-
 
     // we register handlers for custom spell
     SFSpell *iceblade_spell = registrationAPI->registerSpell(ICEBLADE_LINE);
@@ -266,4 +248,3 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 
     return TRUE;
 }
-
