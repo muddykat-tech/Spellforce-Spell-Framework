@@ -2,9 +2,6 @@
 #include <windows.h>
 #include <stdio.h>
 
-// this example shows another way to implement the shieldwall spell
-// it implements shieldwall via single aoe spell instead of combination of two spells (AoE and individual)
-// such implementation is closer to vanilla implementation of AoE buffs
 
 // We declare macros for Iceblade Spell Type and Spell Job
 // Spell Type 0xf8 = 248, Spell Job 0xaf = 175
@@ -30,6 +27,7 @@ void __thiscall iceblade_type_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     // we associate spell type with a spell job
     _this->active_spell_list[spell_index].spell_job = ICEBLADE_JOB;
+    // we initialize the ticks counter
     spellAPI->setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
 }
 
@@ -53,6 +51,17 @@ void __thiscall iceblade_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 
 uint16_t __thiscall iceblade_onhit_handler(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t damage)
 {
+
+    // first of all, we should check for dead-ends such as zero damage or automatical oneshot provided by Critical Strikes spell
+
+    // 0x7fff is an amount which Critical Strikes uses to turn damage into oneshot
+    // instead of checking for spell effect lingering over spellcaster, we can know that with doing damage comparison
+    // also, in case there would be other oneshotting spells, our algorithm would automatically hook them on without the need to modify it
+    if (damage == 0 || damage == 0x7fff)
+    {
+        return damage;
+    }
+
     // unlike most of handlers, On_Hit handler uses Figure Jobs instead of Spell as global object
     // it means, we have to manually get spell index of Iceblade
     uint16_t spell_index = toolboxAPI->getSpellIndexOfType(_this->CGdFigureToolBox, source_index, ICEBLADE_LINE, 0);
@@ -72,13 +81,6 @@ uint16_t __thiscall iceblade_onhit_handler(SF_CGdFigureJobs *_this, uint16_t sou
     SF_CGdResourceSpell spell_data;
     spellAPI->getResourceSpellData(_this->CGdResource, &spell_data, effect_info.spell_id);
 
-    // we check for dead-ends such as zero damage or automatical oneshot dealt with Critical Strikes spell
-    // 0x7fff is an amount which Critical Strikes uses to turn damage into oneshot
-    // instead of checking for spell effect lingering over spellcaster, we can know that with doing damage comparison
-    // also, in case there would be other oneshotting spells, our algorithm would automatically hook them on without the need to modify it
-    if (damage == 0 || damage == 0x7fff)
-        return damage;
-
 
 
     // we declare structure to save the spellcaster's action in it
@@ -88,9 +90,10 @@ uint16_t __thiscall iceblade_onhit_handler(SF_CGdFigureJobs *_this, uint16_t sou
     // we determine spellcaster's action which triggered the On Hit Handler with figureAPI function
     figureAPI->getTargetAction(_this->CGdFigure, &action, source_index);
 
+
+    // Pass though is WIP, so we inline the function here
     // we initialize boolean value which would save the result of our check
     bool isMeleeAttack = 0;
-
     // numbers 10000 or 0x2711 stand for melee, if action type matches either of these numbers, it means that the On Hit Handler was triggered with a melee attack
     if ((action.type == 10000) || (action.type == 0x2711))
     {
@@ -101,7 +104,6 @@ uint16_t __thiscall iceblade_onhit_handler(SF_CGdFigureJobs *_this, uint16_t sou
 
     if (isMeleeAttack)
     {
-
         // we learn target's resistance to Ice magic
         // getChanceToResistSpell automatically determines the type of magic using effect info as the reference
         uint16_t frost_resistance = spellAPI->getChanceToResistSpell(_this->CGdSpell->unkn2, source_index, target_index, effect_info);
@@ -111,33 +113,22 @@ uint16_t __thiscall iceblade_onhit_handler(SF_CGdFigureJobs *_this, uint16_t sou
 
         // we subtract the convereted damage from total damage
         // we will return the reduced physical damage in the end of the handler's logic, and game engine will process it according to usual rules
-        damage -= ice_damage;
+        // in case the percentage is higher than 100, we should make sure it won't reduce the physical damage to negative value
+        if (damage >= ice_damage)
+        {
+            damage -= ice_damage;
+        }
+        else
+        {
+            damage = 0;
+        }
 
         // we modify ice damage with target's ice resistance
-        ice_damage -= uint16_t(ice_damage * frost_resistance / 100);
+        ice_damage -= uint16_t((ice_damage * frost_resistance) / 100);
 
         // we deal ice damage to a target directly within On Hit Handler, we can't deliver it in other way
         toolboxAPI->dealDamage(_this->CGdFigureToolBox, source_index, target_index, ice_damage, 1, 0, 0);
-
-        // it's also worth of noting that with editing lua.scripts, we can create the visual effect which will be applied to the target hit with "Iceblade"
-        // hence, here comes the code which controls this part
-
-        // we declare structure for relative position of visual effect
-        SF_CGdTargetData relative_data;
-        figureAPI->getPosition(_this->CGdFigure, &relative_data.position, target_index);
-        relative_data.entity_type = 4;
-        relative_data.entity_index = 0;
-        uint32_t unused;
-
-
-        SF_Rectangle aux_data;
-        aux_data.partA = 0;
-        aux_data.partB = 0;
-
-        // we apply the visual effect to the target
-        spellAPI->addVisualEffect(_this->CGdSpell, spell_index, kGdEffectSpellDOTHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 0x15, &aux_data);
     }
-
 
     // we should return damage regardless of whether it was modified or not
     return damage;
@@ -226,7 +217,7 @@ int __thiscall iceblade_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
     uint16_t source_index = spell->source.entity_index;
 
-    // we check whether the spellcaster is already having Iceblade effect over them
+    // we check whether the spellcaster has the Iceblade applied to it already
     // this check would return 0 if caster is affected only with the instance of Iceblade which triggered the refresh handler
     // otherwise this check would return the spell index of another instance of Iceblade
     uint16_t spell_index_current = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, source_index, ICEBLADE_LINE, spell_index);
@@ -282,7 +273,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
  ***/
 extern "C" __declspec(dllexport) SFMod *RegisterMod(SpellforceSpellFramework *framework)
 {
-    return framework->createModInfo("Iceblade", "1.0.0", "Teekius", "A mod designed to demonstrate On Hit Spell Handler. The Iceblade spell transforms a percentage of damage done with melee attack into frost damage.");
+    return framework->createModInfo("Iceblade", "1.0.0", "Teekius", "A mod designed to demonstrate On Hit Spell Handler. The Iceblade spell transforms a percentage of damage dealt with melee attack into ice damage.");
 }
 
 // Required to be present by, not required for any functionality
@@ -309,4 +300,3 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 
     return TRUE;
 }
-
