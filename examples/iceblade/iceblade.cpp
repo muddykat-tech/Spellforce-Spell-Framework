@@ -41,8 +41,6 @@ void __thiscall iceblade_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
     spellAPI->setEffectDone(_this, spell_index, 0);
 }
 
-
-
 // we declare On Hit Handler
 // this handler will be triggered whenever a spellcaster makes an attack with the weapon against an enemy
 // the handler intercepts the damage dealt which will be dealt with an attack to the target and allows us to modify it according to our own rules
