@@ -2,7 +2,6 @@
 #include <windows.h>
 #include <stdio.h>
 
-
 // We declare macros for Iceblade Spell Type and Spell Job
 // Spell Type 0xf8 = 248, Spell Job 0xaf = 175
 
@@ -11,7 +10,6 @@
 
 #define ICEBLADE_LINE 0xf8
 #define ICEBLADE_JOB 0xaf
-
 
 SpellforceSpellFramework *sfsf;
 SpellFunctions *spellAPI;
@@ -41,8 +39,6 @@ void __thiscall iceblade_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
     spellAPI->setEffectDone(_this, spell_index, 0);
 }
 
-
-
 // we declare On Hit Handler
 // this handler will be triggered whenever a spellcaster makes an attack with the weapon against an enemy
 // the handler intercepts the damage dealt which will be dealt with an attack to the target and allows us to modify it according to our own rules
@@ -69,7 +65,6 @@ uint16_t __thiscall iceblade_onhit_handler(SF_CGdFigureJobs *_this, uint16_t sou
     // we retrieve the spell which exists behind given On Hit handler
     SF_GdSpell *spell = &_this->CGdSpell->active_spell_list[spell_index];
 
-
     // we declare effect_info structure, because we'll need it later for function which retrieves target's resistance to ice
     SF_SpellEffectInfo effect_info;
 
@@ -81,15 +76,12 @@ uint16_t __thiscall iceblade_onhit_handler(SF_CGdFigureJobs *_this, uint16_t sou
     SF_CGdResourceSpell spell_data;
     spellAPI->getResourceSpellData(_this->CGdResource, &spell_data, effect_info.spell_id);
 
-
-
     // we declare structure to save the spellcaster's action in it
     // we'll need it to determine whether the attack was ranged or melee
     SF_SGtFigureAction action;
 
     // we determine spellcaster's action which triggered the On Hit Handler with figureAPI function
     figureAPI->getTargetAction(_this->CGdFigure, &action, source_index);
-
 
     // Pass though is WIP, so we inline the function here
     // we initialize boolean value which would save the result of our check
@@ -99,8 +91,6 @@ uint16_t __thiscall iceblade_onhit_handler(SF_CGdFigureJobs *_this, uint16_t sou
     {
         isMeleeAttack = 1;
     }
-
-
 
     if (isMeleeAttack)
     {
@@ -134,7 +124,6 @@ uint16_t __thiscall iceblade_onhit_handler(SF_CGdFigureJobs *_this, uint16_t sou
     return damage;
 }
 
-
 void __thiscall iceblade_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     // we pull the pointer for this instance of spell
@@ -145,7 +134,6 @@ void __thiscall iceblade_effect_handler(SF_CGdSpell *_this, uint16_t spell_index
 
     // we increase amount of ticks passed by 1, ensuring that the next time effect handler is triggered, it will start with tick 1
     spellAPI->addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1);
-
 
     // we check the current tick
     // during tick 0 we will initialize the spell main logic if it's allowed with refresh handler
@@ -170,7 +158,6 @@ void __thiscall iceblade_effect_handler(SF_CGdSpell *_this, uint16_t spell_index
             relative_data.entity_index = 0;
             uint32_t unused;
 
-
             SF_Rectangle aux_data;
             aux_data.partA = 0;
             aux_data.partB = 0;
@@ -185,13 +172,13 @@ void __thiscall iceblade_effect_handler(SF_CGdSpell *_this, uint16_t spell_index
             // we have to activate the flag F_CHECK_SPELLS_BEFORE_JOB in order to make it possible for On Hit handler to trigger when the spellcaster makes an attack
             _this->SF_CGdFigure->figures[source_index].flags |= F_CHECK_SPELLS_BEFORE_JOB;
 
-            // we activate the flag F_CHECK_SPELLS_BEFORE_BATTLE for the sake of optimization
-            _this->active_spell_list[spell_index].flags |= 2;
+            // we activate the flag CHECK_SPELLS_BEFORE_JOB2 for the sake of optimization
+            _this->active_spell_list[spell_index].flags |= CHECK_SPELLS_BEFORE_JOB2;
         }
         else
         // the refresh handler indicated that the current instance of iceblade can't be applied, because the target is already affected with the same spell
         {
-            //in such case we finish the spell and remove it from the active spells list
+            // in such case we finish the spell and remove it from the active spells list
             spellAPI->removeDLLNode(_this, spell_index);
             spellAPI->setEffectDone(_this, spell_index, 0);
         }
@@ -205,10 +192,8 @@ void __thiscall iceblade_effect_handler(SF_CGdSpell *_this, uint16_t spell_index
         // we finish the spell and remove it from the active spells list
         spellAPI->removeDLLNode(_this, spell_index);
         spellAPI->setEffectDone(_this, spell_index, 0);
-        }
+    }
 }
-
-
 
 int __thiscall iceblade_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index) // we casted shieldwall universal again before the previous expired
 {
@@ -221,7 +206,6 @@ int __thiscall iceblade_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index
     // otherwise this check would return the spell index of another instance of Iceblade
     uint16_t spell_index_current = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, source_index, ICEBLADE_LINE, spell_index);
 
-
     // if the check returned number other than 0, it means other instance of Iceblade prevents the current one from being applied
     // in such case we should return false, and spell gets automatically terminated within Spell Effect handler
     if (spell_index_current != 0)
@@ -229,15 +213,12 @@ int __thiscall iceblade_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index
         return 0;
     }
     else
-        // if the check returned 0, it means that there are no previous instances of Iceblade
-        // in such case we return true, the spell continues operating as it's supposed to
+    // if the check returned 0, it means that there are no previous instances of Iceblade
+    // in such case we return true, the spell continues operating as it's supposed to
     {
         return 1;
     }
 }
-
-
-
 
 /***
  * This function MUST be present in your code with the exact declaration
@@ -253,7 +234,6 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     iteratorAPI = sfsf->iteratorAPI;
     registrationAPI = sfsf->registrationAPI;
     logger = sfsf->logAPI;
-
 
     // we register handlers for custom spell
     SFSpell *iceblade_spell = registrationAPI->registerSpell(ICEBLADE_LINE);
@@ -299,4 +279,3 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 
     return TRUE;
 }
-
