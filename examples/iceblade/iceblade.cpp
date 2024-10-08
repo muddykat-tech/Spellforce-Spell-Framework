@@ -195,29 +195,35 @@ void __thiscall iceblade_effect_handler(SF_CGdSpell *_this, uint16_t spell_index
     }
 }
 
-int __thiscall iceblade_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index) // we casted shieldwall universal again before the previous expired
+// the Iceblade is freely refreshable
+// it means that when it's casted on a spellcaster again before its duration expired,
+// it would remove the old instance and replace it with a new one, this would update the spell duration
+
+int __thiscall iceblade_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     // we store spell pointer and source index for our convenience
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
     uint16_t source_index = spell->source.entity_index;
 
-    // we check whether the spellcaster has the Iceblade applied to it already
-    // this check would return 0 if caster is affected only with the instance of Iceblade which triggered the refresh handler
-    // otherwise this check would return the spell index of another instance of Iceblade
-    uint16_t spell_index_current = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, source_index, ICEBLADE_LINE, spell_index);
+    // we should check for whether the spellcaster is affected with more than a single instance of Iceblade
+    uint16_t pruned_spell_index = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, source_index, ICEBLADE_LINE, spell_index);
+    // because we passed spell_index as last argument of the function, this index will be ignored
+    // the function will return the spell index of another Iceblade instance, if there is any
+    // if there is no other instance of Iceblade than the current, the function will return 0
 
-    // if the check returned number other than 0, it means other instance of Iceblade prevents the current one from being applied
-    // in such case we should return false, and spell gets automatically terminated within Spell Effect handler
-    if (spell_index_current != 0)
+    // if the function returned any spell index, we must prune that instance to make a space for the new one
+    if (pruned_spell_index != 0)
     {
-        return 0;
+        // first we should clear the flags which the old instance of Iceblade set up 
+        spellAPI->figTryClrCHkSPlBfrJob2(_this, pruned_spell_index);
+        spellAPI->figClrChkSplBfrChkBattle(_this, pruned_spell_index, 0);
+        // then we should end the previous instance
+        spellAPI->removeDLLNode(_this, pruned_spell_index);
+        spellAPI->setEffectDone(_this, pruned_spell_index, 0);
     }
-    else
-    // if the check returned 0, it means that there are no previous instances of Iceblade
-    // in such case we return true, the spell continues operating as it's supposed to
-    {
-        return 1;
-    }
+
+    // we return true showing that the new instance can be applied to the target
+    return 1;
 }
 
 /***
