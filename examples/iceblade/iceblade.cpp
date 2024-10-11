@@ -165,22 +165,15 @@ void __thiscall iceblade_effect_handler(SF_CGdSpell *_this, uint16_t spell_index
             // we apply the visual effect to the target (requires editing lua scripts to make the continous visual effect as long as the spell is active)
             spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 0, &aux_data);
 
-            // we disable the spell effect from being triggered until specified amount of time passes
-            uint16_t ticks_interval = spell_data.params[1];
-            _this->active_spell_list[spell_index].to_do_count = (uint16_t)((ticks_interval * 10) / 1000);
-
             // we have to activate the flag F_CHECK_SPELLS_BEFORE_JOB in order to make it possible for On Hit handler to trigger when the spellcaster makes an attack
             _this->SF_CGdFigure->figures[source_index].flags |= F_CHECK_SPELLS_BEFORE_JOB;
 
             // we activate the flag CHECK_SPELLS_BEFORE_JOB2 for the sake of optimization
             _this->active_spell_list[spell_index].flags |= CHECK_SPELLS_BEFORE_JOB2;
-        }
-        else
-        // the refresh handler indicated that the current instance of iceblade can't be applied, because the target is already affected with the same spell
-        {
-            // in such case we finish the spell and remove it from the active spells list
-            spellAPI->removeDLLNode(_this, spell_index);
-            spellAPI->setEffectDone(_this, spell_index, 0);
+            
+            // we disable the spell effect from being triggered until specified amount of time passes
+            uint16_t ticks_interval = spell_data.params[1];
+            _this->active_spell_list[spell_index].to_do_count = (uint16_t)((ticks_interval * 10) / 1000);
         }
     }
     else
@@ -222,7 +215,7 @@ int __thiscall iceblade_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index
         spellAPI->setEffectDone(_this, pruned_spell_index, 0);
     }
 
-    // we return true showing that the new instance can be applied to the target
+    // we return true indicating that the new instance can be applied to the target
     return 1;
 }
 
