@@ -74,6 +74,7 @@ uint16_t summonCreature(SF_CGdFigureToolbox *_this, uint16_t master_index, uint1
         uint16_t owner = _this->CGdFigure->figures[master_index].owner;
         summon_index = toolboxAPI->addUnit(_this, real_pos.X, real_pos.Y, owner, creature_type, 0x13, 0,  _this->CGdFigure->figures[master_index].faction, 0);
         //figureAPI->setTask
+        _this->CGdFigure->figures[summon_index].race = _this->CGdFigure->figures[master_index].race;
     }
     return summon_index;
 }
