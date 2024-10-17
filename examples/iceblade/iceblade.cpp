@@ -48,9 +48,9 @@ void __thiscall iceblade_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 uint16_t __thiscall iceblade_onhit_handler(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t damage)
 {
 
-    // first of all, we should check for dead-ends such as zero damage or automatical oneshot provided by Critical Strikes spell
+    // first of all, we should check for dead-ends such as zero damage or automatical oneshot provided by Critical Hits spell
 
-    // 0x7fff is an amount which Critical Strikes uses to turn damage into oneshot
+    // 0x7fff is an amount which Critical Hits uses to turn damage into oneshot
     // instead of checking for spell effect lingering over spellcaster, we can know that with doing damage comparison
     // also, in case there would be other oneshotting spells, our algorithm would automatically hook them on without the need to modify it
     if (damage == 0 || damage == 0x7fff)
