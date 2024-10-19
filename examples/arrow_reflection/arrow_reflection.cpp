@@ -1,4 +1,4 @@
-#include ".../.../api/sfsf.h"
+#include "../../src/api/sfsf.h"
 #include <windows.h>
 #include <stdio.h>
 
@@ -67,67 +67,67 @@ uint32_t getDistance(SF_Coord *pointA, SF_Coord *pointB)
     return ((delta * 0xd) >> 5) + uVar4;
 }
 
-SF_Rectangle get_spell_vector (SF_Coord* source_position, SF_Coord* target_position, SF_Rectangle* spell_vector)
+SF_Rectangle *get_spell_vector(SF_Coord *source_position, SF_Coord *target_position, SF_Rectangle *spell_vector)
 {
-                /*uint16_t maxY = (_this->CGdFigure->figures[source_index].position.Y <= _this->CGdFigure->figures[target.entity_index].position.Y)
-                                    ? (_this->CGdFigure->figures[target.entity_index].position.Y)
-                                    : (_this->CGdFigure->figures[source_index].position.Y);
+    /*uint16_t maxY = (_this->CGdFigure->figures[source_index].position.Y <= _this->CGdFigure->figures[target.entity_index].position.Y)
+                        ? (_this->CGdFigure->figures[target.entity_index].position.Y)
+                        : (_this->CGdFigure->figures[source_index].position.Y);
 
-                uint16_t maxX = (_this->CGdFigure->figures[source_index].position.X <= _this->CGdFigure->figures[target.entity_index].position.X)
-                                    ? (_this->CGdFigure->figures[target.entity_index].position.X)
-                                    : (_this->CGdFigure->figures[source_index].position.X);
+    uint16_t maxX = (_this->CGdFigure->figures[source_index].position.X <= _this->CGdFigure->figures[target.entity_index].position.X)
+                        ? (_this->CGdFigure->figures[target.entity_index].position.X)
+                        : (_this->CGdFigure->figures[source_index].position.X);
 
-                uint16_t minY = (_this->CGdFigure->figures[source_index].position.Y > _this->CGdFigure->figures[target.entity_index].position.Y)
-                                    ? (_this->CGdFigure->figures[target.entity_index].position.Y)
-                                    : (_this->CGdFigure->figures[source_index].position.Y);
+    uint16_t minY = (_this->CGdFigure->figures[source_index].position.Y > _this->CGdFigure->figures[target.entity_index].position.Y)
+                        ? (_this->CGdFigure->figures[target.entity_index].position.Y)
+                        : (_this->CGdFigure->figures[source_index].position.Y);
 
-                uint16_t minX = (_this->CGdFigure->figures[source_index].position.X > _this->CGdFigure->figures[target.entity_index].position.X)
-                                    ? (_this->CGdFigure->figures[target.entity_index].position.X)
-                                    : (_this->CGdFigure->figures[source_index].position.X);*/
+    uint16_t minX = (_this->CGdFigure->figures[source_index].position.X > _this->CGdFigure->figures[target.entity_index].position.X)
+                        ? (_this->CGdFigure->figures[target.entity_index].position.X)
+                        : (_this->CGdFigure->figures[source_index].position.X);*/
 
-                uint16_t maxY = (source_position->Y <= target_position->Y)
-                                    ? (target_position->Y)
-                                    : (source_position->Y);
+    uint16_t maxY = (source_position->Y <= target_position->Y)
+                        ? (target_position->Y)
+                        : (source_position->Y);
 
-                uint16_t maxX = (source_position->X <= target_position->X)
-                                    ? (target_position->X)
-                                    : (source_position->X);
+    uint16_t maxX = (source_position->X <= target_position->X)
+                        ? (target_position->X)
+                        : (source_position->X);
 
-                uint16_t minY = (source_position->Y > target_position->Y)
-                                    ? (target_position->Y)
-                                    : (source_position->Y);
+    uint16_t minY = (source_position->Y > target_position->Y)
+                        ? (target_position->Y)
+                        : (source_position->Y);
 
-                uint16_t minX = (source_position->X > target_position->X)
-                                    ? (target_position->X)
-                                    : (source_position->X);
+    uint16_t minX = (source_position->X > target_position->X)
+                        ? (target_position->X)
+                        : (source_position->X);
 
-                SF_Coord p1;
-                SF_Coord p2;
-                p1.X = maxX;
-                if (minX < maxX)
-                {
-                    p1.X = minX;
-                }
-                p1.Y = maxY;
-                if (minY < maxY)
-                {
-                    p1.Y = minY;
-                }
+    SF_Coord p1;
+    SF_Coord p2;
+    p1.X = maxX;
+    if (minX < maxX)
+    {
+        p1.X = minX;
+    }
+    p1.Y = maxY;
+    if (minY < maxY)
+    {
+        p1.Y = minY;
+    }
 
-                p2.X = maxX;
-                if (maxX <= minX)
-                {
-                    p2.X = minX;
-                }
-                p2.Y = maxY;
-                if (maxY <= minY)
-                {
-                    p2.Y = minY;
-                }
-                spell_vector->partA = p1.Y << 0x10 | p1.X;
-                spell_vector->partB = p2.Y << 0x10 | p2.X;
+    p2.X = maxX;
+    if (maxX <= minX)
+    {
+        p2.X = minX;
+    }
+    p2.Y = maxY;
+    if (maxY <= minY)
+    {
+        p2.Y = minY;
+    }
+    spell_vector->partA = p1.Y << 0x10 | p1.X;
+    spell_vector->partB = p2.Y << 0x10 | p2.X;
 
-                return *spell_vector;
+    return spell_vector;
 }
 
 // we declare On Hit Handler
@@ -174,48 +174,46 @@ uint16_t __thiscall arrows_reflection_onhit_handler(SF_CGdFigureJobs *_this, uin
     else
     // if the attack was ranged attack, we reflected the projectile into the attacker and completely negate damage
     {
-    // unlike most of handlers, On_Hit handler uses Figure Jobs instead of Spell as global object
-    // it means, we have to manually get spell index of Arrows reflection
-    uint16_t spell_index = toolboxAPI->getSpellIndexOfType(_this->CGdFigureToolBox, target_index, ARROWS_REFLECTION_LINE, 0);
+        // unlike most of handlers, On_Hit handler uses Figure Jobs instead of Spell as global object
+        // it means, we have to manually get spell index of Arrows reflection
+        uint16_t spell_index = toolboxAPI->getSpellIndexOfType(_this->CGdFigureToolBox, target_index, ARROWS_REFLECTION_LINE, 0);
 
-    // we retrieve the spell which exists behind given On Hit handler
-    SF_GdSpell *spell = &_this->CGdSpell->active_spell_list[spell_index];
+        // we retrieve the spell which exists behind given On Hit handler
+        SF_GdSpell *spell = &_this->CGdSpell->active_spell_list[spell_index];
 
-    // we declare effect_info structure, because we'll need it later for function which retrieves target's resistance to ice
-    SF_SpellEffectInfo effect_info;
+        // we declare effect_info structure, because we'll need it later for function which retrieves target's resistance to ice
+        SF_SpellEffectInfo effect_info;
 
-    // we declare structure for spell data and load it from GameData.cff
-    SF_CGdResourceSpell spell_data;
-    spellAPI->getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);
+        // we declare structure for spell data and load it from GameData.cff
+        SF_CGdResourceSpell spell_data;
+        spellAPI->getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);
 
-    SF_Rectangle spell_vector;
-    spell_vector = get_spell_vector(&_this->CGdFigure->figures[source_index].position, &_this->CGdFigure->figures[target_index].position, &spell_vector);
+        SF_Rectangle spell_vector;
+        get_spell_vector(&_this->CGdFigure->figures[source_index].position, &_this->CGdFigure->figures[target_index].position, &spell_vector);
 
-    uint32_t distance = getDistance(&_this->CGdFigure->figures[source_index].position, &_this->CGdFigure->figures[target_index].position);
-    distance = ((distance & 0xffff) * 0x578) / 3000;
+        uint32_t distance = getDistance(&_this->CGdFigure->figures[source_index].position, &_this->CGdFigure->figures[target_index].position);
+        distance = ((distance & 0xffff) * 0x578) / 3000;
 
-    sprintf(aliveInfo, "Distance is: %hd \n", distance);
-    logger->logInfo(aliveInfo);
+        sprintf(aliveInfo, "Distance is: %hd \n", distance);
+        logger->logInfo(aliveInfo);
 
-    // source and target indexes are reversed, because the game treats the attacker as the source and the spellcaster as the target respectively
-    SF_CGdTargetData source = {1, target_index, {0, 0}};
-    SF_CGdTargetData target = {1, source_index, {0, 0}};
+        // source and target indexes are reversed, because the game treats the attacker as the source and the spellcaster as the target respectively
+        SF_CGdTargetData source = {1, target_index, {0, 0}};
+        SF_CGdTargetData target = {1, source_index, {0, 0}};
+        uint16_t effect_id = effectAPI->addEffect(_this->CGdEffect, kGdEffectProjectile, &source, &target,
+                                                  _this->OpaqueClass->current_step+distance, ((distance != 0) ? distance : 1), &spell_vector);
+        effectAPI->setEffectXData(_this->CGdEffect, effect_id, EFFECT_ENTITY_TYPE, 1);
+        effectAPI->setEffectXData(_this->CGdEffect, effect_id, EFFECT_ENTITY_TYPE2, 1);
+        effectAPI->setEffectXData(_this->CGdEffect, effect_id, EFFECT_ENTITY_INDEX, source_index);
+        effectAPI->setEffectXData(_this->CGdEffect, effect_id, EFFECT_ENTITY_INDEX2, target.entity_index);
+        effectAPI->setEffectXData(_this->CGdEffect, effect_id, EFFECT_DO_NOT_ADD_SUBSPELL, 1);
+        effectAPI->setEffectXData(_this->CGdEffect, effect_id, EFFECT_PHYSICAL_DAMAGE, damage);
 
-    uint16_t effect_id = effectAPI->addEffect(_this->CGdEffect, kGdEffectProjectile, &source, &target,
-                                                         _this->OpaqueClass->current_step, ((distance != 0) ? distance : 1), &spell_vector);
-    effectAPI->setEffectXData(_this->CGdEffect, effect_id, EFFECT_ENTITY_TYPE, 1);
-    effectAPI->setEffectXData(_this->CGdEffect, effect_id, EFFECT_ENTITY_TYPE2, 1);
-    effectAPI->setEffectXData(_this->CGdEffect, effect_id, EFFECT_ENTITY_INDEX, source_index);
-    effectAPI->setEffectXData(_this->CGdEffect, effect_id, EFFECT_ENTITY_INDEX2, target.entity_index);
-    effectAPI->setEffectXData(_this->CGdEffect, effect_id, EFFECT_DO_NOT_ADD_SUBSPELL, 1);
-    effectAPI->setEffectXData(_this->CGdEffect, effect_id, EFFECT_PHYSICAL_DAMAGE, damage);
-
-    logger->logInfo("ATTACK WAS REFLECTED");
-    // we negate damage to the spellcaster
-    damage = 0;
-    return damage;
+        logger->logInfo("ATTACK WAS REFLECTED");
+        // we negate damage to the spellcaster
+        damage = 0;
+        return damage;
     }
-
 }
 
 void __thiscall arrows_reflection_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
@@ -381,4 +379,3 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 
     return TRUE;
 }
-
