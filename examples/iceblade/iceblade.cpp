@@ -3,13 +3,13 @@
 #include <stdio.h>
 
 // We declare macros for Iceblade Spell Type and Spell Job
-// Spell Type 0xf8 = 248, Spell Job 0xaf = 175
+// Spell Type 0xf7 = 247, Spell Job 0xae = 174
 
 // The custom Spell Type also must be defined within GameData.cff
 // and provided with at least one spell corresponding to it
 
-#define ICEBLADE_LINE 0xf8
-#define ICEBLADE_JOB 0xaf
+#define ICEBLADE_LINE 0xf7
+#define ICEBLADE_JOB 0xae
 
 SpellforceSpellFramework *sfsf;
 SpellFunctions *spellAPI;
@@ -251,7 +251,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
  ***/
 extern "C" __declspec(dllexport) SFMod *RegisterMod(SpellforceSpellFramework *framework)
 {
-    return framework->createModInfo("Iceblade", "1.0.0", "Teekius", "A mod designed to demonstrate On Hit Spell Handler. The Iceblade spell transforms a percentage of damage dealt with melee attack into ice damage.");
+    return framework->createModInfo("Iceblade", "1.0.0", "Teekius", "A mod designed to demonstrate On Hit spell handler. The Iceblade spell converts a percentage of damage dealt with melee attack into ice damage.");
 }
 
 // Required to be present by, not required for any functionality
