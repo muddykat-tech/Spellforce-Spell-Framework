@@ -2,7 +2,9 @@
 #include <windows.h>
 #include <stdio.h>
 
-// We declare macros for Arrows reflection Spell Type and Spell Job
+// Arrow Reflections is a spell which reflects any ranged attacks which hit the spellcaster back towards an attacker
+
+// We declare macros for Arrows Reflection Spell Type and Spell Job
 // Spell Type 0xf8 = 248, Spell Job 0xaf = 175
 
 // The custom Spell Type also must be defined within GameData.cff
@@ -20,7 +22,7 @@ RegistrationFunctions *registrationAPI;
 EffectFunctions *effectAPI;
 SFLog *logger;
 
-// we declare spell type handler for Arrows reflection, it must initialize ticks and bonus modifier values
+// we declare spell type handler for Arrows Reflection, it must initialize ticks and bonus modifier values
 
 void __thiscall arrows_reflection_type_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
@@ -40,7 +42,10 @@ void __thiscall arrows_reflection_end_handler(SF_CGdSpell *_this, uint16_t spell
     spellAPI->setEffectDone(_this, spell_index, 0);
 }
 
-// result of engine reverse-engineering, all credits to UnSchtalch/Muddykat for retrieving this function from the deeps of Spellforce engine
+// result of engine reverse-engineering
+// that's how the game calculates the distance between two points on the map
+// all credits to UnSchtalch/Muddykat for retrieving this function from the deeps of Spellforce engine
+// we'll need this function later to adjust reflected projectile flight time
 uint32_t getDistance(SF_Coord *pointA, SF_Coord *pointB)
 {
 
@@ -67,24 +72,11 @@ uint32_t getDistance(SF_Coord *pointA, SF_Coord *pointB)
     return ((delta * 0xd) >> 5) + uVar4;
 }
 
-SF_Rectangle *get_spell_vector(SF_Coord *source_position, SF_Coord *target_position, SF_Rectangle *spell_vector)
+// we have to manually calculate the direction where the reflected projectile would fly
+// let's wrap all calculations in a function accepting position (X-Y) coordinates of two figures and returning vector going from the first figure to the second
+SF_Rectangle* get_spell_vector(SF_Coord* source_position, SF_Coord* target_position, SF_Rectangle* spell_vector)
 {
-    /*uint16_t maxY = (_this->CGdFigure->figures[source_index].position.Y <= _this->CGdFigure->figures[target.entity_index].position.Y)
-                        ? (_this->CGdFigure->figures[target.entity_index].position.Y)
-                        : (_this->CGdFigure->figures[source_index].position.Y);
-
-    uint16_t maxX = (_this->CGdFigure->figures[source_index].position.X <= _this->CGdFigure->figures[target.entity_index].position.X)
-                        ? (_this->CGdFigure->figures[target.entity_index].position.X)
-                        : (_this->CGdFigure->figures[source_index].position.X);
-
-    uint16_t minY = (_this->CGdFigure->figures[source_index].position.Y > _this->CGdFigure->figures[target.entity_index].position.Y)
-                        ? (_this->CGdFigure->figures[target.entity_index].position.Y)
-                        : (_this->CGdFigure->figures[source_index].position.Y);
-
-    uint16_t minX = (_this->CGdFigure->figures[source_index].position.X > _this->CGdFigure->figures[target.entity_index].position.X)
-                        ? (_this->CGdFigure->figures[target.entity_index].position.X)
-                        : (_this->CGdFigure->figures[source_index].position.X);*/
-
+    // let's build a real rectangle based on coordinates we got in arguments
     uint16_t maxY = (source_position->Y <= target_position->Y)
                         ? (target_position->Y)
                         : (source_position->Y);
@@ -101,8 +93,13 @@ SF_Rectangle *get_spell_vector(SF_Coord *source_position, SF_Coord *target_posit
                         ? (target_position->X)
                         : (source_position->X);
 
+    // SF_Rectangle is defined with only two points rather than four
+    // meaningly upper-left and lower-right vertices
+    // let's declare variables for them, p1 for upper-left and p2 for lower-right
     SF_Coord p1;
     SF_Coord p2;
+
+    // let's establish upper-left vertex
     p1.X = maxX;
     if (minX < maxX)
     {
@@ -114,6 +111,7 @@ SF_Rectangle *get_spell_vector(SF_Coord *source_position, SF_Coord *target_posit
         p1.Y = minY;
     }
 
+    // now let's establish lower-right vertex
     p2.X = maxX;
     if (maxX <= minX)
     {
@@ -124,6 +122,8 @@ SF_Rectangle *get_spell_vector(SF_Coord *source_position, SF_Coord *target_posit
     {
         p2.Y = minY;
     }
+
+    // let's calculate the vector basing on the rectangle we've got
     spell_vector->partA = p1.Y << 0x10 | p1.X;
     spell_vector->partB = p2.Y << 0x10 | p2.X;
 
@@ -148,71 +148,72 @@ uint16_t __thiscall arrows_reflection_onhit_handler(SF_CGdFigureJobs *_this, uin
         return damage;
     }
 
-    char aliveInfo[256];
-    sprintf(aliveInfo, "Source index is %hd \n", source_index);
-    logger->logInfo(aliveInfo);
-
-    sprintf(aliveInfo, "Target index is: %hd \n", target_index);
-    logger->logInfo(aliveInfo);
-
-    // we declare structure to save the spellcaster's action in it
+    // we declare structure to save the attacker's action in it
     // we'll need it to determine whether the attack was ranged or melee
     SF_SGtFigureAction action;
 
-    // we determine spellcaster's action which triggered the On Hit Handler with figureAPI function
+    // we determine attacker'a action which triggered the On Hit handler with figureAPI function
+    // because the spell is tagged as TARGET_ONHIT_SPELL, the attacker is being the source and the spellcaster is regarded as the target
     figureAPI->getTargetAction(_this->CGdFigure, &action, source_index);
 
     // Pass though is WIP, so we inline the function here
-    // we initialize boolean value which would save the result of our check
-    bool isRangedAttack = 0;
-
     if ((action.type != 0x2712))
     // number 0x2712 stands for ranged attack, if the attack wasn't ranged, we interrupt the function
     {
         return damage;
     }
     else
-    // if the attack was ranged attack, we reflected the projectile into the attacker and completely negate damage
+    // if the attack was ranged attack, we reflect the projectile back at the attacker and remove attack's damage
     {
-        // unlike most of handlers, On_Hit handler uses Figure Jobs instead of Spell as global object
-        // it means, we have to manually get spell index of Arrows reflection
-        uint16_t spell_index = toolboxAPI->getSpellIndexOfType(_this->CGdFigureToolBox, target_index, ARROWS_REFLECTION_LINE, 0);
+        // to imitate the projectile being reflected, we'd have to spawn a new projectile and aim it at the attacker manually calculating the geometry
 
-        // we retrieve the spell which exists behind given On Hit handler
-        SF_GdSpell *spell = &_this->CGdSpell->active_spell_list[spell_index];
-
-        // we declare effect_info structure, because we'll need it later for function which retrieves target's resistance to ice
-        SF_SpellEffectInfo effect_info;
-
-        // we declare structure for spell data and load it from GameData.cff
-        SF_CGdResourceSpell spell_data;
-        spellAPI->getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);
-
+        // first we have to calculate the vector from the spellcaster back to the attacker
+        // the vector can be stored as variable of SF_Rectangle type
         SF_Rectangle spell_vector;
+
+        // we wrapped up necessary calculations in the function which we wrote above and can use it now
+        // the function accepts positions of the source and the target and writes the result in SF_Rectangle variable
         get_spell_vector(&_this->CGdFigure->figures[source_index].position, &_this->CGdFigure->figures[target_index].position, &spell_vector);
 
+        // we should also calculate the distance between the spellcaster and the attacker to know how fast the projectile should fly
+        // we wrapped up distance calculations in its own function as well
         uint32_t distance = getDistance(&_this->CGdFigure->figures[source_index].position, &_this->CGdFigure->figures[target_index].position);
+
+        // we don't need the distance itself, let's translate it into flight time with some numbers
         distance = ((distance & 0xffff) * 0x578) / 3000;
 
-        sprintf(aliveInfo, "Distance is: %hd \n", distance);
-        logger->logInfo(aliveInfo);
 
-        // source and target indexes are reversed, because the game treats the attacker as the source and the spellcaster as the target respectively
+
+        // we'd also need the visual effect offsets for both spellcaster and the attacker
+
+        // source and target have to be manually reversed in this case, because to make the new projectile damage the attacker
+        // it should be sourced from the spellcaster and have attacker as its target
+        // basically, it means that target_index = spellcaster_index
+        // and source_index = attacker_index
         SF_CGdTargetData source = {1, target_index, {0, 0}};
         SF_CGdTargetData target = {1, source_index, {0, 0}};
+
+        // we spawn the projectile with addEffect command having EffectType set as kGdEffectProjectile
+        // please note that it's different command than the command we used to spawn visuals (addVisualEffect)
+        // addEffect accepts Type, visual offsets for source figure and target figure, the beginning tick, amount of ticks it should last (flight time), vector of movement
         uint16_t effect_id = effectAPI->addEffect(_this->CGdEffect, kGdEffectProjectile, &source, &target,
                                                   _this->OpaqueClass->current_step+distance, ((distance != 0) ? distance : 1), &spell_vector);
+
+        // after we spawned the effect, we have to manually set its data
+        // we set both spellcaster and attacker entity types as 1 (figure)
         effectAPI->setEffectXData(_this->CGdEffect, effect_id, EFFECT_ENTITY_TYPE, 1);
         effectAPI->setEffectXData(_this->CGdEffect, effect_id, EFFECT_ENTITY_TYPE2, 1);
+        // then we should assign the source and the target indexes to the effect
+        // it gets really messed here, but the first index should be attacker's index and the second the spellcaster's index
         effectAPI->setEffectXData(_this->CGdEffect, effect_id, EFFECT_ENTITY_INDEX, source_index);
         effectAPI->setEffectXData(_this->CGdEffect, effect_id, EFFECT_ENTITY_INDEX2, target.entity_index);
+        // we should specify that the projectile doesn't bring any subspell with itself
         effectAPI->setEffectXData(_this->CGdEffect, effect_id, EFFECT_DO_NOT_ADD_SUBSPELL, 1);
+        // we should set the projectile's physical damage, let's just return full damage the attacker was going to deal
         effectAPI->setEffectXData(_this->CGdEffect, effect_id, EFFECT_PHYSICAL_DAMAGE, damage);
 
-        logger->logInfo("ATTACK WAS REFLECTED");
-        // we negate damage to the spellcaster
-        damage = 0;
-        return damage;
+        // the projectile is ready, but we should also negate damage dealt to the spellcaster
+        return 0;
     }
 }
 
@@ -287,7 +288,7 @@ void __thiscall arrows_reflection_effect_handler(SF_CGdSpell *_this, uint16_t sp
     }
 }
 
-// the Arrows reflection is freely refreshable
+// the Arrows Reflection is freely refreshable
 // it means that when it's casted on a spellcaster again before its duration expired,
 // it would remove the old instance and replace it with a new one, this would update the spell duration
 
@@ -297,16 +298,16 @@ int __thiscall arrows_reflection_refresh_handler(SF_CGdSpell *_this, uint16_t sp
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
     uint16_t source_index = spell->source.entity_index;
 
-    // we should check for whether the spellcaster is affected with more than a single instance of Arrows reflection
+    // we should check for whether the spellcaster is affected with more than a single instance of Arrows Reflection
     uint16_t pruned_spell_index = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, source_index, ARROWS_REFLECTION_LINE, spell_index);
     // because we passed spell_index as last argument of the function, this index will be ignored
-    // the function will return the spell index of another Arrows reflection instance, if there is any
-    // if there is no other instance of Arrows reflection than the current, the function will return 0
+    // the function will return the spell index of another Arrows Reflection instance, if there is any
+    // if there is no other instance of Arrows Reflection than the current, the function will return 0
 
     // if the function returned any spell index, we must prune that instance to make a space for the new one
     if (pruned_spell_index != 0)
     {
-        // first we should clear the flags which the old instance of Arrows reflection set up
+        // first we should clear the flags which the old instance of Arrows Reflection set up
         spellAPI->figTryClrCHkSPlBfrJob2(_this, pruned_spell_index);
         spellAPI->figClrChkSplBfrChkBattle(_this, pruned_spell_index, 0);
         // then we should end the previous instance
@@ -339,9 +340,8 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     registrationAPI->linkTypeHandler(arrows_reflection_spell, &arrows_reflection_type_handler);
     registrationAPI->linkEffectHandler(arrows_reflection_spell, ARROWS_REFLECTION_JOB, &arrows_reflection_effect_handler);
     registrationAPI->linkRefreshHandler(arrows_reflection_spell, &arrows_reflection_refresh_handler);
-    registrationAPI->linkOnHitHandler(arrows_reflection_spell, &arrows_reflection_onhit_handler, PHASE_3);
-    // the last argument can take values from PHASE_0 to PHASE_5
-    // sadly the algorithm is too big to be explained in commentaries, but take my word that Phases 4 and 5 will fit the spell logic the best
+    registrationAPI->linkOnHitHandler(arrows_reflection_spell, &arrows_reflection_onhit_handler, PHASE_2);
+    // to make the On Hit handler be triggered when the caster is hit, we also have to tag the spell as TARGET_ON_HITSPELL
     registrationAPI->applySpellTag(arrows_reflection_spell, TARGET_ONHIT_SPELL);
     registrationAPI->linkEndHandler(arrows_reflection_spell, &arrows_reflection_end_handler);
 }
@@ -352,7 +352,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
  ***/
 extern "C" __declspec(dllexport) SFMod *RegisterMod(SpellforceSpellFramework *framework)
 {
-    return framework->createModInfo("Arrows reflection", "1.0.0", "Teekius", "A mod designed to demonstrate defensive using of the On Hit spell handler. The spell will reflect all ranged attacks which hit the spellcaster back towards the attackers.");
+    return framework->createModInfo("Arrows Reflection", "1.0.0", "Teekius", "A mod designed to demonstrate defensive using of the On Hit spell handler. The spell will reflect all ranged attacks which hit the spellcaster back towards the attackers.");
 }
 
 // Required to be present by, not required for any functionality
