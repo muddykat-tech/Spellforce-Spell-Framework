@@ -4,8 +4,9 @@
 #include <list>
 
 uint16_t __thiscall trueshot_onhit_handler(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t damage)
-{    SF_SGtFigureAction action;
-    figureAPI.getTargetAction(_this->CGdFigure, &action, source_index);
+{
+    SF_SGtFigureAction action;
+    aiAPI.getTargetAction(_this->CGdFigure, &action, source_index);
 
     if (isActionMelee(&action))
     {
@@ -23,7 +24,7 @@ uint16_t __thiscall trueshot_onhit_handler(SF_CGdFigureJobs *_this, uint16_t sou
 uint16_t __thiscall riposte_onhit_handler(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t damage)
 {
     SF_SGtFigureAction action;
-    figureAPI.getTargetAction(_this->CGdFigure, &action, source_index);
+    aiAPI.getTargetAction(_this->CGdFigure, &action, source_index);
     bool isMeleeAttack = isActionMelee(&action);
 
     if (!isMeleeAttack)
@@ -51,7 +52,7 @@ uint16_t __thiscall riposte_onhit_handler(SF_CGdFigureJobs *_this, uint16_t sour
 uint16_t __thiscall durability_onhit_handler(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t damage)
 {
     SF_SGtFigureAction action;
-    figureAPI.getTargetAction(_this->CGdFigure, &action, source_index);
+    aiAPI.getTargetAction(_this->CGdFigure, &action, source_index);
     bool isMeleeAttack = isActionMelee(&action);
 
     if (!isMeleeAttack)
@@ -109,7 +110,7 @@ uint16_t __thiscall critical_hits_onhit_handler(SF_CGdFigureJobs *_this, uint16_
 uint16_t __thiscall endurance_onhit_handler(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t damage)
 {
     SF_SGtFigureAction action;
-    figureAPI.getTargetAction(_this->CGdFigure, &action, source_index);
+    aiAPI.getTargetAction(_this->CGdFigure, &action, source_index);
     bool isMeleeAttack = isActionMelee(&action);
 
     if (!isMeleeAttack)
@@ -131,7 +132,7 @@ uint16_t __thiscall endurance_onhit_handler(SF_CGdFigureJobs *_this, uint16_t so
 uint16_t __thiscall berserk_onhit_handler(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t damage)
 {
     SF_SGtFigureAction action;
-    figureAPI.getTargetAction(_this->CGdFigure, &action, source_index);
+    aiAPI.getTargetAction(_this->CGdFigure, &action, source_index);
     bool isMeleeAttack = isActionMelee(&action);
 
     if (!isMeleeAttack)
@@ -156,7 +157,7 @@ uint16_t __thiscall berserk_onhit_handler(SF_CGdFigureJobs *_this, uint16_t sour
 uint16_t __thiscall warcry_onhit_handler(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t damage)
 {
     SF_SGtFigureAction action;
-    figureAPI.getTargetAction(_this->CGdFigure, &action, source_index);
+    aiAPI.getTargetAction(_this->CGdFigure, &action, source_index);
     bool isMeleeAttack = isActionMelee(&action);
 
     if (!isMeleeAttack)

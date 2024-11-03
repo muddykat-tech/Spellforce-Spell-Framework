@@ -9,6 +9,7 @@
 #include "sf_effect_functions.h"
 #include "sf_toolbox_functions.h"
 #include "sf_registration_functions.h"
+#include "sf_ai_functions.h"
 
 #include <stdint.h>
 
@@ -31,6 +32,7 @@ struct SpellforceSpellFramework
     IteratorFunctions *iteratorAPI;
     RegistrationFunctions *registrationAPI;
     EffectFunctions *effectAPI;
+    AiFunctions *aiAPI;
     SFLog *logAPI;
 };
 

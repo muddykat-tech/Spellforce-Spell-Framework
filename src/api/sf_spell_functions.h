@@ -287,7 +287,7 @@ DECLARE_FUNCTION(void, figClrChkSplBfrChkBattle, SF_CGdSpell *_this, uint16_t sp
 DECLARE_FUNCTION(void, figTryClrCHkSPlBfrJob2, SF_CGdSpell *_this, uint16_t spell_id);
 DECLARE_FUNCTION(void, figTryUnfreeze, SF_CGdSpell *_this, uint16_t spell_id, uint16_t unk1);
 DECLARE_FUNCTION(uint16_t, getSpellID, SF_CGdSpell *_this, uint16_t spell_index);
-DECLARE_FUNCTION(int, getSpellTags, uint16_t spell_index);
+DECLARE_FUNCTION(uint16_t, getSpellTags, uint16_t spell_index);
 
 DECLARE_FUNCTION(int, checkCanApply, SF_CGdSpell *_this, uint16_t index);
 

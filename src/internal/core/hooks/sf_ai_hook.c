@@ -10,14 +10,11 @@ void clearAction(SF_SGtFigureAction *_this)
     _this->unkn5 = 0;
 }
 
-
-void __thiscall ai_spell_hook (SF_CGdBattleDevelopment * _this)
+void __thiscall ai_spell_hook(SF_CGdBattleDevelopment *_this)
 {
     SF_SGtFigureAction current_action;
     uint32_t action_rank = 10;
 
     clearAction(&current_action);
     _this->BattleData.current_source_maybe.entity_type = 1;
-
-
 }

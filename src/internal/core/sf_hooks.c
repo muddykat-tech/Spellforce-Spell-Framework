@@ -25,6 +25,7 @@ EffectFunctions effectAPI;
 ToolboxFunctions toolboxAPI;
 FigureFunctions figureAPI;
 IteratorFunctions iteratorAPI;
+AiFunctions aiAPI;
 RegistrationFunctions registrationAPI;
 
 void initialize_data_hooks()
@@ -65,9 +66,20 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(figure, getPosition, 0x2caaf0);
     DEFINE_FUNCTION(figure, setTask, 0x2b7110);
     DEFINE_FUNCTION(figure, getWeaponStats, 0x2b30a0);
-    DEFINE_FUNCTION(figure, getTargetAction, 0x2b2f50);
     DEFINE_FUNCTION(figure, getAggroValue, 0x2b1ab0);
     DEFINE_FUNCTION(figure, setAggroValue, 0x2b6670);
+
+    log_info("| - AI API Hooks");
+
+    DEFINE_FUNCTION(ai, getTargetAction, 0x2b2f50);
+    DEFINE_FUNCTION(ai, isAIVectorEmpty, 0x3645c7);
+    DEFINE_FUNCTION(ai, getAIVectorFirstElement, 0x3644dd);
+    DEFINE_FUNCTION(ai, getAIVectorGetCurrent, 0x364617);
+    DEFINE_FUNCTION(ai, getAIVectorLength, 0x2cc10a);
+    DEFINE_FUNCTION(ai, AC60AddOrGetEntity, 0x35dcc0);
+
+    DEFINE_FUNCTION(ai, setAICurrentActionRanking, 0x35e340);
+    DEFINE_FUNCTION(ai, getAICurrentActionRanking, 0x362ed0);
 
     log_info("| - SpellAPI Hooks");
     // Define the function pointers for SpellFunctions group

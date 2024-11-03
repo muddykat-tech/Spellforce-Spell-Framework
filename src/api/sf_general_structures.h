@@ -547,7 +547,7 @@ struct __attribute__((packed)) SF_CGDEffect
 };
 /* |-============= Buildings Structures ==========- |*/
 
-typedef struct __attribute__ ((packed))
+typedef struct __attribute__((packed))
 {
     SF_Coord position;
     uint16_t owner;
