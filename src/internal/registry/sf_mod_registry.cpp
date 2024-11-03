@@ -25,7 +25,7 @@ SFSpell *__thiscall registerSpell(uint16_t spell_id)
     SFSpell *sf_spell = new SFSpell;
     sf_spell->spell_id = spell_id;
     sf_spell->spell_effect_id = 0x00;
-    sf_spell->spell_tag = SpellTag::NONE;
+    sf_spell->spell_tags = 0x0;
     sf_spell->spell_type_handler = nullptr;
     sf_spell->spell_effect_handler = nullptr;
     sf_spell->spell_end_handler = nullptr;
@@ -43,7 +43,8 @@ SFSpell *__thiscall registerSpell(uint16_t spell_id)
 
 void __thiscall applySpellTag(SFSpell *spell, SpellTag tag)
 {
-    spell->spell_tag = tag;
+    uint16_t current_tags = spell->spell_tags;
+    spell->spell_tags = current_tags | tag;
 }
 
 void __thiscall linkTypeHandler(SFSpell *spell, handler_ptr typeHandler)
@@ -84,16 +85,16 @@ void __thiscall linkDealDamageHandler(SFSpell *spell, damage_handler_ptr handler
     spell->damage_phase = phase;
 }
 
-int __thiscall getSpellTag(uint16_t spell_line_id)
+uint16_t __thiscall getSpellTags(uint16_t spell_line_id)
 {
     for (auto &entry : g_internal_spell_list)
     {
         if (entry->spell_id == spell_line_id)
         {
-            return entry->spell_tag;
+            return entry->spell_tags;
         }
     }
-    return SpellTag::NONE;
+    return 0x0;
 }
 
 /**

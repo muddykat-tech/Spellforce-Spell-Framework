@@ -781,7 +781,7 @@ int __thiscall domination_spell_refresh_handler(SF_CGdSpell *_this, uint16_t spe
     std::list<uint16_t> domination_spell_ids;
     for (SFSpell *spell : g_internal_spell_list)
     {
-        if (spell->spell_tag == SpellTag::DOMINATION_SPELL)
+        if (spell->spell_tags & SpellTag::DOMINATION_SPELL)
         {
             domination_spell_ids.push_back(spell->spell_id);
         }

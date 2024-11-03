@@ -127,7 +127,7 @@ void initialize_data_hooks()
     INCLUDE_FUNCTION(spell, addSpell, &sf_spelltype_hook);
     INCLUDE_FUNCTION(spell, getSpellID, &sf_get_spell_id);
     INCLUDE_FUNCTION(spell, checkCanApply, &sf_refresh_hook)
-    INCLUDE_FUNCTION(spell, getSpellTag, &getSpellTag);
+    INCLUDE_FUNCTION(spell, getSpellTags, &getSpellTags);
 
     log_info("| - FigureAPI Wrappers");
     INCLUDE_FUNCTION(figure, addBonusMultToStatistic, &addBonusMultToStatistic);

@@ -223,7 +223,7 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
 
     if (target.entity_type == 1)
     {
-        //NB Parenthis matters in flags check. I mean it
+        // NB Parenthis matters in flags check. I mean it
         if ((_this->CGdFigure->figures[target.entity_index].owner == -1) ||
             ((_this->CGdFigure->figures[target.entity_index].flags & (REDO | IS_DEAD)) != 0) ||
             (!toolboxAPI.isTargetable(_this->CGdFigureToolBox, target.entity_index)))
@@ -300,9 +300,8 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
                     std::pair<uint16_t, onhit_handler_ptr> entry = *it;
 
                     uint16_t spell_line_id = entry.first;
-                    SpellTag spell_tag = static_cast<SpellTag>(getSpellTag(spell_line_id));
 
-                    if (spell_tag == TARGET_ONHIT_SPELL)
+                    if (getSpellTags(spell_line_id) & TARGET_ONHIT_SPELL)
                     {
                         if ((_this->CGdFigure->figures[target.entity_index].flags & F_CHECK_SPELLS_BEFORE_JOB) != 0)
                         {
