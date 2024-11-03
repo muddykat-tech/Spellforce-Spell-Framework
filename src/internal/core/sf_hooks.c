@@ -72,6 +72,7 @@ void initialize_data_hooks()
     log_info("| - AI API Hooks");
 
     DEFINE_FUNCTION(ai, getTargetAction, 0x2b2f50);
+    DEFINE_FUNCTION(ai, getFigureAction, 0x2b19c0);
     DEFINE_FUNCTION(ai, isAIVectorEmpty, 0x3645c7);
     DEFINE_FUNCTION(ai, getAIVectorFirstElement, 0x3644dd);
     DEFINE_FUNCTION(ai, getAIVectorGetCurrent, 0x364617);
