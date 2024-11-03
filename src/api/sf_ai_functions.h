@@ -10,6 +10,14 @@ typedef struct __attribute__((packed))
     uint16_t *post_last;
 } ushort_list_node;
 
+
+
+typedef struct __attribute((packed))
+{
+    uint8_t data[0xfa0];
+    uint16_t entityCount;
+}AutoClass60;
+
 typedef struct __attribute__((packed))
 {
     SF_CGdBuilding *CGdBuilding;
@@ -33,13 +41,13 @@ typedef struct __attribute__((packed))
     SF_CGdWorld *CGdWorld;
     SF_CGdWorldToolBox *CGdWorldToolBox;
     void *autoclass64;
-    uint8_t figures_maybe[0xf2a];
+    AutoClass60 figures_maybe;
     uint16_t unkn1;
-    uint8_t figure_maybe2[0xfa2];
+    AutoClass60 figure_maybe2;
     uint16_t unkn2;
-    uint8_t building_ally[0xfa2];
+    AutoClass60 building_ally;
     uint16_t unkn3;
-    uint8_t building_not_ally[0xfa2];
+    AutoClass60 building_not_ally;
     uint16_t unkn4;
     uint32_t unkn5;
     SF_SGtFigureAction current_action;
@@ -114,8 +122,8 @@ DECLARE_FUNCTION(int, getAICurrentActionRanking, SF_CGdBattleDevelopment *_this)
 
 // May be moved to General if it is not used anywhere else
 DECLARE_FUNCTION(bool, isAIVectorEmpty, void *_this);
-DECLARE_FUNCTION(uint16_t, getAIVectorFirstElement, void *_this, uint16_t *value);
-DECLARE_FUNCTION(uint16_t, getAIVectorGetCurrent, void *_this, uint16_t *value);
+DECLARE_FUNCTION(uint16_t **, getAIVectorFirstElement, void *_this, uint16_t **pvalue);
+DECLARE_FUNCTION(uint16_t **, getAIVectorGetCurrent, void *_this, uint16_t **value);
 DECLARE_FUNCTION(int, getAIVectorLength, void *_this);
 
 DECLARE_FUNCTION(void *, AC60AddOrGetEntity, void *_autoclass60, uint16_t entity_index);
