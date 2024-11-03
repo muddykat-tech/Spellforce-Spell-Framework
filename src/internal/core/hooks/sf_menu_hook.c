@@ -52,8 +52,11 @@ void initialize_menu_data_hooks()
     g_container_add_control = (container_add_control_ptr)(ASI::AddrOf(0x506f30));
 }
 
+static bool hasLoadedOnce = false;
+
 void __attribute__((no_caller_saved_registers, thiscall)) sf_menu_hook(uint32_t _CAppMenu)
 {
+
     // String to display in the new label we're attaching to the menu
     char sfsf_info[256];
     sprintf(sfsf_info, "Spell Framework %s\n%d Mod(s) Loaded with %d Error(s)", g_framework_mod->mod_version, g_mod_count, g_error_count);
@@ -67,6 +70,13 @@ void __attribute__((no_caller_saved_registers, thiscall)) sf_menu_hook(uint32_t 
 
     attach_new_label(container_hack, sfsf_info, 6, 10, 729, 100, 100);
 
+    if (hasLoadedOnce)
+    {
+        s_menu_func(_CAppMenu);
+        return;
+    }
+
+    hasLoadedOnce = true;
     log_info("-==== Mod Information Start ====-");
     SFMod *old_parent;
     for (SFSpell *spell_data : g_internal_spell_list)
@@ -79,6 +89,7 @@ void __attribute__((no_caller_saved_registers, thiscall)) sf_menu_hook(uint32_t 
             log_info(parent_mod->mod_version);
             log_info(parent_mod->mod_author);
             log_info(parent_mod->mod_description);
+            log_info("-========-");
             old_parent = parent_mod;
         }
     }
