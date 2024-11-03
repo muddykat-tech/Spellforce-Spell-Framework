@@ -10,13 +10,11 @@ typedef struct __attribute__((packed))
     uint16_t *post_last;
 } ushort_list_node;
 
-
-
 typedef struct __attribute((packed))
 {
     uint8_t data[0xfa0];
     uint16_t entityCount;
-}AutoClass60;
+} AutoClass60;
 
 typedef struct __attribute__((packed))
 {
@@ -121,6 +119,8 @@ DECLARE_FUNCTION(SF_SGtFigureAction *, getFigureAction, SF_CGdFigure *figure, SF
 DECLARE_FUNCTION(void, setAICurrentActionRanking, SF_CGdBattleDevelopment *_this, int rank);
 DECLARE_FUNCTION(int, getAICurrentActionRanking, SF_CGdBattleDevelopment *_this);
 
+DECLARE_FUNCTION(bool, canFigureDoAction, SF_CGdBattleDevelopment *_this, SF_SGtFigureAction *action);
+
 // May be moved to General if it is not used anywhere else
 DECLARE_FUNCTION(bool, isAIVectorEmpty, void *_this);
 DECLARE_FUNCTION(uint16_t **, getAIVectorFirstElement, void *_this, uint16_t **pvalue);
@@ -132,11 +132,11 @@ DECLARE_FUNCTION(void *, AC60AddOrGetEntity, void *_autoclass60, uint16_t entity
 DECLARE_FUNCTION_GROUP(Ai,
                        getTargetAction_ptr getTargetAction;
                        getFigureAction_ptr getFigureAction;
+                       canFigureDoAction_ptr canFigureDoAction;
                        setAICurrentActionRanking_ptr setAICurrentActionRanking;
                        getAICurrentActionRanking_ptr getAICurrentActionRanking;
                        isAIVectorEmpty_ptr isAIVectorEmpty;
                        getAIVectorFirstElement_ptr getAIVectorFirstElement;
                        getAIVectorGetCurrent_ptr getAIVectorGetCurrent;
                        getAIVectorLength_ptr getAIVectorLength;
-                       AC60AddOrGetEntity_ptr AC60AddOrGetEntity;
-                       );
+                       AC60AddOrGetEntity_ptr AC60AddOrGetEntity;);

@@ -79,6 +79,7 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(ai, getAIVectorLength, 0x2cc10a);
     DEFINE_FUNCTION(ai, AC60AddOrGetEntity, 0x35dcc0);
 
+    DEFINE_FUNCTION(ai, canFigureDoAction, 0x35ace7);
     DEFINE_FUNCTION(ai, setAICurrentActionRanking, 0x35e340);
     DEFINE_FUNCTION(ai, getAICurrentActionRanking, 0x362ed0);
 
