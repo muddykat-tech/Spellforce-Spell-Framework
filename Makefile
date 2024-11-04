@@ -95,7 +95,7 @@ obj/sf_mod_registry.o: ${REGISTRY_SRC}/sf_mod_registry.cpp | obj
 obj/sf_spelltype_handlers.o: ${HANDLERS_SRC}/sf_spelltype_handlers.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
 
-obj/sf_ai_avoidance_handlers.o: ${HANDLERS_SRC}/sf_avoidance_handlers.cpp | obj
+obj/sf_ai_avoidance_handlers.o: ${HANDLERS_SRC}/sf_ai_avoidance_handlers.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
 
 obj/sf_onhit_handlers.o: ${HANDLERS_SRC}/sf_onhit_handlers.cpp | obj

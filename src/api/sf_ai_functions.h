@@ -23,7 +23,7 @@ typedef struct __attribute__((packed))
     void *autoclass30;
     SF_CGdFigure *CGdFigure;
     SF_CGdFigureJobs *CGdFigureJobs;
-    void *CGdFigureToolBox;
+    SF_CGdFigureToolbox *CGdFigureToolBox;
     void *autoclass34;
     void *CGdFormation;
     void *CGdDoubleLinkList;
