@@ -81,6 +81,11 @@ void __thiscall setupFigureIterator(CGdFigureIterator *iterator, SF_CGdSpell *sp
     iteratorAPI.figureIteratorSetPointers(iterator, spell->SF_CGdFigure, spell->unkn3, spell->SF_CGdWorld);
 }
 
+bool __thiscall hasSpellTag(uint16_t spell_id, SpellTag tag)
+{
+    return spellAPI.getSpellTags(spell_id) & tag;
+}
+
 uint32_t getDistance(SF_Coord *pointA, SF_Coord *pointB)
 {
 

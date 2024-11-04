@@ -11,6 +11,7 @@ void log_message(const char *filename, const char *message);
 void initialize_wrapper_data_hooks();
 
 extern bool __thiscall isActionMelee(SF_SGtFigureAction *_this);
+extern bool __thiscall hasSpellTag(uint16_t spell_id, SpellTag tag);
 extern void __thiscall setupFigureIterator(CGdFigureIterator *iterator, SF_CGdSpell *spell);
 extern void __thiscall disposeFigureIterator(CGdFigureIterator iterator);
 extern void __thiscall addBonusMultToStatistic(SF_CGdFigure *figure, StatisticDataKey key, uint16_t target, int8_t value);

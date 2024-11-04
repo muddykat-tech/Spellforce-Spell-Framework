@@ -301,7 +301,7 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
 
                     uint16_t spell_line_id = entry.first;
 
-                    if (getSpellTags(spell_line_id) & TARGET_ONHIT_SPELL)
+                    if (hasSpellTag(spell_line_id, TARGET_ONHIT_SPELL))
                     {
                         if ((_this->CGdFigure->figures[target.entity_index].flags & F_CHECK_SPELLS_BEFORE_JOB) != 0)
                         {

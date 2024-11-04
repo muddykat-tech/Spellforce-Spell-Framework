@@ -703,6 +703,7 @@ void initialize_vanilla_spells()
 
     SFSpell *aura21 = registrationAPI.registerSpell(kGdSpellLineAuraSiegeHuman);
     registrationAPI.linkTypeHandler(aura21, &aura_handler);
+    registrationAPI.applySpellTag(aura21, SpellTag::SEIGE_AURA_SPELL);
 
     // Next Spell Block
 
@@ -710,15 +711,19 @@ void initialize_vanilla_spells()
 
     SFSpell *aura22 = registrationAPI.registerSpell(kGdSpellLineAuraSiegeElf); // TODO Find Spell Name
     registrationAPI.linkTypeHandler(aura22, &aura_handler);
+    registrationAPI.applySpellTag(aura22, SpellTag::SEIGE_AURA_SPELL);
 
     SFSpell *aura23 = registrationAPI.registerSpell(kGdSpellLineAuraSiegeOrc); // TODO Find Spell Name
     registrationAPI.linkTypeHandler(aura23, &aura_handler);
+    registrationAPI.applySpellTag(aura23, SpellTag::SEIGE_AURA_SPELL);
 
     SFSpell *aura24 = registrationAPI.registerSpell(kGdSpellLineAuraSiegeTroll); // TODO Find Spell Name
     registrationAPI.linkTypeHandler(aura24, &aura_handler);
+    registrationAPI.applySpellTag(aura24, SpellTag::SEIGE_AURA_SPELL);
 
     SFSpell *aura25 = registrationAPI.registerSpell(kGdSpellLineAuraSiegeDarkElf); // TODO Find Spell Name
     registrationAPI.linkTypeHandler(aura25, &aura_handler);
+    registrationAPI.applySpellTag(aura25, SpellTag::SEIGE_AURA_SPELL);
 
     SFSpell *eternity_aura = registrationAPI.registerSpell(kGdSpellLineEternity);
     registrationAPI.linkTypeHandler(eternity_aura, &eternity_aura_handler);

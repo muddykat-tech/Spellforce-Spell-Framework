@@ -288,6 +288,7 @@ DECLARE_FUNCTION(void, figTryClrCHkSPlBfrJob2, SF_CGdSpell *_this, uint16_t spel
 DECLARE_FUNCTION(void, figTryUnfreeze, SF_CGdSpell *_this, uint16_t spell_id, uint16_t unk1);
 DECLARE_FUNCTION(uint16_t, getSpellID, SF_CGdSpell *_this, uint16_t spell_index);
 DECLARE_FUNCTION(uint16_t, getSpellTags, uint16_t spell_index);
+DECLARE_FUNCTION(bool, hasSpellTag, uint16_t spell_id, SpellTag tag);
 
 DECLARE_FUNCTION(int, checkCanApply, SF_CGdSpell *_this, uint16_t index);
 
@@ -311,6 +312,7 @@ DECLARE_FUNCTION_GROUP(Spell,
                        getSpellID_ptr getSpellID;
                        checkCanApply_ptr checkCanApply;
                        getSpellTags_ptr getSpellTags;
+                       hasSpellTag_ptr hasSpellTag;
 
                        // flag clear function used inside spellClearFigureFlag Wrapper
                        figClrChkSplBfrChkBattle_ptr figClrChkSplBfrChkBattle;

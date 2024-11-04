@@ -20,6 +20,22 @@ typedef struct __attribute__((packed))
     log_function_ptr logInfo;
 } SFLog;
 
+typedef enum : uint16_t
+{
+    NONE = 0x0,
+    SUMMON_SPELL = 0x1,
+    DOMINATION_SPELL = 0x2,
+    CHAIN_SPELL = 0x4,
+    WHITE_AURA_SPELL = 0x8,
+    BLACK_AURA_SPELL = 0x10,
+    TARGET_ONHIT_SPELL = 0x20,
+    COMBAT_ABILITY_SPELL = 0x40,
+    AOE_SPELL = 0x80,
+    SEIGE_AURA_SPELL = 0x100,
+    AURA_SPELL = 0x200,
+    SPELL_TAG_COUNT = 11
+} SpellTag;
+
 /* |-========== General Structures ==========-| */
 
 // Forward Declarations for looping struct declarations

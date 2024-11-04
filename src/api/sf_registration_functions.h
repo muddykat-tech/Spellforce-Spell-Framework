@@ -11,22 +11,6 @@ typedef void(__thiscall *handler_ptr)(SF_CGdSpell *, uint16_t);
 typedef uint16_t(__thiscall *onhit_handler_ptr)(SF_CGdFigureJobs *, uint16_t source, uint16_t target, uint16_t damage);
 typedef int(__thiscall *refresh_handler_ptr)(SF_CGdSpell *, uint16_t);
 
-typedef enum : uint16_t
-{
-	NONE = 0x0,
-	SUMMON_SPELL = 0x1,
-	DOMINATION_SPELL = 0x2,
-	CHAIN_SPELL = 0x4,
-	WHITE_AURA_SPELL = 0x8, // In Future versions, we may be able to refactor AURA tags to be more dynamic
-	BLACK_AURA_SPELL = 0x10,
-	TARGET_ONHIT_SPELL = 0x20,
-	COMBAT_ABILITY_SPELL = 0x40,
-	AOE_SPELL = 0x80,
-	SEIGE_AURA_SPELL = 0x100,
-	AURA_SPELL = 0x200,
-	SPELL_TAG_COUNT = 11
-} SpellTag;
-
 typedef struct __attribute__((packed))
 {
 	uint16_t spell_id;
