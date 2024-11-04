@@ -82,6 +82,10 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(ai, canFigureDoAction, 0x35ace7);
     DEFINE_FUNCTION(ai, setAICurrentActionRanking, 0x35e340);
     DEFINE_FUNCTION(ai, getAICurrentActionRanking, 0x362ed0);
+    DEFINE_FUNCTION(ai, getActionStats, 0x35e0d4);
+    DEFINE_FUNCTION(ai, getCastType, 0x26dcf0);
+    DEFINE_FUNCTION(ai, getPositionToCastAlly, 0x35f197);
+    DEFINE_FUNCTION(ai, getPositionToCastEnemy, 0x35b5e2);
 
     log_info("| - SpellAPI Hooks");
     // Define the function pointers for SpellFunctions group

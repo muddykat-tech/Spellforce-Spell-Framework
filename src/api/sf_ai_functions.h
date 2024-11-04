@@ -120,14 +120,16 @@ DECLARE_FUNCTION(void, setAICurrentActionRanking, SF_CGdBattleDevelopment *_this
 DECLARE_FUNCTION(int, getAICurrentActionRanking, SF_CGdBattleDevelopment *_this);
 
 DECLARE_FUNCTION(bool, canFigureDoAction, SF_CGdBattleDevelopment *_this, SF_SGtFigureAction *action);
-
+DECLARE_FUNCTION(void, getActionStats, SF_CGdBattleDevelopment *_this, uint16_t *minRange, uint16_t *maxRange, SF_CGdResourceSpell *spellData);
 // May be moved to General if it is not used anywhere else
 DECLARE_FUNCTION(bool, isAIVectorEmpty, void *_this);
 DECLARE_FUNCTION(uint16_t **, getAIVectorFirstElement, void *_this, uint16_t **pvalue);
 DECLARE_FUNCTION(uint16_t **, getAIVectorGetCurrent, void *_this, uint16_t **value);
 DECLARE_FUNCTION(int, getAIVectorLength, void *_this);
-
+DECLARE_FUNCTION(uint16_t, getCastType, void* resource, uint16_t spellID);
 DECLARE_FUNCTION(void *, AC60AddOrGetEntity, void *_autoclass60, uint16_t entity_index);
+DECLARE_FUNCTION(SF_Coord *, getPositionToCastAlly, SF_CGdBattleDevelopment *_this,SF_Coord *param_1,void *std_vector_uint16_t);
+DECLARE_FUNCTION(SF_Coord *, getPositionToCastEnemy, SF_CGdBattleDevelopment *_this,SF_Coord *param_1,void *std_vector_uint16_t);
 
 DECLARE_FUNCTION_GROUP(Ai,
                        getTargetAction_ptr getTargetAction;
@@ -139,4 +141,9 @@ DECLARE_FUNCTION_GROUP(Ai,
                        getAIVectorFirstElement_ptr getAIVectorFirstElement;
                        getAIVectorGetCurrent_ptr getAIVectorGetCurrent;
                        getAIVectorLength_ptr getAIVectorLength;
-                       AC60AddOrGetEntity_ptr AC60AddOrGetEntity;);
+                       AC60AddOrGetEntity_ptr AC60AddOrGetEntity;
+                       getActionStats_ptr getActionStats;
+                       getCastType_ptr getCastType;
+                       getPositionToCastAlly_ptr getPositionToCastAlly;
+                       getPositionToCastEnemy_ptr getPositionToCastEnemy;
+                       );

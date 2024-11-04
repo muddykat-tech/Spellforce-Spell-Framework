@@ -3,37 +3,21 @@
 void clearAction(SF_SGtFigureAction *_this)
 {
     _this->type = 0xffff;
-    _this->unkn1 = 0;
+    _this->subtype = 0;
     _this->unkn2 = 0;
     _this->unkn3 = 0;
     _this->unkn4 = 0;
     _this->unkn5 = 0;
 }
+// TODO MOVE ME
 
-bool isSiegeAura(SF_SGtFigureAction *action)
+bool isSpellAction(SF_SGtFigureAction *_this)
 {
-    uint16_t type = action->type;
-    if (type == kGdSpellLineAuraSiegeDarkElf)
+    if ((_this->type != 0) && (_this->type < 10000))
     {
-        return 1;
+        return true;
     }
-    if (type == kGdSpellLineAuraSiegeHuman)
-    {
-        return 1;
-    }
-    if (type == kGdSpellLineAuraSiegeElf)
-    {
-        return 1;
-    }
-    if (type == kGdSpellLineAuraSiegeTroll)
-    {
-        return 1;
-    }
-    if (type == kGdSpellLineAuraSiegeOrc)
-    {
-        return 1;
-    }
-    return 0;
+    return false;
 }
 
 void __thiscall ai_spell_hook(SF_CGdBattleDevelopment *_this)
@@ -63,6 +47,7 @@ void __thiscall ai_spell_hook(SF_CGdBattleDevelopment *_this)
     }
     for (uint8_t action_index = 0; action_index < 0xf; action_index++)
     {
+        SF_CGdResourceSpell spell_data;
         aiAPI.getFigureAction(battleData->CGdFigure, &current_action, battleData->current_figure, action_index);
         if (current_action.type == (uint16_t)(-1))
             break; // no more actions available
@@ -71,6 +56,50 @@ void __thiscall ai_spell_hook(SF_CGdBattleDevelopment *_this)
         if (spellAPI.hasSpellTag(spell_line_id, SpellTag::SEIGE_AURA_SPELL))
         {
             battleData->action_is_siege_aura = 1;
+        }
+        if (!aiAPI.canFigureDoAction(_this, &current_action))
+        {
+            continue;
+        }
+        uint16_t minRange = 1;
+        uint16_t maxRange = 1;
+        aiAPI.getActionStats(_this, &minRange, &maxRange, &spell_data);
+        if ((!battleData->action_is_siege_aura) && (isSpellAction(&current_action)))
+        {
+            if ((spellAPI.hasSpellTag(spell_line_id, SpellTag::AOE_SPELL)) &&
+                (spellAPI.hasSpellTag(spell_line_id, SpellTag::COMBAT_ABILITY_SPELL)))
+            {
+                action_rank = 1;
+                SF_Coord castCoord = {0, 0};
+                if (aiAPI.getCastType(battleData->CGdResource, current_action.subtype) == 2)
+                {
+                    uint16_t targets_length = aiAPI.getAIVectorLength(&battleData->some_figure_list[battleData->current_figure]);
+                    if (targets_length > 4)
+                    {
+                        action_rank *= 5;
+                        aiAPI.getPositionToCastAlly(_this, &castCoord, &battleData->some_figure_list[battleData->current_figure]);
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+                else
+                {
+                    uint16_t targets_length = aiAPI.getAIVectorLength(&battleData->another_figure_list[battleData->current_figure]);
+                    if (targets_length > 4)
+                    {
+                        action_rank *= 10;
+                        aiAPI.getPositionToCastEnemy(_this, &castCoord, &battleData->another_figure_list[battleData->current_figure]);
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+                SF_Coord caster_postion = {battleData->current_figure_pos.X, battleData->current_figure_pos.Y};
+
+            }
         }
     }
 }
