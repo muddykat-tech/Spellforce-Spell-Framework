@@ -20,6 +20,33 @@ bool isSpellAction(SF_SGtFigureAction *_this)
     return false;
 }
 
+uint16_t __thiscall getSector(SF_CGdWorld *_this, SF_Coord *position)
+{
+    uint32_t index = position->X + position->Y * 0x400;
+    return _this->cells[index].sector;
+}
+
+uint32_t GetEuclideanDistanceFromRing(int x1, int y1, int x2, int y2, int inner_radius, int outer_radius)
+{
+    int iVar1;
+
+    iVar1 = (y1 - y2) * (y1 - y2) + (x1 - x2) * (x1 - x2);
+    if (iVar1 < (inner_radius * inner_radius - 1))
+    {
+        return inner_radius * inner_radius - iVar1;
+    }
+    if ((outer_radius * outer_radius + 1) < iVar1)
+    {
+        return iVar1 - outer_radius * outer_radius;
+    }
+    return 0;
+}
+
+uint32_t signum(uint32_t param_1)
+{
+    return (param_1 ^ (int)param_1 >> 0x1f) - ((int)param_1 >> 0x1f);
+}
+
 void __thiscall ai_spell_hook(SF_CGdBattleDevelopment *_this)
 {
     SF_SGtFigureAction current_action;
@@ -98,7 +125,14 @@ void __thiscall ai_spell_hook(SF_CGdBattleDevelopment *_this)
                     }
                 }
                 SF_Coord caster_postion = {battleData->current_figure_pos.X, battleData->current_figure_pos.Y};
+                if (getSector(battleData->CGdWorld, &caster_postion) == getSector(battleData->CGdWorld, &castCoord))
+                {
+                    uint32_t distance = GetEuclideanDistanceFromRing(battleData->current_figure_pos.X, battleData->current_figure_pos.Y,
+                                                                     castCoord.X, castCoord.Y, minRange, maxRange);
+                    distance = signum(distance);
+                    action_rank = (distance + 1) * action_rank;
 
+                }
             }
         }
     }
