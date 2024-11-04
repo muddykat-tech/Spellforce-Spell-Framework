@@ -68,7 +68,7 @@ void __thiscall ai_spell_hook(SF_CGdBattleDevelopment *_this)
             break; // no more actions available
 
         uint16_t spell_line_id = current_action.type;
-        if (spellAPI.hasSpellTag(spell_line_id, SpellTag::SEIGE_AURA_SPELL)) // (isSiegeAura(&current_action))
+        if (spellAPI.hasSpellTag(spell_line_id, SpellTag::SEIGE_AURA_SPELL))
         {
             battleData->action_is_siege_aura = 1;
         }
