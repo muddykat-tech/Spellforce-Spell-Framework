@@ -98,9 +98,11 @@ void __thiscall ai_spell_hook(SF_CGdBattleDevelopment *_this)
             {
                 action_rank = 1;
                 SF_Coord castCoord = {0, 0};
-                if (aiAPI.getCastType(battleData->CGdResource, current_action.subtype) == 2)
+                uint8_t cast_type = aiAPI.getCastType(battleData->CGdResource, current_action.subtype);
+                uint16_t targets_length = 0;
+                if (cast_type == 2)
                 {
-                    uint16_t targets_length = aiAPI.getAIVectorLength(&battleData->some_figure_list[battleData->current_figure]);
+                    targets_length = aiAPI.getAIVectorLength(&battleData->some_figure_list[battleData->current_figure]);
                     if (targets_length > 4)
                     {
                         action_rank *= 5;
@@ -113,7 +115,7 @@ void __thiscall ai_spell_hook(SF_CGdBattleDevelopment *_this)
                 }
                 else
                 {
-                    uint16_t targets_length = aiAPI.getAIVectorLength(&battleData->another_figure_list[battleData->current_figure]);
+                    targets_length = aiAPI.getAIVectorLength(&battleData->another_figure_list[battleData->current_figure]);
                     if (targets_length > 4)
                     {
                         action_rank *= 10;
@@ -131,7 +133,48 @@ void __thiscall ai_spell_hook(SF_CGdBattleDevelopment *_this)
                                                                      castCoord.X, castCoord.Y, minRange, maxRange);
                     distance = signum(distance);
                     action_rank = (distance + 1) * action_rank;
-
+                    distance = getDistance(&caster_postion, &castCoord);
+                    action_rank = (((uint16_t)distance) / 5 + 1) * action_rank;
+                }
+                if (cast_type == 2)
+                {
+                    action_rank *= 2; // FIXME, handle AOE support spells!
+                }
+                else
+                {
+                    action_rank *= 2; // FIXME TOO! Handle AOE offensive spells!
+                }
+                if ((action_rank < targets_length) && action_rank != 0)
+                {
+                    action_rank = 1;
+                }
+                else
+                {
+                    action_rank = action_rank / targets_length;
+                }
+                uint16_t rand_penalty = spellAPI.getRandom(_this->battleFactory, 5);
+                action_rank = ((rand_penalty + 10) * action_rank) / 10;
+                if (action_rank == 0)
+                {
+                    action_rank = 0xffffffff;
+                }
+                if (action_rank < aiAPI.getAICurrentActionRanking(_this))
+                {
+                    aiAPI.setAICurrentActionRanking(_this, action_rank);
+                    battleData->current_target.entity_index = 0;
+                    battleData->current_target.position.X = castCoord.X;
+                    battleData->current_target.position.Y = castCoord.Y;
+                    battleData->current_target.entity_type = spell_data.cast_type2;
+                    battleData->current_action.type =current_action.type;
+                    battleData->current_action.subtype = current_action.subtype;
+                    battleData->current_action.unkn2 = current_action.unkn2;
+                    battleData->current_action.unkn3 = current_action.unkn3;
+                    battleData->current_action.unkn4 = current_action.unkn4;
+                    battleData->current_action.unkn5 = current_action.unkn5;
+                    battleData->current_action_min_rng = minRange;
+                    battleData->current_action_max_rng = maxRange;
+                    battleData->something_related_to_ranking = 0;
+                    battleData -> current_figure_noaggroattack = no_aggro_attack;
                 }
             }
         }
