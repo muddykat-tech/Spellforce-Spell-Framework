@@ -47,6 +47,24 @@ uint32_t signum(uint32_t param_1)
     return (param_1 ^ (int)param_1 >> 0x1f) - ((int)param_1 >> 0x1f);
 }
 
+void updateCurrentAction(SF_CGdBattleDevelopment *_this, SF_SGtFigureAction *action, SF_CGdTargetData *target, uint16_t minRange, uint16_t maxRange)
+{
+    _this->BattleData.current_target.entity_index = target->entity_index;
+    _this->BattleData.current_target.entity_type = target->entity_type;
+    _this->BattleData.current_target.position.X = target->position.X;
+    _this->BattleData.current_target.position.Y = target->position.Y;
+
+    _this->BattleData.current_action.type = action->type;
+    _this->BattleData.current_action.subtype = action->subtype;
+    _this->BattleData.current_action.unkn2 = action->unkn2;
+    _this->BattleData.current_action.unkn3 = action->unkn3;
+    _this->BattleData.current_action.unkn4 = action->unkn4;
+    _this->BattleData.current_action.unkn5 = action->unkn5;
+
+    _this->BattleData.current_action_min_rng = minRange;
+    _this->BattleData.current_action_max_rng = maxRange;
+}
+
 void __thiscall ai_spell_hook(SF_CGdBattleDevelopment *_this)
 {
     SF_SGtFigureAction current_action;
@@ -161,22 +179,16 @@ void __thiscall ai_spell_hook(SF_CGdBattleDevelopment *_this)
                 if (action_rank < aiAPI.getAICurrentActionRanking(_this))
                 {
                     aiAPI.setAICurrentActionRanking(_this, action_rank);
-                    battleData->current_target.entity_index = 0;
-                    battleData->current_target.position.X = castCoord.X;
-                    battleData->current_target.position.Y = castCoord.Y;
-                    battleData->current_target.entity_type = spell_data.cast_type2;
-                    battleData->current_action.type =current_action.type;
-                    battleData->current_action.subtype = current_action.subtype;
-                    battleData->current_action.unkn2 = current_action.unkn2;
-                    battleData->current_action.unkn3 = current_action.unkn3;
-                    battleData->current_action.unkn4 = current_action.unkn4;
-                    battleData->current_action.unkn5 = current_action.unkn5;
-                    battleData->current_action_min_rng = minRange;
-                    battleData->current_action_max_rng = maxRange;
+                    SF_CGdTargetData target = {spell_data.cast_type2,
+                                               0,
+                                               {castCoord.X, castCoord.Y}};
+                    updateCurrentAction(_this, &current_action, &target, minRange, maxRange);
                     battleData->something_related_to_ranking = 0;
-                    battleData -> current_figure_noaggroattack = no_aggro_attack;
+                    battleData->current_figure_noaggroattack = no_aggro_attack;
                 }
             }
         }
+
+        
     }
 }
