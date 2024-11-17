@@ -131,6 +131,8 @@ DECLARE_FUNCTION(void *, AC60AddOrGetEntity, void *_autoclass60, uint16_t entity
 DECLARE_FUNCTION(SF_Coord *, getPositionToCastAlly, SF_CGdBattleDevelopment *_this,SF_Coord *param_1,void *std_vector_uint16_t);
 DECLARE_FUNCTION(SF_Coord *, getPositionToCastEnemy, SF_CGdBattleDevelopment *_this,SF_Coord *param_1,void *std_vector_uint16_t);
 
+DECLARE_FUNCTION(bool, isUnknownWorldFeature, SF_CGdWorldToolBox *, uint16_t figure_index, SF_Coord * param2, SF_Coord *param3, uint32_t param4, SF_Coord * param5, uint16_t param6);
+
 DECLARE_FUNCTION_GROUP(Ai,
                        getTargetAction_ptr getTargetAction;
                        getFigureAction_ptr getFigureAction;
@@ -146,4 +148,5 @@ DECLARE_FUNCTION_GROUP(Ai,
                        getCastType_ptr getCastType;
                        getPositionToCastAlly_ptr getPositionToCastAlly;
                        getPositionToCastEnemy_ptr getPositionToCastEnemy;
+                       isUnknownWorldFeature_ptr isUnknownWorldFeature;
                        );

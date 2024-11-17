@@ -115,7 +115,7 @@ void __thiscall ai_spell_hook(SF_CGdBattleDevelopment *_this)
                 (spellAPI.hasSpellTag(spell_line_id, SpellTag::COMBAT_ABILITY_SPELL)))
             {
                 action_rank = 1;
-                SF_Coord castCoord = {0, 0};
+                SF_Coord cast_position = {0, 0};
                 uint8_t cast_type = aiAPI.getCastType(battleData->CGdResource, current_action.subtype);
                 uint16_t targets_length = 0;
                 if (cast_type == 2)
@@ -124,7 +124,7 @@ void __thiscall ai_spell_hook(SF_CGdBattleDevelopment *_this)
                     if (targets_length > 4)
                     {
                         action_rank *= 5;
-                        aiAPI.getPositionToCastAlly(_this, &castCoord, &battleData->some_figure_list[battleData->current_figure]);
+                        aiAPI.getPositionToCastAlly(_this, &cast_position, &battleData->some_figure_list[battleData->current_figure]);
                     }
                     else
                     {
@@ -137,7 +137,7 @@ void __thiscall ai_spell_hook(SF_CGdBattleDevelopment *_this)
                     if (targets_length > 4)
                     {
                         action_rank *= 10;
-                        aiAPI.getPositionToCastEnemy(_this, &castCoord, &battleData->another_figure_list[battleData->current_figure]);
+                        aiAPI.getPositionToCastEnemy(_this, &cast_position, &battleData->another_figure_list[battleData->current_figure]);
                     }
                     else
                     {
@@ -145,15 +145,34 @@ void __thiscall ai_spell_hook(SF_CGdBattleDevelopment *_this)
                     }
                 }
                 SF_Coord caster_postion = {battleData->current_figure_pos.X, battleData->current_figure_pos.Y};
-                if (getSector(battleData->CGdWorld, &caster_postion) == getSector(battleData->CGdWorld, &castCoord))
+                if (!(getSector(battleData->CGdWorld, &caster_postion) == getSector(battleData->CGdWorld, &cast_position)))
                 {
-                    uint32_t distance = GetEuclideanDistanceFromRing(battleData->current_figure_pos.X, battleData->current_figure_pos.Y,
-                                                                     castCoord.X, castCoord.Y, minRange, maxRange);
-                    distance = signum(distance);
-                    action_rank = (distance + 1) * action_rank;
-                    distance = getDistance(&caster_postion, &castCoord);
-                    action_rank = (((uint16_t)distance) / 5 + 1) * action_rank;
+                    if (getSector(battleData->CGdWorld, &cast_position) == 0)
+                    {
+                        SF_Coord unkn1 = {1, 5};
+                        SF_Coord new_cast_position = {0, 0};
+                        if (aiAPI.isUnknownWorldFeature(battleData->CGdWorldToolBox, battleData->current_figure, &cast_position, &unkn1, 0, &new_cast_position, 0))
+                        {
+                            cast_position.X = new_cast_position.X;
+                            cast_position.Y = new_cast_position.Y;
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        continue;
+                    }
                 }
+                uint32_t distance = GetEuclideanDistanceFromRing(battleData->current_figure_pos.X, battleData->current_figure_pos.Y,
+                                                                 cast_position.X, cast_position.Y, minRange, maxRange);
+                distance = signum(distance);
+                action_rank = (distance + 1) * action_rank;
+                distance = getDistance(&caster_postion, &cast_position);
+                action_rank = (((uint16_t)distance) / 5 + 1) * action_rank;
+
                 if (cast_type == 2)
                 {
                     action_rank *= 2; // FIXME, handle AOE support spells!
@@ -181,14 +200,12 @@ void __thiscall ai_spell_hook(SF_CGdBattleDevelopment *_this)
                     aiAPI.setAICurrentActionRanking(_this, action_rank);
                     SF_CGdTargetData target = {spell_data.cast_type2,
                                                0,
-                                               {castCoord.X, castCoord.Y}};
+                                               {cast_position.X, cast_position.Y}};
                     updateCurrentAction(_this, &current_action, &target, minRange, maxRange);
                     battleData->something_related_to_ranking = 0;
                     battleData->current_figure_noaggroattack = no_aggro_attack;
                 }
             }
         }
-
-        
     }
 }
