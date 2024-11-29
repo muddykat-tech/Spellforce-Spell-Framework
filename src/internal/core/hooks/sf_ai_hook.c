@@ -72,7 +72,7 @@ void __thiscall ai_spell_hook(SF_CGdBattleDevelopment *_this)
     uint32_t no_aggro_attack = 0;
     clearAction(&current_action);
     CGdAIBattleData *battleData = &(_this->BattleData);
-    if (battleData->current_figure_has_owner != 0 && (battleData->figure_maybe2).entityCount == 0)
+    if (battleData->current_figure_has_owner != 0 && (battleData->figures_maybe2).entityCount == 0)
     {
         if (!aiAPI.isAIVectorEmpty(&battleData->another_figure_list[battleData->current_figure]))
         {
@@ -84,7 +84,7 @@ void __thiscall ai_spell_hook(SF_CGdBattleDevelopment *_this)
                 aiAPI.getAIVectorGetCurrent(&battleData->another_figure_list[battleData->current_figure], &current_figure);
                 if (current_figure == first_figure)
                     break;
-                aiAPI.AC60AddOrGetEntity(&(battleData->figure_maybe2), *first_figure);
+                aiAPI.AC60AddOrGetEntity(&(battleData->figures_maybe2), *first_figure);
                 first_figure++;
             }
             no_aggro_attack = 1;
@@ -112,7 +112,7 @@ void __thiscall ai_spell_hook(SF_CGdBattleDevelopment *_this)
         if ((!battleData->action_is_siege_aura) && (isSpellAction(&current_action)))
         {
             if ((spellAPI.hasSpellTag(spell_line_id, SpellTag::AOE_SPELL)) &&
-                (spellAPI.hasSpellTag(spell_line_id, SpellTag::COMBAT_ABILITY_SPELL)))
+                (!spellAPI.hasSpellTag(spell_line_id, SpellTag::COMBAT_ABILITY_SPELL)))
             {
                 action_rank = 1;
                 SF_Coord cast_position = {0, 0};
@@ -205,6 +205,23 @@ void __thiscall ai_spell_hook(SF_CGdBattleDevelopment *_this)
                     battleData->something_related_to_ranking = 0;
                     battleData->current_figure_noaggroattack = no_aggro_attack;
                 }
+            }
+        }
+        else
+        {
+            AutoClass60 *list_to_proceed;
+            if (battleData->unkn_flag3)
+            {
+                list_to_proceed = &(battleData->figures_maybe);
+            }
+            else
+            {
+                list_to_proceed = &(battleData->figures_maybe2);
+            }
+            for (int i = 0; i<list_to_proceed->entityCount; i++)
+            {
+                action_rank = 1;
+
             }
         }
     }

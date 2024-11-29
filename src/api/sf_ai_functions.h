@@ -41,7 +41,7 @@ typedef struct __attribute__((packed))
     void *autoclass64;
     AutoClass60 figures_maybe;
     uint16_t unkn1;
-    AutoClass60 figure_maybe2;
+    AutoClass60 figures_maybe2;
     uint16_t unkn2;
     AutoClass60 building_ally;
     uint16_t unkn3;
