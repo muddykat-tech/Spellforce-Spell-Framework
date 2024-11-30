@@ -23,6 +23,7 @@ DECLARE_FUNCTION(uint16_t, addUnit, SF_CGdFigureToolbox *_this, uint16_t posX, u
                     uint16_t spawn_effect, int npc_id, int faction, int disable_ai);
 DECLARE_FUNCTION(bool, findClosestFreePosition, SF_CGdWorldToolBox* _this, SF_Coord *param_1,SF_Coord *param_2,
                     uint16_t sector, SF_Coord *return_value)
+DECLARE_FUNCTION(bool, isUnitMelee, SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t figure_id);
 
 DECLARE_FUNCTION_GROUP(Toolbox,
                        dealDamage_ptr dealDamage;
@@ -42,4 +43,5 @@ DECLARE_FUNCTION_GROUP(Toolbox,
                        removeSpellFromList_ptr removeSpellFromList;
                        addUnit_ptr addUnit;
                        findClosestFreePosition_ptr findClosestFreePosition;
+                       isUnitMelee_ptr isUnitMelee;
                        );
