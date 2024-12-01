@@ -377,7 +377,7 @@ uint32_t __thiscall berserk_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t 
     }
     else
     {
-        //Berserk level 101 is special case for trolls
+        // Berserk level 101 is special case for trolls
         if (spell_data->skill_requirements[2] > 100)
         {
             uint16_t current_health = figureAPI.getCurrentHealth(_this->battleData.CGdFigure, target_index);
@@ -397,4 +397,123 @@ uint32_t __thiscall berserk_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t 
         }
     }
     return rank;
+}
+
+uint32_t __thiscall blessing_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 1;
+    if ((_this->battleData.current_figure != target_index) ||
+        (_this->battleData.enemy_figures.entityCount == 0))
+    {
+        rank = 0;
+    }
+    else
+    {
+        uint16_t current_health = figureAPI.getCurrentHealth(_this->battleData.CGdFigure, target_index);
+        uint32_t max_health = figureAPI.getCurrentMaxHealth(_this->battleData.CGdFigure, target_index);
+        if (max_health != 0)
+        {
+            uint16_t percent = (current_health / max_health) * 100;
+            if (percent > (100 - spell_data->params[0]))
+            {
+                rank = 0;
+            }
+        }
+        else
+        {
+            rank = 0;
+        }
+    }
+    return rank;
+}
+
+uint32_t __thiscall benefactions_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 1;
+    if ((_this->battleData.current_figure != target_index) ||
+        (_this->battleData.enemy_figures.entityCount == 0) ||
+        (_this->battleData.ally_figures.entityCount < 4) ||
+        (_this->battleData.figures_missing_hp == 0))
+    {
+        rank = 0;
+    }
+    else
+    {
+        uint16_t figures_count = 0;
+        for (uint16_t i = 0; i < _this->battleData.ally_figures.entityCount; i++)
+        {
+            uint16_t ally_index = _this->battleData.ally_figures.data[i].entity_index;
+            if (figureAPI.isAlive(_this->battleData.CGdFigure, ally_index))
+            {
+                if (!toolboxAPI.hasSpellOnIt(_this->battleData.CGdFigureToolBox, ally_index, spell_line))
+                {
+                    if (figureAPI.isWarrior(_this->battleData.CGdFigure, ally_index))
+                    {
+                        uint16_t current_health = figureAPI.getCurrentHealth(_this->battleData.CGdFigure, ally_index);
+                        uint32_t max_health = figureAPI.getCurrentMaxHealth(_this->battleData.CGdFigure, ally_index);
+                        if (max_health != 0)
+                        {
+                            uint16_t percent = (current_health / max_health) * 100;
+                            if (percent < (100 - spell_data->params[0]))
+                            {
+                                figures_count++;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    rank = 0;
+                    break;
+                }
+            }
+        }
+        if (figures_count < 3)
+        {
+            rank = 0;
+        }
+    }
+    return rank;
+}
+
+uint32_t __thiscall shift_life_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 1;
+    if ((_this->battleData.current_figure != target_index) ||
+        (_this->battleData.enemy_figures.entityCount == 0) ||
+        (_this->battleData.ally_figures.entityCount == 0))
+    {
+        rank = 0;
+    }
+    else
+    {
+        uint16_t current_health = figureAPI.getCurrentHealth(_this->battleData.CGdFigure, target_index);
+        uint32_t max_health = figureAPI.getCurrentMaxHealth(_this->battleData.CGdFigure, target_index);
+        if (max_health != 0)
+        {
+            uint16_t percent = (current_health / max_health) * 100;
+            //hardcode value is 75% gamedata value is 50%, i go with gamedata value
+            if (percent > (100 - spell_data->params[1]))
+            {
+                rank = 0;
+            }
+        }
+        else
+        {
+            rank = 0;
+        }
+    }
+    return rank;
+}
+
+// kGdSpellLineProtectionBlack
+// kGdSpellLineFakeSpellOneFigure
+uint32_t __thiscall do_not_cast_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    return 0;
+}
+
+uint32_t __thiscall default_support_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    return 2;
 }
