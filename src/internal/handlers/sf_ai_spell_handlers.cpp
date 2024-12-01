@@ -246,10 +246,10 @@ uint32_t __thiscall HCA_ability_ai_handler(SF_CGdBattleDevelopment *_this, uint1
     return rank;
 }
 
-//kGdSpellLineAbilityShelter
-//kGdSpellLineAbilityTrueShot
-//kGdSpellLineAbilitySteelSkin
-//kGdSpellLineAbilitySalvo
+// kGdSpellLineAbilityShelter
+// kGdSpellLineAbilityTrueShot
+// kGdSpellLineAbilitySteelSkin
+// kGdSpellLineAbilitySalvo
 uint32_t __thiscall RCA_ability_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 1;
@@ -257,6 +257,36 @@ uint32_t __thiscall RCA_ability_ai_handler(SF_CGdBattleDevelopment *_this, uint1
         (_this->battleData.enemy_figures.entityCount == 0))
     {
         rank = 0;
+    }
+    return rank;
+}
+
+// kGdSpellLineAbilityDurability
+// kGdSpellLineAbilityRiposte
+uint32_t __thiscall riposte_ability_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 1;
+    if ((_this->battleData.current_figure != target_index) ||
+        (_this->battleData.enemy_figures.entityCount == 0))
+    {
+        rank = 0;
+    }
+    else
+    {
+        uint16_t current_health = figureAPI.getCurrentHealth(_this->battleData.CGdFigure, target_index);
+        uint32_t max_health = figureAPI.getCurrentMaxHealth(_this->battleData.CGdFigure, target_index);
+        if (max_health != 0)
+        {
+            uint16_t percent = (current_health / max_health) * 100;
+            if (percent > 80)
+            {
+                rank = 0;
+            }
+        }
+        else
+        {
+            rank = 0;
+        }
     }
     return rank;
 }
