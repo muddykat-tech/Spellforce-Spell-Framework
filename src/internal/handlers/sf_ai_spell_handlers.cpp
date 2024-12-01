@@ -366,3 +366,35 @@ uint32_t __thiscall wave_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t tar
     }
     return rank;
 }
+
+uint32_t __thiscall berserk_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 1;
+    if ((_this->battleData.current_figure != target_index) ||
+        (_this->battleData.enemy_figures.entityCount == 0))
+    {
+        rank = 0;
+    }
+    else
+    {
+        //Berserk level 101 is special case for trolls
+        if (spell_data->skill_requirements[2] > 100)
+        {
+            uint16_t current_health = figureAPI.getCurrentHealth(_this->battleData.CGdFigure, target_index);
+            uint32_t max_health = figureAPI.getCurrentMaxHealth(_this->battleData.CGdFigure, target_index);
+            if (max_health != 0)
+            {
+                uint16_t percent = (current_health / max_health) * 100;
+                if (percent > 25)
+                {
+                    rank = 0;
+                }
+            }
+            else
+            {
+                rank = 0;
+            }
+        }
+    }
+    return rank;
+}
