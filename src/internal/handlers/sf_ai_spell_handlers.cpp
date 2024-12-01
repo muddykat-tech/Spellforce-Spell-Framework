@@ -290,3 +290,79 @@ uint32_t __thiscall riposte_ability_ai_handler(SF_CGdBattleDevelopment *_this, u
     }
     return rank;
 }
+
+// kGdSpellLineSummonGoblin
+// kGdSpellLineSummonSkeleton
+// kGdSpellLineSummonDemon
+// kGdSpellLineSummonChanneler
+// kGdSpellLineSummonSpectre
+// kGdSpellLineSummonWolf
+// kGdSpellLineSummonBear
+// kGdSpellLineFireElemental
+// kGdSpellLineIceElemental
+// kGdSpellLineEarthElemental
+// kGdSpellLineSummonTreeWraith
+// kGdSpellLineSummonBlade
+// kGdSpellLineSummonFireGolem
+// kGdSpellLineSummonIceGolem
+// kGdSpellLineSummonEarthGolem
+// kGdSpellLineMirrorImage
+uint32_t __thiscall summon_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 1;
+    if ((_this->battleData.current_figure != target_index) ||
+        (_this->battleData.enemy_figures.entityCount == 0))
+    {
+        rank = 0;
+    }
+    else
+    {
+        uint16_t manacost = (spell_data->mana_cost * 3) / 2;
+        if (figureAPI.getManaCurrent(_this->battleData.CGdFigure, target_index) < manacost)
+        {
+            rank = 0;
+        }
+    }
+    return rank;
+}
+
+// kGdSpellLineDistract
+// kGdSpellLineShockwave
+// kGdSpellLineWaveOfFire
+// kGdSpellLineWaveOfIce
+// kGdSpellLineWaveOfRocks
+uint32_t __thiscall wave_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 1;
+    if ((_this->battleData.current_figure != target_index) ||
+        (_this->battleData.enemy_figures.entityCount == 0))
+    {
+        rank = 0;
+    }
+    else
+    {
+        uint8_t figure_count = 0;
+        for (uint16_t i = 0; i < _this->battleData.enemy_figures.entityCount; i++)
+        {
+            uint16_t enemy_index = _this->battleData.enemy_figures.data[i].entity_index;
+            if (figureAPI.isAlive(_this->battleData.CGdFigure, enemy_index))
+            {
+                SF_Coord enemy_pos = _this->battleData.CGdFigure->figures[enemy_index].position;
+                SF_Coord caster_pos = _this->battleData.current_figure_pos;
+                if (getDistance(&enemy_pos, &caster_pos) < 10)
+                {
+                    figure_count++;
+                }
+            }
+            if (figure_count > 2)
+            {
+                break;
+            }
+        }
+        if (figure_count < 2)
+        {
+            rank = 0;
+        }
+    }
+    return rank;
+}
