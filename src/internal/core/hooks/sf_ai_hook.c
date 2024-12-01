@@ -49,20 +49,20 @@ uint32_t signum(uint32_t param_1)
 
 void updateCurrentAction(SF_CGdBattleDevelopment *_this, SF_SGtFigureAction *action, SF_CGdTargetData *target, uint16_t minRange, uint16_t maxRange)
 {
-    _this->BattleData.current_target.entity_index = target->entity_index;
-    _this->BattleData.current_target.entity_type = target->entity_type;
-    _this->BattleData.current_target.position.X = target->position.X;
-    _this->BattleData.current_target.position.Y = target->position.Y;
+    _this->battleData.current_target.entity_index = target->entity_index;
+    _this->battleData.current_target.entity_type = target->entity_type;
+    _this->battleData.current_target.position.X = target->position.X;
+    _this->battleData.current_target.position.Y = target->position.Y;
 
-    _this->BattleData.current_action.type = action->type;
-    _this->BattleData.current_action.subtype = action->subtype;
-    _this->BattleData.current_action.unkn2 = action->unkn2;
-    _this->BattleData.current_action.unkn3 = action->unkn3;
-    _this->BattleData.current_action.unkn4 = action->unkn4;
-    _this->BattleData.current_action.unkn5 = action->unkn5;
+    _this->battleData.current_action.type = action->type;
+    _this->battleData.current_action.subtype = action->subtype;
+    _this->battleData.current_action.unkn2 = action->unkn2;
+    _this->battleData.current_action.unkn3 = action->unkn3;
+    _this->battleData.current_action.unkn4 = action->unkn4;
+    _this->battleData.current_action.unkn5 = action->unkn5;
 
-    _this->BattleData.current_action_min_rng = minRange;
-    _this->BattleData.current_action_max_rng = maxRange;
+    _this->battleData.current_action_min_rng = minRange;
+    _this->battleData.current_action_max_rng = maxRange;
 }
 
 void __thiscall ai_spell_hook(SF_CGdBattleDevelopment *_this)
@@ -71,8 +71,8 @@ void __thiscall ai_spell_hook(SF_CGdBattleDevelopment *_this)
     uint32_t action_rank = 10;
     uint32_t no_aggro_attack = 0;
     clearAction(&current_action);
-    CGdAIBattleData *battleData = &(_this->BattleData);
-    if (battleData->current_figure_has_owner != 0 && (battleData->figures_maybe2).entityCount == 0)
+    CGdAIBattleData *battleData = &(_this->battleData);
+    if (battleData->current_figure_has_owner != 0 && (battleData->enemy_figures).entityCount == 0)
     {
         if (!aiAPI.isAIVectorEmpty(&battleData->another_figure_list[battleData->current_figure]))
         {
@@ -84,7 +84,7 @@ void __thiscall ai_spell_hook(SF_CGdBattleDevelopment *_this)
                 aiAPI.getAIVectorGetCurrent(&battleData->another_figure_list[battleData->current_figure], &current_figure);
                 if (current_figure == first_figure)
                     break;
-                aiAPI.AC60AddOrGetEntity(&(battleData->figures_maybe2), *first_figure);
+                aiAPI.AC60AddOrGetEntity(&(battleData->enemy_figures), *first_figure);
                 first_figure++;
             }
             no_aggro_attack = 1;
@@ -212,11 +212,11 @@ void __thiscall ai_spell_hook(SF_CGdBattleDevelopment *_this)
             AutoClass60 *list_to_proceed;
             if (battleData->unkn_flag3)
             {
-                list_to_proceed = &(battleData->figures_maybe);
+                list_to_proceed = &(battleData->ally_figures);
             }
             else
             {
-                list_to_proceed = &(battleData->figures_maybe2);
+                list_to_proceed = &(battleData->enemy_figures);
             }
             for (int i = 0; i<list_to_proceed->entityCount; i++)
             {

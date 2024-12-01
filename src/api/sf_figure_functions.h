@@ -207,7 +207,7 @@ DECLARE_FUNCTION(void, subMana, SF_CGdFigure *_this, uint16_t param_1, uint32_t 
 DECLARE_FUNCTION(uint16_t, getManaCurrent, SF_CGdFigure *figure, uint16_t figure_id);
 DECLARE_FUNCTION(SF_Coord, getPosition, SF_CGdFigure *figure, SF_Coord *position, uint16_t figure_id);
 DECLARE_FUNCTION(SF_CGdFigureWeaponStats *, getWeaponStats, SF_CGdFigure *figure, SF_CGdFigureWeaponStats *stats_in, uint16_t figure_id);
-
+DECLARE_FUNCTION(bool, isWarrior, SF_CGdFigure *figure, uint16_t figure_id);
 DECLARE_FUNCTION(void, setTask, SF_CGdFigure *_figure, uint16_t figure_index, CGdFigureTask figureTask);
 // Unknown Functons
 DECLARE_FUNCTION(bool, FUN_006e3a90, uint32_t *CGdFigureJobs, uint16_t figure_id);
@@ -246,4 +246,5 @@ DECLARE_FUNCTION_GROUP(Figure,
                        setTask_ptr setTask;
                        getWeaponStats_ptr getWeaponStats;
                        getAggroValue_ptr getAggroValue;
-                       setAggroValue_ptr setAggroValue;);
+                       setAggroValue_ptr setAggroValue;
+                       isWarrior_ptr isWarrior;);

@@ -12,7 +12,14 @@ typedef struct __attribute__((packed))
 
 typedef struct __attribute((packed))
 {
-    uint8_t data[0xfa0];
+    uint16_t entity_index;
+    uint16_t padding;
+    uint32_t hate_value;
+} AutoClass60_data;
+
+typedef struct __attribute((packed))
+{
+    AutoClass60_data data[500];
     uint16_t entityCount;
 } AutoClass60;
 
@@ -39,9 +46,9 @@ typedef struct __attribute__((packed))
     SF_CGdWorld *CGdWorld;
     SF_CGdWorldToolBox *CGdWorldToolBox;
     void *autoclass64;
-    AutoClass60 figures_maybe;
+    AutoClass60 ally_figures;
     uint16_t unkn1;
-    AutoClass60 figures_maybe2;
+    AutoClass60 enemy_figures;
     uint16_t unkn2;
     AutoClass60 building_ally;
     uint16_t unkn3;
@@ -111,7 +118,7 @@ typedef struct __attribute__((packed))
 {
     void *vfTable;
     void *battleFactory;
-    CGdAIBattleData BattleData;
+    CGdAIBattleData battleData;
 } SF_CGdBattleDevelopment;
 
 DECLARE_FUNCTION(SF_SGtFigureAction *, getTargetAction, SF_CGdFigure *figure, SF_SGtFigureAction *action, uint16_t figure_id);

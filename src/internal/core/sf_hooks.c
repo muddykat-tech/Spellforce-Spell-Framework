@@ -68,6 +68,7 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(figure, getWeaponStats, 0x2b30a0);
     DEFINE_FUNCTION(figure, getAggroValue, 0x2b1ab0);
     DEFINE_FUNCTION(figure, setAggroValue, 0x2b6670);
+    DEFINE_FUNCTION(figure, isWarrior, 0x1c1510);
 
     log_info("| - AI API Hooks");
 
