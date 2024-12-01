@@ -76,3 +76,96 @@ uint32_t __thiscall death_grasp_ai_handler(SF_CGdBattleDevelopment *_this, uint1
     }
     return rank;
 }
+
+// weakness, suffocation, lifetap
+// slow fighting, inflexibility, slow walking
+// inability, hypnotization, manatap
+uint32_t __thiscall offensive_aura_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 1;
+    if (_this->BattleData.current_figure == target_index)
+    {
+        if (_this->BattleData.figures_maybe2.entityCount == 0)
+        {
+            rank = 0;
+        }
+        else
+        {
+            uint16_t manacost = (spell_data->mana_cost * 3) / 2;
+            if (figureAPI.getManaCurrent(_this->BattleData.CGdFigure, target_index) < manacost)
+            {
+                rank = 0;
+            }
+        }
+    }
+    else
+    {
+        rank = 0;
+    }
+    return rank;
+}
+
+// kGdSpellLineAuraStrength
+// kGdSpellLineAuraEndurance
+// kGdSpellLineAuraFastFighting
+// kGdSpellLineAuraFlexibility
+// kGdSpellLineAuraFastWalking
+// kGdSpellLineAuraDexterity
+// kGdSpellLineAuraBrilliance
+uint32_t __thiscall defensive_aura_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 1;
+    if (_this->BattleData.current_figure == target_index)
+    {
+        if ((_this->BattleData.figures_maybe2.entityCount == 0) || (_this->BattleData.figures_maybe.entityCount == 0))
+        {
+            rank = 0;
+        }
+        else
+        {
+            uint16_t manacost = (spell_data->mana_cost * 3) / 2;
+            if (figureAPI.getManaCurrent(_this->BattleData.CGdFigure, target_index) < manacost)
+            {
+                rank = 0;
+            }
+        }
+    }
+    else
+    {
+        rank = 0;
+    }
+    return rank;
+}
+
+// Regeneration and Healing
+uint32_t __thiscall healing_aura_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 1;
+    if (_this->BattleData.current_figure == target_index)
+    {
+        if ((_this->BattleData.figures_maybe2.entityCount == 0) || (_this->BattleData.figures_maybe.entityCount == 0))
+        {
+            rank = 0;
+        }
+        else
+        {
+            if (_this->BattleData.figures_missing_hp == 0)
+            {
+                rank = 0;
+            }
+            else
+            {
+                uint16_t manacost = (spell_data->mana_cost * 3) / 2;
+                if (figureAPI.getManaCurrent(_this->BattleData.CGdFigure, target_index) < manacost)
+                {
+                    rank = 0;
+                }
+            }
+        }
+    }
+    else
+    {
+        rank = 0;
+    }
+    return rank;
+}
