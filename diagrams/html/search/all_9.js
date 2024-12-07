@@ -44,6 +44,7 @@ var searchData=
   ['isactionmelee_41',['isActionMelee',['../sf__wrappers_8c.html#ae2ec775265f1435a0f7e177e86b004d0',1,'isActionMelee(SF_SGtFigureAction *_this):&#160;sf_wrappers.c'],['../sf__wrappers_8h.html#ae2ec775265f1435a0f7e177e86b004d0',1,'isActionMelee(SF_SGtFigureAction *_this):&#160;sf_wrappers.c']]],
   ['isfigurejobspell_42',['isFigureJobSpell',['../sf__onhit__hook_8c.html#a0ca3dd8cf7def5592a69450b5caaac2a',1,'sf_onhit_hook.c']]],
   ['isjobdonothing_43',['isJobDoNothing',['../sf__onhit__hook_8c.html#a02411a5016dfa987f9f46df8ff4ca332',1,'sf_onhit_hook.c']]],
-  ['istargetable_44',['isTargetable',['../sf__toolbox__functions_8h.html#a363ee8a37392234ec3b8a78ccbca8265',1,'sf_toolbox_functions.h']]],
-  ['iteratorapi_45',['iteratorAPI',['../struct_spellforce_spell_framework.html#a2abb65c695dc68a320217e23ae6c97f0',1,'SpellforceSpellFramework::iteratorAPI'],['../sf__hooks_8c.html#a764358640400f5367f96608b5794f0c2',1,'iteratorAPI:&#160;sf_hooks.c'],['../sf__hooks_8h.html#a764358640400f5367f96608b5794f0c2',1,'iteratorAPI:&#160;sf_hooks.c']]]
+  ['isspellaction_44',['isSpellAction',['../sf__ai__hook_8c.html#adbfebe2587f5680512bab3f489b05a2b',1,'sf_ai_hook.c']]],
+  ['isunitmelee_45',['isUnitMelee',['../sf__toolbox__functions_8h.html#a007132d5785ba177732c22a8453f8cf8',1,'sf_toolbox_functions.h']]],
+  ['iteratorapi_46',['iteratorAPI',['../struct_spellforce_spell_framework.html#a2abb65c695dc68a320217e23ae6c97f0',1,'SpellforceSpellFramework::iteratorAPI'],['../sf__hooks_8c.html#a764358640400f5367f96608b5794f0c2',1,'iteratorAPI:&#160;sf_hooks.c'],['../sf__hooks_8h.html#a764358640400f5367f96608b5794f0c2',1,'iteratorAPI:&#160;sf_hooks.c']]]
 ];

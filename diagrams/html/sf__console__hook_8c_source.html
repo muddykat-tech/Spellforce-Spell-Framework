@@ -5,12 +5,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Spellforce-Spell-Framework: src/internal/core/hooks/sf_console_hook.c Source File</title>
+<title>Spellforce-Spell-framework: src/internal/core/hooks/sf_console_hook.c Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
@@ -25,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Spellforce-Spell-Framework
+   <div id="projectname">Spellforce-Spell-framework
    </div>
   </td>
  </tr>
@@ -49,17 +51,29 @@ $(function() { codefold.init(0); });
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
-  initMenu('',true,false,'search.php','Search',false);
+  initMenu('',true,false,'search.php','Search',true);
   $(function() { init_search(); });
 });
 /* @license-end */
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){ initResizable(false); });
+$(function(){initNavTree('sf__console__hook_8c_source.html',''); initResizable(true); });
 /* @license-end */
 </script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -81,12 +95,6 @@ $(function(){ initResizable(false); });
 </div>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_3756d50f4003bc63fa3fe49460f9c79d.html">internal</a></li><li class="navelem"><a class="el" href="dir_fc391693c5b997f1c609080ef9ece185.html">core</a></li><li class="navelem"><a class="el" href="dir_4252364b3ed5287ae5919d8f2cc87ee7.html">hooks</a></li>  </ul>
-</div>
-</div><!-- top -->
-<div id="doc-content">
 <div class="header">
   <div class="headertitle"><div class="title">sf_console_hook.c</div></div>
 </div><!--header-->
@@ -129,7 +137,7 @@ $(function(){ initResizable(false); });
 <div class="ttc" id="asf__console__hook_8c_html_ad95110eea0d834055b5fc04eb031e45b"><div class="ttname"><a href="sf__console__hook_8c.html#ad95110eea0d834055b5fc04eb031e45b">initialize_console_data_hooks</a></div><div class="ttdeci">void initialize_console_data_hooks()</div><div class="ttdef"><b>Definition</b> <a href="#l00022">sf_console_hook.c:22</a></div></div>
 <div class="ttc" id="asf__console__hook_8c_html_af6b694e632c7b92e802468161b511edf"><div class="ttname"><a href="sf__console__hook_8c.html#af6b694e632c7b92e802468161b511edf">console_log</a></div><div class="ttdeci">void console_log(const char *message)</div><div class="ttdef"><b>Definition</b> <a href="#l00007">sf_console_hook.c:7</a></div></div>
 <div class="ttc" id="asf__console__hook_8h_html"><div class="ttname"><a href="sf__console__hook_8h.html">sf_console_hook.h</a></div></div>
-<div class="ttc" id="asf__general__structures_8h_html_a79f1216fa524f80356c60c2f1c6a2456"><div class="ttname"><a href="sf__general__structures_8h.html#a79f1216fa524f80356c60c2f1c6a2456">console_print_ptr</a></div><div class="ttdeci">void(__thiscall * console_print_ptr)(uint32_t, const char *)</div><div class="ttdef"><b>Definition</b> <a href="sf__general__structures_8h_source.html#l00736">sf_general_structures.h:736</a></div></div>
+<div class="ttc" id="asf__general__structures_8h_html_a79f1216fa524f80356c60c2f1c6a2456"><div class="ttname"><a href="sf__general__structures_8h.html#a79f1216fa524f80356c60c2f1c6a2456">console_print_ptr</a></div><div class="ttdeci">void(__thiscall * console_print_ptr)(uint32_t, const char *)</div><div class="ttdef"><b>Definition</b> <a href="sf__general__structures_8h_source.html#l00752">sf_general_structures.h:752</a></div></div>
 <div class="ttc" id="asf__wrappers_8c_html_ab85594e3b6df124de9090d26bfd9e0e4"><div class="ttname"><a href="sf__wrappers_8c.html#ab85594e3b6df124de9090d26bfd9e0e4">g_create_sf_string</a></div><div class="ttdeci">SF_String_ctor_ptr g_create_sf_string</div><div class="ttdef"><b>Definition</b> <a href="sf__wrappers_8c_source.html#l00015">sf_wrappers.c:15</a></div></div>
 <div class="ttc" id="asf__wrappers_8c_html_ac5c95c4eeefbc3d135cafe996908b639"><div class="ttname"><a href="sf__wrappers_8c.html#ac5c95c4eeefbc3d135cafe996908b639">log_message</a></div><div class="ttdeci">void log_message(const char *filename, const char *message)</div><div class="ttdef"><b>Definition</b> <a href="sf__wrappers_8c_source.html#l00024">sf_wrappers.c:24</a></div></div>
 <div class="ttc" id="asf__wrappers_8c_html_ad3b25209004dc1abef56d10891ae58d0"><div class="ttname"><a href="sf__wrappers_8c.html#ad3b25209004dc1abef56d10891ae58d0">g_destroy_sf_string</a></div><div class="ttdeci">SF_String_dtor_ptr g_destroy_sf_string</div><div class="ttdef"><b>Definition</b> <a href="sf__wrappers_8c_source.html#l00016">sf_wrappers.c:16</a></div></div>
@@ -137,10 +145,13 @@ $(function(){ initResizable(false); });
 <div class="ttc" id="asf__wrappers_8h_html_a29a27e7466c8964f8580d2530dfa83f2"><div class="ttname"><a href="sf__wrappers_8h.html#a29a27e7466c8964f8580d2530dfa83f2">SF_String_ctor_ptr</a></div><div class="ttdeci">SF_String *(__thiscall * SF_String_ctor_ptr)(SF_String *, const char *)</div><div class="ttdef"><b>Definition</b> <a href="sf__wrappers_8h_source.html#l00007">sf_wrappers.h:7</a></div></div>
 <div class="ttc" id="asf__wrappers_8h_html_a38d30345bd98d7e48f2a2d58a3734831"><div class="ttname"><a href="sf__wrappers_8h.html#a38d30345bd98d7e48f2a2d58a3734831">SF_String_dtor_ptr</a></div><div class="ttdeci">void(__thiscall * SF_String_dtor_ptr)(SF_String *)</div><div class="ttdef"><b>Definition</b> <a href="sf__wrappers_8h_source.html#l00008">sf_wrappers.h:8</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
-<!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
-</small></address>
 </div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_3756d50f4003bc63fa3fe49460f9c79d.html">internal</a></li><li class="navelem"><a class="el" href="dir_fc391693c5b997f1c609080ef9ece185.html">core</a></li><li class="navelem"><a class="el" href="dir_4252364b3ed5287ae5919d8f2cc87ee7.html">hooks</a></li><li class="navelem"><a class="el" href="sf__console__hook_8c.html">sf_console_hook.c</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+  </ul>
+</div>
 </body>
 </html>

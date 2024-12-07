@@ -5,12 +5,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Spellforce-Spell-Framework: src/internal/handlers/sf_spelltype_handlers.cpp File Reference</title>
+<title>Spellforce-Spell-framework: src/internal/handlers/sf_spelltype_handlers.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
@@ -25,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Spellforce-Spell-Framework
+   <div id="projectname">Spellforce-Spell-framework
    </div>
   </td>
  </tr>
@@ -49,17 +51,29 @@ $(function() { codefold.init(0); });
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
-  initMenu('',true,false,'search.php','Search',false);
+  initMenu('',true,false,'search.php','Search',true);
   $(function() { init_search(); });
 });
 /* @license-end */
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){ initResizable(false); });
+$(function(){initNavTree('sf__spelltype__handlers_8cpp.html',''); initResizable(true); });
 /* @license-end */
 </script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -81,12 +95,6 @@ $(function(){ initResizable(false); });
 </div>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_3756d50f4003bc63fa3fe49460f9c79d.html">internal</a></li><li class="navelem"><a class="el" href="dir_095a2eba2762fc723abb6dd3e65ef539.html">handlers</a></li>  </ul>
-</div>
-</div><!-- top -->
-<div id="doc-content">
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
@@ -96,12 +104,80 @@ $(function(){ initResizable(false); });
 <div class="textblock"><code>#include &quot;<a class="el" href="sf__spelltype__handlers_8h_source.html">sf_spelltype_handlers.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="sf__hooks_8h_source.html">../core/sf_hooks.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="sf__wrappers_8h_source.html">../core/sf_wrappers.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="sf__spelltype__registry_8h_source.html">../registry/sf_spelltype_registry.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="sf__spelltype__registry_8h_source.html">../registry/spell_data_registries/sf_spelltype_registry.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="sf__registry_8h_source.html">../registry/sf_registry.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for sf_spelltype_handlers.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp__incl.png" border="0" usemap="#asrc_2internal_2handlers_2sf__spelltype__handlers_8cpp" alt=""/></div>
+<map name="asrc_2internal_2handlers_2sf__spelltype__handlers_8cpp" id="asrc_2internal_2handlers_2sf__spelltype__handlers_8cpp">
+<area shape="rect" title=" " alt="" coords="708,5,884,48"/>
+<area shape="rect" href="sf__spelltype__handlers_8h.html" title=" " alt="" coords="279,112,438,139"/>
+<area shape="poly" title=" " alt="" coords="708,50,431,111,429,106,707,45"/>
+<area shape="rect" href="sf__hooks_8h.html" title=" " alt="" coords="898,112,1024,139"/>
+<area shape="poly" title=" " alt="" coords="833,46,928,101,925,106,830,51"/>
+<area shape="rect" href="sf__wrappers_8h.html" title=" " alt="" coords="1049,112,1193,139"/>
+<area shape="poly" title=" " alt="" coords="872,46,1037,93,1070,104,1068,109,1035,99,871,51"/>
+<area shape="rect" href="sf__spelltype__registry_8h.html" title=" " alt="" coords="718,96,873,155"/>
+<area shape="poly" title=" " alt="" coords="798,48,798,80,793,80,793,48"/>
+<area shape="rect" href="sf__registry_8h.html" title=" " alt="" coords="543,112,694,139"/>
+<area shape="poly" title=" " alt="" coords="759,51,656,107,654,102,756,46"/>
+<area shape="rect" href="sfsf_8h.html" title=" " alt="" coords="658,203,757,229"/>
+<area shape="poly" title=" " alt="" coords="409,137,644,196,642,201,408,142"/>
+<area shape="rect" href="sf__general__structures_8h.html" title=" " alt="" coords="437,427,594,453"/>
+<area shape="poly" title=" " alt="" coords="348,141,323,169,296,208,277,255,274,279,277,303,289,345,299,360,316,377,340,393,367,406,423,424,421,429,365,411,338,398,313,381,295,364,285,347,272,305,269,279,272,254,291,206,319,166,344,137"/>
+<area shape="rect" href="sf__spell__functions_8h.html" title=" " alt="" coords="23,352,160,379"/>
+<area shape="poly" title=" " alt="" coords="333,142,284,168,232,205,196,239,162,276,111,341,107,338,158,272,192,235,229,201,282,164,331,137"/>
+<area shape="poly" title=" " alt="" coords="686,232,615,279,576,314,543,353,529,383,522,412,517,411,524,381,539,351,573,310,612,275,683,228"/>
+<area shape="rect" title=" " alt="" coords="853,501,917,528"/>
+<area shape="poly" title=" " alt="" coords="758,221,869,237,1004,264,1070,281,1128,301,1175,324,1206,350,1217,369,1221,387,1219,403,1210,418,1181,444,1137,465,1086,481,1031,494,933,511,932,505,1030,489,1084,476,1135,460,1178,439,1206,415,1213,401,1216,387,1212,371,1202,354,1172,329,1126,306,1068,286,1003,269,868,242,757,226"/>
+<area shape="rect" href="sf__figure__functions_8h.html" title=" " alt="" coords="698,352,840,379"/>
+<area shape="poly" title=" " alt="" coords="715,229,761,337,756,339,711,231"/>
+<area shape="rect" href="sf__iterator__functions_8h.html" title=" " alt="" coords="865,352,1015,379"/>
+<area shape="poly" title=" " alt="" coords="729,228,909,341,906,346,726,232"/>
+<area shape="poly" title=" " alt="" coords="658,222,583,227,487,237,380,254,275,280,194,312,127,346,125,342,192,307,274,275,379,249,486,232,582,222,658,217"/>
+<area shape="rect" href="sf__effect__functions_8h.html" title=" " alt="" coords="337,352,479,379"/>
+<area shape="poly" title=" " alt="" coords="658,232,596,252,530,280,479,311,436,344,432,340,476,307,528,275,594,247,657,227"/>
+<area shape="rect" href="sf__toolbox__functions_8h.html" title=" " alt="" coords="1040,352,1192,379"/>
+<area shape="poly" title=" " alt="" coords="744,227,1067,344,1066,349,742,232"/>
+<area shape="rect" href="sf__registration__functions_8h.html" title=" " alt="" coords="286,277,460,304"/>
+<area shape="poly" title=" " alt="" coords="658,231,447,276,446,271,657,226"/>
+<area shape="rect" href="sf__ai__functions_8h.html" title=" " alt="" coords="553,352,673,379"/>
+<area shape="poly" title=" " alt="" coords="702,231,632,340,627,337,697,228"/>
+<area shape="poly" title=" " alt="" coords="581,451,838,501,837,507,580,457"/>
+<area shape="rect" title=" " alt="" coords="595,501,669,528"/>
+<area shape="poly" title=" " alt="" coords="537,452,600,490,597,495,535,456"/>
+<area shape="poly" title=" " alt="" coords="726,382,575,425,574,419,724,377"/>
+<area shape="poly" title=" " alt="" coords="796,377,826,397,855,425,872,455,882,485,877,487,867,457,851,428,823,401,793,382"/>
+<area shape="poly" title=" " alt="" coords="759,381,656,491,652,488,755,377"/>
+<area shape="poly" title=" " alt="" coords="866,382,605,426,605,421,865,377"/>
+<area shape="poly" title=" " alt="" coords="938,380,898,488,893,486,933,378"/>
+<area shape="poly" title=" " alt="" coords="894,382,832,402,766,429,710,461,662,494,659,489,707,457,764,424,830,397,892,377"/>
+<area shape="poly" title=" " alt="" coords="161,376,427,421,426,426,160,381"/>
+<area shape="poly" title=" " alt="" coords="102,377,133,415,156,435,181,451,274,464,463,480,838,508,837,513,462,486,273,469,179,456,152,440,129,419,98,381"/>
+<area shape="poly" title=" " alt="" coords="96,378,105,416,115,435,129,451,164,469,212,482,272,493,337,501,470,509,579,511,579,516,470,514,336,506,271,498,211,488,162,474,126,455,110,438,100,418,90,380"/>
+<area shape="poly" title=" " alt="" coords="428,377,486,415,483,420,425,381"/>
+<area shape="poly" title=" " alt="" coords="1040,380,1027,381,610,431,609,425,1026,376,1039,374"/>
+<area shape="poly" title=" " alt="" coords="1098,381,919,495,916,491,1095,377"/>
+<area shape="poly" title=" " alt="" coords="1075,382,685,500,683,495,1073,377"/>
+<area shape="poly" title=" " alt="" coords="359,307,343,322,329,340,322,360,323,368,327,377,346,397,370,412,396,422,423,430,421,435,394,428,367,416,343,401,323,380,318,370,317,359,324,338,339,318,355,303"/>
+<area shape="poly" title=" " alt="" coords="356,306,338,321,323,339,314,358,317,378,338,408,361,425,426,451,507,470,622,487,838,507,838,513,621,492,506,476,424,456,358,430,334,411,312,380,309,357,318,336,335,317,353,302"/>
+<area shape="poly" title=" " alt="" coords="286,297,207,302,125,312,55,329,30,340,13,354,8,365,13,378,30,406,48,424,72,437,103,451,143,463,197,474,330,491,468,502,579,508,579,514,467,507,329,496,196,479,142,468,102,456,70,442,45,428,25,409,8,380,3,365,8,350,27,336,54,324,124,307,207,296,285,291"/>
+<area shape="poly" title=" " alt="" coords="382,303,398,337,393,339,377,306"/>
+<area shape="poly" title=" " alt="" coords="598,381,546,420,543,415,595,377"/>
+<area shape="poly" title=" " alt="" coords="638,377,850,491,847,496,635,382"/>
+<area shape="poly" title=" " alt="" coords="617,379,631,485,626,486,612,380"/>
+<area shape="poly" title=" " alt="" coords="928,142,886,157,761,200,759,195,884,152,927,137"/>
+<area shape="rect" href="sf__asi_8h.html" title=" " alt="" coords="1317,203,1429,229"/>
+<area shape="poly" title=" " alt="" coords="992,137,1038,152,1302,200,1301,205,1036,157,991,142"/>
+<area shape="rect" title=" " alt="" coords="1331,277,1415,304"/>
+<area shape="poly" title=" " alt="" coords="1376,230,1376,262,1370,262,1370,230"/>
+<area shape="poly" title=" " alt="" coords="1087,142,1036,157,896,188,773,208,772,203,895,182,1035,152,1086,137"/>
+<area shape="poly" title=" " alt="" coords="1158,137,1324,195,1322,200,1156,142"/>
+<area shape="poly" title=" " alt="" coords="769,157,733,193,729,190,766,153"/>
+<area shape="poly" title=" " alt="" coords="875,148,1129,230,1237,267,1282,288,1282,367,1276,400,1257,423,1230,439,1197,456,1129,484,1057,502,989,512,933,516,932,510,988,506,1056,497,1127,479,1195,451,1228,434,1254,419,1271,398,1277,366,1278,291,1235,272,1127,235,873,153"/>
+<area shape="poly" title=" " alt="" coords="633,137,686,190,682,193,629,141"/>
+</map>
 </div>
 </div>
 <p><a href="sf__spelltype__handlers_8cpp_source.html">Go to the source code of this file.</a></p>
@@ -464,11 +540,11 @@ Functions</h2></td></tr>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_af1b3bfeab14c360bf171e4cf2c637be1_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_af1b3bfeab14c360bf171e4cf2c637be1_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_af1b3bfeab14c360bf171e4cf2c637be1_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_af1b3bfeab14c360bf171e4cf2c637be1_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_af1b3bfeab14c360bf171e4cf2c637be1_cgraph" id="asf__spelltype__handlers_8cpp_af1b3bfeab14c360bf171e4cf2c637be1_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,142,48"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="190,13,315,40"/>
+<area shape="poly" title=" " alt="" coords="142,24,174,24,174,29,142,29"/>
+</map>
 </div>
 
 </div>
@@ -497,11 +573,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_af73ec53fce95e38627faa9e42ed942b4_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_af73ec53fce95e38627faa9e42ed942b4_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_af73ec53fce95e38627faa9e42ed942b4_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_af73ec53fce95e38627faa9e42ed942b4_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_af73ec53fce95e38627faa9e42ed942b4_cgraph" id="asf__spelltype__handlers_8cpp_af73ec53fce95e38627faa9e42ed942b4_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,160,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="208,5,333,32"/>
+<area shape="poly" title=" " alt="" coords="160,16,192,16,192,21,160,21"/>
+</map>
 </div>
 
 </div>
@@ -530,11 +606,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_aa6129304981d5bbb44a588a34dca774e_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aa6129304981d5bbb44a588a34dca774e_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_aa6129304981d5bbb44a588a34dca774e_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aa6129304981d5bbb44a588a34dca774e_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_aa6129304981d5bbb44a588a34dca774e_cgraph" id="asf__spelltype__handlers_8cpp_aa6129304981d5bbb44a588a34dca774e_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,152,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="200,5,325,32"/>
+<area shape="poly" title=" " alt="" coords="152,16,184,16,184,21,152,21"/>
+</map>
 </div>
 
 </div>
@@ -563,11 +639,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a21d9f40003de136a4720f28c30069a1b_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a21d9f40003de136a4720f28c30069a1b_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a21d9f40003de136a4720f28c30069a1b_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a21d9f40003de136a4720f28c30069a1b_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a21d9f40003de136a4720f28c30069a1b_cgraph" id="asf__spelltype__handlers_8cpp_a21d9f40003de136a4720f28c30069a1b_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,134,48"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="182,13,307,40"/>
+<area shape="poly" title=" " alt="" coords="134,24,166,24,166,29,134,29"/>
+</map>
 </div>
 
 </div>
@@ -596,11 +672,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a4a2e1ab43afb55377f2a519edbdb7800_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a4a2e1ab43afb55377f2a519edbdb7800_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a4a2e1ab43afb55377f2a519edbdb7800_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a4a2e1ab43afb55377f2a519edbdb7800_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a4a2e1ab43afb55377f2a519edbdb7800_cgraph" id="asf__spelltype__handlers_8cpp_a4a2e1ab43afb55377f2a519edbdb7800_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,120,48"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="168,13,293,40"/>
+<area shape="poly" title=" " alt="" coords="120,24,152,24,152,29,120,29"/>
+</map>
 </div>
 
 </div>
@@ -629,11 +705,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_aa12b60c41f89cfcd8d01290919bedd1a_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aa12b60c41f89cfcd8d01290919bedd1a_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_aa12b60c41f89cfcd8d01290919bedd1a_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aa12b60c41f89cfcd8d01290919bedd1a_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_aa12b60c41f89cfcd8d01290919bedd1a_cgraph" id="asf__spelltype__handlers_8cpp_aa12b60c41f89cfcd8d01290919bedd1a_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,177,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="225,5,350,32"/>
+<area shape="poly" title=" " alt="" coords="177,16,209,16,209,21,177,21"/>
+</map>
 </div>
 
 </div>
@@ -662,11 +738,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_ad82ce21c479b8e57d0024cc78ac2b101_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ad82ce21c479b8e57d0024cc78ac2b101_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_ad82ce21c479b8e57d0024cc78ac2b101_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ad82ce21c479b8e57d0024cc78ac2b101_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_ad82ce21c479b8e57d0024cc78ac2b101_cgraph" id="asf__spelltype__handlers_8cpp_ad82ce21c479b8e57d0024cc78ac2b101_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,170,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="218,5,343,32"/>
+<area shape="poly" title=" " alt="" coords="170,16,202,16,202,21,170,21"/>
+</map>
 </div>
 
 </div>
@@ -695,11 +771,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_aed518ae1fe7dea94be9fdf847e327ff6_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aed518ae1fe7dea94be9fdf847e327ff6_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_aed518ae1fe7dea94be9fdf847e327ff6_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aed518ae1fe7dea94be9fdf847e327ff6_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_aed518ae1fe7dea94be9fdf847e327ff6_cgraph" id="asf__spelltype__handlers_8cpp_aed518ae1fe7dea94be9fdf847e327ff6_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,156,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="204,5,329,32"/>
+<area shape="poly" title=" " alt="" coords="156,16,188,16,188,21,156,21"/>
+</map>
 </div>
 
 </div>
@@ -728,11 +804,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a2666a8cd3a261dfa4eac84dec9df038a_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a2666a8cd3a261dfa4eac84dec9df038a_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a2666a8cd3a261dfa4eac84dec9df038a_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a2666a8cd3a261dfa4eac84dec9df038a_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a2666a8cd3a261dfa4eac84dec9df038a_cgraph" id="asf__spelltype__handlers_8cpp_a2666a8cd3a261dfa4eac84dec9df038a_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,148,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="196,5,321,32"/>
+<area shape="poly" title=" " alt="" coords="148,16,180,16,180,21,148,21"/>
+</map>
 </div>
 
 </div>
@@ -761,11 +837,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_af99e2f778bfedc5cc7a72de7cfcfb928_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_af99e2f778bfedc5cc7a72de7cfcfb928_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_af99e2f778bfedc5cc7a72de7cfcfb928_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_af99e2f778bfedc5cc7a72de7cfcfb928_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_af99e2f778bfedc5cc7a72de7cfcfb928_cgraph" id="asf__spelltype__handlers_8cpp_af99e2f778bfedc5cc7a72de7cfcfb928_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,156,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="204,5,329,32"/>
+<area shape="poly" title=" " alt="" coords="156,16,188,16,188,21,156,21"/>
+</map>
 </div>
 
 </div>
@@ -790,11 +866,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00955">955</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_ac068097a6eb9500b524595381210232c_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ac068097a6eb9500b524595381210232c_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -822,11 +893,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a63eb5c620dd29640d7f245380e03ef69_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a63eb5c620dd29640d7f245380e03ef69_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a63eb5c620dd29640d7f245380e03ef69_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a63eb5c620dd29640d7f245380e03ef69_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a63eb5c620dd29640d7f245380e03ef69_cgraph" id="asf__spelltype__handlers_8cpp_a63eb5c620dd29640d7f245380e03ef69_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,169,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="217,5,342,32"/>
+<area shape="poly" title=" " alt="" coords="169,16,201,16,201,21,169,21"/>
+</map>
 </div>
 
 </div>
@@ -855,11 +926,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a53e0b7d91c4f1cf7982ab9f68fd0c551_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a53e0b7d91c4f1cf7982ab9f68fd0c551_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a53e0b7d91c4f1cf7982ab9f68fd0c551_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a53e0b7d91c4f1cf7982ab9f68fd0c551_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a53e0b7d91c4f1cf7982ab9f68fd0c551_cgraph" id="asf__spelltype__handlers_8cpp_a53e0b7d91c4f1cf7982ab9f68fd0c551_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,164,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="212,5,337,32"/>
+<area shape="poly" title=" " alt="" coords="164,16,196,16,196,21,164,21"/>
+</map>
 </div>
 
 </div>
@@ -888,11 +959,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_ad5873c5f83be6bf8d45222557f23f151_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ad5873c5f83be6bf8d45222557f23f151_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_ad5873c5f83be6bf8d45222557f23f151_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ad5873c5f83be6bf8d45222557f23f151_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_ad5873c5f83be6bf8d45222557f23f151_cgraph" id="asf__spelltype__handlers_8cpp_ad5873c5f83be6bf8d45222557f23f151_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,156,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="204,5,329,32"/>
+<area shape="poly" title=" " alt="" coords="156,16,188,16,188,21,156,21"/>
+</map>
 </div>
 
 </div>
@@ -921,11 +992,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a164ad25f7e3f2642b08fbb92a2de7cd5_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a164ad25f7e3f2642b08fbb92a2de7cd5_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a164ad25f7e3f2642b08fbb92a2de7cd5_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a164ad25f7e3f2642b08fbb92a2de7cd5_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a164ad25f7e3f2642b08fbb92a2de7cd5_cgraph" id="asf__spelltype__handlers_8cpp_a164ad25f7e3f2642b08fbb92a2de7cd5_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,138,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="186,5,311,32"/>
+<area shape="poly" title=" " alt="" coords="138,16,170,16,170,21,138,21"/>
+</map>
 </div>
 
 </div>
@@ -954,11 +1025,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a6f0578025be523e81f637f4f67e979f3_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a6f0578025be523e81f637f4f67e979f3_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a6f0578025be523e81f637f4f67e979f3_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a6f0578025be523e81f637f4f67e979f3_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a6f0578025be523e81f637f4f67e979f3_cgraph" id="asf__spelltype__handlers_8cpp_a6f0578025be523e81f637f4f67e979f3_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,108,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="156,5,281,32"/>
+<area shape="poly" title=" " alt="" coords="108,16,140,16,140,21,108,21"/>
+</map>
 </div>
 
 </div>
@@ -987,11 +1058,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_aa2e87391e685730053069eda668e1c6d_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aa2e87391e685730053069eda668e1c6d_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_aa2e87391e685730053069eda668e1c6d_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aa2e87391e685730053069eda668e1c6d_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_aa2e87391e685730053069eda668e1c6d_cgraph" id="asf__spelltype__handlers_8cpp_aa2e87391e685730053069eda668e1c6d_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,154,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="202,5,327,32"/>
+<area shape="poly" title=" " alt="" coords="154,16,186,16,186,21,154,21"/>
+</map>
 </div>
 
 </div>
@@ -1020,11 +1091,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a983ab1490927c33c71d00884ce2e1894_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a983ab1490927c33c71d00884ce2e1894_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a983ab1490927c33c71d00884ce2e1894_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a983ab1490927c33c71d00884ce2e1894_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a983ab1490927c33c71d00884ce2e1894_cgraph" id="asf__spelltype__handlers_8cpp_a983ab1490927c33c71d00884ce2e1894_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,161,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="209,5,334,32"/>
+<area shape="poly" title=" " alt="" coords="161,16,193,16,193,21,161,21"/>
+</map>
 </div>
 
 </div>
@@ -1053,11 +1124,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_ae80a2c47e99bbc45cadb3cda797719f1_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ae80a2c47e99bbc45cadb3cda797719f1_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_ae80a2c47e99bbc45cadb3cda797719f1_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ae80a2c47e99bbc45cadb3cda797719f1_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_ae80a2c47e99bbc45cadb3cda797719f1_cgraph" id="asf__spelltype__handlers_8cpp_ae80a2c47e99bbc45cadb3cda797719f1_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,159,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="207,5,332,32"/>
+<area shape="poly" title=" " alt="" coords="159,16,191,16,191,21,159,21"/>
+</map>
 </div>
 
 </div>
@@ -1086,11 +1157,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a86fe3a0bda15ea1ed9a79c491f2ec1eb_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a86fe3a0bda15ea1ed9a79c491f2ec1eb_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a86fe3a0bda15ea1ed9a79c491f2ec1eb_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a86fe3a0bda15ea1ed9a79c491f2ec1eb_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a86fe3a0bda15ea1ed9a79c491f2ec1eb_cgraph" id="asf__spelltype__handlers_8cpp_a86fe3a0bda15ea1ed9a79c491f2ec1eb_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,144,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="192,5,317,32"/>
+<area shape="poly" title=" " alt="" coords="144,16,176,16,176,21,144,21"/>
+</map>
 </div>
 
 </div>
@@ -1115,11 +1186,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00227">227</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_ad16137f9f353c4b5ff128800a000370d_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ad16137f9f353c4b5ff128800a000370d_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -1147,11 +1213,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a478f329200bcc9fac2729a32d4a15654_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a478f329200bcc9fac2729a32d4a15654_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a478f329200bcc9fac2729a32d4a15654_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a478f329200bcc9fac2729a32d4a15654_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a478f329200bcc9fac2729a32d4a15654_cgraph" id="asf__spelltype__handlers_8cpp_a478f329200bcc9fac2729a32d4a15654_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,164,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="212,5,337,32"/>
+<area shape="poly" title=" " alt="" coords="164,16,196,16,196,21,164,21"/>
+</map>
 </div>
 
 </div>
@@ -1180,11 +1246,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_ab065be09e3bc9852796bd27cdd670314_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ab065be09e3bc9852796bd27cdd670314_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_ab065be09e3bc9852796bd27cdd670314_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ab065be09e3bc9852796bd27cdd670314_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_ab065be09e3bc9852796bd27cdd670314_cgraph" id="asf__spelltype__handlers_8cpp_ab065be09e3bc9852796bd27cdd670314_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,120,48"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="168,13,293,40"/>
+<area shape="poly" title=" " alt="" coords="120,24,152,24,152,29,120,29"/>
+</map>
 </div>
 
 </div>
@@ -1209,11 +1275,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00162">162</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a227fe36cea9bd232f00f6a5c4f279ed0_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a227fe36cea9bd232f00f6a5c4f279ed0_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -1241,11 +1302,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_aae10fa9b7eae038fdd60cce9e7947cf0_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aae10fa9b7eae038fdd60cce9e7947cf0_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_aae10fa9b7eae038fdd60cce9e7947cf0_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aae10fa9b7eae038fdd60cce9e7947cf0_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_aae10fa9b7eae038fdd60cce9e7947cf0_cgraph" id="asf__spelltype__handlers_8cpp_aae10fa9b7eae038fdd60cce9e7947cf0_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,146,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="194,5,319,32"/>
+<area shape="poly" title=" " alt="" coords="146,16,178,16,178,21,146,21"/>
+</map>
 </div>
 
 </div>
@@ -1274,11 +1335,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a552e47736e92035a39120a4336fc068f_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a552e47736e92035a39120a4336fc068f_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a552e47736e92035a39120a4336fc068f_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a552e47736e92035a39120a4336fc068f_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a552e47736e92035a39120a4336fc068f_cgraph" id="asf__spelltype__handlers_8cpp_a552e47736e92035a39120a4336fc068f_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,167,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="215,5,340,32"/>
+<area shape="poly" title=" " alt="" coords="167,16,199,16,199,21,167,21"/>
+</map>
 </div>
 
 </div>
@@ -1307,11 +1368,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a401482398d08b8044cb75bfd15b16b21_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a401482398d08b8044cb75bfd15b16b21_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a401482398d08b8044cb75bfd15b16b21_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a401482398d08b8044cb75bfd15b16b21_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a401482398d08b8044cb75bfd15b16b21_cgraph" id="asf__spelltype__handlers_8cpp_a401482398d08b8044cb75bfd15b16b21_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,137,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="185,5,310,32"/>
+<area shape="poly" title=" " alt="" coords="137,16,169,16,169,21,137,21"/>
+</map>
 </div>
 
 </div>
@@ -1340,11 +1401,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a6727d2e76327925c70049ea690665d87_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a6727d2e76327925c70049ea690665d87_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a6727d2e76327925c70049ea690665d87_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a6727d2e76327925c70049ea690665d87_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a6727d2e76327925c70049ea690665d87_cgraph" id="asf__spelltype__handlers_8cpp_a6727d2e76327925c70049ea690665d87_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,163,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="211,5,336,32"/>
+<area shape="poly" title=" " alt="" coords="163,16,195,16,195,21,163,21"/>
+</map>
 </div>
 
 </div>
@@ -1373,11 +1434,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a890521a8fc0c5890636c178f74f3981c_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a890521a8fc0c5890636c178f74f3981c_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a890521a8fc0c5890636c178f74f3981c_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a890521a8fc0c5890636c178f74f3981c_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a890521a8fc0c5890636c178f74f3981c_cgraph" id="asf__spelltype__handlers_8cpp_a890521a8fc0c5890636c178f74f3981c_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,155,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="203,5,328,32"/>
+<area shape="poly" title=" " alt="" coords="155,16,187,16,187,21,155,21"/>
+</map>
 </div>
 
 </div>
@@ -1406,11 +1467,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_aaec19c9a645107e9cb4b854fe80d92a4_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aaec19c9a645107e9cb4b854fe80d92a4_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_aaec19c9a645107e9cb4b854fe80d92a4_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aaec19c9a645107e9cb4b854fe80d92a4_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_aaec19c9a645107e9cb4b854fe80d92a4_cgraph" id="asf__spelltype__handlers_8cpp_aaec19c9a645107e9cb4b854fe80d92a4_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,153,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="201,5,326,32"/>
+<area shape="poly" title=" " alt="" coords="153,16,185,16,185,21,153,21"/>
+</map>
 </div>
 
 </div>
@@ -1439,11 +1500,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_af9c5b0a2e50b140a990c9e556e36e6c6_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_af9c5b0a2e50b140a990c9e556e36e6c6_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_af9c5b0a2e50b140a990c9e556e36e6c6_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_af9c5b0a2e50b140a990c9e556e36e6c6_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_af9c5b0a2e50b140a990c9e556e36e6c6_cgraph" id="asf__spelltype__handlers_8cpp_af9c5b0a2e50b140a990c9e556e36e6c6_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,139,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="187,5,312,32"/>
+<area shape="poly" title=" " alt="" coords="139,16,171,16,171,21,139,21"/>
+</map>
 </div>
 
 </div>
@@ -1472,11 +1533,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a53d23ee6208690eec8fded15a92a2cf3_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a53d23ee6208690eec8fded15a92a2cf3_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a53d23ee6208690eec8fded15a92a2cf3_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a53d23ee6208690eec8fded15a92a2cf3_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a53d23ee6208690eec8fded15a92a2cf3_cgraph" id="asf__spelltype__handlers_8cpp_a53d23ee6208690eec8fded15a92a2cf3_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,101,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="149,5,274,32"/>
+<area shape="poly" title=" " alt="" coords="101,16,133,16,133,21,101,21"/>
+</map>
 </div>
 
 </div>
@@ -1501,11 +1562,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00536">536</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a44774815dbb9ce2a97867849a8e60084_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a44774815dbb9ce2a97867849a8e60084_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -1529,11 +1585,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00972">972</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a17e0579e827dbcb4af88c510be4ba2ef_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a17e0579e827dbcb4af88c510be4ba2ef_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -1561,11 +1612,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a47e0ccc00f7c2e88a86ceb56af21f393_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a47e0ccc00f7c2e88a86ceb56af21f393_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a47e0ccc00f7c2e88a86ceb56af21f393_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a47e0ccc00f7c2e88a86ceb56af21f393_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a47e0ccc00f7c2e88a86ceb56af21f393_cgraph" id="asf__spelltype__handlers_8cpp_a47e0ccc00f7c2e88a86ceb56af21f393_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,184,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="232,5,357,32"/>
+<area shape="poly" title=" " alt="" coords="184,16,216,16,216,21,184,21"/>
+</map>
 </div>
 
 </div>
@@ -1594,11 +1645,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a3cd6f38abc778e2c57667ecbe4d669ac_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a3cd6f38abc778e2c57667ecbe4d669ac_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a3cd6f38abc778e2c57667ecbe4d669ac_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a3cd6f38abc778e2c57667ecbe4d669ac_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a3cd6f38abc778e2c57667ecbe4d669ac_cgraph" id="asf__spelltype__handlers_8cpp_a3cd6f38abc778e2c57667ecbe4d669ac_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,163,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="211,5,336,32"/>
+<area shape="poly" title=" " alt="" coords="163,16,195,16,195,21,163,21"/>
+</map>
 </div>
 
 </div>
@@ -1627,11 +1678,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_aea744657eace7d4099d5bebe2d26acb7_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aea744657eace7d4099d5bebe2d26acb7_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_aea744657eace7d4099d5bebe2d26acb7_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aea744657eace7d4099d5bebe2d26acb7_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_aea744657eace7d4099d5bebe2d26acb7_cgraph" id="asf__spelltype__handlers_8cpp_aea744657eace7d4099d5bebe2d26acb7_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,121,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="169,5,294,32"/>
+<area shape="poly" title=" " alt="" coords="121,16,153,16,153,21,121,21"/>
+</map>
 </div>
 
 </div>
@@ -1660,11 +1711,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a603f5d6da23164433faee5086ed53277_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a603f5d6da23164433faee5086ed53277_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a603f5d6da23164433faee5086ed53277_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a603f5d6da23164433faee5086ed53277_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a603f5d6da23164433faee5086ed53277_cgraph" id="asf__spelltype__handlers_8cpp_a603f5d6da23164433faee5086ed53277_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,127,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="175,5,300,32"/>
+<area shape="poly" title=" " alt="" coords="127,16,159,16,159,21,127,21"/>
+</map>
 </div>
 
 </div>
@@ -1689,11 +1740,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00876">876</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a2f94a791e554cc8345155ffb9dcb9546_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a2f94a791e554cc8345155ffb9dcb9546_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -1721,11 +1767,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_ab949e1e5dde972463df7c11f47d33980_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ab949e1e5dde972463df7c11f47d33980_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_ab949e1e5dde972463df7c11f47d33980_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ab949e1e5dde972463df7c11f47d33980_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_ab949e1e5dde972463df7c11f47d33980_cgraph" id="asf__spelltype__handlers_8cpp_ab949e1e5dde972463df7c11f47d33980_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,107,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="155,5,280,32"/>
+<area shape="poly" title=" " alt="" coords="107,16,139,16,139,21,107,21"/>
+</map>
 </div>
 
 </div>
@@ -1754,11 +1800,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a2c309b96afb2bae02db66a75d27bf359_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a2c309b96afb2bae02db66a75d27bf359_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a2c309b96afb2bae02db66a75d27bf359_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a2c309b96afb2bae02db66a75d27bf359_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a2c309b96afb2bae02db66a75d27bf359_cgraph" id="asf__spelltype__handlers_8cpp_a2c309b96afb2bae02db66a75d27bf359_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,129,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="177,5,302,32"/>
+<area shape="poly" title=" " alt="" coords="129,16,161,16,161,21,129,21"/>
+</map>
 </div>
 
 </div>
@@ -1787,11 +1833,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a074c966cc87597b3d1ec746598b4167e_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a074c966cc87597b3d1ec746598b4167e_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a074c966cc87597b3d1ec746598b4167e_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a074c966cc87597b3d1ec746598b4167e_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a074c966cc87597b3d1ec746598b4167e_cgraph" id="asf__spelltype__handlers_8cpp_a074c966cc87597b3d1ec746598b4167e_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,157,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="205,5,330,32"/>
+<area shape="poly" title=" " alt="" coords="157,16,189,16,189,21,157,21"/>
+</map>
 </div>
 
 </div>
@@ -1820,11 +1866,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_adbfb08bc14e0aab1f294ac2abe5f5f81_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_adbfb08bc14e0aab1f294ac2abe5f5f81_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_adbfb08bc14e0aab1f294ac2abe5f5f81_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_adbfb08bc14e0aab1f294ac2abe5f5f81_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_adbfb08bc14e0aab1f294ac2abe5f5f81_cgraph" id="asf__spelltype__handlers_8cpp_adbfb08bc14e0aab1f294ac2abe5f5f81_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,112,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="160,5,285,32"/>
+<area shape="poly" title=" " alt="" coords="112,16,144,16,144,21,112,21"/>
+</map>
 </div>
 
 </div>
@@ -1853,11 +1899,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a75f9d052a924a3d4abedbc49ee08cf3b_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a75f9d052a924a3d4abedbc49ee08cf3b_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a75f9d052a924a3d4abedbc49ee08cf3b_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a75f9d052a924a3d4abedbc49ee08cf3b_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a75f9d052a924a3d4abedbc49ee08cf3b_cgraph" id="asf__spelltype__handlers_8cpp_a75f9d052a924a3d4abedbc49ee08cf3b_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,166,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="214,5,339,32"/>
+<area shape="poly" title=" " alt="" coords="166,16,198,16,198,21,166,21"/>
+</map>
 </div>
 
 </div>
@@ -1886,11 +1932,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_aa21fa8196255c60e9584fc76dde21e7f_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aa21fa8196255c60e9584fc76dde21e7f_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_aa21fa8196255c60e9584fc76dde21e7f_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aa21fa8196255c60e9584fc76dde21e7f_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_aa21fa8196255c60e9584fc76dde21e7f_cgraph" id="asf__spelltype__handlers_8cpp_aa21fa8196255c60e9584fc76dde21e7f_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,129,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="177,5,302,32"/>
+<area shape="poly" title=" " alt="" coords="129,16,161,16,161,21,129,21"/>
+</map>
 </div>
 
 </div>
@@ -1919,11 +1965,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a38e0ad85fa862df660cf85aae894cc73_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a38e0ad85fa862df660cf85aae894cc73_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a38e0ad85fa862df660cf85aae894cc73_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a38e0ad85fa862df660cf85aae894cc73_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a38e0ad85fa862df660cf85aae894cc73_cgraph" id="asf__spelltype__handlers_8cpp_a38e0ad85fa862df660cf85aae894cc73_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,150,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="198,5,323,32"/>
+<area shape="poly" title=" " alt="" coords="150,16,182,16,182,21,150,21"/>
+</map>
 </div>
 
 </div>
@@ -1952,11 +1998,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_abab66ea5a8d4741d444153b7bebd4e4a_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_abab66ea5a8d4741d444153b7bebd4e4a_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_abab66ea5a8d4741d444153b7bebd4e4a_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_abab66ea5a8d4741d444153b7bebd4e4a_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_abab66ea5a8d4741d444153b7bebd4e4a_cgraph" id="asf__spelltype__handlers_8cpp_abab66ea5a8d4741d444153b7bebd4e4a_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,122,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="170,5,295,32"/>
+<area shape="poly" title=" " alt="" coords="122,16,154,16,154,21,122,21"/>
+</map>
 </div>
 
 </div>
@@ -1985,11 +2031,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_aba3962561e7b5212a21866a52883e0a9_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aba3962561e7b5212a21866a52883e0a9_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_aba3962561e7b5212a21866a52883e0a9_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aba3962561e7b5212a21866a52883e0a9_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_aba3962561e7b5212a21866a52883e0a9_cgraph" id="asf__spelltype__handlers_8cpp_aba3962561e7b5212a21866a52883e0a9_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,150,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="198,5,323,32"/>
+<area shape="poly" title=" " alt="" coords="150,16,182,16,182,21,150,21"/>
+</map>
 </div>
 
 </div>
@@ -2014,11 +2060,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00151">151</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a4fae2c91ac21b802bed850132764c3bd_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a4fae2c91ac21b802bed850132764c3bd_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -2042,11 +2083,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00056">56</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_af142656d016ff267ced3e346f899a1aa_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_af142656d016ff267ced3e346f899a1aa_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -2074,11 +2110,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a9a38a3fe6234f79adb4209427ed1e8b0_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a9a38a3fe6234f79adb4209427ed1e8b0_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a9a38a3fe6234f79adb4209427ed1e8b0_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a9a38a3fe6234f79adb4209427ed1e8b0_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a9a38a3fe6234f79adb4209427ed1e8b0_cgraph" id="asf__spelltype__handlers_8cpp_a9a38a3fe6234f79adb4209427ed1e8b0_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,163,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="211,5,336,32"/>
+<area shape="poly" title=" " alt="" coords="163,16,195,16,195,21,163,21"/>
+</map>
 </div>
 
 </div>
@@ -2107,11 +2143,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a397032ddc0bb2a2a4abbf25fc74d5522_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a397032ddc0bb2a2a4abbf25fc74d5522_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a397032ddc0bb2a2a4abbf25fc74d5522_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a397032ddc0bb2a2a4abbf25fc74d5522_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a397032ddc0bb2a2a4abbf25fc74d5522_cgraph" id="asf__spelltype__handlers_8cpp_a397032ddc0bb2a2a4abbf25fc74d5522_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,147,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="195,5,320,32"/>
+<area shape="poly" title=" " alt="" coords="147,16,179,16,179,21,147,21"/>
+</map>
 </div>
 
 </div>
@@ -2136,11 +2172,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00032">32</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a85572f0279425508ac24efe914b84d4f_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a85572f0279425508ac24efe914b84d4f_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -2168,11 +2199,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_aa8d103c4ec40c0c208f6e7f3e43586ea_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aa8d103c4ec40c0c208f6e7f3e43586ea_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_aa8d103c4ec40c0c208f6e7f3e43586ea_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aa8d103c4ec40c0c208f6e7f3e43586ea_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_aa8d103c4ec40c0c208f6e7f3e43586ea_cgraph" id="asf__spelltype__handlers_8cpp_aa8d103c4ec40c0c208f6e7f3e43586ea_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,118,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="166,5,291,32"/>
+<area shape="poly" title=" " alt="" coords="118,16,150,16,150,21,118,21"/>
+</map>
 </div>
 
 </div>
@@ -2201,11 +2232,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a3a88b74e411732c07e7abb59202b264c_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a3a88b74e411732c07e7abb59202b264c_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a3a88b74e411732c07e7abb59202b264c_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a3a88b74e411732c07e7abb59202b264c_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a3a88b74e411732c07e7abb59202b264c_cgraph" id="asf__spelltype__handlers_8cpp_a3a88b74e411732c07e7abb59202b264c_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,118,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="166,5,291,32"/>
+<area shape="poly" title=" " alt="" coords="118,16,150,16,150,21,118,21"/>
+</map>
 </div>
 
 </div>
@@ -2230,11 +2261,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00007">7</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a732de9d69a3456d8ff4b46dcd27ffee3_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a732de9d69a3456d8ff4b46dcd27ffee3_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -2262,11 +2288,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_ad3a99bf16e83b25c051a9d443226d3ae_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ad3a99bf16e83b25c051a9d443226d3ae_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_ad3a99bf16e83b25c051a9d443226d3ae_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ad3a99bf16e83b25c051a9d443226d3ae_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_ad3a99bf16e83b25c051a9d443226d3ae_cgraph" id="asf__spelltype__handlers_8cpp_ad3a99bf16e83b25c051a9d443226d3ae_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,160,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="208,5,333,32"/>
+<area shape="poly" title=" " alt="" coords="160,16,192,16,192,21,160,21"/>
+</map>
 </div>
 
 </div>
@@ -2291,11 +2317,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00417">417</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a382ee35061422622b7d4759cd7161572_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a382ee35061422622b7d4759cd7161572_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -2319,11 +2340,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00412">412</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_aeb901d78314a21195b3b55c6b218b80e_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aeb901d78314a21195b3b55c6b218b80e_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -2351,11 +2367,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a9296039f135daecfbaa35f3992c03d2e_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a9296039f135daecfbaa35f3992c03d2e_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a9296039f135daecfbaa35f3992c03d2e_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a9296039f135daecfbaa35f3992c03d2e_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a9296039f135daecfbaa35f3992c03d2e_cgraph" id="asf__spelltype__handlers_8cpp_a9296039f135daecfbaa35f3992c03d2e_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,126,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="174,5,299,32"/>
+<area shape="poly" title=" " alt="" coords="126,16,158,16,158,21,126,21"/>
+</map>
 </div>
 
 </div>
@@ -2380,11 +2396,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00541">541</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_aa1de1b1f2e35ef2221b8568f12fd1baa_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aa1de1b1f2e35ef2221b8568f12fd1baa_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -2412,11 +2423,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_ae309ad3a8994b9f8f34f06dc83cbe39f_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ae309ad3a8994b9f8f34f06dc83cbe39f_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_ae309ad3a8994b9f8f34f06dc83cbe39f_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ae309ad3a8994b9f8f34f06dc83cbe39f_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_ae309ad3a8994b9f8f34f06dc83cbe39f_cgraph" id="asf__spelltype__handlers_8cpp_ae309ad3a8994b9f8f34f06dc83cbe39f_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,180,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="228,5,353,32"/>
+<area shape="poly" title=" " alt="" coords="180,16,212,16,212,21,180,21"/>
+</map>
 </div>
 
 </div>
@@ -2445,11 +2456,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a8d87b5c1fea580ad4d26cb1dc09ce157_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a8d87b5c1fea580ad4d26cb1dc09ce157_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a8d87b5c1fea580ad4d26cb1dc09ce157_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a8d87b5c1fea580ad4d26cb1dc09ce157_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a8d87b5c1fea580ad4d26cb1dc09ce157_cgraph" id="asf__spelltype__handlers_8cpp_a8d87b5c1fea580ad4d26cb1dc09ce157_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,180,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="228,5,353,32"/>
+<area shape="poly" title=" " alt="" coords="180,16,212,16,212,21,180,21"/>
+</map>
 </div>
 
 </div>
@@ -2474,11 +2485,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00366">366</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_afd6b29a18976241acf34dc062502cf9c_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_afd6b29a18976241acf34dc062502cf9c_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -2502,11 +2508,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00519">519</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_afa9d2cd66496c7efa1365a7f7b678418_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_afa9d2cd66496c7efa1365a7f7b678418_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -2534,11 +2535,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a6e4d5c9db39f3643a7890a7eb567c496_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a6e4d5c9db39f3643a7890a7eb567c496_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a6e4d5c9db39f3643a7890a7eb567c496_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a6e4d5c9db39f3643a7890a7eb567c496_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a6e4d5c9db39f3643a7890a7eb567c496_cgraph" id="asf__spelltype__handlers_8cpp_a6e4d5c9db39f3643a7890a7eb567c496_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,174,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="222,5,347,32"/>
+<area shape="poly" title=" " alt="" coords="174,16,206,16,206,21,174,21"/>
+</map>
 </div>
 
 </div>
@@ -2567,11 +2568,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a9628394c7bf74789ccddd42f578cdc00_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a9628394c7bf74789ccddd42f578cdc00_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a9628394c7bf74789ccddd42f578cdc00_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a9628394c7bf74789ccddd42f578cdc00_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a9628394c7bf74789ccddd42f578cdc00_cgraph" id="asf__spelltype__handlers_8cpp_a9628394c7bf74789ccddd42f578cdc00_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,129,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="177,5,302,32"/>
+<area shape="poly" title=" " alt="" coords="129,16,161,16,161,21,129,21"/>
+</map>
 </div>
 
 </div>
@@ -2600,11 +2601,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a382d6fd895f7249d62915e4a18a5f2b2_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a382d6fd895f7249d62915e4a18a5f2b2_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a382d6fd895f7249d62915e4a18a5f2b2_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a382d6fd895f7249d62915e4a18a5f2b2_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a382d6fd895f7249d62915e4a18a5f2b2_cgraph" id="asf__spelltype__handlers_8cpp_a382d6fd895f7249d62915e4a18a5f2b2_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,178,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="226,5,351,32"/>
+<area shape="poly" title=" " alt="" coords="178,16,210,16,210,21,178,21"/>
+</map>
 </div>
 
 </div>
@@ -2633,11 +2634,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_ae378bda9ce5f44e89ecbcedd0ca90adf_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ae378bda9ce5f44e89ecbcedd0ca90adf_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_ae378bda9ce5f44e89ecbcedd0ca90adf_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ae378bda9ce5f44e89ecbcedd0ca90adf_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_ae378bda9ce5f44e89ecbcedd0ca90adf_cgraph" id="asf__spelltype__handlers_8cpp_ae378bda9ce5f44e89ecbcedd0ca90adf_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,167,48"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="215,13,340,40"/>
+<area shape="poly" title=" " alt="" coords="167,24,199,24,199,29,167,29"/>
+</map>
 </div>
 
 </div>
@@ -2662,11 +2663,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00819">819</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a1ad1d4e1fd8371752be01dc8a9e0c2c3_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a1ad1d4e1fd8371752be01dc8a9e0c2c3_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -2694,11 +2690,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_aadc7ceb80f0b5f208d19565b1c894ce9_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aadc7ceb80f0b5f208d19565b1c894ce9_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_aadc7ceb80f0b5f208d19565b1c894ce9_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aadc7ceb80f0b5f208d19565b1c894ce9_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_aadc7ceb80f0b5f208d19565b1c894ce9_cgraph" id="asf__spelltype__handlers_8cpp_aadc7ceb80f0b5f208d19565b1c894ce9_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,146,48"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="194,13,319,40"/>
+<area shape="poly" title=" " alt="" coords="146,24,178,24,178,29,146,29"/>
+</map>
 </div>
 
 </div>
@@ -2723,11 +2719,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00797">797</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_aaf65d6f6d9e4048273d85f15697e4b6d_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aaf65d6f6d9e4048273d85f15697e4b6d_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -2755,11 +2746,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a4a51bc957c3d2dc758e326216306d487_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a4a51bc957c3d2dc758e326216306d487_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a4a51bc957c3d2dc758e326216306d487_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a4a51bc957c3d2dc758e326216306d487_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a4a51bc957c3d2dc758e326216306d487_cgraph" id="asf__spelltype__handlers_8cpp_a4a51bc957c3d2dc758e326216306d487_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,136,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="184,5,309,32"/>
+<area shape="poly" title=" " alt="" coords="136,16,168,16,168,21,136,21"/>
+</map>
 </div>
 
 </div>
@@ -2788,11 +2779,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_aaaf6e511c7b6b3e74a5e9114d7b705c8_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aaaf6e511c7b6b3e74a5e9114d7b705c8_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_aaaf6e511c7b6b3e74a5e9114d7b705c8_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aaaf6e511c7b6b3e74a5e9114d7b705c8_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_aaaf6e511c7b6b3e74a5e9114d7b705c8_cgraph" id="asf__spelltype__handlers_8cpp_aaaf6e511c7b6b3e74a5e9114d7b705c8_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,157,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="205,5,330,32"/>
+<area shape="poly" title=" " alt="" coords="157,16,189,16,189,21,157,21"/>
+</map>
 </div>
 
 </div>
@@ -2821,11 +2812,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a885058626cd4b70eb98052a55a1543dd_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a885058626cd4b70eb98052a55a1543dd_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a885058626cd4b70eb98052a55a1543dd_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a885058626cd4b70eb98052a55a1543dd_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a885058626cd4b70eb98052a55a1543dd_cgraph" id="asf__spelltype__handlers_8cpp_a885058626cd4b70eb98052a55a1543dd_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,151,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="199,5,324,32"/>
+<area shape="poly" title=" " alt="" coords="151,16,183,16,183,21,151,21"/>
+</map>
 </div>
 
 </div>
@@ -2850,11 +2841,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00407">407</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a1564dd0b75bd2e343d308e5e932c7131_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a1564dd0b75bd2e343d308e5e932c7131_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -2882,11 +2868,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_ae872879ac5fc5a0399e25cfbf2dbed2a_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ae872879ac5fc5a0399e25cfbf2dbed2a_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_ae872879ac5fc5a0399e25cfbf2dbed2a_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ae872879ac5fc5a0399e25cfbf2dbed2a_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_ae872879ac5fc5a0399e25cfbf2dbed2a_cgraph" id="asf__spelltype__handlers_8cpp_ae872879ac5fc5a0399e25cfbf2dbed2a_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,147,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="195,5,320,32"/>
+<area shape="poly" title=" " alt="" coords="147,16,179,16,179,21,147,21"/>
+</map>
 </div>
 
 </div>
@@ -2915,11 +2901,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_ab98d02d5ee8621b5cee2c6e82d35e039_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ab98d02d5ee8621b5cee2c6e82d35e039_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_ab98d02d5ee8621b5cee2c6e82d35e039_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ab98d02d5ee8621b5cee2c6e82d35e039_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_ab98d02d5ee8621b5cee2c6e82d35e039_cgraph" id="asf__spelltype__handlers_8cpp_ab98d02d5ee8621b5cee2c6e82d35e039_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,129,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="177,5,302,32"/>
+<area shape="poly" title=" " alt="" coords="129,16,161,16,161,21,129,21"/>
+</map>
 </div>
 
 </div>
@@ -2948,11 +2934,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a45395c5e1285ee43ed6d46786e14b30e_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a45395c5e1285ee43ed6d46786e14b30e_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a45395c5e1285ee43ed6d46786e14b30e_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a45395c5e1285ee43ed6d46786e14b30e_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a45395c5e1285ee43ed6d46786e14b30e_cgraph" id="asf__spelltype__handlers_8cpp_a45395c5e1285ee43ed6d46786e14b30e_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,143,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="191,5,316,32"/>
+<area shape="poly" title=" " alt="" coords="143,16,175,16,175,21,143,21"/>
+</map>
 </div>
 
 </div>
@@ -2981,11 +2967,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_afd51390e0066418bfa2e0ea77b173cce_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_afd51390e0066418bfa2e0ea77b173cce_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_afd51390e0066418bfa2e0ea77b173cce_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_afd51390e0066418bfa2e0ea77b173cce_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_afd51390e0066418bfa2e0ea77b173cce_cgraph" id="asf__spelltype__handlers_8cpp_afd51390e0066418bfa2e0ea77b173cce_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,121,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="169,5,294,32"/>
+<area shape="poly" title=" " alt="" coords="121,16,153,16,153,21,121,21"/>
+</map>
 </div>
 
 </div>
@@ -3010,11 +2996,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00085">85</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a1d14936d7e5f12ccfabf658843186c61_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a1d14936d7e5f12ccfabf658843186c61_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -3042,11 +3023,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_ae6b5c1d4a56e221440805b1f33f29c3f_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ae6b5c1d4a56e221440805b1f33f29c3f_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_ae6b5c1d4a56e221440805b1f33f29c3f_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ae6b5c1d4a56e221440805b1f33f29c3f_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_ae6b5c1d4a56e221440805b1f33f29c3f_cgraph" id="asf__spelltype__handlers_8cpp_ae6b5c1d4a56e221440805b1f33f29c3f_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,122,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="170,5,295,32"/>
+<area shape="poly" title=" " alt="" coords="122,16,154,16,154,21,122,21"/>
+</map>
 </div>
 
 </div>
@@ -3075,11 +3056,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a115cd8be50654cf73f98c8ac98771511_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a115cd8be50654cf73f98c8ac98771511_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a115cd8be50654cf73f98c8ac98771511_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a115cd8be50654cf73f98c8ac98771511_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a115cd8be50654cf73f98c8ac98771511_cgraph" id="asf__spelltype__handlers_8cpp_a115cd8be50654cf73f98c8ac98771511_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,123,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="171,5,296,32"/>
+<area shape="poly" title=" " alt="" coords="123,16,155,16,155,21,123,21"/>
+</map>
 </div>
 
 </div>
@@ -3104,11 +3085,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00313">313</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_aa0d8f9727962bddb4008542f3572b60a_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aa0d8f9727962bddb4008542f3572b60a_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -3136,11 +3112,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a44484dc8835943bcc55b91933deaa241_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a44484dc8835943bcc55b91933deaa241_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a44484dc8835943bcc55b91933deaa241_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a44484dc8835943bcc55b91933deaa241_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a44484dc8835943bcc55b91933deaa241_cgraph" id="asf__spelltype__handlers_8cpp_a44484dc8835943bcc55b91933deaa241_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,128,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="176,5,301,32"/>
+<area shape="poly" title=" " alt="" coords="128,16,160,16,160,21,128,21"/>
+</map>
 </div>
 
 </div>
@@ -3169,11 +3145,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_ab133246e1a6cc76b6c5757fe168dd34e_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ab133246e1a6cc76b6c5757fe168dd34e_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_ab133246e1a6cc76b6c5757fe168dd34e_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ab133246e1a6cc76b6c5757fe168dd34e_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_ab133246e1a6cc76b6c5757fe168dd34e_cgraph" id="asf__spelltype__handlers_8cpp_ab133246e1a6cc76b6c5757fe168dd34e_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,127,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="175,5,300,32"/>
+<area shape="poly" title=" " alt="" coords="127,16,159,16,159,21,127,21"/>
+</map>
 </div>
 
 </div>
@@ -3202,11 +3178,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a055899d2fb23a0b393975bc515c86fb2_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a055899d2fb23a0b393975bc515c86fb2_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a055899d2fb23a0b393975bc515c86fb2_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a055899d2fb23a0b393975bc515c86fb2_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a055899d2fb23a0b393975bc515c86fb2_cgraph" id="asf__spelltype__handlers_8cpp_a055899d2fb23a0b393975bc515c86fb2_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,94,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="142,5,267,32"/>
+<area shape="poly" title=" " alt="" coords="94,16,126,16,126,21,94,21"/>
+</map>
 </div>
 
 </div>
@@ -3231,11 +3207,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00323">323</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_adc09e9346f60513f32f2d417d9ff3c9a_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_adc09e9346f60513f32f2d417d9ff3c9a_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -3263,11 +3234,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_aef95cbbf6f1fe2c3eb1fab34654d6517_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aef95cbbf6f1fe2c3eb1fab34654d6517_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_aef95cbbf6f1fe2c3eb1fab34654d6517_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aef95cbbf6f1fe2c3eb1fab34654d6517_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_aef95cbbf6f1fe2c3eb1fab34654d6517_cgraph" id="asf__spelltype__handlers_8cpp_aef95cbbf6f1fe2c3eb1fab34654d6517_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,119,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="167,5,292,32"/>
+<area shape="poly" title=" " alt="" coords="119,16,151,16,151,21,119,21"/>
+</map>
 </div>
 
 </div>
@@ -3296,11 +3267,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a93a0964e0f6e8a8dd49172aec9a21064_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a93a0964e0f6e8a8dd49172aec9a21064_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a93a0964e0f6e8a8dd49172aec9a21064_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a93a0964e0f6e8a8dd49172aec9a21064_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a93a0964e0f6e8a8dd49172aec9a21064_cgraph" id="asf__spelltype__handlers_8cpp_a93a0964e0f6e8a8dd49172aec9a21064_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,119,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="167,5,292,32"/>
+<area shape="poly" title=" " alt="" coords="119,16,151,16,151,21,119,21"/>
+</map>
 </div>
 
 </div>
@@ -3329,11 +3300,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a097cd12c35313e5dff81efcd000ec99e_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a097cd12c35313e5dff81efcd000ec99e_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a097cd12c35313e5dff81efcd000ec99e_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a097cd12c35313e5dff81efcd000ec99e_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a097cd12c35313e5dff81efcd000ec99e_cgraph" id="asf__spelltype__handlers_8cpp_a097cd12c35313e5dff81efcd000ec99e_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,112,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="160,5,285,32"/>
+<area shape="poly" title=" " alt="" coords="112,16,144,16,144,21,112,21"/>
+</map>
 </div>
 
 </div>
@@ -3362,11 +3333,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_aa2101be351a8a8fe596cb4aa48cbd034_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aa2101be351a8a8fe596cb4aa48cbd034_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_aa2101be351a8a8fe596cb4aa48cbd034_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aa2101be351a8a8fe596cb4aa48cbd034_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_aa2101be351a8a8fe596cb4aa48cbd034_cgraph" id="asf__spelltype__handlers_8cpp_aa2101be351a8a8fe596cb4aa48cbd034_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,108,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="156,5,281,32"/>
+<area shape="poly" title=" " alt="" coords="108,16,140,16,140,21,108,21"/>
+</map>
 </div>
 
 </div>
@@ -3395,11 +3366,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a4d73f6c8b30b4247e3fffab1bca8c7dd_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a4d73f6c8b30b4247e3fffab1bca8c7dd_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a4d73f6c8b30b4247e3fffab1bca8c7dd_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a4d73f6c8b30b4247e3fffab1bca8c7dd_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a4d73f6c8b30b4247e3fffab1bca8c7dd_cgraph" id="asf__spelltype__handlers_8cpp_a4d73f6c8b30b4247e3fffab1bca8c7dd_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,113,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="161,5,286,32"/>
+<area shape="poly" title=" " alt="" coords="113,16,145,16,145,21,113,21"/>
+</map>
 </div>
 
 </div>
@@ -3424,11 +3395,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00027">27</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a119c641c44dd408ace7055ede90f499d_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a119c641c44dd408ace7055ede90f499d_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -3452,11 +3418,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00849">849</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a1d82c055dc326271941639e6e16d4313_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a1d82c055dc326271941639e6e16d4313_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -3484,11 +3445,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a4a1c61f84a6c11343d20c494470f9ef6_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a4a1c61f84a6c11343d20c494470f9ef6_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a4a1c61f84a6c11343d20c494470f9ef6_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a4a1c61f84a6c11343d20c494470f9ef6_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a4a1c61f84a6c11343d20c494470f9ef6_cgraph" id="asf__spelltype__handlers_8cpp_a4a1c61f84a6c11343d20c494470f9ef6_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,132,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="180,5,305,32"/>
+<area shape="poly" title=" " alt="" coords="132,16,164,16,164,21,132,21"/>
+</map>
 </div>
 
 </div>
@@ -3517,11 +3478,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a5d8d67ec9eda45d1ef067b81097bd514_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a5d8d67ec9eda45d1ef067b81097bd514_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a5d8d67ec9eda45d1ef067b81097bd514_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a5d8d67ec9eda45d1ef067b81097bd514_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a5d8d67ec9eda45d1ef067b81097bd514_cgraph" id="asf__spelltype__handlers_8cpp_a5d8d67ec9eda45d1ef067b81097bd514_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,134,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="182,5,307,32"/>
+<area shape="poly" title=" " alt="" coords="134,16,166,16,166,21,134,21"/>
+</map>
 </div>
 
 </div>
@@ -3550,6 +3511,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a4608a422a9fd5daefc00a49e431679c5_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a4608a422a9fd5daefc00a49e431679c5_cgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a4608a422a9fd5daefc00a49e431679c5_cgraph" id="asf__spelltype__handlers_8cpp_a4608a422a9fd5daefc00a49e431679c5_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,134,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="182,5,307,32"/>
+<area shape="poly" title=" " alt="" coords="134,16,166,16,166,21,134,21"/>
+</map>
 </div>
 
 </div>
@@ -3578,11 +3544,11 @@ Here is the call graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a8058d84c7410407c2ef4d99054130f15_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a8058d84c7410407c2ef4d99054130f15_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a8058d84c7410407c2ef4d99054130f15_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a8058d84c7410407c2ef4d99054130f15_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a8058d84c7410407c2ef4d99054130f15_cgraph" id="asf__spelltype__handlers_8cpp_a8058d84c7410407c2ef4d99054130f15_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,127,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="175,5,300,32"/>
+<area shape="poly" title=" " alt="" coords="127,16,159,16,159,21,127,21"/>
+</map>
 </div>
 
 </div>
@@ -3611,11 +3577,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a0ff0a1e6b37c703c3a49fe588714ae77_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a0ff0a1e6b37c703c3a49fe588714ae77_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a0ff0a1e6b37c703c3a49fe588714ae77_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a0ff0a1e6b37c703c3a49fe588714ae77_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a0ff0a1e6b37c703c3a49fe588714ae77_cgraph" id="asf__spelltype__handlers_8cpp_a0ff0a1e6b37c703c3a49fe588714ae77_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,125,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="173,5,298,32"/>
+<area shape="poly" title=" " alt="" coords="125,16,157,16,157,21,125,21"/>
+</map>
 </div>
 
 </div>
@@ -3644,11 +3610,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a781e1e8ee6452a244ff6f760b5308362_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a781e1e8ee6452a244ff6f760b5308362_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a781e1e8ee6452a244ff6f760b5308362_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a781e1e8ee6452a244ff6f760b5308362_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a781e1e8ee6452a244ff6f760b5308362_cgraph" id="asf__spelltype__handlers_8cpp_a781e1e8ee6452a244ff6f760b5308362_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,131,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="179,5,304,32"/>
+<area shape="poly" title=" " alt="" coords="131,16,163,16,163,21,131,21"/>
+</map>
 </div>
 
 </div>
@@ -3677,11 +3643,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_ac882e185e6aace3343d0419b4e5a917c_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ac882e185e6aace3343d0419b4e5a917c_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_ac882e185e6aace3343d0419b4e5a917c_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ac882e185e6aace3343d0419b4e5a917c_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_ac882e185e6aace3343d0419b4e5a917c_cgraph" id="asf__spelltype__handlers_8cpp_ac882e185e6aace3343d0419b4e5a917c_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,123,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="171,5,296,32"/>
+<area shape="poly" title=" " alt="" coords="123,16,155,16,155,21,123,21"/>
+</map>
 </div>
 
 </div>
@@ -3710,11 +3676,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a0399bd0677c82298ee7e43fba897af0b_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a0399bd0677c82298ee7e43fba897af0b_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a0399bd0677c82298ee7e43fba897af0b_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a0399bd0677c82298ee7e43fba897af0b_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a0399bd0677c82298ee7e43fba897af0b_cgraph" id="asf__spelltype__handlers_8cpp_a0399bd0677c82298ee7e43fba897af0b_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,137,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="185,5,310,32"/>
+<area shape="poly" title=" " alt="" coords="137,16,169,16,169,21,137,21"/>
+</map>
 </div>
 
 </div>
@@ -3743,11 +3709,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_aa59c7160db56d8d8f05988e2466e5a00_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aa59c7160db56d8d8f05988e2466e5a00_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_aa59c7160db56d8d8f05988e2466e5a00_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aa59c7160db56d8d8f05988e2466e5a00_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_aa59c7160db56d8d8f05988e2466e5a00_cgraph" id="asf__spelltype__handlers_8cpp_aa59c7160db56d8d8f05988e2466e5a00_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,133,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="181,5,306,32"/>
+<area shape="poly" title=" " alt="" coords="133,16,165,16,165,21,133,21"/>
+</map>
 </div>
 
 </div>
@@ -3776,11 +3742,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_ad00db96275fa8a7b2b2c917ec06b5927_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ad00db96275fa8a7b2b2c917ec06b5927_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_ad00db96275fa8a7b2b2c917ec06b5927_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ad00db96275fa8a7b2b2c917ec06b5927_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_ad00db96275fa8a7b2b2c917ec06b5927_cgraph" id="asf__spelltype__handlers_8cpp_ad00db96275fa8a7b2b2c917ec06b5927_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,155,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="203,5,328,32"/>
+<area shape="poly" title=" " alt="" coords="155,16,187,16,187,21,155,21"/>
+</map>
 </div>
 
 </div>
@@ -3805,11 +3771,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00748">748</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a78da977feee847155268029ac1e64e84_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a78da977feee847155268029ac1e64e84_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -3833,11 +3794,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00625">625</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_adc21c4a295ceaf4acc71b381f2c331a9_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_adc21c4a295ceaf4acc71b381f2c331a9_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -3865,11 +3821,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_ad543fb4ce2ebf1a26e6c668e4af69ca4_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ad543fb4ce2ebf1a26e6c668e4af69ca4_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_ad543fb4ce2ebf1a26e6c668e4af69ca4_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ad543fb4ce2ebf1a26e6c668e4af69ca4_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_ad543fb4ce2ebf1a26e6c668e4af69ca4_cgraph" id="asf__spelltype__handlers_8cpp_ad543fb4ce2ebf1a26e6c668e4af69ca4_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,111,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="159,5,284,32"/>
+<area shape="poly" title=" " alt="" coords="111,16,143,16,143,21,111,21"/>
+</map>
 </div>
 
 </div>
@@ -3894,11 +3850,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00356">356</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a1dcac7bcd1fb0121a0c80383f65f3ee0_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a1dcac7bcd1fb0121a0c80383f65f3ee0_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -3926,11 +3877,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a6d2bee80c51ab7e6ccf5d8cf5588227b_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a6d2bee80c51ab7e6ccf5d8cf5588227b_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a6d2bee80c51ab7e6ccf5d8cf5588227b_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a6d2bee80c51ab7e6ccf5d8cf5588227b_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a6d2bee80c51ab7e6ccf5d8cf5588227b_cgraph" id="asf__spelltype__handlers_8cpp_a6d2bee80c51ab7e6ccf5d8cf5588227b_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,142,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="190,5,315,32"/>
+<area shape="poly" title=" " alt="" coords="142,16,174,16,174,21,142,21"/>
+</map>
 </div>
 
 </div>
@@ -3955,11 +3906,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00758">758</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a211cb0469b43c72d1b3d730885e18980_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a211cb0469b43c72d1b3d730885e18980_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -3983,11 +3929,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00351">351</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a03686c897307b9ef3ecadc6c9fcadb42_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a03686c897307b9ef3ecadc6c9fcadb42_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -4011,11 +3952,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00571">571</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a4c30649d6094bfc6d371ec542cacbb95_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a4c30649d6094bfc6d371ec542cacbb95_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -4043,11 +3979,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_ab3553d283ce2a2184aa7c89a15053191_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ab3553d283ce2a2184aa7c89a15053191_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_ab3553d283ce2a2184aa7c89a15053191_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ab3553d283ce2a2184aa7c89a15053191_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_ab3553d283ce2a2184aa7c89a15053191_cgraph" id="asf__spelltype__handlers_8cpp_ab3553d283ce2a2184aa7c89a15053191_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,168,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="216,5,341,32"/>
+<area shape="poly" title=" " alt="" coords="168,16,200,16,200,21,168,21"/>
+</map>
 </div>
 
 </div>
@@ -4072,11 +4008,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00824">824</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a7ea5243c6e7daaeab5093967cd0a4c65_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a7ea5243c6e7daaeab5093967cd0a4c65_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -4100,11 +4031,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00802">802</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a2e791287c169e24392a11ef4cd52de27_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a2e791287c169e24392a11ef4cd52de27_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -4132,11 +4058,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a62e35c441f6c292042c5f23ba3d60360_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a62e35c441f6c292042c5f23ba3d60360_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a62e35c441f6c292042c5f23ba3d60360_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a62e35c441f6c292042c5f23ba3d60360_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a62e35c441f6c292042c5f23ba3d60360_cgraph" id="asf__spelltype__handlers_8cpp_a62e35c441f6c292042c5f23ba3d60360_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,115,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="163,5,288,32"/>
+<area shape="poly" title=" " alt="" coords="115,16,147,16,147,21,115,21"/>
+</map>
 </div>
 
 </div>
@@ -4165,11 +4091,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a41f221765020d74f67bb3973c53154b4_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a41f221765020d74f67bb3973c53154b4_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a41f221765020d74f67bb3973c53154b4_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a41f221765020d74f67bb3973c53154b4_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a41f221765020d74f67bb3973c53154b4_cgraph" id="asf__spelltype__handlers_8cpp_a41f221765020d74f67bb3973c53154b4_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,126,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="174,5,299,32"/>
+<area shape="poly" title=" " alt="" coords="126,16,158,16,158,21,126,21"/>
+</map>
 </div>
 
 </div>
@@ -4194,11 +4120,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00108">108</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_abcb37e42f5bdf7281ed6ed0f3ff01162_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_abcb37e42f5bdf7281ed6ed0f3ff01162_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -4226,11 +4147,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a31ce80dce0a23a9f748b4a674f8fe7b8_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a31ce80dce0a23a9f748b4a674f8fe7b8_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a31ce80dce0a23a9f748b4a674f8fe7b8_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a31ce80dce0a23a9f748b4a674f8fe7b8_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a31ce80dce0a23a9f748b4a674f8fe7b8_cgraph" id="asf__spelltype__handlers_8cpp_a31ce80dce0a23a9f748b4a674f8fe7b8_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,135,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="183,5,308,32"/>
+<area shape="poly" title=" " alt="" coords="135,16,167,16,167,21,135,21"/>
+</map>
 </div>
 
 </div>
@@ -4259,11 +4180,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a02629593607870c5280d60046ff97c71_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a02629593607870c5280d60046ff97c71_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a02629593607870c5280d60046ff97c71_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a02629593607870c5280d60046ff97c71_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a02629593607870c5280d60046ff97c71_cgraph" id="asf__spelltype__handlers_8cpp_a02629593607870c5280d60046ff97c71_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,112,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="160,5,285,32"/>
+<area shape="poly" title=" " alt="" coords="112,16,144,16,144,21,112,21"/>
+</map>
 </div>
 
 </div>
@@ -4292,11 +4213,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a341df7b79461d7d5c25002775e6d5cb0_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a341df7b79461d7d5c25002775e6d5cb0_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a341df7b79461d7d5c25002775e6d5cb0_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a341df7b79461d7d5c25002775e6d5cb0_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a341df7b79461d7d5c25002775e6d5cb0_cgraph" id="asf__spelltype__handlers_8cpp_a341df7b79461d7d5c25002775e6d5cb0_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,114,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="162,5,287,32"/>
+<area shape="poly" title=" " alt="" coords="114,16,146,16,146,21,114,21"/>
+</map>
 </div>
 
 </div>
@@ -4325,11 +4246,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a67663c01109d4d2747cf5a2d03238ad7_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a67663c01109d4d2747cf5a2d03238ad7_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a67663c01109d4d2747cf5a2d03238ad7_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a67663c01109d4d2747cf5a2d03238ad7_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a67663c01109d4d2747cf5a2d03238ad7_cgraph" id="asf__spelltype__handlers_8cpp_a67663c01109d4d2747cf5a2d03238ad7_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,135,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="183,5,308,32"/>
+<area shape="poly" title=" " alt="" coords="135,16,167,16,167,21,135,21"/>
+</map>
 </div>
 
 </div>
@@ -4358,11 +4279,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a8f0d586c6766f85f027dda8bad87b01a_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a8f0d586c6766f85f027dda8bad87b01a_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a8f0d586c6766f85f027dda8bad87b01a_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a8f0d586c6766f85f027dda8bad87b01a_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a8f0d586c6766f85f027dda8bad87b01a_cgraph" id="asf__spelltype__handlers_8cpp_a8f0d586c6766f85f027dda8bad87b01a_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,140,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="188,5,313,32"/>
+<area shape="poly" title=" " alt="" coords="140,16,172,16,172,21,140,21"/>
+</map>
 </div>
 
 </div>
@@ -4387,11 +4308,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00167">167</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a063ee1b47db114bb461b5b94d09cc264_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a063ee1b47db114bb461b5b94d09cc264_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -4419,11 +4335,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_ae44d1f29ea3d036eecc9da14efa04de0_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ae44d1f29ea3d036eecc9da14efa04de0_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_ae44d1f29ea3d036eecc9da14efa04de0_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ae44d1f29ea3d036eecc9da14efa04de0_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_ae44d1f29ea3d036eecc9da14efa04de0_cgraph" id="asf__spelltype__handlers_8cpp_ae44d1f29ea3d036eecc9da14efa04de0_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,137,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="185,5,310,32"/>
+<area shape="poly" title=" " alt="" coords="137,16,169,16,169,21,137,21"/>
+</map>
 </div>
 
 </div>
@@ -4448,11 +4364,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00871">871</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_ae80c7b6e589989bd53066132dd2d63ee_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ae80c7b6e589989bd53066132dd2d63ee_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -4480,11 +4391,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_ab41804fb1e0096e398e037ba47749791_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ab41804fb1e0096e398e037ba47749791_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_ab41804fb1e0096e398e037ba47749791_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ab41804fb1e0096e398e037ba47749791_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_ab41804fb1e0096e398e037ba47749791_cgraph" id="asf__spelltype__handlers_8cpp_ab41804fb1e0096e398e037ba47749791_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,139,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="187,5,312,32"/>
+<area shape="poly" title=" " alt="" coords="139,16,171,16,171,21,139,21"/>
+</map>
 </div>
 
 </div>
@@ -4513,11 +4424,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_acf68d26d67cc700783c44b23822ac3e9_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_acf68d26d67cc700783c44b23822ac3e9_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_acf68d26d67cc700783c44b23822ac3e9_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_acf68d26d67cc700783c44b23822ac3e9_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_acf68d26d67cc700783c44b23822ac3e9_cgraph" id="asf__spelltype__handlers_8cpp_acf68d26d67cc700783c44b23822ac3e9_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,158,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="206,5,331,32"/>
+<area shape="poly" title=" " alt="" coords="158,16,190,16,190,21,158,21"/>
+</map>
 </div>
 
 </div>
@@ -4546,11 +4457,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a10d68d1bd6c801875af792caeffd7d14_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a10d68d1bd6c801875af792caeffd7d14_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a10d68d1bd6c801875af792caeffd7d14_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a10d68d1bd6c801875af792caeffd7d14_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a10d68d1bd6c801875af792caeffd7d14_cgraph" id="asf__spelltype__handlers_8cpp_a10d68d1bd6c801875af792caeffd7d14_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,126,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="174,5,299,32"/>
+<area shape="poly" title=" " alt="" coords="126,16,158,16,158,21,126,21"/>
+</map>
 </div>
 
 </div>
@@ -4575,11 +4486,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00854">854</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a5b6f545575bc5f201c262bc06a67abce_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a5b6f545575bc5f201c262bc06a67abce_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -4603,11 +4509,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00595">595</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_adce67f435863577e9c376650c44d3253_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_adce67f435863577e9c376650c44d3253_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -4635,11 +4536,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a50d26d24d0ca6ccb8e23b065f30b985c_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a50d26d24d0ca6ccb8e23b065f30b985c_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a50d26d24d0ca6ccb8e23b065f30b985c_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a50d26d24d0ca6ccb8e23b065f30b985c_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a50d26d24d0ca6ccb8e23b065f30b985c_cgraph" id="asf__spelltype__handlers_8cpp_a50d26d24d0ca6ccb8e23b065f30b985c_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,105,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="153,5,278,32"/>
+<area shape="poly" title=" " alt="" coords="105,16,137,16,137,21,105,21"/>
+</map>
 </div>
 
 </div>
@@ -4664,11 +4565,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00346">346</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a694902a6925e1c375cd3c0bd8243c285_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a694902a6925e1c375cd3c0bd8243c285_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -4696,11 +4592,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a3b4a1d70aacc78565b47e0ab2e66986f_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a3b4a1d70aacc78565b47e0ab2e66986f_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a3b4a1d70aacc78565b47e0ab2e66986f_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a3b4a1d70aacc78565b47e0ab2e66986f_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a3b4a1d70aacc78565b47e0ab2e66986f_cgraph" id="asf__spelltype__handlers_8cpp_a3b4a1d70aacc78565b47e0ab2e66986f_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,144,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="192,5,317,32"/>
+<area shape="poly" title=" " alt="" coords="144,16,176,16,176,21,144,21"/>
+</map>
 </div>
 
 </div>
@@ -4725,11 +4621,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00232">232</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a4dc038980aa89281f53d11abdeb9488c_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a4dc038980aa89281f53d11abdeb9488c_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -4753,11 +4644,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00950">950</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_af493b7fbbeb450b063384db5fd11ccf1_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_af493b7fbbeb450b063384db5fd11ccf1_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -4781,11 +4667,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00361">361</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a0261b9c0d3875b2161ff2156a94a6792_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a0261b9c0d3875b2161ff2156a94a6792_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -4809,11 +4690,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00552">552</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a4e331369ec0223eb6f828b143fc841f4_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a4e331369ec0223eb6f828b143fc841f4_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -4841,11 +4717,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a705dead631112a9b69ff38109c333b88_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a705dead631112a9b69ff38109c333b88_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a705dead631112a9b69ff38109c333b88_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a705dead631112a9b69ff38109c333b88_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a705dead631112a9b69ff38109c333b88_cgraph" id="asf__spelltype__handlers_8cpp_a705dead631112a9b69ff38109c333b88_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,152,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="200,5,325,32"/>
+<area shape="poly" title=" " alt="" coords="152,16,184,16,184,21,152,21"/>
+</map>
 </div>
 
 </div>
@@ -4874,11 +4750,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a5d374faf1bb4480c648ab5440d6f0c84_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a5d374faf1bb4480c648ab5440d6f0c84_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a5d374faf1bb4480c648ab5440d6f0c84_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a5d374faf1bb4480c648ab5440d6f0c84_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a5d374faf1bb4480c648ab5440d6f0c84_cgraph" id="asf__spelltype__handlers_8cpp_a5d374faf1bb4480c648ab5440d6f0c84_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,131,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="179,5,304,32"/>
+<area shape="poly" title=" " alt="" coords="131,16,163,16,163,21,131,21"/>
+</map>
 </div>
 
 </div>
@@ -4903,11 +4779,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00703">703</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a35ce43c82e5636c9860ab5fc93ed1bba_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a35ce43c82e5636c9860ab5fc93ed1bba_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -4931,11 +4802,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00434">434</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_ad807b2b05b25eaff48bc921a3b71dc05_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ad807b2b05b25eaff48bc921a3b71dc05_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -4963,11 +4829,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_ad691df56089c9d6ad5dd0500f9fe4f03_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ad691df56089c9d6ad5dd0500f9fe4f03_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_ad691df56089c9d6ad5dd0500f9fe4f03_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ad691df56089c9d6ad5dd0500f9fe4f03_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_ad691df56089c9d6ad5dd0500f9fe4f03_cgraph" id="asf__spelltype__handlers_8cpp_ad691df56089c9d6ad5dd0500f9fe4f03_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,136,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="184,5,309,32"/>
+<area shape="poly" title=" " alt="" coords="136,16,168,16,168,21,136,21"/>
+</map>
 </div>
 
 </div>
@@ -4996,11 +4862,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a84aa84d9f224ba52b503b8c9f9f3cfaa_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a84aa84d9f224ba52b503b8c9f9f3cfaa_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a84aa84d9f224ba52b503b8c9f9f3cfaa_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a84aa84d9f224ba52b503b8c9f9f3cfaa_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a84aa84d9f224ba52b503b8c9f9f3cfaa_cgraph" id="asf__spelltype__handlers_8cpp_a84aa84d9f224ba52b503b8c9f9f3cfaa_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,123,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="171,5,296,32"/>
+<area shape="poly" title=" " alt="" coords="123,16,155,16,155,21,123,21"/>
+</map>
 </div>
 
 </div>
@@ -5029,11 +4895,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a5071e94070c8035199d96c7d683bfad3_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a5071e94070c8035199d96c7d683bfad3_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a5071e94070c8035199d96c7d683bfad3_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a5071e94070c8035199d96c7d683bfad3_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a5071e94070c8035199d96c7d683bfad3_cgraph" id="asf__spelltype__handlers_8cpp_a5071e94070c8035199d96c7d683bfad3_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,139,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="187,5,312,32"/>
+<area shape="poly" title=" " alt="" coords="139,16,171,16,171,21,139,21"/>
+</map>
 </div>
 
 </div>
@@ -5058,11 +4924,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00446">446</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a101e37348982b11e099889a84863ff38_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a101e37348982b11e099889a84863ff38_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -5086,11 +4947,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00481">481</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a31b81b8e089ac0194c3432f711683ee6_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a31b81b8e089ac0194c3432f711683ee6_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -5118,11 +4974,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_acb5bde32f3726bd0447c751dc194bf79_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_acb5bde32f3726bd0447c751dc194bf79_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_acb5bde32f3726bd0447c751dc194bf79_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_acb5bde32f3726bd0447c751dc194bf79_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_acb5bde32f3726bd0447c751dc194bf79_cgraph" id="asf__spelltype__handlers_8cpp_acb5bde32f3726bd0447c751dc194bf79_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,133,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="181,5,306,32"/>
+<area shape="poly" title=" " alt="" coords="133,16,165,16,165,21,133,21"/>
+</map>
 </div>
 
 </div>
@@ -5147,11 +5003,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00318">318</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_ae6aec83bccf9f30da2bb77e4b7ec6b70_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ae6aec83bccf9f30da2bb77e4b7ec6b70_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -5179,11 +5030,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a3dbba8eaac67759185edc2761e629110_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a3dbba8eaac67759185edc2761e629110_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a3dbba8eaac67759185edc2761e629110_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a3dbba8eaac67759185edc2761e629110_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a3dbba8eaac67759185edc2761e629110_cgraph" id="asf__spelltype__handlers_8cpp_a3dbba8eaac67759185edc2761e629110_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,146,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="194,5,319,32"/>
+<area shape="poly" title=" " alt="" coords="146,16,178,16,178,21,146,21"/>
+</map>
 </div>
 
 </div>
@@ -5208,11 +5059,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00881">881</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a5b80937c54a636d519e502c80e6eec8e_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a5b80937c54a636d519e502c80e6eec8e_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -5236,11 +5082,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00608">608</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a6b864688a6bfc9d6bde0766fb3e0a415_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a6b864688a6bfc9d6bde0766fb3e0a415_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -5264,11 +5105,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00753">753</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a7c895cfa980c7abf061e0014f451577c_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a7c895cfa980c7abf061e0014f451577c_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -5292,11 +5128,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00613">613</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_adf72c938b31a6fe136d105c5651f2134_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_adf72c938b31a6fe136d105c5651f2134_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -5324,11 +5155,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_ae8da7f4f735c1eeca4c5d3af5c71bae1_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ae8da7f4f735c1eeca4c5d3af5c71bae1_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_ae8da7f4f735c1eeca4c5d3af5c71bae1_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ae8da7f4f735c1eeca4c5d3af5c71bae1_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_ae8da7f4f735c1eeca4c5d3af5c71bae1_cgraph" id="asf__spelltype__handlers_8cpp_ae8da7f4f735c1eeca4c5d3af5c71bae1_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,171,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="219,5,344,32"/>
+<area shape="poly" title=" " alt="" coords="171,16,203,16,203,21,171,21"/>
+</map>
 </div>
 
 </div>
@@ -5357,11 +5188,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a171561bdf528b624c97ed629743bb5be_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a171561bdf528b624c97ed629743bb5be_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a171561bdf528b624c97ed629743bb5be_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a171561bdf528b624c97ed629743bb5be_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a171561bdf528b624c97ed629743bb5be_cgraph" id="asf__spelltype__handlers_8cpp_a171561bdf528b624c97ed629743bb5be_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,164,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="212,5,337,32"/>
+<area shape="poly" title=" " alt="" coords="164,16,196,16,196,21,164,21"/>
+</map>
 </div>
 
 </div>
@@ -5386,11 +5217,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00714">714</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_ae0489c9a0ecb08de32ad510e5a21d675_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ae0489c9a0ecb08de32ad510e5a21d675_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -5414,11 +5240,6 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__spelltype__handlers_8cpp_source.html#l00719">719</a> of file <a class="el" href="sf__spelltype__handlers_8cpp_source.html">sf_spelltype_handlers.cpp</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_aef820dcf8cf512f8efff155fe17daaf1_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aef820dcf8cf512f8efff155fe17daaf1_icgraph" alt=""/></div>
-</div>
 
 </div>
 </div>
@@ -5446,11 +5267,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_aefc04e630170fd34e87e68233308513c_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aefc04e630170fd34e87e68233308513c_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_aefc04e630170fd34e87e68233308513c_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aefc04e630170fd34e87e68233308513c_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_aefc04e630170fd34e87e68233308513c_cgraph" id="asf__spelltype__handlers_8cpp_aefc04e630170fd34e87e68233308513c_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,145,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="193,5,318,32"/>
+<area shape="poly" title=" " alt="" coords="145,16,177,16,177,21,145,21"/>
+</map>
 </div>
 
 </div>
@@ -5479,6 +5300,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_afb30176c7e66cdd5139e73b5dbd7d8d0_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_afb30176c7e66cdd5139e73b5dbd7d8d0_cgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_afb30176c7e66cdd5139e73b5dbd7d8d0_cgraph" id="asf__spelltype__handlers_8cpp_afb30176c7e66cdd5139e73b5dbd7d8d0_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,138,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="186,5,311,32"/>
+<area shape="poly" title=" " alt="" coords="138,16,170,16,170,21,138,21"/>
+</map>
 </div>
 
 </div>
@@ -5507,11 +5333,11 @@ Here is the call graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_aaf45ad03905fd8dfd24a1db587d2e163_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aaf45ad03905fd8dfd24a1db587d2e163_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_aaf45ad03905fd8dfd24a1db587d2e163_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_aaf45ad03905fd8dfd24a1db587d2e163_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_aaf45ad03905fd8dfd24a1db587d2e163_cgraph" id="asf__spelltype__handlers_8cpp_aaf45ad03905fd8dfd24a1db587d2e163_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,107,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="155,5,280,32"/>
+<area shape="poly" title=" " alt="" coords="107,16,139,16,139,21,107,21"/>
+</map>
 </div>
 
 </div>
@@ -5540,11 +5366,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_af20653873bd5789c2874a0b53bde70f4_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_af20653873bd5789c2874a0b53bde70f4_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_af20653873bd5789c2874a0b53bde70f4_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_af20653873bd5789c2874a0b53bde70f4_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_af20653873bd5789c2874a0b53bde70f4_cgraph" id="asf__spelltype__handlers_8cpp_af20653873bd5789c2874a0b53bde70f4_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,121,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="169,5,294,32"/>
+<area shape="poly" title=" " alt="" coords="121,16,153,16,153,21,121,21"/>
+</map>
 </div>
 
 </div>
@@ -5573,11 +5399,11 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_ada03af5efe130d3744650dc07298a191_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ada03af5efe130d3744650dc07298a191_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_ada03af5efe130d3744650dc07298a191_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_ada03af5efe130d3744650dc07298a191_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_ada03af5efe130d3744650dc07298a191_cgraph" id="asf__spelltype__handlers_8cpp_ada03af5efe130d3744650dc07298a191_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,184,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="232,5,357,32"/>
+<area shape="poly" title=" " alt="" coords="184,16,216,16,216,21,184,21"/>
+</map>
 </div>
 
 </div>
@@ -5606,20 +5432,23 @@ Here is the caller graph for this function:</div>
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__spelltype__handlers_8cpp_a454682734cdb97ec8619f6f1bf8f5d1d_cgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a454682734cdb97ec8619f6f1bf8f5d1d_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__spelltype__handlers_8cpp_a454682734cdb97ec8619f6f1bf8f5d1d_icgraph.png" border="0" usemap="#asf__spelltype__handlers_8cpp_a454682734cdb97ec8619f6f1bf8f5d1d_icgraph" alt=""/></div>
+<map name="asf__spelltype__handlers_8cpp_a454682734cdb97ec8619f6f1bf8f5d1d_cgraph" id="asf__spelltype__handlers_8cpp_a454682734cdb97ec8619f6f1bf8f5d1d_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,163,32"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="211,5,336,32"/>
+<area shape="poly" title=" " alt="" coords="163,16,195,16,195,21,163,21"/>
+</map>
 </div>
 
 </div>
 </div>
 </div><!-- contents -->
-<!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
-</small></address>
 </div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_3756d50f4003bc63fa3fe49460f9c79d.html">internal</a></li><li class="navelem"><a class="el" href="dir_095a2eba2762fc723abb6dd3e65ef539.html">handlers</a></li><li class="navelem"><a class="el" href="sf__spelltype__handlers_8cpp.html">sf_spelltype_handlers.cpp</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+  </ul>
+</div>
 </body>
 </html>

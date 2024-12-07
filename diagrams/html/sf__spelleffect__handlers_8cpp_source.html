@@ -5,12 +5,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Spellforce-Spell-Framework: src/internal/handlers/sf_spelleffect_handlers.cpp Source File</title>
+<title>Spellforce-Spell-framework: src/internal/handlers/sf_spelleffect_handlers.cpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
@@ -25,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Spellforce-Spell-Framework
+   <div id="projectname">Spellforce-Spell-framework
    </div>
   </td>
  </tr>
@@ -49,17 +51,29 @@ $(function() { codefold.init(0); });
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
-  initMenu('',true,false,'search.php','Search',false);
+  initMenu('',true,false,'search.php','Search',true);
   $(function() { init_search(); });
 });
 /* @license-end */
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){ initResizable(false); });
+$(function(){initNavTree('sf__spelleffect__handlers_8cpp_source.html',''); initResizable(true); });
 /* @license-end */
 </script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -81,19 +95,13 @@ $(function(){ initResizable(false); });
 </div>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_3756d50f4003bc63fa3fe49460f9c79d.html">internal</a></li><li class="navelem"><a class="el" href="dir_095a2eba2762fc723abb6dd3e65ef539.html">handlers</a></li>  </ul>
-</div>
-</div><!-- top -->
-<div id="doc-content">
 <div class="header">
   <div class="headertitle"><div class="title">sf_spelleffect_handlers.cpp</div></div>
 </div><!--header-->
 <div class="contents">
 <a href="sf__spelleffect__handlers_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &quot;<a class="code" href="sf__spelleffect__handlers_8h.html">sf_spelleffect_handlers.h</a>&quot;</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;<a class="code" href="sf__wrappers_8h.html">../core/sf_wrappers.h</a>&quot;</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;<a class="code" href="sf__spelleffect__registry_8h.html">../registry/sf_spelleffect_registry.h</a>&quot;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;<a class="code" href="sf__spelleffect__registry_8h.html">../registry/spell_data_registries/sf_spelleffect_registry.h</a>&quot;</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno"><a class="line" href="sf__spelleffect__handlers_8cpp.html#a963cc58271f9000e0a64f813561c6614">    5</a></span><a class="code hl_typedef" href="sf__registration__functions_8h.html#af76aa0d565c5ebb0b1eb50e2ed3377b3">handler_ptr</a> <a class="code hl_variable" href="sf__spelleffect__handlers_8cpp.html#a963cc58271f9000e0a64f813561c6614">effect_ability_benefactions_handler</a>;</div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno"><a class="line" href="sf__spelleffect__handlers_8cpp.html#ae4c7e704e869bbeebd009e26ca7d482a">    6</a></span><a class="code hl_typedef" href="sf__registration__functions_8h.html#af76aa0d565c5ebb0b1eb50e2ed3377b3">handler_ptr</a> <a class="code hl_variable" href="sf__spelleffect__handlers_8cpp.html#ae4c7e704e869bbeebd009e26ca7d482a">effect_ability_berserk_handler</a>;</div>
@@ -600,10 +608,13 @@ $(function(){ initResizable(false); });
 <div class="ttc" id="asf__spelleffect__registry_8h_html"><div class="ttname"><a href="sf__spelleffect__registry_8h.html">sf_spelleffect_registry.h</a></div></div>
 <div class="ttc" id="asf__wrappers_8h_html"><div class="ttname"><a href="sf__wrappers_8h.html">sf_wrappers.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
-<!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
-</small></address>
 </div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_3756d50f4003bc63fa3fe49460f9c79d.html">internal</a></li><li class="navelem"><a class="el" href="dir_095a2eba2762fc723abb6dd3e65ef539.html">handlers</a></li><li class="navelem"><a class="el" href="sf__spelleffect__handlers_8cpp.html">sf_spelleffect_handlers.cpp</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+  </ul>
+</div>
 </body>
 </html>

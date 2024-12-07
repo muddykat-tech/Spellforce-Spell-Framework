@@ -5,12 +5,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Spellforce-Spell-Framework: src/internal/registry/sf_spelldamage_registry.cpp Source File</title>
+<title>Spellforce-Spell-framework: src/internal/registry/spell_data_registries/sf_spelldamage_registry.cpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
@@ -25,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Spellforce-Spell-Framework
+   <div id="projectname">Spellforce-Spell-framework
    </div>
   </td>
  </tr>
@@ -49,17 +51,29 @@ $(function() { codefold.init(0); });
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
-  initMenu('',true,false,'search.php','Search',false);
+  initMenu('',true,false,'search.php','Search',true);
   $(function() { init_search(); });
 });
 /* @license-end */
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){ initResizable(false); });
+$(function(){initNavTree('sf__spelldamage__registry_8cpp_source.html',''); initResizable(true); });
 /* @license-end */
 </script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -81,20 +95,14 @@ $(function(){ initResizable(false); });
 </div>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_3756d50f4003bc63fa3fe49460f9c79d.html">internal</a></li><li class="navelem"><a class="el" href="dir_7c9c5794ca21d46921d6ad00eebb9fa9.html">registry</a></li>  </ul>
-</div>
-</div><!-- top -->
-<div id="doc-content">
 <div class="header">
   <div class="headertitle"><div class="title">sf_spelldamage_registry.cpp</div></div>
 </div><!--header-->
 <div class="contents">
 <a href="sf__spelldamage__registry_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &quot;<a class="code" href="sf__spelldamage__registry_8h.html">sf_spelldamage_registry.h</a>&quot;</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;<a class="code" href="sf__wrappers_8h.html">../core/sf_wrappers.h</a>&quot;</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;<a class="code" href="sf__modloader_8h.html">../core/sf_modloader.h</a>&quot;</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;<a class="code" href="sf__spelldamage__handlers_8h.html">../handlers/sf_spelldamage_handlers.h</a>&quot;</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;<a class="code" href="sf__wrappers_8h.html">../../core/sf_wrappers.h</a>&quot;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;<a class="code" href="sf__modloader_8h.html">../../core/sf_modloader.h</a>&quot;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;<a class="code" href="sf__spelldamage__handlers_8h.html">../../handlers/sf_spelldamage_handlers.h</a>&quot;</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;map&gt;</span></div>
@@ -162,12 +170,12 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <a class="code hl_function" href="sf__spelldamage__registry_8cpp.html#a8fdf321eedee2c47adbc88de0e747760">registerSpellDamageHandler</a>(0xda, &amp;<a class="code hl_function" href="sf__spelldamage__handlers_8cpp.html#a51ecc4f761fea26391833f88538ee0f9">mana_shield_dmg_handler</a>, <a class="code hl_enumvalue" href="sf__general__structures_8h.html#a3f1ae4d570090b097230b86e02b1a178a368c5bc07109370b819193871352b926">SpellDamagePhase::POST</a>);</div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>}</div>
 </div>
-<div class="ttc" id="asf__general__structures_8h_html_a3f1ae4d570090b097230b86e02b1a178"><div class="ttname"><a href="sf__general__structures_8h.html#a3f1ae4d570090b097230b86e02b1a178">SpellDamagePhase</a></div><div class="ttdeci">SpellDamagePhase</div><div class="ttdef"><b>Definition</b> <a href="sf__general__structures_8h_source.html#l00681">sf_general_structures.h:682</a></div></div>
-<div class="ttc" id="asf__general__structures_8h_html_a3f1ae4d570090b097230b86e02b1a178a368c5bc07109370b819193871352b926"><div class="ttname"><a href="sf__general__structures_8h.html#a3f1ae4d570090b097230b86e02b1a178a368c5bc07109370b819193871352b926">POST</a></div><div class="ttdeci">@ POST</div><div class="ttdef"><b>Definition</b> <a href="sf__general__structures_8h_source.html#l00685">sf_general_structures.h:685</a></div></div>
-<div class="ttc" id="asf__general__structures_8h_html_a3f1ae4d570090b097230b86e02b1a178a88ec7d5086d2469ba843c7fcceade8a6"><div class="ttname"><a href="sf__general__structures_8h.html#a3f1ae4d570090b097230b86e02b1a178a88ec7d5086d2469ba843c7fcceade8a6">DEFAULT</a></div><div class="ttdeci">@ DEFAULT</div><div class="ttdef"><b>Definition</b> <a href="sf__general__structures_8h_source.html#l00684">sf_general_structures.h:684</a></div></div>
-<div class="ttc" id="asf__general__structures_8h_html_a3f1ae4d570090b097230b86e02b1a178abfbf875310a12806703353540abf4285"><div class="ttname"><a href="sf__general__structures_8h.html#a3f1ae4d570090b097230b86e02b1a178abfbf875310a12806703353540abf4285">PRE</a></div><div class="ttdeci">@ PRE</div><div class="ttdef"><b>Definition</b> <a href="sf__general__structures_8h_source.html#l00683">sf_general_structures.h:683</a></div></div>
+<div class="ttc" id="asf__general__structures_8h_html_a3f1ae4d570090b097230b86e02b1a178"><div class="ttname"><a href="sf__general__structures_8h.html#a3f1ae4d570090b097230b86e02b1a178">SpellDamagePhase</a></div><div class="ttdeci">SpellDamagePhase</div><div class="ttdef"><b>Definition</b> <a href="sf__general__structures_8h_source.html#l00697">sf_general_structures.h:698</a></div></div>
+<div class="ttc" id="asf__general__structures_8h_html_a3f1ae4d570090b097230b86e02b1a178a368c5bc07109370b819193871352b926"><div class="ttname"><a href="sf__general__structures_8h.html#a3f1ae4d570090b097230b86e02b1a178a368c5bc07109370b819193871352b926">POST</a></div><div class="ttdeci">@ POST</div><div class="ttdef"><b>Definition</b> <a href="sf__general__structures_8h_source.html#l00701">sf_general_structures.h:701</a></div></div>
+<div class="ttc" id="asf__general__structures_8h_html_a3f1ae4d570090b097230b86e02b1a178a88ec7d5086d2469ba843c7fcceade8a6"><div class="ttname"><a href="sf__general__structures_8h.html#a3f1ae4d570090b097230b86e02b1a178a88ec7d5086d2469ba843c7fcceade8a6">DEFAULT</a></div><div class="ttdeci">@ DEFAULT</div><div class="ttdef"><b>Definition</b> <a href="sf__general__structures_8h_source.html#l00700">sf_general_structures.h:700</a></div></div>
+<div class="ttc" id="asf__general__structures_8h_html_a3f1ae4d570090b097230b86e02b1a178abfbf875310a12806703353540abf4285"><div class="ttname"><a href="sf__general__structures_8h.html#a3f1ae4d570090b097230b86e02b1a178abfbf875310a12806703353540abf4285">PRE</a></div><div class="ttdeci">@ PRE</div><div class="ttdef"><b>Definition</b> <a href="sf__general__structures_8h_source.html#l00699">sf_general_structures.h:699</a></div></div>
 <div class="ttc" id="asf__modloader_8h_html"><div class="ttname"><a href="sf__modloader_8h.html">sf_modloader.h</a></div></div>
-<div class="ttc" id="asf__modloader_8h_html_a8342c5f7a97f7d7ada992295eb451353"><div class="ttname"><a href="sf__modloader_8h.html#a8342c5f7a97f7d7ada992295eb451353">g_current_mod</a></div><div class="ttdeci">SFMod * g_current_mod</div><div class="ttdef"><b>Definition</b> <a href="sf__registry_8cpp_source.html#l00020">sf_registry.cpp:20</a></div></div>
+<div class="ttc" id="asf__modloader_8h_html_a8342c5f7a97f7d7ada992295eb451353"><div class="ttname"><a href="sf__modloader_8h.html#a8342c5f7a97f7d7ada992295eb451353">g_current_mod</a></div><div class="ttdeci">SFMod * g_current_mod</div><div class="ttdef"><b>Definition</b> <a href="sf__registry_8cpp_source.html#l00040">sf_registry.cpp:40</a></div></div>
 <div class="ttc" id="asf__registration__functions_8h_html_a66d6ae6fed8f89847ff4ec8e71bfa461"><div class="ttname"><a href="sf__registration__functions_8h.html#a66d6ae6fed8f89847ff4ec8e71bfa461">damage_handler_ptr</a></div><div class="ttdeci">uint16_t(__thiscall * damage_handler_ptr)(SF_CGdFigureToolbox *_toolbox, uint16_t source, uint16_t target, uint16_t current_damage, uint16_t is_spell_damage, uint32_t is_ranged_damage, uint16_t spell_id)</div><div class="ttdef"><b>Definition</b> <a href="sf__registration__functions_8h_source.html#l00006">sf_registration_functions.h:6</a></div></div>
 <div class="ttc" id="asf__spelldamage__handlers_8cpp_html_a00fca112d45def173b867a27e10382cf"><div class="ttname"><a href="sf__spelldamage__handlers_8cpp.html#a00fca112d45def173b867a27e10382cf">hypnotize_dmg_handler</a></div><div class="ttdeci">uint16_t __thiscall hypnotize_dmg_handler(SF_CGdFigureToolbox *_this, uint16_t source, uint16_t target, uint16_t current_damage, uint16_t is_spell_damage, uint32_t is_ranged_damage, uint16_t spell_id)</div><div class="ttdef"><b>Definition</b> <a href="sf__spelldamage__handlers_8cpp_source.html#l00133">sf_spelldamage_handlers.cpp:133</a></div></div>
 <div class="ttc" id="asf__spelldamage__handlers_8cpp_html_a103760811c6954d740d3371e4a99681d"><div class="ttname"><a href="sf__spelldamage__handlers_8cpp.html#a103760811c6954d740d3371e4a99681d">durability_dmg_handler</a></div><div class="ttdeci">uint16_t __thiscall durability_dmg_handler(SF_CGdFigureToolbox *_this, uint16_t source, uint16_t target, uint16_t current_damage, uint16_t is_spell_damage, uint32_t is_ranged_damage, uint16_t spell_id)</div><div class="ttdef"><b>Definition</b> <a href="sf__spelldamage__handlers_8cpp_source.html#l00017">sf_spelldamage_handlers.cpp:17</a></div></div>
@@ -187,10 +195,13 @@ $(function(){ initResizable(false); });
 <div class="ttc" id="asf__wrappers_8c_html_a825433b084e07dce191049d45ecdde2a"><div class="ttname"><a href="sf__wrappers_8c.html#a825433b084e07dce191049d45ecdde2a">log_warning</a></div><div class="ttdeci">void log_warning(const char *message)</div><div class="ttdef"><b>Definition</b> <a href="sf__wrappers_8c_source.html#l00034">sf_wrappers.c:34</a></div></div>
 <div class="ttc" id="asf__wrappers_8h_html"><div class="ttname"><a href="sf__wrappers_8h.html">sf_wrappers.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
-<!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
-</small></address>
 </div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_3756d50f4003bc63fa3fe49460f9c79d.html">internal</a></li><li class="navelem"><a class="el" href="dir_7c9c5794ca21d46921d6ad00eebb9fa9.html">registry</a></li><li class="navelem"><a class="el" href="dir_4b00acc7ff3804a973ffcd1cc7e23e0a.html">spell_data_registries</a></li><li class="navelem"><a class="el" href="sf__spelldamage__registry_8cpp.html">sf_spelldamage_registry.cpp</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+  </ul>
+</div>
 </body>
 </html>

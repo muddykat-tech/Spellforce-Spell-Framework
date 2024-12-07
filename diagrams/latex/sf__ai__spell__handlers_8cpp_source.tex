@@ -1,0 +1,558 @@
+\doxysection{sf\+\_\+ai\+\_\+spell\+\_\+handlers.\+cpp}
+\hypertarget{sf__ai__spell__handlers_8cpp_source}{}\label{sf__ai__spell__handlers_8cpp_source}\index{src/internal/handlers/sf\_ai\_spell\_handlers.cpp@{src/internal/handlers/sf\_ai\_spell\_handlers.cpp}}
+\mbox{\hyperlink{sf__ai__spell__handlers_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__ai__spell__handlers_8h}{sf\_ai\_spell\_handlers.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00003}\mbox{\hyperlink{sf__ai__spell__handlers_8cpp_a2a276c0da3aeb3563035126942e7a286}{00003}}\ uint32\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__ai__spell__handlers_8cpp_a2a276c0da3aeb3563035126942e7a286}{target\_healing\_ai\_handler}}(\mbox{\hyperlink{sf__ai__functions_8h_afa0b3dda911f5160951038e1311f754c}{SF\_CGdBattleDevelopment}}\ *\_this,\ uint16\_t\ target\_index,\ uint16\_t\ spell\_line,\ \mbox{\hyperlink{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}{SF\_CGdResourceSpell}}\ *spell\_data)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00004}00004\ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00005}00005\ \ \ \ \ \textcolor{comment}{//\ TODO:\ Implement\ Me}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00006}00006\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00007}00007\ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00009}\mbox{\hyperlink{sf__ai__spell__handlers_8cpp_a713ba263e53c0caa0aab88537b5ddc2e}{00009}}\ uint32\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__ai__spell__handlers_8cpp_a713ba263e53c0caa0aab88537b5ddc2e}{cure\_poison\_ai\_handler}}(\mbox{\hyperlink{sf__ai__functions_8h_afa0b3dda911f5160951038e1311f754c}{SF\_CGdBattleDevelopment}}\ *\_this,\ uint16\_t\ target\_index,\ uint16\_t\ spell\_line,\ \mbox{\hyperlink{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}{SF\_CGdResourceSpell}}\ *spell\_data)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00010}00010\ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00011}00011\ \ \ \ \ uint32\_t\ rank\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00012}00012\ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{_test_mod_8cpp_af5cc9e62d950cef0fc6386b8162d5cf0}{toolboxAPI}}.hasSpellOnIt((\_this-\/>battleData).CGdFigureToolBox,\ target\_index,\ \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a1c1295f35dc9fdd447e59a37ff8e72ce}{kGdSpellLinePoison}}))}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00013}00013\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00014}00014\ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00015}00015\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00016}00016\ \ \ \ \ \textcolor{keywordflow}{return}\ rank;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00017}00017\ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00019}00019\ \textcolor{comment}{//\ Ice,\ Fire,\ Thorn\ shield,\ Conservation,\ Dexterity}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00020}\mbox{\hyperlink{sf__ai__spell__handlers_8cpp_a0f3795b5d65c262ad71b9df6c8e5f1d3}{00020}}\ uint32\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__ai__spell__handlers_8cpp_a0f3795b5d65c262ad71b9df6c8e5f1d3}{shields\_ai\_handler}}(\mbox{\hyperlink{sf__ai__functions_8h_afa0b3dda911f5160951038e1311f754c}{SF\_CGdBattleDevelopment}}\ *\_this,\ uint16\_t\ target\_index,\ uint16\_t\ spell\_line,\ \mbox{\hyperlink{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}{SF\_CGdResourceSpell}}\ *spell\_data)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00021}00021\ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00022}00022\ \ \ \ \ uint32\_t\ rank\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00023}00023\ \ \ \ \ \textcolor{keywordflow}{if}\ (\_this-\/>battleData.enemy\_figures.entityCount\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00024}00024\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00025}00025\ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00026}00026\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00027}00027\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00028}00028\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00029}00029\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{_test_mod_8cpp_af5cc9e62d950cef0fc6386b8162d5cf0}{toolboxAPI}}.isUnitMelee(\_this-\/>battleData.CGdFigureToolBox,\ target\_index))}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00030}00030\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ rank\ =\ rank\ <<\ 2;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00032}00032\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00033}00033\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00034}00034\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ rank\ =\ rank\ <<\ 1;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00036}00036\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00038}00038\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{_test_mod_8cpp_a721b8129088d90091730781611ecee94}{figureAPI}}.getCurrentHealth(\_this-\/>battleData.CGdFigure,\ target\_index)\ <\ \mbox{\hyperlink{_test_mod_8cpp_a721b8129088d90091730781611ecee94}{figureAPI}}.getCurrentMaxHealth(\_this-\/>battleData.CGdFigure,\ target\_index))}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00039}00039\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ rank\ =\ rank\ <<\ 1;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00041}00041\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00042}00042\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00043}00043\ \ \ \ \ \textcolor{keywordflow}{return}\ rank;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00044}00044\ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00046}\mbox{\hyperlink{sf__ai__spell__handlers_8cpp_a0096f713786964db604d13962f8bb544}{00046}}\ uint32\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__ai__spell__handlers_8cpp_a0096f713786964db604d13962f8bb544}{cure\_disease\_ai\_handler}}(\mbox{\hyperlink{sf__ai__functions_8h_afa0b3dda911f5160951038e1311f754c}{SF\_CGdBattleDevelopment}}\ *\_this,\ uint16\_t\ target\_index,\ uint16\_t\ spell\_line,\ \mbox{\hyperlink{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}{SF\_CGdResourceSpell}}\ *spell\_data)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00047}00047\ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00048}00048\ \ \ \ \ uint32\_t\ rank\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00049}00049\ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{_test_mod_8cpp_af5cc9e62d950cef0fc6386b8162d5cf0}{toolboxAPI}}.hasSpellOnIt((\_this-\/>battleData).CGdFigureToolBox,\ target\_index,\ \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a3b8459db5df60a63973f32d28850d794}{kGdSpellLinePestilence}}))}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00050}00050\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00051}00051\ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00052}00052\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00053}00053\ \ \ \ \ \textcolor{keywordflow}{return}\ rank;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00054}00054\ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00056}\mbox{\hyperlink{sf__ai__spell__handlers_8cpp_a510658320cb46bf012b2893192e3ea30}{00056}}\ uint32\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__ai__spell__handlers_8cpp_a510658320cb46bf012b2893192e3ea30}{death\_grasp\_ai\_handler}}(\mbox{\hyperlink{sf__ai__functions_8h_afa0b3dda911f5160951038e1311f754c}{SF\_CGdBattleDevelopment}}\ *\_this,\ uint16\_t\ target\_index,\ uint16\_t\ spell\_line,\ \mbox{\hyperlink{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}{SF\_CGdResourceSpell}}\ *spell\_data)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00057}00057\ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00058}00058\ \ \ \ \ uint32\_t\ rank\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00059}00059\ \ \ \ \ uint16\_t\ current\_health\ =\ \mbox{\hyperlink{_test_mod_8cpp_a721b8129088d90091730781611ecee94}{figureAPI}}.getCurrentHealth(\_this-\/>battleData.CGdFigure,\ target\_index);}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00060}00060\ \ \ \ \ uint32\_t\ max\_health\ =\ \mbox{\hyperlink{_test_mod_8cpp_a721b8129088d90091730781611ecee94}{figureAPI}}.getCurrentMaxHealth(\_this-\/>battleData.CGdFigure,\ target\_index);}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00061}00061\ \ \ \ \ \textcolor{keywordflow}{if}\ (max\_health\ !=\ 0)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00062}00062\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00063}00063\ \ \ \ \ \ \ \ \ uint16\_t\ percent\ =\ (current\_health\ /\ max\_health)\ *\ 100;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00064}00064\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (percent\ <\ 50)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00065}00065\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ rank\ =\ rank\ *\ 10;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00067}00067\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00068}00068\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00069}00069\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00071}00071\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00072}00072\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00073}00073\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00074}00074\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00075}00075\ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00076}00076\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00077}00077\ \ \ \ \ \textcolor{keywordflow}{return}\ rank;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00078}00078\ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00079}00079\ }
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00080}00080\ \textcolor{comment}{//\ weakness,\ suffocation,\ lifetap}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00081}00081\ \textcolor{comment}{//\ slow\ fighting,\ inflexibility,\ slow\ walking}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00082}00082\ \textcolor{comment}{//\ inability,\ hypnotization,\ manatap}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00083}\mbox{\hyperlink{sf__ai__spell__handlers_8cpp_a79825a874911641764dffd18f9f8ddda}{00083}}\ uint32\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__ai__spell__handlers_8cpp_a79825a874911641764dffd18f9f8ddda}{offensive\_aura\_ai\_handler}}(\mbox{\hyperlink{sf__ai__functions_8h_afa0b3dda911f5160951038e1311f754c}{SF\_CGdBattleDevelopment}}\ *\_this,\ uint16\_t\ target\_index,\ uint16\_t\ spell\_line,\ \mbox{\hyperlink{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}{SF\_CGdResourceSpell}}\ *spell\_data)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00084}00084\ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00085}00085\ \ \ \ \ uint32\_t\ rank\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00086}00086\ \ \ \ \ \textcolor{keywordflow}{if}\ (\_this-\/>battleData.current\_figure\ ==\ target\_index)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00087}00087\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00088}00088\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\_this-\/>battleData.enemy\_figures.entityCount\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00089}00089\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00091}00091\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00092}00092\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00093}00093\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ manacost\ =\ (spell\_data-\/>mana\_cost\ *\ 3)\ /\ 2;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{_test_mod_8cpp_a721b8129088d90091730781611ecee94}{figureAPI}}.getCurrentMana(\_this-\/>battleData.CGdFigure,\ target\_index)\ <\ manacost)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00099}00099\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00100}00100\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00101}00101\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00102}00102\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00103}00103\ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00104}00104\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00105}00105\ \ \ \ \ \textcolor{keywordflow}{return}\ rank;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00106}00106\ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00108}00108\ \textcolor{comment}{//\ kGdSpellLineAuraStrength}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00109}00109\ \textcolor{comment}{//\ kGdSpellLineAuraEndurance}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00110}00110\ \textcolor{comment}{//\ kGdSpellLineAuraFastFighting}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00111}00111\ \textcolor{comment}{//\ kGdSpellLineAuraFlexibility}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00112}00112\ \textcolor{comment}{//\ kGdSpellLineAuraFastWalking}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00113}00113\ \textcolor{comment}{//\ kGdSpellLineAuraDexterity}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00114}00114\ \textcolor{comment}{//\ kGdSpellLineAuraBrilliance}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00115}\mbox{\hyperlink{sf__ai__spell__handlers_8cpp_ad6ea78e722f190ba61dd629772710d26}{00115}}\ uint32\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__ai__spell__handlers_8cpp_ad6ea78e722f190ba61dd629772710d26}{defensive\_aura\_ai\_handler}}(\mbox{\hyperlink{sf__ai__functions_8h_afa0b3dda911f5160951038e1311f754c}{SF\_CGdBattleDevelopment}}\ *\_this,\ uint16\_t\ target\_index,\ uint16\_t\ spell\_line,\ \mbox{\hyperlink{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}{SF\_CGdResourceSpell}}\ *spell\_data)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00116}00116\ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00117}00117\ \ \ \ \ uint32\_t\ rank\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00118}00118\ \ \ \ \ \textcolor{keywordflow}{if}\ (\_this-\/>battleData.current\_figure\ ==\ target\_index)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00119}00119\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00120}00120\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((\_this-\/>battleData.enemy\_figures.entityCount\ ==\ 0)\ ||\ (\_this-\/>battleData.ally\_figures.entityCount\ ==\ 0))}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00121}00121\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00123}00123\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00124}00124\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00125}00125\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ manacost\ =\ (spell\_data-\/>mana\_cost\ *\ 3)\ /\ 2;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{_test_mod_8cpp_a721b8129088d90091730781611ecee94}{figureAPI}}.getCurrentMana(\_this-\/>battleData.CGdFigure,\ target\_index)\ <\ manacost)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00131}00131\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00132}00132\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00133}00133\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00134}00134\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00135}00135\ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00136}00136\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00137}00137\ \ \ \ \ \textcolor{keywordflow}{return}\ rank;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00138}00138\ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00139}00139\ }
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00140}00140\ \textcolor{comment}{//\ Regeneration\ and\ Healing}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00141}\mbox{\hyperlink{sf__ai__spell__handlers_8cpp_aec61efec9239e7dbad0d4c6f1d9e46f3}{00141}}\ uint32\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__ai__spell__handlers_8cpp_aec61efec9239e7dbad0d4c6f1d9e46f3}{healing\_aura\_ai\_handler}}(\mbox{\hyperlink{sf__ai__functions_8h_afa0b3dda911f5160951038e1311f754c}{SF\_CGdBattleDevelopment}}\ *\_this,\ uint16\_t\ target\_index,\ uint16\_t\ spell\_line,\ \mbox{\hyperlink{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}{SF\_CGdResourceSpell}}\ *spell\_data)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00142}00142\ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00143}00143\ \ \ \ \ uint32\_t\ rank\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00144}00144\ \ \ \ \ \textcolor{keywordflow}{if}\ (\_this-\/>battleData.current\_figure\ ==\ target\_index)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00145}00145\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00146}00146\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((\_this-\/>battleData.enemy\_figures.entityCount\ ==\ 0)\ ||\ (\_this-\/>battleData.ally\_figures.entityCount\ ==\ 0))}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00147}00147\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00149}00149\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00150}00150\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00151}00151\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\_this-\/>battleData.figures\_missing\_hp\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ manacost\ =\ (spell\_data-\/>mana\_cost\ *\ 3)\ /\ 2;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{_test_mod_8cpp_a721b8129088d90091730781611ecee94}{figureAPI}}.getCurrentMana(\_this-\/>battleData.CGdFigure,\ target\_index)\ <\ manacost)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00164}00164\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00165}00165\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00166}00166\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00167}00167\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00168}00168\ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00169}00169\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00170}00170\ \ \ \ \ \textcolor{keywordflow}{return}\ rank;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00171}00171\ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00172}00172\ }
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00173}\mbox{\hyperlink{sf__ai__spell__handlers_8cpp_afe934a437e40c5cccf34b333dfbe7127}{00173}}\ uint32\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__ai__spell__handlers_8cpp_afe934a437e40c5cccf34b333dfbe7127}{aura\_light\_ai\_handler}}(\mbox{\hyperlink{sf__ai__functions_8h_afa0b3dda911f5160951038e1311f754c}{SF\_CGdBattleDevelopment}}\ *\_this,\ uint16\_t\ target\_index,\ uint16\_t\ spell\_line,\ \mbox{\hyperlink{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}{SF\_CGdResourceSpell}}\ *spell\_data)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00174}00174\ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00175}00175\ \ \ \ \ uint32\_t\ rank\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00176}00176\ \ \ \ \ \textcolor{keywordflow}{if}\ (\_this-\/>battleData.current\_figure\ ==\ target\_index)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00177}00177\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00178}00178\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\_this-\/>battleData.enemy\_figures.entityCount\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00179}00179\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00181}00181\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00182}00182\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00183}00183\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Vanilla\ Bug\ Fix}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint16\_t\ i\ =\ 0;\ i\ <\ \_this-\/>battleData.enemy\_figures.entityCount;\ i++)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ enemy\_index\ =\ \_this-\/>battleData.enemy\_figures.data[i].entity\_index;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\_this-\/>battleData.CGdFigure-\/>figures[enemy\_index].flags\ \&\ \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a20af34269ed8856e12e156b8c01336a2}{UNDEAD}})}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rank\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (rank)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ manacost\ =\ (spell\_data-\/>mana\_cost\ *\ 3)\ /\ 2;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{_test_mod_8cpp_a721b8129088d90091730781611ecee94}{figureAPI}}.getCurrentMana(\_this-\/>battleData.CGdFigure,\ target\_index)\ <\ manacost)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00203}00203\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00204}00204\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00205}00205\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00206}00206\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00207}00207\ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00208}00208\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00209}00209\ \ \ \ \ \textcolor{keywordflow}{return}\ rank;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00210}00210\ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00211}00211\ }
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00212}00212\ \textcolor{comment}{//\ kGdSpellLineAbilityWarCry}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00213}00213\ \textcolor{comment}{//\ kGdSpellLineAbilityPatronize}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00214}00214\ \textcolor{comment}{//\ kGdSpellLineAbilityEndurance}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00215}\mbox{\hyperlink{sf__ai__spell__handlers_8cpp_a7bbb9f831a34ecde31e4ef2f38b3a669}{00215}}\ uint32\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__ai__spell__handlers_8cpp_a7bbb9f831a34ecde31e4ef2f38b3a669}{HCA\_ability\_ai\_handler}}(\mbox{\hyperlink{sf__ai__functions_8h_afa0b3dda911f5160951038e1311f754c}{SF\_CGdBattleDevelopment}}\ *\_this,\ uint16\_t\ target\_index,\ uint16\_t\ spell\_line,\ \mbox{\hyperlink{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}{SF\_CGdResourceSpell}}\ *spell\_data)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00216}00216\ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00217}00217\ \ \ \ \ uint32\_t\ rank\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00218}00218\ \ \ \ \ \textcolor{keywordflow}{if}\ ((\_this-\/>battleData.current\_figure\ !=\ target\_index)\ ||}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00219}00219\ \ \ \ \ \ \ \ \ (\_this-\/>battleData.ally\_figures.entityCount\ <\ 4)\ ||}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00220}00220\ \ \ \ \ \ \ \ \ (\_this-\/>battleData.enemy\_figures.entityCount\ ==\ 0))}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00221}00221\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00222}00222\ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00223}00223\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00224}00224\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00225}00225\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00226}00226\ \ \ \ \ \ \ \ \ uint8\_t\ figure\_count\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00227}00227\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint16\_t\ i\ =\ 0;\ i\ <\ \_this-\/>battleData.ally\_figures.entityCount;\ i++)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00228}00228\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ ally\_index\ =\ \_this-\/>battleData.ally\_figures.data[i].entity\_index;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((\mbox{\hyperlink{_test_mod_8cpp_a721b8129088d90091730781611ecee94}{figureAPI}}.isAlive(\_this-\/>battleData.CGdFigure,\ ally\_index))\ \&\&}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\mbox{\hyperlink{_test_mod_8cpp_a721b8129088d90091730781611ecee94}{figureAPI}}.isWarrior(\_this-\/>battleData.CGdFigure,\ ally\_index))\ \&\&}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (!\mbox{\hyperlink{_test_mod_8cpp_af5cc9e62d950cef0fc6386b8162d5cf0}{toolboxAPI}}.hasSpellOnIt(\_this-\/>battleData.CGdFigureToolBox,\ ally\_index,\ spell\_line)))}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ figure\_count++;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (figure\_count\ >\ 2)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00240}00240\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00241}00241\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (figure\_count\ <\ 3)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00242}00242\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00244}00244\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00245}00245\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00246}00246\ \ \ \ \ \textcolor{keywordflow}{return}\ rank;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00247}00247\ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00248}00248\ }
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00249}00249\ \textcolor{comment}{//\ kGdSpellLineAbilityShelter}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00250}00250\ \textcolor{comment}{//\ kGdSpellLineAbilityTrueShot}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00251}00251\ \textcolor{comment}{//\ kGdSpellLineAbilitySteelSkin}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00252}00252\ \textcolor{comment}{//\ kGdSpellLineAbilitySalvo}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00253}\mbox{\hyperlink{sf__ai__spell__handlers_8cpp_a1820c78933a00df1a942128e991142ad}{00253}}\ uint32\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__ai__spell__handlers_8cpp_a1820c78933a00df1a942128e991142ad}{RCA\_ability\_ai\_handler}}(\mbox{\hyperlink{sf__ai__functions_8h_afa0b3dda911f5160951038e1311f754c}{SF\_CGdBattleDevelopment}}\ *\_this,\ uint16\_t\ target\_index,\ uint16\_t\ spell\_line,\ \mbox{\hyperlink{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}{SF\_CGdResourceSpell}}\ *spell\_data)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00254}00254\ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00255}00255\ \ \ \ \ uint32\_t\ rank\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00256}00256\ \ \ \ \ \textcolor{keywordflow}{if}\ ((\_this-\/>battleData.current\_figure\ !=\ target\_index)\ ||}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00257}00257\ \ \ \ \ \ \ \ \ (\_this-\/>battleData.enemy\_figures.entityCount\ ==\ 0))}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00258}00258\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00259}00259\ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00260}00260\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00261}00261\ \ \ \ \ \textcolor{keywordflow}{return}\ rank;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00262}00262\ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00263}00263\ }
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00264}00264\ \textcolor{comment}{//\ kGdSpellLineAbilityDurability}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00265}00265\ \textcolor{comment}{//\ kGdSpellLineAbilityRiposte}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00266}\mbox{\hyperlink{sf__ai__spell__handlers_8cpp_a644e94494db384522f116597e3d73f4d}{00266}}\ uint32\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__ai__spell__handlers_8cpp_a644e94494db384522f116597e3d73f4d}{riposte\_ability\_ai\_handler}}(\mbox{\hyperlink{sf__ai__functions_8h_afa0b3dda911f5160951038e1311f754c}{SF\_CGdBattleDevelopment}}\ *\_this,\ uint16\_t\ target\_index,\ uint16\_t\ spell\_line,\ \mbox{\hyperlink{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}{SF\_CGdResourceSpell}}\ *spell\_data)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00267}00267\ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00268}00268\ \ \ \ \ uint32\_t\ rank\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00269}00269\ \ \ \ \ \textcolor{keywordflow}{if}\ ((\_this-\/>battleData.current\_figure\ !=\ target\_index)\ ||}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00270}00270\ \ \ \ \ \ \ \ \ (\_this-\/>battleData.enemy\_figures.entityCount\ ==\ 0))}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00271}00271\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00272}00272\ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00273}00273\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00274}00274\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00275}00275\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00276}00276\ \ \ \ \ \ \ \ \ uint16\_t\ current\_health\ =\ \mbox{\hyperlink{_test_mod_8cpp_a721b8129088d90091730781611ecee94}{figureAPI}}.getCurrentHealth(\_this-\/>battleData.CGdFigure,\ target\_index);}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00277}00277\ \ \ \ \ \ \ \ \ uint32\_t\ max\_health\ =\ \mbox{\hyperlink{_test_mod_8cpp_a721b8129088d90091730781611ecee94}{figureAPI}}.getCurrentMaxHealth(\_this-\/>battleData.CGdFigure,\ target\_index);}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00278}00278\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (max\_health\ !=\ 0)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00279}00279\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ percent\ =\ (current\_health\ /\ max\_health)\ *\ 100;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (percent\ >\ 80)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00282}00282\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00283}00283\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00284}00284\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00285}00285\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00286}00286\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00287}00287\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00288}00288\ \ \ \ \ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00289}00289\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00290}00290\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00291}00291\ \ \ \ \ \textcolor{keywordflow}{return}\ rank;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00292}00292\ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00293}00293\ }
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00294}00294\ \textcolor{comment}{//\ kGdSpellLineSummonGoblin}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00295}00295\ \textcolor{comment}{//\ kGdSpellLineSummonSkeleton}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00296}00296\ \textcolor{comment}{//\ kGdSpellLineSummonDemon}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00297}00297\ \textcolor{comment}{//\ kGdSpellLineSummonChanneler}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00298}00298\ \textcolor{comment}{//\ kGdSpellLineSummonSpectre}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00299}00299\ \textcolor{comment}{//\ kGdSpellLineSummonWolf}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00300}00300\ \textcolor{comment}{//\ kGdSpellLineSummonBear}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00301}00301\ \textcolor{comment}{//\ kGdSpellLineFireElemental}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00302}00302\ \textcolor{comment}{//\ kGdSpellLineIceElemental}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00303}00303\ \textcolor{comment}{//\ kGdSpellLineEarthElemental}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00304}00304\ \textcolor{comment}{//\ kGdSpellLineSummonTreeWraith}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00305}00305\ \textcolor{comment}{//\ kGdSpellLineSummonBlade}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00306}00306\ \textcolor{comment}{//\ kGdSpellLineSummonFireGolem}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00307}00307\ \textcolor{comment}{//\ kGdSpellLineSummonIceGolem}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00308}00308\ \textcolor{comment}{//\ kGdSpellLineSummonEarthGolem}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00309}00309\ \textcolor{comment}{//\ kGdSpellLineMirrorImage}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00310}\mbox{\hyperlink{sf__ai__spell__handlers_8cpp_a5eaf3ab07445126ecf2b27ef376c76f7}{00310}}\ uint32\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__ai__spell__handlers_8cpp_a5eaf3ab07445126ecf2b27ef376c76f7}{summon\_ai\_handler}}(\mbox{\hyperlink{sf__ai__functions_8h_afa0b3dda911f5160951038e1311f754c}{SF\_CGdBattleDevelopment}}\ *\_this,\ uint16\_t\ target\_index,\ uint16\_t\ spell\_line,\ \mbox{\hyperlink{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}{SF\_CGdResourceSpell}}\ *spell\_data)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00311}00311\ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00312}00312\ \ \ \ \ uint32\_t\ rank\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00313}00313\ \ \ \ \ \textcolor{keywordflow}{if}\ ((\_this-\/>battleData.current\_figure\ !=\ target\_index)\ ||}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00314}00314\ \ \ \ \ \ \ \ \ (\_this-\/>battleData.enemy\_figures.entityCount\ ==\ 0))}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00315}00315\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00316}00316\ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00317}00317\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00318}00318\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00319}00319\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00320}00320\ \ \ \ \ \ \ \ \ uint16\_t\ manacost\ =\ (spell\_data-\/>mana\_cost\ *\ 3)\ /\ 2;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00321}00321\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{_test_mod_8cpp_a721b8129088d90091730781611ecee94}{figureAPI}}.getCurrentMana(\_this-\/>battleData.CGdFigure,\ target\_index)\ <\ manacost)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00322}00322\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00323}00323\ \ \ \ \ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00324}00324\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00325}00325\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00326}00326\ \ \ \ \ \textcolor{keywordflow}{return}\ rank;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00327}00327\ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00328}00328\ }
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00329}00329\ \textcolor{comment}{//\ kGdSpellLineDistract}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00330}00330\ \textcolor{comment}{//\ kGdSpellLineShockwave}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00331}00331\ \textcolor{comment}{//\ kGdSpellLineWaveOfFire}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00332}00332\ \textcolor{comment}{//\ kGdSpellLineWaveOfIce}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00333}00333\ \textcolor{comment}{//\ kGdSpellLineWaveOfRocks}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00334}\mbox{\hyperlink{sf__ai__spell__handlers_8cpp_ac1b455af3edc08d0572699c7d196dc12}{00334}}\ uint32\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__ai__spell__handlers_8cpp_ac1b455af3edc08d0572699c7d196dc12}{wave\_ai\_handler}}(\mbox{\hyperlink{sf__ai__functions_8h_afa0b3dda911f5160951038e1311f754c}{SF\_CGdBattleDevelopment}}\ *\_this,\ uint16\_t\ target\_index,\ uint16\_t\ spell\_line,\ \mbox{\hyperlink{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}{SF\_CGdResourceSpell}}\ *spell\_data)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00335}00335\ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00336}00336\ \ \ \ \ uint32\_t\ rank\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00337}00337\ \ \ \ \ \textcolor{keywordflow}{if}\ ((\_this-\/>battleData.current\_figure\ !=\ target\_index)\ ||}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00338}00338\ \ \ \ \ \ \ \ \ (\_this-\/>battleData.enemy\_figures.entityCount\ ==\ 0))}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00339}00339\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00340}00340\ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00341}00341\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00342}00342\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00343}00343\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00344}00344\ \ \ \ \ \ \ \ \ uint8\_t\ figure\_count\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00345}00345\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint16\_t\ i\ =\ 0;\ i\ <\ \_this-\/>battleData.enemy\_figures.entityCount;\ i++)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00346}00346\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00347}00347\ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ enemy\_index\ =\ \_this-\/>battleData.enemy\_figures.data[i].entity\_index;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00348}00348\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{_test_mod_8cpp_a721b8129088d90091730781611ecee94}{figureAPI}}.isAlive(\_this-\/>battleData.CGdFigure,\ enemy\_index))}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00349}00349\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00350}00350\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aa44e45471f7b6c436abe46e7d9d728c9}{SF\_Coord}}\ enemy\_pos\ =\ \_this-\/>battleData.CGdFigure-\/>figures[enemy\_index].position;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00351}00351\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aa44e45471f7b6c436abe46e7d9d728c9}{SF\_Coord}}\ caster\_pos\ =\ \_this-\/>battleData.current\_figure\_pos;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00352}00352\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{sf__wrappers_8c_a3c287532656896e928bad09d4e9565e4}{getDistance}}(\&enemy\_pos,\ \&caster\_pos)\ <\ 10)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00353}00353\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00354}00354\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ figure\_count++;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00355}00355\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00356}00356\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00357}00357\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (figure\_count\ >\ 2)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00358}00358\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00359}00359\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00360}00360\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00361}00361\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00362}00362\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (figure\_count\ <\ 2)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00363}00363\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00364}00364\ \ \ \ \ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00365}00365\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00366}00366\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00367}00367\ \ \ \ \ \textcolor{keywordflow}{return}\ rank;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00368}00368\ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00369}00369\ }
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00370}\mbox{\hyperlink{sf__ai__spell__handlers_8cpp_a0aaba47babe954a48dceeaeb17cf8260}{00370}}\ uint32\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__ai__spell__handlers_8cpp_a0aaba47babe954a48dceeaeb17cf8260}{berserk\_ai\_handler}}(\mbox{\hyperlink{sf__ai__functions_8h_afa0b3dda911f5160951038e1311f754c}{SF\_CGdBattleDevelopment}}\ *\_this,\ uint16\_t\ target\_index,\ uint16\_t\ spell\_line,\ \mbox{\hyperlink{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}{SF\_CGdResourceSpell}}\ *spell\_data)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00371}00371\ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00372}00372\ \ \ \ \ uint32\_t\ rank\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00373}00373\ \ \ \ \ \textcolor{keywordflow}{if}\ ((\_this-\/>battleData.current\_figure\ !=\ target\_index)\ ||}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00374}00374\ \ \ \ \ \ \ \ \ (\_this-\/>battleData.enemy\_figures.entityCount\ ==\ 0))}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00375}00375\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00376}00376\ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00377}00377\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00378}00378\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00379}00379\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00380}00380\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Berserk\ level\ 101\ is\ special\ case\ for\ trolls}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00381}00381\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (spell\_data-\/>skill\_requirements[2]\ >\ 100)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00382}00382\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00383}00383\ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ current\_health\ =\ \mbox{\hyperlink{_test_mod_8cpp_a721b8129088d90091730781611ecee94}{figureAPI}}.getCurrentHealth(\_this-\/>battleData.CGdFigure,\ target\_index);}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00384}00384\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ max\_health\ =\ \mbox{\hyperlink{_test_mod_8cpp_a721b8129088d90091730781611ecee94}{figureAPI}}.getCurrentMaxHealth(\_this-\/>battleData.CGdFigure,\ target\_index);}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00385}00385\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (max\_health\ !=\ 0)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00386}00386\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00387}00387\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ percent\ =\ (current\_health\ /\ max\_health)\ *\ 100;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00388}00388\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (percent\ >\ 25)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00389}00389\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00390}00390\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00391}00391\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00392}00392\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00393}00393\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00394}00394\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00395}00395\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00396}00396\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00397}00397\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00398}00398\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00399}00399\ \ \ \ \ \textcolor{keywordflow}{return}\ rank;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00400}00400\ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00401}00401\ }
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00402}\mbox{\hyperlink{sf__ai__spell__handlers_8cpp_ae1ce0cf6aa078fc9b94a743173e773f4}{00402}}\ uint32\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__ai__spell__handlers_8cpp_ae1ce0cf6aa078fc9b94a743173e773f4}{blessing\_ai\_handler}}(\mbox{\hyperlink{sf__ai__functions_8h_afa0b3dda911f5160951038e1311f754c}{SF\_CGdBattleDevelopment}}\ *\_this,\ uint16\_t\ target\_index,\ uint16\_t\ spell\_line,\ \mbox{\hyperlink{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}{SF\_CGdResourceSpell}}\ *spell\_data)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00403}00403\ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00404}00404\ \ \ \ \ uint32\_t\ rank\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00405}00405\ \ \ \ \ \textcolor{keywordflow}{if}\ ((\_this-\/>battleData.current\_figure\ !=\ target\_index)\ ||}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00406}00406\ \ \ \ \ \ \ \ \ (\_this-\/>battleData.enemy\_figures.entityCount\ ==\ 0))}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00407}00407\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00408}00408\ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00409}00409\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00410}00410\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00411}00411\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00412}00412\ \ \ \ \ \ \ \ \ uint16\_t\ current\_health\ =\ \mbox{\hyperlink{_test_mod_8cpp_a721b8129088d90091730781611ecee94}{figureAPI}}.getCurrentHealth(\_this-\/>battleData.CGdFigure,\ target\_index);}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00413}00413\ \ \ \ \ \ \ \ \ uint32\_t\ max\_health\ =\ \mbox{\hyperlink{_test_mod_8cpp_a721b8129088d90091730781611ecee94}{figureAPI}}.getCurrentMaxHealth(\_this-\/>battleData.CGdFigure,\ target\_index);}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00414}00414\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (max\_health\ !=\ 0)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00415}00415\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00416}00416\ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ percent\ =\ (current\_health\ /\ max\_health)\ *\ 100;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00417}00417\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (percent\ >\ (100\ -\/\ spell\_data-\/>params[0]))}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00418}00418\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00419}00419\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00420}00420\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00421}00421\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00422}00422\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00423}00423\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00424}00424\ \ \ \ \ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00425}00425\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00426}00426\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00427}00427\ \ \ \ \ \textcolor{keywordflow}{return}\ rank;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00428}00428\ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00429}00429\ }
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00430}\mbox{\hyperlink{sf__ai__spell__handlers_8cpp_af18dc2c40d25d727afca6d769824100b}{00430}}\ uint32\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__ai__spell__handlers_8cpp_af18dc2c40d25d727afca6d769824100b}{benefactions\_ai\_handler}}(\mbox{\hyperlink{sf__ai__functions_8h_afa0b3dda911f5160951038e1311f754c}{SF\_CGdBattleDevelopment}}\ *\_this,\ uint16\_t\ target\_index,\ uint16\_t\ spell\_line,\ \mbox{\hyperlink{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}{SF\_CGdResourceSpell}}\ *spell\_data)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00431}00431\ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00432}00432\ \ \ \ \ uint32\_t\ rank\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00433}00433\ \ \ \ \ \textcolor{keywordflow}{if}\ ((\_this-\/>battleData.current\_figure\ !=\ target\_index)\ ||}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00434}00434\ \ \ \ \ \ \ \ \ (\_this-\/>battleData.enemy\_figures.entityCount\ ==\ 0)\ ||}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00435}00435\ \ \ \ \ \ \ \ \ (\_this-\/>battleData.ally\_figures.entityCount\ <\ 4)\ ||}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00436}00436\ \ \ \ \ \ \ \ \ (\_this-\/>battleData.figures\_missing\_hp\ ==\ 0))}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00437}00437\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00438}00438\ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00439}00439\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00440}00440\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00441}00441\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00442}00442\ \ \ \ \ \ \ \ \ uint16\_t\ figures\_count\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00443}00443\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint16\_t\ i\ =\ 0;\ i\ <\ \_this-\/>battleData.ally\_figures.entityCount;\ i++)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00444}00444\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00445}00445\ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ ally\_index\ =\ \_this-\/>battleData.ally\_figures.data[i].entity\_index;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00446}00446\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{_test_mod_8cpp_a721b8129088d90091730781611ecee94}{figureAPI}}.isAlive(\_this-\/>battleData.CGdFigure,\ ally\_index))}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00447}00447\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00448}00448\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{_test_mod_8cpp_af5cc9e62d950cef0fc6386b8162d5cf0}{toolboxAPI}}.hasSpellOnIt(\_this-\/>battleData.CGdFigureToolBox,\ ally\_index,\ spell\_line))}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00449}00449\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00450}00450\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{_test_mod_8cpp_a721b8129088d90091730781611ecee94}{figureAPI}}.isWarrior(\_this-\/>battleData.CGdFigure,\ ally\_index))}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00451}00451\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00452}00452\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ current\_health\ =\ \mbox{\hyperlink{_test_mod_8cpp_a721b8129088d90091730781611ecee94}{figureAPI}}.getCurrentHealth(\_this-\/>battleData.CGdFigure,\ ally\_index);}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00453}00453\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ max\_health\ =\ \mbox{\hyperlink{_test_mod_8cpp_a721b8129088d90091730781611ecee94}{figureAPI}}.getCurrentMaxHealth(\_this-\/>battleData.CGdFigure,\ ally\_index);}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00454}00454\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (max\_health\ !=\ 0)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00455}00455\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00456}00456\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ percent\ =\ (current\_health\ /\ max\_health)\ *\ 100;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00457}00457\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (percent\ <\ (100\ -\/\ spell\_data-\/>params[0]))}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00458}00458\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00459}00459\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ figures\_count++;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00460}00460\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00461}00461\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00462}00462\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00463}00463\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00464}00464\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00465}00465\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00466}00466\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00467}00467\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00468}00468\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00469}00469\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00470}00470\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00471}00471\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (figures\_count\ <\ 3)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00472}00472\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00473}00473\ \ \ \ \ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00474}00474\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00475}00475\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00476}00476\ \ \ \ \ \textcolor{keywordflow}{return}\ rank;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00477}00477\ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00478}00478\ }
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00479}\mbox{\hyperlink{sf__ai__spell__handlers_8cpp_a4b84d9ed0c014775ff4cc1210e78a808}{00479}}\ uint32\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__ai__spell__handlers_8cpp_a4b84d9ed0c014775ff4cc1210e78a808}{shift\_life\_ai\_handler}}(\mbox{\hyperlink{sf__ai__functions_8h_afa0b3dda911f5160951038e1311f754c}{SF\_CGdBattleDevelopment}}\ *\_this,\ uint16\_t\ target\_index,\ uint16\_t\ spell\_line,\ \mbox{\hyperlink{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}{SF\_CGdResourceSpell}}\ *spell\_data)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00480}00480\ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00481}00481\ \ \ \ \ uint32\_t\ rank\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00482}00482\ \ \ \ \ \textcolor{keywordflow}{if}\ ((\_this-\/>battleData.current\_figure\ !=\ target\_index)\ ||}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00483}00483\ \ \ \ \ \ \ \ \ (\_this-\/>battleData.enemy\_figures.entityCount\ ==\ 0)\ ||}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00484}00484\ \ \ \ \ \ \ \ \ (\_this-\/>battleData.ally\_figures.entityCount\ ==\ 0))}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00485}00485\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00486}00486\ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00487}00487\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00488}00488\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00489}00489\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00490}00490\ \ \ \ \ \ \ \ \ uint16\_t\ current\_health\ =\ \mbox{\hyperlink{_test_mod_8cpp_a721b8129088d90091730781611ecee94}{figureAPI}}.getCurrentHealth(\_this-\/>battleData.CGdFigure,\ target\_index);}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00491}00491\ \ \ \ \ \ \ \ \ uint32\_t\ max\_health\ =\ \mbox{\hyperlink{_test_mod_8cpp_a721b8129088d90091730781611ecee94}{figureAPI}}.getCurrentMaxHealth(\_this-\/>battleData.CGdFigure,\ target\_index);}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00492}00492\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (max\_health\ !=\ 0)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00493}00493\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00494}00494\ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ percent\ =\ (current\_health\ /\ max\_health)\ *\ 100;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00495}00495\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ hardcode\ value\ is\ 75\%\ gamedata\ value\ is\ 50\%,\ i\ go\ with\ gamedata\ value}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00496}00496\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (percent\ >\ (100\ -\/\ spell\_data-\/>params[1]))}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00497}00497\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00498}00498\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00499}00499\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00500}00500\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00501}00501\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00502}00502\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00503}00503\ \ \ \ \ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00504}00504\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00505}00505\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00506}00506\ \ \ \ \ \textcolor{keywordflow}{return}\ rank;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00507}00507\ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00508}00508\ }
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00509}00509\ \textcolor{comment}{//\ kGdSpellLineProtectionBlack}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00510}00510\ \textcolor{comment}{//\ kGdSpellLineFakeSpellOneFigure}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00511}\mbox{\hyperlink{sf__ai__spell__handlers_8cpp_a391d5e663f1afb5ec582a3fd5b0d4ce0}{00511}}\ uint32\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__ai__spell__handlers_8cpp_a391d5e663f1afb5ec582a3fd5b0d4ce0}{do\_not\_cast\_ai\_handler}}(\mbox{\hyperlink{sf__ai__functions_8h_afa0b3dda911f5160951038e1311f754c}{SF\_CGdBattleDevelopment}}\ *\_this,\ uint16\_t\ target\_index,\ uint16\_t\ spell\_line,\ \mbox{\hyperlink{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}{SF\_CGdResourceSpell}}\ *spell\_data)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00512}00512\ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00513}00513\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00514}00514\ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00515}00515\ }
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00516}\mbox{\hyperlink{sf__ai__spell__handlers_8cpp_a670e49978bafcef2dbba766a87079ce5}{00516}}\ uint32\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__ai__spell__handlers_8cpp_a670e49978bafcef2dbba766a87079ce5}{default\_support\_ai\_handler}}(\mbox{\hyperlink{sf__ai__functions_8h_afa0b3dda911f5160951038e1311f754c}{SF\_CGdBattleDevelopment}}\ *\_this,\ uint16\_t\ target\_index,\ uint16\_t\ spell\_line,\ \mbox{\hyperlink{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}{SF\_CGdResourceSpell}}\ *spell\_data)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00517}00517\ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00518}00518\ \ \ \ \ \textcolor{keywordflow}{return}\ 2;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00519}00519\ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00520}00520\ }
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00521}00521\ \textcolor{comment}{//Weird\ shit,\ might\ need\ fix?}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00522}\mbox{\hyperlink{sf__ai__spell__handlers_8cpp_a763a0bd54cb6874e061cd747e391ab3a}{00522}}\ uint32\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__ai__spell__handlers_8cpp_a763a0bd54cb6874e061cd747e391ab3a}{sacrifice\_mana\_ai\_handler}}(\mbox{\hyperlink{sf__ai__functions_8h_afa0b3dda911f5160951038e1311f754c}{SF\_CGdBattleDevelopment}}\ *\_this,\ uint16\_t\ target\_index,\ uint16\_t\ spell\_line,\ \mbox{\hyperlink{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}{SF\_CGdResourceSpell}}\ *spell\_data)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00523}00523\ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00524}00524\ \ \ \ \ uint32\_t\ rank\ =\ 5;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00525}00525\ \ \ \ \ uint16\_t\ current\_mana\ =\ \mbox{\hyperlink{_test_mod_8cpp_a721b8129088d90091730781611ecee94}{figureAPI}}.getCurrentMana(\_this-\/>battleData.CGdFigure,\ \_this-\/>battleData.current\_figure);}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00526}00526\ \ \ \ \ uint16\_t\ max\_mana\ =\ \mbox{\hyperlink{_test_mod_8cpp_a721b8129088d90091730781611ecee94}{figureAPI}}.getCurrentMaxMana(\_this-\/>battleData.CGdFigure,\ \_this-\/>battleData.current\_figure);}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00527}00527\ \ \ \ \ uint16\_t\ current\_health\ =\ \mbox{\hyperlink{_test_mod_8cpp_a721b8129088d90091730781611ecee94}{figureAPI}}.getCurrentHealth(\_this-\/>battleData.CGdFigure,\ target\_index);}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00528}00528\ \ \ \ \ uint16\_t\ max\_health\ =\ \mbox{\hyperlink{_test_mod_8cpp_a721b8129088d90091730781611ecee94}{figureAPI}}.getCurrentMaxHealth(\_this-\/>battleData.CGdFigure,\ target\_index);}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00529}00529\ \ \ \ \ \textcolor{keywordflow}{if}\ ((max\_mana\ /\ 2\ <\ current\_mana)\ \&\&\ (current\_health\ <\ max\_health))}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00530}00530\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00531}00531\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (current\_health\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00532}00532\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00533}00533\ \ \ \ \ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00534}00534\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00535}00535\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00536}00536\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00537}00537\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (max\_health\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00538}00538\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00539}00539\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00540}00540\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00541}00541\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00542}00542\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00543}00543\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rank\ =\ (current\_health\ *\ 2\ -\/\ max\_health)\ /\ (max\_health\ *\ max\_health);}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00544}00544\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00545}00545\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00546}00546\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00547}00547\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00548}00548\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00549}00549\ \ \ \ \ \ \ \ \ rank\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00550}00550\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00551}00551\ \ \ \ \ \textcolor{keywordflow}{return}\ rank;}
+\DoxyCodeLine{\Hypertarget{sf__ai__spell__handlers_8cpp_source_l00552}00552\ \}}
+
+\end{DoxyCode}

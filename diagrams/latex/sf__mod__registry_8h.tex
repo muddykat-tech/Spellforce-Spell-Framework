@@ -1,0 +1,85 @@
+\doxysection{src/internal/registry/sf\+\_\+mod\+\_\+registry.h File Reference}
+\hypertarget{sf__mod__registry_8h}{}\label{sf__mod__registry_8h}\index{src/internal/registry/sf\_mod\_registry.h@{src/internal/registry/sf\_mod\_registry.h}}
+{\ttfamily \#include "{}../../api/sfsf.\+h"{}}\newline
+{\ttfamily \#include "{}../core/sf\+\_\+modloader.\+h"{}}\newline
+{\ttfamily \#include "{}../core/sf\+\_\+wrappers.\+h"{}}\newline
+{\ttfamily \#include "{}../core/sf\+\_\+hooks.\+h"{}}\newline
+{\ttfamily \#include $<$list$>$}\newline
+Include dependency graph for sf\+\_\+mod\+\_\+registry.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__mod__registry_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__mod__registry_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{sf__mod__registry_8h_ab760f8f899f39400156538bbd0c21c68}{register\+\_\+mod\+\_\+spells}} ()
+\item 
+uint16\+\_\+t \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__mod__registry_8h_af3ffd25a39d8cd3e76880a062109e619}{get\+Spell\+Tags}} (uint16\+\_\+t spell\+\_\+line\+\_\+id)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+std\+::list$<$ \mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{sf__mod__registry_8h_a938a112888fa66ca03ebb37f831d7b84}{g\+\_\+internal\+\_\+spell\+\_\+list}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{sf__mod__registry_8h_af3ffd25a39d8cd3e76880a062109e619}\index{sf\_mod\_registry.h@{sf\_mod\_registry.h}!getSpellTags@{getSpellTags}}
+\index{getSpellTags@{getSpellTags}!sf\_mod\_registry.h@{sf\_mod\_registry.h}}
+\doxysubsubsection{\texorpdfstring{getSpellTags()}{getSpellTags()}}
+{\footnotesize\ttfamily \label{sf__mod__registry_8h_af3ffd25a39d8cd3e76880a062109e619} 
+uint16\+\_\+t \+\_\+\+\_\+thiscall get\+Spell\+Tags (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{spell\+\_\+line\+\_\+id}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__mod__registry_8cpp_source_l00088}{88}} of file \mbox{\hyperlink{sf__mod__registry_8cpp_source}{sf\+\_\+mod\+\_\+registry.\+cpp}}.
+
+\Hypertarget{sf__mod__registry_8h_ab760f8f899f39400156538bbd0c21c68}\index{sf\_mod\_registry.h@{sf\_mod\_registry.h}!register\_mod\_spells@{register\_mod\_spells}}
+\index{register\_mod\_spells@{register\_mod\_spells}!sf\_mod\_registry.h@{sf\_mod\_registry.h}}
+\doxysubsubsection{\texorpdfstring{register\_mod\_spells()}{register\_mod\_spells()}}
+{\footnotesize\ttfamily \label{sf__mod__registry_8h_ab760f8f899f39400156538bbd0c21c68} 
+void register\+\_\+mod\+\_\+spells (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [extern]}}
+
+Registers the mod spells and performs basic conflict checking.
+
+This function iterates over the g\+\_\+internal\+\_\+spell\+\_\+list and registers each spell by adding it to the spell\+\_\+id\+\_\+map and spell\+\_\+effect\+\_\+id\+\_\+map. It checks for conflicts by checking if the spell\+\_\+id or spell\+\_\+effect\+\_\+id is already registered by another mod. If a conflict is detected, an error message is logged. If no conflict is detected, the spell is added to the respective map.
+
+Additionally, it registers the spell type handler, spell effect handler, and spell end handler if the SFSpell struct has a non-\/null handler pointer.
+
+After registering all the spells, the memory allocated for each spell is freed. 
+
+Definition at line \mbox{\hyperlink{sf__mod__registry_8cpp_source_l00114}{114}} of file \mbox{\hyperlink{sf__mod__registry_8cpp_source}{sf\+\_\+mod\+\_\+registry.\+cpp}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__mod__registry_8h_ab760f8f899f39400156538bbd0c21c68_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{sf__mod__registry_8h_a938a112888fa66ca03ebb37f831d7b84}\index{sf\_mod\_registry.h@{sf\_mod\_registry.h}!g\_internal\_spell\_list@{g\_internal\_spell\_list}}
+\index{g\_internal\_spell\_list@{g\_internal\_spell\_list}!sf\_mod\_registry.h@{sf\_mod\_registry.h}}
+\doxysubsubsection{\texorpdfstring{g\_internal\_spell\_list}{g\_internal\_spell\_list}}
+{\footnotesize\ttfamily \label{sf__mod__registry_8h_a938a112888fa66ca03ebb37f831d7b84} 
+std\+::list$<$\mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}} \texorpdfstring{$\ast$}{*}$>$ g\+\_\+internal\+\_\+spell\+\_\+list\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Definition at line \mbox{\hyperlink{sf__mod__registry_8cpp_source_l00021}{21}} of file \mbox{\hyperlink{sf__mod__registry_8cpp_source}{sf\+\_\+mod\+\_\+registry.\+cpp}}.
+

@@ -5,12 +5,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Spellforce-Spell-Framework: src/internal/core/sf_hooks.c File Reference</title>
+<title>Spellforce-Spell-framework: src/internal/core/sf_hooks.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
@@ -25,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Spellforce-Spell-Framework
+   <div id="projectname">Spellforce-Spell-framework
    </div>
   </td>
  </tr>
@@ -49,17 +51,29 @@ $(function() { codefold.init(0); });
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
-  initMenu('',true,false,'search.php','Search',false);
+  initMenu('',true,false,'search.php','Search',true);
   $(function() { init_search(); });
 });
 /* @license-end */
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){ initResizable(false); });
+$(function(){initNavTree('sf__hooks_8c.html',''); initResizable(true); });
 /* @license-end */
 </script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -81,12 +95,6 @@ $(function(){ initResizable(false); });
 </div>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_3756d50f4003bc63fa3fe49460f9c79d.html">internal</a></li><li class="navelem"><a class="el" href="dir_fc391693c5b997f1c609080ef9ece185.html">core</a></li>  </ul>
-</div>
-</div><!-- top -->
-<div id="doc-content">
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions</a> &#124;
@@ -98,7 +106,7 @@ $(function(){ initResizable(false); });
 <code>#include &quot;<a class="el" href="sf__modloader_8h_source.html">sf_modloader.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="sf__hooks_8h_source.html">sf_hooks.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="sf__spelltype__handlers_8h_source.html">../handlers/sf_spelltype_handlers.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="sf__spelltype__registry_8h_source.html">../registry/sf_spelltype_registry.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="sf__spelltype__registry_8h_source.html">../registry/spell_data_registries/sf_spelltype_registry.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="sf__mod__registry_8h_source.html">../registry/sf_mod_registry.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="sf__refresh__hook_8h_source.html">hooks/sf_refresh_hook.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="sf__endspell__hook_8h_source.html">hooks/sf_endspell_hook.h</a>&quot;</code><br />
@@ -117,6 +125,125 @@ $(function(){ initResizable(false); });
 Include dependency graph for sf_hooks.c:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__hooks_8c__incl.png" border="0" usemap="#asrc_2internal_2core_2sf__hooks_8c" alt=""/></div>
+<map name="asrc_2internal_2core_2sf__hooks_8c" id="asrc_2internal_2core_2sf__hooks_8c">
+<area shape="rect" title=" " alt="" coords="1097,5,1226,48"/>
+<area shape="rect" href="sf__wrappers_8h.html" title=" " alt="" coords="648,203,752,229"/>
+<area shape="poly" title=" " alt="" coords="1097,50,954,98,836,150,739,198,736,193,833,146,952,94,1096,44"/>
+<area shape="rect" title=" " alt="" coords="573,592,638,619"/>
+<area shape="poly" title=" " alt="" coords="1096,30,951,32,751,41,523,62,407,78,294,99,242,106,191,110,99,117,62,126,33,144,23,156,15,172,10,191,8,215,8,457,12,476,25,494,46,510,73,525,143,549,229,568,321,581,411,591,558,600,557,605,411,596,320,587,228,573,142,554,71,530,43,515,21,498,8,479,3,458,3,215,4,190,10,170,18,153,30,140,60,121,98,111,191,104,242,101,293,93,406,73,523,57,751,36,951,27,1096,25"/>
+<area shape="rect" href="sf__modloader_8h.html" title=" " alt="" coords="402,203,512,229"/>
+<area shape="poly" title=" " alt="" coords="1096,34,978,42,835,55,699,74,644,85,604,98,567,118,533,143,480,193,476,189,529,139,564,114,602,94,643,80,698,69,834,50,977,37,1096,29"/>
+<area shape="rect" href="sf__hooks_8h.html" title=" " alt="" coords="776,203,861,229"/>
+<area shape="poly" title=" " alt="" coords="1125,51,856,197,854,193,1123,46"/>
+<area shape="rect" href="sf__spelltype__handlers_8h.html" title=" " alt="" coords="222,195,378,237"/>
+<area shape="poly" title=" " alt="" coords="1096,30,987,33,846,42,689,63,609,79,533,99,481,117,430,141,345,189,342,184,427,136,479,112,531,93,608,73,688,58,845,37,987,27,1096,25"/>
+<area shape="rect" href="sf__spelltype__registry_8h.html" title=" " alt="" coords="42,187,198,245"/>
+<area shape="poly" title=" " alt="" coords="1096,31,971,34,805,44,617,64,521,79,429,99,366,116,303,137,194,182,192,177,301,132,364,111,427,93,520,74,616,59,804,39,971,29,1096,25"/>
+<area shape="rect" href="sf__mod__registry_8h.html" title=" " alt="" coords="614,96,738,139"/>
+<area shape="poly" title=" " alt="" coords="1097,42,753,105,752,99,1096,37"/>
+<area shape="rect" href="sf__refresh__hook_8h.html" title=" " alt="" coords="1062,203,1226,229"/>
+<area shape="poly" title=" " alt="" coords="1157,49,1145,96,1143,144,1144,187,1139,187,1137,144,1140,96,1152,48"/>
+<area shape="rect" href="sf__endspell__hook_8h.html" title=" " alt="" coords="1250,203,1422,229"/>
+<area shape="poly" title=" " alt="" coords="1165,48,1173,92,1182,116,1195,137,1214,155,1235,171,1280,194,1278,199,1232,176,1210,160,1191,140,1177,118,1168,93,1160,49"/>
+<area shape="rect" href="sf__menu__hook_8h.html" title=" " alt="" coords="1446,203,1602,229"/>
+<area shape="poly" title=" " alt="" coords="1173,47,1202,93,1222,117,1245,136,1294,161,1335,169,1380,173,1435,184,1472,195,1470,200,1434,189,1379,179,1335,175,1292,166,1243,141,1218,120,1197,96,1169,50"/>
+<area shape="rect" href="sf__spelleffect__hook_8h.html" title=" " alt="" coords="1626,195,1763,237"/>
+<area shape="poly" title=" " alt="" coords="1187,46,1296,136,1341,154,1381,163,1452,169,1524,170,1567,174,1615,184,1626,187,1625,192,1614,189,1566,180,1524,176,1451,174,1380,169,1340,159,1293,141,1183,50"/>
+<area shape="rect" href="sf__subeffect__hook_8h.html" title=" " alt="" coords="1788,195,1919,237"/>
+<area shape="poly" title=" " alt="" coords="1205,46,1290,94,1317,117,1329,127,1346,136,1408,157,1462,167,1511,171,1557,170,1655,168,1711,172,1777,184,1788,187,1787,192,1775,189,1711,178,1655,173,1558,175,1511,176,1461,172,1407,162,1344,141,1326,132,1314,121,1286,98,1202,51"/>
+<area shape="rect" href="sf__damage__hook_8h.html" title=" " alt="" coords="1943,203,2113,229"/>
+<area shape="poly" title=" " alt="" coords="1226,46,1281,67,1337,94,1355,106,1367,117,1379,127,1397,136,1474,160,1541,172,1602,176,1659,175,1780,170,1850,173,1931,184,1977,195,1975,200,1930,189,1849,178,1780,175,1659,180,1602,181,1541,178,1473,165,1395,141,1376,132,1364,121,1352,110,1335,98,1279,72,1224,51"/>
+<area shape="rect" href="sf__spelltype__hook_8h.html" title=" " alt="" coords="2138,195,2268,237"/>
+<area shape="poly" title=" " alt="" coords="1227,40,1305,61,1387,94,1405,105,1417,117,1430,127,1448,136,1546,164,1632,177,1709,179,1782,174,1856,168,1935,164,2023,168,2126,184,2138,187,2137,192,2125,189,2023,173,1935,170,1856,173,1782,180,1709,184,1631,182,1545,170,1446,141,1427,132,1414,121,1401,109,1384,98,1303,67,1226,45"/>
+<area shape="rect" href="sf__console__hook_8h.html" title=" " alt="" coords="2291,203,2461,229"/>
+<area shape="poly" title=" " alt="" coords="1227,34,1327,55,1383,72,1436,94,1453,105,1464,116,1475,127,1492,136,1565,154,1659,165,1767,170,1882,172,2107,172,2203,176,2280,184,2326,195,2325,200,2280,189,2203,181,2107,178,1882,177,1767,175,1659,170,1564,160,1490,141,1472,131,1460,120,1449,109,1433,98,1381,77,1326,60,1226,39"/>
+<area shape="rect" href="sf__onhit__hook_8h.html" title=" " alt="" coords="885,203,1038,229"/>
+<area shape="poly" title=" " alt="" coords="1141,50,988,194,984,190,1138,46"/>
+<area shape="rect" title=" " alt="" coords="1503,104,1566,131"/>
+<area shape="poly" title=" " alt="" coords="1227,36,1348,59,1485,93,1492,96,1491,101,1483,99,1346,64,1226,41"/>
+<area shape="rect" title=" " alt="" coords="1590,104,1650,131"/>
+<area shape="poly" title=" " alt="" coords="1227,30,1389,50,1485,68,1579,93,1584,95,1582,100,1578,99,1484,74,1388,55,1226,35"/>
+<area shape="rect" title=" " alt="" coords="1674,104,1739,131"/>
+<area shape="poly" title=" " alt="" coords="1226,28,1314,34,1424,46,1544,65,1663,93,1669,95,1667,100,1662,99,1543,71,1423,52,1314,40,1226,33"/>
+<area shape="rect" href="sfsf_8h.html" title=" " alt="" coords="868,293,967,320"/>
+<area shape="poly" title=" " alt="" coords="729,227,765,243,871,285,869,290,763,248,727,232"/>
+<area shape="rect" href="sf__asi_8h.html" title=" " alt="" coords="1468,293,1580,320"/>
+<area shape="poly" title=" " alt="" coords="725,227,765,243,824,254,903,264,1096,281,1452,300,1452,305,1095,286,903,270,824,259,763,248,723,232"/>
+<area shape="rect" href="sf__general__structures_8h.html" title=" " alt="" coords="663,517,820,544"/>
+<area shape="poly" title=" " alt="" coords="868,319,814,333,754,357,726,373,700,393,678,417,661,444,659,462,667,479,682,494,702,507,699,512,679,498,662,482,653,463,656,442,674,413,697,389,723,369,752,352,812,328,866,313"/>
+<area shape="poly" title=" " alt="" coords="868,312,715,320,518,342,420,359,333,381,264,410,239,426,221,444,209,465,205,484,208,500,218,515,234,529,255,541,309,562,373,577,441,588,558,599,557,604,440,593,372,582,308,567,253,546,231,533,214,519,203,502,200,484,204,463,217,441,236,422,262,405,332,376,419,354,517,336,715,315,867,307"/>
+<area shape="rect" href="sf__figure__functions_8h.html" title=" " alt="" coords="1082,443,1224,469"/>
+<area shape="poly" title=" " alt="" coords="939,318,1122,432,1119,437,936,323"/>
+<area shape="rect" href="sf__iterator__functions_8h.html" title=" " alt="" coords="1249,443,1399,469"/>
+<area shape="poly" title=" " alt="" coords="953,318,1276,434,1274,439,951,323"/>
+<area shape="rect" href="sf__spell__functions_8h.html" title=" " alt="" coords="231,443,369,469"/>
+<area shape="poly" title=" " alt="" coords="868,317,735,338,577,371,454,405,350,440,348,435,452,400,575,365,734,333,867,312"/>
+<area shape="rect" href="sf__effect__functions_8h.html" title=" " alt="" coords="670,443,812,469"/>
+<area shape="poly" title=" " alt="" coords="868,321,820,339,797,353,777,370,758,398,748,429,743,427,754,396,773,366,794,349,818,335,866,316"/>
+<area shape="rect" href="sf__toolbox__functions_8h.html" title=" " alt="" coords="393,443,546,469"/>
+<area shape="poly" title=" " alt="" coords="868,318,762,337,701,352,641,370,566,403,504,437,501,432,564,398,639,366,699,347,761,332,867,312"/>
+<area shape="rect" href="sf__registration__functions_8h.html" title=" " alt="" coords="786,368,960,395"/>
+<area shape="poly" title=" " alt="" coords="912,322,891,356,887,353,907,319"/>
+<area shape="rect" href="sf__ai__functions_8h.html" title=" " alt="" coords="937,443,1058,469"/>
+<area shape="poly" title=" " alt="" coords="934,319,955,340,974,367,987,397,995,427,990,428,982,399,970,369,951,343,930,322"/>
+<area shape="poly" title=" " alt="" coords="719,547,644,587,641,582,716,542"/>
+<area shape="rect" title=" " alt="" coords="1015,592,1089,619"/>
+<area shape="poly" title=" " alt="" coords="796,542,1000,589,999,594,795,547"/>
+<area shape="poly" title=" " alt="" coords="1082,473,829,517,828,511,1081,467"/>
+<area shape="poly" title=" " alt="" coords="1131,472,1053,509,954,547,872,567,790,583,654,602,653,597,789,578,871,562,953,541,1051,504,1128,468"/>
+<area shape="poly" title=" " alt="" coords="1147,471,1071,581,1067,578,1142,468"/>
+<area shape="poly" title=" " alt="" coords="1249,470,1236,472,836,521,835,516,1236,467,1248,465"/>
+<area shape="poly" title=" " alt="" coords="1285,473,1162,509,1009,547,812,581,653,601,653,596,811,576,1007,541,1161,503,1283,467"/>
+<area shape="poly" title=" " alt="" coords="1314,472,1276,508,1223,546,1163,574,1105,593,1103,588,1161,569,1220,542,1272,504,1311,468"/>
+<area shape="poly" title=" " alt="" coords="369,466,649,512,648,517,369,471"/>
+<area shape="poly" title=" " alt="" coords="327,467,567,583,565,587,325,472"/>
+<area shape="poly" title=" " alt="" coords="335,467,443,504,579,541,696,563,813,579,1000,598,999,603,812,585,695,568,578,547,441,509,333,472"/>
+<area shape="poly" title=" " alt="" coords="744,470,744,502,739,502,739,470"/>
+<area shape="poly" title=" " alt="" coords="517,467,680,510,678,515,516,472"/>
+<area shape="poly" title=" " alt="" coords="483,468,585,579,581,582,479,472"/>
+<area shape="poly" title=" " alt="" coords="492,468,561,505,605,525,651,541,746,565,842,582,1000,598,999,604,841,587,745,570,650,547,603,530,559,510,489,472"/>
+<area shape="poly" title=" " alt="" coords="871,396,853,431,826,471,803,493,778,511,775,507,799,489,822,468,849,429,866,394"/>
+<area shape="poly" title=" " alt="" coords="877,395,876,426,872,466,859,509,848,528,834,546,814,562,792,576,745,594,696,604,653,607,653,602,695,598,743,589,790,571,811,558,830,542,844,525,854,506,866,465,871,425,871,395"/>
+<area shape="poly" title=" " alt="" coords="961,383,1088,391,1229,402,1349,418,1390,429,1412,441,1426,460,1432,478,1429,495,1421,510,1406,524,1387,537,1338,557,1279,574,1217,587,1105,602,1104,597,1216,581,1278,569,1336,552,1385,532,1403,520,1417,507,1424,493,1426,479,1421,462,1409,445,1388,434,1348,424,1229,407,1088,396,961,389"/>
+<area shape="poly" title=" " alt="" coords="852,398,779,437,776,433,849,393"/>
+<area shape="poly" title=" " alt="" coords="953,472,801,515,800,510,952,467"/>
+<area shape="poly" title=" " alt="" coords="992,471,964,509,944,529,920,546,851,576,779,594,710,603,653,607,653,601,709,598,778,589,849,571,917,542,940,525,960,505,988,468"/>
+<area shape="poly" title=" " alt="" coords="1004,469,1045,576,1040,578,999,471"/>
+<area shape="rect" title=" " alt="" coords="1482,368,1566,395"/>
+<area shape="poly" title=" " alt="" coords="1527,321,1527,352,1521,352,1521,321"/>
+<area shape="poly" title=" " alt="" coords="487,227,531,243,617,262,704,278,852,297,852,302,703,283,616,268,530,248,485,232"/>
+<area shape="poly" title=" " alt="" coords="835,228,894,281,890,285,831,232"/>
+<area shape="poly" title=" " alt="" coords="840,227,874,243,923,254,989,264,1149,280,1453,300,1452,305,1148,285,988,269,922,259,872,248,838,232"/>
+<area shape="poly" title=" " alt="" coords="362,235,391,243,518,265,645,281,852,299,852,304,645,287,517,270,390,248,360,240"/>
+<area shape="poly" title=" " alt="" coords="329,236,467,336,652,467,711,506,708,511,649,472,464,341,326,240"/>
+<area shape="poly" title=" " alt="" coords="303,238,303,427,297,427,297,238"/>
+<area shape="poly" title=" " alt="" coords="199,240,210,243,391,271,571,289,731,298,852,302,852,307,731,303,571,294,390,276,209,248,198,246"/>
+<area shape="poly" title=" " alt="" coords="126,245,132,307,135,380,135,457,141,489,157,509,182,525,214,542,242,553,280,562,374,579,558,598,557,603,373,584,279,568,241,558,212,546,180,530,153,513,136,491,129,458,129,380,126,307,121,246"/>
+<area shape="poly" title=" " alt="" coords="684,138,696,187,691,188,679,140"/>
+<area shape="poly" title=" " alt="" coords="628,141,599,161,577,188,566,217,568,230,577,244,594,257,621,269,693,286,776,296,852,301,852,306,776,301,693,291,619,274,592,262,573,247,563,232,561,217,572,185,596,157,625,137"/>
+<area shape="poly" title=" " alt="" coords="630,142,501,198,499,194,628,137"/>
+<area shape="poly" title=" " alt="" coords="708,137,789,191,786,196,705,141"/>
+<area shape="rect" title=" " alt="" coords="586,203,625,229"/>
+<area shape="poly" title=" " alt="" coords="663,141,625,192,621,189,659,137"/>
+<area shape="poly" title=" " alt="" coords="1112,232,965,290,963,285,1111,227"/>
+<area shape="poly" title=" " alt="" coords="1184,227,1238,243,1453,290,1452,295,1237,248,1183,232"/>
+<area shape="poly" title=" " alt="" coords="1296,232,1239,248,1102,277,983,298,982,292,1101,271,1238,243,1295,227"/>
+<area shape="poly" title=" " alt="" coords="1364,228,1485,284,1482,289,1362,232"/>
+<area shape="poly" title=" " alt="" coords="1490,232,1435,248,1311,270,1186,287,983,304,982,299,1185,281,1310,265,1434,243,1488,227"/>
+<area shape="poly" title=" " alt="" coords="1527,230,1527,278,1521,278,1521,230"/>
+<area shape="poly" title=" " alt="" coords="1643,240,1615,248,1437,278,1260,296,1102,305,983,308,982,302,1101,299,1259,290,1437,273,1614,243,1641,235"/>
+<area shape="poly" title=" " alt="" coords="1656,240,1563,288,1561,283,1653,236"/>
+<area shape="poly" title=" " alt="" coords="1803,240,1777,248,1706,259,1613,270,1387,287,983,306,982,300,1387,281,1612,264,1705,254,1775,243,1802,235"/>
+<area shape="poly" title=" " alt="" coords="1799,241,1777,248,1683,273,1596,293,1594,288,1681,268,1775,243,1798,235"/>
+<area shape="poly" title=" " alt="" coords="1992,233,1931,248,1845,259,1733,269,1461,286,983,306,982,301,1460,281,1732,264,1845,254,1930,243,1991,227"/>
+<area shape="poly" title=" " alt="" coords="1989,233,1931,248,1751,280,1596,300,1595,295,1750,275,1930,243,1988,227"/>
+<area shape="poly" title=" " alt="" coords="2153,240,2126,248,2054,257,1933,265,1600,282,983,306,983,301,1600,277,1932,260,2053,251,2125,243,2152,235"/>
+<area shape="poly" title=" " alt="" coords="2152,241,2126,248,1980,275,1833,292,1700,302,1596,307,1596,301,1700,297,1833,287,1979,269,2125,243,2150,235"/>
+<area shape="poly" title=" " alt="" coords="2341,232,2280,248,2198,256,2059,265,1678,282,983,306,982,301,1678,277,2059,260,2198,251,2280,243,2340,227"/>
+<area shape="poly" title=" " alt="" coords="2340,232,2281,248,2088,276,1895,294,1725,303,1596,307,1596,302,1725,298,1895,288,2087,271,2279,243,2339,227"/>
+<area shape="poly" title=" " alt="" coords="957,231,933,280,928,278,953,229"/>
+<area shape="poly" title=" " alt="" coords="997,227,1050,243,1159,263,1269,279,1453,298,1452,303,1268,284,1158,269,1049,248,995,233"/>
+</map>
 </div>
 </div>
 <p><a href="sf__hooks_8c_source.html">Go to the source code of this file.</a></p>
@@ -140,6 +267,8 @@ Variables</h2></td></tr>
 <tr class="separator:ae5424c0f69d85cabda2866498e788521"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a764358640400f5367f96608b5794f0c2" id="r_a764358640400f5367f96608b5794f0c2"><td class="memItemLeft" align="right" valign="top">IteratorFunctions&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a764358640400f5367f96608b5794f0c2">iteratorAPI</a></td></tr>
 <tr class="separator:a764358640400f5367f96608b5794f0c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f46704f751d2e936794090d969bfb63" id="r_a9f46704f751d2e936794090d969bfb63"><td class="memItemLeft" align="right" valign="top">AiFunctions&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9f46704f751d2e936794090d969bfb63">aiAPI</a></td></tr>
+<tr class="separator:a9f46704f751d2e936794090d969bfb63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae864f2c7237380a404ae0b972f87d36f" id="r_ae864f2c7237380a404ae0b972f87d36f"><td class="memItemLeft" align="right" valign="top">RegistrationFunctions&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae864f2c7237380a404ae0b972f87d36f">registrationAPI</a></td></tr>
 <tr class="separator:ae864f2c7237380a404ae0b972f87d36f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -159,16 +288,22 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__hooks_8c_source.html#l00237">237</a> of file <a class="el" href="sf__hooks_8c_source.html">sf_hooks.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__hooks_8c_source.html#l00259">259</a> of file <a class="el" href="sf__hooks_8c_source.html">sf_hooks.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__hooks_8c_a68518887ac30bef0798064a5ea87b1f5_cgraph.png" border="0" usemap="#asf__hooks_8c_a68518887ac30bef0798064a5ea87b1f5_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__hooks_8c_a68518887ac30bef0798064a5ea87b1f5_icgraph.png" border="0" usemap="#asf__hooks_8c_a68518887ac30bef0798064a5ea87b1f5_icgraph" alt=""/></div>
+<map name="asf__hooks_8c_a68518887ac30bef0798064a5ea87b1f5_cgraph" id="asf__hooks_8c_a68518887ac30bef0798064a5ea87b1f5_cgraph">
+<area shape="rect" title=" " alt="" coords="5,31,148,57"/>
+<area shape="rect" href="sf__wrappers_8c.html#a4fd90de0913ed15b0812918255559a55" title=" " alt="" coords="196,31,262,57"/>
+<area shape="poly" title=" " alt="" coords="148,41,180,41,180,47,148,47"/>
+<area shape="rect" href="sf__console__hook_8c.html#af6b694e632c7b92e802468161b511edf" title=" " alt="" coords="310,31,400,57"/>
+<area shape="poly" title=" " alt="" coords="263,41,294,41,294,47,263,47"/>
+<area shape="rect" href="namespace_a_s_i.html#a05ca5acefdcb7e955f472b60e5511a1a" title="returns &quot;real&quot; virtual address of given memory offset" alt="" coords="451,5,544,32"/>
+<area shape="poly" title=" " alt="" coords="400,33,436,27,437,32,401,39"/>
+<area shape="rect" href="sf__wrappers_8c.html#ac5c95c4eeefbc3d135cafe996908b639" title=" " alt="" coords="448,56,547,83"/>
+<area shape="poly" title=" " alt="" coords="401,49,433,55,432,60,400,55"/>
+</map>
 </div>
 
 </div>
@@ -188,21 +323,111 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__hooks_8c_source.html#l00030">30</a> of file <a class="el" href="sf__hooks_8c_source.html">sf_hooks.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__hooks_8c_source.html#l00031">31</a> of file <a class="el" href="sf__hooks_8c_source.html">sf_hooks.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__hooks_8c_a053468e9037e13eede0757a9c0dc4f90_cgraph.png" border="0" usemap="#asf__hooks_8c_a053468e9037e13eede0757a9c0dc4f90_cgraph" alt=""/></div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__hooks_8c_a053468e9037e13eede0757a9c0dc4f90_icgraph.png" border="0" usemap="#asf__hooks_8c_a053468e9037e13eede0757a9c0dc4f90_icgraph" alt=""/></div>
+<map name="asf__hooks_8c_a053468e9037e13eede0757a9c0dc4f90_cgraph" id="asf__hooks_8c_a053468e9037e13eede0757a9c0dc4f90_cgraph">
+<area shape="rect" title=" " alt="" coords="5,724,148,751"/>
+<area shape="rect" href="sf__wrappers_8c.html#a07c7f2ab4e0212797ec2d05125bbf0e7" title=" " alt="" coords="406,252,572,279"/>
+<area shape="poly" title=" " alt="" coords="77,723,89,636,113,506,129,439,148,378,169,329,194,296,215,280,239,268,289,253,341,247,391,248,391,253,342,252,290,258,241,273,218,285,198,299,174,331,153,380,134,441,118,507,94,637,82,724"/>
+<area shape="rect" href="sf__mod__registry_8cpp.html#a4afdf02d3c8eeffbfbe125fa3464be67" title=" " alt="" coords="226,572,328,599"/>
+<area shape="poly" title=" " alt="" coords="85,722,128,668,159,636,194,609,210,600,213,605,197,613,162,640,132,671,89,726"/>
+<area shape="rect" href="sf__wrappers_8c.html#a11ea3542304632f3b7ae9807ba5cf394" title=" " alt="" coords="205,623,348,650"/>
+<area shape="poly" title=" " alt="" coords="95,721,139,691,194,659,209,653,211,658,197,664,142,695,98,726"/>
+<area shape="rect" href="sf__mod__registry_8cpp.html#af3ffd25a39d8cd3e76880a062109e619" title=" " alt="" coords="229,674,325,700"/>
+<area shape="poly" title=" " alt="" coords="132,721,213,700,214,705,133,726"/>
+<area shape="rect" href="sf__wrappers_8c.html#aad92c6ec5283b3732feeefd0d62ab629" title=" " alt="" coords="231,724,323,751"/>
+<area shape="poly" title=" " alt="" coords="148,735,215,735,215,740,148,740"/>
+<area shape="rect" href="sf__console__hook_8c.html#ad95110eea0d834055b5fc04eb031e45b" title=" " alt="" coords="804,404,924,447"/>
+<area shape="poly" title=" " alt="" coords="76,723,84,672,103,600,118,562,138,525,163,491,194,463,241,442,306,427,384,418,470,412,644,412,789,418,788,423,644,417,470,418,384,423,307,432,243,447,197,468,167,495,142,528,123,564,108,602,89,673,82,724"/>
+<area shape="rect" href="sf__menu__hook_8c.html#a8076488696ac2dd10539d2908d8dd408" title=" " alt="" coords="980,460,1119,503"/>
+<area shape="poly" title=" " alt="" coords="78,723,90,683,112,628,146,571,168,545,194,523,233,500,268,485,301,477,333,474,402,478,488,482,686,482,964,480,964,485,686,487,488,487,402,483,333,480,301,483,269,490,235,505,197,528,172,549,151,574,117,630,95,684,84,725"/>
+<area shape="rect" href="sf__onhit__hook_8c.html#aab9fd18e448dfed4d72a3d8d9507bcc8" title=" " alt="" coords="797,522,932,564"/>
+<area shape="poly" title=" " alt="" coords="80,723,93,687,116,641,150,595,171,574,194,558,242,541,306,529,383,523,467,521,638,524,782,533,781,539,638,530,467,526,383,528,307,534,243,546,197,563,174,578,154,598,121,644,98,690,85,725"/>
+<area shape="rect" href="sf__spelltype__hook_8c.html#a1bc35d41762c3fcc7495cf54585283aa" title=" " alt="" coords="986,287,1113,330"/>
+<area shape="poly" title=" " alt="" coords="75,724,78,659,93,563,107,510,128,458,157,410,194,369,230,341,264,323,296,313,329,308,400,310,488,314,686,314,970,308,970,314,686,319,488,319,400,315,330,314,297,318,266,328,233,346,197,373,161,413,133,461,112,512,98,564,83,659,80,724"/>
+<area shape="rect" href="sf__wrappers_8c.html#ad057ef7976901ef0ba76e8b78eb53898" title=" " alt="" coords="428,354,550,396"/>
+<area shape="poly" title=" " alt="" coords="76,724,80,665,97,580,112,534,133,489,160,448,194,413,219,396,245,383,303,368,361,362,413,363,413,368,361,367,304,373,247,388,221,401,197,417,164,451,137,492,117,536,102,582,86,666,81,724"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3" title=" " alt="" coords="214,775,340,802"/>
+<area shape="poly" title=" " alt="" coords="133,749,207,768,206,773,132,754"/>
+<area shape="rect" href="sf__mod__registry_8cpp.html#a3dc1674ebcd56a898d2a52729d9bdea1" title=" " alt="" coords="196,826,358,852"/>
+<area shape="poly" title=" " alt="" coords="98,749,142,780,197,811,211,817,209,822,194,816,139,784,95,754"/>
+<area shape="rect" href="sf__mod__registry_8cpp.html#a963e6fcecd10433218b3925f0e2d39a9" title=" " alt="" coords="217,876,337,903"/>
+<area shape="poly" title=" " alt="" coords="89,750,132,804,162,835,197,862,206,867,204,872,194,866,159,839,128,808,85,753"/>
+<area shape="rect" href="sf__mod__registry_8cpp.html#a29b2de8f5f9ec3ced0c15db03d7817b6" title=" " alt="" coords="222,927,332,954"/>
+<area shape="poly" title=" " alt="" coords="86,750,100,783,124,827,157,873,197,913,209,920,206,925,194,917,153,877,120,830,96,786,81,753"/>
+<area shape="rect" href="sf__mod__registry_8cpp.html#a7cf1ceca8456636a9ace972847017e72" title=" " alt="" coords="217,978,337,1004"/>
+<area shape="poly" title=" " alt="" coords="84,750,95,792,118,849,151,911,173,939,197,964,204,969,201,973,194,968,169,942,147,914,113,852,90,794,78,752"/>
+<area shape="rect" href="sf__mod__registry_8cpp.html#a8751386410676c0a282ab668879c19f4" title=" " alt="" coords="211,1028,343,1055"/>
+<area shape="poly" title=" " alt="" coords="82,751,91,801,111,872,127,910,146,948,169,983,198,1014,202,1018,198,1022,194,1018,165,987,141,951,122,912,106,873,86,802,77,752"/>
+<area shape="rect" href="sf__mod__registry_8cpp.html#ae355b11ac572b3ae505c4d088e1c21e8" title=" " alt="" coords="205,1079,348,1106"/>
+<area shape="poly" title=" " alt="" coords="81,751,88,809,105,893,120,939,140,985,166,1028,198,1065,201,1068,198,1072,194,1069,161,1031,135,987,115,941,100,894,82,809,76,752"/>
+<area shape="rect" href="sf__mod__registry_8cpp.html#a5eb74dc38db9aa0f7f858687cb5951e8" title=" " alt="" coords="220,1130,334,1156"/>
+<area shape="poly" title=" " alt="" coords="80,751,84,816,99,914,114,968,134,1021,162,1072,198,1116,208,1124,204,1128,194,1119,158,1075,130,1024,109,969,94,915,79,817,75,751"/>
+<area shape="rect" href="sf__wrappers_8c.html#a4fd90de0913ed15b0812918255559a55" title=" " alt="" coords="831,104,898,131"/>
+<area shape="poly" title=" " alt="" coords="76,724,86,611,107,436,123,343,143,258,166,187,179,159,194,137,254,77,284,54,314,36,377,12,441,3,510,6,583,18,749,58,793,73,831,94,829,98,791,78,748,63,582,24,510,12,442,9,378,17,317,41,287,58,257,81,198,141,184,161,171,189,148,259,128,344,113,436,91,612,81,724"/>
+<area shape="rect" href="sf__mod__registry_8cpp.html#ae507705c327c357e28eae53d52ad0638" title=" " alt="" coords="230,1180,324,1207"/>
+<area shape="poly" title=" " alt="" coords="80,751,81,824,85,876,94,935,108,997,129,1058,158,1116,198,1166,217,1180,214,1184,194,1170,154,1118,124,1060,103,998,88,936,80,877,75,824,75,751"/>
+<area shape="rect" href="sf__wrappers_8c.html#a6242a2f91bf97824c8c2eca28e2b2256" title=" " alt="" coords="212,1231,342,1258"/>
+<area shape="poly" title=" " alt="" coords="82,751,94,844,118,985,134,1058,153,1125,174,1180,198,1217,201,1220,197,1224,194,1221,169,1182,148,1127,129,1059,113,986,89,845,77,752"/>
+<area shape="rect" href="sf__wrappers_8c.html#ad7e79f06e19f919ffb1ea67493886ff8" title=" " alt="" coords="223,1282,331,1308"/>
+<area shape="poly" title=" " alt="" coords="82,751,93,853,115,1008,131,1090,150,1165,172,1226,198,1268,210,1278,207,1282,194,1271,168,1229,145,1166,126,1091,110,1009,87,853,76,752"/>
+<area shape="rect" href="sf__refresh__hook_8c.html#ad1c59c07883c319b2e33cb35737b4e97" title=" " alt="" coords="220,151,334,178"/>
+<area shape="poly" title=" " alt="" coords="76,724,87,619,109,459,125,374,144,296,167,232,180,207,194,188,204,179,207,183,198,191,184,210,172,234,149,298,130,375,114,459,92,620,82,724"/>
+<area shape="rect" href="sf__spelltype__hook_8c.html#ab55b7421576dfd7ea00096b427741d9b" title=" " alt="" coords="214,202,340,228"/>
+<area shape="poly" title=" " alt="" coords="77,724,89,630,114,487,130,412,149,343,170,285,194,245,206,234,209,238,198,249,175,287,154,344,135,413,119,488,95,630,82,724"/>
+<area shape="rect" href="sf__wrappers_8c.html#ab97dc11635deb183cfe8b9dc8b2fc064" title=" " alt="" coords="207,1332,347,1359"/>
+<area shape="poly" title=" " alt="" coords="81,751,91,861,112,1032,128,1122,147,1204,171,1273,184,1299,198,1319,200,1321,196,1325,194,1322,179,1302,166,1275,142,1206,123,1123,107,1033,86,861,76,751"/>
+<area shape="rect" href="sf__wrappers_8c.html#a825433b084e07dce191049d45ecdde2a" title=" " alt="" coords="639,218,730,244"/>
+<area shape="poly" title=" " alt="" coords="567,249,624,239,625,244,568,254"/>
+<area shape="rect" href="sf__console__hook_8c.html#af6b694e632c7b92e802468161b511edf" title=" " alt="" coords="1004,218,1095,244"/>
+<area shape="poly" title=" " alt="" coords="730,228,989,228,989,234,730,234"/>
+<area shape="rect" href="namespace_a_s_i.html#a05ca5acefdcb7e955f472b60e5511a1a" title="returns &quot;real&quot; virtual address of given memory offset" alt="" coords="1170,379,1263,406"/>
+<area shape="poly" title=" " alt="" coords="1078,242,1121,273,1165,320,1199,364,1195,368,1161,323,1118,277,1075,247"/>
+<area shape="rect" href="sf__wrappers_8c.html#ac5c95c4eeefbc3d135cafe996908b639" title=" " alt="" coords="1167,218,1266,244"/>
+<area shape="poly" title=" " alt="" coords="1095,228,1151,228,1151,234,1095,234"/>
+<area shape="poly" title=" " alt="" coords="925,417,1155,395,1155,401,925,423"/>
+<area shape="poly" title=" " alt="" coords="1090,457,1175,411,1178,416,1092,462"/>
+<area shape="poly" title=" " alt="" coords="932,547,976,547,1024,542,1073,532,1118,513,1145,493,1168,468,1200,418,1205,421,1172,472,1148,497,1121,517,1074,537,1025,547,976,552,932,552"/>
+<area shape="poly" title=" " alt="" coords="1095,328,1176,369,1173,374,1092,332"/>
+<area shape="poly" title=" " alt="" coords="550,374,1119,387,1155,388,1155,393,1119,392,550,379"/>
+<area shape="poly" title=" " alt="" coords="889,129,1015,207,1012,212,887,134"/>
+<area shape="poly" title=" " alt="" coords="293,148,341,115,372,98,405,86,500,66,576,63,652,72,749,86,817,100,816,106,748,91,652,77,576,69,501,71,407,91,374,103,344,119,296,153"/>
+<area shape="rect" href="sf__spellrefresh__registry_8cpp.html#af136a234eef8a48e76be83c9a457c054" title=" " alt="" coords="429,151,549,178"/>
+<area shape="poly" title=" " alt="" coords="334,162,413,162,413,167,334,167"/>
+<area shape="poly" title=" " alt="" coords="532,176,630,210,628,215,530,181"/>
+<area shape="rect" href="sf__spellrefresh__handlers_8cpp.html#a587baa6487811f3281106202e088ab57" title=" " alt="" coords="620,151,749,194"/>
+<area shape="poly" title=" " alt="" coords="550,164,605,166,605,172,550,169"/>
+<area shape="poly" title=" " alt="" coords="749,150,816,129,817,134,750,155"/>
+<area shape="poly" title=" " alt="" coords="341,215,624,226,623,231,340,220"/>
+<area shape="rect" href="sf__spelltype__registry_8cpp.html#af0733a266ae6b4cb44943b9e9a3a0dfa" title=" " alt="" coords="428,100,550,127"/>
+<area shape="poly" title=" " alt="" coords="334,199,357,187,371,175,380,163,389,150,404,137,415,131,417,136,408,141,393,153,384,166,375,179,359,192,336,203"/>
+<area shape="rect" href="sf__spelltype__handlers_8cpp.html#a732de9d69a3456d8ff4b46dcd27ffee3" title=" " alt="" coords="630,100,739,127"/>
+<area shape="poly" title=" " alt="" coords="551,111,615,111,615,116,551,116"/>
+</map>
 </div>
 
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
+<a id="a9f46704f751d2e936794090d969bfb63" name="a9f46704f751d2e936794090d969bfb63"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f46704f751d2e936794090d969bfb63">&#9670;&#160;</a></span>aiAPI</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">AiFunctions aiAPI</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__hooks_8c_source.html#l00028">28</a> of file <a class="el" href="sf__hooks_8c_source.html">sf_hooks.c</a>.</p>
+
+</div>
+</div>
 <a id="a6223ae94a537c083aa89e5ad9033bb62" name="a6223ae94a537c083aa89e5ad9033bb62"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6223ae94a537c083aa89e5ad9033bb62">&#9670;&#160;</a></span>effectAPI</h2>
 
@@ -263,7 +488,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__hooks_8c_source.html#l00028">28</a> of file <a class="el" href="sf__hooks_8c_source.html">sf_hooks.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__hooks_8c_source.html#l00029">29</a> of file <a class="el" href="sf__hooks_8c_source.html">sf_hooks.c</a>.</p>
 
 </div>
 </div>
@@ -300,10 +525,13 @@ Here is the caller graph for this function:</div>
 </div>
 </div>
 </div><!-- contents -->
-<!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
-</small></address>
 </div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_3756d50f4003bc63fa3fe49460f9c79d.html">internal</a></li><li class="navelem"><a class="el" href="dir_fc391693c5b997f1c609080ef9ece185.html">core</a></li><li class="navelem"><a class="el" href="sf__hooks_8c.html">sf_hooks.c</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+  </ul>
+</div>
 </body>
 </html>

@@ -53,14 +53,12 @@ var searchData=
   ['getcurrentdex_50',['getCurrentDex',['../sf__onhit__hook_8c.html#a69d941158155931cc3f4f0289372b2c3',1,'sf_onhit_hook.c']]],
   ['getcurrentint_51',['getCurrentInt',['../sf__onhit__hook_8c.html#adbcaaa404231f4f989ce388bb454a830',1,'sf_onhit_hook.c']]],
   ['getdistance_52',['getDistance',['../sf__wrappers_8c.html#a3c287532656896e928bad09d4e9565e4',1,'getDistance(SF_Coord *pointA, SF_Coord *pointB):&#160;sf_wrappers.c'],['../sf__wrappers_8h.html#a3c287532656896e928bad09d4e9565e4',1,'getDistance(SF_Coord *pointA, SF_Coord *pointB):&#160;sf_wrappers.c']]],
-  ['getfigurefromworld_53',['getFigureFromWorld',['../sf__toolbox__functions_8h.html#a8f79e930f5b35d84d8a8e66cf2a7d679',1,'sf_toolbox_functions.h']]],
-  ['getnextnode_54',['getNextNode',['../sf__toolbox__functions_8h.html#a84cfb956f4408f315ce8f56304c3364c',1,'sf_toolbox_functions.h']]],
-  ['getspellindexfromdll_55',['getSpellIndexFromDLL',['../sf__toolbox__functions_8h.html#a1c8e53e50a3c1bc3f8e88e0414382374',1,'sf_toolbox_functions.h']]],
-  ['getspellindexoftype_56',['getSpellIndexOfType',['../sf__toolbox__functions_8h.html#a8d3e1f7edf95b0ac165e22d45216d6bf',1,'sf_toolbox_functions.h']]],
-  ['getspelltag_57',['getSpellTag',['../sf__mod__registry_8cpp.html#af4503f89adff0725f6795aedf7d95016',1,'getSpellTag(uint16_t spell_line_id):&#160;sf_mod_registry.cpp'],['../sf__mod__registry_8h.html#af4503f89adff0725f6795aedf7d95016',1,'getSpellTag(uint16_t spell_line_id):&#160;sf_mod_registry.cpp']]],
-  ['gettargetdata_58',['getTargetData',['../sf__onhit__hook_8c.html#affbf587ee967cb3013b7244bf2615832',1,'sf_onhit_hook.c']]],
-  ['getweaponeffects_5fptr_59',['getWeaponEffects_ptr',['../sf__onhit__hook_8c.html#a44458ce7f2b81338e0f6862f28bdab23',1,'sf_onhit_hook.c']]],
-  ['got_5faggro_60',['GOT_AGGRO',['../sf__general__structures_8h.html#ac82390a633ae8fc23e2141e25507f732a00c5df4fd13b9611fc6e746fff22ca59',1,'sf_general_structures.h']]],
-  ['guard_5fend_5fhandler_61',['guard_end_handler',['../sf__spellend__handlers_8h.html#ab0e46c234e93094634c597e3a613bccb',1,'sf_spellend_handlers.h']]],
-  ['guard_5fhandler_62',['guard_handler',['../sf__spelltype__handlers_8cpp.html#aa2101be351a8a8fe596cb4aa48cbd034',1,'guard_handler(SF_CGdSpell *_this, uint16_t spell_index):&#160;sf_spelltype_handlers.cpp'],['../sf__spelltype__handlers_8h.html#aa2101be351a8a8fe596cb4aa48cbd034',1,'guard_handler(SF_CGdSpell *_this, uint16_t spell_index):&#160;sf_spelltype_handlers.cpp']]]
+  ['geteuclideandistancefromring_53',['GetEuclideanDistanceFromRing',['../sf__ai__hook_8c.html#a8b05ede347b93b11df8a6d828d3f1776',1,'sf_ai_hook.c']]],
+  ['getsector_54',['getSector',['../sf__ai__hook_8c.html#ae8785a71043ac84c08d23c97623a4bdc',1,'sf_ai_hook.c']]],
+  ['getspelltags_55',['getSpellTags',['../sf__mod__registry_8cpp.html#af3ffd25a39d8cd3e76880a062109e619',1,'getSpellTags(uint16_t spell_line_id):&#160;sf_mod_registry.cpp'],['../sf__mod__registry_8h.html#af3ffd25a39d8cd3e76880a062109e619',1,'getSpellTags(uint16_t spell_line_id):&#160;sf_mod_registry.cpp']]],
+  ['gettargetdata_56',['getTargetData',['../sf__onhit__hook_8c.html#affbf587ee967cb3013b7244bf2615832',1,'sf_onhit_hook.c']]],
+  ['getweaponeffects_5fptr_57',['getWeaponEffects_ptr',['../sf__onhit__hook_8c.html#a44458ce7f2b81338e0f6862f28bdab23',1,'sf_onhit_hook.c']]],
+  ['got_5faggro_58',['GOT_AGGRO',['../sf__general__structures_8h.html#ac82390a633ae8fc23e2141e25507f732a00c5df4fd13b9611fc6e746fff22ca59',1,'sf_general_structures.h']]],
+  ['guard_5fend_5fhandler_59',['guard_end_handler',['../sf__spellend__handlers_8h.html#ab0e46c234e93094634c597e3a613bccb',1,'sf_spellend_handlers.h']]],
+  ['guard_5fhandler_60',['guard_handler',['../sf__spelltype__handlers_8cpp.html#aa2101be351a8a8fe596cb4aa48cbd034',1,'guard_handler(SF_CGdSpell *_this, uint16_t spell_index):&#160;sf_spelltype_handlers.cpp'],['../sf__spelltype__handlers_8h.html#aa2101be351a8a8fe596cb4aa48cbd034',1,'guard_handler(SF_CGdSpell *_this, uint16_t spell_index):&#160;sf_spelltype_handlers.cpp']]]
 ];

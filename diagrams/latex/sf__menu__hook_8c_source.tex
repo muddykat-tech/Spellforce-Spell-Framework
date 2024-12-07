@@ -1,0 +1,105 @@
+\doxysection{sf\+\_\+menu\+\_\+hook.\+c}
+\hypertarget{sf__menu__hook_8c_source}{}\label{sf__menu__hook_8c_source}\index{src/internal/core/hooks/sf\_menu\_hook.c@{src/internal/core/hooks/sf\_menu\_hook.c}}
+\mbox{\hyperlink{sf__menu__hook_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__wrappers_8h}{../sf\_wrappers.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00003}00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__menu__hook_8h}{sf\_menu\_hook.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__hooks_8h}{../sf\_hooks.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__modloader_8h}{../sf\_modloader.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__mod__registry_8h}{../../registry/sf\_mod\_registry.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00013}00013\ \textcolor{keyword}{static}\ \mbox{\hyperlink{sf__general__structures_8h_a834aa4e5d61d6ad1de3c5f5848abf932}{menu\_label\_ptr}}\ s\_initialize\_menu\_label;}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00014}00014\ \textcolor{keyword}{static}\ \mbox{\hyperlink{sf__general__structures_8h_abb19b1c51539a52b999170f114584722}{initialize\_menu\_container\_ptr}}\ s\_initialize\_menu\_container;}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00015}00015\ \textcolor{keyword}{static}\ \mbox{\hyperlink{sf__general__structures_8h_a3ce0902fdc64b610961f5fa408d452f7}{original\_menu\_func\_ptr}}\ s\_menu\_func;}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00016}00016\ \textcolor{keyword}{static}\ \mbox{\hyperlink{sf__general__structures_8h_a5b8c6c5f47cca11977c79654edd4fada}{construct\_default\_sf\_string\_ptr}}\ s\_construct\_default\_sf\_string;}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00017}00017\ \textcolor{keyword}{static}\ \mbox{\hyperlink{sf__general__structures_8h_a959316cdd55be021bfd0c8079cac8f4f}{message\_box\_ptr}}\ s\_show\_message\_box;}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00018}00018\ \textcolor{keyword}{static}\ \mbox{\hyperlink{sf__general__structures_8h_ab4a877cdf7704b29f7b1a09a459a4a98}{menu\_label\_set\_data\_ptr}}\ s\_menu\_label\_set\_color;}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00020}\mbox{\hyperlink{sf__menu__hook_8c_ae79507f29d3eaae4d5b5d50ff8310cff}{00020}}\ \mbox{\hyperlink{sf__general__structures_8h_abe77c012ba01b4cd2d108bb7e7ff3a4d}{container\_add\_control\_ptr}}\ \mbox{\hyperlink{sf__menu__hook_8c_ae79507f29d3eaae4d5b5d50ff8310cff}{g\_container\_add\_control}};}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00021}\mbox{\hyperlink{sf__menu__hook_8c_a0d0fb6aa3b1c95174db19a927a5f4222}{00021}}\ uint32\_t\ \mbox{\hyperlink{sf__menu__hook_8c_a0d0fb6aa3b1c95174db19a927a5f4222}{g\_menu\_return\_addr}};}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00022}\mbox{\hyperlink{sf__menu__hook_8c_a0b043e609b3677d7857e4d6880c09348}{00022}}\ \mbox{\hyperlink{sf__general__structures_8h_aa48f85cc726097517700b72afc013c87}{new\_operator\_ptr}}\ \mbox{\hyperlink{sf__menu__hook_8c_a0b043e609b3677d7857e4d6880c09348}{g\_new\_operator}};}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00023}\mbox{\hyperlink{sf__menu__hook_8c_ae584596f7d458fd747729f585462d155}{00023}}\ \mbox{\hyperlink{sf__general__structures_8h_a1ef3ef233abb55a4392db0aa82a654e0}{menu\_label\_constructor\_ptr}}\ \mbox{\hyperlink{sf__menu__hook_8c_ae584596f7d458fd747729f585462d155}{g\_menu\_label\_constructor}};}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00024}\mbox{\hyperlink{sf__menu__hook_8c_afa5a0b2bacbea79ede93d718f0b94931}{00024}}\ \mbox{\hyperlink{sf__general__structures_8h_acc2efadfffc955b944400b3006ab7344}{set\_label\_flags\_ptr}}\ \mbox{\hyperlink{sf__menu__hook_8c_afa5a0b2bacbea79ede93d718f0b94931}{g\_set\_label\_flags}};}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00025}\mbox{\hyperlink{sf__menu__hook_8c_ab8a55728fd019669310fdfd1e271537d}{00025}}\ \mbox{\hyperlink{sf__general__structures_8h_a9017afd3d59671398dcba18538b8b8fc}{mnu\_label\_init\_data\_ptr}}\ \mbox{\hyperlink{sf__menu__hook_8c_ab8a55728fd019669310fdfd1e271537d}{g\_init\_menu\_element}};}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00026}\mbox{\hyperlink{sf__menu__hook_8c_a0ed81a038f3a8c929795974fe61fde79}{00026}}\ \mbox{\hyperlink{sf__general__structures_8h_a59949b7d52615db72af6f2527029d21a}{get\_smth\_fonts\_ptr}}\ \mbox{\hyperlink{sf__menu__hook_8c_a0ed81a038f3a8c929795974fe61fde79}{g\_get\_smth\_fonts}};}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00027}\mbox{\hyperlink{sf__menu__hook_8c_a68788982d768827e7886efe8664457ed}{00027}}\ \mbox{\hyperlink{sf__general__structures_8h_a7818ce44011f5f2d723bfa87aa127fcf}{menu\_label\_set\_font\_ptr}}\ \mbox{\hyperlink{sf__menu__hook_8c_a68788982d768827e7886efe8664457ed}{g\_menu\_label\_set\_font}};}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00028}\mbox{\hyperlink{sf__menu__hook_8c_a563f2b17fd7d8d2c92b68e722ebb931f}{00028}}\ \mbox{\hyperlink{sf__general__structures_8h_a777a4dfb668807471094b748e5152aba}{get\_font\_ptr}}\ \mbox{\hyperlink{sf__menu__hook_8c_a563f2b17fd7d8d2c92b68e722ebb931f}{g\_get\_font}};}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00029}\mbox{\hyperlink{sf__menu__hook_8c_ae486f5194c1a8f7dfe116bd30fa4feff}{00029}}\ \mbox{\hyperlink{sf__general__structures_8h_a3a212a2bab16f5e6c3c81b564d609ae9}{menu\_label\_set\_string\_ptr}}\ \mbox{\hyperlink{sf__menu__hook_8c_ae486f5194c1a8f7dfe116bd30fa4feff}{g\_menu\_label\_set\_string}};}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00031}\mbox{\hyperlink{sf__menu__hook_8c_a8076488696ac2dd10539d2908d8dd408}{00031}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{sf__menu__hook_8c_a8076488696ac2dd10539d2908d8dd408}{initialize\_menu\_data\_hooks}}()}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00032}00032\ \{}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00033}00033\ \ \ \ \ \textcolor{comment}{//\ Retrieve\ function\ pointers\ using\ the\ Memory\ Address\ of\ Intercepted\ Function}}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00034}00034\ \ \ \ \ \textcolor{comment}{//\ These\ addresses\ are\ found\ using\ a\ Reverse\ Engineering\ program\ called\ Ghidra}}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00036}00036\ \ \ \ \ s\_initialize\_menu\_label\ =\ (\mbox{\hyperlink{sf__general__structures_8h_a834aa4e5d61d6ad1de3c5f5848abf932}{menu\_label\_ptr}})(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x51a180));}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00037}00037\ \ \ \ \ s\_initialize\_menu\_container\ =\ (\mbox{\hyperlink{sf__general__structures_8h_abb19b1c51539a52b999170f114584722}{initialize\_menu\_container\_ptr}})(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x505780));}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00038}00038\ \ \ \ \ s\_construct\_default\_sf\_string\ =\ (\mbox{\hyperlink{sf__general__structures_8h_a5b8c6c5f47cca11977c79654edd4fada}{construct\_default\_sf\_string\_ptr}})(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x383900));}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00039}00039\ \ \ \ \ s\_menu\_func\ =\ (\mbox{\hyperlink{sf__general__structures_8h_a3ce0902fdc64b610961f5fa408d452f7}{original\_menu\_func\_ptr}})(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x197b10));}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00040}00040\ \ \ \ \ s\_menu\_label\_set\_color\ =\ (\mbox{\hyperlink{sf__general__structures_8h_ab4a877cdf7704b29f7b1a09a459a4a98}{menu\_label\_set\_data\_ptr}})(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x530330));}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00041}00041\ \ \ \ \ s\_show\_message\_box\ =\ (\mbox{\hyperlink{sf__general__structures_8h_a959316cdd55be021bfd0c8079cac8f4f}{message\_box\_ptr}})(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x198660));}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00043}00043\ \ \ \ \ \mbox{\hyperlink{sf__menu__hook_8c_afa5a0b2bacbea79ede93d718f0b94931}{g\_set\_label\_flags}}\ =\ (\mbox{\hyperlink{sf__general__structures_8h_acc2efadfffc955b944400b3006ab7344}{set\_label\_flags\_ptr}})(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x52f1d0));}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00044}00044\ \ \ \ \ \mbox{\hyperlink{sf__menu__hook_8c_ae486f5194c1a8f7dfe116bd30fa4feff}{g\_menu\_label\_set\_string}}\ =\ (\mbox{\hyperlink{sf__general__structures_8h_a3a212a2bab16f5e6c3c81b564d609ae9}{menu\_label\_set\_string\_ptr}})(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x52fab0));}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00045}00045\ \ \ \ \ \mbox{\hyperlink{sf__menu__hook_8c_a0d0fb6aa3b1c95174db19a927a5f4222}{g\_menu\_return\_addr}}\ =\ (\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x182799));}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00046}00046\ \ \ \ \ \mbox{\hyperlink{sf__menu__hook_8c_a0b043e609b3677d7857e4d6880c09348}{g\_new\_operator}}\ =\ (\mbox{\hyperlink{sf__general__structures_8h_aa48f85cc726097517700b72afc013c87}{new\_operator\_ptr}})(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x675A9D));}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00047}00047\ \ \ \ \ \mbox{\hyperlink{sf__menu__hook_8c_ae584596f7d458fd747729f585462d155}{g\_menu\_label\_constructor}}\ =\ (\mbox{\hyperlink{sf__general__structures_8h_a1ef3ef233abb55a4392db0aa82a654e0}{menu\_label\_constructor\_ptr}})(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x51a180));}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00048}00048\ \ \ \ \ \mbox{\hyperlink{sf__menu__hook_8c_ab8a55728fd019669310fdfd1e271537d}{g\_init\_menu\_element}}\ =\ (\mbox{\hyperlink{sf__general__structures_8h_a9017afd3d59671398dcba18538b8b8fc}{mnu\_label\_init\_data\_ptr}})(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x52cfe0));}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00049}00049\ \ \ \ \ \mbox{\hyperlink{sf__menu__hook_8c_a0ed81a038f3a8c929795974fe61fde79}{g\_get\_smth\_fonts}}\ =\ (\mbox{\hyperlink{sf__general__structures_8h_a59949b7d52615db72af6f2527029d21a}{get\_smth\_fonts\_ptr}})(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x5357b0));}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00050}00050\ \ \ \ \ \mbox{\hyperlink{sf__menu__hook_8c_a68788982d768827e7886efe8664457ed}{g\_menu\_label\_set\_font}}\ =\ (\mbox{\hyperlink{sf__general__structures_8h_a7818ce44011f5f2d723bfa87aa127fcf}{menu\_label\_set\_font\_ptr}})(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x530e00));}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00051}00051\ \ \ \ \ \mbox{\hyperlink{sf__menu__hook_8c_a563f2b17fd7d8d2c92b68e722ebb931f}{g\_get\_font}}\ =\ (\mbox{\hyperlink{sf__general__structures_8h_a777a4dfb668807471094b748e5152aba}{get\_font\_ptr}})(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x535180));}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00052}00052\ \ \ \ \ \mbox{\hyperlink{sf__menu__hook_8c_ae79507f29d3eaae4d5b5d50ff8310cff}{g\_container\_add\_control}}\ =\ (\mbox{\hyperlink{sf__general__structures_8h_abe77c012ba01b4cd2d108bb7e7ff3a4d}{container\_add\_control\_ptr}})(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x506f30));}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00053}00053\ \}}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00055}00055\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ hasLoadedOnce\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00057}\mbox{\hyperlink{sf__menu__hook_8c_a45756bf5d6785440601776ad63ebed59}{00057}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{sf__menu__hook_8c_a45756bf5d6785440601776ad63ebed59}{\_\_attribute\_\_}}((no\_caller\_saved\_registers,\ thiscall))\ \mbox{\hyperlink{sf__menu__hook_8h_ada2af0427fc55564fbb95eaa3caf1f34}{sf\_menu\_hook}}(uint32\_t\ \_CAppMenu)}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00058}00058\ \{}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00060}00060\ \ \ \ \ \textcolor{comment}{//\ String\ to\ display\ in\ the\ new\ label\ we're\ attaching\ to\ the\ menu}}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00061}00061\ \ \ \ \ \textcolor{keywordtype}{char}\ sfsf\_info[256];}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00062}00062\ \ \ \ \ sprintf(sfsf\_info,\ \textcolor{stringliteral}{"{}Spell\ Framework\ \%s\(\backslash\)n\%d\ Mod(s)\ Loaded\ with\ \%d\ Error(s)"{}},\ \mbox{\hyperlink{sf__modloader_8h_af11e4aae0bd5dfd212aee4af4c095baf}{g\_framework\_mod}}-\/>mod\_version,\ \mbox{\hyperlink{sf__modloader_8c_a3fbcfa4d468e6676194270102744f8c3}{g\_mod\_count}},\ \mbox{\hyperlink{sf__modloader_8c_a8e9db14599932818820eed01fa118197}{g\_error\_count}});}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00064}00064\ \ \ \ \ \textcolor{comment}{//\ Manually\ move\ the\ pointer\ in\ order\ to\ access\ the\ CMNuContainer}}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00065}00065\ \ \ \ \ uint32\_t\ CAppMenu\_data\ =\ *(uint32\_t\ *)(\_CAppMenu\ +\ 0x4);}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00066}00066\ \ \ \ \ uint32\_t\ CMnuScreen\_ptr\ =\ *(uint32\_t\ *)(CAppMenu\_data\ +\ 0x68);}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00067}00067\ \ \ \ \ uint32\_t\ container\_hack\_ptr\ =\ *(uint32\_t\ *)(\_CAppMenu\ +\ 0x58);}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00068}00068\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aa4b2c10b9c9570a024b495014e652c71}{CMnuContainer}}\ *container\_hack\ =\ (\mbox{\hyperlink{sf__general__structures_8h_aa4b2c10b9c9570a024b495014e652c71}{CMnuContainer}}\ *)container\_hack\_ptr;}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00069}00069\ \ \ \ \ uint32\_t\ screen\_vftable\_ptr\ =\ CMnuScreen\_ptr;}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00071}00071\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ab4f08eefec549de8444fd0207158d0ab}{attach\_new\_label}}(container\_hack,\ sfsf\_info,\ 6,\ 10,\ 729,\ 100,\ 100);}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00073}00073\ \ \ \ \ \textcolor{keywordflow}{if}\ (hasLoadedOnce)}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00074}00074\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00075}00075\ \ \ \ \ \ \ \ \ s\_menu\_func(\_CAppMenu);}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00076}00076\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00077}00077\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00079}00079\ \ \ \ \ hasLoadedOnce\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00080}00080\ \ \ \ \ \mbox{\hyperlink{sf__wrappers_8c_a4fd90de0913ed15b0812918255559a55}{log\_info}}(\textcolor{stringliteral}{"{}-\/====\ Mod\ Information\ Start\ ====-\/"{}});}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00081}00081\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a64ca7d92af978ccdfb97fd8ad71ea8e5}{SFMod}}\ *old\_parent;}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00082}00082\ \ \ \ \ \textcolor{keywordflow}{for}\ (\mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}}\ *spell\_data\ :\ \mbox{\hyperlink{sf__mod__registry_8cpp_a938a112888fa66ca03ebb37f831d7b84}{g\_internal\_spell\_list}})}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00083}00083\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00084}00084\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Let's\ add\ mod\ information\ into\ the\ console}}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00085}00085\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a64ca7d92af978ccdfb97fd8ad71ea8e5}{SFMod}}\ *parent\_mod\ =\ spell\_data-\/>parent\_mod;}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00086}00086\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (old\_parent\ !=\ parent\_mod)}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00087}00087\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__wrappers_8c_a4fd90de0913ed15b0812918255559a55}{log\_info}}(parent\_mod-\/>mod\_id);}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__wrappers_8c_a4fd90de0913ed15b0812918255559a55}{log\_info}}(parent\_mod-\/>mod\_version);}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__wrappers_8c_a4fd90de0913ed15b0812918255559a55}{log\_info}}(parent\_mod-\/>mod\_author);}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__wrappers_8c_a4fd90de0913ed15b0812918255559a55}{log\_info}}(parent\_mod-\/>mod\_description);}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__wrappers_8c_a4fd90de0913ed15b0812918255559a55}{log\_info}}(\textcolor{stringliteral}{"{}-\/========-\/"{}});}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ old\_parent\ =\ parent\_mod;}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00094}00094\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00095}00095\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00096}00096\ \ \ \ \ \mbox{\hyperlink{sf__wrappers_8c_a4fd90de0913ed15b0812918255559a55}{log\_info}}(\textcolor{stringliteral}{"{}-\/====\ Mod\ Information\ End\ ====-\/"{}});}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00097}00097\ \ \ \ \ \textcolor{comment}{//\ Call\ original\ menu\ function\ to\ show\ the\ menu}}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00098}00098\ \ \ \ \ s\_menu\_func(\_CAppMenu);}
+\DoxyCodeLine{\Hypertarget{sf__menu__hook_8c_source_l00099}00099\ \}}
+
+\end{DoxyCode}

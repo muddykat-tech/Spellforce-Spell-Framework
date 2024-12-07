@@ -1,0 +1,29 @@
+\doxysection{sf\+\_\+endspell\+\_\+hook.\+c}
+\hypertarget{sf__endspell__hook_8c_source}{}\label{sf__endspell__hook_8c_source}\index{src/internal/core/hooks/sf\_endspell\_hook.c@{src/internal/core/hooks/sf\_endspell\_hook.c}}
+\mbox{\hyperlink{sf__endspell__hook_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{sf__endspell__hook_8c_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__wrappers_8h}{../sf\_wrappers.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__endspell__hook_8c_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__hooks_8h}{../sf\_hooks.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__endspell__hook_8c_source_l00003}00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__spellend__registry_8h}{../../registry/spell\_data\_registries/sf\_spellend\_registry.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__endspell__hook_8c_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{sf__endspell__hook_8c_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{sf__endspell__hook_8c_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{sf__endspell__hook_8c_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{sf__endspell__hook_8c_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{\Hypertarget{sf__endspell__hook_8c_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{sf__endspell__hook_8c_source_l00010}00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__endspell__hook_8h}{sf\_endspell\_hook.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__endspell__hook_8c_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{sf__endspell__hook_8c_source_l00012}\mbox{\hyperlink{sf__endspell__hook_8c_aee626a16e719383c36fc0a739dbbd81c}{00012}}\ \textcolor{keywordtype}{void}\ \_\_thiscall\ \mbox{\hyperlink{sf__endspell__hook_8c_aee626a16e719383c36fc0a739dbbd81c}{sf\_endspell\_hook}}(\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\_CGdSpell}}\ *\_this,\ uint16\_t\ spell\_index)}
+\DoxyCodeLine{\Hypertarget{sf__endspell__hook_8c_source_l00013}00013\ \{}
+\DoxyCodeLine{\Hypertarget{sf__endspell__hook_8c_source_l00014}00014\ \ \ \ \ \textcolor{comment}{//\ We\ need\ a\ map\ of\ end\ spell\ handlers?}}
+\DoxyCodeLine{\Hypertarget{sf__endspell__hook_8c_source_l00015}00015\ \ \ \ \ \textcolor{comment}{//\ And\ a\ default\ handler\ that\ does\ nothing}}
+\DoxyCodeLine{\Hypertarget{sf__endspell__hook_8c_source_l00016}00016\ \ \ \ \ \textcolor{comment}{//\ handler\ takes\ (SF\_CGdSpell\ *\_this,\ uint16\_t\ spell\_index)\ as\ params}}
+\DoxyCodeLine{\Hypertarget{sf__endspell__hook_8c_source_l00017}00017\ \ \ \ \ uint16\_t\ spell\_line\ =\ \_this-\/>active\_spell\_list[spell\_index].spell\_line;}
+\DoxyCodeLine{\Hypertarget{sf__endspell__hook_8c_source_l00018}00018\ \ \ \ \ \mbox{\hyperlink{sf__registration__functions_8h_af76aa0d565c5ebb0b1eb50e2ed3377b3}{handler\_ptr}}\ spellend\_handler\ =\ \mbox{\hyperlink{sf__spellend__registry_8cpp_a63fcc6788d213fca27dd2d28143e1208}{get\_spell\_end}}(spell\_line);}
+\DoxyCodeLine{\Hypertarget{sf__endspell__hook_8c_source_l00019}00019\ \ \ \ \ \textcolor{keywordflow}{if}\ (spellend\_handler\ !=\ NULL)}
+\DoxyCodeLine{\Hypertarget{sf__endspell__hook_8c_source_l00020}00020\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__endspell__hook_8c_source_l00021}00021\ \ \ \ \ \ \ \ \ spellend\_handler(\_this,\ spell\_index);}
+\DoxyCodeLine{\Hypertarget{sf__endspell__hook_8c_source_l00022}00022\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__endspell__hook_8c_source_l00023}00023\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,26 @@
+var sf__ai__functions_8h =
+[
+    [ "__attribute", "sf__ai__functions_8h.html#adb715832ffacb80abf49da19f6d4cf78", null ],
+    [ "__attribute__", "sf__ai__functions_8h.html#ab898071398b359603a35c202e9c65f3b", null ],
+    [ "DECLARE_FUNCTION", "sf__ai__functions_8h.html#a437e45f4cb487a4dabcc605ed1019650", null ],
+    [ "DECLARE_FUNCTION", "sf__ai__functions_8h.html#adf6d52dd1d2d403e2ea8d1ad29937ef6", null ],
+    [ "DECLARE_FUNCTION", "sf__ai__functions_8h.html#a3ce9a94fe2d9f8bd6915dff9511f8e36", null ],
+    [ "DECLARE_FUNCTION", "sf__ai__functions_8h.html#a4dd27a933faab7e4f1f0115a9ea27756", null ],
+    [ "DECLARE_FUNCTION", "sf__ai__functions_8h.html#acc39c6dc6423a4bf5f4804b5f9badd09", null ],
+    [ "DECLARE_FUNCTION", "sf__ai__functions_8h.html#a72affa73fc0d5c1b2b4ec97a8add990d", null ],
+    [ "DECLARE_FUNCTION", "sf__ai__functions_8h.html#a5386b2c0bfad97c1231a8508b9c14f22", null ],
+    [ "DECLARE_FUNCTION", "sf__ai__functions_8h.html#a3a7803fb5f049d17564d3cae070a2500", null ],
+    [ "DECLARE_FUNCTION", "sf__ai__functions_8h.html#ae86f67d1d8ec942c92b655419d5fb6cd", null ],
+    [ "DECLARE_FUNCTION", "sf__ai__functions_8h.html#abae74ddfe93304b89bdff99d179b4850", null ],
+    [ "DECLARE_FUNCTION", "sf__ai__functions_8h.html#a9603792b1345f08306dee034571314c4", null ],
+    [ "DECLARE_FUNCTION", "sf__ai__functions_8h.html#ab678987bc5879f19d1dbdc1e9e649177", null ],
+    [ "DECLARE_FUNCTION", "sf__ai__functions_8h.html#a79a1efe8ecbf8f6a8507d955a01e87ff", null ],
+    [ "DECLARE_FUNCTION", "sf__ai__functions_8h.html#a28fc5bfcec341cfd77b5b1b8d85d9892", null ],
+    [ "DECLARE_FUNCTION", "sf__ai__functions_8h.html#a36023d1a49b11d8aa52091cbaa973156", null ],
+    [ "DECLARE_FUNCTION_GROUP", "sf__ai__functions_8h.html#a49e7fe82c9b51d388a800e0325e31bae", null ],
+    [ "AutoClass60", "sf__ai__functions_8h.html#a76be63358a79fc66bf634f23e8e5f06c", null ],
+    [ "AutoClass60_data", "sf__ai__functions_8h.html#a3b2f327c9acacac6607e05b8bf8d3044", null ],
+    [ "CGdAIBattleData", "sf__ai__functions_8h.html#abe9802c6c942020f09667f94085e5bfc", null ],
+    [ "SF_CGdBattleDevelopment", "sf__ai__functions_8h.html#afa0b3dda911f5160951038e1311f754c", null ],
+    [ "ushort_list_node", "sf__ai__functions_8h.html#adf7edd1d8e4e17c44cd5488cd7cc308e", null ]
+];

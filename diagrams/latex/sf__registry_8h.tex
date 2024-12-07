@@ -1,0 +1,93 @@
+\doxysection{src/internal/registry/sf\+\_\+registry.h File Reference}
+\hypertarget{sf__registry_8h}{}\label{sf__registry_8h}\index{src/internal/registry/sf\_registry.h@{src/internal/registry/sf\_registry.h}}
+{\ttfamily \#include "{}../../api/sfsf.\+h"{}}\newline
+Include dependency graph for sf\+\_\+registry.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__registry_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__registry_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{sf__registry_8h_aa653b9256d033c2d02e806489c6a4271}{initialize\+\_\+framework}} ()
+\begin{DoxyCompactList}\small\item\em Initializes the Spellforce Spell Framework (SFSF). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_spellforce_spell_framework}{Spellforce\+Spell\+Framework}} \mbox{\hyperlink{sf__registry_8h_a0a7a03471daa2a86ac7f7616a5b0427e}{framework\+API}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{sf__registry_8h_aa653b9256d033c2d02e806489c6a4271}\index{sf\_registry.h@{sf\_registry.h}!initialize\_framework@{initialize\_framework}}
+\index{initialize\_framework@{initialize\_framework}!sf\_registry.h@{sf\_registry.h}}
+\doxysubsubsection{\texorpdfstring{initialize\_framework()}{initialize\_framework()}}
+{\footnotesize\ttfamily \label{sf__registry_8h_aa653b9256d033c2d02e806489c6a4271} 
+void initialize\+\_\+framework (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Initializes the Spellforce Spell Framework (SFSF). 
+
+This function initializes the Spellforce Spell Framework (SFSF), setting up hooks, APIs, vanilla spells, and loading/registering mods.
+
+The initialization process includes the following phases\+:
+
+
+\begin{DoxyItemize}
+\item {\bfseries{Framework Configuration Phase}}\+:
+\begin{DoxyItemize}
+\item {\bfseries{Data Hook Initialization}}\+: Sets up low-\/level hooks to the game\textquotesingle{}s memory and functions.
+\item {\bfseries{API Function Linking}}\+: Links framework API structures.
+\item {\bfseries{Vanilla Spell Initialization}}\+: Registers vanilla spell types and effect handlers.
+\end{DoxyItemize}
+\item {\bfseries{Mod Loading Phase}}\+:
+\begin{DoxyItemize}
+\item Loads all mods compatible with the framework.
+\end{DoxyItemize}
+\item {\bfseries{Mod Registration Phase}}\+:
+\begin{DoxyItemize}
+\item Registers spells and functions from loaded mods. \begin{DoxyWarning}{Warning}
+Incorrect setup of hooks or APIs can lead to crashes. Mods must adhere to the framework\textquotesingle{}s API for compatibility. 
+\end{DoxyWarning}
+\begin{DoxySeeAlso}{See also}
+\doxylink{sf__registry_8cpp_a2a689bd8779670d6d2cf54a6be3265c8}{register\+Framework\+API()}, \doxylink{sf__hooks_8c_a053468e9037e13eede0757a9c0dc4f90}{initialize\+\_\+data\+\_\+hooks()}, \doxylink{sf__vanilla__registry_8cpp_ad464df22114c57d7e41361edf691ac01}{initialize\+\_\+vanilla\+\_\+spells()}, \doxylink{sf__spelleffect__registry_8cpp_a074a9e5dad13819ccfdcb6830d0ec8b7}{register\+\_\+vanilla\+\_\+effect\+\_\+handlers()}, \doxylink{sf__spellend__registry_8cpp_ac737d76fe9fb2039f0109366cbded12d}{register\+\_\+vanilla\+\_\+spell\+\_\+end\+\_\+handlers()}, \doxylink{sf__subeffect__registry_8cpp_a9a8146362cdec001aac19aa84590ef1a}{register\+\_\+vanilla\+\_\+sub\+\_\+effect\+\_\+handlers()}, \doxylink{sf__spellrefresh__registry_8cpp_a43b02c5e6d7550c7fd35d46caa3d67d0}{register\+\_\+vanilla\+\_\+spell\+\_\+refresh\+\_\+handlers()}, \doxylink{sf__spelldamage__registry_8cpp_a72edb1e1cbac99025f4ae918358557ba}{register\+\_\+vanilla\+\_\+spell\+\_\+damage\+\_\+handlers()}, \doxylink{sf__modloader_8c_a56273b58bfd284c452925e7f24e2b252}{initialize\+\_\+mods()}, \doxylink{sf__mod__registry_8cpp_ab760f8f899f39400156538bbd0c21c68}{register\+\_\+mod\+\_\+spells()} 
+\end{DoxySeeAlso}
+
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+Definition at line \mbox{\hyperlink{sf__registry_8cpp_source_l00097}{97}} of file \mbox{\hyperlink{sf__registry_8cpp_source}{sf\+\_\+registry.\+cpp}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{sf__registry_8h_aa653b9256d033c2d02e806489c6a4271_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{sf__registry_8h_a0a7a03471daa2a86ac7f7616a5b0427e}\index{sf\_registry.h@{sf\_registry.h}!frameworkAPI@{frameworkAPI}}
+\index{frameworkAPI@{frameworkAPI}!sf\_registry.h@{sf\_registry.h}}
+\doxysubsubsection{\texorpdfstring{frameworkAPI}{frameworkAPI}}
+{\footnotesize\ttfamily \label{sf__registry_8h_a0a7a03471daa2a86ac7f7616a5b0427e} 
+\mbox{\hyperlink{struct_spellforce_spell_framework}{Spellforce\+Spell\+Framework}} framework\+API\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Definition at line \mbox{\hyperlink{sf__registry_8cpp_source_l00039}{39}} of file \mbox{\hyperlink{sf__registry_8cpp_source}{sf\+\_\+registry.\+cpp}}.
+

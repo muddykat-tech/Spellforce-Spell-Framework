@@ -32,5 +32,6 @@ var searchData=
   ['invulnerability_5fhandler_29',['invulnerability_handler',['../sf__spelltype__handlers_8cpp.html#ad00db96275fa8a7b2b2c917ec06b5927',1,'invulnerability_handler(SF_CGdSpell *_this, uint16_t spell_index):&#160;sf_spelltype_handlers.cpp'],['../sf__spelltype__handlers_8h.html#ad00db96275fa8a7b2b2c917ec06b5927',1,'invulnerability_handler(SF_CGdSpell *_this, uint16_t spell_index):&#160;sf_spelltype_handlers.cpp']]],
   ['isactionmelee_30',['isActionMelee',['../sf__wrappers_8c.html#ae2ec775265f1435a0f7e177e86b004d0',1,'isActionMelee(SF_SGtFigureAction *_this):&#160;sf_wrappers.c'],['../sf__wrappers_8h.html#ae2ec775265f1435a0f7e177e86b004d0',1,'isActionMelee(SF_SGtFigureAction *_this):&#160;sf_wrappers.c']]],
   ['isfigurejobspell_31',['isFigureJobSpell',['../sf__onhit__hook_8c.html#a0ca3dd8cf7def5592a69450b5caaac2a',1,'sf_onhit_hook.c']]],
-  ['isjobdonothing_32',['isJobDoNothing',['../sf__onhit__hook_8c.html#a02411a5016dfa987f9f46df8ff4ca332',1,'sf_onhit_hook.c']]]
+  ['isjobdonothing_32',['isJobDoNothing',['../sf__onhit__hook_8c.html#a02411a5016dfa987f9f46df8ff4ca332',1,'sf_onhit_hook.c']]],
+  ['isspellaction_33',['isSpellAction',['../sf__ai__hook_8c.html#adbfebe2587f5680512bab3f489b05a2b',1,'sf_ai_hook.c']]]
 ];

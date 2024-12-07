@@ -1,0 +1,46 @@
+\doxysection{sfsf.\+h}
+\hypertarget{sfsf_8h_source}{}\label{sfsf_8h_source}\index{src/api/sfsf.h@{src/api/sfsf.h}}
+\mbox{\hyperlink{sfsf_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00001}00001\ \textcolor{comment}{//\ SpellforceSpellFramework.h}}
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00002}00002\ \textcolor{comment}{//\ DEPRECATED}}
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00003}00003\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__general__structures_8h}{sf\_general\_structures.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__figure__functions_8h}{sf\_figure\_functions.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__iterator__functions_8h}{sf\_iterator\_functions.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__spell__functions_8h}{sf\_spell\_functions.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__effect__functions_8h}{sf\_effect\_functions.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__toolbox__functions_8h}{sf\_toolbox\_functions.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__registration__functions_8h}{sf\_registration\_functions.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__ai__functions_8h}{sf\_ai\_functions.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00016}\mbox{\hyperlink{sfsf_8h_a3e28bae564f385436562931344d348d7}{00016}}\ \textcolor{keyword}{typedef}\ void\ (*\mbox{\hyperlink{sfsf_8h_a3e28bae564f385436562931344d348d7}{initializeModule\_ptr}})(\textcolor{keywordtype}{void}\ *);}
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00017}\mbox{\hyperlink{sfsf_8h_ae8841c666a9cb90c0f6b9c9f14c91ffd}{00017}}\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{sf__general__structures_8h_a64ca7d92af978ccdfb97fd8ad71ea8e5}{SFMod}}\ *(*registerMod\_ptr)(\textcolor{keywordtype}{void}\ *);}
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00018}\mbox{\hyperlink{sfsf_8h_aa01c39b32297e6eaa930a49fcae6ca46}{00018}}\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{sf__general__structures_8h_a64ca7d92af978ccdfb97fd8ad71ea8e5}{SFMod}}\ *(*createModInfo\_ptr)(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *mod\_id,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *mod\_version,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *mod\_author,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *mod\_description);}
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00020}\mbox{\hyperlink{sfsf_8h_a00dc0a7ddf1f4e403e5093b20e90120e}{00020}}\ \textcolor{keyword}{typedef}\ void\ (*\mbox{\hyperlink{sfsf_8h_a00dc0a7ddf1f4e403e5093b20e90120e}{logInfoFunc}})(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *);}
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00021}\mbox{\hyperlink{sfsf_8h_af76aa0d565c5ebb0b1eb50e2ed3377b3}{00021}}\ \textcolor{keyword}{typedef}\ void(\_\_thiscall\ *\mbox{\hyperlink{sfsf_8h_af76aa0d565c5ebb0b1eb50e2ed3377b3}{handler\_ptr}})(\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\_CGdSpell}}\ *,\ uint16\_t);}
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00022}\mbox{\hyperlink{sfsf_8h_a6c693fbf9a67b42cfa2dce6d4a4e0b4b}{00022}}\ \textcolor{keyword}{typedef}\ int(\_\_thiscall\ *\mbox{\hyperlink{sfsf_8h_a6c693fbf9a67b42cfa2dce6d4a4e0b4b}{refresh\_handler\_ptr}})(\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\_CGdSpell}}\ *,\ uint16\_t);}
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00024}00024\ \textcolor{comment}{//\ Declare\ the\ structure}}
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00025}\mbox{\hyperlink{struct_spellforce_spell_framework}{00025}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_spellforce_spell_framework}{SpellforceSpellFramework}}}
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00026}00026\ \{}
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00027}\mbox{\hyperlink{struct_spellforce_spell_framework_aee4f4bbf0459e4d957ab841700a302e1}{00027}}\ \ \ \ \ \mbox{\hyperlink{sfsf_8h_aa01c39b32297e6eaa930a49fcae6ca46}{createModInfo\_ptr}}\ \mbox{\hyperlink{struct_spellforce_spell_framework_aee4f4bbf0459e4d957ab841700a302e1}{createModInfo}};}
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00029}\mbox{\hyperlink{struct_spellforce_spell_framework_ae0db8536cdd7cf556d3ab786982da3b4}{00029}}\ \ \ \ \ SpellFunctions\ *\mbox{\hyperlink{struct_spellforce_spell_framework_ae0db8536cdd7cf556d3ab786982da3b4}{spellAPI}};}
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00030}\mbox{\hyperlink{struct_spellforce_spell_framework_a03fa16f9089c633813cdf6e573f21b5a}{00030}}\ \ \ \ \ ToolboxFunctions\ *\mbox{\hyperlink{struct_spellforce_spell_framework_a03fa16f9089c633813cdf6e573f21b5a}{toolboxAPI}};}
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00031}\mbox{\hyperlink{struct_spellforce_spell_framework_ac27c1b2addee2094e99d71dcac3f43a9}{00031}}\ \ \ \ \ FigureFunctions\ *\mbox{\hyperlink{struct_spellforce_spell_framework_ac27c1b2addee2094e99d71dcac3f43a9}{figureAPI}};}
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00032}\mbox{\hyperlink{struct_spellforce_spell_framework_a2abb65c695dc68a320217e23ae6c97f0}{00032}}\ \ \ \ \ IteratorFunctions\ *\mbox{\hyperlink{struct_spellforce_spell_framework_a2abb65c695dc68a320217e23ae6c97f0}{iteratorAPI}};}
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00033}\mbox{\hyperlink{struct_spellforce_spell_framework_a02421d621414cc1a80e692d21dec7775}{00033}}\ \ \ \ \ RegistrationFunctions\ *\mbox{\hyperlink{struct_spellforce_spell_framework_a02421d621414cc1a80e692d21dec7775}{registrationAPI}};}
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00034}\mbox{\hyperlink{struct_spellforce_spell_framework_ad632c80044c35ab5620e6c97e0749405}{00034}}\ \ \ \ \ EffectFunctions\ *\mbox{\hyperlink{struct_spellforce_spell_framework_ad632c80044c35ab5620e6c97e0749405}{effectAPI}};}
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00035}\mbox{\hyperlink{struct_spellforce_spell_framework_ad99031dc9d31010bab42163b85bb5b49}{00035}}\ \ \ \ \ AiFunctions\ *\mbox{\hyperlink{struct_spellforce_spell_framework_ad99031dc9d31010bab42163b85bb5b49}{aiAPI}};}
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00036}\mbox{\hyperlink{struct_spellforce_spell_framework_a28facbb31f7f8cb31f79e15385f02115}{00036}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a1c952b093fb7b451bb336a65c6658ad4}{SFLog}}\ *\mbox{\hyperlink{struct_spellforce_spell_framework_a28facbb31f7f8cb31f79e15385f02115}{logAPI}};}
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00037}00037\ \};}
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00039}\mbox{\hyperlink{sfsf_8h_a398b372a8c4fd7f3bed4cdf9b40715f2}{00039}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_spellforce_spell_framework}{SpellforceSpellFramework}}\ \mbox{\hyperlink{struct_spellforce_spell_framework}{FrameworkAPI}};}
+\DoxyCodeLine{\Hypertarget{sfsf_8h_source_l00040}\mbox{\hyperlink{sfsf_8h_a4b8557c91a1a696449e04272a12b9637}{00040}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_spellforce_spell_framework}{SpellforceSpellFramework}}\ *\mbox{\hyperlink{sfsf_8h_a4b8557c91a1a696449e04272a12b9637}{pFrameworkAPI}};}
+
+\end{DoxyCode}

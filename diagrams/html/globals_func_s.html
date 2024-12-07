@@ -5,12 +5,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Spellforce-Spell-Framework: File Members</title>
+<title>Spellforce-Spell-framework: File Members</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <script type="text/javascript" src="clipboard.js"></script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
@@ -25,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Spellforce-Spell-Framework
+   <div id="projectname">Spellforce-Spell-framework
    </div>
   </td>
  </tr>
@@ -49,19 +51,29 @@ $(function() { codefold.init(0); });
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
-  initMenu('',true,false,'search.php','Search',false);
+  initMenu('',true,false,'search.php','Search',true);
   $(function() { init_search(); });
 });
 /* @license-end */
 </script>
 <div id="main-nav"></div>
 </div><!-- top -->
-<div id="doc-content">
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){ initResizable(false); });
+$(function(){initNavTree('globals_func_s.html',''); initResizable(true); });
 /* @license-end */
 </script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -87,6 +99,7 @@ $(function(){ initResizable(false); });
 <div class="textblock">Here is a list of all functions with links to the files they belong to:</div>
 
 <h3><a id="index_s" name="index_s"></a>- s -</h3><ul>
+<li>sacrifice_mana_ai_handler()&#160;:&#160;<a class="el" href="sf__ai__spell__handlers_8cpp.html#a763a0bd54cb6874e061cd747e391ab3a">sf_ai_spell_handlers.cpp</a></li>
 <li>sacrifice_mana_end_handler()&#160;:&#160;<a class="el" href="sf__spellend__handlers_8h.html#ab022ccae15181bcc0fafd1c37d1a8573">sf_spellend_handlers.h</a></li>
 <li>sacrifice_mana_handler()&#160;:&#160;<a class="el" href="sf__spelltype__handlers_8cpp.html#a694902a6925e1c375cd3c0bd8243c285">sf_spelltype_handlers.cpp</a>, <a class="el" href="sf__spelltype__handlers_8h.html#a694902a6925e1c375cd3c0bd8243c285">sf_spelltype_handlers.h</a></li>
 <li>self_illusion_end_handler()&#160;:&#160;<a class="el" href="sf__spellend__handlers_8h.html#a0455c1d1e7966ba834b550c3a24f51c1">sf_spellend_handlers.h</a></li>
@@ -95,6 +108,11 @@ $(function(){ initResizable(false); });
 <li>sentinel_healing_handler()&#160;:&#160;<a class="el" href="sf__spelltype__handlers_8cpp.html#a4dc038980aa89281f53d11abdeb9488c">sf_spelltype_handlers.cpp</a>, <a class="el" href="sf__spelltype__handlers_8h.html#a4dc038980aa89281f53d11abdeb9488c">sf_spelltype_handlers.h</a></li>
 <li>setup_logger()&#160;:&#160;<a class="el" href="sf__wrappers_8c.html#acf9d8a5367491e7f2b294fe979783e22">sf_wrappers.c</a>, <a class="el" href="sf__wrappers_8h.html#acf9d8a5367491e7f2b294fe979783e22">sf_wrappers.h</a></li>
 <li>setupFigureIterator()&#160;:&#160;<a class="el" href="sf__wrappers_8c.html#a6242a2f91bf97824c8c2eca28e2b2256">sf_wrappers.c</a>, <a class="el" href="sf__wrappers_8h.html#a6242a2f91bf97824c8c2eca28e2b2256">sf_wrappers.h</a></li>
+<li>sf_ai_avoidance_default_handler()&#160;:&#160;<a class="el" href="sf__ai__avoidance__handlers_8cpp.html#ad5e45a6c6c0167cefa26a94bc9dc2ba6">sf_ai_avoidance_handlers.cpp</a>, <a class="el" href="sf__ai__avoidance__handlers_8h.html#ad5e45a6c6c0167cefa26a94bc9dc2ba6">sf_ai_avoidance_handlers.h</a></li>
+<li>sf_ai_avoidance_freeze_handler()&#160;:&#160;<a class="el" href="sf__ai__avoidance__handlers_8cpp.html#ac0edcc7ea3425c13fdd2cbf6d7c264f8">sf_ai_avoidance_handlers.cpp</a>, <a class="el" href="sf__ai__avoidance__handlers_8h.html#ac0edcc7ea3425c13fdd2cbf6d7c264f8">sf_ai_avoidance_handlers.h</a></li>
+<li>sf_ai_avoidance_hypnotize_handler()&#160;:&#160;<a class="el" href="sf__ai__avoidance__handlers_8cpp.html#a3323b6af4004931e9e6744e78b04486b">sf_ai_avoidance_handlers.cpp</a>, <a class="el" href="sf__ai__avoidance__handlers_8h.html#a3323b6af4004931e9e6744e78b04486b">sf_ai_avoidance_handlers.h</a></li>
+<li>sf_ai_avoidance_invulnerability_handler()&#160;:&#160;<a class="el" href="sf__ai__avoidance__handlers_8cpp.html#a3ba9cc0cf8606d5f66beb18e79f88324">sf_ai_avoidance_handlers.cpp</a>, <a class="el" href="sf__ai__avoidance__handlers_8h.html#a3ba9cc0cf8606d5f66beb18e79f88324">sf_ai_avoidance_handlers.h</a></li>
+<li>sf_ai_avoidance_shield_handler()&#160;:&#160;<a class="el" href="sf__ai__avoidance__handlers_8cpp.html#aca03f45b84789ae428c86ca4bb54e6e9">sf_ai_avoidance_handlers.cpp</a>, <a class="el" href="sf__ai__avoidance__handlers_8h.html#aca03f45b84789ae428c86ca4bb54e6e9">sf_ai_avoidance_handlers.h</a></li>
 <li>sf_endspell_hook()&#160;:&#160;<a class="el" href="sf__endspell__hook_8c.html#aee626a16e719383c36fc0a739dbbd81c">sf_endspell_hook.c</a>, <a class="el" href="sf__endspell__hook_8h.html#aee626a16e719383c36fc0a739dbbd81c">sf_endspell_hook.h</a></li>
 <li>sf_get_spell_id()&#160;:&#160;<a class="el" href="sf__wrappers_8c.html#ad7e79f06e19f919ffb1ea67493886ff8">sf_wrappers.c</a>, <a class="el" href="sf__wrappers_8h.html#ad7e79f06e19f919ffb1ea67493886ff8">sf_wrappers.h</a></li>
 <li>sf_menu_hook()&#160;:&#160;<a class="el" href="sf__menu__hook_8h.html#ada2af0427fc55564fbb95eaa3caf1f34">sf_menu_hook.h</a></li>
@@ -103,12 +121,15 @@ $(function(){ initResizable(false); });
 <li>sf_spelleffect_hook()&#160;:&#160;<a class="el" href="sf__spelleffect__hook_8c.html#a7bc8319c080c36bf60a565521774fe48">sf_spelleffect_hook.c</a>, <a class="el" href="sf__spelleffect__hook_8h.html#a7bc8319c080c36bf60a565521774fe48">sf_spelleffect_hook.h</a></li>
 <li>sf_spelltype_hook()&#160;:&#160;<a class="el" href="sf__spelltype__hook_8c.html#ab55b7421576dfd7ea00096b427741d9b">sf_spelltype_hook.c</a>, <a class="el" href="sf__spelltype__hook_8h.html#ab55b7421576dfd7ea00096b427741d9b">sf_spelltype_hook.h</a></li>
 <li>sf_subeffect_hook()&#160;:&#160;<a class="el" href="sf__subeffect__hook_8c.html#a1dcff1e838a859bb7fd432cd6661016e">sf_subeffect_hook.c</a>, <a class="el" href="sf__subeffect__hook_8h.html#a1dcff1e838a859bb7fd432cd6661016e">sf_subeffect_hook.h</a></li>
+<li>shields_ai_handler()&#160;:&#160;<a class="el" href="sf__ai__spell__handlers_8cpp.html#a0f3795b5d65c262ad71b9df6c8e5f1d3">sf_ai_spell_handlers.cpp</a></li>
+<li>shift_life_ai_handler()&#160;:&#160;<a class="el" href="sf__ai__spell__handlers_8cpp.html#a4b84d9ed0c014775ff4cc1210e78a808">sf_ai_spell_handlers.cpp</a></li>
 <li>shift_mana_end_handler()&#160;:&#160;<a class="el" href="sf__spellend__handlers_8h.html#a1ce1683cacaafdc02f0b49da0dd79d8e">sf_spellend_handlers.h</a></li>
 <li>shift_mana_handler()&#160;:&#160;<a class="el" href="sf__spelltype__handlers_8cpp.html#af493b7fbbeb450b063384db5fd11ccf1">sf_spelltype_handlers.cpp</a>, <a class="el" href="sf__spelltype__handlers_8h.html#af493b7fbbeb450b063384db5fd11ccf1">sf_spelltype_handlers.h</a></li>
 <li>shock_end_handler()&#160;:&#160;<a class="el" href="sf__spellend__handlers_8h.html#a63f07e68ece5c7ff3f6fcc8a54628906">sf_spellend_handlers.h</a></li>
 <li>shock_handler()&#160;:&#160;<a class="el" href="sf__spelltype__handlers_8cpp.html#a0261b9c0d3875b2161ff2156a94a6792">sf_spelltype_handlers.cpp</a>, <a class="el" href="sf__spelltype__handlers_8h.html#a0261b9c0d3875b2161ff2156a94a6792">sf_spelltype_handlers.h</a></li>
 <li>shockwave_end_handler()&#160;:&#160;<a class="el" href="sf__spellend__handlers_8h.html#aec255fea0b5cda6356f6a29a7a267b3e">sf_spellend_handlers.h</a></li>
 <li>shockwave_handler()&#160;:&#160;<a class="el" href="sf__spelltype__handlers_8cpp.html#a4e331369ec0223eb6f828b143fc841f4">sf_spelltype_handlers.cpp</a>, <a class="el" href="sf__spelltype__handlers_8h.html#a4e331369ec0223eb6f828b143fc841f4">sf_spelltype_handlers.h</a></li>
+<li>signum()&#160;:&#160;<a class="el" href="sf__ai__hook_8c.html#a4ff157855ad65cfd8f8e94d74fa35998">sf_ai_hook.c</a></li>
 <li>slow_fighting_end_handler()&#160;:&#160;<a class="el" href="sf__spellend__handlers_8cpp.html#af7c69b976010aa57c585307f83820ac3">sf_spellend_handlers.cpp</a>, <a class="el" href="sf__spellend__handlers_8h.html#af7c69b976010aa57c585307f83820ac3">sf_spellend_handlers.h</a></li>
 <li>slow_fighting_handler()&#160;:&#160;<a class="el" href="sf__spelltype__handlers_8cpp.html#a705dead631112a9b69ff38109c333b88">sf_spelltype_handlers.cpp</a>, <a class="el" href="sf__spelltype__handlers_8h.html#a705dead631112a9b69ff38109c333b88">sf_spelltype_handlers.h</a></li>
 <li>slow_fighting_refresh_handler()&#160;:&#160;<a class="el" href="sf__spellrefresh__handlers_8cpp.html#ad2a69996de79c7371e94b33c8afb5c13">sf_spellrefresh_handlers.cpp</a>, <a class="el" href="sf__spellrefresh__handlers_8h.html#ad2a69996de79c7371e94b33c8afb5c13">sf_spellrefresh_handlers.h</a></li>
@@ -133,14 +154,17 @@ $(function(){ initResizable(false); });
 <li>suicide_death_handler()&#160;:&#160;<a class="el" href="sf__spelltype__handlers_8cpp.html#a101e37348982b11e099889a84863ff38">sf_spelltype_handlers.cpp</a>, <a class="el" href="sf__spelltype__handlers_8h.html#a101e37348982b11e099889a84863ff38">sf_spelltype_handlers.h</a></li>
 <li>suicide_heal_end_handler()&#160;:&#160;<a class="el" href="sf__spellend__handlers_8h.html#a4bd71209b4d5901cd2833bb87f0628bd">sf_spellend_handlers.h</a></li>
 <li>suicide_heal_handler()&#160;:&#160;<a class="el" href="sf__spelltype__handlers_8cpp.html#a31b81b8e089ac0194c3432f711683ee6">sf_spelltype_handlers.cpp</a>, <a class="el" href="sf__spelltype__handlers_8h.html#a31b81b8e089ac0194c3432f711683ee6">sf_spelltype_handlers.h</a></li>
+<li>summon_ai_handler()&#160;:&#160;<a class="el" href="sf__ai__spell__handlers_8cpp.html#a5eaf3ab07445126ecf2b27ef376c76f7">sf_ai_spell_handlers.cpp</a></li>
 <li>summons_end_handler()&#160;:&#160;<a class="el" href="sf__spellend__handlers_8h.html#af1b814f3e973fb3f6038e5d1ecefcdb8">sf_spellend_handlers.h</a></li>
 <li>summons_handler()&#160;:&#160;<a class="el" href="sf__spelltype__handlers_8cpp.html#acb5bde32f3726bd0447c751dc194bf79">sf_spelltype_handlers.cpp</a>, <a class="el" href="sf__spelltype__handlers_8h.html#acb5bde32f3726bd0447c751dc194bf79">sf_spelltype_handlers.h</a></li>
 </ul>
 </div><!-- contents -->
-<!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
-</small></address>
 </div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
+  </ul>
+</div>
 </body>
 </html>

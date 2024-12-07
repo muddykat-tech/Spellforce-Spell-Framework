@@ -1,0 +1,38 @@
+\doxysection{src/asi/sf\+\_\+asi.cpp File Reference}
+\hypertarget{sf__asi_8cpp}{}\label{sf__asi_8cpp}\index{src/asi/sf\_asi.cpp@{src/asi/sf\_asi.cpp}}
+{\ttfamily \#include "{}sf\+\_\+asi.\+h"{}}\newline
+Include dependency graph for sf\+\_\+asi.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=173pt]{sf__asi_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_a_s_i}{ASI}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{namespace_a_s_i_a4761cc7671cb5ca025364456b8363f48}{ASI\+::\+Begin\+Rewrite}} (\mbox{\hyperlink{struct_a_s_i_1_1_memory_region}{Memory\+Region}} \&mem\+\_\+region)
+\begin{DoxyCompactList}\small\item\em allows rewriting code in a given memory region by overwriting permissions for that memory region \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{namespace_a_s_i_a9531e2306bef93541e7b64dd9dda8716}{ASI\+::\+End\+Rewrite}} (\mbox{\hyperlink{struct_a_s_i_1_1_memory_region}{Memory\+Region}} \&mem\+\_\+region)
+\begin{DoxyCompactList}\small\item\em ends rewriting by restoring old permissions in a given memory region \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespace_a_s_i_aef6e3e5d3a17c1ec2c880333285bd748}{ASI\+::\+Set\+Game\+Base}} ()
+\item 
+bool \mbox{\hyperlink{namespace_a_s_i_ab869e8184e5ce56887fa91a8a4b2e059}{ASI\+::\+Init}} (HMODULE lib\+\_\+module)
+\begin{DoxyCompactList}\small\item\em required for everything to work... why? \end{DoxyCompactList}\item 
+bool \+\_\+\+\_\+stdcall \mbox{\hyperlink{namespace_a_s_i_a34bd6eea545e02b6e66bf62616769440}{ASI\+::\+Check\+SFVersion}} (\mbox{\hyperlink{namespace_a_s_i_a0d3678d7eaf95729a8566ad9bff50546}{SF\+\_\+\+Version}} sf\+\_\+version)
+\begin{DoxyCompactList}\small\item\em check version of the game that was hooked into \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+unsigned int \mbox{\hyperlink{namespace_a_s_i_a9d8756b82c9acda6d924a0c254c54299}{ASI\+::\+GAME\+\_\+\+BASE}}
+\item 
+int \mbox{\hyperlink{namespace_a_s_i_a560306678b08a2a6d38984dd0ada8dd6}{ASI\+::\+WINDOW\+\_\+\+OFFSET}}
+\item 
+unsigned int \mbox{\hyperlink{namespace_a_s_i_a4fb1c15606fca124058f34024ecfd00d}{ASI\+::\+APPMAIN\+\_\+\+OFFSET}}
+\end{DoxyCompactItemize}

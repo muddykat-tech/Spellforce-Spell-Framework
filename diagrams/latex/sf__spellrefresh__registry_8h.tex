@@ -1,0 +1,85 @@
+\doxysection{src/internal/registry/spell\+\_\+data\+\_\+registries/sf\+\_\+spellrefresh\+\_\+registry.h File Reference}
+\hypertarget{sf__spellrefresh__registry_8h}{}\label{sf__spellrefresh__registry_8h}\index{src/internal/registry/spell\_data\_registries/sf\_spellrefresh\_registry.h@{src/internal/registry/spell\_data\_registries/sf\_spellrefresh\_registry.h}}
+{\ttfamily \#include "{}../../../api/sfsf.\+h"{}}\newline
+Include dependency graph for sf\+\_\+spellrefresh\+\_\+registry.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__registry_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__registry_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{sf__registration__functions_8h_a6c693fbf9a67b42cfa2dce6d4a4e0b4b}{refresh\+\_\+handler\+\_\+ptr}} \mbox{\hyperlink{sf__spellrefresh__registry_8h_a3b50f8f994834f6409aa95f5d20dabe2}{get\+\_\+spell\+\_\+refresh}} (const uint16\+\_\+t spell\+\_\+job)
+\item 
+void \mbox{\hyperlink{sf__spellrefresh__registry_8h_a0ffaad3e760c8019f1194ce7d3ad11ed}{register\+Spell\+Refresh\+Handler}} (uint16\+\_\+t spell\+\_\+job, \mbox{\hyperlink{sf__registration__functions_8h_a6c693fbf9a67b42cfa2dce6d4a4e0b4b}{refresh\+\_\+handler\+\_\+ptr}} handler)
+\item 
+void \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__spellrefresh__registry_8h_ab02f3df414e163890e1c06702b2d3b7f}{register\+\_\+vanilla\+\_\+spell\+\_\+refresh\+\_\+handlers}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{sf__spellrefresh__registry_8h_a3b50f8f994834f6409aa95f5d20dabe2}\index{sf\_spellrefresh\_registry.h@{sf\_spellrefresh\_registry.h}!get\_spell\_refresh@{get\_spell\_refresh}}
+\index{get\_spell\_refresh@{get\_spell\_refresh}!sf\_spellrefresh\_registry.h@{sf\_spellrefresh\_registry.h}}
+\doxysubsubsection{\texorpdfstring{get\_spell\_refresh()}{get\_spell\_refresh()}}
+{\footnotesize\ttfamily \label{sf__spellrefresh__registry_8h_a3b50f8f994834f6409aa95f5d20dabe2} 
+\mbox{\hyperlink{sf__registration__functions_8h_a6c693fbf9a67b42cfa2dce6d4a4e0b4b}{refresh\+\_\+handler\+\_\+ptr}} get\+\_\+spell\+\_\+refresh (\begin{DoxyParamCaption}\item[{const uint16\+\_\+t}]{spell\+\_\+job}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spellrefresh__registry_8cpp_source_l00027}{27}} of file \mbox{\hyperlink{sf__spellrefresh__registry_8cpp_source}{sf\+\_\+spellrefresh\+\_\+registry.\+cpp}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__registry_8h_a3b50f8f994834f6409aa95f5d20dabe2_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__spellrefresh__registry_8h_ab02f3df414e163890e1c06702b2d3b7f}\index{sf\_spellrefresh\_registry.h@{sf\_spellrefresh\_registry.h}!register\_vanilla\_spell\_refresh\_handlers@{register\_vanilla\_spell\_refresh\_handlers}}
+\index{register\_vanilla\_spell\_refresh\_handlers@{register\_vanilla\_spell\_refresh\_handlers}!sf\_spellrefresh\_registry.h@{sf\_spellrefresh\_registry.h}}
+\doxysubsubsection{\texorpdfstring{register\_vanilla\_spell\_refresh\_handlers()}{register\_vanilla\_spell\_refresh\_handlers()}}
+{\footnotesize\ttfamily \label{sf__spellrefresh__registry_8h_ab02f3df414e163890e1c06702b2d3b7f} 
+void \+\_\+\+\_\+thiscall register\+\_\+vanilla\+\_\+spell\+\_\+refresh\+\_\+handlers (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spellrefresh__registry_8cpp_source_l00040}{40}} of file \mbox{\hyperlink{sf__spellrefresh__registry_8cpp_source}{sf\+\_\+spellrefresh\+\_\+registry.\+cpp}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{sf__spellrefresh__registry_8h_ab02f3df414e163890e1c06702b2d3b7f_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__spellrefresh__registry_8h_a0ffaad3e760c8019f1194ce7d3ad11ed}\index{sf\_spellrefresh\_registry.h@{sf\_spellrefresh\_registry.h}!registerSpellRefreshHandler@{registerSpellRefreshHandler}}
+\index{registerSpellRefreshHandler@{registerSpellRefreshHandler}!sf\_spellrefresh\_registry.h@{sf\_spellrefresh\_registry.h}}
+\doxysubsubsection{\texorpdfstring{registerSpellRefreshHandler()}{registerSpellRefreshHandler()}}
+{\footnotesize\ttfamily \label{sf__spellrefresh__registry_8h_a0ffaad3e760c8019f1194ce7d3ad11ed} 
+void register\+Spell\+Refresh\+Handler (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{spell\+\_\+job}{, }\item[{\mbox{\hyperlink{sf__registration__functions_8h_a6c693fbf9a67b42cfa2dce6d4a4e0b4b}{refresh\+\_\+handler\+\_\+ptr}}}]{handler}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spellrefresh__registry_8cpp_source_l00014}{14}} of file \mbox{\hyperlink{sf__spellrefresh__registry_8cpp_source}{sf\+\_\+spellrefresh\+\_\+registry.\+cpp}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__registry_8h_a0ffaad3e760c8019f1194ce7d3ad11ed_cgraph}
+\end{center}
+\end{figure}

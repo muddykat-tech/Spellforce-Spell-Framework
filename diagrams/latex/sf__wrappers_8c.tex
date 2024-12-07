@@ -1,0 +1,380 @@
+\doxysection{src/internal/core/sf\+\_\+wrappers.c File Reference}
+\hypertarget{sf__wrappers_8c}{}\label{sf__wrappers_8c}\index{src/internal/core/sf\_wrappers.c@{src/internal/core/sf\_wrappers.c}}
+{\ttfamily \#include $<$windows.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include "{}sf\+\_\+wrappers.\+h"{}}\newline
+{\ttfamily \#include "{}sf\+\_\+hooks.\+h"{}}\newline
+{\ttfamily \#include "{}hooks/sf\+\_\+menu\+\_\+hook.\+h"{}}\newline
+{\ttfamily \#include "{}hooks/sf\+\_\+console\+\_\+hook.\+h"{}}\newline
+Include dependency graph for sf\+\_\+wrappers.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__wrappers_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef void(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__wrappers_8c_a7424493c13059f1d1b56fc2de3a60cb2}{vfunction\+\_\+ptr}}) (void \texorpdfstring{$\ast$}{*}label, char \texorpdfstring{$\ast$}{*}p1)
+\item 
+typedef void(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__wrappers_8c_a7e9fc33d8673914d1b0c165c3193d1a7}{vfunction12\+\_\+ptr}}) (void \texorpdfstring{$\ast$}{*}container, void \texorpdfstring{$\ast$}{*}test, char \texorpdfstring{$\ast$}{*}p1)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{sf__wrappers_8c_ad057ef7976901ef0ba76e8b78eb53898}{initialize\+\_\+wrapper\+\_\+data\+\_\+hooks}} ()
+\item 
+void \mbox{\hyperlink{sf__wrappers_8c_ac5c95c4eeefbc3d135cafe996908b639}{log\+\_\+message}} (const char \texorpdfstring{$\ast$}{*}filename, const char \texorpdfstring{$\ast$}{*}message)
+\item 
+void \mbox{\hyperlink{sf__wrappers_8c_a825433b084e07dce191049d45ecdde2a}{log\+\_\+warning}} (const char \texorpdfstring{$\ast$}{*}message)
+\item 
+void \mbox{\hyperlink{sf__wrappers_8c_a4fd90de0913ed15b0812918255559a55}{log\+\_\+info}} (const char \texorpdfstring{$\ast$}{*}message)
+\item 
+void \mbox{\hyperlink{sf__wrappers_8c_aad4d6cb3f073a7fff67de1c1daa2c1f7}{log\+\_\+error}} (const char \texorpdfstring{$\ast$}{*}message)
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_a1c952b093fb7b451bb336a65c6658ad4}{SFLog}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__wrappers_8c_acf9d8a5367491e7f2b294fe979783e22}{setup\+\_\+logger}} ()
+\item 
+bool \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__wrappers_8c_ae2ec775265f1435a0f7e177e86b004d0}{is\+Action\+Melee}} (\mbox{\hyperlink{sf__general__structures_8h_a07619fa231562f2cc55bd33173b4c765}{SF\+\_\+\+SGt\+Figure\+Action}} \texorpdfstring{$\ast$}{*}\+\_\+this)
+\item 
+void \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__wrappers_8c_a6242a2f91bf97824c8c2eca28e2b2256}{setup\+Figure\+Iterator}} (\mbox{\hyperlink{sf__iterator__functions_8h_a229bbe7405e654b8ba7ec853dfbbe84f}{CGd\+Figure\+Iterator}} \texorpdfstring{$\ast$}{*}iterator, \mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}spell)
+\item 
+bool \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__wrappers_8c_aad92c6ec5283b3732feeefd0d62ab629}{has\+Spell\+Tag}} (uint16\+\_\+t spell\+\_\+id, \mbox{\hyperlink{sf__general__structures_8h_a42506507e4f7b927f1ec61d982197ff6}{Spell\+Tag}} tag)
+\item 
+uint32\+\_\+t \mbox{\hyperlink{sf__wrappers_8c_a3c287532656896e928bad09d4e9565e4}{get\+Distance}} (\mbox{\hyperlink{sf__general__structures_8h_aa44e45471f7b6c436abe46e7d9d728c9}{SF\+\_\+\+Coord}} \texorpdfstring{$\ast$}{*}pointA, \mbox{\hyperlink{sf__general__structures_8h_aa44e45471f7b6c436abe46e7d9d728c9}{SF\+\_\+\+Coord}} \texorpdfstring{$\ast$}{*}pointB)
+\item 
+void \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__wrappers_8c_a11ea3542304632f3b7ae9807ba5cf394}{dispose\+Figure\+Iterator}} (\mbox{\hyperlink{sf__iterator__functions_8h_a229bbe7405e654b8ba7ec853dfbbe84f}{CGd\+Figure\+Iterator}} iterator)
+\item 
+void \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__wrappers_8c_a07c7f2ab4e0212797ec2d05125bbf0e7}{add\+Bonus\+Mult\+To\+Statistic}} (\mbox{\hyperlink{sf__general__structures_8h_adcfde5041b3e58539ba533680e23d9b0}{SF\+\_\+\+CGd\+Figure}} \texorpdfstring{$\ast$}{*}figure, \mbox{\hyperlink{sf__figure__functions_8h_a35c57de9b4dfd894cc11e998a47b1436}{Statistic\+Data\+Key}} key, uint16\+\_\+t target, int8\+\_\+t value)
+\item 
+void \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__wrappers_8c_ab97dc11635deb183cfe8b9dc8b2fc064}{spell\+Clear\+Figure\+Flag}} (\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+id, \mbox{\hyperlink{sf__spell__functions_8h_a588abbdd197bfe8e420ee8a32ee9ba5e}{Spell\+Flag\+Key}} key)
+\item 
+void \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__wrappers_8c_a1feb5825c3671b0a58ddd372550124e1}{attach\+\_\+new\+\_\+label}} (\mbox{\hyperlink{sf__general__structures_8h_aa4b2c10b9c9570a024b495014e652c71}{CMnu\+Container}} \texorpdfstring{$\ast$}{*}parent, char \texorpdfstring{$\ast$}{*}label\+\_\+chars, uint8\+\_\+t font\+\_\+index, uint16\+\_\+t x\+\_\+pos, uint16\+\_\+t y\+\_\+pos, uint16\+\_\+t width, uint16\+\_\+t height)
+\item 
+uint16\+\_\+t \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__wrappers_8c_ad7e79f06e19f919ffb1ea67493886ff8}{sf\+\_\+get\+\_\+spell\+\_\+id}} (\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+index)
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_a64ca7d92af978ccdfb97fd8ad71ea8e5}{SFMod}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__wrappers_8c_ad7f44cb8b9d8f0cbc12c26d33c3f0cc6}{create\+Mod\+Info}} (const char \texorpdfstring{$\ast$}{*}mod\+\_\+id, const char \texorpdfstring{$\ast$}{*}mod\+\_\+version, const char \texorpdfstring{$\ast$}{*}mod\+\_\+author, const char \texorpdfstring{$\ast$}{*}mod\+\_\+description)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{sf__wrappers_8h_a29a27e7466c8964f8580d2530dfa83f2}{SF\+\_\+\+String\+\_\+ctor\+\_\+ptr}} \mbox{\hyperlink{sf__wrappers_8c_ab85594e3b6df124de9090d26bfd9e0e4}{g\+\_\+create\+\_\+sf\+\_\+string}}
+\item 
+\mbox{\hyperlink{sf__wrappers_8h_a38d30345bd98d7e48f2a2d58a3734831}{SF\+\_\+\+String\+\_\+dtor\+\_\+ptr}} \mbox{\hyperlink{sf__wrappers_8c_ad3b25209004dc1abef56d10891ae58d0}{g\+\_\+destroy\+\_\+sf\+\_\+string}}
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_a1c952b093fb7b451bb336a65c6658ad4}{SFLog}} \mbox{\hyperlink{sf__wrappers_8c_a590be2559f294aeda6077b3672b39218}{sf\+\_\+logger}}
+\item 
+\mbox{\hyperlink{sf__wrappers_8c_a7424493c13059f1d1b56fc2de3a60cb2}{vfunction\+\_\+ptr}} \mbox{\hyperlink{sf__wrappers_8c_a7ef53fed6c0e034e86c0600dbe4466bc}{vfunction176}}
+\item 
+\mbox{\hyperlink{sf__wrappers_8c_a7424493c13059f1d1b56fc2de3a60cb2}{vfunction\+\_\+ptr}} \mbox{\hyperlink{sf__wrappers_8c_ae0405b2ad0a2fe474abfda70a6478ab2}{vfunction25}}
+\item 
+\mbox{\hyperlink{sf__wrappers_8c_a7e9fc33d8673914d1b0c165c3193d1a7}{vfunction12\+\_\+ptr}} \mbox{\hyperlink{sf__wrappers_8c_af62420a2b3030fac6c2a06e178b73f99}{vfunction12}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{sf__wrappers_8c_a7e9fc33d8673914d1b0c165c3193d1a7}\index{sf\_wrappers.c@{sf\_wrappers.c}!vfunction12\_ptr@{vfunction12\_ptr}}
+\index{vfunction12\_ptr@{vfunction12\_ptr}!sf\_wrappers.c@{sf\_wrappers.c}}
+\doxysubsubsection{\texorpdfstring{vfunction12\_ptr}{vfunction12\_ptr}}
+{\footnotesize\ttfamily \label{sf__wrappers_8c_a7e9fc33d8673914d1b0c165c3193d1a7} 
+typedef void(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} vfunction12\+\_\+ptr) (void \texorpdfstring{$\ast$}{*}container, void \texorpdfstring{$\ast$}{*}test, char \texorpdfstring{$\ast$}{*}p1)}
+
+
+
+Definition at line \mbox{\hyperlink{sf__wrappers_8c_source_l00204}{204}} of file \mbox{\hyperlink{sf__wrappers_8c_source}{sf\+\_\+wrappers.\+c}}.
+
+\Hypertarget{sf__wrappers_8c_a7424493c13059f1d1b56fc2de3a60cb2}\index{sf\_wrappers.c@{sf\_wrappers.c}!vfunction\_ptr@{vfunction\_ptr}}
+\index{vfunction\_ptr@{vfunction\_ptr}!sf\_wrappers.c@{sf\_wrappers.c}}
+\doxysubsubsection{\texorpdfstring{vfunction\_ptr}{vfunction\_ptr}}
+{\footnotesize\ttfamily \label{sf__wrappers_8c_a7424493c13059f1d1b56fc2de3a60cb2} 
+typedef void(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} vfunction\+\_\+ptr) (void \texorpdfstring{$\ast$}{*}label, char \texorpdfstring{$\ast$}{*}p1)}
+
+
+
+Definition at line \mbox{\hyperlink{sf__wrappers_8c_source_l00203}{203}} of file \mbox{\hyperlink{sf__wrappers_8c_source}{sf\+\_\+wrappers.\+c}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{sf__wrappers_8c_a07c7f2ab4e0212797ec2d05125bbf0e7}\index{sf\_wrappers.c@{sf\_wrappers.c}!addBonusMultToStatistic@{addBonusMultToStatistic}}
+\index{addBonusMultToStatistic@{addBonusMultToStatistic}!sf\_wrappers.c@{sf\_wrappers.c}}
+\doxysubsubsection{\texorpdfstring{addBonusMultToStatistic()}{addBonusMultToStatistic()}}
+{\footnotesize\ttfamily \label{sf__wrappers_8c_a07c7f2ab4e0212797ec2d05125bbf0e7} 
+void \+\_\+\+\_\+thiscall add\+Bonus\+Mult\+To\+Statistic (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_adcfde5041b3e58539ba533680e23d9b0}{SF\+\_\+\+CGd\+Figure}} \texorpdfstring{$\ast$}{*}}]{figure}{, }\item[{\mbox{\hyperlink{sf__figure__functions_8h_a35c57de9b4dfd894cc11e998a47b1436}{Statistic\+Data\+Key}}}]{key}{, }\item[{uint16\+\_\+t}]{target}{, }\item[{int8\+\_\+t}]{value}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__wrappers_8c_source_l00123}{123}} of file \mbox{\hyperlink{sf__wrappers_8c_source}{sf\+\_\+wrappers.\+c}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__wrappers_8c_a07c7f2ab4e0212797ec2d05125bbf0e7_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__wrappers_8c_a1feb5825c3671b0a58ddd372550124e1}\index{sf\_wrappers.c@{sf\_wrappers.c}!attach\_new\_label@{attach\_new\_label}}
+\index{attach\_new\_label@{attach\_new\_label}!sf\_wrappers.c@{sf\_wrappers.c}}
+\doxysubsubsection{\texorpdfstring{attach\_new\_label()}{attach\_new\_label()}}
+{\footnotesize\ttfamily \label{sf__wrappers_8c_a1feb5825c3671b0a58ddd372550124e1} 
+void \+\_\+\+\_\+thiscall attach\+\_\+new\+\_\+label (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_aa4b2c10b9c9570a024b495014e652c71}{CMnu\+Container}} \texorpdfstring{$\ast$}{*}}]{parent}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{label\+\_\+chars}{, }\item[{uint8\+\_\+t}]{font\+\_\+index}{, }\item[{uint16\+\_\+t}]{x\+\_\+pos}{, }\item[{uint16\+\_\+t}]{y\+\_\+pos}{, }\item[{uint16\+\_\+t}]{width}{, }\item[{uint16\+\_\+t}]{height}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__wrappers_8c_source_l00210}{210}} of file \mbox{\hyperlink{sf__wrappers_8c_source}{sf\+\_\+wrappers.\+c}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__wrappers_8c_a1feb5825c3671b0a58ddd372550124e1_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__wrappers_8c_ad7f44cb8b9d8f0cbc12c26d33c3f0cc6}\index{sf\_wrappers.c@{sf\_wrappers.c}!createModInfo@{createModInfo}}
+\index{createModInfo@{createModInfo}!sf\_wrappers.c@{sf\_wrappers.c}}
+\doxysubsubsection{\texorpdfstring{createModInfo()}{createModInfo()}}
+{\footnotesize\ttfamily \label{sf__wrappers_8c_ad7f44cb8b9d8f0cbc12c26d33c3f0cc6} 
+\mbox{\hyperlink{sf__general__structures_8h_a64ca7d92af978ccdfb97fd8ad71ea8e5}{SFMod}} \texorpdfstring{$\ast$}{*} create\+Mod\+Info (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{mod\+\_\+id}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{mod\+\_\+version}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{mod\+\_\+author}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{mod\+\_\+description}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__wrappers_8c_source_l00262}{262}} of file \mbox{\hyperlink{sf__wrappers_8c_source}{sf\+\_\+wrappers.\+c}}.
+
+\Hypertarget{sf__wrappers_8c_a11ea3542304632f3b7ae9807ba5cf394}\index{sf\_wrappers.c@{sf\_wrappers.c}!disposeFigureIterator@{disposeFigureIterator}}
+\index{disposeFigureIterator@{disposeFigureIterator}!sf\_wrappers.c@{sf\_wrappers.c}}
+\doxysubsubsection{\texorpdfstring{disposeFigureIterator()}{disposeFigureIterator()}}
+{\footnotesize\ttfamily \label{sf__wrappers_8c_a11ea3542304632f3b7ae9807ba5cf394} 
+void \+\_\+\+\_\+thiscall dispose\+Figure\+Iterator (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__iterator__functions_8h_a229bbe7405e654b8ba7ec853dfbbe84f}{CGd\+Figure\+Iterator}}}]{iterator}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__wrappers_8c_source_l00116}{116}} of file \mbox{\hyperlink{sf__wrappers_8c_source}{sf\+\_\+wrappers.\+c}}.
+
+\Hypertarget{sf__wrappers_8c_a3c287532656896e928bad09d4e9565e4}\index{sf\_wrappers.c@{sf\_wrappers.c}!getDistance@{getDistance}}
+\index{getDistance@{getDistance}!sf\_wrappers.c@{sf\_wrappers.c}}
+\doxysubsubsection{\texorpdfstring{getDistance()}{getDistance()}}
+{\footnotesize\ttfamily \label{sf__wrappers_8c_a3c287532656896e928bad09d4e9565e4} 
+uint32\+\_\+t get\+Distance (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_aa44e45471f7b6c436abe46e7d9d728c9}{SF\+\_\+\+Coord}} \texorpdfstring{$\ast$}{*}}]{pointA}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_aa44e45471f7b6c436abe46e7d9d728c9}{SF\+\_\+\+Coord}} \texorpdfstring{$\ast$}{*}}]{pointB}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__wrappers_8c_source_l00089}{89}} of file \mbox{\hyperlink{sf__wrappers_8c_source}{sf\+\_\+wrappers.\+c}}.
+
+\Hypertarget{sf__wrappers_8c_aad92c6ec5283b3732feeefd0d62ab629}\index{sf\_wrappers.c@{sf\_wrappers.c}!hasSpellTag@{hasSpellTag}}
+\index{hasSpellTag@{hasSpellTag}!sf\_wrappers.c@{sf\_wrappers.c}}
+\doxysubsubsection{\texorpdfstring{hasSpellTag()}{hasSpellTag()}}
+{\footnotesize\ttfamily \label{sf__wrappers_8c_aad92c6ec5283b3732feeefd0d62ab629} 
+bool \+\_\+\+\_\+thiscall has\+Spell\+Tag (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{spell\+\_\+id}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_a42506507e4f7b927f1ec61d982197ff6}{Spell\+Tag}}}]{tag}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__wrappers_8c_source_l00084}{84}} of file \mbox{\hyperlink{sf__wrappers_8c_source}{sf\+\_\+wrappers.\+c}}.
+
+\Hypertarget{sf__wrappers_8c_ad057ef7976901ef0ba76e8b78eb53898}\index{sf\_wrappers.c@{sf\_wrappers.c}!initialize\_wrapper\_data\_hooks@{initialize\_wrapper\_data\_hooks}}
+\index{initialize\_wrapper\_data\_hooks@{initialize\_wrapper\_data\_hooks}!sf\_wrappers.c@{sf\_wrappers.c}}
+\doxysubsubsection{\texorpdfstring{initialize\_wrapper\_data\_hooks()}{initialize\_wrapper\_data\_hooks()}}
+{\footnotesize\ttfamily \label{sf__wrappers_8c_ad057ef7976901ef0ba76e8b78eb53898} 
+void initialize\+\_\+wrapper\+\_\+data\+\_\+hooks (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__wrappers_8c_source_l00018}{18}} of file \mbox{\hyperlink{sf__wrappers_8c_source}{sf\+\_\+wrappers.\+c}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=276pt]{sf__wrappers_8c_ad057ef7976901ef0ba76e8b78eb53898_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__wrappers_8c_ae2ec775265f1435a0f7e177e86b004d0}\index{sf\_wrappers.c@{sf\_wrappers.c}!isActionMelee@{isActionMelee}}
+\index{isActionMelee@{isActionMelee}!sf\_wrappers.c@{sf\_wrappers.c}}
+\doxysubsubsection{\texorpdfstring{isActionMelee()}{isActionMelee()}}
+{\footnotesize\ttfamily \label{sf__wrappers_8c_ae2ec775265f1435a0f7e177e86b004d0} 
+bool \+\_\+\+\_\+thiscall is\+Action\+Melee (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a07619fa231562f2cc55bd33173b4c765}{SF\+\_\+\+SGt\+Figure\+Action}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__wrappers_8c_source_l00069}{69}} of file \mbox{\hyperlink{sf__wrappers_8c_source}{sf\+\_\+wrappers.\+c}}.
+
+\Hypertarget{sf__wrappers_8c_aad4d6cb3f073a7fff67de1c1daa2c1f7}\index{sf\_wrappers.c@{sf\_wrappers.c}!log\_error@{log\_error}}
+\index{log\_error@{log\_error}!sf\_wrappers.c@{sf\_wrappers.c}}
+\doxysubsubsection{\texorpdfstring{log\_error()}{log\_error()}}
+{\footnotesize\ttfamily \label{sf__wrappers_8c_aad4d6cb3f073a7fff67de1c1daa2c1f7} 
+void log\+\_\+error (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{message}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__wrappers_8c_source_l00050}{50}} of file \mbox{\hyperlink{sf__wrappers_8c_source}{sf\+\_\+wrappers.\+c}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=347pt]{sf__wrappers_8c_aad4d6cb3f073a7fff67de1c1daa2c1f7_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__wrappers_8c_a4fd90de0913ed15b0812918255559a55}\index{sf\_wrappers.c@{sf\_wrappers.c}!log\_info@{log\_info}}
+\index{log\_info@{log\_info}!sf\_wrappers.c@{sf\_wrappers.c}}
+\doxysubsubsection{\texorpdfstring{log\_info()}{log\_info()}}
+{\footnotesize\ttfamily \label{sf__wrappers_8c_a4fd90de0913ed15b0812918255559a55} 
+void log\+\_\+info (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{message}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__wrappers_8c_source_l00042}{42}} of file \mbox{\hyperlink{sf__wrappers_8c_source}{sf\+\_\+wrappers.\+c}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=343pt]{sf__wrappers_8c_a4fd90de0913ed15b0812918255559a55_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__wrappers_8c_ac5c95c4eeefbc3d135cafe996908b639}\index{sf\_wrappers.c@{sf\_wrappers.c}!log\_message@{log\_message}}
+\index{log\_message@{log\_message}!sf\_wrappers.c@{sf\_wrappers.c}}
+\doxysubsubsection{\texorpdfstring{log\_message()}{log\_message()}}
+{\footnotesize\ttfamily \label{sf__wrappers_8c_ac5c95c4eeefbc3d135cafe996908b639} 
+void log\+\_\+message (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{filename}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{message}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__wrappers_8c_source_l00024}{24}} of file \mbox{\hyperlink{sf__wrappers_8c_source}{sf\+\_\+wrappers.\+c}}.
+
+\Hypertarget{sf__wrappers_8c_a825433b084e07dce191049d45ecdde2a}\index{sf\_wrappers.c@{sf\_wrappers.c}!log\_warning@{log\_warning}}
+\index{log\_warning@{log\_warning}!sf\_wrappers.c@{sf\_wrappers.c}}
+\doxysubsubsection{\texorpdfstring{log\_warning()}{log\_warning()}}
+{\footnotesize\ttfamily \label{sf__wrappers_8c_a825433b084e07dce191049d45ecdde2a} 
+void log\+\_\+warning (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{message}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__wrappers_8c_source_l00034}{34}} of file \mbox{\hyperlink{sf__wrappers_8c_source}{sf\+\_\+wrappers.\+c}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__wrappers_8c_a825433b084e07dce191049d45ecdde2a_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__wrappers_8c_acf9d8a5367491e7f2b294fe979783e22}\index{sf\_wrappers.c@{sf\_wrappers.c}!setup\_logger@{setup\_logger}}
+\index{setup\_logger@{setup\_logger}!sf\_wrappers.c@{sf\_wrappers.c}}
+\doxysubsubsection{\texorpdfstring{setup\_logger()}{setup\_logger()}}
+{\footnotesize\ttfamily \label{sf__wrappers_8c_acf9d8a5367491e7f2b294fe979783e22} 
+\mbox{\hyperlink{sf__general__structures_8h_a1c952b093fb7b451bb336a65c6658ad4}{SFLog}} \texorpdfstring{$\ast$}{*} setup\+\_\+logger (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__wrappers_8c_source_l00060}{60}} of file \mbox{\hyperlink{sf__wrappers_8c_source}{sf\+\_\+wrappers.\+c}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__wrappers_8c_acf9d8a5367491e7f2b294fe979783e22_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__wrappers_8c_a6242a2f91bf97824c8c2eca28e2b2256}\index{sf\_wrappers.c@{sf\_wrappers.c}!setupFigureIterator@{setupFigureIterator}}
+\index{setupFigureIterator@{setupFigureIterator}!sf\_wrappers.c@{sf\_wrappers.c}}
+\doxysubsubsection{\texorpdfstring{setupFigureIterator()}{setupFigureIterator()}}
+{\footnotesize\ttfamily \label{sf__wrappers_8c_a6242a2f91bf97824c8c2eca28e2b2256} 
+void \+\_\+\+\_\+thiscall setup\+Figure\+Iterator (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__iterator__functions_8h_a229bbe7405e654b8ba7ec853dfbbe84f}{CGd\+Figure\+Iterator}} \texorpdfstring{$\ast$}{*}}]{iterator}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{spell}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__wrappers_8c_source_l00078}{78}} of file \mbox{\hyperlink{sf__wrappers_8c_source}{sf\+\_\+wrappers.\+c}}.
+
+\Hypertarget{sf__wrappers_8c_ad7e79f06e19f919ffb1ea67493886ff8}\index{sf\_wrappers.c@{sf\_wrappers.c}!sf\_get\_spell\_id@{sf\_get\_spell\_id}}
+\index{sf\_get\_spell\_id@{sf\_get\_spell\_id}!sf\_wrappers.c@{sf\_wrappers.c}}
+\doxysubsubsection{\texorpdfstring{sf\_get\_spell\_id()}{sf\_get\_spell\_id()}}
+{\footnotesize\ttfamily \label{sf__wrappers_8c_ad7e79f06e19f919ffb1ea67493886ff8} 
+uint16\+\_\+t \+\_\+\+\_\+thiscall sf\+\_\+get\+\_\+spell\+\_\+id (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+index}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__wrappers_8c_source_l00251}{251}} of file \mbox{\hyperlink{sf__wrappers_8c_source}{sf\+\_\+wrappers.\+c}}.
+
+\Hypertarget{sf__wrappers_8c_ab97dc11635deb183cfe8b9dc8b2fc064}\index{sf\_wrappers.c@{sf\_wrappers.c}!spellClearFigureFlag@{spellClearFigureFlag}}
+\index{spellClearFigureFlag@{spellClearFigureFlag}!sf\_wrappers.c@{sf\_wrappers.c}}
+\doxysubsubsection{\texorpdfstring{spellClearFigureFlag()}{spellClearFigureFlag()}}
+{\footnotesize\ttfamily \label{sf__wrappers_8c_ab97dc11635deb183cfe8b9dc8b2fc064} 
+void \+\_\+\+\_\+thiscall spell\+Clear\+Figure\+Flag (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+id}{, }\item[{\mbox{\hyperlink{sf__spell__functions_8h_a588abbdd197bfe8e420ee8a32ee9ba5e}{Spell\+Flag\+Key}}}]{key}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__wrappers_8c_source_l00186}{186}} of file \mbox{\hyperlink{sf__wrappers_8c_source}{sf\+\_\+wrappers.\+c}}.
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{sf__wrappers_8c_ab85594e3b6df124de9090d26bfd9e0e4}\index{sf\_wrappers.c@{sf\_wrappers.c}!g\_create\_sf\_string@{g\_create\_sf\_string}}
+\index{g\_create\_sf\_string@{g\_create\_sf\_string}!sf\_wrappers.c@{sf\_wrappers.c}}
+\doxysubsubsection{\texorpdfstring{g\_create\_sf\_string}{g\_create\_sf\_string}}
+{\footnotesize\ttfamily \label{sf__wrappers_8c_ab85594e3b6df124de9090d26bfd9e0e4} 
+\mbox{\hyperlink{sf__wrappers_8h_a29a27e7466c8964f8580d2530dfa83f2}{SF\+\_\+\+String\+\_\+ctor\+\_\+ptr}} g\+\_\+create\+\_\+sf\+\_\+string}
+
+
+
+Definition at line \mbox{\hyperlink{sf__wrappers_8c_source_l00015}{15}} of file \mbox{\hyperlink{sf__wrappers_8c_source}{sf\+\_\+wrappers.\+c}}.
+
+\Hypertarget{sf__wrappers_8c_ad3b25209004dc1abef56d10891ae58d0}\index{sf\_wrappers.c@{sf\_wrappers.c}!g\_destroy\_sf\_string@{g\_destroy\_sf\_string}}
+\index{g\_destroy\_sf\_string@{g\_destroy\_sf\_string}!sf\_wrappers.c@{sf\_wrappers.c}}
+\doxysubsubsection{\texorpdfstring{g\_destroy\_sf\_string}{g\_destroy\_sf\_string}}
+{\footnotesize\ttfamily \label{sf__wrappers_8c_ad3b25209004dc1abef56d10891ae58d0} 
+\mbox{\hyperlink{sf__wrappers_8h_a38d30345bd98d7e48f2a2d58a3734831}{SF\+\_\+\+String\+\_\+dtor\+\_\+ptr}} g\+\_\+destroy\+\_\+sf\+\_\+string}
+
+
+
+Definition at line \mbox{\hyperlink{sf__wrappers_8c_source_l00016}{16}} of file \mbox{\hyperlink{sf__wrappers_8c_source}{sf\+\_\+wrappers.\+c}}.
+
+\Hypertarget{sf__wrappers_8c_a590be2559f294aeda6077b3672b39218}\index{sf\_wrappers.c@{sf\_wrappers.c}!sf\_logger@{sf\_logger}}
+\index{sf\_logger@{sf\_logger}!sf\_wrappers.c@{sf\_wrappers.c}}
+\doxysubsubsection{\texorpdfstring{sf\_logger}{sf\_logger}}
+{\footnotesize\ttfamily \label{sf__wrappers_8c_a590be2559f294aeda6077b3672b39218} 
+\mbox{\hyperlink{sf__general__structures_8h_a1c952b093fb7b451bb336a65c6658ad4}{SFLog}} sf\+\_\+logger}
+
+
+
+Definition at line \mbox{\hyperlink{sf__wrappers_8c_source_l00059}{59}} of file \mbox{\hyperlink{sf__wrappers_8c_source}{sf\+\_\+wrappers.\+c}}.
+
+\Hypertarget{sf__wrappers_8c_af62420a2b3030fac6c2a06e178b73f99}\index{sf\_wrappers.c@{sf\_wrappers.c}!vfunction12@{vfunction12}}
+\index{vfunction12@{vfunction12}!sf\_wrappers.c@{sf\_wrappers.c}}
+\doxysubsubsection{\texorpdfstring{vfunction12}{vfunction12}}
+{\footnotesize\ttfamily \label{sf__wrappers_8c_af62420a2b3030fac6c2a06e178b73f99} 
+\mbox{\hyperlink{sf__wrappers_8c_a7e9fc33d8673914d1b0c165c3193d1a7}{vfunction12\+\_\+ptr}} vfunction12}
+
+
+
+Definition at line \mbox{\hyperlink{sf__wrappers_8c_source_l00208}{208}} of file \mbox{\hyperlink{sf__wrappers_8c_source}{sf\+\_\+wrappers.\+c}}.
+
+\Hypertarget{sf__wrappers_8c_a7ef53fed6c0e034e86c0600dbe4466bc}\index{sf\_wrappers.c@{sf\_wrappers.c}!vfunction176@{vfunction176}}
+\index{vfunction176@{vfunction176}!sf\_wrappers.c@{sf\_wrappers.c}}
+\doxysubsubsection{\texorpdfstring{vfunction176}{vfunction176}}
+{\footnotesize\ttfamily \label{sf__wrappers_8c_a7ef53fed6c0e034e86c0600dbe4466bc} 
+\mbox{\hyperlink{sf__wrappers_8c_a7424493c13059f1d1b56fc2de3a60cb2}{vfunction\+\_\+ptr}} vfunction176}
+
+
+
+Definition at line \mbox{\hyperlink{sf__wrappers_8c_source_l00206}{206}} of file \mbox{\hyperlink{sf__wrappers_8c_source}{sf\+\_\+wrappers.\+c}}.
+
+\Hypertarget{sf__wrappers_8c_ae0405b2ad0a2fe474abfda70a6478ab2}\index{sf\_wrappers.c@{sf\_wrappers.c}!vfunction25@{vfunction25}}
+\index{vfunction25@{vfunction25}!sf\_wrappers.c@{sf\_wrappers.c}}
+\doxysubsubsection{\texorpdfstring{vfunction25}{vfunction25}}
+{\footnotesize\ttfamily \label{sf__wrappers_8c_ae0405b2ad0a2fe474abfda70a6478ab2} 
+\mbox{\hyperlink{sf__wrappers_8c_a7424493c13059f1d1b56fc2de3a60cb2}{vfunction\+\_\+ptr}} vfunction25}
+
+
+
+Definition at line \mbox{\hyperlink{sf__wrappers_8c_source_l00207}{207}} of file \mbox{\hyperlink{sf__wrappers_8c_source}{sf\+\_\+wrappers.\+c}}.
+

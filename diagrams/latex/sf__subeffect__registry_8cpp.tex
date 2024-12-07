@@ -1,0 +1,84 @@
+\doxysection{src/internal/registry/spell\+\_\+data\+\_\+registries/sf\+\_\+subeffect\+\_\+registry.cpp File Reference}
+\hypertarget{sf__subeffect__registry_8cpp}{}\label{sf__subeffect__registry_8cpp}\index{src/internal/registry/spell\_data\_registries/sf\_subeffect\_registry.cpp@{src/internal/registry/spell\_data\_registries/sf\_subeffect\_registry.cpp}}
+{\ttfamily \#include "{}../../../api/sf\+\_\+effect\+\_\+functions.\+h"{}}\newline
+{\ttfamily \#include "{}../../handlers/sf\+\_\+sub\+\_\+effect\+\_\+handlers.\+h"{}}\newline
+{\ttfamily \#include "{}../../core/sf\+\_\+hooks.\+h"{}}\newline
+{\ttfamily \#include "{}../../core/sf\+\_\+wrappers.\+h"{}}\newline
+{\ttfamily \#include "{}../../core/sf\+\_\+modloader.\+h"{}}\newline
+{\ttfamily \#include "{}../sf\+\_\+registry.\+h"{}}\newline
+{\ttfamily \#include $<$map$>$}\newline
+{\ttfamily \#include $<$cstdio$>$}\newline
+Include dependency graph for sf\+\_\+subeffect\+\_\+registry.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__subeffect__registry_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{sf__subeffect__registry_8cpp_a8c60d0b898c4269742ebb3f19049215e}{register\+Sub\+Effect\+Handler}} (uint16\+\_\+t spell\+\_\+line, \mbox{\hyperlink{sf__effect__functions_8h_af76bd3c90ee01801e44eaf0fb6cbab0e}{sub\+\_\+effect\+\_\+handler\+\_\+ptr}} handler)
+\item 
+\mbox{\hyperlink{sf__effect__functions_8h_af76bd3c90ee01801e44eaf0fb6cbab0e}{sub\+\_\+effect\+\_\+handler\+\_\+ptr}} \mbox{\hyperlink{sf__subeffect__registry_8cpp_a0b20af65c9e86bd5c6265c65595dfa2e}{get\+\_\+sub\+\_\+effect\+\_\+handler}} (uint16\+\_\+t spell\+\_\+line)
+\item 
+void \mbox{\hyperlink{sf__subeffect__registry_8cpp_a9a8146362cdec001aac19aa84590ef1a}{register\+\_\+vanilla\+\_\+sub\+\_\+effect\+\_\+handlers}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{sf__subeffect__registry_8cpp_a0b20af65c9e86bd5c6265c65595dfa2e}\index{sf\_subeffect\_registry.cpp@{sf\_subeffect\_registry.cpp}!get\_sub\_effect\_handler@{get\_sub\_effect\_handler}}
+\index{get\_sub\_effect\_handler@{get\_sub\_effect\_handler}!sf\_subeffect\_registry.cpp@{sf\_subeffect\_registry.cpp}}
+\doxysubsubsection{\texorpdfstring{get\_sub\_effect\_handler()}{get\_sub\_effect\_handler()}}
+{\footnotesize\ttfamily \label{sf__subeffect__registry_8cpp_a0b20af65c9e86bd5c6265c65595dfa2e} 
+\mbox{\hyperlink{sf__effect__functions_8h_af76bd3c90ee01801e44eaf0fb6cbab0e}{sub\+\_\+effect\+\_\+handler\+\_\+ptr}} get\+\_\+sub\+\_\+effect\+\_\+handler (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{spell\+\_\+line}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__subeffect__registry_8cpp_source_l00026}{26}} of file \mbox{\hyperlink{sf__subeffect__registry_8cpp_source}{sf\+\_\+subeffect\+\_\+registry.\+cpp}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__subeffect__registry_8cpp_a0b20af65c9e86bd5c6265c65595dfa2e_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__subeffect__registry_8cpp_a9a8146362cdec001aac19aa84590ef1a}\index{sf\_subeffect\_registry.cpp@{sf\_subeffect\_registry.cpp}!register\_vanilla\_sub\_effect\_handlers@{register\_vanilla\_sub\_effect\_handlers}}
+\index{register\_vanilla\_sub\_effect\_handlers@{register\_vanilla\_sub\_effect\_handlers}!sf\_subeffect\_registry.cpp@{sf\_subeffect\_registry.cpp}}
+\doxysubsubsection{\texorpdfstring{register\_vanilla\_sub\_effect\_handlers()}{register\_vanilla\_sub\_effect\_handlers()}}
+{\footnotesize\ttfamily \label{sf__subeffect__registry_8cpp_a9a8146362cdec001aac19aa84590ef1a} 
+void register\+\_\+vanilla\+\_\+sub\+\_\+effect\+\_\+handlers (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__subeffect__registry_8cpp_source_l00038}{38}} of file \mbox{\hyperlink{sf__subeffect__registry_8cpp_source}{sf\+\_\+subeffect\+\_\+registry.\+cpp}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__subeffect__registry_8cpp_a9a8146362cdec001aac19aa84590ef1a_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__subeffect__registry_8cpp_a8c60d0b898c4269742ebb3f19049215e}\index{sf\_subeffect\_registry.cpp@{sf\_subeffect\_registry.cpp}!registerSubEffectHandler@{registerSubEffectHandler}}
+\index{registerSubEffectHandler@{registerSubEffectHandler}!sf\_subeffect\_registry.cpp@{sf\_subeffect\_registry.cpp}}
+\doxysubsubsection{\texorpdfstring{registerSubEffectHandler()}{registerSubEffectHandler()}}
+{\footnotesize\ttfamily \label{sf__subeffect__registry_8cpp_a8c60d0b898c4269742ebb3f19049215e} 
+void register\+Sub\+Effect\+Handler (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{spell\+\_\+line}{, }\item[{\mbox{\hyperlink{sf__effect__functions_8h_af76bd3c90ee01801e44eaf0fb6cbab0e}{sub\+\_\+effect\+\_\+handler\+\_\+ptr}}}]{handler}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__subeffect__registry_8cpp_source_l00013}{13}} of file \mbox{\hyperlink{sf__subeffect__registry_8cpp_source}{sf\+\_\+subeffect\+\_\+registry.\+cpp}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__subeffect__registry_8cpp_a8c60d0b898c4269742ebb3f19049215e_cgraph}
+\end{center}
+\end{figure}

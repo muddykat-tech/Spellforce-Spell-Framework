@@ -1,0 +1,257 @@
+\doxysection{sf\+\_\+onhit\+\_\+handlers.\+cpp}
+\hypertarget{sf__onhit__handlers_8cpp_source}{}\label{sf__onhit__handlers_8cpp_source}\index{src/internal/handlers/sf\_onhit\_handlers.cpp@{src/internal/handlers/sf\_onhit\_handlers.cpp}}
+\mbox{\hyperlink{sf__onhit__handlers_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__onhit__handlers_8h}{sf\_onhit\_handlers.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__wrappers_8h}{../core/sf\_wrappers.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__hooks_8h}{../core/sf\_hooks.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <list>}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00006}\mbox{\hyperlink{sf__onhit__handlers_8cpp_ac0986ad1e5c63abc1c53b44e7b612e1d}{00006}}\ uint16\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__onhit__handlers_8cpp_ac0986ad1e5c63abc1c53b44e7b612e1d}{trueshot\_onhit\_handler}}(\mbox{\hyperlink{sf__general__structures_8h_a2739681db2b7bff68f1229d5a5f3d5e4}{SF\_CGdFigureJobs}}\ *\_this,\ uint16\_t\ source\_index,\ uint16\_t\ target\_index,\ uint16\_t\ damage)}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00007}00007\ \{}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00008}00008\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a07619fa231562f2cc55bd33173b4c765}{SF\_SGtFigureAction}}\ action;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00009}00009\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8c_a9f46704f751d2e936794090d969bfb63}{aiAPI}}.getTargetAction(\_this-\/>CGdFigure,\ \&action,\ source\_index);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00011}00011\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{sf__wrappers_8c_ae2ec775265f1435a0f7e177e86b004d0}{isActionMelee}}(\&action))}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00012}00012\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00013}00013\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ damage;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00014}00014\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00016}00016\ \ \ \ \ uint16\_t\ spell\_index\_of\_type\ =\ \mbox{\hyperlink{_test_mod_8cpp_af5cc9e62d950cef0fc6386b8162d5cf0}{toolboxAPI}}.getSpellIndexOfType(\_this-\/>CGdFigureToolBox,\ source\_index,\ \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a03d6ff6bac62e9636f098ff623be6e5f}{kGdSpellLineAbilityTrueShot}},\ 0);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00017}00017\ \ \ \ \ \mbox{\hyperlink{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}{SF\_CGdResourceSpell}}\ spell\_data;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00018}00018\ \ \ \ \ uint16\_t\ spell\_id\ =\ \mbox{\hyperlink{_test_mod_8cpp_a5b988b6614b887f35da8a75c213820b8}{spellAPI}}.getSpellID(\_this-\/>CGdSpell,\ spell\_index\_of\_type);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00019}00019\ \ \ \ \ \mbox{\hyperlink{_test_mod_8cpp_a5b988b6614b887f35da8a75c213820b8}{spellAPI}}.getResourceSpellData(\_this-\/>CGdResource,\ \&spell\_data,\ spell\_id);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00020}00020\ \ \ \ \ uint16\_t\ current\_damage\ =\ (spell\_data.params[1]\ *\ damage)\ /\ 100;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00021}00021\ \ \ \ \ \textcolor{keywordflow}{return}\ current\_damage;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00022}00022\ \}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00024}\mbox{\hyperlink{sf__onhit__handlers_8cpp_a8a7c13dd51222396bae7fc6466d4f32a}{00024}}\ uint16\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__onhit__handlers_8cpp_a8a7c13dd51222396bae7fc6466d4f32a}{riposte\_onhit\_handler}}(\mbox{\hyperlink{sf__general__structures_8h_a2739681db2b7bff68f1229d5a5f3d5e4}{SF\_CGdFigureJobs}}\ *\_this,\ uint16\_t\ source\_index,\ uint16\_t\ target\_index,\ uint16\_t\ damage)}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00025}00025\ \{}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00026}00026\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a07619fa231562f2cc55bd33173b4c765}{SF\_SGtFigureAction}}\ action;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00027}00027\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8c_a9f46704f751d2e936794090d969bfb63}{aiAPI}}.getTargetAction(\_this-\/>CGdFigure,\ \&action,\ source\_index);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00028}00028\ \ \ \ \ \textcolor{keywordtype}{bool}\ isMeleeAttack\ =\ \mbox{\hyperlink{sf__wrappers_8c_ae2ec775265f1435a0f7e177e86b004d0}{isActionMelee}}(\&action);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00030}00030\ \ \ \ \ \textcolor{keywordflow}{if}\ (!isMeleeAttack)}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00031}00031\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00032}00032\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ damage;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00033}00033\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00035}00035\ \ \ \ \ \mbox{\hyperlink{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}{SF\_CGdResourceSpell}}\ spell\_data;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00036}00036\ \ \ \ \ uint16\_t\ spell\_index\ =\ \mbox{\hyperlink{_test_mod_8cpp_af5cc9e62d950cef0fc6386b8162d5cf0}{toolboxAPI}}.getSpellIndexOfType(\_this-\/>CGdFigureToolBox,\ target\_index,\ \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ac50b2107cecfed43423e305eb7a24983}{kGdSpellLineAbilityRiposte}},\ 0);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00037}00037\ \ \ \ \ uint16\_t\ spell\_id\ =\ \mbox{\hyperlink{_test_mod_8cpp_a5b988b6614b887f35da8a75c213820b8}{spellAPI}}.getSpellID(\_this-\/>CGdSpell,\ spell\_index);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00038}00038\ \ \ \ \ \mbox{\hyperlink{_test_mod_8cpp_a5b988b6614b887f35da8a75c213820b8}{spellAPI}}.getResourceSpellData(\_this-\/>CGdResource,\ \&spell\_data,\ spell\_id);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00040}00040\ \ \ \ \ uint16\_t\ return\_damage\ =\ (damage\ *\ spell\_data.params[0])\ /\ 100;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00042}00042\ \ \ \ \ \textcolor{comment}{//\ Lower\ the\ damage\ by\ the\ amount\ that\ will\ be\ reflected}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00043}00043\ \ \ \ \ uint16\_t\ final\_damage\ =\ (damage\ -\/\ return\_damage);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00044}00044\ \ \ \ \ \textcolor{keywordflow}{if}\ (final\_damage\ !=\ 0)}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00045}00045\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00046}00046\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_test_mod_8cpp_af5cc9e62d950cef0fc6386b8162d5cf0}{toolboxAPI}}.dealDamage(\_this-\/>CGdFigureToolBox,\ target\_index,\ source\_index,\ return\_damage,\ 0,\ 0,\ 0);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00047}00047\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00049}00049\ \ \ \ \ \textcolor{keywordflow}{return}\ final\_damage;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00050}00050\ \}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00052}\mbox{\hyperlink{sf__onhit__handlers_8cpp_abb6ab49666d5bff642990c358db43685}{00052}}\ uint16\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__onhit__handlers_8cpp_abb6ab49666d5bff642990c358db43685}{durability\_onhit\_handler}}(\mbox{\hyperlink{sf__general__structures_8h_a2739681db2b7bff68f1229d5a5f3d5e4}{SF\_CGdFigureJobs}}\ *\_this,\ uint16\_t\ source\_index,\ uint16\_t\ target\_index,\ uint16\_t\ damage)}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00053}00053\ \{}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00054}00054\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a07619fa231562f2cc55bd33173b4c765}{SF\_SGtFigureAction}}\ action;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00055}00055\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8c_a9f46704f751d2e936794090d969bfb63}{aiAPI}}.getTargetAction(\_this-\/>CGdFigure,\ \&action,\ source\_index);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00056}00056\ \ \ \ \ \textcolor{keywordtype}{bool}\ isMeleeAttack\ =\ \mbox{\hyperlink{sf__wrappers_8c_ae2ec775265f1435a0f7e177e86b004d0}{isActionMelee}}(\&action);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00058}00058\ \ \ \ \ \textcolor{keywordflow}{if}\ (!isMeleeAttack)}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00059}00059\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00060}00060\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ damage;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00061}00061\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00063}00063\ \ \ \ \ \mbox{\hyperlink{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}{SF\_CGdResourceSpell}}\ spell\_data;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00064}00064\ \ \ \ \ uint16\_t\ spell\_index\ =\ \mbox{\hyperlink{_test_mod_8cpp_af5cc9e62d950cef0fc6386b8162d5cf0}{toolboxAPI}}.getSpellIndexOfType(\_this-\/>CGdFigureToolBox,\ source\_index,\ \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a0abe463ca2e843201a6ed71f222216e1}{kGdSpellLineAbilityDurability}},\ 0);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00065}00065\ \ \ \ \ uint16\_t\ spell\_id\ =\ \mbox{\hyperlink{_test_mod_8cpp_a5b988b6614b887f35da8a75c213820b8}{spellAPI}}.getSpellID(\_this-\/>CGdSpell,\ spell\_index);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00066}00066\ \ \ \ \ \mbox{\hyperlink{_test_mod_8cpp_a5b988b6614b887f35da8a75c213820b8}{spellAPI}}.getResourceSpellData(\_this-\/>CGdResource,\ \&spell\_data,\ spell\_id);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00067}00067\ \ \ \ \ \textcolor{keywordflow}{return}\ (damage\ *\ spell\_data.params[1])\ /\ 100;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00068}00068\ \}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00070}\mbox{\hyperlink{sf__onhit__handlers_8cpp_a13a971818ee688e6c1c727b73dc3b4f8}{00070}}\ uint16\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__onhit__handlers_8cpp_a13a971818ee688e6c1c727b73dc3b4f8}{critical\_hits\_onhit\_handler}}(\mbox{\hyperlink{sf__general__structures_8h_a2739681db2b7bff68f1229d5a5f3d5e4}{SF\_CGdFigureJobs}}\ *\_this,\ uint16\_t\ source\_index,\ uint16\_t\ target\_index,\ uint16\_t\ damage)}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00071}00071\ \{}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00072}00072\ \ \ \ \ \textcolor{comment}{//\ no\ need\ to\ calculate\ damage\ in\ this\ cases}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00073}00073\ \ \ \ \ \textcolor{keywordflow}{if}\ (damage\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00074}00074\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00075}00075\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ damage;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00076}00076\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00077}00077\ \ \ \ \ uint16\_t\ target\_level\ =\ \_this-\/>CGdFigure-\/>figures[target\_index].level;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00078}00078\ \ \ \ \ uint16\_t\ source\_level\ =\ \_this-\/>CGdFigure-\/>figures[source\_index].level;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00079}00079\ \ \ \ \ \textcolor{comment}{//\ not\ proccing\ on\ targets\ 5+\ levels\ above\ source}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00080}00080\ \ \ \ \ \textcolor{keywordflow}{if}\ (source\_level\ +\ 5\ <=\ target\_level)}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00081}00081\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ damage;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00083}00083\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00084}00084\ \ \ \ \ \textcolor{comment}{//\ outright\ killing\ targets\ 15+\ levels\ below}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00085}00085\ \ \ \ \ \textcolor{keywordflow}{if}\ (source\_level\ -\/\ 0xf\ >\ target\_level)}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00086}00086\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00087}00087\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0x7fff;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00088}00088\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00089}00089\ \ \ \ \ \mbox{\hyperlink{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}{SF\_CGdResourceSpell}}\ spell\_data;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00090}00090\ \ \ \ \ uint16\_t\ spell\_index\ =\ \mbox{\hyperlink{_test_mod_8cpp_af5cc9e62d950cef0fc6386b8162d5cf0}{toolboxAPI}}.getSpellIndexOfType(\_this-\/>CGdFigureToolBox,\ spell\_index,\ \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a7130e84ad012920f333c5364b248ce20}{kGdSpellLineAbilityCriticalHits}},\ 0);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00091}00091\ \ \ \ \ uint16\_t\ spell\_id\ =\ \mbox{\hyperlink{_test_mod_8cpp_a5b988b6614b887f35da8a75c213820b8}{spellAPI}}.getSpellID(\_this-\/>CGdSpell,\ spell\_index);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00092}00092\ \ \ \ \ \mbox{\hyperlink{_test_mod_8cpp_a5b988b6614b887f35da8a75c213820b8}{spellAPI}}.getResourceSpellData(\_this-\/>CGdResource,\ \&spell\_data,\ spell\_id);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00094}00094\ \ \ \ \ uint16\_t\ tmp\_damage\ =\ damage\ *\ spell\_data.params[1];}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00095}00095\ \ \ \ \ uint16\_t\ hp\_left\ =\ \mbox{\hyperlink{_test_mod_8cpp_a721b8129088d90091730781611ecee94}{figureAPI}}.getCurrentHealth(\_this-\/>CGdFigure,\ target\_index);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00096}00096\ \ \ \ \ \textcolor{keywordflow}{if}\ (tmp\_damage\ <\ hp\_left)}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00097}00097\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ damage;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00099}00099\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00100}00100\ }
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00101}00101\ \ \ \ \ tmp\_damage\ =\ ((tmp\_damage\ -\/\ hp\_left)\ *\ 100)\ /\ tmp\_damage;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00102}00102\ \ \ \ \ uint16\_t\ chance\ =\ 5\ *\ tmp\_damage\ *\ (5\ +\ (int16\_t)(source\_level\ -\/\ target\_level));}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00103}00103\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{_test_mod_8cpp_a5b988b6614b887f35da8a75c213820b8}{spellAPI}}.getRandom(\_this-\/>OpaqueClass,\ 10000)\ >\ chance)}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00104}00104\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00105}00105\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ damage;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00106}00106\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00107}00107\ \ \ \ \ \textcolor{keywordflow}{return}\ 0x7fff;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00108}00108\ \}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00109}00109\ }
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00110}\mbox{\hyperlink{sf__onhit__handlers_8cpp_a3770396fbee7cfe4628cb69d8ffa8ef9}{00110}}\ uint16\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__onhit__handlers_8cpp_a3770396fbee7cfe4628cb69d8ffa8ef9}{endurance\_onhit\_handler}}(\mbox{\hyperlink{sf__general__structures_8h_a2739681db2b7bff68f1229d5a5f3d5e4}{SF\_CGdFigureJobs}}\ *\_this,\ uint16\_t\ source\_index,\ uint16\_t\ target\_index,\ uint16\_t\ damage)}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00111}00111\ \{}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00112}00112\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a07619fa231562f2cc55bd33173b4c765}{SF\_SGtFigureAction}}\ action;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00113}00113\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8c_a9f46704f751d2e936794090d969bfb63}{aiAPI}}.getTargetAction(\_this-\/>CGdFigure,\ \&action,\ source\_index);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00114}00114\ \ \ \ \ \textcolor{keywordtype}{bool}\ isMeleeAttack\ =\ \mbox{\hyperlink{sf__wrappers_8c_ae2ec775265f1435a0f7e177e86b004d0}{isActionMelee}}(\&action);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00115}00115\ }
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00116}00116\ \ \ \ \ \textcolor{keywordflow}{if}\ (!isMeleeAttack)}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00117}00117\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00118}00118\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ damage;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00119}00119\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00120}00120\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{_test_mod_8cpp_af5cc9e62d950cef0fc6386b8162d5cf0}{toolboxAPI}}.hasSpellOnIt(\_this-\/>CGdFigureToolBox,\ source\_index,\ \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a0abe463ca2e843201a6ed71f222216e1}{kGdSpellLineAbilityDurability}}))}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00121}00121\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00122}00122\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ damage;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00123}00123\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00124}00124\ }
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00125}00125\ \ \ \ \ \mbox{\hyperlink{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}{SF\_CGdResourceSpell}}\ spell\_data;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00126}00126\ \ \ \ \ uint16\_t\ spell\_index\ =\ \mbox{\hyperlink{_test_mod_8cpp_af5cc9e62d950cef0fc6386b8162d5cf0}{toolboxAPI}}.getSpellIndexOfType(\_this-\/>CGdFigureToolBox,\ source\_index,\ \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393afa6dde4a8074d54d4a3b902e286ba6dc}{kGdSpellLineAbilityEndurance}},\ 0);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00127}00127\ \ \ \ \ uint16\_t\ spell\_id\ =\ \mbox{\hyperlink{_test_mod_8cpp_a5b988b6614b887f35da8a75c213820b8}{spellAPI}}.getSpellID(\_this-\/>CGdSpell,\ spell\_index);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00128}00128\ \ \ \ \ \mbox{\hyperlink{_test_mod_8cpp_a5b988b6614b887f35da8a75c213820b8}{spellAPI}}.getResourceSpellData(\_this-\/>CGdResource,\ \&spell\_data,\ spell\_id);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00129}00129\ \ \ \ \ \textcolor{keywordflow}{return}\ (damage\ *\ spell\_data.params[1])\ /\ 100;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00130}00130\ \}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00131}00131\ }
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00132}\mbox{\hyperlink{sf__onhit__handlers_8cpp_a68c8e1479dea26d0fefe2f917fc836f0}{00132}}\ uint16\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__onhit__handlers_8cpp_a68c8e1479dea26d0fefe2f917fc836f0}{berserk\_onhit\_handler}}(\mbox{\hyperlink{sf__general__structures_8h_a2739681db2b7bff68f1229d5a5f3d5e4}{SF\_CGdFigureJobs}}\ *\_this,\ uint16\_t\ source\_index,\ uint16\_t\ target\_index,\ uint16\_t\ damage)}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00133}00133\ \{}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00134}00134\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a07619fa231562f2cc55bd33173b4c765}{SF\_SGtFigureAction}}\ action;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00135}00135\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8c_a9f46704f751d2e936794090d969bfb63}{aiAPI}}.getTargetAction(\_this-\/>CGdFigure,\ \&action,\ source\_index);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00136}00136\ \ \ \ \ \textcolor{keywordtype}{bool}\ isMeleeAttack\ =\ \mbox{\hyperlink{sf__wrappers_8c_ae2ec775265f1435a0f7e177e86b004d0}{isActionMelee}}(\&action);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00137}00137\ }
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00138}00138\ \ \ \ \ \textcolor{keywordflow}{if}\ (!isMeleeAttack)}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00139}00139\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00140}00140\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ damage;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00141}00141\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00142}00142\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{_test_mod_8cpp_af5cc9e62d950cef0fc6386b8162d5cf0}{toolboxAPI}}.hasSpellOnIt(\_this-\/>CGdFigureToolBox,\ source\_index,\ \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393afa6dde4a8074d54d4a3b902e286ba6dc}{kGdSpellLineAbilityEndurance}}))}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00143}00143\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00144}00144\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ damage;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00145}00145\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00146}00146\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{_test_mod_8cpp_af5cc9e62d950cef0fc6386b8162d5cf0}{toolboxAPI}}.hasSpellOnIt(\_this-\/>CGdFigureToolBox,\ source\_index,\ \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a0abe463ca2e843201a6ed71f222216e1}{kGdSpellLineAbilityDurability}}))}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00147}00147\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00148}00148\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ damage;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00149}00149\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00150}00150\ \ \ \ \ \mbox{\hyperlink{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}{SF\_CGdResourceSpell}}\ spell\_data;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00151}00151\ \ \ \ \ uint16\_t\ spell\_index\ =\ \mbox{\hyperlink{_test_mod_8cpp_af5cc9e62d950cef0fc6386b8162d5cf0}{toolboxAPI}}.getSpellIndexOfType(\_this-\/>CGdFigureToolBox,\ source\_index,\ \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393add4e5fdb4f68a12564fd3f8ccc949867}{kGdSpellLineAbilityBerserk}},\ 0);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00152}00152\ \ \ \ \ uint16\_t\ spell\_id\ =\ \mbox{\hyperlink{_test_mod_8cpp_a5b988b6614b887f35da8a75c213820b8}{spellAPI}}.getSpellID(\_this-\/>CGdSpell,\ spell\_index);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00153}00153\ \ \ \ \ \mbox{\hyperlink{_test_mod_8cpp_a5b988b6614b887f35da8a75c213820b8}{spellAPI}}.getResourceSpellData(\_this-\/>CGdResource,\ \&spell\_data,\ spell\_id);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00154}00154\ \ \ \ \ \textcolor{keywordflow}{return}\ (damage\ *\ spell\_data.params[1])\ /\ 100;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00155}00155\ \}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00156}00156\ }
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00157}\mbox{\hyperlink{sf__onhit__handlers_8cpp_a5bfdda108517a0c519e5ec6a934a7b2a}{00157}}\ uint16\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__onhit__handlers_8cpp_a5bfdda108517a0c519e5ec6a934a7b2a}{warcry\_onhit\_handler}}(\mbox{\hyperlink{sf__general__structures_8h_a2739681db2b7bff68f1229d5a5f3d5e4}{SF\_CGdFigureJobs}}\ *\_this,\ uint16\_t\ source\_index,\ uint16\_t\ target\_index,\ uint16\_t\ damage)}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00158}00158\ \{}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00159}00159\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a07619fa231562f2cc55bd33173b4c765}{SF\_SGtFigureAction}}\ action;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00160}00160\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8c_a9f46704f751d2e936794090d969bfb63}{aiAPI}}.getTargetAction(\_this-\/>CGdFigure,\ \&action,\ source\_index);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00161}00161\ \ \ \ \ \textcolor{keywordtype}{bool}\ isMeleeAttack\ =\ \mbox{\hyperlink{sf__wrappers_8c_ae2ec775265f1435a0f7e177e86b004d0}{isActionMelee}}(\&action);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00162}00162\ }
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00163}00163\ \ \ \ \ \textcolor{keywordflow}{if}\ (!isMeleeAttack)}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00164}00164\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00165}00165\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ damage;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00166}00166\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00167}00167\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{_test_mod_8cpp_af5cc9e62d950cef0fc6386b8162d5cf0}{toolboxAPI}}.hasSpellOnIt(\_this-\/>CGdFigureToolBox,\ source\_index,\ \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393afa6dde4a8074d54d4a3b902e286ba6dc}{kGdSpellLineAbilityEndurance}}))}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00168}00168\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00169}00169\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ damage;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00170}00170\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00171}00171\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{_test_mod_8cpp_af5cc9e62d950cef0fc6386b8162d5cf0}{toolboxAPI}}.hasSpellOnIt(\_this-\/>CGdFigureToolBox,\ source\_index,\ \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a0abe463ca2e843201a6ed71f222216e1}{kGdSpellLineAbilityDurability}}))}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00172}00172\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00173}00173\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ damage;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00174}00174\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00175}00175\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{_test_mod_8cpp_af5cc9e62d950cef0fc6386b8162d5cf0}{toolboxAPI}}.hasSpellOnIt(\_this-\/>CGdFigureToolBox,\ source\_index,\ \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393add4e5fdb4f68a12564fd3f8ccc949867}{kGdSpellLineAbilityBerserk}}))}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00176}00176\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00177}00177\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ damage;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00178}00178\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00179}00179\ \ \ \ \ \mbox{\hyperlink{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}{SF\_CGdResourceSpell}}\ spell\_data;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00180}00180\ \ \ \ \ uint16\_t\ spell\_index\ =\ \mbox{\hyperlink{_test_mod_8cpp_af5cc9e62d950cef0fc6386b8162d5cf0}{toolboxAPI}}.getSpellIndexOfType(\_this-\/>CGdFigureToolBox,\ source\_index,\ \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a7bdb626463fc76f051bf14dc33512529}{kGdSpellLineAbilityWarCry}},\ 0);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00181}00181\ \ \ \ \ uint16\_t\ spell\_id\ =\ \mbox{\hyperlink{_test_mod_8cpp_a5b988b6614b887f35da8a75c213820b8}{spellAPI}}.getSpellID(\_this-\/>CGdSpell,\ spell\_index);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00182}00182\ \ \ \ \ \mbox{\hyperlink{_test_mod_8cpp_a5b988b6614b887f35da8a75c213820b8}{spellAPI}}.getResourceSpellData(\_this-\/>CGdResource,\ \&spell\_data,\ spell\_id);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00183}00183\ \ \ \ \ \textcolor{keywordflow}{return}\ (damage\ *\ spell\_data.params[1])\ /\ 100;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00184}00184\ \}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00185}00185\ }
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00186}\mbox{\hyperlink{sf__onhit__handlers_8cpp_a649600c313ee46716d4f4342f672b69a}{00186}}\ uint16\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__onhit__handlers_8cpp_a649600c313ee46716d4f4342f672b69a}{assistance\_onhit\_handler}}(\mbox{\hyperlink{sf__general__structures_8h_a2739681db2b7bff68f1229d5a5f3d5e4}{SF\_CGdFigureJobs}}\ *\_this,\ uint16\_t\ source\_index,\ uint16\_t\ target\_index,\ uint16\_t\ damage)}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00187}00187\ \{}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00188}00188\ \ \ \ \ \textcolor{comment}{//\ oneshot\ or\ zero\ damage}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00189}00189\ \ \ \ \ \textcolor{keywordflow}{if}\ (damage\ ==\ 0x7fff\ ||\ damage\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00190}00190\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00191}00191\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ damage;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00192}00192\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00193}00193\ \ \ \ \ \mbox{\hyperlink{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}{SF\_CGdResourceSpell}}\ spell\_data;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00194}00194\ \ \ \ \ uint16\_t\ spell\_index\ =\ \mbox{\hyperlink{_test_mod_8cpp_af5cc9e62d950cef0fc6386b8162d5cf0}{toolboxAPI}}.getSpellIndexOfType(\_this-\/>CGdFigureToolBox,\ target\_index,\ \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aa1edb64203cb51b563133c3146cb1514}{kGdSpellLineAssistance}},\ 0);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00195}00195\ \ \ \ \ uint16\_t\ spell\_id\ =\ \mbox{\hyperlink{_test_mod_8cpp_a5b988b6614b887f35da8a75c213820b8}{spellAPI}}.getSpellID(\_this-\/>CGdSpell,\ spell\_index);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00196}00196\ \ \ \ \ \mbox{\hyperlink{_test_mod_8cpp_a5b988b6614b887f35da8a75c213820b8}{spellAPI}}.getResourceSpellData(\_this-\/>CGdResource,\ \&spell\_data,\ spell\_id);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00197}00197\ \ \ \ \ \mbox{\hyperlink{sf__iterator__functions_8h_a229bbe7405e654b8ba7ec853dfbbe84f}{CGdFigureIterator}}\ iter;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00198}00198\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8c_a764358640400f5367f96608b5794f0c2}{iteratorAPI}}.figureIteratorInit(\&iter,\ 0,\ 0,\ 0x3ff,\ 0x3ff);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00199}00199\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8c_a764358640400f5367f96608b5794f0c2}{iteratorAPI}}.figureIteratorSetPointers(\&iter,\ \_this-\/>CGdFigure,\ \_this-\/>AutoClass22,\ \_this-\/>CGdWorld);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00200}00200\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8c_a764358640400f5367f96608b5794f0c2}{iteratorAPI}}.iteratorSetArea(\&iter,\ \&\_this-\/>CGdFigure-\/>figures-\/>position,\ spell\_data.params[0]);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00201}00201\ \ \ \ \ std::list<uint16\_t>\ affected\_figures;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00202}00202\ \ \ \ \ uint16\_t\ \mbox{\hyperlink{sf__toolbox__functions_8h_a1df661aef5db9714e4b8646fa8e7cbdc}{figure\_id}}\ =\ \mbox{\hyperlink{sf__hooks_8c_a764358640400f5367f96608b5794f0c2}{iteratorAPI}}.getNextFigure(\&iter);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00203}00203\ \ \ \ \ uint16\_t\ element\_count\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00204}00204\ \ \ \ \ \textcolor{keywordflow}{while}\ (\mbox{\hyperlink{sf__toolbox__functions_8h_a1df661aef5db9714e4b8646fa8e7cbdc}{figure\_id}}\ !=\ 0)}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00205}00205\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00206}00206\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{_test_mod_8cpp_af5cc9e62d950cef0fc6386b8162d5cf0}{toolboxAPI}}.figuresCheckFriendly(\_this-\/>CGdFigureToolBox,\ target\_index,\ \mbox{\hyperlink{sf__toolbox__functions_8h_a1df661aef5db9714e4b8646fa8e7cbdc}{figure\_id}}))}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00207}00207\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{sf__toolbox__functions_8h_a1df661aef5db9714e4b8646fa8e7cbdc}{figure\_id}}\ !=\ target\_index)}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ affected\_figures.push\_back(\mbox{\hyperlink{sf__toolbox__functions_8h_a1df661aef5db9714e4b8646fa8e7cbdc}{figure\_id}});}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ element\_count++;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (element\_count\ ==\ spell\_data.params[1])}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00217}00217\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00218}00218\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__toolbox__functions_8h_a1df661aef5db9714e4b8646fa8e7cbdc}{figure\_id}}\ =\ \mbox{\hyperlink{sf__hooks_8c_a764358640400f5367f96608b5794f0c2}{iteratorAPI}}.getNextFigure(\&iter);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00219}00219\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00220}00220\ \ \ \ \ \textcolor{keywordflow}{if}\ (element\_count\ !=\ 0)}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00221}00221\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00222}00222\ \ \ \ \ \ \ \ \ uint16\_t\ shared\_damage\ =\ (damage\ /\ (element\_count\ +\ 1));}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00223}00223\ \ \ \ \ \ \ \ \ uint16\_t\ remainder\ =\ (damage\ \%\ (element\_count\ +\ 1));}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00224}00224\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aa44e45471f7b6c436abe46e7d9d728c9}{SF\_Coord}}\ source\_pos\ =\ \_this-\/>CGdFigure-\/>figures[target\_index].position;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00225}00225\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aedd8705d0983d09965ace902f37d0e0b}{SF\_CGdTargetData}}\ source\_data;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00226}00226\ \ \ \ \ \ \ \ \ source\_data.entity\_index\ =\ target\_index;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00227}00227\ \ \ \ \ \ \ \ \ source\_data.entity\_type\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00228}00228\ \ \ \ \ \ \ \ \ source\_data.position\ =\ source\_pos;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00229}00229\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ t\ :\ affected\_figures)}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00230}00230\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aa44e45471f7b6c436abe46e7d9d728c9}{SF\_Coord}}\ friend\_pos\ =\ \_this-\/>CGdFigure-\/>figures[t].position;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ uint32\_t\ distance\ =\ \mbox{\hyperlink{sf__wrappers_8c_a3c287532656896e928bad09d4e9565e4}{getDistance}}(\&source\_pos,\ \&friend\_pos);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ distance\ =\ (distance\ *\ 0x578)\ /\ 1000;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (distance\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00235}00235\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ distance\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00237}00237\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00238}00238\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aedd8705d0983d09965ace902f37d0e0b}{SF\_CGdTargetData}}\ friend\_data;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ friend\_data.entity\_type\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00240}00240\ \ \ \ \ \ \ \ \ \ \ \ \ friend\_data.entity\_index\ =\ t;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ friend\_pos\ =\ friend\_pos;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00242}00242\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a1b8b1ec284ff51feaf2673b4aa18f4eb}{SF\_Rectangle}}\ unused\ =\ \{0,\ 0\};}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00243}00243\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__hooks_8c_a6223ae94a537c083aa89e5ad9033bb62}{effectAPI}}.addEffect(\_this-\/>CGdEffect,\ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa053580e27d9ec2972f6cf57d9748152a}{kGdEffectSpellAssistanceHitFigure}},\ \&source\_data,\ \&friend\_data,}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00244}00244\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_this-\/>OpaqueClass-\/>current\_step,\ distance,\ \&unused);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_test_mod_8cpp_af5cc9e62d950cef0fc6386b8162d5cf0}{toolboxAPI}}.dealDamage(\_this-\/>CGdFigureToolBox,\ source\_index,\ t,\ shared\_damage,\ 0,\ 0,\ 0);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00246}00246\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00247}00247\ \ \ \ \ \ \ \ \ damage\ =\ shared\_damage\ +\ remainder;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00248}00248\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00249}00249\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8c_a764358640400f5367f96608b5794f0c2}{iteratorAPI}}.disposeFigureIterator(iter);}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00250}00250\ \ \ \ \ \textcolor{keywordflow}{return}\ damage;}
+\DoxyCodeLine{\Hypertarget{sf__onhit__handlers_8cpp_source_l00251}00251\ \}}
+
+\end{DoxyCode}

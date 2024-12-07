@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['target_5fonhit_5fspell_0',['TARGET_ONHIT_SPELL',['../sf__registration__functions_8h.html#a1ef25133f998082d0974a3d43088f1e5a636237f8aba0ef100f937b6f69bd96b5',1,'sf_registration_functions.h']]],
+  ['target_5fonhit_5fspell_0',['TARGET_ONHIT_SPELL',['../sf__general__structures_8h.html#a42506507e4f7b927f1ec61d982197ff6a636237f8aba0ef100f937b6f69bd96b5',1,'sf_general_structures.h']]],
   ['task_5fforge_1',['TASK_FORGE',['../sf__general__structures_8h.html#a54c3638e61af929e03829f9caa622073abc75637ba7b152e97cd204300f665968',1,'sf_general_structures.h']]],
   ['task_5fhero_2',['TASK_HERO',['../sf__general__structures_8h.html#a54c3638e61af929e03829f9caa622073a48bd84e659a01c6771a4d4e07695003f',1,'sf_general_structures.h']]],
   ['task_5fhunting_5flodge_3',['TASK_HUNTING_LODGE',['../sf__general__structures_8h.html#a54c3638e61af929e03829f9caa622073a197417afd7dc7ba0509c2ee298b7d022',1,'sf_general_structures.h']]],
