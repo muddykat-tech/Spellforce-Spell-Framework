@@ -49,16 +49,18 @@ DECLARE_FUNCTION(void, linkSingleTargetAIHandler, SFSpell *spell, ai_single_hand
 DECLARE_FUNCTION(void, linkAOEAIHandler, SFSpell *spell, ai_aoe_handler_ptr handler);
 DECLARE_FUNCTION(void, linkAvoidanceAIHandler, SFSpell *spell, ai_avoidance_handler_ptr handler);
 
-DECLARE_FUNCTION_GROUP(Registration,
-					   registerSpell_ptr registerSpell;
-					   linkTypeHandler_ptr linkTypeHandler;
-					   linkEffectHandler_ptr linkEffectHandler;
-					   linkEndHandler_ptr linkEndHandler;
-					   applySpellTag_ptr applySpellTag;
-					   linkSubEffectHandler_ptr linkSubEffectHandler;
-					   linkRefreshHandler_ptr linkRefreshHandler;
-					   linkDealDamageHandler_ptr linkDealDamageHandler;
-					   linkOnHitHandler_ptr linkOnHitHandler;
-					   linkAvoidanceAIHandler_ptr linkAvoidanceAIHandler;
-					   linkSingleTargetAIHandler_ptr linkSingleTargetAIHandler;
-					   linkAOEAIHandler_ptr linkAOEAIHandler;);
+typedef struct
+{
+	registerSpell_ptr registerSpell;
+	linkTypeHandler_ptr linkTypeHandler;
+	linkEffectHandler_ptr linkEffectHandler;
+	linkEndHandler_ptr linkEndHandler;
+	applySpellTag_ptr applySpellTag;
+	linkSubEffectHandler_ptr linkSubEffectHandler;
+	linkRefreshHandler_ptr linkRefreshHandler;
+	linkDealDamageHandler_ptr linkDealDamageHandler;
+	linkOnHitHandler_ptr linkOnHitHandler;
+	linkAvoidanceAIHandler_ptr linkAvoidanceAIHandler;
+	linkSingleTargetAIHandler_ptr linkSingleTargetAIHandler;
+	linkAOEAIHandler_ptr linkAOEAIHandler;
+} RegistrationFunctions;

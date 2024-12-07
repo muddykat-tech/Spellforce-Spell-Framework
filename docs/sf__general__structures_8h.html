@@ -282,8 +282,6 @@ Macros</h2></td></tr>
 <tr class="memitem:a8fc1a791568a2848b8b001524eee155c" id="r_a8fc1a791568a2848b8b001524eee155c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8fc1a791568a2848b8b001524eee155c">DECLARE_FUNCTION</a>(type,  name, ...)</td></tr>
 <tr class="memdesc:a8fc1a791568a2848b8b001524eee155c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Declares a function with the specified return type, name, and arguments.  <br /></td></tr>
 <tr class="separator:a8fc1a791568a2848b8b001524eee155c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b4790d37e7ac68e99b4cc12ab91328e" id="r_a7b4790d37e7ac68e99b4cc12ab91328e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7b4790d37e7ac68e99b4cc12ab91328e">DECLARE_FUNCTION_GROUP</a>(group, ...)</td></tr>
-<tr class="separator:a7b4790d37e7ac68e99b4cc12ab91328e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -561,6 +559,7 @@ Enumerations</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ab898071398b359603a35c202e9c65f3b" id="r_ab898071398b359603a35c202e9c65f3b"><td class="memItemLeft" align="right" valign="top">struct&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab898071398b359603a35c202e9c65f3b">__attribute__</a> ((packed))</td></tr>
+<tr class="memdesc:ab898071398b359603a35c202e9c65f3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">A structure for the global list of figures and related statistics for them.  <br /></td></tr>
 <tr class="separator:ab898071398b359603a35c202e9c65f3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab4f08eefec549de8444fd0207158d0ab" id="r_ab4f08eefec549de8444fd0207158d0ab"><td class="memItemLeft" align="right" valign="top">void __thiscall&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab4f08eefec549de8444fd0207158d0ab">attach_new_label</a> (<a class="el" href="#aa4b2c10b9c9570a024b495014e652c71">CMnuContainer</a> *parent, char *label_text, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height)</td></tr>
 <tr class="separator:ab4f08eefec549de8444fd0207158d0ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -661,7 +660,6 @@ Variables</h2></td></tr>
 <b>Value:</b><div class="fragment"><div class="line">    <span class="keyword">typedef</span> type(__thiscall *name##_ptr)(__VA_ARGS__);</div>
 </div><!-- fragment -->
 <p>Declares a function with the specified return type, name, and arguments. </p>
-<p>@macro DECLARE_FUNCTION </p>
 <p>This macro is used to define functions that we use for hooking into the game and to expose these to the API. we use it to cut down on boilerplate code typedefs and structures.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -672,34 +670,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00796">796</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
-
-</div>
-</div>
-<a id="a7b4790d37e7ac68e99b4cc12ab91328e" name="a7b4790d37e7ac68e99b4cc12ab91328e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7b4790d37e7ac68e99b4cc12ab91328e">&#9670;&#160;</a></span>DECLARE_FUNCTION_GROUP</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DECLARE_FUNCTION_GROUP</td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>group</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em></em></span>...&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <span class="keyword">typedef</span> <span class="keyword">struct                         </span>\</div>
-<div class="line">    {                                      \</div>
-<div class="line">        __VA_ARGS__                        \</div>
-<div class="line">    } group##Functions;</div>
-</div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00799">799</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00798">798</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -716,7 +687,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00753">753</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00756">756</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -732,7 +703,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00763">763</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00766">766</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -748,7 +719,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00765">765</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00768">768</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -764,7 +735,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00776">776</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00779">779</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -780,7 +751,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00759">759</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00762">762</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -796,7 +767,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00756">756</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00759">759</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -812,7 +783,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00755">755</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00758">758</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -828,7 +799,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00757">757</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00760">760</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -844,7 +815,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00758">758</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00761">761</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -860,7 +831,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00780">780</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00783">783</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -876,7 +847,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00778">778</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00781">781</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -892,7 +863,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00779">779</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00782">782</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -908,7 +879,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00754">754</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00757">757</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -924,7 +895,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00762">762</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00765">765</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -956,7 +927,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00770">770</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00773">773</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -972,7 +943,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00760">760</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00763">763</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -988,7 +959,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00777">777</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00780">780</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -1004,7 +975,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00781">781</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00784">784</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -1020,7 +991,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00761">761</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00764">764</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -1036,7 +1007,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00768">768</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00771">771</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -1052,7 +1023,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00767">767</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00770">770</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -1068,7 +1039,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00775">775</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00778">778</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -1084,7 +1055,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00773">773</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00776">776</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -1100,7 +1071,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00771">771</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00774">774</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -1287,7 +1258,7 @@ Variables</h2></td></tr>
 <tr><td class="fieldname"><a id="a5dd3c40db85ccf451e0ea2888e91883aa2305fb41c8855c0f4ff3e23229321583" name="a5dd3c40db85ccf451e0ea2888e91883aa2305fb41c8855c0f4ff3e23229321583"></a>kGdEffectMax&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00706">706</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00709">709</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -1444,7 +1415,7 @@ Variables</h2></td></tr>
 <tr><td class="fieldname"><a id="a3f1ae4d570090b097230b86e02b1a178a2addb49878f50c95dc669e5fdbd130a2" name="a3f1ae4d570090b097230b86e02b1a178a2addb49878f50c95dc669e5fdbd130a2"></a>COUNT&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00698">698</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00701">701</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -1483,7 +1454,7 @@ Variables</h2></td></tr>
 <tr><td class="fieldname"><a id="a59e7b4825ade86985ea9ff0cd38d4355a6c400d88ba9221a3edc111cd5dbc9dd6" name="a59e7b4825ade86985ea9ff0cd38d4355a6c400d88ba9221a3edc111cd5dbc9dd6"></a>SPELL_CONSERVATION_SHIELD&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00673">673</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00676">676</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -1533,6 +1504,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>A structure for the global list of figures and related statistics for them. </p>
 
 <p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00001">1</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
@@ -1634,7 +1607,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00343">343</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00346">346</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -1666,7 +1639,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00327">327</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00330">330</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -1682,7 +1655,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00606">606</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00609">609</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -1714,7 +1687,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00631">631</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00634">634</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -1730,7 +1703,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00647">647</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00650">650</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -1746,7 +1719,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00639">639</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00642">642</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -1762,7 +1735,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00671">671</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00674">674</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -1778,7 +1751,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00662">662</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00665">665</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -1826,7 +1799,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00587">587</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00590">590</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -1858,7 +1831,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00314">314</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00317">317</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -1906,7 +1879,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00624">624</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00627">627</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -1938,7 +1911,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00611">611</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00614">614</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -1954,7 +1927,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00617">617</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00620">620</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -1970,7 +1943,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00386">386</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00389">389</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -2066,7 +2039,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00351">351</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00354">354</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -2082,7 +2055,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00359">359</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00362">362</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -2098,7 +2071,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00366">366</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00369">369</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>
@@ -2114,7 +2087,7 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00372">372</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__general__structures_8h_source.html#l00375">375</a> of file <a class="el" href="sf__general__structures_8h_source.html">sf_general_structures.h</a>.</p>
 
 </div>
 </div>

@@ -1,10 +1,21 @@
 var searchData=
 [
-  ['aiapi_0',['aiAPI',['../struct_spellforce_spell_framework.html#ad99031dc9d31010bab42163b85bb5b49',1,'SpellforceSpellFramework::aiAPI'],['../sf__hooks_8c.html#a9f46704f751d2e936794090d969bfb63',1,'aiAPI:&#160;sf_hooks.c'],['../sf__hooks_8h.html#a9f46704f751d2e936794090d969bfb63',1,'aiAPI:&#160;sf_hooks.c']]],
-  ['appmain_5foffset_1',['APPMAIN_OFFSET',['../namespace_a_s_i.html#a4fb1c15606fca124058f34024ecfd00d',1,'ASI']]],
-  ['autoclass14_2',['AutoClass14',['../sf__general__structures_8h.html#ae56d22e41c81c0beca45d507d4ba44e8',1,'sf_general_structures.h']]],
-  ['autoclass24_3',['AutoClass24',['../sf__general__structures_8h.html#a33f353e639dcf925b3b022137ecf7432',1,'sf_general_structures.h']]],
-  ['autoclass60_4',['AutoClass60',['../sf__ai__functions_8h.html#a76be63358a79fc66bf634f23e8e5f06c',1,'sf_ai_functions.h']]],
-  ['autoclass60_5fdata_5',['AutoClass60_data',['../sf__ai__functions_8h.html#a3b2f327c9acacac6607e05b8bf8d3044',1,'sf_ai_functions.h']]],
-  ['autoclass69_6',['AutoClass69',['../sf__general__structures_8h.html#aa3705057831d559c6a64bd6a4aeb9dd3',1,'sf_general_structures.h']]]
+  ['ac60addorgetentity_0',['AC60AddOrGetEntity',['../struct_ai_functions.html#af2248339c04683a087dd42ad62076fc7',1,'AiFunctions']]],
+  ['addaction_1',['addAction',['../struct_figure_functions.html#a628e912e761ce328624e085d37882082',1,'FigureFunctions']]],
+  ['addbonusmult_2',['addBonusMult',['../struct_figure_functions.html#a2c7cb86876168f925ece1d705dd421fc',1,'FigureFunctions']]],
+  ['addbonusmulttostatistic_3',['addBonusMultToStatistic',['../struct_figure_functions.html#aec008992608252a17cd192965d568c20',1,'FigureFunctions']]],
+  ['addeffect_4',['addEffect',['../struct_effect_functions.html#a17ae3648392fd5e5952a430cc2688edb',1,'EffectFunctions']]],
+  ['addspell_5',['addSpell',['../struct_spell_functions.html#a962e3a225218757ca3e8d707613c1314',1,'SpellFunctions']]],
+  ['addspelltofigure_6',['addSpellToFigure',['../struct_toolbox_functions.html#a42ef513af43ab7a223adfa0ede463a64',1,'ToolboxFunctions']]],
+  ['addtoxdata_7',['addToXData',['../struct_spell_functions.html#a37ced9539e1ddd4b7b0c54cbd7558682',1,'SpellFunctions']]],
+  ['addunit_8',['addUnit',['../struct_toolbox_functions.html#a0f9f6e014712dd19592fed29b3bf830c',1,'ToolboxFunctions']]],
+  ['addvisualeffect_9',['addVisualEffect',['../struct_spell_functions.html#abef90091db95ae798138025c451ffbbe',1,'SpellFunctions']]],
+  ['aiapi_10',['aiAPI',['../struct_spellforce_spell_framework.html#ad99031dc9d31010bab42163b85bb5b49',1,'SpellforceSpellFramework::aiAPI'],['../sf__hooks_8c.html#a9f46704f751d2e936794090d969bfb63',1,'aiAPI:&#160;sf_hooks.c'],['../sf__hooks_8h.html#a9f46704f751d2e936794090d969bfb63',1,'aiAPI:&#160;sf_hooks.c']]],
+  ['applyspelltag_11',['applySpellTag',['../struct_registration_functions.html#acc04eb6c8eee1e556b633c3d2ff2fd9d',1,'RegistrationFunctions']]],
+  ['appmain_5foffset_12',['APPMAIN_OFFSET',['../namespace_a_s_i.html#a4fb1c15606fca124058f34024ecfd00d',1,'ASI']]],
+  ['autoclass14_13',['AutoClass14',['../sf__general__structures_8h.html#ae56d22e41c81c0beca45d507d4ba44e8',1,'sf_general_structures.h']]],
+  ['autoclass24_14',['AutoClass24',['../sf__general__structures_8h.html#a33f353e639dcf925b3b022137ecf7432',1,'sf_general_structures.h']]],
+  ['autoclass60_15',['AutoClass60',['../sf__ai__functions_8h.html#a76be63358a79fc66bf634f23e8e5f06c',1,'sf_ai_functions.h']]],
+  ['autoclass60_5fdata_16',['AutoClass60_data',['../sf__ai__functions_8h.html#a3b2f327c9acacac6607e05b8bf8d3044',1,'sf_ai_functions.h']]],
+  ['autoclass69_17',['AutoClass69',['../sf__general__structures_8h.html#aa3705057831d559c6a64bd6a4aeb9dd3',1,'sf_general_structures.h']]]
 ];

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['registrationapi_0',['registrationAPI',['../struct_spellforce_spell_framework.html#a02421d621414cc1a80e692d21dec7775',1,'SpellforceSpellFramework::registrationAPI'],['../_test_mod_8cpp.html#a032f264605eb651b428b9ca84409e5c5',1,'registrationAPI:&#160;TestMod.cpp'],['../sf__hooks_8c.html#ae864f2c7237380a404ae0b972f87d36f',1,'registrationAPI:&#160;sf_hooks.c'],['../sf__hooks_8h.html#ae864f2c7237380a404ae0b972f87d36f',1,'registrationAPI:&#160;TestMod.cpp']]]
+  ['old_5freg_5fperm_0',['old_reg_perm',['../struct_a_s_i_1_1_memory_region.html#a8357aac6c7ffd5a3f5e22d72b678a62e',1,'ASI::MemoryRegion']]],
+  ['onspellremove_1',['onSpellRemove',['../struct_spell_functions.html#abfc56830d1de7707b3ba9d0a45cc9380',1,'SpellFunctions']]]
 ];

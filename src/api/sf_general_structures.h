@@ -307,6 +307,9 @@ typedef struct __attribute__((packed))
     uint8_t set_type;
 } GdFigure;
 
+/**
+ * @brief A structure for the global list of figures and related statistics for them
+ */
 typedef struct __attribute__((packed))
 {
     uint16_t max_used;
@@ -783,7 +786,6 @@ typedef void(__thiscall *menu_label_set_font_ptr)(void *_this, SF_Font *font);
 extern void __thiscall attach_new_label(CMnuContainer *parent, char *label_text, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height);
 
 /**
- * @macro DECLARE_FUNCTION
  * @brief Declares a function with the specified return type, name, and arguments.
  * 
  * This macro is used to define functions that we use for hooking into the game and to expose these to the API.
@@ -795,9 +797,3 @@ extern void __thiscall attach_new_label(CMnuContainer *parent, char *label_text,
  */
 #define DECLARE_FUNCTION(type, name, ...) \
     typedef type(__thiscall *name##_ptr)(__VA_ARGS__);
-
-#define DECLARE_FUNCTION_GROUP(group, ...) \
-    typedef struct                         \
-    {                                      \
-        __VA_ARGS__                        \
-    } group##Functions;

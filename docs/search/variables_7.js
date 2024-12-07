@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['logapi_0',['logAPI',['../struct_spellforce_spell_framework.html#a28facbb31f7f8cb31f79e15385f02115',1,'SpellforceSpellFramework']]],
-  ['logger_1',['logger',['../_test_mod_8cpp.html#ae1013ca38170a8eaa9fe3a8a88b42809',1,'TestMod.cpp']]]
+  ['hasspellonit_0',['hasSpellOnIt',['../struct_toolbox_functions.html#a4252a801c57cf3f1c933c14a5c33cb49',1,'ToolboxFunctions']]],
+  ['hasspelltag_1',['hasSpellTag',['../struct_spell_functions.html#ac436a0f2ad21ce5c66af94c9a001018a',1,'SpellFunctions']]]
 ];

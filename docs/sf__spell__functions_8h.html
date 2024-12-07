@@ -89,6 +89,7 @@ $(function(){ initResizable(false); });
 <div id="doc-content">
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
@@ -302,6 +303,12 @@ This graph shows which files directly or indirectly include this file:</div>
 </div>
 <p><a href="sf__spell__functions_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_spell_functions.html">SpellFunctions</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a collection of function pointers for managing spell-related operations.  <a href="struct_spell_functions.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr class="memitem:a588abbdd197bfe8e420ee8a32ee9ba5e" id="r_a588abbdd197bfe8e420ee8a32ee9ba5e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a588abbdd197bfe8e420ee8a32ee9ba5e">SpellFlagKey</a> { <a class="el" href="#a588abbdd197bfe8e420ee8a32ee9ba5ead9232843108f384e615ce592834113a1">CHECK_SPELLS_BEFORE_CHECK_BATTLE</a> = 0x04
@@ -657,8 +664,6 @@ Functions</h2></td></tr>
 <tr class="separator:aaae3278904990a10b313a19fa7cf0a78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3d01781c7b0b78749eee3cdfdad71ea2" id="r_a3d01781c7b0b78749eee3cdfdad71ea2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3d01781c7b0b78749eee3cdfdad71ea2">DECLARE_FUNCTION</a> (int, checkCanApply, <a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *_this, uint16_t index)</td></tr>
 <tr class="separator:a3d01781c7b0b78749eee3cdfdad71ea2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa1c75c02f80d00e51cfcf32df1b7686b" id="r_aa1c75c02f80d00e51cfcf32df1b7686b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa1c75c02f80d00e51cfcf32df1b7686b">DECLARE_FUNCTION_GROUP</a> (Spell, setXData_ptr setXData;initializeSpellData_ptr <a class="el" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3">initializeSpellData</a>;setEffectDone_ptr setEffectDone;addToXData_ptr addToXData;getChanceToResistSpell_ptr getChanceToResistSpell;getRandom_ptr getRandom;getResourceSpellData_ptr getResourceSpellData;addVisualEffect_ptr addVisualEffect;figureAggro_ptr figureAggro;getXData_ptr getXData;getTargetsRectangle_ptr getTargetsRectangle;removeDLLNode_ptr removeDLLNode;spellClearFigureFlag_ptr <a class="el" href="sf__wrappers_8c.html#ab97dc11635deb183cfe8b9dc8b2fc064">spellClearFigureFlag</a>;addSpell_ptr addSpell;getSpellLine_ptr getSpellLine;onSpellRemove_ptr onSpellRemove;getSpellID_ptr getSpellID;checkCanApply_ptr checkCanApply;getSpellTags_ptr <a class="el" href="sf__mod__registry_8cpp.html#af3ffd25a39d8cd3e76880a062109e619">getSpellTags</a>;hasSpellTag_ptr <a class="el" href="sf__wrappers_8c.html#aad92c6ec5283b3732feeefd0d62ab629">hasSpellTag</a>;figClrChkSplBfrChkBattle_ptr figClrChkSplBfrChkBattle;figTryClrCHkSPlBfrJob2_ptr figTryClrCHkSPlBfrJob2;figTryUnfreeze_ptr figTryUnfreeze;)</td></tr>
-<tr class="separator:aa1c75c02f80d00e51cfcf32df1b7686b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -1797,27 +1802,6 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="#a588abbdd197bfe8e420ee8a32ee9ba5e">SpellFlagKey</a></td>          <td class="paramname"><span class="paramname"><em>key</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aa1c75c02f80d00e51cfcf32df1b7686b" name="aa1c75c02f80d00e51cfcf32df1b7686b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa1c75c02f80d00e51cfcf32df1b7686b">&#9670;&#160;</a></span>DECLARE_FUNCTION_GROUP()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">DECLARE_FUNCTION_GROUP </td>
-          <td>(</td>
-          <td class="paramtype">Spell</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">setXData_ptr setXData;initializeSpellData_ptr <a class="el" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3">initializeSpellData</a>;setEffectDone_ptr setEffectDone;addToXData_ptr addToXData;getChanceToResistSpell_ptr getChanceToResistSpell;getRandom_ptr getRandom;getResourceSpellData_ptr getResourceSpellData;addVisualEffect_ptr addVisualEffect;figureAggro_ptr figureAggro;getXData_ptr getXData;getTargetsRectangle_ptr getTargetsRectangle;removeDLLNode_ptr removeDLLNode;spellClearFigureFlag_ptr <a class="el" href="sf__wrappers_8c.html#ab97dc11635deb183cfe8b9dc8b2fc064">spellClearFigureFlag</a>;addSpell_ptr addSpell;getSpellLine_ptr getSpellLine;onSpellRemove_ptr onSpellRemove;getSpellID_ptr getSpellID;checkCanApply_ptr checkCanApply;getSpellTags_ptr <a class="el" href="sf__mod__registry_8cpp.html#af3ffd25a39d8cd3e76880a062109e619">getSpellTags</a>;hasSpellTag_ptr <a class="el" href="sf__wrappers_8c.html#aad92c6ec5283b3732feeefd0d62ab629">hasSpellTag</a>;figClrChkSplBfrChkBattle_ptr figClrChkSplBfrChkBattle;figTryClrCHkSPlBfrJob2_ptr figTryClrCHkSPlBfrJob2;figTryUnfreeze_ptr figTryUnfreeze;</td>          <td class="paramname"><span class="paramname"><em></em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">

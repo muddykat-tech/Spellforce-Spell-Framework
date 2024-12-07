@@ -212,39 +212,31 @@ DECLARE_FUNCTION(void, setTask, SF_CGdFigure *_figure, uint16_t figure_index, CG
 // Unknown Functons
 DECLARE_FUNCTION(bool, FUN_006e3a90, uint32_t *CGdFigureJobs, uint16_t figure_id);
 
-/*
- * @brief Macro used to define a group of function pointers for a given struct
- *
- * @details This macro is used to declare a group of function pointers, in this case a Figure struct. It
- * defines a list of function pointers and the names of the functions they point to.
- *
- * @param GroupName The name of the group, used as the prefix for the function pointer variables.
- * @param Functions A list of function pointers, each with a name and type.
- *
- * The generated code will define a struct (with the same name as the GroupName) with each function pointer as a member.
- */
-DECLARE_FUNCTION_GROUP(Figure,
-                       isAlive_ptr isAlive;
-                       setWalkSpeed_ptr setWalkSpeed;
-                       addAction_ptr addAction;
-                       addBonusMult_ptr addBonusMult;
-                       addBonusMultToStatistic_ptr addBonusMultToStatistic;
-                       decreaseHealth_ptr decreaseHealth;
-                       getCurrentHealth_ptr getCurrentHealth;
-                       getCurrentMaxHealth_ptr getCurrentMaxHealth;
-                       getCurrentMaxMana_ptr getCurrentMaxMana;
-                       rescaleMana_ptr rescaleMana;
-                       rescaleHealth_ptr rescaleHealth;
-                       getJob_ptr getJob;
-                       isFlagSet_ptr isFlagSet;
-                       getSpellJobStartNode_ptr getSpellJobStartNode;
-                       setJobToDoCount_ptr setJobToDoCount;
-                       FUN_006e3a90_ptr FUN_006e3a90;
-                       subMana_ptr subMana;
-                       getCurrentMana_ptr getCurrentMana;
-                       getPosition_ptr getPosition;
-                       setTask_ptr setTask;
-                       getWeaponStats_ptr getWeaponStats;
-                       getAggroValue_ptr getAggroValue;
-                       setAggroValue_ptr setAggroValue;
-                       isWarrior_ptr isWarrior;);
+
+typedef struct
+{
+    isAlive_ptr isAlive;
+    setWalkSpeed_ptr setWalkSpeed;
+    addAction_ptr addAction;
+    addBonusMult_ptr addBonusMult;
+    addBonusMultToStatistic_ptr addBonusMultToStatistic;
+    decreaseHealth_ptr decreaseHealth;
+    getCurrentHealth_ptr getCurrentHealth;
+    getCurrentMaxHealth_ptr getCurrentMaxHealth;
+    getCurrentMaxMana_ptr getCurrentMaxMana;
+    rescaleMana_ptr rescaleMana;
+    rescaleHealth_ptr rescaleHealth;
+    getJob_ptr getJob;
+    isFlagSet_ptr isFlagSet;
+    getSpellJobStartNode_ptr getSpellJobStartNode;
+    setJobToDoCount_ptr setJobToDoCount;
+    FUN_006e3a90_ptr FUN_006e3a90;
+    subMana_ptr subMana;
+    getCurrentMana_ptr getCurrentMana;
+    getPosition_ptr getPosition;
+    setTask_ptr setTask;
+    getWeaponStats_ptr getWeaponStats;
+    getAggroValue_ptr getAggroValue;
+    setAggroValue_ptr setAggroValue;
+    isWarrior_ptr isWarrior;
+} FigureFunctions;

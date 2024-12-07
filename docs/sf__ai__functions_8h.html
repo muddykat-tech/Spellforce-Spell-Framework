@@ -89,6 +89,7 @@ $(function(){ initResizable(false); });
 <div id="doc-content">
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">sf_ai_functions.h File Reference</div></div>
@@ -298,9 +299,16 @@ This graph shows which files directly or indirectly include this file:</div>
 </div>
 <p><a href="sf__ai__functions_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_ai_functions.html">AiFunctions</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Group of functions related to AI manipulation.  <a href="struct_ai_functions.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ab898071398b359603a35c202e9c65f3b" id="r_ab898071398b359603a35c202e9c65f3b"><td class="memItemLeft" align="right" valign="top">struct&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab898071398b359603a35c202e9c65f3b">__attribute__</a> ((packed))</td></tr>
+<tr class="memdesc:ab898071398b359603a35c202e9c65f3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">A structure for the global list of figures and related statistics for them.  <br /></td></tr>
 <tr class="separator:ab898071398b359603a35c202e9c65f3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adb715832ffacb80abf49da19f6d4cf78" id="r_adb715832ffacb80abf49da19f6d4cf78"><td class="memItemLeft" align="right" valign="top">struct&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adb715832ffacb80abf49da19f6d4cf78">__attribute</a> ((packed))</td></tr>
 <tr class="separator:adb715832ffacb80abf49da19f6d4cf78"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -336,9 +344,6 @@ Functions</h2></td></tr>
 <tr class="separator:a5386b2c0bfad97c1231a8508b9c14f22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3ce9a94fe2d9f8bd6915dff9511f8e36" id="r_a3ce9a94fe2d9f8bd6915dff9511f8e36"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3ce9a94fe2d9f8bd6915dff9511f8e36">DECLARE_FUNCTION</a> (bool, isUnknownWorldFeature, <a class="el" href="sf__general__structures_8h.html#afaafd0a4f93b6d4e95de3f0e494c941b">SF_CGdWorldToolBox</a> *, uint16_t figure_index, <a class="el" href="sf__general__structures_8h.html#aa44e45471f7b6c436abe46e7d9d728c9">SF_Coord</a> *param2, <a class="el" href="sf__general__structures_8h.html#aa44e45471f7b6c436abe46e7d9d728c9">SF_Coord</a> *param3, uint32_t param4, <a class="el" href="sf__general__structures_8h.html#aa44e45471f7b6c436abe46e7d9d728c9">SF_Coord</a> *param5, uint16_t param6)</td></tr>
 <tr class="separator:a3ce9a94fe2d9f8bd6915dff9511f8e36"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a49e7fe82c9b51d388a800e0325e31bae" id="r_a49e7fe82c9b51d388a800e0325e31bae"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a49e7fe82c9b51d388a800e0325e31bae">DECLARE_FUNCTION_GROUP</a> (Ai, getTargetAction_ptr getTargetAction;getFigureAction_ptr getFigureAction;canFigureDoAction_ptr canFigureDoAction;setAICurrentActionRanking_ptr setAICurrentActionRanking;getAICurrentActionRanking_ptr getAICurrentActionRanking;isAIVectorEmpty_ptr isAIVectorEmpty;getAIVectorFirstElement_ptr getAIVectorFirstElement;getAIVectorGetCurrent_ptr getAIVectorGetCurrent;getAIVectorLength_ptr getAIVectorLength;AC60AddOrGetEntity_ptr AC60AddOrGetEntity;getActionStats_ptr getActionStats;getCastType_ptr getCastType;getPositionToCastAlly_ptr getPositionToCastAlly;getPositionToCastEnemy_ptr getPositionToCastEnemy;isUnknownWorldFeature_ptr isUnknownWorldFeature;)</td></tr>
-<tr class="memdesc:a49e7fe82c9b51d388a800e0325e31bae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Group of functions related to AI manipulation.  <br /></td></tr>
-<tr class="separator:a49e7fe82c9b51d388a800e0325e31bae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -397,6 +402,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>A structure for the global list of figures and related statistics for them. </p>
 <p>&lt; Pointer to the first element in the list.</p>
 <p>&lt; Pointer to the data element within the list.</p>
 <p>&lt; Pointer to the element following the last in the list.</p>
@@ -947,30 +954,6 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a id="a49e7fe82c9b51d388a800e0325e31bae" name="a49e7fe82c9b51d388a800e0325e31bae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a49e7fe82c9b51d388a800e0325e31bae">&#9670;&#160;</a></span>DECLARE_FUNCTION_GROUP()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">DECLARE_FUNCTION_GROUP </td>
-          <td>(</td>
-          <td class="paramtype">Ai</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">getTargetAction_ptr getTargetAction;getFigureAction_ptr getFigureAction;canFigureDoAction_ptr canFigureDoAction;setAICurrentActionRanking_ptr setAICurrentActionRanking;getAICurrentActionRanking_ptr getAICurrentActionRanking;isAIVectorEmpty_ptr isAIVectorEmpty;getAIVectorFirstElement_ptr getAIVectorFirstElement;getAIVectorGetCurrent_ptr getAIVectorGetCurrent;getAIVectorLength_ptr getAIVectorLength;AC60AddOrGetEntity_ptr AC60AddOrGetEntity;getActionStats_ptr getActionStats;getCastType_ptr getCastType;getPositionToCastAlly_ptr getPositionToCastAlly;getPositionToCastEnemy_ptr getPositionToCastEnemy;isUnknownWorldFeature_ptr isUnknownWorldFeature;</td>          <td class="paramname"><span class="paramname"><em></em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Group of functions related to AI manipulation. </p>
-<p>@function_group Ai </p>
 
 </div>
 </div>

@@ -54,15 +54,15 @@ DECLARE_FUNCTION(void, buildingIteratorSetPointers, CGdBuildingIterator *iterato
 
 DECLARE_FUNCTION(uint16_t, getNextBuilding, CGdBuildingIterator *_this);
 
-// Functions in this group may be renamed soon
-DECLARE_FUNCTION_GROUP(Iterator,
-					   figureIteratorInit_ptr figureIteratorInit;
-					   figureIteratorSetPointers_ptr figureIteratorSetPointers;
-					   iteratorSetArea_ptr iteratorSetArea;
-					   getNextFigure_ptr getNextFigure;
-					   setupFigureIterator_ptr setupFigureIterator;
-					   disposeFigureIterator_ptr disposeFigureIterator;
-
-					   getNextBuilding_ptr getNextBuilding;
-					   buildingIteratorInit_ptr buildingIteratorInit;
-					   buildingIteratorSetPointers_ptr buildingIteratorSetPointers;);
+typedef struct
+{
+	figureIteratorInit_ptr figureIteratorInit;
+	figureIteratorSetPointers_ptr figureIteratorSetPointers;
+	iteratorSetArea_ptr iteratorSetArea;
+	getNextFigure_ptr getNextFigure;
+	setupFigureIterator_ptr setupFigureIterator;
+	disposeFigureIterator_ptr disposeFigureIterator;
+	getNextBuilding_ptr getNextBuilding;
+	buildingIteratorInit_ptr buildingIteratorInit;
+	buildingIteratorSetPointers_ptr buildingIteratorSetPointers;
+} IteratorFunctions;

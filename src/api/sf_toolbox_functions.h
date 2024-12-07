@@ -25,23 +25,24 @@ DECLARE_FUNCTION(bool, findClosestFreePosition, SF_CGdWorldToolBox* _this, SF_Co
                     uint16_t sector, SF_Coord *return_value)
 DECLARE_FUNCTION(bool, isUnitMelee, SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t figure_id);
 
-DECLARE_FUNCTION_GROUP(Toolbox,
-                       dealDamage_ptr dealDamage;
-                       isTargetable_ptr isTargetable;
-                       figuresCheckHostile_ptr figuresCheckHostile;
-                       figuresCheckNeutral_ptr figuresCheckNeutral;
-                       figuresCheckFriendly_ptr figuresCheckFriendly;
-                       hasSpellOnIt_ptr hasSpellOnIt;
-                       buildingDealDamage_ptr buildingDealDamage;
-                       rescaleLevelStats_ptr rescaleLevelStats;
-                       addSpellToFigure_ptr addSpellToFigure;
-                       getFigureFromWorld_ptr getFigureFromWorld;
-                       getSpellIndexOfType_ptr getSpellIndexOfType;
-                       getSpellIndexFromDLL_ptr getSpellIndexFromDLL;
-                       getNextNode_ptr getNextNode;
-                       figureSetNewJob_ptr figureSetNewJob;
-                       removeSpellFromList_ptr removeSpellFromList;
-                       addUnit_ptr addUnit;
-                       findClosestFreePosition_ptr findClosestFreePosition;
-                       isUnitMelee_ptr isUnitMelee;
-                       );
+typedef struct
+{
+    dealDamage_ptr dealDamage;
+    isTargetable_ptr isTargetable;
+    figuresCheckHostile_ptr figuresCheckHostile;
+    figuresCheckNeutral_ptr figuresCheckNeutral;
+    figuresCheckFriendly_ptr figuresCheckFriendly;
+    hasSpellOnIt_ptr hasSpellOnIt;
+    buildingDealDamage_ptr buildingDealDamage;
+    rescaleLevelStats_ptr rescaleLevelStats;
+    addSpellToFigure_ptr addSpellToFigure;
+    getFigureFromWorld_ptr getFigureFromWorld;
+    getSpellIndexOfType_ptr getSpellIndexOfType;
+    getSpellIndexFromDLL_ptr getSpellIndexFromDLL;
+    getNextNode_ptr getNextNode;
+    figureSetNewJob_ptr figureSetNewJob;
+    removeSpellFromList_ptr removeSpellFromList;
+    addUnit_ptr addUnit;
+    findClosestFreePosition_ptr findClosestFreePosition;
+    isUnitMelee_ptr isUnitMelee;
+} ToolboxFunctions;

@@ -89,6 +89,7 @@ $(function(){ initResizable(false); });
 <div id="doc-content">
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">sf_toolbox_functions.h File Reference</div></div>
@@ -292,6 +293,11 @@ This graph shows which files directly or indirectly include this file:</div>
 </div>
 <p><a href="sf__toolbox__functions_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_toolbox_functions.html">ToolboxFunctions</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ac95e32195fb62e68222454c546e0678e" id="r_ac95e32195fb62e68222454c546e0678e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac95e32195fb62e68222454c546e0678e">DECLARE_FUNCTION</a> (void, dealDamage, <a class="el" href="sf__general__structures_8h.html#a17f35cab19a4752dcf2d3fb1ea9a9f0e">SF_CGdFigureToolbox</a> *<a class="el" href="#ad9ee9f2be03c14a38976a7aa466f9402">CGdFigureToolbox</a>, uint16_t source_index, uint16_t target_index, uint32_t damage, uint32_t is_spell_damage, uint32_t param5, uint32_t param6)</td></tr>
@@ -328,8 +334,6 @@ Functions</h2></td></tr>
 <tr class="separator:a383732afd7ce50aa8e0d4540c5f4670b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a95eed628083f31b2725674a2e149b6b1" id="r_a95eed628083f31b2725674a2e149b6b1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a95eed628083f31b2725674a2e149b6b1">DECLARE_FUNCTION</a> (bool, findClosestFreePosition, <a class="el" href="sf__general__structures_8h.html#afaafd0a4f93b6d4e95de3f0e494c941b">SF_CGdWorldToolBox</a> *_this, <a class="el" href="sf__general__structures_8h.html#aa44e45471f7b6c436abe46e7d9d728c9">SF_Coord</a> *param_1, <a class="el" href="sf__general__structures_8h.html#aa44e45471f7b6c436abe46e7d9d728c9">SF_Coord</a> *param_2, uint16_t sector, <a class="el" href="sf__general__structures_8h.html#aa44e45471f7b6c436abe46e7d9d728c9">SF_Coord</a> *return_value) DECLARE_FUNCTION(bool</td></tr>
 <tr class="separator:a95eed628083f31b2725674a2e149b6b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa222c750ab7a28a2f1c2d2d8dcb8c3db" id="r_aa222c750ab7a28a2f1c2d2d8dcb8c3db"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa222c750ab7a28a2f1c2d2d8dcb8c3db">DECLARE_FUNCTION_GROUP</a> (Toolbox, dealDamage_ptr dealDamage;isTargetable_ptr isTargetable;figuresCheckHostile_ptr figuresCheckHostile;figuresCheckNeutral_ptr figuresCheckNeutral;figuresCheckFriendly_ptr figuresCheckFriendly;hasSpellOnIt_ptr hasSpellOnIt;buildingDealDamage_ptr buildingDealDamage;rescaleLevelStats_ptr rescaleLevelStats;addSpellToFigure_ptr addSpellToFigure;getFigureFromWorld_ptr getFigureFromWorld;getSpellIndexOfType_ptr getSpellIndexOfType;getSpellIndexFromDLL_ptr getSpellIndexFromDLL;getNextNode_ptr getNextNode;figureSetNewJob_ptr figureSetNewJob;removeSpellFromList_ptr removeSpellFromList;addUnit_ptr addUnit;findClosestFreePosition_ptr findClosestFreePosition;isUnitMelee_ptr <a class="el" href="#a007132d5785ba177732c22a8453f8cf8">isUnitMelee</a>;)</td></tr>
-<tr class="separator:aa222c750ab7a28a2f1c2d2d8dcb8c3db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -1022,27 +1026,6 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>figure_index</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aa222c750ab7a28a2f1c2d2d8dcb8c3db" name="aa222c750ab7a28a2f1c2d2d8dcb8c3db"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa222c750ab7a28a2f1c2d2d8dcb8c3db">&#9670;&#160;</a></span>DECLARE_FUNCTION_GROUP()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">DECLARE_FUNCTION_GROUP </td>
-          <td>(</td>
-          <td class="paramtype">Toolbox</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">dealDamage_ptr dealDamage;isTargetable_ptr isTargetable;figuresCheckHostile_ptr figuresCheckHostile;figuresCheckNeutral_ptr figuresCheckNeutral;figuresCheckFriendly_ptr figuresCheckFriendly;hasSpellOnIt_ptr hasSpellOnIt;buildingDealDamage_ptr buildingDealDamage;rescaleLevelStats_ptr rescaleLevelStats;addSpellToFigure_ptr addSpellToFigure;getFigureFromWorld_ptr getFigureFromWorld;getSpellIndexOfType_ptr getSpellIndexOfType;getSpellIndexFromDLL_ptr getSpellIndexFromDLL;getNextNode_ptr getNextNode;figureSetNewJob_ptr figureSetNewJob;removeSpellFromList_ptr removeSpellFromList;addUnit_ptr addUnit;findClosestFreePosition_ptr findClosestFreePosition;isUnitMelee_ptr <a class="el" href="#a007132d5785ba177732c22a8453f8cf8">isUnitMelee</a>;</td>          <td class="paramname"><span class="paramname"><em></em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">

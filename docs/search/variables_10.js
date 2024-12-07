@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['window_5foffset_0',['WINDOW_OFFSET',['../namespace_a_s_i.html#a560306678b08a2a6d38984dd0ada8dd6',1,'ASI']]]
+  ['ushort_5flist_5fnode_0',['ushort_list_node',['../sf__ai__functions_8h.html#adf7edd1d8e4e17c44cd5488cd7cc308e',1,'sf_ai_functions.h']]]
 ];

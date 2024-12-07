@@ -89,6 +89,7 @@ $(function(){ initResizable(false); });
 <div id="doc-content">
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
@@ -306,6 +307,11 @@ This graph shows which files directly or indirectly include this file:</div>
 </div>
 <p><a href="sf__registration__functions_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_registration_functions.html">RegistrationFunctions</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:a66d6ae6fed8f89847ff4ec8e71bfa461" id="r_a66d6ae6fed8f89847ff4ec8e71bfa461"><td class="memItemLeft" align="right" valign="top">typedef uint16_t(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a66d6ae6fed8f89847ff4ec8e71bfa461">damage_handler_ptr</a>) (<a class="el" href="sf__general__structures_8h.html#a17f35cab19a4752dcf2d3fb1ea9a9f0e">SF_CGdFigureToolbox</a> *_toolbox, uint16_t source, uint16_t target, uint16_t current_damage, uint16_t is_spell_damage, uint32_t is_ranged_damage, uint16_t spell_id)</td></tr>
@@ -351,8 +357,6 @@ Functions</h2></td></tr>
 <tr class="separator:a2aa980c1c7ce26396f24d7eaa29cd1b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5e563f8ade6102259783da369be2e747" id="r_a5e563f8ade6102259783da369be2e747"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5e563f8ade6102259783da369be2e747">DECLARE_FUNCTION</a> (void, <a class="el" href="sf__hooks_8h.html#aba66ad3844e03371820ba433ec07144d">linkAvoidanceAIHandler</a>, <a class="el" href="#a2ad426e9a8e695a45844a45fd5e4dd91">SFSpell</a> *spell, <a class="el" href="#afa2647c6110962b42e564bc76f92cffa">ai_avoidance_handler_ptr</a> handler)</td></tr>
 <tr class="separator:a5e563f8ade6102259783da369be2e747"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a27700d079a433307d7f2c8c87addaba5" id="r_a27700d079a433307d7f2c8c87addaba5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a27700d079a433307d7f2c8c87addaba5">DECLARE_FUNCTION_GROUP</a> (Registration, registerSpell_ptr <a class="el" href="sf__hooks_8h.html#ae507705c327c357e28eae53d52ad0638">registerSpell</a>;linkTypeHandler_ptr <a class="el" href="sf__hooks_8h.html#a5eb74dc38db9aa0f7f858687cb5951e8">linkTypeHandler</a>;linkEffectHandler_ptr <a class="el" href="sf__hooks_8h.html#a963e6fcecd10433218b3925f0e2d39a9">linkEffectHandler</a>;linkEndHandler_ptr <a class="el" href="sf__hooks_8h.html#a29b2de8f5f9ec3ced0c15db03d7817b6">linkEndHandler</a>;applySpellTag_ptr <a class="el" href="sf__hooks_8h.html#a4afdf02d3c8eeffbfbe125fa3464be67">applySpellTag</a>;linkSubEffectHandler_ptr <a class="el" href="sf__hooks_8h.html#ae355b11ac572b3ae505c4d088e1c21e8">linkSubEffectHandler</a>;linkRefreshHandler_ptr <a class="el" href="sf__hooks_8h.html#a8751386410676c0a282ab668879c19f4">linkRefreshHandler</a>;linkDealDamageHandler_ptr <a class="el" href="sf__hooks_8h.html#a3dc1674ebcd56a898d2a52729d9bdea1">linkDealDamageHandler</a>;linkOnHitHandler_ptr <a class="el" href="sf__hooks_8h.html#acf0a614184ddb2b958241a2fec8e8056">linkOnHitHandler</a>;linkAvoidanceAIHandler_ptr <a class="el" href="sf__hooks_8h.html#aba66ad3844e03371820ba433ec07144d">linkAvoidanceAIHandler</a>;linkSingleTargetAIHandler_ptr <a class="el" href="sf__hooks_8h.html#a99a8a66f1f6cf6c442953cff3708f318">linkSingleTargetAIHandler</a>;linkAOEAIHandler_ptr <a class="el" href="sf__hooks_8h.html#a0ba75dbe6a1d9cf0cfaad064ccda190a">linkAOEAIHandler</a>;)</td></tr>
-<tr class="separator:a27700d079a433307d7f2c8c87addaba5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -868,27 +872,6 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="#af76aa0d565c5ebb0b1eb50e2ed3377b3">handler_ptr</a></td>          <td class="paramname"><span class="paramname"><em>typeHandler</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a27700d079a433307d7f2c8c87addaba5" name="a27700d079a433307d7f2c8c87addaba5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a27700d079a433307d7f2c8c87addaba5">&#9670;&#160;</a></span>DECLARE_FUNCTION_GROUP()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">DECLARE_FUNCTION_GROUP </td>
-          <td>(</td>
-          <td class="paramtype">Registration</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">registerSpell_ptr <a class="el" href="sf__hooks_8h.html#ae507705c327c357e28eae53d52ad0638">registerSpell</a>;linkTypeHandler_ptr <a class="el" href="sf__hooks_8h.html#a5eb74dc38db9aa0f7f858687cb5951e8">linkTypeHandler</a>;linkEffectHandler_ptr <a class="el" href="sf__hooks_8h.html#a963e6fcecd10433218b3925f0e2d39a9">linkEffectHandler</a>;linkEndHandler_ptr <a class="el" href="sf__hooks_8h.html#a29b2de8f5f9ec3ced0c15db03d7817b6">linkEndHandler</a>;applySpellTag_ptr <a class="el" href="sf__hooks_8h.html#a4afdf02d3c8eeffbfbe125fa3464be67">applySpellTag</a>;linkSubEffectHandler_ptr <a class="el" href="sf__hooks_8h.html#ae355b11ac572b3ae505c4d088e1c21e8">linkSubEffectHandler</a>;linkRefreshHandler_ptr <a class="el" href="sf__hooks_8h.html#a8751386410676c0a282ab668879c19f4">linkRefreshHandler</a>;linkDealDamageHandler_ptr <a class="el" href="sf__hooks_8h.html#a3dc1674ebcd56a898d2a52729d9bdea1">linkDealDamageHandler</a>;linkOnHitHandler_ptr <a class="el" href="sf__hooks_8h.html#acf0a614184ddb2b958241a2fec8e8056">linkOnHitHandler</a>;linkAvoidanceAIHandler_ptr <a class="el" href="sf__hooks_8h.html#aba66ad3844e03371820ba433ec07144d">linkAvoidanceAIHandler</a>;linkSingleTargetAIHandler_ptr <a class="el" href="sf__hooks_8h.html#a99a8a66f1f6cf6c442953cff3708f318">linkSingleTargetAIHandler</a>;linkAOEAIHandler_ptr <a class="el" href="sf__hooks_8h.html#a0ba75dbe6a1d9cf0cfaad064ccda190a">linkAOEAIHandler</a>;</td>          <td class="paramname"><span class="paramname"><em></em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
