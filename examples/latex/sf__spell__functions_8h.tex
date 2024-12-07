@@ -1,0 +1,1522 @@
+\doxysection{src/api/sf\+\_\+spell\+\_\+functions.h File Reference}
+\hypertarget{sf__spell__functions_8h}{}\label{sf__spell__functions_8h}\index{src/api/sf\_spell\_functions.h@{src/api/sf\_spell\_functions.h}}
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include "{}sf\+\_\+general\+\_\+structures.\+h"{}}\newline
+Include dependency graph for sf\+\_\+spell\+\_\+functions.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=255pt]{sf__spell__functions_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spell__functions_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{sf__spell__functions_8h_a588abbdd197bfe8e420ee8a32ee9ba5e}{Spell\+Flag\+Key}} \{ \mbox{\hyperlink{sf__spell__functions_8h_a588abbdd197bfe8e420ee8a32ee9ba5ead9232843108f384e615ce592834113a1}{CHECK\+\_\+\+SPELLS\+\_\+\+BEFORE\+\_\+\+CHECK\+\_\+\+BATTLE}} = 0x04
+, \mbox{\hyperlink{sf__spell__functions_8h_a588abbdd197bfe8e420ee8a32ee9ba5ea38b715ed1f58dd1278e0474928a7fd64}{CHECK\+\_\+\+SPELLS\+\_\+\+BEFORE\+\_\+\+JOB2}} = 0x02
+, \mbox{\hyperlink{sf__spell__functions_8h_a588abbdd197bfe8e420ee8a32ee9ba5eabdffc29095c50d2aedd5aef3ca9e5ae1}{UNFREEZE}} = 0x1
+ \}
+\item 
+enum \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393}{Gd\+Spell\+Line}} \{ \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ab61b1e77c053785ee2064f6dfcb4846e}{k\+Gd\+Spell\+Line\+Fire\+Burst}} = 1
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aafad4afd28ac1ebcb8408cbb2fe87f91}{k\+Gd\+Spell\+Line\+Healing}} = 2
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a3098d8a675693a0709576843649cd01e}{k\+Gd\+Spell\+Line\+Death}} = 3
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a20543777c02bfed7cc120d3d9a2e6970}{k\+Gd\+Spell\+Line\+Slowness}} = 4
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a1c1295f35dc9fdd447e59a37ff8e72ce}{k\+Gd\+Spell\+Line\+Poison}} = 5
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a799ce443f800b253ff7a4eac60740216}{k\+Gd\+Spell\+Line\+Invulnerability}} = 6
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393afd5f06c052b88ef1c032361119de3ba6}{k\+Gd\+Spell\+Line\+Cure\+Poison}} = 7
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393af93177c795e1a264f555a825f2555289}{k\+Gd\+Spell\+Line\+Freeze}} = 9
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aafbc8f3a7ce6332b8fe14ea8f8598aee}{k\+Gd\+Spell\+Line\+Fog}} = 10
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a3e116879ad910374522e9c7f5a110258}{k\+Gd\+Spell\+Line\+Illuminate}} = 11
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a585e6984fcd63b0f5a65ebaba9cd4cf9}{k\+Gd\+Spell\+Line\+Fire\+Shield}} = 12
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393abcde65da91231cee3d12492adaf2d3af}{k\+Gd\+Spell\+Line\+Fire\+Ball}} = 13
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a420a2562a890ef80e539e3a3d066c180}{k\+Gd\+Spell\+Line\+Ice\+Burst}} = 14
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393af6479d405a1f694089e13e7e2083b2cc}{k\+Gd\+Spell\+Line\+Ice\+Shield}} = 15
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aab18e996d91968af3b1a7f10a6ea0fd5}{k\+Gd\+Spell\+Line\+Decay}} = 16
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a8090313c0c1c5dbac49891dd9d9d3a1c}{k\+Gd\+Spell\+Line\+Decay\+Area}} = 17
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a2e9e2c4bd61b8f9a91ce9aa56adf109e}{k\+Gd\+Spell\+Line\+Pain}} = 18
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a3047ab256e38b0006ee3ef5d7af43178}{k\+Gd\+Spell\+Line\+Life\+Tap}} = 19
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a1f7758e6881eed15244d6dd78c9dda01}{k\+Gd\+Spell\+Line\+Summon\+Goblin}} = 20
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a68f55d7c9aa149ee5c4386035b48bccb}{k\+Gd\+Spell\+Line\+Hypnotize}} = 21
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a39c10676f53e00ab3a526a1826416356}{k\+Gd\+Spell\+Line\+Ice\+Shield\+Stun}} = 22
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a3b8459db5df60a63973f32d28850d794}{k\+Gd\+Spell\+Line\+Pestilence}} = 23
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ac3844336ae280b7fa05251d612848946}{k\+Gd\+Spell\+Line\+Cure\+Disease}} = 24
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a6da52f71c56bf9e16cff0043295a7c98}{k\+Gd\+Spell\+Line\+Petrify}} = 25
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a178671a9c309285235c163160897a96d}{k\+Gd\+Spell\+Line\+Pain\+Area}} = 28
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a8281d0bc9439caf1c60cce08c27d2acf}{k\+Gd\+Spell\+Line\+Summon\+Skeleton}} = 29
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ab9ba5e768f9d70078e8982aafb87dcce}{k\+Gd\+Spell\+Line\+Raise\+Dead}} = 30
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a11aba4c40fa579b64ef41bc31eb20de0}{k\+Gd\+Spell\+Line\+Summon\+Demon}} = 31
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ad68588fc5e66499c00add7cafad68434}{k\+Gd\+Spell\+Line\+Death\+Grasp}} = 32
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a48e02583c26359215ca9739a755edb53}{k\+Gd\+Spell\+Line\+Summon\+Channeler}} = 33
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a007d6d46e6c4604cd18d5c65663b3e49}{k\+Gd\+Spell\+Line\+Inflexibility}} = 34
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a16b8812f794ba26cc77b8549fd2e3d20}{k\+Gd\+Spell\+Line\+Weaken}} = 35
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ac74e0a8e30932e4f8f31db2e63353077}{k\+Gd\+Spell\+Line\+Dark\+Banishing}} = 36
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ad51081518fd28ac1d5270524809e47d1}{k\+Gd\+Spell\+Line\+Slowness\+Area}} = 37
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ace5f1bc3738db433ab1d24212bbae9ee}{k\+Gd\+Spell\+Line\+Inflexibility\+Area}} = 38
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393afb7f5f4dc98224fe0ec30360441c378a}{k\+Gd\+Spell\+Line\+Weaken\+Area}} = 39
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a6e65580aa765cccf7f16e4500e2ac2d4}{k\+Gd\+Spell\+Line\+Plague\+Area}} = 40
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a6e2ac3fceabb15ebc03d460a5607e895}{k\+Gd\+Spell\+Line\+Remediless}} = 41
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ad5b68a749d51853cdaecb675bde419a7}{k\+Gd\+Spell\+Line\+Dark\+Might}} = 42
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ab7c21cbdee8b51c5b41c15e67f8dc480}{k\+Gd\+Spell\+Line\+Healing\+Area}} = 43
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a6bf9027edce0c8d11050f3590ea81769}{k\+Gd\+Spell\+Line\+Sentinel\+Healing}} = 44
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a0991b88b6f1e11311314fbaa8d80dd27}{k\+Gd\+Spell\+Line\+Greater\+Healing}} = 45
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a18d355785d246bebd20a664c99014f41}{k\+Gd\+Spell\+Line\+Charm\+Animal}} = 46
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393adb1683cf89a7c72a34efc7745061593d}{k\+Gd\+Spell\+Line\+Thorn\+Shield}} = 47
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a46ce2248254aa6aee8e8847bd190bec3}{k\+Gd\+Spell\+Line\+Quickness}} = 48
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ad2bf2483d6fbcea053fbf4cfdd026b1b}{k\+Gd\+Spell\+Line\+Quickness\+Area}} = 49
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393abdc6fbc3dca5d61a62c12adee2e1cedb}{k\+Gd\+Spell\+Line\+Flexibility}} = 50
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a87afad068778d293a80862956ce4da5f}{k\+Gd\+Spell\+Line\+Flexibility\+Area}} = 51
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a9ac0b548fcfef09a514bebc022019da2}{k\+Gd\+Spell\+Line\+Strengthen}} = 52
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393afdb615de3a02bb1f41c1b1f2043a1477}{k\+Gd\+Spell\+Line\+Strengthen\+Area}} = 53
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a7f42c7a9cdb551f5b0148f75d134f530}{k\+Gd\+Spell\+Line\+Guard}} = 54
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a59deb6312c5ca58af5491b79de63450e}{k\+Gd\+Spell\+Line\+Remove\+Curse}} = 55
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a022b9c483fda35d7f4e45bd96aa77bb3}{k\+Gd\+Spell\+Line\+Regenerate}} = 56
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aaf42cafbb1d2938dc0502188a13adf8c}{k\+Gd\+Spell\+Line\+Holy\+Might}} = 57
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a65fa7957a9581a45e29ff92943a3b473}{k\+Gd\+Spell\+Line\+Hallow}} = 58
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a7fbf0971ebd018f04b6898c29f74aeb3}{k\+Gd\+Spell\+Line\+Fire\+Shield\+Damage}} = 60
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a7579db571d062cd8f44b6c713984a53a}{k\+Gd\+Spell\+Line\+Thorn\+Shield\+Damage}} = 61
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a24add7ea83904d8016a5aeb75a5f54c6}{k\+Gd\+Spell\+Line\+Forget}} = 62
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ad1d39e858068a683c266ec2d84b3fb49}{k\+Gd\+Spell\+Line\+Self\+Illusion}} = 63
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a68c7bd1058c48c3690c2bd3ecae8cb65}{k\+Gd\+Spell\+Line\+Retention}} = 64
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a3f241736723f2d43eb48cd63b2253817}{k\+Gd\+Spell\+Line\+Brilliance}} = 65
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a7603063520ecbf6189641f27b43f3a09}{k\+Gd\+Spell\+Line\+Sacrifice\+Mana}} = 66
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a107c941736f2f7a96d73716651fa7ecf}{k\+Gd\+Spell\+Line\+Mana\+Tap}} = 67
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ade87aa67244d02cb455b262abd355907}{k\+Gd\+Spell\+Line\+Mana\+Drain}} = 68
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a140859e63dd3c80185b9ade9488f1225}{k\+Gd\+Spell\+Line\+Shock}} = 69
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ac11fe0d2802ca4ced28fcd7c42131d51}{k\+Gd\+Spell\+Line\+Disrupt}} = 70
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a94fb322989e1ae8618d4b89ae991d282}{k\+Gd\+Spell\+Line\+Fear}} = 71
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ae9ed687728668dfed70c319d97e17d1f}{k\+Gd\+Spell\+Line\+Confuse}} = 72
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ab116d2ff2962b72cf1743763b6c832f3}{k\+Gd\+Spell\+Line\+Rain\+Of\+Fire}} = 73
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ac2f7c75fcefd2d02adf29b343bbfc3db}{k\+Gd\+Spell\+Line\+Blizzard}} = 74
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a35e05b1b6fb86a1fbb376ac979c23579}{k\+Gd\+Spell\+Line\+Acid\+Cloud}} = 75
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a5d2a094b331aa504df9da2518a102f6e}{k\+Gd\+Spell\+Line\+Stone\+Rain}} = 76
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a70e71c8161c4ce6279dadf2211ad439d}{k\+Gd\+Spell\+Line\+Wall\+Of\+Rocks}} = 77
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ab8a7f08157eac94f9d492cb16aba5c47}{k\+Gd\+Spell\+Line\+Ring\+Of\+Rocks}} = 78
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a0184dd4743de0f372155b8c2d1075b48}{k\+Gd\+Spell\+Line\+Amok}} = 79
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a27e656f18d9e29fb6d28dfc51a45dd10}{k\+Gd\+Spell\+Line\+Extinct}} = 81
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a47b7aafffdbb37071fc0f5d53544d5dd}{k\+Gd\+Spell\+Line\+Detect\+Metal}} = 82
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a035ee3b7e476467b556721f0ce2d55c9}{k\+Gd\+Spell\+Line\+Detect\+Magic}} = 83
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a111e326326810cfbb11d33e202f84913}{k\+Gd\+Spell\+Line\+Arrow}} = 84
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a5e0898a27d5ea1d97620db702e6b6a5b}{k\+Gd\+Spell\+Line\+Berserk}} = 85
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a1e701b9a5a86bd5df1628e2384f1e598}{k\+Gd\+Spell\+Line\+Invisibility}} = 86
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a7d6b3ff954bfbd4f83217039319cebbe}{k\+Gd\+Spell\+Line\+Stone}} = 87
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a76d065c9baf0d478c073ad6834b44ccf}{k\+Gd\+Spell\+Line\+Aura\+Weakness}} = 88
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aa182a5df307b4d2abc23229724b8e63d}{k\+Gd\+Spell\+Line\+Aura\+Suffocation}} = 89
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ab8996347e449e8d41878ea91ef2647c5}{k\+Gd\+Spell\+Line\+Suicide\+Death}} = 90
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ac0f86f162922ced523a2a87f96b045e3}{k\+Gd\+Spell\+Line\+Aura\+Life\+Tap}} = 91
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a70af662c607135f864506508da063de6}{k\+Gd\+Spell\+Line\+Summon\+Spectre}} = 92
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a43f420f114cb6f5c146d62a7d13beeb0}{k\+Gd\+Spell\+Line\+Feign\+Death}} = 93
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a25b5a3d168e17b87ce986cfd971f1951}{k\+Gd\+Spell\+Line\+Aura\+Slow\+Fighting}} = 94
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a3fa7120d9010b80214ac84798fb46344}{k\+Gd\+Spell\+Line\+Aura\+Inflexibility}} = 95
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a1be676659dbe33695489541a43efd4e4}{k\+Gd\+Spell\+Line\+Dispel\+White\+Aura}} = 96
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ab58f089546fe8e0ac933e0ffe1744d8e}{k\+Gd\+Spell\+Line\+Aura\+Slow\+Walking}} = 97
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393af565ea7a413207d2597b3dcc766f4379}{k\+Gd\+Spell\+Line\+Aura\+Inability}} = 98
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a31bf4c341bd8dd70108774238b5f7bf0}{k\+Gd\+Spell\+Line\+Suffocation}} = 99
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a4288b430ade99c2a27304bcaadf2eac5}{k\+Gd\+Spell\+Line\+Inability}} = 100
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a3a9c327d86a2eae834173b78c2db3233}{k\+Gd\+Spell\+Line\+Slow\+Fighting}} = 101
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ae078cdc2eb6a8044d3a1792e94fadde5}{k\+Gd\+Spell\+Line\+Aura\+Strength}} = 102
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a66a23bc9669c81636300d304e4d5fec4}{k\+Gd\+Spell\+Line\+Aura\+Healing}} = 103
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393af6ed0c01339e1d2436bc47b26cdc5a51}{k\+Gd\+Spell\+Line\+Aura\+Endurance}} = 104
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a79bd107885792579272f4d1f392e1344}{k\+Gd\+Spell\+Line\+Suicide\+Heal}} = 105
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aef1b6370c13bb820a812ee4cc8fea0b6}{k\+Gd\+Spell\+Line\+Summon\+Wolf}} = 106
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a162d2c2b56f5a444c6a3334f5b8d62ee}{k\+Gd\+Spell\+Line\+Aura\+Regeneration}} = 107
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a5e9ec74f92b94c10862c2c24c4bd2a17}{k\+Gd\+Spell\+Line\+Dominate\+Animal}} = 108
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a2e1c16b658e00c58fbd232ed88450f0a}{k\+Gd\+Spell\+Line\+Summon\+Bear}} = 109
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ade0e9f27325b27aa1401464fbbdeb509}{k\+Gd\+Spell\+Line\+Aura\+Fast\+Fighting}} = 110
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393acece77496703ddbdf19f829d279ca429}{k\+Gd\+Spell\+Line\+Aura\+Flexibility}} = 111
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393acc3ac9b7b1c6dad6c62a04f25b7da36d}{k\+Gd\+Spell\+Line\+Dispel\+Black\+Aura}} = 112
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393afb8dd55d469a7e4a6b4dc36bea2f44c6}{k\+Gd\+Spell\+Line\+Aura\+Fast\+Walking}} = 113
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ae5c17d0081e1f4544098c490e5e69eb8}{k\+Gd\+Spell\+Line\+Aura\+Light}} = 114
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a3e9b69f5099b10fe54163ac9e7b4b2f0}{k\+Gd\+Spell\+Line\+Aura\+Dexterity}} = 115
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a870bb58a6ca146b8b45d452fc95400b4}{k\+Gd\+Spell\+Line\+Dexterity}} = 116
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ace802e11b8721469578c1e37e11a3ac9}{k\+Gd\+Spell\+Line\+Endurance}} = 117
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ad6f791f25bdf0fc85f9293844d7b1361}{k\+Gd\+Spell\+Line\+Fast\+Fighting}} = 118
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393af5f6d1816729e18aab52fc0ed6326a47}{k\+Gd\+Spell\+Line\+Distract}} = 119
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393adfa36e4b3918b3dc59abf79e5b0fec66}{k\+Gd\+Spell\+Line\+Dominate}} = 120
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a13a0e665c14d17b974e1850d10cc568b}{k\+Gd\+Spell\+Line\+Object\+Illusion}} = 121
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a1505b24616fce91231ef396bed0e3982}{k\+Gd\+Spell\+Line\+Charm}} = 122
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ad65fd37e8c94596e76853e280bc58ee6}{k\+Gd\+Spell\+Line\+Befriend}} = 123
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a25edd98c1d5c1870709e72905747bdae}{k\+Gd\+Spell\+Line\+Disenchant}} = 124
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ab3cef37c17a45202364e6044883c9d33}{k\+Gd\+Spell\+Line\+Charisma}} = 125
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aaf1fd67fa4388c488d4f59a6c1d7b469}{k\+Gd\+Spell\+Line\+Shockwave}} = 126
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a0dacf6fdd47dac6505db7728d32e2ddf}{k\+Gd\+Spell\+Line\+Aura\+Hypnotization}} = 127
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ae4fac47d57ac6785defe888972aa7c57}{k\+Gd\+Spell\+Line\+Demoralization}} = 128
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ada6fdcab938c8985a13668e023c9936d}{k\+Gd\+Spell\+Line\+Aura\+Brilliance}} = 129
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a1b4da7ee328b53113c0d707b8103f0e8}{k\+Gd\+Spell\+Line\+Enlightenment}} = 130
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a12879b531ffab48f7cc828fb5f9e08c9}{k\+Gd\+Spell\+Line\+Aura\+Mana\+Tap}} = 131
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a3584eb873cb6e1de238aa9673c0c3d70}{k\+Gd\+Spell\+Line\+Meditation}} = 132
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aa66fb4002186197dc118d52fa85fae48}{k\+Gd\+Spell\+Line\+Fire\+Elemental}} = 133
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393afab67d56203d891b0e0e7f0d64d5c1be}{k\+Gd\+Spell\+Line\+Wave\+Of\+Fire}} = 134
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393accaa82bf9c47aac50bea0645ebc8d311}{k\+Gd\+Spell\+Line\+Melt\+Resistance}} = 135
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aef0031418e1bb5e3d8f7b61cd29deff6}{k\+Gd\+Spell\+Line\+Ice\+Elemental}} = 136
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a10b43aeb62633db33fdd5397239124bd}{k\+Gd\+Spell\+Line\+Wave\+Of\+Ice}} = 137
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a2942d0375957ad18ac763850a2cdfa17}{k\+Gd\+Spell\+Line\+Chill\+Resistance}} = 138
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a348fa87aa1a7d65b2719e099ade3d233}{k\+Gd\+Spell\+Line\+Rock\+Bullet}} = 139
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393adbd998f6e68ce225dac50b09d3c610c8}{k\+Gd\+Spell\+Line\+Conservation}} = 140
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a919ecf4e893dc1b875892c8780e1bba2}{k\+Gd\+Spell\+Line\+Earth\+Elemental}} = 141
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ae1808b607f82d39522ed537b2f0ddada}{k\+Gd\+Spell\+Line\+Wave\+Of\+Rocks}} = 142
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a574d566840e111853d6b2f0419f66fdd}{k\+Gd\+Spell\+Line\+Arrow\+Tower}} = 143
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aae17d1476768aa69125f71486dd3bd1c}{k\+Gd\+Spell\+Line\+Healing\+Tower}} = 144
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a5a0bde757dffbabef5ab994c8cef998a}{k\+Gd\+Spell\+Line\+Iceburst\+Tower}} = 145
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a7c36a73eec1be9b2d752c31e61785763}{k\+Gd\+Spell\+Line\+Life\+Tap\+Aura}} = 146
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a29be6c0439b716bbaae20b71ef9e9641}{k\+Gd\+Spell\+Line\+Fire\+Ball\+Effect}} = 147
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a7bdb626463fc76f051bf14dc33512529}{k\+Gd\+Spell\+Line\+Ability\+War\+Cry}} = 148
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a82ccb29a0417c1159227f1ba625b4fe2}{k\+Gd\+Spell\+Line\+Ability\+Benefactions}} = 149
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a12fd22c6519dd689322735ac4349b0d7}{k\+Gd\+Spell\+Line\+Ability\+Patronize}} = 150
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393afa6dde4a8074d54d4a3b902e286ba6dc}{k\+Gd\+Spell\+Line\+Ability\+Endurance}} = 151
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393add4e5fdb4f68a12564fd3f8ccc949867}{k\+Gd\+Spell\+Line\+Ability\+Berserk}} = 152
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a8fec6696f9407a92c2f6b7f9b6bea5ca}{k\+Gd\+Spell\+Line\+Ability\+Blessing}} = 153
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a48f8affd08643aa5acd40c65b052b7dc}{k\+Gd\+Spell\+Line\+Ability\+Shelter}} = 154
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a0abe463ca2e843201a6ed71f222216e1}{k\+Gd\+Spell\+Line\+Ability\+Durability}} = 155
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a03d6ff6bac62e9636f098ff623be6e5f}{k\+Gd\+Spell\+Line\+Ability\+True\+Shot}} = 156
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a077c825828adb70e50886eaeb4f75323}{k\+Gd\+Spell\+Line\+Ability\+Steel\+Skin}} = 157
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a8fc302b233a7d964251a50afb4534946}{k\+Gd\+Spell\+Line\+Ability\+Salvo}} = 158
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393af0962fdeed66af3393dfb5427a50e33b}{k\+Gd\+Spell\+Line\+Fire\+Burst\+Tower}} = 159
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a6655f1cdda7e31474ed051e01c1c30e7}{k\+Gd\+Spell\+Line\+Spark}} = 160
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a62b852cc905bfac800ff9ab5cf5db806}{k\+Gd\+Spell\+Line\+Hypnotize\+Tower}} = 161
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a3e79cb3bff3fd240ac5af0524c27fce2}{k\+Gd\+Spell\+Line\+Pain\+Tower}} = 162
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a21c5fe05e2ecc8de521edd3a52452c88}{k\+Gd\+Spell\+Line\+Stone\+Tower}} = 163
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ab29edc9cf21128229c613ce848e0c42f}{k\+Gd\+Spell\+Line\+Protection\+Black}} = 164
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a69b1571f6ccec659feccc68c21358c6f}{k\+Gd\+Spell\+Line\+Do\+Not\+Touch\+Me}} = 165
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393abe3746a3906574857ab2fa6d139697c2}{k\+Gd\+Spell\+Line\+Healing\+Aura}} = 166
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aa090b651dc3bad9c104192c55bc48fe5}{k\+Gd\+Spell\+Line\+Hypnotize\+Two}} = 167
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a58f59092603d044df8f24be59f5d52af}{k\+Gd\+Spell\+Line\+Ice\+Arrow\+Effect}} = 168
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a8b238d72d19d3ea669147d41818a3837}{k\+Gd\+Spell\+Line\+Ice\+Block\+Effect}} = 169
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a562a66e4ad120b1f68fabea35c763bad}{k\+Gd\+Spell\+Line\+Fire\+Block\+Effect}} = 170
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ab1714bc414b7eeafca741e3a31b538eb}{k\+Gd\+Spell\+Line\+Extinct\+Tower}} = 171
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a69e18400cd5f24c5ca5b7956053af6b7}{k\+Gd\+Spell\+Line\+Mana\+Tap\+Aura}} = 172
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ad9ebe23b0850c7fc78a084010f1b96ec}{k\+Gd\+Spell\+Line\+Fire\+Resistance}} = 173
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ab4cd0160072d591af53fc22c8207f11d}{k\+Gd\+Spell\+Line\+Essence\+Black}} = 174
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a80ce79f195c205c518d55083a914d90a}{k\+Gd\+Spell\+Line\+Essence\+White}} = 175
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393af8925c03dec4ff599f31042f74b0dd31}{k\+Gd\+Spell\+Line\+Essence\+Elemental}} = 176
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aa3a8c78f2b8ba513b7fbe3a6f1b5e178}{k\+Gd\+Spell\+Line\+Essence\+Mental}} = 177
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393af3c9a6e21bfa63ad139586dbf4a3f9cd}{k\+Gd\+Spell\+Line\+Almightiness\+Black}} = 178
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393add4a63dcc4b2d2465914875b41ca93fd}{k\+Gd\+Spell\+Line\+Almightiness\+White}} = 179
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393abff5bdb03f14e14449db47877e6c49b2}{k\+Gd\+Spell\+Line\+Almightiness\+Elemental}} = 180
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a4d19879ad0fb7b0a5d3f2f49c6d6dd72}{k\+Gd\+Spell\+Line\+Almightiness\+Mental}} = 181
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a6cafc1875631272b1a78d2d17c102816}{k\+Gd\+Spell\+Line\+Almightiness\+Elemental\+Effect}} = 182
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ad2c1ec15b6d3be73cd61c66bdd219f5c}{k\+Gd\+Spell\+Line\+Essence\+Elemental\+Effect}} = 183
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aa1edb64203cb51b563133c3146cb1514}{k\+Gd\+Spell\+Line\+Assistance}} = 184
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393adf28611fd112d87f8367a8511ae5da88}{k\+Gd\+Spell\+Line\+Holy\+Touch}} = 185
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a4d5bbf2e7e30a3861f782c5c8873e77a}{k\+Gd\+Spell\+Line\+Revenge}} = 186
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393abf3c921f730b78aa334fefc94117ce79}{k\+Gd\+Spell\+Line\+Roots\+Area}} = 187
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aad4ea6348b41433a74af935fb76ff31e}{k\+Gd\+Spell\+Line\+Summon\+Tree\+Wraith}} = 188
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a023a41ac001552c7b4b32736299d72c1}{k\+Gd\+Spell\+Line\+Roots}} = 189
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a5450b0269f3d64f370e0f50ec469bc45}{k\+Gd\+Spell\+Line\+Chain\+Hallow}} = 190
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a845f40c2cd4b4a05df71f31bafb487bd}{k\+Gd\+Spell\+Line\+Reinforcement}} = 191
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a61994484bc6d1d8c86d3e71a9d6c5977}{k\+Gd\+Spell\+Line\+Aura\+Eternity}} = 192
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a8a7ea6300368bda9cd3b18b07fa90cab}{k\+Gd\+Spell\+Line\+Chain\+Pain}} = 193
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a52d8bcaec7928ed31c62511b4eac0acd}{k\+Gd\+Spell\+Line\+Cannibalize}} = 194
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aae52424731eed214acd5d420425f0774}{k\+Gd\+Spell\+Line\+Torture}} = 195
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393af0c1a84f2507a6137dfd4057c68ba5f6}{k\+Gd\+Spell\+Line\+Chain\+Lifetap}} = 196
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393af9c1b4545548b3788f2dfba249f8e927}{k\+Gd\+Spell\+Line\+Dominate\+Undead}} = 197
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393adbaa2064a990ba7af4d10a494c55167d}{k\+Gd\+Spell\+Line\+Summon\+Blade}} = 198
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a9815c6021f22b5cc19f56a0d8c41bdbd}{k\+Gd\+Spell\+Line\+Mutation}} = 199
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a1304d163a6e30614cdafdbda5ab96add}{k\+Gd\+Spell\+Line\+Darkness\+Area}} = 200
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a8d92d9d72fe5744a2e1877ec585d5697}{k\+Gd\+Spell\+Line\+Chain\+Mutation}} = 201
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a1e562a4af11af993bdc1ceb315ab9c73}{k\+Gd\+Spell\+Line\+Chain\+Fireburst}} = 202
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a90c23e13f1a332098a5969e9ce2f569c}{k\+Gd\+Spell\+Line\+Summon\+Fire\+Golem}} = 203
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393af3a445cc7d5d50d3f74423da3eab9fec}{k\+Gd\+Spell\+Line\+Chain\+Fireball}} = 204
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a9d78a23bd0c6cd641608d6da88ff32c1}{k\+Gd\+Spell\+Line\+Chain\+Iceburst}} = 205
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ad18df96ca195544d1fbd592f89457a43}{k\+Gd\+Spell\+Line\+Summon\+Ice\+Golem}} = 206
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ad3dd345f1f07915a9c0076c02eb00b3c}{k\+Gd\+Spell\+Line\+Freeze\+Area}} = 207
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a70dc7dd1d466ab1407de4592dc564e14}{k\+Gd\+Spell\+Line\+Chain\+Rock\+Bullet}} = 208
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a8117c57d837981b0db75bb982b796212}{k\+Gd\+Spell\+Line\+Summon\+Earth\+Golem}} = 209
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aa4e43c66ecca302f2b620c3c8b14d942}{k\+Gd\+Spell\+Line\+Feet\+Clay}} = 210
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a586f9274274f1cdbe7e8699e01705412}{k\+Gd\+Spell\+Line\+Mirror\+Image}} = 211
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393afcc84e31ef693876623d7ad01fb172b8}{k\+Gd\+Spell\+Line\+Chain\+Charm}} = 212
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aabb00b84db564e868ab780e07d4a001a}{k\+Gd\+Spell\+Line\+Voodoo}} = 213
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a6cbccefbfdd5c3814d26be0d3c9417b3}{k\+Gd\+Spell\+Line\+Chain\+Shock}} = 214
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a4c3be6f33304a00cfa3fa971517a3855}{k\+Gd\+Spell\+Line\+Hypnotize\+Area}} = 215
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a7469c425c7e044db5f712c4fb3be5f2c}{k\+Gd\+Spell\+Line\+Confuse\+Area}} = 216
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393afb7998947b7bc6da09954daada32eadf}{k\+Gd\+Spell\+Line\+Chain\+Manatap}} = 217
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ac805cb4fc8f5a9767061ebc7cdd87bef}{k\+Gd\+Spell\+Line\+Mana\+Shield}} = 218
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ac4017f0a3c1e0462c43ce353c8ff47cb}{k\+Gd\+Spell\+Line\+Shift\+Mana}} = 219
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ae85e1110621e890435ed84524213e817}{k\+Gd\+Spell\+Line\+Ability\+Shift\+Life}} = 220
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ac50b2107cecfed43423e305eb7a24983}{k\+Gd\+Spell\+Line\+Ability\+Riposte}} = 221
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a7130e84ad012920f333c5364b248ce20}{k\+Gd\+Spell\+Line\+Ability\+Critical\+Hits}} = 222
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a44ae67313b929eaf04d4a4f4e2252e37}{k\+Gd\+Spell\+Line\+Aura\+Siege\+Human}} = 223
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a01769db48f5f245e2cdc9713527bd47e}{k\+Gd\+Spell\+Line\+Aura\+Siege\+Elf}} = 225
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a2ec78dcaa3e08021486ed4b6b4331301}{k\+Gd\+Spell\+Line\+Aura\+Siege\+Orc}} = 226
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aa33df0c7c0c55091e23bc37a482f757c}{k\+Gd\+Spell\+Line\+Aura\+Siege\+Troll}} = 227
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a8de9cda36b804dce89ffb298e77ab6ff}{k\+Gd\+Spell\+Line\+Aura\+Siege\+Dark\+Elf}} = 228
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a43fefab3999fd807370fcbe6cb4648f5}{k\+Gd\+Spell\+Line\+Eternity}} = 229
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393af71f519fdc9dc4bf936c80bfca143e4d}{k\+Gd\+Spell\+Line\+Hallow\+Chained}} = 230
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a9cf53399acf6ef07e06f2071b6de9f98}{k\+Gd\+Spell\+Line\+Life\+Tap\+Chained}} = 231
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a1473395a98a71e80b3357246c450648d}{k\+Gd\+Spell\+Line\+Mana\+Tap\+Chained}} = 232
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aabddbf81dad444f8e739c04dff5098e1}{k\+Gd\+Spell\+Line\+Mutation\+Chained}} = 233
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a7d90448e09a707c66796554f9cb89e9c}{k\+Gd\+Spell\+Line\+Fire\+Burst\+Chained}} = 234
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a56904be294194768217b144ca8b45584}{k\+Gd\+Spell\+Line\+Ice\+Burst\+Chained}} = 235
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a7c1eadd11041a6873f433bf8b5db5433}{k\+Gd\+Spell\+Line\+Rock\+Bullet\+Chained}} = 236
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a536ff8e2609b757d0747b2a55fcc9832}{k\+Gd\+Spell\+Line\+Charm\+Chained}} = 237
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a00ebe47c3c76801e6ab509be7e7d3968}{k\+Gd\+Spell\+Line\+Shock\+Chained}} = 238
+, \newline
+\mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a74ee1a90daee38e77f0dd037f13e93cd}{k\+Gd\+Spell\+Line\+Fire\+Ball\+Chained}} = 239
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ab75f28a4aa8648aa87b887a2383b97f5}{k\+Gd\+Spell\+Line\+Pain\+Chained}} = 240
+, \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a8d20ec27c44d0b15548688d2a20a741d}{k\+Gd\+Spell\+Line\+Fake\+Spell\+One\+Figure}} = 241
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{sf__spell__functions_8h_ab898071398b359603a35c202e9c65f3b}{\+\_\+\+\_\+attribute\+\_\+\+\_\+}} ((packed))
+\item 
+\mbox{\hyperlink{sf__spell__functions_8h_a8bd50b5d8196b39629fe28810eee9db2}{DECLARE\+\_\+\+FUNCTION}} (void, set\+XData, \mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+id, uint8\+\_\+t xdatakey, uint32\+\_\+t value)
+\item 
+\mbox{\hyperlink{sf__spell__functions_8h_a8a361d5f37ad1f7c7b80615679bebda5}{DECLARE\+\_\+\+FUNCTION}} (void, \mbox{\hyperlink{sf__spelltype__registry_8cpp_ac3e5dfa2fdcb8f683f6921e40eece8c3}{initialize\+Spell\+Data}}, \mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+id, \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355}{Spell\+Data\+Key}} key)
+\item 
+\mbox{\hyperlink{sf__spell__functions_8h_a3d50cdcceddcaf84b914ad6c1b6efc3c}{DECLARE\+\_\+\+FUNCTION}} (void, set\+Effect\+Done, \mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+id, uint16\+\_\+t param\+\_\+2)
+\item 
+\mbox{\hyperlink{sf__spell__functions_8h_aa4713679a0197af8b53d09842a53cc05}{DECLARE\+\_\+\+FUNCTION}} (uint32\+\_\+t, add\+To\+XData, \mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+id, \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355}{Spell\+Data\+Key}} key, uint32\+\_\+t value)
+\item 
+\mbox{\hyperlink{sf__spell__functions_8h_a3666dc57e591344471012509a9602d72}{DECLARE\+\_\+\+FUNCTION}} (uint32\+\_\+t, get\+Chance\+To\+Resist\+Spell, void \texorpdfstring{$\ast$}{*}autoclass34, uint16\+\_\+t source, uint16\+\_\+t target, \mbox{\hyperlink{sf__general__structures_8h_a5155b93e12786efd5c2faf220aa5b928}{SF\+\_\+\+Spell\+Effect\+Info}} effect\+\_\+info)
+\item 
+\mbox{\hyperlink{sf__spell__functions_8h_a0f6ab8062e2808a64fef2259c9e610a1}{DECLARE\+\_\+\+FUNCTION}} (uint16\+\_\+t, get\+Random, void \texorpdfstring{$\ast$}{*}autoclass14, uint16\+\_\+t max\+\_\+value)
+\item 
+\mbox{\hyperlink{sf__spell__functions_8h_ad29f351904b80df56c9f1463ee52dbe9}{DECLARE\+\_\+\+FUNCTION}} (void, add\+Visual\+Effect, \mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+id, \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a}{CGd\+Effect\+Type}} effect\+\_\+id, void \texorpdfstring{$\ast$}{*}unused, \mbox{\hyperlink{sf__general__structures_8h_aedd8705d0983d09965ace902f37d0e0b}{SF\+\_\+\+CGd\+Target\+Data}} \texorpdfstring{$\ast$}{*}target, uint32\+\_\+t tick\+\_\+start, uint16\+\_\+t tick\+\_\+count, void \texorpdfstring{$\ast$}{*}corner\+\_\+coords)
+\item 
+\mbox{\hyperlink{sf__spell__functions_8h_a9fc4387da97f6a1a833556a7101791a0}{DECLARE\+\_\+\+FUNCTION}} (void, figure\+Aggro, \mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+id, uint16\+\_\+t target\+\_\+index)
+\item 
+\mbox{\hyperlink{sf__spell__functions_8h_afd7616fc8ac718bf9199cc9c6a00c852}{DECLARE\+\_\+\+FUNCTION}} (\mbox{\hyperlink{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}{SF\+\_\+\+CGd\+Resource\+Spell}} \texorpdfstring{$\ast$}{*}, get\+Resource\+Spell\+Data, void \texorpdfstring{$\ast$}{*}, \mbox{\hyperlink{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}{SF\+\_\+\+CGd\+Resource\+Spell}} \texorpdfstring{$\ast$}{*}spell\+Data, uint16\+\_\+t index)
+\item 
+\mbox{\hyperlink{sf__spell__functions_8h_a1c8f47e46ff2ccc11d87333652490d66}{DECLARE\+\_\+\+FUNCTION}} (uint32\+\_\+t, get\+XData, \mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+id, \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355}{Spell\+Data\+Key}} key)
+\item 
+\mbox{\hyperlink{sf__spell__functions_8h_a8bac7e91e05a4b61eb057c792857d8b6}{DECLARE\+\_\+\+FUNCTION}} (\mbox{\hyperlink{sf__general__structures_8h_a1b8b1ec284ff51feaf2673b4aa18f4eb}{SF\+\_\+\+Rectangle}} \texorpdfstring{$\ast$}{*}, get\+Targets\+Rectangle, \mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, \mbox{\hyperlink{sf__general__structures_8h_a1b8b1ec284ff51feaf2673b4aa18f4eb}{SF\+\_\+\+Rectangle}} \texorpdfstring{$\ast$}{*}output, uint16\+\_\+t spell\+\_\+id, uint16\+\_\+t radius, \mbox{\hyperlink{sf__general__structures_8h_aa44e45471f7b6c436abe46e7d9d728c9}{SF\+\_\+\+Coord}} \texorpdfstring{$\ast$}{*}center\+\_\+maybe)
+\item 
+\mbox{\hyperlink{sf__spell__functions_8h_abeaf8b34f10e7c2de96ecbc1c0e5394f}{DECLARE\+\_\+\+FUNCTION}} (void, remove\+DLLNode, \mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t param\+\_\+1)
+\item 
+\mbox{\hyperlink{sf__spell__functions_8h_ad579e096acb95e4e30a3cc581a70352b}{DECLARE\+\_\+\+FUNCTION}} (void, \mbox{\hyperlink{sf__wrappers_8c_ab97dc11635deb183cfe8b9dc8b2fc064}{spell\+Clear\+Figure\+Flag}}, \mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+id, \mbox{\hyperlink{sf__spell__functions_8h_a588abbdd197bfe8e420ee8a32ee9ba5e}{Spell\+Flag\+Key}} key)
+\item 
+\mbox{\hyperlink{sf__spell__functions_8h_aad0e94ecc005ef7d45e051407bdedfbb}{DECLARE\+\_\+\+FUNCTION}} (void, on\+Spell\+Remove, \mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+id)
+\item 
+\mbox{\hyperlink{sf__spell__functions_8h_ae009b67ad04468b339b6f701cae74aae}{DECLARE\+\_\+\+FUNCTION}} (uint16\+\_\+t, add\+Spell, \mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+id, uint16\+\_\+t param2, \mbox{\hyperlink{sf__general__structures_8h_aedd8705d0983d09965ace902f37d0e0b}{SF\+\_\+\+CGd\+Target\+Data}} \texorpdfstring{$\ast$}{*}source, \mbox{\hyperlink{sf__general__structures_8h_aedd8705d0983d09965ace902f37d0e0b}{SF\+\_\+\+CGd\+Target\+Data}} \texorpdfstring{$\ast$}{*}target, uint16\+\_\+t param5)
+\item 
+\mbox{\hyperlink{sf__spell__functions_8h_a0adcc92391e54eaf789eb826733f93a2}{DECLARE\+\_\+\+FUNCTION}} (uint16\+\_\+t, get\+Spell\+Line, \mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+id)
+\item 
+\mbox{\hyperlink{sf__spell__functions_8h_abf21bc9f31fee188b99cad2914e4735d}{DECLARE\+\_\+\+FUNCTION}} (void, fig\+Clr\+Chk\+Spl\+Bfr\+Chk\+Battle, \mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+id, uint16\+\_\+t unk1)
+\item 
+\mbox{\hyperlink{sf__spell__functions_8h_a2dab8627e165c19ebed90faa3c3236c0}{DECLARE\+\_\+\+FUNCTION}} (void, fig\+Try\+Clr\+CHk\+SPl\+Bfr\+Job2, \mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+id)
+\item 
+\mbox{\hyperlink{sf__spell__functions_8h_a35063aede93712a881b8cad5aa38a5d7}{DECLARE\+\_\+\+FUNCTION}} (void, fig\+Try\+Unfreeze, \mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+id, uint16\+\_\+t unk1)
+\item 
+\mbox{\hyperlink{sf__spell__functions_8h_a514048b32172352676ebfa06006f9286}{DECLARE\+\_\+\+FUNCTION}} (uint16\+\_\+t, get\+Spell\+ID, \mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+index)
+\item 
+\mbox{\hyperlink{sf__spell__functions_8h_ab1d3d7cef7d2da5f63e0cce4e8246e41}{DECLARE\+\_\+\+FUNCTION}} (int, \mbox{\hyperlink{sf__mod__registry_8cpp_af4503f89adff0725f6795aedf7d95016}{get\+Spell\+Tag}}, uint16\+\_\+t spell\+\_\+index)
+\item 
+\mbox{\hyperlink{sf__spell__functions_8h_a3d01781c7b0b78749eee3cdfdad71ea2}{DECLARE\+\_\+\+FUNCTION}} (int, check\+Can\+Apply, \mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t index)
+\item 
+\mbox{\hyperlink{sf__spell__functions_8h_a9e3754875dd78f246fc2ec471f664d82}{DECLARE\+\_\+\+FUNCTION\+\_\+\+GROUP}} (Spell, set\+XData\+\_\+ptr set\+XData;initialize\+Spell\+Data\+\_\+ptr \mbox{\hyperlink{sf__spelltype__registry_8cpp_ac3e5dfa2fdcb8f683f6921e40eece8c3}{initialize\+Spell\+Data}};set\+Effect\+Done\+\_\+ptr set\+Effect\+Done;add\+To\+XData\+\_\+ptr add\+To\+XData;get\+Chance\+To\+Resist\+Spell\+\_\+ptr get\+Chance\+To\+Resist\+Spell;get\+Random\+\_\+ptr get\+Random;get\+Resource\+Spell\+Data\+\_\+ptr get\+Resource\+Spell\+Data;add\+Visual\+Effect\+\_\+ptr add\+Visual\+Effect;figure\+Aggro\+\_\+ptr figure\+Aggro;get\+XData\+\_\+ptr get\+XData;get\+Targets\+Rectangle\+\_\+ptr get\+Targets\+Rectangle;remove\+DLLNode\+\_\+ptr remove\+DLLNode;spell\+Clear\+Figure\+Flag\+\_\+ptr \mbox{\hyperlink{sf__wrappers_8c_ab97dc11635deb183cfe8b9dc8b2fc064}{spell\+Clear\+Figure\+Flag}};add\+Spell\+\_\+ptr add\+Spell;get\+Spell\+Line\+\_\+ptr get\+Spell\+Line;on\+Spell\+Remove\+\_\+ptr on\+Spell\+Remove;get\+Spell\+ID\+\_\+ptr get\+Spell\+ID;check\+Can\+Apply\+\_\+ptr check\+Can\+Apply;get\+Spell\+Tag\+\_\+ptr \mbox{\hyperlink{sf__mod__registry_8cpp_af4503f89adff0725f6795aedf7d95016}{get\+Spell\+Tag}};fig\+Clr\+Chk\+Spl\+Bfr\+Chk\+Battle\+\_\+ptr fig\+Clr\+Chk\+Spl\+Bfr\+Chk\+Battle;fig\+Try\+Clr\+CHk\+SPl\+Bfr\+Job2\+\_\+ptr fig\+Try\+Clr\+CHk\+SPl\+Bfr\+Job2;fig\+Try\+Unfreeze\+\_\+ptr fig\+Try\+Unfreeze;)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}{SF\+\_\+\+CGd\+Resource\+Spell}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!GdSpellLine@{GdSpellLine}}
+\index{GdSpellLine@{GdSpellLine}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}
+\doxysubsubsection{\texorpdfstring{GdSpellLine}{GdSpellLine}}
+{\footnotesize\ttfamily \label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+enum \mbox{\hyperlink{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393}{Gd\+Spell\+Line}}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineFireBurst@{kGdSpellLineFireBurst}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineFireBurst@{kGdSpellLineFireBurst}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ab61b1e77c053785ee2064f6dfcb4846e}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Fire\+Burst&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineHealing@{kGdSpellLineHealing}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineHealing@{kGdSpellLineHealing}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aafad4afd28ac1ebcb8408cbb2fe87f91}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Healing&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineDeath@{kGdSpellLineDeath}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineDeath@{kGdSpellLineDeath}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a3098d8a675693a0709576843649cd01e}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Death&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineSlowness@{kGdSpellLineSlowness}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineSlowness@{kGdSpellLineSlowness}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a20543777c02bfed7cc120d3d9a2e6970}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Slowness&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLinePoison@{kGdSpellLinePoison}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLinePoison@{kGdSpellLinePoison}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a1c1295f35dc9fdd447e59a37ff8e72ce}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Poison&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineInvulnerability@{kGdSpellLineInvulnerability}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineInvulnerability@{kGdSpellLineInvulnerability}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a799ce443f800b253ff7a4eac60740216}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Invulnerability&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineCurePoison@{kGdSpellLineCurePoison}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineCurePoison@{kGdSpellLineCurePoison}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393afd5f06c052b88ef1c032361119de3ba6}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Cure\+Poison&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineFreeze@{kGdSpellLineFreeze}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineFreeze@{kGdSpellLineFreeze}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393af93177c795e1a264f555a825f2555289}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Freeze&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineFog@{kGdSpellLineFog}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineFog@{kGdSpellLineFog}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aafbc8f3a7ce6332b8fe14ea8f8598aee}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Fog&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineIlluminate@{kGdSpellLineIlluminate}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineIlluminate@{kGdSpellLineIlluminate}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a3e116879ad910374522e9c7f5a110258}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Illuminate&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineFireShield@{kGdSpellLineFireShield}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineFireShield@{kGdSpellLineFireShield}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a585e6984fcd63b0f5a65ebaba9cd4cf9}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Fire\+Shield&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineFireBall@{kGdSpellLineFireBall}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineFireBall@{kGdSpellLineFireBall}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393abcde65da91231cee3d12492adaf2d3af}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Fire\+Ball&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineIceBurst@{kGdSpellLineIceBurst}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineIceBurst@{kGdSpellLineIceBurst}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a420a2562a890ef80e539e3a3d066c180}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Ice\+Burst&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineIceShield@{kGdSpellLineIceShield}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineIceShield@{kGdSpellLineIceShield}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393af6479d405a1f694089e13e7e2083b2cc}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Ice\+Shield&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineDecay@{kGdSpellLineDecay}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineDecay@{kGdSpellLineDecay}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aab18e996d91968af3b1a7f10a6ea0fd5}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Decay&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineDecayArea@{kGdSpellLineDecayArea}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineDecayArea@{kGdSpellLineDecayArea}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a8090313c0c1c5dbac49891dd9d9d3a1c}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Decay\+Area&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLinePain@{kGdSpellLinePain}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLinePain@{kGdSpellLinePain}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a2e9e2c4bd61b8f9a91ce9aa56adf109e}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Pain&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineLifeTap@{kGdSpellLineLifeTap}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineLifeTap@{kGdSpellLineLifeTap}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a3047ab256e38b0006ee3ef5d7af43178}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Life\+Tap&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineSummonGoblin@{kGdSpellLineSummonGoblin}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineSummonGoblin@{kGdSpellLineSummonGoblin}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a1f7758e6881eed15244d6dd78c9dda01}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Summon\+Goblin&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineHypnotize@{kGdSpellLineHypnotize}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineHypnotize@{kGdSpellLineHypnotize}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a68f55d7c9aa149ee5c4386035b48bccb}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Hypnotize&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineIceShieldStun@{kGdSpellLineIceShieldStun}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineIceShieldStun@{kGdSpellLineIceShieldStun}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a39c10676f53e00ab3a526a1826416356}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Ice\+Shield\+Stun&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLinePestilence@{kGdSpellLinePestilence}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLinePestilence@{kGdSpellLinePestilence}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a3b8459db5df60a63973f32d28850d794}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Pestilence&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineCureDisease@{kGdSpellLineCureDisease}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineCureDisease@{kGdSpellLineCureDisease}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ac3844336ae280b7fa05251d612848946}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Cure\+Disease&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLinePetrify@{kGdSpellLinePetrify}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLinePetrify@{kGdSpellLinePetrify}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a6da52f71c56bf9e16cff0043295a7c98}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Petrify&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLinePainArea@{kGdSpellLinePainArea}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLinePainArea@{kGdSpellLinePainArea}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a178671a9c309285235c163160897a96d}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Pain\+Area&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineSummonSkeleton@{kGdSpellLineSummonSkeleton}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineSummonSkeleton@{kGdSpellLineSummonSkeleton}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a8281d0bc9439caf1c60cce08c27d2acf}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Summon\+Skeleton&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineRaiseDead@{kGdSpellLineRaiseDead}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineRaiseDead@{kGdSpellLineRaiseDead}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ab9ba5e768f9d70078e8982aafb87dcce}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Raise\+Dead&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineSummonDemon@{kGdSpellLineSummonDemon}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineSummonDemon@{kGdSpellLineSummonDemon}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a11aba4c40fa579b64ef41bc31eb20de0}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Summon\+Demon&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineDeathGrasp@{kGdSpellLineDeathGrasp}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineDeathGrasp@{kGdSpellLineDeathGrasp}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ad68588fc5e66499c00add7cafad68434}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Death\+Grasp&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineSummonChanneler@{kGdSpellLineSummonChanneler}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineSummonChanneler@{kGdSpellLineSummonChanneler}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a48e02583c26359215ca9739a755edb53}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Summon\+Channeler&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineInflexibility@{kGdSpellLineInflexibility}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineInflexibility@{kGdSpellLineInflexibility}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a007d6d46e6c4604cd18d5c65663b3e49}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Inflexibility&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineWeaken@{kGdSpellLineWeaken}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineWeaken@{kGdSpellLineWeaken}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a16b8812f794ba26cc77b8549fd2e3d20}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Weaken&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineDarkBanishing@{kGdSpellLineDarkBanishing}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineDarkBanishing@{kGdSpellLineDarkBanishing}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ac74e0a8e30932e4f8f31db2e63353077}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Dark\+Banishing&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineSlownessArea@{kGdSpellLineSlownessArea}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineSlownessArea@{kGdSpellLineSlownessArea}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ad51081518fd28ac1d5270524809e47d1}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Slowness\+Area&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineInflexibilityArea@{kGdSpellLineInflexibilityArea}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineInflexibilityArea@{kGdSpellLineInflexibilityArea}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ace5f1bc3738db433ab1d24212bbae9ee}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Inflexibility\+Area&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineWeakenArea@{kGdSpellLineWeakenArea}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineWeakenArea@{kGdSpellLineWeakenArea}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393afb7f5f4dc98224fe0ec30360441c378a}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Weaken\+Area&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLinePlagueArea@{kGdSpellLinePlagueArea}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLinePlagueArea@{kGdSpellLinePlagueArea}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a6e65580aa765cccf7f16e4500e2ac2d4}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Plague\+Area&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineRemediless@{kGdSpellLineRemediless}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineRemediless@{kGdSpellLineRemediless}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a6e2ac3fceabb15ebc03d460a5607e895}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Remediless&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineDarkMight@{kGdSpellLineDarkMight}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineDarkMight@{kGdSpellLineDarkMight}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ad5b68a749d51853cdaecb675bde419a7}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Dark\+Might&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineHealingArea@{kGdSpellLineHealingArea}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineHealingArea@{kGdSpellLineHealingArea}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ab7c21cbdee8b51c5b41c15e67f8dc480}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Healing\+Area&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineSentinelHealing@{kGdSpellLineSentinelHealing}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineSentinelHealing@{kGdSpellLineSentinelHealing}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a6bf9027edce0c8d11050f3590ea81769}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Sentinel\+Healing&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineGreaterHealing@{kGdSpellLineGreaterHealing}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineGreaterHealing@{kGdSpellLineGreaterHealing}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a0991b88b6f1e11311314fbaa8d80dd27}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Greater\+Healing&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineCharmAnimal@{kGdSpellLineCharmAnimal}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineCharmAnimal@{kGdSpellLineCharmAnimal}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a18d355785d246bebd20a664c99014f41}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Charm\+Animal&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineThornShield@{kGdSpellLineThornShield}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineThornShield@{kGdSpellLineThornShield}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393adb1683cf89a7c72a34efc7745061593d}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Thorn\+Shield&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineQuickness@{kGdSpellLineQuickness}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineQuickness@{kGdSpellLineQuickness}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a46ce2248254aa6aee8e8847bd190bec3}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Quickness&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineQuicknessArea@{kGdSpellLineQuicknessArea}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineQuicknessArea@{kGdSpellLineQuicknessArea}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ad2bf2483d6fbcea053fbf4cfdd026b1b}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Quickness\+Area&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineFlexibility@{kGdSpellLineFlexibility}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineFlexibility@{kGdSpellLineFlexibility}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393abdc6fbc3dca5d61a62c12adee2e1cedb}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Flexibility&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineFlexibilityArea@{kGdSpellLineFlexibilityArea}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineFlexibilityArea@{kGdSpellLineFlexibilityArea}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a87afad068778d293a80862956ce4da5f}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Flexibility\+Area&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineStrengthen@{kGdSpellLineStrengthen}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineStrengthen@{kGdSpellLineStrengthen}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a9ac0b548fcfef09a514bebc022019da2}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Strengthen&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineStrengthenArea@{kGdSpellLineStrengthenArea}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineStrengthenArea@{kGdSpellLineStrengthenArea}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393afdb615de3a02bb1f41c1b1f2043a1477}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Strengthen\+Area&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineGuard@{kGdSpellLineGuard}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineGuard@{kGdSpellLineGuard}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a7f42c7a9cdb551f5b0148f75d134f530}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Guard&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineRemoveCurse@{kGdSpellLineRemoveCurse}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineRemoveCurse@{kGdSpellLineRemoveCurse}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a59deb6312c5ca58af5491b79de63450e}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Remove\+Curse&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineRegenerate@{kGdSpellLineRegenerate}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineRegenerate@{kGdSpellLineRegenerate}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a022b9c483fda35d7f4e45bd96aa77bb3}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Regenerate&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineHolyMight@{kGdSpellLineHolyMight}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineHolyMight@{kGdSpellLineHolyMight}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aaf42cafbb1d2938dc0502188a13adf8c}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Holy\+Might&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineHallow@{kGdSpellLineHallow}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineHallow@{kGdSpellLineHallow}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a65fa7957a9581a45e29ff92943a3b473}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Hallow&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineFireShieldDamage@{kGdSpellLineFireShieldDamage}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineFireShieldDamage@{kGdSpellLineFireShieldDamage}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a7fbf0971ebd018f04b6898c29f74aeb3}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Fire\+Shield\+Damage&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineThornShieldDamage@{kGdSpellLineThornShieldDamage}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineThornShieldDamage@{kGdSpellLineThornShieldDamage}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a7579db571d062cd8f44b6c713984a53a}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Thorn\+Shield\+Damage&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineForget@{kGdSpellLineForget}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineForget@{kGdSpellLineForget}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a24add7ea83904d8016a5aeb75a5f54c6}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Forget&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineSelfIllusion@{kGdSpellLineSelfIllusion}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineSelfIllusion@{kGdSpellLineSelfIllusion}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ad1d39e858068a683c266ec2d84b3fb49}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Self\+Illusion&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineRetention@{kGdSpellLineRetention}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineRetention@{kGdSpellLineRetention}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a68c7bd1058c48c3690c2bd3ecae8cb65}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Retention&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineBrilliance@{kGdSpellLineBrilliance}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineBrilliance@{kGdSpellLineBrilliance}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a3f241736723f2d43eb48cd63b2253817}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Brilliance&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineSacrificeMana@{kGdSpellLineSacrificeMana}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineSacrificeMana@{kGdSpellLineSacrificeMana}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a7603063520ecbf6189641f27b43f3a09}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Sacrifice\+Mana&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineManaTap@{kGdSpellLineManaTap}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineManaTap@{kGdSpellLineManaTap}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a107c941736f2f7a96d73716651fa7ecf}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Mana\+Tap&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineManaDrain@{kGdSpellLineManaDrain}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineManaDrain@{kGdSpellLineManaDrain}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ade87aa67244d02cb455b262abd355907}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Mana\+Drain&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineShock@{kGdSpellLineShock}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineShock@{kGdSpellLineShock}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a140859e63dd3c80185b9ade9488f1225}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Shock&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineDisrupt@{kGdSpellLineDisrupt}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineDisrupt@{kGdSpellLineDisrupt}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ac11fe0d2802ca4ced28fcd7c42131d51}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Disrupt&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineFear@{kGdSpellLineFear}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineFear@{kGdSpellLineFear}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a94fb322989e1ae8618d4b89ae991d282}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Fear&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineConfuse@{kGdSpellLineConfuse}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineConfuse@{kGdSpellLineConfuse}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ae9ed687728668dfed70c319d97e17d1f}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Confuse&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineRainOfFire@{kGdSpellLineRainOfFire}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineRainOfFire@{kGdSpellLineRainOfFire}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ab116d2ff2962b72cf1743763b6c832f3}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Rain\+Of\+Fire&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineBlizzard@{kGdSpellLineBlizzard}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineBlizzard@{kGdSpellLineBlizzard}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ac2f7c75fcefd2d02adf29b343bbfc3db}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Blizzard&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAcidCloud@{kGdSpellLineAcidCloud}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAcidCloud@{kGdSpellLineAcidCloud}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a35e05b1b6fb86a1fbb376ac979c23579}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Acid\+Cloud&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineStoneRain@{kGdSpellLineStoneRain}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineStoneRain@{kGdSpellLineStoneRain}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a5d2a094b331aa504df9da2518a102f6e}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Stone\+Rain&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineWallOfRocks@{kGdSpellLineWallOfRocks}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineWallOfRocks@{kGdSpellLineWallOfRocks}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a70e71c8161c4ce6279dadf2211ad439d}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Wall\+Of\+Rocks&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineRingOfRocks@{kGdSpellLineRingOfRocks}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineRingOfRocks@{kGdSpellLineRingOfRocks}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ab8a7f08157eac94f9d492cb16aba5c47}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Ring\+Of\+Rocks&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAmok@{kGdSpellLineAmok}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAmok@{kGdSpellLineAmok}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a0184dd4743de0f372155b8c2d1075b48}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Amok&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineExtinct@{kGdSpellLineExtinct}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineExtinct@{kGdSpellLineExtinct}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a27e656f18d9e29fb6d28dfc51a45dd10}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Extinct&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineDetectMetal@{kGdSpellLineDetectMetal}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineDetectMetal@{kGdSpellLineDetectMetal}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a47b7aafffdbb37071fc0f5d53544d5dd}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Detect\+Metal&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineDetectMagic@{kGdSpellLineDetectMagic}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineDetectMagic@{kGdSpellLineDetectMagic}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a035ee3b7e476467b556721f0ce2d55c9}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Detect\+Magic&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineArrow@{kGdSpellLineArrow}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineArrow@{kGdSpellLineArrow}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a111e326326810cfbb11d33e202f84913}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Arrow&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineBerserk@{kGdSpellLineBerserk}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineBerserk@{kGdSpellLineBerserk}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a5e0898a27d5ea1d97620db702e6b6a5b}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Berserk&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineInvisibility@{kGdSpellLineInvisibility}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineInvisibility@{kGdSpellLineInvisibility}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a1e701b9a5a86bd5df1628e2384f1e598}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Invisibility&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineStone@{kGdSpellLineStone}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineStone@{kGdSpellLineStone}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a7d6b3ff954bfbd4f83217039319cebbe}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Stone&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAuraWeakness@{kGdSpellLineAuraWeakness}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAuraWeakness@{kGdSpellLineAuraWeakness}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a76d065c9baf0d478c073ad6834b44ccf}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Aura\+Weakness&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAuraSuffocation@{kGdSpellLineAuraSuffocation}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAuraSuffocation@{kGdSpellLineAuraSuffocation}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aa182a5df307b4d2abc23229724b8e63d}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Aura\+Suffocation&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineSuicideDeath@{kGdSpellLineSuicideDeath}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineSuicideDeath@{kGdSpellLineSuicideDeath}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ab8996347e449e8d41878ea91ef2647c5}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Suicide\+Death&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAuraLifeTap@{kGdSpellLineAuraLifeTap}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAuraLifeTap@{kGdSpellLineAuraLifeTap}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ac0f86f162922ced523a2a87f96b045e3}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Aura\+Life\+Tap&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineSummonSpectre@{kGdSpellLineSummonSpectre}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineSummonSpectre@{kGdSpellLineSummonSpectre}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a70af662c607135f864506508da063de6}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Summon\+Spectre&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineFeignDeath@{kGdSpellLineFeignDeath}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineFeignDeath@{kGdSpellLineFeignDeath}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a43f420f114cb6f5c146d62a7d13beeb0}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Feign\+Death&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAuraSlowFighting@{kGdSpellLineAuraSlowFighting}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAuraSlowFighting@{kGdSpellLineAuraSlowFighting}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a25b5a3d168e17b87ce986cfd971f1951}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Aura\+Slow\+Fighting&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAuraInflexibility@{kGdSpellLineAuraInflexibility}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAuraInflexibility@{kGdSpellLineAuraInflexibility}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a3fa7120d9010b80214ac84798fb46344}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Aura\+Inflexibility&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineDispelWhiteAura@{kGdSpellLineDispelWhiteAura}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineDispelWhiteAura@{kGdSpellLineDispelWhiteAura}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a1be676659dbe33695489541a43efd4e4}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Dispel\+White\+Aura&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAuraSlowWalking@{kGdSpellLineAuraSlowWalking}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAuraSlowWalking@{kGdSpellLineAuraSlowWalking}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ab58f089546fe8e0ac933e0ffe1744d8e}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Aura\+Slow\+Walking&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAuraInability@{kGdSpellLineAuraInability}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAuraInability@{kGdSpellLineAuraInability}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393af565ea7a413207d2597b3dcc766f4379}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Aura\+Inability&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineSuffocation@{kGdSpellLineSuffocation}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineSuffocation@{kGdSpellLineSuffocation}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a31bf4c341bd8dd70108774238b5f7bf0}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Suffocation&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineInability@{kGdSpellLineInability}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineInability@{kGdSpellLineInability}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a4288b430ade99c2a27304bcaadf2eac5}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Inability&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineSlowFighting@{kGdSpellLineSlowFighting}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineSlowFighting@{kGdSpellLineSlowFighting}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a3a9c327d86a2eae834173b78c2db3233}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Slow\+Fighting&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAuraStrength@{kGdSpellLineAuraStrength}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAuraStrength@{kGdSpellLineAuraStrength}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ae078cdc2eb6a8044d3a1792e94fadde5}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Aura\+Strength&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAuraHealing@{kGdSpellLineAuraHealing}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAuraHealing@{kGdSpellLineAuraHealing}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a66a23bc9669c81636300d304e4d5fec4}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Aura\+Healing&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAuraEndurance@{kGdSpellLineAuraEndurance}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAuraEndurance@{kGdSpellLineAuraEndurance}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393af6ed0c01339e1d2436bc47b26cdc5a51}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Aura\+Endurance&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineSuicideHeal@{kGdSpellLineSuicideHeal}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineSuicideHeal@{kGdSpellLineSuicideHeal}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a79bd107885792579272f4d1f392e1344}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Suicide\+Heal&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineSummonWolf@{kGdSpellLineSummonWolf}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineSummonWolf@{kGdSpellLineSummonWolf}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aef1b6370c13bb820a812ee4cc8fea0b6}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Summon\+Wolf&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAuraRegeneration@{kGdSpellLineAuraRegeneration}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAuraRegeneration@{kGdSpellLineAuraRegeneration}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a162d2c2b56f5a444c6a3334f5b8d62ee}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Aura\+Regeneration&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineDominateAnimal@{kGdSpellLineDominateAnimal}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineDominateAnimal@{kGdSpellLineDominateAnimal}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a5e9ec74f92b94c10862c2c24c4bd2a17}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Dominate\+Animal&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineSummonBear@{kGdSpellLineSummonBear}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineSummonBear@{kGdSpellLineSummonBear}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a2e1c16b658e00c58fbd232ed88450f0a}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Summon\+Bear&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAuraFastFighting@{kGdSpellLineAuraFastFighting}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAuraFastFighting@{kGdSpellLineAuraFastFighting}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ade0e9f27325b27aa1401464fbbdeb509}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Aura\+Fast\+Fighting&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAuraFlexibility@{kGdSpellLineAuraFlexibility}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAuraFlexibility@{kGdSpellLineAuraFlexibility}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393acece77496703ddbdf19f829d279ca429}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Aura\+Flexibility&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineDispelBlackAura@{kGdSpellLineDispelBlackAura}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineDispelBlackAura@{kGdSpellLineDispelBlackAura}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393acc3ac9b7b1c6dad6c62a04f25b7da36d}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Dispel\+Black\+Aura&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAuraFastWalking@{kGdSpellLineAuraFastWalking}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAuraFastWalking@{kGdSpellLineAuraFastWalking}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393afb8dd55d469a7e4a6b4dc36bea2f44c6}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Aura\+Fast\+Walking&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAuraLight@{kGdSpellLineAuraLight}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAuraLight@{kGdSpellLineAuraLight}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ae5c17d0081e1f4544098c490e5e69eb8}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Aura\+Light&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAuraDexterity@{kGdSpellLineAuraDexterity}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAuraDexterity@{kGdSpellLineAuraDexterity}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a3e9b69f5099b10fe54163ac9e7b4b2f0}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Aura\+Dexterity&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineDexterity@{kGdSpellLineDexterity}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineDexterity@{kGdSpellLineDexterity}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a870bb58a6ca146b8b45d452fc95400b4}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Dexterity&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineEndurance@{kGdSpellLineEndurance}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineEndurance@{kGdSpellLineEndurance}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ace802e11b8721469578c1e37e11a3ac9}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Endurance&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineFastFighting@{kGdSpellLineFastFighting}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineFastFighting@{kGdSpellLineFastFighting}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ad6f791f25bdf0fc85f9293844d7b1361}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Fast\+Fighting&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineDistract@{kGdSpellLineDistract}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineDistract@{kGdSpellLineDistract}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393af5f6d1816729e18aab52fc0ed6326a47}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Distract&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineDominate@{kGdSpellLineDominate}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineDominate@{kGdSpellLineDominate}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393adfa36e4b3918b3dc59abf79e5b0fec66}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Dominate&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineObjectIllusion@{kGdSpellLineObjectIllusion}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineObjectIllusion@{kGdSpellLineObjectIllusion}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a13a0e665c14d17b974e1850d10cc568b}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Object\+Illusion&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineCharm@{kGdSpellLineCharm}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineCharm@{kGdSpellLineCharm}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a1505b24616fce91231ef396bed0e3982}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Charm&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineBefriend@{kGdSpellLineBefriend}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineBefriend@{kGdSpellLineBefriend}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ad65fd37e8c94596e76853e280bc58ee6}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Befriend&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineDisenchant@{kGdSpellLineDisenchant}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineDisenchant@{kGdSpellLineDisenchant}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a25edd98c1d5c1870709e72905747bdae}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Disenchant&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineCharisma@{kGdSpellLineCharisma}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineCharisma@{kGdSpellLineCharisma}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ab3cef37c17a45202364e6044883c9d33}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Charisma&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineShockwave@{kGdSpellLineShockwave}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineShockwave@{kGdSpellLineShockwave}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aaf1fd67fa4388c488d4f59a6c1d7b469}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Shockwave&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAuraHypnotization@{kGdSpellLineAuraHypnotization}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAuraHypnotization@{kGdSpellLineAuraHypnotization}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a0dacf6fdd47dac6505db7728d32e2ddf}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Aura\+Hypnotization&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineDemoralization@{kGdSpellLineDemoralization}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineDemoralization@{kGdSpellLineDemoralization}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ae4fac47d57ac6785defe888972aa7c57}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Demoralization&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAuraBrilliance@{kGdSpellLineAuraBrilliance}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAuraBrilliance@{kGdSpellLineAuraBrilliance}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ada6fdcab938c8985a13668e023c9936d}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Aura\+Brilliance&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineEnlightenment@{kGdSpellLineEnlightenment}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineEnlightenment@{kGdSpellLineEnlightenment}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a1b4da7ee328b53113c0d707b8103f0e8}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Enlightenment&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAuraManaTap@{kGdSpellLineAuraManaTap}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAuraManaTap@{kGdSpellLineAuraManaTap}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a12879b531ffab48f7cc828fb5f9e08c9}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Aura\+Mana\+Tap&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineMeditation@{kGdSpellLineMeditation}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineMeditation@{kGdSpellLineMeditation}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a3584eb873cb6e1de238aa9673c0c3d70}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Meditation&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineFireElemental@{kGdSpellLineFireElemental}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineFireElemental@{kGdSpellLineFireElemental}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aa66fb4002186197dc118d52fa85fae48}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Fire\+Elemental&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineWaveOfFire@{kGdSpellLineWaveOfFire}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineWaveOfFire@{kGdSpellLineWaveOfFire}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393afab67d56203d891b0e0e7f0d64d5c1be}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Wave\+Of\+Fire&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineMeltResistance@{kGdSpellLineMeltResistance}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineMeltResistance@{kGdSpellLineMeltResistance}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393accaa82bf9c47aac50bea0645ebc8d311}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Melt\+Resistance&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineIceElemental@{kGdSpellLineIceElemental}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineIceElemental@{kGdSpellLineIceElemental}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aef0031418e1bb5e3d8f7b61cd29deff6}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Ice\+Elemental&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineWaveOfIce@{kGdSpellLineWaveOfIce}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineWaveOfIce@{kGdSpellLineWaveOfIce}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a10b43aeb62633db33fdd5397239124bd}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Wave\+Of\+Ice&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineChillResistance@{kGdSpellLineChillResistance}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineChillResistance@{kGdSpellLineChillResistance}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a2942d0375957ad18ac763850a2cdfa17}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Chill\+Resistance&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineRockBullet@{kGdSpellLineRockBullet}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineRockBullet@{kGdSpellLineRockBullet}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a348fa87aa1a7d65b2719e099ade3d233}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Rock\+Bullet&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineConservation@{kGdSpellLineConservation}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineConservation@{kGdSpellLineConservation}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393adbd998f6e68ce225dac50b09d3c610c8}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Conservation&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineEarthElemental@{kGdSpellLineEarthElemental}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineEarthElemental@{kGdSpellLineEarthElemental}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a919ecf4e893dc1b875892c8780e1bba2}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Earth\+Elemental&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineWaveOfRocks@{kGdSpellLineWaveOfRocks}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineWaveOfRocks@{kGdSpellLineWaveOfRocks}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ae1808b607f82d39522ed537b2f0ddada}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Wave\+Of\+Rocks&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineArrowTower@{kGdSpellLineArrowTower}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineArrowTower@{kGdSpellLineArrowTower}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a574d566840e111853d6b2f0419f66fdd}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Arrow\+Tower&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineHealingTower@{kGdSpellLineHealingTower}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineHealingTower@{kGdSpellLineHealingTower}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aae17d1476768aa69125f71486dd3bd1c}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Healing\+Tower&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineIceburstTower@{kGdSpellLineIceburstTower}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineIceburstTower@{kGdSpellLineIceburstTower}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a5a0bde757dffbabef5ab994c8cef998a}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Iceburst\+Tower&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineLifeTapAura@{kGdSpellLineLifeTapAura}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineLifeTapAura@{kGdSpellLineLifeTapAura}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a7c36a73eec1be9b2d752c31e61785763}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Life\+Tap\+Aura&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineFireBallEffect@{kGdSpellLineFireBallEffect}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineFireBallEffect@{kGdSpellLineFireBallEffect}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a29be6c0439b716bbaae20b71ef9e9641}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Fire\+Ball\+Effect&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAbilityWarCry@{kGdSpellLineAbilityWarCry}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAbilityWarCry@{kGdSpellLineAbilityWarCry}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a7bdb626463fc76f051bf14dc33512529}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Ability\+War\+Cry&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAbilityBenefactions@{kGdSpellLineAbilityBenefactions}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAbilityBenefactions@{kGdSpellLineAbilityBenefactions}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a82ccb29a0417c1159227f1ba625b4fe2}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Ability\+Benefactions&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAbilityPatronize@{kGdSpellLineAbilityPatronize}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAbilityPatronize@{kGdSpellLineAbilityPatronize}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a12fd22c6519dd689322735ac4349b0d7}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Ability\+Patronize&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAbilityEndurance@{kGdSpellLineAbilityEndurance}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAbilityEndurance@{kGdSpellLineAbilityEndurance}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393afa6dde4a8074d54d4a3b902e286ba6dc}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Ability\+Endurance&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAbilityBerserk@{kGdSpellLineAbilityBerserk}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAbilityBerserk@{kGdSpellLineAbilityBerserk}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393add4e5fdb4f68a12564fd3f8ccc949867}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Ability\+Berserk&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAbilityBlessing@{kGdSpellLineAbilityBlessing}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAbilityBlessing@{kGdSpellLineAbilityBlessing}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a8fec6696f9407a92c2f6b7f9b6bea5ca}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Ability\+Blessing&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAbilityShelter@{kGdSpellLineAbilityShelter}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAbilityShelter@{kGdSpellLineAbilityShelter}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a48f8affd08643aa5acd40c65b052b7dc}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Ability\+Shelter&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAbilityDurability@{kGdSpellLineAbilityDurability}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAbilityDurability@{kGdSpellLineAbilityDurability}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a0abe463ca2e843201a6ed71f222216e1}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Ability\+Durability&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAbilityTrueShot@{kGdSpellLineAbilityTrueShot}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAbilityTrueShot@{kGdSpellLineAbilityTrueShot}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a03d6ff6bac62e9636f098ff623be6e5f}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Ability\+True\+Shot&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAbilitySteelSkin@{kGdSpellLineAbilitySteelSkin}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAbilitySteelSkin@{kGdSpellLineAbilitySteelSkin}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a077c825828adb70e50886eaeb4f75323}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Ability\+Steel\+Skin&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAbilitySalvo@{kGdSpellLineAbilitySalvo}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAbilitySalvo@{kGdSpellLineAbilitySalvo}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a8fc302b233a7d964251a50afb4534946}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Ability\+Salvo&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineFireBurstTower@{kGdSpellLineFireBurstTower}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineFireBurstTower@{kGdSpellLineFireBurstTower}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393af0962fdeed66af3393dfb5427a50e33b}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Fire\+Burst\+Tower&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineSpark@{kGdSpellLineSpark}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineSpark@{kGdSpellLineSpark}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a6655f1cdda7e31474ed051e01c1c30e7}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Spark&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineHypnotizeTower@{kGdSpellLineHypnotizeTower}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineHypnotizeTower@{kGdSpellLineHypnotizeTower}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a62b852cc905bfac800ff9ab5cf5db806}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Hypnotize\+Tower&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLinePainTower@{kGdSpellLinePainTower}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLinePainTower@{kGdSpellLinePainTower}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a3e79cb3bff3fd240ac5af0524c27fce2}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Pain\+Tower&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineStoneTower@{kGdSpellLineStoneTower}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineStoneTower@{kGdSpellLineStoneTower}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a21c5fe05e2ecc8de521edd3a52452c88}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Stone\+Tower&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineProtectionBlack@{kGdSpellLineProtectionBlack}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineProtectionBlack@{kGdSpellLineProtectionBlack}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ab29edc9cf21128229c613ce848e0c42f}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Protection\+Black&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineDoNotTouchMe@{kGdSpellLineDoNotTouchMe}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineDoNotTouchMe@{kGdSpellLineDoNotTouchMe}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a69b1571f6ccec659feccc68c21358c6f}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Do\+Not\+Touch\+Me&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineHealingAura@{kGdSpellLineHealingAura}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineHealingAura@{kGdSpellLineHealingAura}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393abe3746a3906574857ab2fa6d139697c2}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Healing\+Aura&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineHypnotizeTwo@{kGdSpellLineHypnotizeTwo}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineHypnotizeTwo@{kGdSpellLineHypnotizeTwo}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aa090b651dc3bad9c104192c55bc48fe5}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Hypnotize\+Two&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineIceArrowEffect@{kGdSpellLineIceArrowEffect}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineIceArrowEffect@{kGdSpellLineIceArrowEffect}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a58f59092603d044df8f24be59f5d52af}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Ice\+Arrow\+Effect&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineIceBlockEffect@{kGdSpellLineIceBlockEffect}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineIceBlockEffect@{kGdSpellLineIceBlockEffect}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a8b238d72d19d3ea669147d41818a3837}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Ice\+Block\+Effect&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineFireBlockEffect@{kGdSpellLineFireBlockEffect}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineFireBlockEffect@{kGdSpellLineFireBlockEffect}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a562a66e4ad120b1f68fabea35c763bad}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Fire\+Block\+Effect&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineExtinctTower@{kGdSpellLineExtinctTower}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineExtinctTower@{kGdSpellLineExtinctTower}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ab1714bc414b7eeafca741e3a31b538eb}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Extinct\+Tower&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineManaTapAura@{kGdSpellLineManaTapAura}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineManaTapAura@{kGdSpellLineManaTapAura}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a69e18400cd5f24c5ca5b7956053af6b7}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Mana\+Tap\+Aura&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineFireResistance@{kGdSpellLineFireResistance}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineFireResistance@{kGdSpellLineFireResistance}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ad9ebe23b0850c7fc78a084010f1b96ec}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Fire\+Resistance&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineEssenceBlack@{kGdSpellLineEssenceBlack}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineEssenceBlack@{kGdSpellLineEssenceBlack}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ab4cd0160072d591af53fc22c8207f11d}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Essence\+Black&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineEssenceWhite@{kGdSpellLineEssenceWhite}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineEssenceWhite@{kGdSpellLineEssenceWhite}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a80ce79f195c205c518d55083a914d90a}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Essence\+White&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineEssenceElemental@{kGdSpellLineEssenceElemental}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineEssenceElemental@{kGdSpellLineEssenceElemental}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393af8925c03dec4ff599f31042f74b0dd31}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Essence\+Elemental&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineEssenceMental@{kGdSpellLineEssenceMental}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineEssenceMental@{kGdSpellLineEssenceMental}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aa3a8c78f2b8ba513b7fbe3a6f1b5e178}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Essence\+Mental&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAlmightinessBlack@{kGdSpellLineAlmightinessBlack}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAlmightinessBlack@{kGdSpellLineAlmightinessBlack}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393af3c9a6e21bfa63ad139586dbf4a3f9cd}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Almightiness\+Black&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAlmightinessWhite@{kGdSpellLineAlmightinessWhite}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAlmightinessWhite@{kGdSpellLineAlmightinessWhite}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393add4a63dcc4b2d2465914875b41ca93fd}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Almightiness\+White&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAlmightinessElemental@{kGdSpellLineAlmightinessElemental}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAlmightinessElemental@{kGdSpellLineAlmightinessElemental}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393abff5bdb03f14e14449db47877e6c49b2}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Almightiness\+Elemental&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAlmightinessMental@{kGdSpellLineAlmightinessMental}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAlmightinessMental@{kGdSpellLineAlmightinessMental}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a4d19879ad0fb7b0a5d3f2f49c6d6dd72}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Almightiness\+Mental&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAlmightinessElementalEffect@{kGdSpellLineAlmightinessElementalEffect}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAlmightinessElementalEffect@{kGdSpellLineAlmightinessElementalEffect}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a6cafc1875631272b1a78d2d17c102816}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Almightiness\+Elemental\+Effect&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineEssenceElementalEffect@{kGdSpellLineEssenceElementalEffect}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineEssenceElementalEffect@{kGdSpellLineEssenceElementalEffect}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ad2c1ec15b6d3be73cd61c66bdd219f5c}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Essence\+Elemental\+Effect&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAssistance@{kGdSpellLineAssistance}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAssistance@{kGdSpellLineAssistance}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aa1edb64203cb51b563133c3146cb1514}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Assistance&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineHolyTouch@{kGdSpellLineHolyTouch}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineHolyTouch@{kGdSpellLineHolyTouch}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393adf28611fd112d87f8367a8511ae5da88}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Holy\+Touch&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineRevenge@{kGdSpellLineRevenge}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineRevenge@{kGdSpellLineRevenge}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a4d5bbf2e7e30a3861f782c5c8873e77a}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Revenge&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineRootsArea@{kGdSpellLineRootsArea}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineRootsArea@{kGdSpellLineRootsArea}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393abf3c921f730b78aa334fefc94117ce79}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Roots\+Area&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineSummonTreeWraith@{kGdSpellLineSummonTreeWraith}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineSummonTreeWraith@{kGdSpellLineSummonTreeWraith}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aad4ea6348b41433a74af935fb76ff31e}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Summon\+Tree\+Wraith&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineRoots@{kGdSpellLineRoots}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineRoots@{kGdSpellLineRoots}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a023a41ac001552c7b4b32736299d72c1}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Roots&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineChainHallow@{kGdSpellLineChainHallow}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineChainHallow@{kGdSpellLineChainHallow}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a5450b0269f3d64f370e0f50ec469bc45}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Chain\+Hallow&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineReinforcement@{kGdSpellLineReinforcement}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineReinforcement@{kGdSpellLineReinforcement}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a845f40c2cd4b4a05df71f31bafb487bd}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Reinforcement&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAuraEternity@{kGdSpellLineAuraEternity}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAuraEternity@{kGdSpellLineAuraEternity}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a61994484bc6d1d8c86d3e71a9d6c5977}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Aura\+Eternity&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineChainPain@{kGdSpellLineChainPain}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineChainPain@{kGdSpellLineChainPain}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a8a7ea6300368bda9cd3b18b07fa90cab}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Chain\+Pain&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineCannibalize@{kGdSpellLineCannibalize}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineCannibalize@{kGdSpellLineCannibalize}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a52d8bcaec7928ed31c62511b4eac0acd}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Cannibalize&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineTorture@{kGdSpellLineTorture}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineTorture@{kGdSpellLineTorture}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aae52424731eed214acd5d420425f0774}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Torture&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineChainLifetap@{kGdSpellLineChainLifetap}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineChainLifetap@{kGdSpellLineChainLifetap}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393af0c1a84f2507a6137dfd4057c68ba5f6}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Chain\+Lifetap&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineDominateUndead@{kGdSpellLineDominateUndead}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineDominateUndead@{kGdSpellLineDominateUndead}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393af9c1b4545548b3788f2dfba249f8e927}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Dominate\+Undead&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineSummonBlade@{kGdSpellLineSummonBlade}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineSummonBlade@{kGdSpellLineSummonBlade}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393adbaa2064a990ba7af4d10a494c55167d}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Summon\+Blade&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineMutation@{kGdSpellLineMutation}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineMutation@{kGdSpellLineMutation}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a9815c6021f22b5cc19f56a0d8c41bdbd}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Mutation&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineDarknessArea@{kGdSpellLineDarknessArea}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineDarknessArea@{kGdSpellLineDarknessArea}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a1304d163a6e30614cdafdbda5ab96add}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Darkness\+Area&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineChainMutation@{kGdSpellLineChainMutation}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineChainMutation@{kGdSpellLineChainMutation}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a8d92d9d72fe5744a2e1877ec585d5697}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Chain\+Mutation&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineChainFireburst@{kGdSpellLineChainFireburst}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineChainFireburst@{kGdSpellLineChainFireburst}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a1e562a4af11af993bdc1ceb315ab9c73}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Chain\+Fireburst&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineSummonFireGolem@{kGdSpellLineSummonFireGolem}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineSummonFireGolem@{kGdSpellLineSummonFireGolem}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a90c23e13f1a332098a5969e9ce2f569c}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Summon\+Fire\+Golem&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineChainFireball@{kGdSpellLineChainFireball}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineChainFireball@{kGdSpellLineChainFireball}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393af3a445cc7d5d50d3f74423da3eab9fec}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Chain\+Fireball&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineChainIceburst@{kGdSpellLineChainIceburst}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineChainIceburst@{kGdSpellLineChainIceburst}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a9d78a23bd0c6cd641608d6da88ff32c1}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Chain\+Iceburst&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineSummonIceGolem@{kGdSpellLineSummonIceGolem}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineSummonIceGolem@{kGdSpellLineSummonIceGolem}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ad18df96ca195544d1fbd592f89457a43}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Summon\+Ice\+Golem&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineFreezeArea@{kGdSpellLineFreezeArea}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineFreezeArea@{kGdSpellLineFreezeArea}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ad3dd345f1f07915a9c0076c02eb00b3c}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Freeze\+Area&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineChainRockBullet@{kGdSpellLineChainRockBullet}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineChainRockBullet@{kGdSpellLineChainRockBullet}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a70dc7dd1d466ab1407de4592dc564e14}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Chain\+Rock\+Bullet&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineSummonEarthGolem@{kGdSpellLineSummonEarthGolem}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineSummonEarthGolem@{kGdSpellLineSummonEarthGolem}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a8117c57d837981b0db75bb982b796212}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Summon\+Earth\+Golem&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineFeetClay@{kGdSpellLineFeetClay}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineFeetClay@{kGdSpellLineFeetClay}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aa4e43c66ecca302f2b620c3c8b14d942}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Feet\+Clay&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineMirrorImage@{kGdSpellLineMirrorImage}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineMirrorImage@{kGdSpellLineMirrorImage}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a586f9274274f1cdbe7e8699e01705412}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Mirror\+Image&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineChainCharm@{kGdSpellLineChainCharm}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineChainCharm@{kGdSpellLineChainCharm}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393afcc84e31ef693876623d7ad01fb172b8}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Chain\+Charm&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineVoodoo@{kGdSpellLineVoodoo}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineVoodoo@{kGdSpellLineVoodoo}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aabb00b84db564e868ab780e07d4a001a}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Voodoo&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineChainShock@{kGdSpellLineChainShock}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineChainShock@{kGdSpellLineChainShock}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a6cbccefbfdd5c3814d26be0d3c9417b3}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Chain\+Shock&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineHypnotizeArea@{kGdSpellLineHypnotizeArea}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineHypnotizeArea@{kGdSpellLineHypnotizeArea}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a4c3be6f33304a00cfa3fa971517a3855}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Hypnotize\+Area&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineConfuseArea@{kGdSpellLineConfuseArea}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineConfuseArea@{kGdSpellLineConfuseArea}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a7469c425c7e044db5f712c4fb3be5f2c}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Confuse\+Area&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineChainManatap@{kGdSpellLineChainManatap}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineChainManatap@{kGdSpellLineChainManatap}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393afb7998947b7bc6da09954daada32eadf}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Chain\+Manatap&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineManaShield@{kGdSpellLineManaShield}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineManaShield@{kGdSpellLineManaShield}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ac805cb4fc8f5a9767061ebc7cdd87bef}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Mana\+Shield&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineShiftMana@{kGdSpellLineShiftMana}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineShiftMana@{kGdSpellLineShiftMana}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ac4017f0a3c1e0462c43ce353c8ff47cb}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Shift\+Mana&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAbilityShiftLife@{kGdSpellLineAbilityShiftLife}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAbilityShiftLife@{kGdSpellLineAbilityShiftLife}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ae85e1110621e890435ed84524213e817}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Ability\+Shift\+Life&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAbilityRiposte@{kGdSpellLineAbilityRiposte}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAbilityRiposte@{kGdSpellLineAbilityRiposte}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ac50b2107cecfed43423e305eb7a24983}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Ability\+Riposte&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAbilityCriticalHits@{kGdSpellLineAbilityCriticalHits}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAbilityCriticalHits@{kGdSpellLineAbilityCriticalHits}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a7130e84ad012920f333c5364b248ce20}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Ability\+Critical\+Hits&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAuraSiegeHuman@{kGdSpellLineAuraSiegeHuman}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAuraSiegeHuman@{kGdSpellLineAuraSiegeHuman}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a44ae67313b929eaf04d4a4f4e2252e37}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Aura\+Siege\+Human&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAuraSiegeElf@{kGdSpellLineAuraSiegeElf}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAuraSiegeElf@{kGdSpellLineAuraSiegeElf}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a01769db48f5f245e2cdc9713527bd47e}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Aura\+Siege\+Elf&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAuraSiegeOrc@{kGdSpellLineAuraSiegeOrc}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAuraSiegeOrc@{kGdSpellLineAuraSiegeOrc}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a2ec78dcaa3e08021486ed4b6b4331301}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Aura\+Siege\+Orc&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAuraSiegeTroll@{kGdSpellLineAuraSiegeTroll}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAuraSiegeTroll@{kGdSpellLineAuraSiegeTroll}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aa33df0c7c0c55091e23bc37a482f757c}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Aura\+Siege\+Troll&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineAuraSiegeDarkElf@{kGdSpellLineAuraSiegeDarkElf}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineAuraSiegeDarkElf@{kGdSpellLineAuraSiegeDarkElf}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a8de9cda36b804dce89ffb298e77ab6ff}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Aura\+Siege\+Dark\+Elf&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineEternity@{kGdSpellLineEternity}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineEternity@{kGdSpellLineEternity}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a43fefab3999fd807370fcbe6cb4648f5}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Eternity&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineHallowChained@{kGdSpellLineHallowChained}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineHallowChained@{kGdSpellLineHallowChained}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393af71f519fdc9dc4bf936c80bfca143e4d}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Hallow\+Chained&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineLifeTapChained@{kGdSpellLineLifeTapChained}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineLifeTapChained@{kGdSpellLineLifeTapChained}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a9cf53399acf6ef07e06f2071b6de9f98}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Life\+Tap\+Chained&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineManaTapChained@{kGdSpellLineManaTapChained}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineManaTapChained@{kGdSpellLineManaTapChained}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a1473395a98a71e80b3357246c450648d}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Mana\+Tap\+Chained&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineMutationChained@{kGdSpellLineMutationChained}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineMutationChained@{kGdSpellLineMutationChained}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393aabddbf81dad444f8e739c04dff5098e1}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Mutation\+Chained&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineFireBurstChained@{kGdSpellLineFireBurstChained}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineFireBurstChained@{kGdSpellLineFireBurstChained}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a7d90448e09a707c66796554f9cb89e9c}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Fire\+Burst\+Chained&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineIceBurstChained@{kGdSpellLineIceBurstChained}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineIceBurstChained@{kGdSpellLineIceBurstChained}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a56904be294194768217b144ca8b45584}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Ice\+Burst\+Chained&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineRockBulletChained@{kGdSpellLineRockBulletChained}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineRockBulletChained@{kGdSpellLineRockBulletChained}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a7c1eadd11041a6873f433bf8b5db5433}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Rock\+Bullet\+Chained&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineCharmChained@{kGdSpellLineCharmChained}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineCharmChained@{kGdSpellLineCharmChained}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a536ff8e2609b757d0747b2a55fcc9832}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Charm\+Chained&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineShockChained@{kGdSpellLineShockChained}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineShockChained@{kGdSpellLineShockChained}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a00ebe47c3c76801e6ab509be7e7d3968}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Shock\+Chained&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineFireBallChained@{kGdSpellLineFireBallChained}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineFireBallChained@{kGdSpellLineFireBallChained}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a74ee1a90daee38e77f0dd037f13e93cd}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Fire\+Ball\+Chained&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLinePainChained@{kGdSpellLinePainChained}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLinePainChained@{kGdSpellLinePainChained}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393ab75f28a4aa8648aa87b887a2383b97f5}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Pain\+Chained&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdSpellLineFakeSpellOneFigure@{kGdSpellLineFakeSpellOneFigure}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!kGdSpellLineFakeSpellOneFigure@{kGdSpellLineFakeSpellOneFigure}}}\Hypertarget{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393a8d20ec27c44d0b15548688d2a20a741d}\label{sf__spell__functions_8h_a97a36226c9e385e601acd55f07575393} 
+k\+Gd\+Spell\+Line\+Fake\+Spell\+One\+Figure&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{sf__spell__functions_8h_source_l00013}{13}} of file \mbox{\hyperlink{sf__spell__functions_8h_source}{sf\+\_\+spell\+\_\+functions.\+h}}.
+
+\Hypertarget{sf__spell__functions_8h_a588abbdd197bfe8e420ee8a32ee9ba5e}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!SpellFlagKey@{SpellFlagKey}}
+\index{SpellFlagKey@{SpellFlagKey}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}
+\doxysubsubsection{\texorpdfstring{SpellFlagKey}{SpellFlagKey}}
+{\footnotesize\ttfamily \label{sf__spell__functions_8h_a588abbdd197bfe8e420ee8a32ee9ba5e} 
+enum \mbox{\hyperlink{sf__spell__functions_8h_a588abbdd197bfe8e420ee8a32ee9ba5e}{Spell\+Flag\+Key}}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CHECK\_SPELLS\_BEFORE\_CHECK\_BATTLE@{CHECK\_SPELLS\_BEFORE\_CHECK\_BATTLE}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!CHECK\_SPELLS\_BEFORE\_CHECK\_BATTLE@{CHECK\_SPELLS\_BEFORE\_CHECK\_BATTLE}}}\Hypertarget{sf__spell__functions_8h_a588abbdd197bfe8e420ee8a32ee9ba5ead9232843108f384e615ce592834113a1}\label{sf__spell__functions_8h_a588abbdd197bfe8e420ee8a32ee9ba5e} 
+CHECK\+\_\+\+SPELLS\+\_\+\+BEFORE\+\_\+\+CHECK\+\_\+\+BATTLE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CHECK\_SPELLS\_BEFORE\_JOB2@{CHECK\_SPELLS\_BEFORE\_JOB2}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!CHECK\_SPELLS\_BEFORE\_JOB2@{CHECK\_SPELLS\_BEFORE\_JOB2}}}\Hypertarget{sf__spell__functions_8h_a588abbdd197bfe8e420ee8a32ee9ba5ea38b715ed1f58dd1278e0474928a7fd64}\label{sf__spell__functions_8h_a588abbdd197bfe8e420ee8a32ee9ba5e} 
+CHECK\+\_\+\+SPELLS\+\_\+\+BEFORE\+\_\+\+JOB2&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{UNFREEZE@{UNFREEZE}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!UNFREEZE@{UNFREEZE}}}\Hypertarget{sf__spell__functions_8h_a588abbdd197bfe8e420ee8a32ee9ba5eabdffc29095c50d2aedd5aef3ca9e5ae1}\label{sf__spell__functions_8h_a588abbdd197bfe8e420ee8a32ee9ba5e} 
+UNFREEZE&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{sf__spell__functions_8h_source_l00006}{6}} of file \mbox{\hyperlink{sf__spell__functions_8h_source}{sf\+\_\+spell\+\_\+functions.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{sf__spell__functions_8h_ab898071398b359603a35c202e9c65f3b}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!\_\_attribute\_\_@{\_\_attribute\_\_}}
+\index{\_\_attribute\_\_@{\_\_attribute\_\_}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}
+\doxysubsubsection{\texorpdfstring{\_\_attribute\_\_()}{\_\_attribute\_\_()}}
+{\footnotesize\ttfamily \label{sf__spell__functions_8h_ab898071398b359603a35c202e9c65f3b} 
+struct \+\_\+\+\_\+attribute\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{(packed)}]{}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spell__functions_8h_source_l00001}{1}} of file \mbox{\hyperlink{sf__spell__functions_8h_source}{sf\+\_\+spell\+\_\+functions.\+h}}.
+
+\Hypertarget{sf__spell__functions_8h_a3d01781c7b0b78749eee3cdfdad71ea2}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [1/22]}}
+{\footnotesize\ttfamily \label{sf__spell__functions_8h_a3d01781c7b0b78749eee3cdfdad71ea2} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{int}]{}{, }\item[{check\+Can\+Apply}]{}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{index}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__spell__functions_8h_ab1d3d7cef7d2da5f63e0cce4e8246e41}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [2/22]}}
+{\footnotesize\ttfamily \label{sf__spell__functions_8h_ab1d3d7cef7d2da5f63e0cce4e8246e41} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{int}]{}{, }\item[{\mbox{\hyperlink{sf__mod__registry_8cpp_af4503f89adff0725f6795aedf7d95016}{get\+Spell\+Tag}}}]{}{, }\item[{uint16\+\_\+t}]{spell\+\_\+index}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__spell__functions_8h_afd7616fc8ac718bf9199cc9c6a00c852}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [3/22]}}
+{\footnotesize\ttfamily \label{sf__spell__functions_8h_afd7616fc8ac718bf9199cc9c6a00c852} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}{SF\+\_\+\+CGd\+Resource\+Spell}} \texorpdfstring{$\ast$}{*}}]{}{, }\item[{get\+Resource\+Spell\+Data}]{}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{}{, }\item[{\mbox{\hyperlink{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}{SF\+\_\+\+CGd\+Resource\+Spell}} \texorpdfstring{$\ast$}{*}}]{spell\+Data}{, }\item[{uint16\+\_\+t}]{index}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__spell__functions_8h_a8bac7e91e05a4b61eb057c792857d8b6}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [4/22]}}
+{\footnotesize\ttfamily \label{sf__spell__functions_8h_a8bac7e91e05a4b61eb057c792857d8b6} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a1b8b1ec284ff51feaf2673b4aa18f4eb}{SF\+\_\+\+Rectangle}} \texorpdfstring{$\ast$}{*}}]{}{, }\item[{get\+Targets\+Rectangle}]{}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_a1b8b1ec284ff51feaf2673b4aa18f4eb}{SF\+\_\+\+Rectangle}} \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{uint16\+\_\+t}]{spell\+\_\+id}{, }\item[{uint16\+\_\+t}]{radius}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_aa44e45471f7b6c436abe46e7d9d728c9}{SF\+\_\+\+Coord}} \texorpdfstring{$\ast$}{*}}]{center\+\_\+maybe}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__spell__functions_8h_ae009b67ad04468b339b6f701cae74aae}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [5/22]}}
+{\footnotesize\ttfamily \label{sf__spell__functions_8h_ae009b67ad04468b339b6f701cae74aae} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{}{, }\item[{add\+Spell}]{}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+id}{, }\item[{uint16\+\_\+t}]{param2}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_aedd8705d0983d09965ace902f37d0e0b}{SF\+\_\+\+CGd\+Target\+Data}} \texorpdfstring{$\ast$}{*}}]{source}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_aedd8705d0983d09965ace902f37d0e0b}{SF\+\_\+\+CGd\+Target\+Data}} \texorpdfstring{$\ast$}{*}}]{target}{, }\item[{uint16\+\_\+t}]{param5}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__spell__functions_8h_a0f6ab8062e2808a64fef2259c9e610a1}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [6/22]}}
+{\footnotesize\ttfamily \label{sf__spell__functions_8h_a0f6ab8062e2808a64fef2259c9e610a1} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{}{, }\item[{get\+Random}]{}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{autoclass14}{, }\item[{uint16\+\_\+t}]{max\+\_\+value}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__spell__functions_8h_a514048b32172352676ebfa06006f9286}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [7/22]}}
+{\footnotesize\ttfamily \label{sf__spell__functions_8h_a514048b32172352676ebfa06006f9286} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{}{, }\item[{get\+Spell\+ID}]{}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+index}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__spell__functions_8h_a0adcc92391e54eaf789eb826733f93a2}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [8/22]}}
+{\footnotesize\ttfamily \label{sf__spell__functions_8h_a0adcc92391e54eaf789eb826733f93a2} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{}{, }\item[{get\+Spell\+Line}]{}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+id}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__spell__functions_8h_aa4713679a0197af8b53d09842a53cc05}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [9/22]}}
+{\footnotesize\ttfamily \label{sf__spell__functions_8h_aa4713679a0197af8b53d09842a53cc05} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{}{, }\item[{add\+To\+XData}]{}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+id}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355}{Spell\+Data\+Key}}}]{key}{, }\item[{uint32\+\_\+t}]{value}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__spell__functions_8h_a3666dc57e591344471012509a9602d72}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [10/22]}}
+{\footnotesize\ttfamily \label{sf__spell__functions_8h_a3666dc57e591344471012509a9602d72} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{}{, }\item[{get\+Chance\+To\+Resist\+Spell}]{}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{autoclass34}{, }\item[{uint16\+\_\+t}]{source}{, }\item[{uint16\+\_\+t}]{target}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_a5155b93e12786efd5c2faf220aa5b928}{SF\+\_\+\+Spell\+Effect\+Info}}}]{effect\+\_\+info}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__spell__functions_8h_a1c8f47e46ff2ccc11d87333652490d66}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [11/22]}}
+{\footnotesize\ttfamily \label{sf__spell__functions_8h_a1c8f47e46ff2ccc11d87333652490d66} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{}{, }\item[{get\+XData}]{}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+id}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355}{Spell\+Data\+Key}}}]{key}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__spell__functions_8h_ad29f351904b80df56c9f1463ee52dbe9}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [12/22]}}
+{\footnotesize\ttfamily \label{sf__spell__functions_8h_ad29f351904b80df56c9f1463ee52dbe9} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{void}]{}{, }\item[{add\+Visual\+Effect}]{}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+id}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a}{CGd\+Effect\+Type}}}]{effect\+\_\+id}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{unused}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_aedd8705d0983d09965ace902f37d0e0b}{SF\+\_\+\+CGd\+Target\+Data}} \texorpdfstring{$\ast$}{*}}]{target}{, }\item[{uint32\+\_\+t}]{tick\+\_\+start}{, }\item[{uint16\+\_\+t}]{tick\+\_\+count}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{corner\+\_\+coords}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__spell__functions_8h_abf21bc9f31fee188b99cad2914e4735d}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [13/22]}}
+{\footnotesize\ttfamily \label{sf__spell__functions_8h_abf21bc9f31fee188b99cad2914e4735d} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{void}]{}{, }\item[{fig\+Clr\+Chk\+Spl\+Bfr\+Chk\+Battle}]{}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+id}{, }\item[{uint16\+\_\+t}]{unk1}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__spell__functions_8h_a2dab8627e165c19ebed90faa3c3236c0}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [14/22]}}
+{\footnotesize\ttfamily \label{sf__spell__functions_8h_a2dab8627e165c19ebed90faa3c3236c0} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{void}]{}{, }\item[{fig\+Try\+Clr\+CHk\+SPl\+Bfr\+Job2}]{}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+id}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__spell__functions_8h_a35063aede93712a881b8cad5aa38a5d7}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [15/22]}}
+{\footnotesize\ttfamily \label{sf__spell__functions_8h_a35063aede93712a881b8cad5aa38a5d7} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{void}]{}{, }\item[{fig\+Try\+Unfreeze}]{}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+id}{, }\item[{uint16\+\_\+t}]{unk1}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__spell__functions_8h_a9fc4387da97f6a1a833556a7101791a0}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [16/22]}}
+{\footnotesize\ttfamily \label{sf__spell__functions_8h_a9fc4387da97f6a1a833556a7101791a0} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{void}]{}{, }\item[{figure\+Aggro}]{}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+id}{, }\item[{uint16\+\_\+t}]{target\+\_\+index}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__spell__functions_8h_a8a361d5f37ad1f7c7b80615679bebda5}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [17/22]}}
+{\footnotesize\ttfamily \label{sf__spell__functions_8h_a8a361d5f37ad1f7c7b80615679bebda5} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{void}]{}{, }\item[{\mbox{\hyperlink{sf__spelltype__registry_8cpp_ac3e5dfa2fdcb8f683f6921e40eece8c3}{initialize\+Spell\+Data}}}]{}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+id}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355}{Spell\+Data\+Key}}}]{key}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__spell__functions_8h_aad0e94ecc005ef7d45e051407bdedfbb}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [18/22]}}
+{\footnotesize\ttfamily \label{sf__spell__functions_8h_aad0e94ecc005ef7d45e051407bdedfbb} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{void}]{}{, }\item[{on\+Spell\+Remove}]{}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+id}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__spell__functions_8h_abeaf8b34f10e7c2de96ecbc1c0e5394f}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [19/22]}}
+{\footnotesize\ttfamily \label{sf__spell__functions_8h_abeaf8b34f10e7c2de96ecbc1c0e5394f} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{void}]{}{, }\item[{remove\+DLLNode}]{}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{param\+\_\+1}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__spell__functions_8h_a3d50cdcceddcaf84b914ad6c1b6efc3c}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [20/22]}}
+{\footnotesize\ttfamily \label{sf__spell__functions_8h_a3d50cdcceddcaf84b914ad6c1b6efc3c} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{void}]{}{, }\item[{set\+Effect\+Done}]{}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+id}{, }\item[{uint16\+\_\+t}]{param\+\_\+2}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__spell__functions_8h_a8bd50b5d8196b39629fe28810eee9db2}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [21/22]}}
+{\footnotesize\ttfamily \label{sf__spell__functions_8h_a8bd50b5d8196b39629fe28810eee9db2} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{void}]{}{, }\item[{set\+XData}]{}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+id}{, }\item[{uint8\+\_\+t}]{xdatakey}{, }\item[{uint32\+\_\+t}]{value}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__spell__functions_8h_ad579e096acb95e4e30a3cc581a70352b}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [22/22]}}
+{\footnotesize\ttfamily \label{sf__spell__functions_8h_ad579e096acb95e4e30a3cc581a70352b} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{void}]{}{, }\item[{\mbox{\hyperlink{sf__wrappers_8c_ab97dc11635deb183cfe8b9dc8b2fc064}{spell\+Clear\+Figure\+Flag}}}]{}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+id}{, }\item[{\mbox{\hyperlink{sf__spell__functions_8h_a588abbdd197bfe8e420ee8a32ee9ba5e}{Spell\+Flag\+Key}}}]{key}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__spell__functions_8h_a9e3754875dd78f246fc2ec471f664d82}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!DECLARE\_FUNCTION\_GROUP@{DECLARE\_FUNCTION\_GROUP}}
+\index{DECLARE\_FUNCTION\_GROUP@{DECLARE\_FUNCTION\_GROUP}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION\_GROUP()}{DECLARE\_FUNCTION\_GROUP()}}
+{\footnotesize\ttfamily \label{sf__spell__functions_8h_a9e3754875dd78f246fc2ec471f664d82} 
+DECLARE\+\_\+\+FUNCTION\+\_\+\+GROUP (\begin{DoxyParamCaption}\item[{Spell}]{}{, }\item[{set\+XData\+\_\+ptr set\+XData;initialize\+Spell\+Data\+\_\+ptr \mbox{\hyperlink{sf__spelltype__registry_8cpp_ac3e5dfa2fdcb8f683f6921e40eece8c3}{initialize\+Spell\+Data}};set\+Effect\+Done\+\_\+ptr set\+Effect\+Done;add\+To\+XData\+\_\+ptr add\+To\+XData;get\+Chance\+To\+Resist\+Spell\+\_\+ptr get\+Chance\+To\+Resist\+Spell;get\+Random\+\_\+ptr get\+Random;get\+Resource\+Spell\+Data\+\_\+ptr get\+Resource\+Spell\+Data;add\+Visual\+Effect\+\_\+ptr add\+Visual\+Effect;figure\+Aggro\+\_\+ptr figure\+Aggro;get\+XData\+\_\+ptr get\+XData;get\+Targets\+Rectangle\+\_\+ptr get\+Targets\+Rectangle;remove\+DLLNode\+\_\+ptr remove\+DLLNode;spell\+Clear\+Figure\+Flag\+\_\+ptr \mbox{\hyperlink{sf__wrappers_8c_ab97dc11635deb183cfe8b9dc8b2fc064}{spell\+Clear\+Figure\+Flag}};add\+Spell\+\_\+ptr add\+Spell;get\+Spell\+Line\+\_\+ptr get\+Spell\+Line;on\+Spell\+Remove\+\_\+ptr on\+Spell\+Remove;get\+Spell\+ID\+\_\+ptr get\+Spell\+ID;check\+Can\+Apply\+\_\+ptr check\+Can\+Apply;get\+Spell\+Tag\+\_\+ptr \mbox{\hyperlink{sf__mod__registry_8cpp_af4503f89adff0725f6795aedf7d95016}{get\+Spell\+Tag}};fig\+Clr\+Chk\+Spl\+Bfr\+Chk\+Battle\+\_\+ptr fig\+Clr\+Chk\+Spl\+Bfr\+Chk\+Battle;fig\+Try\+Clr\+CHk\+SPl\+Bfr\+Job2\+\_\+ptr fig\+Try\+Clr\+CHk\+SPl\+Bfr\+Job2;fig\+Try\+Unfreeze\+\_\+ptr fig\+Try\+Unfreeze;}]{}{}\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}\index{sf\_spell\_functions.h@{sf\_spell\_functions.h}!SF\_CGdResourceSpell@{SF\_CGdResourceSpell}}
+\index{SF\_CGdResourceSpell@{SF\_CGdResourceSpell}!sf\_spell\_functions.h@{sf\_spell\_functions.h}}
+\doxysubsubsection{\texorpdfstring{SF\_CGdResourceSpell}{SF\_CGdResourceSpell}}
+{\footnotesize\ttfamily \label{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d} 
+SF\+\_\+\+CGd\+Resource\+Spell}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spell__functions_8h_source_l00267}{267}} of file \mbox{\hyperlink{sf__spell__functions_8h_source}{sf\+\_\+spell\+\_\+functions.\+h}}.
+

@@ -1,0 +1,48 @@
+\doxysection{sfsf.\+cpp}
+\hypertarget{sfsf_8cpp_source}{}\label{sfsf_8cpp_source}\index{src/internal/sfsf.cpp@{src/internal/sfsf.cpp}}
+\mbox{\hyperlink{sfsf_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ <windows.h>}}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__hooks_8h}{core/sf\_hooks.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__wrappers_8h}{core/sf\_wrappers.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__registry_8h}{registry/sf\_registry.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__asi_8h}{../asi/sf\_asi.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00028}\mbox{\hyperlink{sfsf_8cpp_a26e64fb39b69bcd9d1274d279f1561b9}{00028}}\ BOOL\ APIENTRY\ \mbox{\hyperlink{sfsf_8cpp_a26e64fb39b69bcd9d1274d279f1561b9}{DllMain}}(HMODULE\ hModule,\ DWORD\ ul\_reason\_for\_call,\ LPVOID\ lpReserved)}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00029}00029\ \{}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00030}00030\ \ \ \ \ \textcolor{keywordflow}{switch}\ (ul\_reason\_for\_call)}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00031}00031\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00032}00032\ \ \ \ \ \textcolor{keywordflow}{case}\ DLL\_PROCESS\_ATTACH:}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00033}00033\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00034}00034\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{namespace_a_s_i_ab869e8184e5ce56887fa91a8a4b2e059}{ASI::Init}}(hModule))}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ FALSE;}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00037}00037\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{namespace_a_s_i_a34bd6eea545e02b6e66bf62616769440}{ASI::CheckSFVersion}}(\mbox{\hyperlink{namespace_a_s_i_a0d3678d7eaf95729a8566ad9bff50546abefce345291d262e260541ddcf2f1bcd}{ASI::SF\_BETA}}))}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00038}00038\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ FALSE;}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00040}00040\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00041}00041\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00042}00042\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ FILE\ *file\ =\ fopen(\textcolor{stringliteral}{"{}sfsf.log"{}},\ \textcolor{stringliteral}{"{}w"{}});}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ fclose(file);}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__wrappers_8c_a4fd90de0913ed15b0812918255559a55}{log\_info}}(\textcolor{stringliteral}{"{}Spellforce\ Version\ Accepted;\ Starting\ SFSF"{}});}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Initialize\ Framework\ -\/>\ see\ sf\_registry.h}}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__registry_8cpp_aa653b9256d033c2d02e806489c6a4271}{initialize\_framework}}();}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Initialize\ Spellforce\ Hooks\ -\/>\ see\ sf\_hooks.h}}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__hooks_8c_a68518887ac30bef0798064a5ea87b1f5}{initialize\_beta\_hooks}}();}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Just\ wanted\ to\ align\ the\ debug\ log}}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ OutputDebugStringA(\textcolor{stringliteral}{"{}[SFSF]\ |======================|\ Injection\ Complete\ |======================|"{}});}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00056}00056\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00057}00057\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00058}00058\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00059}00059\ \ \ \ \ \textcolor{keywordflow}{case}\ DLL\_PROCESS\_DETACH:}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00060}00060\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00061}00061\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00062}00062\ \ \ \ \ \textcolor{keywordflow}{return}\ TRUE;}
+\DoxyCodeLine{\Hypertarget{sfsf_8cpp_source_l00063}00063\ \}}
+
+\end{DoxyCode}

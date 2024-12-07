@@ -1,0 +1,268 @@
+\doxysection{sf\+\_\+hooks.\+c}
+\hypertarget{sf__hooks_8c_source}{}\label{sf__hooks_8c_source}\index{src/internal/core/sf\_hooks.c@{src/internal/core/sf\_hooks.c}}
+\mbox{\hyperlink{sf__hooks_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__wrappers_8h}{sf\_wrappers.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__modloader_8h}{sf\_modloader.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00003}00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__hooks_8h}{sf\_hooks.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__spelltype__handlers_8h}{../handlers/sf\_spelltype\_handlers.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__spelltype__registry_8h}{../registry/sf\_spelltype\_registry.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__mod__registry_8h}{../registry/sf\_mod\_registry.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00008}00008\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__refresh__hook_8h}{hooks/sf\_refresh\_hook.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00009}00009\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__endspell__hook_8h}{hooks/sf\_endspell\_hook.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00010}00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__menu__hook_8h}{hooks/sf\_menu\_hook.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00011}00011\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__spelleffect__hook_8h}{hooks/sf\_spelleffect\_hook.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00012}00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__subeffect__hook_8h}{hooks/sf\_subeffect\_hook.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00013}00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__damage__hook_8h}{hooks/sf\_damage\_hook.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00014}00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__spelltype__hook_8h}{hooks/sf\_spelltype\_hook.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00015}00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__console__hook_8h}{hooks/sf\_console\_hook.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00016}00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__onhit__hook_8h}{hooks/sf\_onhit\_hook.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00018}00018\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00019}00019\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00020}00020\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00021}00021\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00023}\mbox{\hyperlink{sf__hooks_8c_abbb7953e765f98bb525822ff276a1e53}{00023}}\ SpellFunctions\ \mbox{\hyperlink{sf__hooks_8c_abbb7953e765f98bb525822ff276a1e53}{spellAPI}};}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00024}\mbox{\hyperlink{sf__hooks_8c_a6223ae94a537c083aa89e5ad9033bb62}{00024}}\ EffectFunctions\ \mbox{\hyperlink{sf__hooks_8c_a6223ae94a537c083aa89e5ad9033bb62}{effectAPI}};}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00025}\mbox{\hyperlink{sf__hooks_8c_a8033183c435322904cc190565a1e03ff}{00025}}\ ToolboxFunctions\ \mbox{\hyperlink{sf__hooks_8c_a8033183c435322904cc190565a1e03ff}{toolboxAPI}};}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00026}\mbox{\hyperlink{sf__hooks_8c_ae5424c0f69d85cabda2866498e788521}{00026}}\ FigureFunctions\ \mbox{\hyperlink{sf__hooks_8c_ae5424c0f69d85cabda2866498e788521}{figureAPI}};}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00027}\mbox{\hyperlink{sf__hooks_8c_a764358640400f5367f96608b5794f0c2}{00027}}\ IteratorFunctions\ \mbox{\hyperlink{sf__hooks_8c_a764358640400f5367f96608b5794f0c2}{iteratorAPI}};}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00028}\mbox{\hyperlink{sf__hooks_8c_ae864f2c7237380a404ae0b972f87d36f}{00028}}\ RegistrationFunctions\ \mbox{\hyperlink{sf__hooks_8c_ae864f2c7237380a404ae0b972f87d36f}{registrationAPI}};}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00030}\mbox{\hyperlink{sf__hooks_8c_a053468e9037e13eede0757a9c0dc4f90}{00030}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{sf__hooks_8c_a053468e9037e13eede0757a9c0dc4f90}{initialize\_data\_hooks}}()}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00031}00031\ \{}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00032}00032\ \ \ \ \ \mbox{\hyperlink{sf__wrappers_8c_a4fd90de0913ed15b0812918255559a55}{log\_info}}(\textcolor{stringliteral}{"{}|\ -\/\ Internal\ Use\ Hooks"{}});}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00033}00033\ \ \ \ \ \mbox{\hyperlink{sf__menu__hook_8c_a8076488696ac2dd10539d2908d8dd408}{initialize\_menu\_data\_hooks}}();}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00035}00035\ \ \ \ \ \textcolor{comment}{//\ Required\ for\ internal\ use}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00036}00036\ \ \ \ \ \mbox{\hyperlink{sf__spelltype__hook_8c_a1bc35d41762c3fcc7495cf54585283aa}{initialize\_spelltype\_data\_hooks}}();}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00038}00038\ \ \ \ \ \textcolor{comment}{//\ Used\ in\ Iterator\ for\ AOE\ Spells\ Dispose}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00039}00039\ \ \ \ \ \mbox{\hyperlink{sf__wrappers_8c_ad057ef7976901ef0ba76e8b78eb53898}{initialize\_wrapper\_data\_hooks}}();}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00041}00041\ \ \ \ \ \mbox{\hyperlink{sf__onhit__hook_8c_aab9fd18e448dfed4d72a3d8d9507bcc8}{initialize\_onhit\_data\_hooks}}();}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00043}00043\ \ \ \ \ \textcolor{comment}{//\ Used\ to\ print\ to\ the\ game\ console}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00044}00044\ \ \ \ \ \mbox{\hyperlink{sf__console__hook_8c_ad95110eea0d834055b5fc04eb031e45b}{initialize\_console\_data\_hooks}}();}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00046}00046\ \ \ \ \ \mbox{\hyperlink{sf__wrappers_8c_a4fd90de0913ed15b0812918255559a55}{log\_info}}(\textcolor{stringliteral}{"{}|\ -\/\ FigureAPI\ Hooks"{}});}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00047}00047\ \ \ \ \ \textcolor{comment}{//\ More\ defined\ for\ external\ use\ in\ api}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00048}00048\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(figure,\ isAlive,\ 0x1BE4D0);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00049}00049\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(figure,\ setWalkSpeed,\ 0x2B7190);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00050}00050\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(figure,\ addAction,\ 0x2AE0B0);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00051}00051\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(figure,\ addBonusMult,\ 0x35A3E0);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00052}00052\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(figure,\ decreaseHealth,\ 0x2b5b40);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00053}00053\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(figure,\ getCurrentHealth,\ 0x279350);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00054}00054\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(figure,\ getCurrentMaxMana,\ 0x2b2a20);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00055}00055\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(figure,\ rescaleMana,\ 0x2b5d50);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00056}00056\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(figure,\ getCurrentMaxHealth,\ 0x2b2970);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00057}00057\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(figure,\ rescaleHealth,\ 0x2b5cd0);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00058}00058\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(figure,\ getJob,\ 0x279290);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00059}00059\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(figure,\ FUN\_006e3a90,\ 0x2e3a90);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00060}00060\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(figure,\ setJobToDoCount,\ 0x300910);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00061}00061\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(figure,\ isFlagSet,\ 0x279d20);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00062}00062\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(figure,\ getSpellJobStartNode,\ 0x2b2de0);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00063}00063\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(figure,\ subMana,\ 0x2b5b60);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00064}00064\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(figure,\ getManaCurrent,\ 0x2b29c0);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00065}00065\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(figure,\ getPosition,\ 0x2caaf0);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00066}00066\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(figure,\ setTask,\ 0x2b7110);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00067}00067\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(figure,\ getWeaponStats,\ 0x2b30a0);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00068}00068\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(figure,\ getTargetAction,\ 0x2b2f50);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00069}00069\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(figure,\ getAggroValue,\ 0x2b1ab0);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00070}00070\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(figure,\ setAggroValue,\ 0x2b6670);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00072}00072\ \ \ \ \ \mbox{\hyperlink{sf__wrappers_8c_a4fd90de0913ed15b0812918255559a55}{log\_info}}(\textcolor{stringliteral}{"{}|\ -\/\ SpellAPI\ Hooks"{}});}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00073}00073\ \ \ \ \ \textcolor{comment}{//\ Define\ the\ function\ pointers\ for\ SpellFunctions\ group}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00074}00074\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(spell,\ setXData,\ 0x329C40);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00075}00075\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(spell,\ setEffectDone,\ 0x32A730);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00076}00076\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(spell,\ addToXData,\ 0x32AAC0);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00077}00077\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(spell,\ getChanceToResistSpell,\ 0x317BA0);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00078}00078\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(spell,\ getRandom,\ 0x2AD200);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00079}00079\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(spell,\ addVisualEffect,\ 0x329B30);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00080}00080\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(spell,\ figureAggro,\ 0x329c90);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00081}00081\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(spell,\ getResourceSpellData,\ 0x26dc40);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00082}00082\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(spell,\ getXData,\ 0x32aa60);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00083}00083\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(spell,\ getTargetsRectangle,\ 0x329D80);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00084}00084\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(spell,\ removeDLLNode,\ 0x34B030);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00085}00085\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(spell,\ figClrChkSplBfrChkBattle,\ 0x32a470);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00086}00086\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(spell,\ figTryClrCHkSPlBfrJob2,\ 0x32a4f0);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00087}00087\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(spell,\ figTryUnfreeze,\ 0x32a5a0);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00088}00088\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(spell,\ onSpellRemove,\ 0x32b310);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00089}00089\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(spell,\ getSpellLine,\ 0x32a980);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00091}00091\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(effect,\ addEffect,\ 0x2dc880);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00092}00092\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(effect,\ setEffectXData,\ 0x2ddb30);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00093}00093\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(effect,\ getEffectXData,\ 0x2dd730);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00094}00094\ }
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00095}00095\ \ \ \ \ \mbox{\hyperlink{sf__wrappers_8c_a4fd90de0913ed15b0812918255559a55}{log\_info}}(\textcolor{stringliteral}{"{}|\ -\/\ ToolboxAPI\ Hooks"{}});}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00096}00096\ }
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00097}00097\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(toolbox,\ \mbox{\hyperlink{sf__toolbox__functions_8h_a34b8169853f41a69ee956d27741498c1}{dealDamage}},\ 0x2f4a57);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00098}00098\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(toolbox,\ \mbox{\hyperlink{sf__toolbox__functions_8h_a363ee8a37392234ec3b8a78ccbca8265}{isTargetable}},\ 0x2fe704);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00099}00099\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(toolbox,\ \mbox{\hyperlink{sf__toolbox__functions_8h_ad30f2dfb8038a1feb7c496b081ab2b1a}{figuresCheckHostile}},\ 0x2fe7b9);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00100}00100\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(toolbox,\ \mbox{\hyperlink{sf__toolbox__functions_8h_a574e9652efdf5631a35332d3ba8d3086}{figuresCheckNeutral}},\ 0x2feba4);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00101}00101\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(toolbox,\ \mbox{\hyperlink{sf__toolbox__functions_8h_ac5c571161b5b4f1d7dd1548153f13c22}{figuresCheckFriendly}},\ 0x2fe953);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00102}00102\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(toolbox,\ \mbox{\hyperlink{sf__toolbox__functions_8h_a2b3d1ce098356a0c05987635d0cc3129}{hasSpellOnIt}},\ 0x2fe4ea);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00103}00103\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(toolbox,\ \mbox{\hyperlink{sf__toolbox__functions_8h_ada4df5333d838afab86ff99c786da6b0}{rescaleLevelStats}},\ 0x2fff48);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00104}00104\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(toolbox,\ \mbox{\hyperlink{sf__toolbox__functions_8h_ad77682246ddee3e413c0998b00bb0e0a}{buildingDealDamage}},\ 0x2d6d80);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00105}00105\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(toolbox,\ \mbox{\hyperlink{sf__toolbox__functions_8h_ae0b86a9c15abddc6c4b2463497eb47f8}{addSpellToFigure}},\ 0x2f673a);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00106}00106\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(toolbox,\ \mbox{\hyperlink{sf__toolbox__functions_8h_a8f79e930f5b35d84d8a8e66cf2a7d679}{getFigureFromWorld}},\ 0x34F160);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00107}00107\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(toolbox,\ \mbox{\hyperlink{sf__toolbox__functions_8h_a8d3e1f7edf95b0ac165e22d45216d6bf}{getSpellIndexOfType}},\ 0x2fd939);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00108}00108\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(toolbox,\ \mbox{\hyperlink{sf__toolbox__functions_8h_a1c8e53e50a3c1bc3f8e88e0414382374}{getSpellIndexFromDLL}},\ 0x2fdd90);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00109}00109\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(toolbox,\ \mbox{\hyperlink{sf__toolbox__functions_8h_a84cfb956f4408f315ce8f56304c3364c}{getNextNode}},\ 0x2fe240);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00110}00110\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(toolbox,\ \mbox{\hyperlink{sf__toolbox__functions_8h_aa4b0d1c56e7c149334d31a2cc3209f63}{figureSetNewJob}},\ 0x2f0ef0);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00111}00111\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(toolbox,\ \mbox{\hyperlink{sf__toolbox__functions_8h_a5bf19bf7ef26b02f1f578f341ec6b033}{removeSpellFromList}},\ 0x2fad57);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00112}00112\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(toolbox,\ \mbox{\hyperlink{sf__toolbox__functions_8h_aa113ab740c84f5683308e960231c8118}{addUnit}},\ 0x2f749a);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00113}00113\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(toolbox,\ \mbox{\hyperlink{sf__toolbox__functions_8h_a8da25c431646980e3dadfa941f580274}{findClosestFreePosition}},\ 0x34e9a0);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00114}00114\ }
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00115}00115\ \ \ \ \ \mbox{\hyperlink{sf__wrappers_8c_a4fd90de0913ed15b0812918255559a55}{log\_info}}(\textcolor{stringliteral}{"{}|\ -\/\ IteratorAPI\ Hooks"{}});}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00116}00116\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(iterator,\ figureIteratorInit,\ 0x3183f0);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00117}00117\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(iterator,\ figureIteratorSetPointers,\ 0x31a680);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00118}00118\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(iterator,\ iteratorSetArea,\ 0x3195d0);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00119}00119\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(iterator,\ getNextFigure,\ 0x318f50);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00120}00120\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(iterator,\ buildingIteratorInit,\ 0x318290);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00121}00121\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a1dc51ab3463a7f65414da784ac3332d1}{DEFINE\_FUNCTION}}(iterator,\ buildingIteratorSetPointers,\ 0x31A640);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00122}00122\ }
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00123}00123\ \ \ \ \ \mbox{\hyperlink{sf__wrappers_8c_a4fd90de0913ed15b0812918255559a55}{log\_info}}(\textcolor{stringliteral}{"{}|\ -\/\ SpellAPI\ Wrappers"{}});}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00124}00124\ \ \ \ \ \textcolor{comment}{//\ Method\ to\ include\ functions\ WE\ define\ in\ the\ Internal\ code.}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00125}00125\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a6266997369ee994155f407bd6d2b2734}{INCLUDE\_FUNCTION}}(spell,\ \mbox{\hyperlink{sf__spelltype__registry_8cpp_ac3e5dfa2fdcb8f683f6921e40eece8c3}{initializeSpellData}},\ \&\mbox{\hyperlink{sf__spelltype__registry_8cpp_ac3e5dfa2fdcb8f683f6921e40eece8c3}{initializeSpellData}});}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00126}00126\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a6266997369ee994155f407bd6d2b2734}{INCLUDE\_FUNCTION}}(spell,\ \mbox{\hyperlink{sf__wrappers_8c_ab97dc11635deb183cfe8b9dc8b2fc064}{spellClearFigureFlag}},\ \&\mbox{\hyperlink{sf__wrappers_8c_ab97dc11635deb183cfe8b9dc8b2fc064}{spellClearFigureFlag}});}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00127}00127\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a6266997369ee994155f407bd6d2b2734}{INCLUDE\_FUNCTION}}(spell,\ addSpell,\ \&\mbox{\hyperlink{sf__spelltype__hook_8c_ab55b7421576dfd7ea00096b427741d9b}{sf\_spelltype\_hook}});}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00128}00128\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a6266997369ee994155f407bd6d2b2734}{INCLUDE\_FUNCTION}}(spell,\ getSpellID,\ \&\mbox{\hyperlink{sf__wrappers_8c_ad7e79f06e19f919ffb1ea67493886ff8}{sf\_get\_spell\_id}});}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00129}00129\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a6266997369ee994155f407bd6d2b2734}{INCLUDE\_FUNCTION}}(spell,\ checkCanApply,\ \&\mbox{\hyperlink{sf__refresh__hook_8c_ad1c59c07883c319b2e33cb35737b4e97}{sf\_refresh\_hook}})}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00130}00130\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a6266997369ee994155f407bd6d2b2734}{INCLUDE\_FUNCTION}}(spell,\ \mbox{\hyperlink{sf__mod__registry_8cpp_af4503f89adff0725f6795aedf7d95016}{getSpellTag}},\ \&\mbox{\hyperlink{sf__mod__registry_8cpp_af4503f89adff0725f6795aedf7d95016}{getSpellTag}});}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00131}00131\ }
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00132}00132\ \ \ \ \ \mbox{\hyperlink{sf__wrappers_8c_a4fd90de0913ed15b0812918255559a55}{log\_info}}(\textcolor{stringliteral}{"{}|\ -\/\ FigureAPI\ Wrappers"{}});}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00133}00133\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a6266997369ee994155f407bd6d2b2734}{INCLUDE\_FUNCTION}}(figure,\ \mbox{\hyperlink{sf__wrappers_8c_a07c7f2ab4e0212797ec2d05125bbf0e7}{addBonusMultToStatistic}},\ \&\mbox{\hyperlink{sf__wrappers_8c_a07c7f2ab4e0212797ec2d05125bbf0e7}{addBonusMultToStatistic}});}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00134}00134\ }
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00135}00135\ \ \ \ \ \mbox{\hyperlink{sf__wrappers_8c_a4fd90de0913ed15b0812918255559a55}{log\_info}}(\textcolor{stringliteral}{"{}|\ -\/\ IteratorAPI\ Wrappers"{}});}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00136}00136\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a6266997369ee994155f407bd6d2b2734}{INCLUDE\_FUNCTION}}(iterator,\ \mbox{\hyperlink{sf__wrappers_8c_a6242a2f91bf97824c8c2eca28e2b2256}{setupFigureIterator}},\ \&\mbox{\hyperlink{sf__wrappers_8c_a6242a2f91bf97824c8c2eca28e2b2256}{setupFigureIterator}});}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00137}00137\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a6266997369ee994155f407bd6d2b2734}{INCLUDE\_FUNCTION}}(iterator,\ \mbox{\hyperlink{sf__wrappers_8c_a11ea3542304632f3b7ae9807ba5cf394}{disposeFigureIterator}},\ \&\mbox{\hyperlink{sf__wrappers_8c_a11ea3542304632f3b7ae9807ba5cf394}{disposeFigureIterator}});}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00138}00138\ }
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00139}00139\ \ \ \ \ \mbox{\hyperlink{sf__wrappers_8c_a4fd90de0913ed15b0812918255559a55}{log\_info}}(\textcolor{stringliteral}{"{}|\ -\/\ RegistrationAPI\ Wrappers"{}});}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00140}00140\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a6266997369ee994155f407bd6d2b2734}{INCLUDE\_FUNCTION}}(registration,\ \mbox{\hyperlink{sf__hooks_8h_ae507705c327c357e28eae53d52ad0638}{registerSpell}},\ \&\mbox{\hyperlink{sf__hooks_8h_ae507705c327c357e28eae53d52ad0638}{registerSpell}});}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00141}00141\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a6266997369ee994155f407bd6d2b2734}{INCLUDE\_FUNCTION}}(registration,\ \mbox{\hyperlink{sf__hooks_8h_a5eb74dc38db9aa0f7f858687cb5951e8}{linkTypeHandler}},\ \&\mbox{\hyperlink{sf__hooks_8h_a5eb74dc38db9aa0f7f858687cb5951e8}{linkTypeHandler}});}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00142}00142\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a6266997369ee994155f407bd6d2b2734}{INCLUDE\_FUNCTION}}(registration,\ \mbox{\hyperlink{sf__hooks_8h_a963e6fcecd10433218b3925f0e2d39a9}{linkEffectHandler}},\ \&\mbox{\hyperlink{sf__hooks_8h_a963e6fcecd10433218b3925f0e2d39a9}{linkEffectHandler}});}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00143}00143\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a6266997369ee994155f407bd6d2b2734}{INCLUDE\_FUNCTION}}(registration,\ \mbox{\hyperlink{sf__hooks_8h_a29b2de8f5f9ec3ced0c15db03d7817b6}{linkEndHandler}},\ \&\mbox{\hyperlink{sf__hooks_8h_a29b2de8f5f9ec3ced0c15db03d7817b6}{linkEndHandler}});}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00144}00144\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a6266997369ee994155f407bd6d2b2734}{INCLUDE\_FUNCTION}}(registration,\ \mbox{\hyperlink{sf__hooks_8h_acf0a614184ddb2b958241a2fec8e8056}{linkOnHitHandler}},\ \&\mbox{\hyperlink{sf__hooks_8h_acf0a614184ddb2b958241a2fec8e8056}{linkOnHitHandler}});}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00145}00145\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a6266997369ee994155f407bd6d2b2734}{INCLUDE\_FUNCTION}}(registration,\ \mbox{\hyperlink{sf__hooks_8h_a4afdf02d3c8eeffbfbe125fa3464be67}{applySpellTag}},\ \&\mbox{\hyperlink{sf__hooks_8h_a4afdf02d3c8eeffbfbe125fa3464be67}{applySpellTag}});}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00146}00146\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a6266997369ee994155f407bd6d2b2734}{INCLUDE\_FUNCTION}}(registration,\ \mbox{\hyperlink{sf__hooks_8h_ae355b11ac572b3ae505c4d088e1c21e8}{linkSubEffectHandler}},\ \&\mbox{\hyperlink{sf__hooks_8h_ae355b11ac572b3ae505c4d088e1c21e8}{linkSubEffectHandler}});}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00147}00147\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a6266997369ee994155f407bd6d2b2734}{INCLUDE\_FUNCTION}}(registration,\ \mbox{\hyperlink{sf__hooks_8h_a8751386410676c0a282ab668879c19f4}{linkRefreshHandler}},\ \&\mbox{\hyperlink{sf__hooks_8h_a8751386410676c0a282ab668879c19f4}{linkRefreshHandler}});}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00148}00148\ \ \ \ \ \mbox{\hyperlink{sf__hooks_8h_a6266997369ee994155f407bd6d2b2734}{INCLUDE\_FUNCTION}}(registration,\ \mbox{\hyperlink{sf__hooks_8h_a3dc1674ebcd56a898d2a52729d9bdea1}{linkDealDamageHandler}},\ \&\mbox{\hyperlink{sf__hooks_8h_a3dc1674ebcd56a898d2a52729d9bdea1}{linkDealDamageHandler}});}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00149}00149\ \}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00150}00150\ }
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00151}00151\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ initialize\_spelltype\_hook()}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00152}00152\ \{}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00153}00153\ \ \ \ \ \mbox{\hyperlink{struct_a_s_i_1_1_memory_region}{ASI::MemoryRegion}}\ add\_spell\_mreg(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x328d60),\ 5);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00154}00154\ \ \ \ \ \mbox{\hyperlink{namespace_a_s_i_a4761cc7671cb5ca025364456b8363f48}{ASI::BeginRewrite}}(add\_spell\_mreg);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00155}00155\ \ \ \ \ *(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ *)(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x328d60))\ =\ 0xE9;\ \textcolor{comment}{//\ jmp\ instruction}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00156}00156\ \ \ \ \ *(\textcolor{keywordtype}{int}\ *)(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x328d61))\ =\ (int)(\&\mbox{\hyperlink{sf__spelltype__hook_8c_ab55b7421576dfd7ea00096b427741d9b}{sf\_spelltype\_hook}})\ -\/\ \mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x328d65);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00157}00157\ \ \ \ \ \mbox{\hyperlink{namespace_a_s_i_a9531e2306bef93541e7b64dd9dda8716}{ASI::EndRewrite}}(add\_spell\_mreg);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00158}00158\ \}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00159}00159\ }
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00160}00160\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ initialize\_spell\_trigger\_hook()}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00161}00161\ \{}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00162}00162\ \ \ \ \ \mbox{\hyperlink{struct_a_s_i_1_1_memory_region}{ASI::MemoryRegion}}\ add\_spell\_mreg(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x278773),\ 5);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00163}00163\ \ \ \ \ \mbox{\hyperlink{namespace_a_s_i_a4761cc7671cb5ca025364456b8363f48}{ASI::BeginRewrite}}(add\_spell\_mreg);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00164}00164\ \ \ \ \ *(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ *)(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x278773))\ =\ 0xE8;\ \textcolor{comment}{//\ CALL\ instruction}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00165}00165\ \ \ \ \ *(\textcolor{keywordtype}{int}\ *)(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x278774))\ =\ (int)(\&\mbox{\hyperlink{sf__spelleffect__hook_8c_a7bc8319c080c36bf60a565521774fe48}{sf\_spelleffect\_hook}})\ -\/\ \mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x278778);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00166}00166\ \ \ \ \ \mbox{\hyperlink{namespace_a_s_i_a9531e2306bef93541e7b64dd9dda8716}{ASI::EndRewrite}}(add\_spell\_mreg);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00167}00167\ \}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00168}00168\ }
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00169}00169\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ initialize\_subeffect\_add\_hook()}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00170}00170\ \{}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00171}00171\ \ \ \ \ \mbox{\hyperlink{struct_a_s_i_1_1_memory_region}{ASI::MemoryRegion}}\ add\_spell\_mreg(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x2de3b7),\ 5);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00172}00172\ \ \ \ \ \mbox{\hyperlink{namespace_a_s_i_a4761cc7671cb5ca025364456b8363f48}{ASI::BeginRewrite}}(add\_spell\_mreg);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00173}00173\ \ \ \ \ *(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ *)(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x2de3b7))\ =\ 0xE8;\ \textcolor{comment}{//\ CALL\ instruction}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00174}00174\ \ \ \ \ *(\textcolor{keywordtype}{int}\ *)(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x2de3b8))\ =\ (int)(\&\mbox{\hyperlink{sf__subeffect__hook_8c_a1dcff1e838a859bb7fd432cd6661016e}{sf\_subeffect\_hook}})\ -\/\ \mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x2de3bc);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00175}00175\ \ \ \ \ \mbox{\hyperlink{namespace_a_s_i_a9531e2306bef93541e7b64dd9dda8716}{ASI::EndRewrite}}(add\_spell\_mreg);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00176}00176\ \}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00177}00177\ }
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00178}00178\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ initialize\_spellend\_hook()}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00179}00179\ \{}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00180}00180\ \ \ \ \ \mbox{\hyperlink{struct_a_s_i_1_1_memory_region}{ASI::MemoryRegion}}\ end\_spell\_mreg(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x34b0a0),\ 5);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00181}00181\ \ \ \ \ \mbox{\hyperlink{namespace_a_s_i_a4761cc7671cb5ca025364456b8363f48}{ASI::BeginRewrite}}(end\_spell\_mreg);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00182}00182\ \ \ \ \ *(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ *)(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x34b0a0))\ =\ 0xE9;\ \textcolor{comment}{//\ jmp\ instruction}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00183}00183\ \ \ \ \ *(\textcolor{keywordtype}{int}\ *)(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x34b0a1))\ =\ (int)(\&\mbox{\hyperlink{sf__endspell__hook_8c_aee626a16e719383c36fc0a739dbbd81c}{sf\_endspell\_hook}})\ -\/\ \mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x34b0a5);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00184}00184\ \ \ \ \ \mbox{\hyperlink{namespace_a_s_i_a9531e2306bef93541e7b64dd9dda8716}{ASI::EndRewrite}}(end\_spell\_mreg);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00185}00185\ \}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00186}00186\ }
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00187}00187\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ initialize\_spellrefresh\_hook()}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00188}00188\ \{}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00189}00189\ \ \ \ \ \mbox{\hyperlink{struct_a_s_i_1_1_memory_region}{ASI::MemoryRegion}}\ refresh\_spell\_mreg(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x329f90),\ 9);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00190}00190\ \ \ \ \ \mbox{\hyperlink{namespace_a_s_i_a4761cc7671cb5ca025364456b8363f48}{ASI::BeginRewrite}}(refresh\_spell\_mreg);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00191}00191\ \ \ \ \ *(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ *)(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x329f90))\ =\ 0x90;\ \textcolor{comment}{//\ nop\ trail}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00192}00192\ \ \ \ \ *(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ *)(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x329f91))\ =\ 0x90;\ \textcolor{comment}{//\ nop\ trail}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00193}00193\ \ \ \ \ *(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ *)(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x329f92))\ =\ 0x90;\ \textcolor{comment}{//\ nop\ trail}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00194}00194\ \ \ \ \ *(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ *)(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x329f93))\ =\ 0x90;\ \textcolor{comment}{//\ nop\ trail}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00195}00195\ \ \ \ \ *(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ *)(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x329f94))\ =\ 0xE9;\ \textcolor{comment}{//\ jmp\ instruction}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00196}00196\ \ \ \ \ *(\textcolor{keywordtype}{int}\ *)(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x329f95))\ =\ (int)(\&\mbox{\hyperlink{sf__refresh__hook_8c_ad1c59c07883c319b2e33cb35737b4e97}{sf\_refresh\_hook}})\ -\/\ \mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x329f99);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00197}00197\ \ \ \ \ \mbox{\hyperlink{namespace_a_s_i_a9531e2306bef93541e7b64dd9dda8716}{ASI::EndRewrite}}(refresh\_spell\_mreg);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00198}00198\ \}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00199}00199\ }
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00200}00200\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{_test_mod_8cpp_af3930783c3809ecf6765504e72cc16bc}{\_\_declspec}}(naked)\ menuload\_hook\_beta()}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00201}00201\ \{}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00202}00202\ \ \ \ \ \textcolor{keyword}{asm}(\textcolor{stringliteral}{"{}push\ \%\%edi\ \ \ \ \ \ \ \ \ \(\backslash\)n\(\backslash\)t"{}}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00203}00203\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}call\ \%P0\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)n\(\backslash\)t"{}}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00204}00204\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}pop\ \%\%edi\ \ \ \ \ \ \ \ \ \ \(\backslash\)n\(\backslash\)t"{}}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00205}00205\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}jmp\ *\%1\ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)n\(\backslash\)t"{}}\ :\ :\ \textcolor{stringliteral}{"{}i"{}}(\mbox{\hyperlink{sf__menu__hook_8h_ada2af0427fc55564fbb95eaa3caf1f34}{sf\_menu\_hook}}),\ \textcolor{stringliteral}{"{}o"{}}(\mbox{\hyperlink{sf__menu__hook_8c_a0d0fb6aa3b1c95174db19a927a5f4222}{g\_menu\_return\_addr}}));}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00206}00206\ \}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00207}00207\ }
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00208}00208\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ initialize\_menuload\_hook()}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00209}00209\ \{}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00210}00210\ \ \ \ \ \mbox{\hyperlink{struct_a_s_i_1_1_memory_region}{ASI::MemoryRegion}}\ menu\_load\_mreg(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x182794),\ 5);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00211}00211\ \ \ \ \ \mbox{\hyperlink{namespace_a_s_i_a4761cc7671cb5ca025364456b8363f48}{ASI::BeginRewrite}}(menu\_load\_mreg);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00212}00212\ \ \ \ \ *(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ *)(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x182794))\ =\ 0xE9;\ \textcolor{comment}{//\ jmp\ instruction}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00213}00213\ \ \ \ \ *(\textcolor{keywordtype}{int}\ *)(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x182795))\ =\ (int)(\&menuload\_hook\_beta)\ -\/\ \mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x182799);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00214}00214\ \ \ \ \ \mbox{\hyperlink{namespace_a_s_i_a9531e2306bef93541e7b64dd9dda8716}{ASI::EndRewrite}}(menu\_load\_mreg);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00215}00215\ \}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00216}00216\ }
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00217}00217\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ initialize\_deal\_damage\_hook()}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00218}00218\ \{}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00219}00219\ \ \ \ \ \textcolor{comment}{//\ uint32\_t\ flag\_pointer\ =\ *(uint32\_t\ *)(ASI::AddrOf());}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00220}00220\ \ \ \ \ \mbox{\hyperlink{sf__damage__hook_8c_a1758334f7ffad31194f6712425f9c413}{g\_damage\_return\_addr}}\ =\ \mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x2f5465);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00221}00221\ \ \ \ \ \mbox{\hyperlink{struct_a_s_i_1_1_memory_region}{ASI::MemoryRegion}}\ deal\_damage\_mreg(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x2f4af3),\ 6);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00222}00222\ \ \ \ \ \mbox{\hyperlink{namespace_a_s_i_a4761cc7671cb5ca025364456b8363f48}{ASI::BeginRewrite}}(deal\_damage\_mreg);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00223}00223\ \ \ \ \ *(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ *)(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x2f4af3))\ =\ 0x90;\ \textcolor{comment}{//\ nop\ trail}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00224}00224\ \ \ \ \ *(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ *)(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x2f4af4))\ =\ 0xE9;\ \textcolor{comment}{//\ JMP}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00225}00225\ \ \ \ \ *(\textcolor{keywordtype}{int}\ *)(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x2f4af5))\ =\ (int)(\&sf\_damage\_hook)\ -\/\ \mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x2f4af9);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00226}00226\ \}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00227}00227\ }
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00228}00228\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ initialize\_onhit\_hook()}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00229}00229\ \{}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00230}00230\ \ \ \ \ \mbox{\hyperlink{struct_a_s_i_1_1_memory_region}{ASI::MemoryRegion}}\ onhit\_mreg(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x2e0b00),\ 5);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00231}00231\ \ \ \ \ \mbox{\hyperlink{namespace_a_s_i_a4761cc7671cb5ca025364456b8363f48}{ASI::BeginRewrite}}(onhit\_mreg);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00232}00232\ \ \ \ \ *(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ *)(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x2e0b00))\ =\ 0xE9;\ \textcolor{comment}{//\ jmp\ instruction}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00233}00233\ \ \ \ \ *(\textcolor{keywordtype}{int}\ *)(\mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x2e0b01))\ =\ (int)(\&\mbox{\hyperlink{sf__onhit__hook_8c_aefde32f4f9aa9831328593444c8811b9}{sf\_onhit\_hook}})\ -\/\ \mbox{\hyperlink{namespace_a_s_i_a05ca5acefdcb7e955f472b60e5511a1a}{ASI::AddrOf}}(0x2e0b05);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00234}00234\ \ \ \ \ \mbox{\hyperlink{namespace_a_s_i_a9531e2306bef93541e7b64dd9dda8716}{ASI::EndRewrite}}(onhit\_mreg);}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00235}00235\ \}}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00236}00236\ }
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00237}\mbox{\hyperlink{sf__hooks_8c_a68518887ac30bef0798064a5ea87b1f5}{00237}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{sf__hooks_8c_a68518887ac30bef0798064a5ea87b1f5}{initialize\_beta\_hooks}}()}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00238}00238\ \{}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00239}00239\ \ \ \ \ \mbox{\hyperlink{sf__wrappers_8c_a4fd90de0913ed15b0812918255559a55}{log\_info}}(\textcolor{stringliteral}{"{}Hooking\ Spell\ Types"{}});}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00240}00240\ \ \ \ \ initialize\_spelltype\_hook();}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00241}00241\ }
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00242}00242\ \ \ \ \ \mbox{\hyperlink{sf__wrappers_8c_a4fd90de0913ed15b0812918255559a55}{log\_info}}(\textcolor{stringliteral}{"{}Hooking\ Spell\ Triggers"{}});}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00243}00243\ \ \ \ \ initialize\_spell\_trigger\_hook();}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00244}00244\ }
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00245}00245\ \ \ \ \ \mbox{\hyperlink{sf__wrappers_8c_a4fd90de0913ed15b0812918255559a55}{log\_info}}(\textcolor{stringliteral}{"{}Hooking\ Spell\ Refresh\ Triggers"{}});}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00246}00246\ \ \ \ \ initialize\_spellrefresh\_hook();}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00247}00247\ }
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00248}00248\ \ \ \ \ \mbox{\hyperlink{sf__wrappers_8c_a4fd90de0913ed15b0812918255559a55}{log\_info}}(\textcolor{stringliteral}{"{}Hooking\ Spell\ End\ Triggers"{}});}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00249}00249\ \ \ \ \ initialize\_spellend\_hook();}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00250}00250\ }
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00251}00251\ \ \ \ \ \mbox{\hyperlink{sf__wrappers_8c_a4fd90de0913ed15b0812918255559a55}{log\_info}}(\textcolor{stringliteral}{"{}Hooking\ Deal\ Damage\ Trigger"{}});}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00252}00252\ \ \ \ \ initialize\_deal\_damage\_hook();}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00253}00253\ }
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00254}00254\ \ \ \ \ \mbox{\hyperlink{sf__wrappers_8c_a4fd90de0913ed15b0812918255559a55}{log\_info}}(\textcolor{stringliteral}{"{}Hooking\ AddSpellFromEffect\ function"{}});}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00255}00255\ \ \ \ \ initialize\_subeffect\_add\_hook();}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00256}00256\ }
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00257}00257\ \ \ \ \ \mbox{\hyperlink{sf__wrappers_8c_a4fd90de0913ed15b0812918255559a55}{log\_info}}(\textcolor{stringliteral}{"{}Dirty\ Menu\ Loading\ Trigger\ Test"{}});}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00258}00258\ \ \ \ \ initialize\_menuload\_hook();}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00259}00259\ }
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00260}00260\ \ \ \ \ \mbox{\hyperlink{sf__wrappers_8c_a4fd90de0913ed15b0812918255559a55}{log\_info}}(\textcolor{stringliteral}{"{}Hooking\ On\ Hit\ Trigger"{}});}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00261}00261\ \ \ \ \ initialize\_onhit\_hook();}
+\DoxyCodeLine{\Hypertarget{sf__hooks_8c_source_l00262}00262\ \}}
+
+\end{DoxyCode}

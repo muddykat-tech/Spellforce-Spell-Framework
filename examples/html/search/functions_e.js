@@ -1,0 +1,6 @@
+var searchData=
+[
+  ['quickness_5fend_5fhandler_0',['quickness_end_handler',['../sf__spellend__handlers_8cpp.html#aefec0c75074c7d44565bf14300ad3117',1,'quickness_end_handler(SF_CGdSpell *_this, uint16_t spell_index):&#160;sf_spellend_handlers.cpp'],['../sf__spellend__handlers_8h.html#aefec0c75074c7d44565bf14300ad3117',1,'quickness_end_handler(SF_CGdSpell *_this, uint16_t spell_index):&#160;sf_spellend_handlers.cpp']]],
+  ['quickness_5fhandler_1',['quickness_handler',['../sf__spelltype__handlers_8cpp.html#a67663c01109d4d2747cf5a2d03238ad7',1,'quickness_handler(SF_CGdSpell *_this, uint16_t spell_index):&#160;sf_spelltype_handlers.cpp'],['../sf__spelltype__handlers_8h.html#a67663c01109d4d2747cf5a2d03238ad7',1,'quickness_handler(SF_CGdSpell *_this, uint16_t spell_index):&#160;sf_spelltype_handlers.cpp']]],
+  ['quickness_5frefresh_5fhandler_2',['quickness_refresh_handler',['../sf__spellrefresh__handlers_8cpp.html#a426617d87a810960e89cf7b5f96792dc',1,'quickness_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index):&#160;sf_spellrefresh_handlers.cpp'],['../sf__spellrefresh__handlers_8h.html#a426617d87a810960e89cf7b5f96792dc',1,'quickness_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index):&#160;sf_spellrefresh_handlers.cpp']]]
+];

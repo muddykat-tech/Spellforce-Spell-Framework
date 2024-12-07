@@ -1,4 +1,4 @@
-#include "../../registry/sf_subeffect_registry.h"
+#include "../../registry/spell_data_registries/sf_subeffect_registry.h"
 #include "../sf_wrappers.h"
 #include "../sf_hooks.h"
 

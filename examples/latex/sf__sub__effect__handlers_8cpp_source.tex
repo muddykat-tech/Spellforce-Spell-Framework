@@ -1,0 +1,125 @@
+\doxysection{sf\+\_\+sub\+\_\+effect\+\_\+handlers.\+cpp}
+\hypertarget{sf__sub__effect__handlers_8cpp_source}{}\label{sf__sub__effect__handlers_8cpp_source}\index{src/internal/handlers/sf\_sub\_effect\_handlers.cpp@{src/internal/handlers/sf\_sub\_effect\_handlers.cpp}}
+\mbox{\hyperlink{sf__sub__effect__handlers_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__sub__effect__handlers_8h}{sf\_sub\_effect\_handlers.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__hooks_8h}{../core/sf\_hooks.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__wrappers_8h}{../core/sf\_wrappers.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <cstdio>}}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00006}\mbox{\hyperlink{sf__sub__effect__handlers_8cpp_a5f38943282e0f8bbdf73b66addd0dc62}{00006}}\ \textcolor{keywordtype}{void}\ \_\_thiscall\ \mbox{\hyperlink{sf__sub__effect__handlers_8cpp_a5f38943282e0f8bbdf73b66addd0dc62}{elemental\_sub\_effect\_handler}}(\mbox{\hyperlink{sf__general__structures_8h_a710c54d12a2bf3e29c87578d51d0373d}{SF\_CGDEffect}}\ *\_this,\ uint16\_t\ effect\_index)}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00007}00007\ \{}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00008}00008\ \ \ \ \ uint16\_t\ spell\_id\ =\ \mbox{\hyperlink{sf__hooks_8c_a6223ae94a537c083aa89e5ad9033bb62}{effectAPI}}.getEffectXData(\_this,\ effect\_index,\ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a61d8bacc33743558c22716f576c09a7a}{EFFECT\_SUBSPELL\_ID}});}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00009}00009\ \ \ \ \ uint16\_t\ source\_index\ =\ \mbox{\hyperlink{sf__hooks_8c_a6223ae94a537c083aa89e5ad9033bb62}{effectAPI}}.getEffectXData(\_this,\ effect\_index,\ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355abf76662bac9c32c99c4847777a416c43}{EFFECT\_ENTITY\_INDEX}});}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00010}00010\ \ \ \ \ uint8\_t\ figure\_type1\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00011}00011\ \ \ \ \ \textcolor{keywordflow}{if}\ (source\_index)}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00012}00012\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00013}00013\ \ \ \ \ \ \ \ \ figure\_type1\ =\ \mbox{\hyperlink{sf__hooks_8c_a6223ae94a537c083aa89e5ad9033bb62}{effectAPI}}.getEffectXData(\_this,\ effect\_index,\ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a70b8c84cbc27ae99d210dd5be3bbd2e6}{EFFECT\_ENTITY\_TYPE}});}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00014}00014\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00015}00015\ \ \ \ \ uint16\_t\ sub\_spell\_flag\ =\ \mbox{\hyperlink{sf__hooks_8c_a6223ae94a537c083aa89e5ad9033bb62}{effectAPI}}.getEffectXData(\_this,\ effect\_index,\ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a56396aef199bc826464e01412f6ad267}{EFFECT\_DO\_NOT\_ADD\_SUBSPELL}});}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00016}00016\ \ \ \ \ \textcolor{keywordflow}{if}\ (sub\_spell\_flag\ !=\ 1)}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00017}00017\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00018}00018\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ here\ comes\ the\ black\ magic}}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00019}00019\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ CGdWorld\ structure\ is\ annotated\ badly,\ so\ offsets\ we\ use}}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00020}00020\ \ \ \ \ \ \ \ \ uint32\_t\ world\ =\ (uint32\_t)(\_this-\/>SF\_CGdWorld);}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00021}00021\ \ \ \ \ \ \ \ \ uint16\_t\ map\_size\ =\ *(uint16\_t\ *)(world\ +\ 0x11187);}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00022}00022\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint16\_t\ i\ =\ 0,\ j\ =\ 9;\ j\ !=\ 0;\ j-\/-\/,\ i\ +=\ 7)}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00023}00023\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ cell\_x\ =\ *(uint16\_t\ *)(world\ +\ i)\ +\ \_this-\/>active\_effect\_list[effect\_index].position.X;}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ cell\_y\ =\ *(uint16\_t\ *)(world\ +\ i\ +\ 2)\ +\ \_this-\/>active\_effect\_list[effect\_index].position.Y;}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((cell\_x\ <\ map\_size)\ \&\&\ (cell\_y\ <\ map\_size))}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint8\_t\ flags\ =\ *(uint8\_t\ *)(world\ +\ 0x1118A\ +\ (cell\_y\ *\ 0x400\ +\ cell\_x)\ *\ 6);}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((flags\ \&\ 0x10)\ !=\ 0)}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ target\_index\ =\ \mbox{\hyperlink{_test_mod_8cpp_af5cc9e62d950cef0fc6386b8162d5cf0}{toolboxAPI}}.getFigureFromWorld(\_this-\/>SF\_CGdWorldToolBox,\ cell\_x,\ cell\_y,\ 0);}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((\mbox{\hyperlink{_test_mod_8cpp_a721b8129088d90091730781611ecee94}{figureAPI}}.isAlive(\_this-\/>SF\_CGdFigure,\ target\_index)\ \&\&\ \mbox{\hyperlink{_test_mod_8cpp_af5cc9e62d950cef0fc6386b8162d5cf0}{toolboxAPI}}.isTargetable(\_this-\/>SF\_CGdFigureToolBox,\ target\_index))}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \&\&\ (((!\mbox{\hyperlink{_test_mod_8cpp_af5cc9e62d950cef0fc6386b8162d5cf0}{toolboxAPI}}.figuresCheckFriendly(\_this-\/>SF\_CGdFigureToolBox,\ source\_index,\ target\_index))}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \&\&\ (!\mbox{\hyperlink{_test_mod_8cpp_af5cc9e62d950cef0fc6386b8162d5cf0}{toolboxAPI}}.figuresCheckNeutral(\_this-\/>SF\_CGdFigureToolBox,\ source\_index,\ target\_index)))}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ||\ (\_this-\/>SF\_CGdFigure-\/>figures[target\_index].owner\ !=\ 0)))}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aedd8705d0983d09965ace902f37d0e0b}{SF\_CGdTargetData}}\ target\ =\ \{1,\ target\_index,\ \{0,\ 0\}\};}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aedd8705d0983d09965ace902f37d0e0b}{SF\_CGdTargetData}}\ source\ =\ \{1,\ source\_index,\ \{0,\ 0\}\};}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_test_mod_8cpp_a5b988b6614b887f35da8a75c213820b8}{spellAPI}}.addSpell(\_this-\/>CGdSpell,\ spell\_id,\ \_this-\/>OpaqueClass-\/>current\_step,\ \&source,\ \&target,\ 0);}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00043}00043\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00044}00044\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00045}00045\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00046}00046\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00047}00047\ \ \ \ \ \ \ \ \ uint16\_t\ figure\_index2\ =\ \mbox{\hyperlink{sf__hooks_8c_a6223ae94a537c083aa89e5ad9033bb62}{effectAPI}}.getEffectXData(\_this,\ effect\_index,\ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a5c1e1f0adff95e4bc9146465e16df9ba}{EFFECT\_ENTITY\_INDEX2}});}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00048}00048\ \ \ \ \ \ \ \ \ uint8\_t\ figure\_type2\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00049}00049\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (figure\_index2)}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00050}00050\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ figure\_type2\ =\ \mbox{\hyperlink{sf__hooks_8c_a6223ae94a537c083aa89e5ad9033bb62}{effectAPI}}.getEffectXData(\_this,\ effect\_index,\ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a057bd74da3f12a193cd1ed9f1c039793}{EFFECT\_ENTITY\_TYPE2}});}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00052}00052\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00053}00053\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!figure\_type2\ ||\ !figure\_index2)}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00054}00054\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00056}00056\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00057}00057\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aedd8705d0983d09965ace902f37d0e0b}{SF\_CGdTargetData}}\ source\ =\ \{figure\_type1,\ source\_index,\ \{0,\ 0\}\};}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00058}00058\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aedd8705d0983d09965ace902f37d0e0b}{SF\_CGdTargetData}}\ target\ =\ \{figure\_type2,\ figure\_index2,\ \{0,\ 0\}\};}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00059}00059\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{_test_mod_8cpp_a5b988b6614b887f35da8a75c213820b8}{spellAPI}}.addSpell(\_this-\/>CGdSpell,\ spell\_id,\ \_this-\/>OpaqueClass-\/>current\_step,\ \&source,\ \&target,\ 0);}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00060}00060\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00061}00061\ \}}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00063}\mbox{\hyperlink{sf__sub__effect__handlers_8cpp_adcabb434664798dc60e8657976830cab}{00063}}\ \textcolor{keywordtype}{void}\ \_\_thiscall\ \mbox{\hyperlink{sf__sub__effect__handlers_8cpp_adcabb434664798dc60e8657976830cab}{elemental\_chain\_sub\_effect\_handler}}(\mbox{\hyperlink{sf__general__structures_8h_a710c54d12a2bf3e29c87578d51d0373d}{SF\_CGDEffect}}\ *\_this,\ uint16\_t\ effect\_index)}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00064}00064\ \{}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00065}00065\ \ \ \ \ uint16\_t\ spell\_id\ =\ \mbox{\hyperlink{sf__hooks_8c_a6223ae94a537c083aa89e5ad9033bb62}{effectAPI}}.getEffectXData(\_this,\ effect\_index,\ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a61d8bacc33743558c22716f576c09a7a}{EFFECT\_SUBSPELL\_ID}});}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00066}00066\ \ \ \ \ uint16\_t\ source\_index\ =\ \mbox{\hyperlink{sf__hooks_8c_a6223ae94a537c083aa89e5ad9033bb62}{effectAPI}}.getEffectXData(\_this,\ effect\_index,\ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355abf76662bac9c32c99c4847777a416c43}{EFFECT\_ENTITY\_INDEX}});}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00067}00067\ \ \ \ \ uint8\_t\ figure\_type1;}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00068}00068\ \ \ \ \ \textcolor{keywordflow}{if}\ (source\_index)}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00069}00069\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00070}00070\ \ \ \ \ \ \ \ \ figure\_type1\ =\ \mbox{\hyperlink{sf__hooks_8c_a6223ae94a537c083aa89e5ad9033bb62}{effectAPI}}.getEffectXData(\_this,\ effect\_index,\ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a70b8c84cbc27ae99d210dd5be3bbd2e6}{EFFECT\_ENTITY\_TYPE}});}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00071}00071\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00072}00072\ \ \ \ \ uint16\_t\ figure\_index2\ =\ \mbox{\hyperlink{sf__hooks_8c_a6223ae94a537c083aa89e5ad9033bb62}{effectAPI}}.getEffectXData(\_this,\ effect\_index,\ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a5c1e1f0adff95e4bc9146465e16df9ba}{EFFECT\_ENTITY\_INDEX2}});}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00073}00073\ \ \ \ \ uint16\_t\ figure\_index3\ =\ \mbox{\hyperlink{sf__hooks_8c_a6223ae94a537c083aa89e5ad9033bb62}{effectAPI}}.getEffectXData(\_this,\ effect\_index,\ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a1103b3d7d2d9229d30f4cb7db27fcb99}{EFFECT\_ENTITY\_INDEX3}});}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00074}00074\ \ \ \ \ uint8\_t\ figure\_type2\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00075}00075\ \ \ \ \ \textcolor{keywordflow}{if}\ (figure\_index2)}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00076}00076\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00077}00077\ \ \ \ \ \ \ \ \ figure\_type2\ =\ \mbox{\hyperlink{sf__hooks_8c_a6223ae94a537c083aa89e5ad9033bb62}{effectAPI}}.getEffectXData(\_this,\ effect\_index,\ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a057bd74da3f12a193cd1ed9f1c039793}{EFFECT\_ENTITY\_TYPE2}});}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00078}00078\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00079}00079\ \ \ \ \ \textcolor{keywordflow}{if}\ (!figure\_type2\ ||\ !figure\_index2)}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00080}00080\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00082}00082\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00083}00083\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aedd8705d0983d09965ace902f37d0e0b}{SF\_CGdTargetData}}\ source\ =\ \{figure\_type1,\ source\_index,\ \{0,\ 0\}\};}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00084}00084\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aedd8705d0983d09965ace902f37d0e0b}{SF\_CGdTargetData}}\ target\ =\ \{figure\_type2,\ figure\_index2,\ \{0,\ 0\}\};}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00085}00085\ \ \ \ \ \mbox{\hyperlink{_test_mod_8cpp_a5b988b6614b887f35da8a75c213820b8}{spellAPI}}.addSpell(\_this-\/>CGdSpell,\ spell\_id,\ \_this-\/>OpaqueClass-\/>current\_step,\ \&source,\ \&target,\ figure\_index3);}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00086}00086\ \}}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00088}\mbox{\hyperlink{sf__sub__effect__handlers_8cpp_a1458cef2203f0b12ea921bad1217ffce}{00088}}\ \textcolor{keywordtype}{void}\ \_\_thiscall\ \mbox{\hyperlink{sf__sub__effect__handlers_8cpp_a1458cef2203f0b12ea921bad1217ffce}{common\_sub\_effect\_handler}}(\mbox{\hyperlink{sf__general__structures_8h_a710c54d12a2bf3e29c87578d51d0373d}{SF\_CGDEffect}}\ *\_this,\ uint16\_t\ effect\_index)}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00089}00089\ \{}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00090}00090\ \ \ \ \ uint16\_t\ spell\_id\ =\ \mbox{\hyperlink{sf__hooks_8c_a6223ae94a537c083aa89e5ad9033bb62}{effectAPI}}.getEffectXData(\_this,\ effect\_index,\ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a61d8bacc33743558c22716f576c09a7a}{EFFECT\_SUBSPELL\_ID}});}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00091}00091\ \ \ \ \ uint16\_t\ source\_index\ =\ \mbox{\hyperlink{sf__hooks_8c_a6223ae94a537c083aa89e5ad9033bb62}{effectAPI}}.getEffectXData(\_this,\ effect\_index,\ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355abf76662bac9c32c99c4847777a416c43}{EFFECT\_ENTITY\_INDEX}});}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00092}00092\ \ \ \ \ uint8\_t\ figure\_type1\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00093}00093\ \ \ \ \ \textcolor{keywordflow}{if}\ (source\_index)}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00094}00094\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00095}00095\ \ \ \ \ \ \ \ \ figure\_type1\ =\ \mbox{\hyperlink{sf__hooks_8c_a6223ae94a537c083aa89e5ad9033bb62}{effectAPI}}.getEffectXData(\_this,\ effect\_index,\ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a70b8c84cbc27ae99d210dd5be3bbd2e6}{EFFECT\_ENTITY\_TYPE}});}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00096}00096\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00097}00097\ \ \ \ \ uint16\_t\ figure\_index2\ =\ \mbox{\hyperlink{sf__hooks_8c_a6223ae94a537c083aa89e5ad9033bb62}{effectAPI}}.getEffectXData(\_this,\ effect\_index,\ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a5c1e1f0adff95e4bc9146465e16df9ba}{EFFECT\_ENTITY\_INDEX2}});}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00098}00098\ \ \ \ \ uint8\_t\ figure\_type2\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00099}00099\ \ \ \ \ \textcolor{keywordflow}{if}\ (figure\_index2)}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00100}00100\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00101}00101\ \ \ \ \ \ \ \ \ figure\_type2\ =\ \mbox{\hyperlink{sf__hooks_8c_a6223ae94a537c083aa89e5ad9033bb62}{effectAPI}}.getEffectXData(\_this,\ effect\_index,\ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a057bd74da3f12a193cd1ed9f1c039793}{EFFECT\_ENTITY\_TYPE2}});}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00102}00102\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00103}00103\ \ \ \ \ \textcolor{keywordflow}{if}\ (!figure\_type2\ ||\ !figure\_index2)}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00104}00104\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00105}00105\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00106}00106\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00107}00107\ \ \ \ \ \textcolor{keywordflow}{if}\ (!figure\_type1\ ||\ !source\_index)}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00108}00108\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00109}00109\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00110}00110\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00111}00111\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aedd8705d0983d09965ace902f37d0e0b}{SF\_CGdTargetData}}\ source\ =\ \{figure\_type1,\ source\_index,\ \{0,\ 0\}\};}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00112}00112\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aedd8705d0983d09965ace902f37d0e0b}{SF\_CGdTargetData}}\ target\ =\ \{figure\_type2,\ figure\_index2,\ \{0,\ 0\}\};}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00113}00113\ \ \ \ \ \mbox{\hyperlink{_test_mod_8cpp_a5b988b6614b887f35da8a75c213820b8}{spellAPI}}.addSpell(\_this-\/>CGdSpell,\ spell\_id,\ \_this-\/>OpaqueClass-\/>current\_step,\ \&source,\ \&target,\ 0);}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00114}00114\ \}}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00115}00115\ }
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00116}\mbox{\hyperlink{sf__sub__effect__handlers_8cpp_a0f340117ea713eabfd81c44cc16792f3}{00116}}\ \textcolor{keywordtype}{void}\ \_\_thiscall\ \mbox{\hyperlink{sf__sub__effect__handlers_8cpp_a0f340117ea713eabfd81c44cc16792f3}{default\_sub\_effect\_handler}}(\mbox{\hyperlink{sf__general__structures_8h_a710c54d12a2bf3e29c87578d51d0373d}{SF\_CGDEffect}}\ *\_this,\ uint16\_t\ effect\_index)}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00117}00117\ \{}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00118}00118\ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{sf__sub__effect__handlers_8cpp_source_l00119}00119\ \}}
+
+\end{DoxyCode}

@@ -1,12 +1,12 @@
 #include "sf_mod_registry.h"
 
-#include "sf_spelltype_registry.h"
-#include "sf_spelleffect_registry.h"
-#include "sf_spellend_registry.h"
-#include "sf_subeffect_registry.h"
-#include "sf_spellrefresh_registry.h"
-#include "sf_onhit_registry.h"
-#include "sf_spelldamage_registry.h"
+#include "spell_data_registries/sf_spelltype_registry.h"
+#include "spell_data_registries/sf_spelleffect_registry.h"
+#include "spell_data_registries/sf_spellend_registry.h"
+#include "spell_data_registries/sf_subeffect_registry.h"
+#include "spell_data_registries/sf_spellrefresh_registry.h"
+#include "spell_data_registries/sf_onhit_registry.h"
+#include "spell_data_registries/sf_spelldamage_registry.h"
 
 #include <windows.h>
 #include <iostream>

@@ -1,6 +1,6 @@
 #include "../sf_wrappers.h"
 #include "../sf_hooks.h"
-#include "../../registry/sf_spellend_registry.h"
+#include "../../registry/spell_data_registries/sf_spellend_registry.h"
 
 #include <stdint.h>
 #include <stdlib.h>

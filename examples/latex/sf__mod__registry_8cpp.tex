@@ -1,0 +1,195 @@
+\doxysection{src/internal/registry/sf\+\_\+mod\+\_\+registry.cpp File Reference}
+\hypertarget{sf__mod__registry_8cpp}{}\label{sf__mod__registry_8cpp}\index{src/internal/registry/sf\_mod\_registry.cpp@{src/internal/registry/sf\_mod\_registry.cpp}}
+{\ttfamily \#include "{}sf\+\_\+mod\+\_\+registry.\+h"{}}\newline
+{\ttfamily \#include "{}sf\+\_\+spelltype\+\_\+registry.\+h"{}}\newline
+{\ttfamily \#include "{}sf\+\_\+spelleffect\+\_\+registry.\+h"{}}\newline
+{\ttfamily \#include "{}sf\+\_\+spellend\+\_\+registry.\+h"{}}\newline
+{\ttfamily \#include "{}sf\+\_\+subeffect\+\_\+registry.\+h"{}}\newline
+{\ttfamily \#include "{}sf\+\_\+spellrefresh\+\_\+registry.\+h"{}}\newline
+{\ttfamily \#include "{}sf\+\_\+onhit\+\_\+registry.\+h"{}}\newline
+{\ttfamily \#include "{}sf\+\_\+spelldamage\+\_\+registry.\+h"{}}\newline
+{\ttfamily \#include $<$windows.\+h$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$map$>$}\newline
+{\ttfamily \#include $<$list$>$}\newline
+{\ttfamily \#include $<$cstdint$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdarg.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+Include dependency graph for sf\+\_\+mod\+\_\+registry.\+cpp\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__mod__registry_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}} \texorpdfstring{$\ast$}{*}\+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__mod__registry_8cpp_ae507705c327c357e28eae53d52ad0638}{register\+Spell}} (uint16\+\_\+t spell\+\_\+id)
+\item 
+void \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__mod__registry_8cpp_a4afdf02d3c8eeffbfbe125fa3464be67}{apply\+Spell\+Tag}} (\mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}} \texorpdfstring{$\ast$}{*}spell, \mbox{\hyperlink{sf__registration__functions_8h_a1ef25133f998082d0974a3d43088f1e5}{Spell\+Tag}} tag)
+\item 
+void \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__mod__registry_8cpp_a5eb74dc38db9aa0f7f858687cb5951e8}{link\+Type\+Handler}} (\mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}} \texorpdfstring{$\ast$}{*}spell, \mbox{\hyperlink{sf__registration__functions_8h_af76aa0d565c5ebb0b1eb50e2ed3377b3}{handler\+\_\+ptr}} type\+Handler)
+\item 
+void \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__mod__registry_8cpp_a7cf1ceca8456636a9ace972847017e72}{link\+On\+Hit\+Handler}} (\mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}} \texorpdfstring{$\ast$}{*}spell, \mbox{\hyperlink{sf__registration__functions_8h_afc33c0496ccf8b60de8f29929de6e565}{onhit\+\_\+handler\+\_\+ptr}} onhit\+Handler, \mbox{\hyperlink{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7}{On\+Hit\+Phase}} phase)
+\item 
+void \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__mod__registry_8cpp_a963e6fcecd10433218b3925f0e2d39a9}{link\+Effect\+Handler}} (\mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}} \texorpdfstring{$\ast$}{*}spell, uint16\+\_\+t spell\+\_\+effect\+\_\+id, \mbox{\hyperlink{sf__registration__functions_8h_af76aa0d565c5ebb0b1eb50e2ed3377b3}{handler\+\_\+ptr}} effect\+Handler)
+\item 
+void \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__mod__registry_8cpp_a29b2de8f5f9ec3ced0c15db03d7817b6}{link\+End\+Handler}} (\mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}} \texorpdfstring{$\ast$}{*}spell, \mbox{\hyperlink{sf__registration__functions_8h_af76aa0d565c5ebb0b1eb50e2ed3377b3}{handler\+\_\+ptr}} end\+Handler)
+\item 
+void \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__mod__registry_8cpp_ae355b11ac572b3ae505c4d088e1c21e8}{link\+Sub\+Effect\+Handler}} (\mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}} \texorpdfstring{$\ast$}{*}spell, \mbox{\hyperlink{sf__effect__functions_8h_af76bd3c90ee01801e44eaf0fb6cbab0e}{sub\+\_\+effect\+\_\+handler\+\_\+ptr}} handler)
+\item 
+void \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__mod__registry_8cpp_a8751386410676c0a282ab668879c19f4}{link\+Refresh\+Handler}} (\mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}} \texorpdfstring{$\ast$}{*}spell, \mbox{\hyperlink{sf__registration__functions_8h_a6c693fbf9a67b42cfa2dce6d4a4e0b4b}{refresh\+\_\+handler\+\_\+ptr}} handler)
+\item 
+void \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__mod__registry_8cpp_a3dc1674ebcd56a898d2a52729d9bdea1}{link\+Deal\+Damage\+Handler}} (\mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}} \texorpdfstring{$\ast$}{*}spell, \mbox{\hyperlink{sf__registration__functions_8h_a66d6ae6fed8f89847ff4ec8e71bfa461}{damage\+\_\+handler\+\_\+ptr}} handler, \mbox{\hyperlink{sf__general__structures_8h_a3f1ae4d570090b097230b86e02b1a178}{Spell\+Damage\+Phase}} phase)
+\item 
+int \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__mod__registry_8cpp_af4503f89adff0725f6795aedf7d95016}{get\+Spell\+Tag}} (uint16\+\_\+t spell\+\_\+line\+\_\+id)
+\item 
+void \mbox{\hyperlink{sf__mod__registry_8cpp_ab760f8f899f39400156538bbd0c21c68}{register\+\_\+mod\+\_\+spells}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+std\+::list$<$ \mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{sf__mod__registry_8cpp_a938a112888fa66ca03ebb37f831d7b84}{g\+\_\+internal\+\_\+spell\+\_\+list}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{sf__mod__registry_8cpp_a4afdf02d3c8eeffbfbe125fa3464be67}\index{sf\_mod\_registry.cpp@{sf\_mod\_registry.cpp}!applySpellTag@{applySpellTag}}
+\index{applySpellTag@{applySpellTag}!sf\_mod\_registry.cpp@{sf\_mod\_registry.cpp}}
+\doxysubsubsection{\texorpdfstring{applySpellTag()}{applySpellTag()}}
+{\footnotesize\ttfamily \label{sf__mod__registry_8cpp_a4afdf02d3c8eeffbfbe125fa3464be67} 
+void \+\_\+\+\_\+thiscall apply\+Spell\+Tag (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}} \texorpdfstring{$\ast$}{*}}]{spell}{, }\item[{\mbox{\hyperlink{sf__registration__functions_8h_a1ef25133f998082d0974a3d43088f1e5}{Spell\+Tag}}}]{tag}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__mod__registry_8cpp_source_l00044}{44}} of file \mbox{\hyperlink{sf__mod__registry_8cpp_source}{sf\+\_\+mod\+\_\+registry.\+cpp}}.
+
+\Hypertarget{sf__mod__registry_8cpp_af4503f89adff0725f6795aedf7d95016}\index{sf\_mod\_registry.cpp@{sf\_mod\_registry.cpp}!getSpellTag@{getSpellTag}}
+\index{getSpellTag@{getSpellTag}!sf\_mod\_registry.cpp@{sf\_mod\_registry.cpp}}
+\doxysubsubsection{\texorpdfstring{getSpellTag()}{getSpellTag()}}
+{\footnotesize\ttfamily \label{sf__mod__registry_8cpp_af4503f89adff0725f6795aedf7d95016} 
+int \+\_\+\+\_\+thiscall get\+Spell\+Tag (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{spell\+\_\+line\+\_\+id}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__mod__registry_8cpp_source_l00087}{87}} of file \mbox{\hyperlink{sf__mod__registry_8cpp_source}{sf\+\_\+mod\+\_\+registry.\+cpp}}.
+
+\Hypertarget{sf__mod__registry_8cpp_a3dc1674ebcd56a898d2a52729d9bdea1}\index{sf\_mod\_registry.cpp@{sf\_mod\_registry.cpp}!linkDealDamageHandler@{linkDealDamageHandler}}
+\index{linkDealDamageHandler@{linkDealDamageHandler}!sf\_mod\_registry.cpp@{sf\_mod\_registry.cpp}}
+\doxysubsubsection{\texorpdfstring{linkDealDamageHandler()}{linkDealDamageHandler()}}
+{\footnotesize\ttfamily \label{sf__mod__registry_8cpp_a3dc1674ebcd56a898d2a52729d9bdea1} 
+void \+\_\+\+\_\+thiscall link\+Deal\+Damage\+Handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}} \texorpdfstring{$\ast$}{*}}]{spell}{, }\item[{\mbox{\hyperlink{sf__registration__functions_8h_a66d6ae6fed8f89847ff4ec8e71bfa461}{damage\+\_\+handler\+\_\+ptr}}}]{handler}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_a3f1ae4d570090b097230b86e02b1a178}{Spell\+Damage\+Phase}}}]{phase}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__mod__registry_8cpp_source_l00081}{81}} of file \mbox{\hyperlink{sf__mod__registry_8cpp_source}{sf\+\_\+mod\+\_\+registry.\+cpp}}.
+
+\Hypertarget{sf__mod__registry_8cpp_a963e6fcecd10433218b3925f0e2d39a9}\index{sf\_mod\_registry.cpp@{sf\_mod\_registry.cpp}!linkEffectHandler@{linkEffectHandler}}
+\index{linkEffectHandler@{linkEffectHandler}!sf\_mod\_registry.cpp@{sf\_mod\_registry.cpp}}
+\doxysubsubsection{\texorpdfstring{linkEffectHandler()}{linkEffectHandler()}}
+{\footnotesize\ttfamily \label{sf__mod__registry_8cpp_a963e6fcecd10433218b3925f0e2d39a9} 
+void \+\_\+\+\_\+thiscall link\+Effect\+Handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}} \texorpdfstring{$\ast$}{*}}]{spell}{, }\item[{uint16\+\_\+t}]{spell\+\_\+effect\+\_\+id}{, }\item[{\mbox{\hyperlink{sf__registration__functions_8h_af76aa0d565c5ebb0b1eb50e2ed3377b3}{handler\+\_\+ptr}}}]{effect\+Handler}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__mod__registry_8cpp_source_l00060}{60}} of file \mbox{\hyperlink{sf__mod__registry_8cpp_source}{sf\+\_\+mod\+\_\+registry.\+cpp}}.
+
+\Hypertarget{sf__mod__registry_8cpp_a29b2de8f5f9ec3ced0c15db03d7817b6}\index{sf\_mod\_registry.cpp@{sf\_mod\_registry.cpp}!linkEndHandler@{linkEndHandler}}
+\index{linkEndHandler@{linkEndHandler}!sf\_mod\_registry.cpp@{sf\_mod\_registry.cpp}}
+\doxysubsubsection{\texorpdfstring{linkEndHandler()}{linkEndHandler()}}
+{\footnotesize\ttfamily \label{sf__mod__registry_8cpp_a29b2de8f5f9ec3ced0c15db03d7817b6} 
+void \+\_\+\+\_\+thiscall link\+End\+Handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}} \texorpdfstring{$\ast$}{*}}]{spell}{, }\item[{\mbox{\hyperlink{sf__registration__functions_8h_af76aa0d565c5ebb0b1eb50e2ed3377b3}{handler\+\_\+ptr}}}]{end\+Handler}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__mod__registry_8cpp_source_l00066}{66}} of file \mbox{\hyperlink{sf__mod__registry_8cpp_source}{sf\+\_\+mod\+\_\+registry.\+cpp}}.
+
+\Hypertarget{sf__mod__registry_8cpp_a7cf1ceca8456636a9ace972847017e72}\index{sf\_mod\_registry.cpp@{sf\_mod\_registry.cpp}!linkOnHitHandler@{linkOnHitHandler}}
+\index{linkOnHitHandler@{linkOnHitHandler}!sf\_mod\_registry.cpp@{sf\_mod\_registry.cpp}}
+\doxysubsubsection{\texorpdfstring{linkOnHitHandler()}{linkOnHitHandler()}}
+{\footnotesize\ttfamily \label{sf__mod__registry_8cpp_a7cf1ceca8456636a9ace972847017e72} 
+void \+\_\+\+\_\+thiscall link\+On\+Hit\+Handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}} \texorpdfstring{$\ast$}{*}}]{spell}{, }\item[{\mbox{\hyperlink{sf__registration__functions_8h_afc33c0496ccf8b60de8f29929de6e565}{onhit\+\_\+handler\+\_\+ptr}}}]{onhit\+Handler}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7}{On\+Hit\+Phase}}}]{phase}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__mod__registry_8cpp_source_l00054}{54}} of file \mbox{\hyperlink{sf__mod__registry_8cpp_source}{sf\+\_\+mod\+\_\+registry.\+cpp}}.
+
+\Hypertarget{sf__mod__registry_8cpp_a8751386410676c0a282ab668879c19f4}\index{sf\_mod\_registry.cpp@{sf\_mod\_registry.cpp}!linkRefreshHandler@{linkRefreshHandler}}
+\index{linkRefreshHandler@{linkRefreshHandler}!sf\_mod\_registry.cpp@{sf\_mod\_registry.cpp}}
+\doxysubsubsection{\texorpdfstring{linkRefreshHandler()}{linkRefreshHandler()}}
+{\footnotesize\ttfamily \label{sf__mod__registry_8cpp_a8751386410676c0a282ab668879c19f4} 
+void \+\_\+\+\_\+thiscall link\+Refresh\+Handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}} \texorpdfstring{$\ast$}{*}}]{spell}{, }\item[{\mbox{\hyperlink{sf__registration__functions_8h_a6c693fbf9a67b42cfa2dce6d4a4e0b4b}{refresh\+\_\+handler\+\_\+ptr}}}]{handler}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__mod__registry_8cpp_source_l00076}{76}} of file \mbox{\hyperlink{sf__mod__registry_8cpp_source}{sf\+\_\+mod\+\_\+registry.\+cpp}}.
+
+\Hypertarget{sf__mod__registry_8cpp_ae355b11ac572b3ae505c4d088e1c21e8}\index{sf\_mod\_registry.cpp@{sf\_mod\_registry.cpp}!linkSubEffectHandler@{linkSubEffectHandler}}
+\index{linkSubEffectHandler@{linkSubEffectHandler}!sf\_mod\_registry.cpp@{sf\_mod\_registry.cpp}}
+\doxysubsubsection{\texorpdfstring{linkSubEffectHandler()}{linkSubEffectHandler()}}
+{\footnotesize\ttfamily \label{sf__mod__registry_8cpp_ae355b11ac572b3ae505c4d088e1c21e8} 
+void \+\_\+\+\_\+thiscall link\+Sub\+Effect\+Handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}} \texorpdfstring{$\ast$}{*}}]{spell}{, }\item[{\mbox{\hyperlink{sf__effect__functions_8h_af76bd3c90ee01801e44eaf0fb6cbab0e}{sub\+\_\+effect\+\_\+handler\+\_\+ptr}}}]{handler}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__mod__registry_8cpp_source_l00071}{71}} of file \mbox{\hyperlink{sf__mod__registry_8cpp_source}{sf\+\_\+mod\+\_\+registry.\+cpp}}.
+
+\Hypertarget{sf__mod__registry_8cpp_a5eb74dc38db9aa0f7f858687cb5951e8}\index{sf\_mod\_registry.cpp@{sf\_mod\_registry.cpp}!linkTypeHandler@{linkTypeHandler}}
+\index{linkTypeHandler@{linkTypeHandler}!sf\_mod\_registry.cpp@{sf\_mod\_registry.cpp}}
+\doxysubsubsection{\texorpdfstring{linkTypeHandler()}{linkTypeHandler()}}
+{\footnotesize\ttfamily \label{sf__mod__registry_8cpp_a5eb74dc38db9aa0f7f858687cb5951e8} 
+void \+\_\+\+\_\+thiscall link\+Type\+Handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}} \texorpdfstring{$\ast$}{*}}]{spell}{, }\item[{\mbox{\hyperlink{sf__registration__functions_8h_af76aa0d565c5ebb0b1eb50e2ed3377b3}{handler\+\_\+ptr}}}]{type\+Handler}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__mod__registry_8cpp_source_l00049}{49}} of file \mbox{\hyperlink{sf__mod__registry_8cpp_source}{sf\+\_\+mod\+\_\+registry.\+cpp}}.
+
+\Hypertarget{sf__mod__registry_8cpp_ab760f8f899f39400156538bbd0c21c68}\index{sf\_mod\_registry.cpp@{sf\_mod\_registry.cpp}!register\_mod\_spells@{register\_mod\_spells}}
+\index{register\_mod\_spells@{register\_mod\_spells}!sf\_mod\_registry.cpp@{sf\_mod\_registry.cpp}}
+\doxysubsubsection{\texorpdfstring{register\_mod\_spells()}{register\_mod\_spells()}}
+{\footnotesize\ttfamily \label{sf__mod__registry_8cpp_ab760f8f899f39400156538bbd0c21c68} 
+void register\+\_\+mod\+\_\+spells (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Registers the mod spells and performs basic conflict checking.
+
+This function iterates over the g\+\_\+internal\+\_\+spell\+\_\+list and registers each spell by adding it to the spell\+\_\+id\+\_\+map and spell\+\_\+effect\+\_\+id\+\_\+map. It checks for conflicts by checking if the spell\+\_\+id or spell\+\_\+effect\+\_\+id is already registered by another mod. If a conflict is detected, an error message is logged. If no conflict is detected, the spell is added to the respective map.
+
+Additionally, it registers the spell type handler, spell effect handler, and spell end handler if the SFSpell struct has a non-\/null handler pointer.
+
+After registering all the spells, the memory allocated for each spell is freed. 
+
+Definition at line \mbox{\hyperlink{sf__mod__registry_8cpp_source_l00113}{113}} of file \mbox{\hyperlink{sf__mod__registry_8cpp_source}{sf\+\_\+mod\+\_\+registry.\+cpp}}.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__mod__registry_8cpp_ab760f8f899f39400156538bbd0c21c68_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__mod__registry_8cpp_ae507705c327c357e28eae53d52ad0638}\index{sf\_mod\_registry.cpp@{sf\_mod\_registry.cpp}!registerSpell@{registerSpell}}
+\index{registerSpell@{registerSpell}!sf\_mod\_registry.cpp@{sf\_mod\_registry.cpp}}
+\doxysubsubsection{\texorpdfstring{registerSpell()}{registerSpell()}}
+{\footnotesize\ttfamily \label{sf__mod__registry_8cpp_ae507705c327c357e28eae53d52ad0638} 
+\mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}} \texorpdfstring{$\ast$}{*}\+\_\+\+\_\+thiscall register\+Spell (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{spell\+\_\+id}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__mod__registry_8cpp_source_l00023}{23}} of file \mbox{\hyperlink{sf__mod__registry_8cpp_source}{sf\+\_\+mod\+\_\+registry.\+cpp}}.
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{sf__mod__registry_8cpp_a938a112888fa66ca03ebb37f831d7b84}\index{sf\_mod\_registry.cpp@{sf\_mod\_registry.cpp}!g\_internal\_spell\_list@{g\_internal\_spell\_list}}
+\index{g\_internal\_spell\_list@{g\_internal\_spell\_list}!sf\_mod\_registry.cpp@{sf\_mod\_registry.cpp}}
+\doxysubsubsection{\texorpdfstring{g\_internal\_spell\_list}{g\_internal\_spell\_list}}
+{\footnotesize\ttfamily \label{sf__mod__registry_8cpp_a938a112888fa66ca03ebb37f831d7b84} 
+std\+::list$<$\mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}} \texorpdfstring{$\ast$}{*}$>$ g\+\_\+internal\+\_\+spell\+\_\+list}
+
+
+
+Definition at line \mbox{\hyperlink{sf__mod__registry_8cpp_source_l00021}{21}} of file \mbox{\hyperlink{sf__mod__registry_8cpp_source}{sf\+\_\+mod\+\_\+registry.\+cpp}}.
+

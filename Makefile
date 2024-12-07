@@ -17,6 +17,7 @@ INTERNALS_SRC = src/internal
 CORE_SRC = ${INTERNALS_SRC}/core
 HOOKS_SRC = ${CORE_SRC}/hooks
 REGISTRY_SRC = ${INTERNALS_SRC}/registry
+SPELL_DATA_REGISTRY_SRC = ${REGISTRY_SRC}/spell_data_registries
 HANDLERS_SRC = ${INTERNALS_SRC}/handlers
 # Check if running in PowerShell
 # Phony targets
@@ -96,16 +97,16 @@ obj/sf_spelltype_handlers.o: ${HANDLERS_SRC}/sf_spelltype_handlers.cpp | obj
 obj/sf_onhit_handlers.o: ${HANDLERS_SRC}/sf_onhit_handlers.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
 
-obj/sf_spelltype_registry.o: ${REGISTRY_SRC}/sf_spelltype_registry.cpp | obj
+obj/sf_spelltype_registry.o: ${SPELL_DATA_REGISTRY_SRC}/sf_spelltype_registry.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
 
 obj/sf_spelleffect_handlers.o: ${HANDLERS_SRC}/sf_spelleffect_handlers.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
 
-obj/sf_spelleffect_registry.o: ${REGISTRY_SRC}/sf_spelleffect_registry.cpp | obj
+obj/sf_spelleffect_registry.o: ${SPELL_DATA_REGISTRY_SRC}/sf_spelleffect_registry.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
 
-obj/sf_onhit_registry.o: ${REGISTRY_SRC}/sf_onhit_registry.cpp | obj
+obj/sf_onhit_registry.o: ${SPELL_DATA_REGISTRY_SRC}/sf_onhit_registry.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
 
 obj/sf_spellend_handlers.o: ${HANDLERS_SRC}/sf_spellend_handlers.cpp | obj
@@ -114,16 +115,16 @@ obj/sf_spellend_handlers.o: ${HANDLERS_SRC}/sf_spellend_handlers.cpp | obj
 obj/sf_sub_effect_handlers.o: ${HANDLERS_SRC}/sf_sub_effect_handlers.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
-obj/sf_spellend_registry.o: ${REGISTRY_SRC}/sf_spellend_registry.cpp | obj
+obj/sf_spellend_registry.o: ${SPELL_DATA_REGISTRY_SRC}/sf_spellend_registry.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
 
-obj/sf_subeffect_registry.o: ${REGISTRY_SRC}/sf_subeffect_registry.cpp | obj
+obj/sf_subeffect_registry.o: ${SPELL_DATA_REGISTRY_SRC}/sf_subeffect_registry.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_spellrefresh_handlers.o: ${HANDLERS_SRC}/sf_spellrefresh_handlers.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
-obj/sf_spellrefresh_registry.o: ${REGISTRY_SRC}/sf_spellrefresh_registry.cpp | obj
+obj/sf_spellrefresh_registry.o: ${SPELL_DATA_REGISTRY_SRC}/sf_spellrefresh_registry.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_vanilla_registry.o: ${REGISTRY_SRC}/sf_vanilla_registry.cpp | obj
@@ -132,7 +133,7 @@ obj/sf_vanilla_registry.o: ${REGISTRY_SRC}/sf_vanilla_registry.cpp | obj
 obj/sf_spelldamage_handlers.o: ${HANDLERS_SRC}/sf_spelldamage_handlers.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
 
-obj/sf_spelldamage_registry.o: ${REGISTRY_SRC}/sf_spelldamage_registry.cpp | obj
+obj/sf_spelldamage_registry.o: ${SPELL_DATA_REGISTRY_SRC}/sf_spelldamage_registry.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
 
 # Mod build

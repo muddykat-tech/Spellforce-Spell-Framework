@@ -746,6 +746,7 @@ void initialize_vanilla_spells()
 
     SFSpell *charm2 = registrationAPI.registerSpell(kGdSpellLineCharmChained);
     registrationAPI.linkTypeHandler(charm2, &charm_handler);
+    registrationAPI.applySpellTag(charm2, SpellTag::DOMINATION_SPELL);
 
     SFSpell *shock2 = registrationAPI.registerSpell(kGdSpellLineShockChained);
     registrationAPI.linkTypeHandler(shock2, &shock_handler);
