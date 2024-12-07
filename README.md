@@ -33,3 +33,5 @@ UnSchtalch\
 Shovel_Knight\
 Muddykat-Tech
 
+Special thanks to Teekius66 for helping with documentation and tutorials!
+
