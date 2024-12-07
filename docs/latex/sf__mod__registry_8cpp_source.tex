@@ -1,0 +1,279 @@
+\doxysection{sf\+\_\+mod\+\_\+registry.\+cpp}
+\hypertarget{sf__mod__registry_8cpp_source}{}\label{sf__mod__registry_8cpp_source}\index{src/internal/registry/sf\_mod\_registry.cpp@{src/internal/registry/sf\_mod\_registry.cpp}}
+\mbox{\hyperlink{sf__mod__registry_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__mod__registry_8h}{sf\_mod\_registry.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__spelltype__registry_8h}{spell\_data\_registries/sf\_spelltype\_registry.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__spelleffect__registry_8h}{spell\_data\_registries/sf\_spelleffect\_registry.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__spellend__registry_8h}{spell\_data\_registries/sf\_spellend\_registry.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__subeffect__registry_8h}{spell\_data\_registries/sf\_subeffect\_registry.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__spellrefresh__registry_8h}{spell\_data\_registries/sf\_spellrefresh\_registry.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__onhit__registry_8h}{spell\_data\_registries/sf\_onhit\_registry.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__spelldamage__registry_8h}{spell\_data\_registries/sf\_spelldamage\_registry.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__ai__aoe__registry_8h}{ai\_data\_registries/sf\_ai\_aoe\_registry.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__ai__avoidance__registry_8h}{ai\_data\_registries/sf\_ai\_avoidance\_registry.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00013}00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__ai__single__target__registry_8h}{ai\_data\_registries/sf\_ai\_single\_target\_registry.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00015}00015\ \textcolor{preprocessor}{\#include\ <windows.h>}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00016}00016\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00017}00017\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00018}00018\ \textcolor{preprocessor}{\#include\ <list>}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00019}00019\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00020}00020\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00021}00021\ \textcolor{preprocessor}{\#include\ <stdarg.h>}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00022}00022\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00023}00023\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00025}\mbox{\hyperlink{sf__mod__registry_8cpp_a938a112888fa66ca03ebb37f831d7b84}{00025}}\ std::list<SFSpell\ *>\ \mbox{\hyperlink{sf__mod__registry_8cpp_a938a112888fa66ca03ebb37f831d7b84}{g\_internal\_spell\_list}};}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00027}\mbox{\hyperlink{sf__hooks_8h_ae507705c327c357e28eae53d52ad0638}{00027}}\ \mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}}\ *\_\_thiscall\ \mbox{\hyperlink{sf__mod__registry_8cpp_ae507705c327c357e28eae53d52ad0638}{registerSpell}}(uint16\_t\ spell\_id)}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00028}00028\ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00029}00029\ \ \ \ \ \mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}}\ *sf\_spell\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}};}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00030}00030\ \ \ \ \ sf\_spell-\/>spell\_id\ =\ spell\_id;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00031}00031\ \ \ \ \ sf\_spell-\/>spell\_effect\_id\ =\ 0x00;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00032}00032\ \ \ \ \ sf\_spell-\/>spell\_tags\ =\ 0x0;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00033}00033\ \ \ \ \ sf\_spell-\/>spell\_type\_handler\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00034}00034\ \ \ \ \ sf\_spell-\/>spell\_effect\_handler\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00035}00035\ \ \ \ \ sf\_spell-\/>spell\_end\_handler\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00036}00036\ \ \ \ \ sf\_spell-\/>spell\_onhit\_handler\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00037}00037\ \ \ \ \ sf\_spell-\/>spell\_refresh\_handler\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00038}00038\ \ \ \ \ sf\_spell-\/>sub\_effect\_handler\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00039}00039\ \ \ \ \ sf\_spell-\/>parent\_mod\ =\ \mbox{\hyperlink{sf__modloader_8h_a8342c5f7a97f7d7ada992295eb451353}{g\_current\_mod}};}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00040}00040\ \ \ \ \ sf\_spell-\/>deal\_damage\_handler\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00041}00041\ \ \ \ \ sf\_spell-\/>ai\_aoe\_handler\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00042}00042\ \ \ \ \ sf\_spell-\/>ai\_single\_handler\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00043}00043\ \ \ \ \ sf\_spell-\/>ai\_avoidance\_handler\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00044}00044\ \ \ \ \ sf\_spell-\/>damage\_phase\ =\ \mbox{\hyperlink{sf__general__structures_8h_a3f1ae4d570090b097230b86e02b1a178a88ec7d5086d2469ba843c7fcceade8a6}{SpellDamagePhase::DEFAULT}};}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00045}00045\ \ \ \ \ sf\_spell-\/>hit\_phase\ =\ \mbox{\hyperlink{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7ad0b4e178cc3b69a5cf3af80dc5605af5}{OnHitPhase::PHASE\_5}};}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00046}00046\ \ \ \ \ \mbox{\hyperlink{sf__mod__registry_8cpp_a938a112888fa66ca03ebb37f831d7b84}{g\_internal\_spell\_list}}.push\_back(sf\_spell);}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00048}00048\ \ \ \ \ \textcolor{keywordflow}{return}\ sf\_spell;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00049}00049\ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00051}\mbox{\hyperlink{sf__hooks_8h_a4afdf02d3c8eeffbfbe125fa3464be67}{00051}}\ \textcolor{keywordtype}{void}\ \_\_thiscall\ \mbox{\hyperlink{sf__mod__registry_8cpp_a4afdf02d3c8eeffbfbe125fa3464be67}{applySpellTag}}(\mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}}\ *spell,\ \mbox{\hyperlink{sf__general__structures_8h_a42506507e4f7b927f1ec61d982197ff6}{SpellTag}}\ tag)}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00052}00052\ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00053}00053\ \ \ \ \ uint16\_t\ current\_tags\ =\ spell-\/>spell\_tags;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00054}00054\ \ \ \ \ spell-\/>spell\_tags\ =\ current\_tags\ |\ tag;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00055}00055\ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00057}\mbox{\hyperlink{sf__hooks_8h_a5eb74dc38db9aa0f7f858687cb5951e8}{00057}}\ \textcolor{keywordtype}{void}\ \_\_thiscall\ \mbox{\hyperlink{sf__mod__registry_8cpp_a5eb74dc38db9aa0f7f858687cb5951e8}{linkTypeHandler}}(\mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}}\ *spell,\ \mbox{\hyperlink{sf__registration__functions_8h_af76aa0d565c5ebb0b1eb50e2ed3377b3}{handler\_ptr}}\ typeHandler)}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00058}00058\ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00059}00059\ \ \ \ \ spell-\/>spell\_type\_handler\ =\ typeHandler;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00060}00060\ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00062}\mbox{\hyperlink{sf__hooks_8h_a99a8a66f1f6cf6c442953cff3708f318}{00062}}\ \textcolor{keywordtype}{void}\ \_\_thiscall\ \mbox{\hyperlink{sf__mod__registry_8cpp_a99a8a66f1f6cf6c442953cff3708f318}{linkSingleTargetAIHandler}}(\mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}}\ *spell,\ \mbox{\hyperlink{sf__registration__functions_8h_a87df9b4cbebca6416ebbf724d2e93292}{ai\_single\_handler\_ptr}}\ handler)}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00063}00063\ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00064}00064\ \ \ \ \ spell-\/>ai\_single\_handler\ =\ handler;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00065}00065\ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00067}\mbox{\hyperlink{sf__hooks_8h_aba66ad3844e03371820ba433ec07144d}{00067}}\ \textcolor{keywordtype}{void}\ \_\_thiscall\ \mbox{\hyperlink{sf__mod__registry_8cpp_aba66ad3844e03371820ba433ec07144d}{linkAvoidanceAIHandler}}(\mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}}\ *spell,\ \mbox{\hyperlink{sf__registration__functions_8h_afa2647c6110962b42e564bc76f92cffa}{ai\_avoidance\_handler\_ptr}}\ handler)}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00068}00068\ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00069}00069\ \ \ \ \ spell-\/>ai\_avoidance\_handler\ =\ handler;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00070}00070\ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00072}\mbox{\hyperlink{sf__hooks_8h_a0ba75dbe6a1d9cf0cfaad064ccda190a}{00072}}\ \textcolor{keywordtype}{void}\ \_\_thiscall\ \mbox{\hyperlink{sf__mod__registry_8cpp_a0ba75dbe6a1d9cf0cfaad064ccda190a}{linkAOEAIHandler}}(\mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}}\ *spell,\ \mbox{\hyperlink{sf__registration__functions_8h_a950efc4d3c9b152f84653aee9167070d}{ai\_aoe\_handler\_ptr}}\ handler)}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00073}00073\ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00074}00074\ \ \ \ \ spell-\/>ai\_aoe\_handler\ =\ handler;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00075}00075\ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00077}\mbox{\hyperlink{sf__hooks_8h_acf0a614184ddb2b958241a2fec8e8056}{00077}}\ \textcolor{keywordtype}{void}\ \_\_thiscall\ \mbox{\hyperlink{sf__mod__registry_8cpp_a7cf1ceca8456636a9ace972847017e72}{linkOnHitHandler}}(\mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}}\ *spell,\ \mbox{\hyperlink{sf__registration__functions_8h_afc33c0496ccf8b60de8f29929de6e565}{onhit\_handler\_ptr}}\ onhitHandler,\ \mbox{\hyperlink{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7}{OnHitPhase}}\ phase)}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00078}00078\ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00079}00079\ \ \ \ \ spell-\/>spell\_onhit\_handler\ =\ onhitHandler;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00080}00080\ \ \ \ \ spell-\/>hit\_phase\ =\ phase;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00081}00081\ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00082}00082\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00083}\mbox{\hyperlink{sf__hooks_8h_a963e6fcecd10433218b3925f0e2d39a9}{00083}}\ \textcolor{keywordtype}{void}\ \_\_thiscall\ \mbox{\hyperlink{sf__mod__registry_8cpp_a963e6fcecd10433218b3925f0e2d39a9}{linkEffectHandler}}(\mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}}\ *spell,\ uint16\_t\ spell\_effect\_id,\ \mbox{\hyperlink{sf__registration__functions_8h_af76aa0d565c5ebb0b1eb50e2ed3377b3}{handler\_ptr}}\ effectHandler)}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00084}00084\ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00085}00085\ \ \ \ \ spell-\/>spell\_effect\_id\ =\ spell\_effect\_id;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00086}00086\ \ \ \ \ spell-\/>spell\_effect\_handler\ =\ effectHandler;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00087}00087\ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00089}\mbox{\hyperlink{sf__hooks_8h_a29b2de8f5f9ec3ced0c15db03d7817b6}{00089}}\ \textcolor{keywordtype}{void}\ \_\_thiscall\ \mbox{\hyperlink{sf__mod__registry_8cpp_a29b2de8f5f9ec3ced0c15db03d7817b6}{linkEndHandler}}(\mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}}\ *spell,\ \mbox{\hyperlink{sf__registration__functions_8h_af76aa0d565c5ebb0b1eb50e2ed3377b3}{handler\_ptr}}\ endHandler)}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00090}00090\ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00091}00091\ \ \ \ \ spell-\/>spell\_end\_handler\ =\ endHandler;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00092}00092\ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00094}\mbox{\hyperlink{sf__hooks_8h_ae355b11ac572b3ae505c4d088e1c21e8}{00094}}\ \textcolor{keywordtype}{void}\ \_\_thiscall\ \mbox{\hyperlink{sf__mod__registry_8cpp_ae355b11ac572b3ae505c4d088e1c21e8}{linkSubEffectHandler}}(\mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}}\ *spell,\ \mbox{\hyperlink{sf__effect__functions_8h_af76bd3c90ee01801e44eaf0fb6cbab0e}{sub\_effect\_handler\_ptr}}\ handler)}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00095}00095\ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00096}00096\ \ \ \ \ spell-\/>sub\_effect\_handler\ =\ handler;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00097}00097\ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00098}00098\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00099}\mbox{\hyperlink{sf__hooks_8h_a8751386410676c0a282ab668879c19f4}{00099}}\ \textcolor{keywordtype}{void}\ \_\_thiscall\ \mbox{\hyperlink{sf__mod__registry_8cpp_a8751386410676c0a282ab668879c19f4}{linkRefreshHandler}}(\mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}}\ *spell,\ \mbox{\hyperlink{sf__registration__functions_8h_a6c693fbf9a67b42cfa2dce6d4a4e0b4b}{refresh\_handler\_ptr}}\ handler)}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00100}00100\ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00101}00101\ \ \ \ \ spell-\/>spell\_refresh\_handler\ =\ handler;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00102}00102\ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00103}00103\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00104}\mbox{\hyperlink{sf__hooks_8h_a3dc1674ebcd56a898d2a52729d9bdea1}{00104}}\ \textcolor{keywordtype}{void}\ \_\_thiscall\ \mbox{\hyperlink{sf__mod__registry_8cpp_a3dc1674ebcd56a898d2a52729d9bdea1}{linkDealDamageHandler}}(\mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}}\ *spell,\ \mbox{\hyperlink{sf__registration__functions_8h_a66d6ae6fed8f89847ff4ec8e71bfa461}{damage\_handler\_ptr}}\ handler,\ \mbox{\hyperlink{sf__general__structures_8h_a3f1ae4d570090b097230b86e02b1a178}{SpellDamagePhase}}\ phase)}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00105}00105\ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00106}00106\ \ \ \ \ spell-\/>deal\_damage\_handler\ =\ handler;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00107}00107\ \ \ \ \ spell-\/>damage\_phase\ =\ phase;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00108}00108\ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00109}00109\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00110}\mbox{\hyperlink{sf__mod__registry_8cpp_af3ffd25a39d8cd3e76880a062109e619}{00110}}\ uint16\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__mod__registry_8cpp_af3ffd25a39d8cd3e76880a062109e619}{getSpellTags}}(uint16\_t\ spell\_line\_id)}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00111}00111\ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00112}00112\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&entry\ :\ \mbox{\hyperlink{sf__mod__registry_8cpp_a938a112888fa66ca03ebb37f831d7b84}{g\_internal\_spell\_list}})}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00113}00113\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00114}00114\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (entry-\/>spell\_id\ ==\ spell\_line\_id)}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00115}00115\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ entry-\/>spell\_tags;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00117}00117\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00118}00118\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00119}00119\ \ \ \ \ \textcolor{keywordflow}{return}\ 0x0;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00120}00120\ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00121}00121\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00136}\mbox{\hyperlink{sf__mod__registry_8cpp_ab760f8f899f39400156538bbd0c21c68}{00136}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{sf__mod__registry_8cpp_ab760f8f899f39400156538bbd0c21c68}{register\_mod\_spells}}()}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00137}00137\ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00138}00138\ \ \ \ \ \textcolor{comment}{//\ Basic\ Conflict\ Checking}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00139}00139\ \ \ \ \ std::map<uint16\_t,\ SFMod\ *>\ spell\_id\_map;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00140}00140\ \ \ \ \ std::map<uint16\_t,\ SFMod\ *>\ spell\_effect\_id\_map;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00141}00141\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00142}00142\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a64ca7d92af978ccdfb97fd8ad71ea8e5}{SFMod}}\ *temp\ =\ \mbox{\hyperlink{sf__modloader_8h_a8342c5f7a97f7d7ada992295eb451353}{g\_current\_mod}};}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00143}00143\ \ \ \ \ uint8\_t\ spell\_count\_for\_mod\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00144}00144\ \ \ \ \ \textcolor{keywordflow}{for}\ (\mbox{\hyperlink{sf__registration__functions_8h_a2ad426e9a8e695a45844a45fd5e4dd91}{SFSpell}}\ *spell\_data\ :\ \mbox{\hyperlink{sf__mod__registry_8cpp_a938a112888fa66ca03ebb37f831d7b84}{g\_internal\_spell\_list}})}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00145}00145\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00146}00146\ \ \ \ \ \ \ \ \ uint16\_t\ spell\_id\ =\ spell\_data-\/>spell\_id;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00147}00147\ \ \ \ \ \ \ \ \ uint16\_t\ spell\_effect\_id\ =\ spell\_data-\/>spell\_effect\_id;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00148}00148\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__registration__functions_8h_af76aa0d565c5ebb0b1eb50e2ed3377b3}{handler\_ptr}}\ spell\_type\_handler\ =\ spell\_data-\/>spell\_type\_handler;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00149}00149\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__registration__functions_8h_af76aa0d565c5ebb0b1eb50e2ed3377b3}{handler\_ptr}}\ spell\_effect\_handler\ =\ spell\_data-\/>spell\_effect\_handler;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00150}00150\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__registration__functions_8h_af76aa0d565c5ebb0b1eb50e2ed3377b3}{handler\_ptr}}\ spell\_end\_handler\ =\ spell\_data-\/>spell\_end\_handler;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00151}00151\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__registration__functions_8h_a6c693fbf9a67b42cfa2dce6d4a4e0b4b}{refresh\_handler\_ptr}}\ spell\_refresh\_handler\ =\ spell\_data-\/>spell\_refresh\_handler;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00152}00152\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__effect__functions_8h_af76bd3c90ee01801e44eaf0fb6cbab0e}{sub\_effect\_handler\_ptr}}\ sub\_effect\_handler\ =\ spell\_data-\/>sub\_effect\_handler;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00153}00153\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__registration__functions_8h_afc33c0496ccf8b60de8f29929de6e565}{onhit\_handler\_ptr}}\ onhit\_handler\ =\ spell\_data-\/>spell\_onhit\_handler;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00154}00154\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__registration__functions_8h_a66d6ae6fed8f89847ff4ec8e71bfa461}{damage\_handler\_ptr}}\ deal\_damage\_handler\ =\ spell\_data-\/>deal\_damage\_handler;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00155}00155\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__registration__functions_8h_a950efc4d3c9b152f84653aee9167070d}{ai\_aoe\_handler\_ptr}}\ ai\_aoe\_handler\ =\ spell\_data-\/>ai\_aoe\_handler;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00156}00156\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__registration__functions_8h_afa2647c6110962b42e564bc76f92cffa}{ai\_avoidance\_handler\_ptr}}\ ai\_avoidance\_handler\ =\ spell\_data-\/>ai\_avoidance\_handler;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00157}00157\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__registration__functions_8h_a87df9b4cbebca6416ebbf724d2e93292}{ai\_single\_handler\_ptr}}\ ai\_single\_handler\ =\ spell\_data-\/>ai\_single\_handler;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00158}00158\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00159}00159\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a3f1ae4d570090b097230b86e02b1a178}{SpellDamagePhase}}\ damage\_phase\ =\ spell\_data-\/>damage\_phase;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00160}00160\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7}{OnHitPhase}}\ onhit\_phase\ =\ spell\_data-\/>hit\_phase;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00161}00161\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a64ca7d92af978ccdfb97fd8ad71ea8e5}{SFMod}}\ *parent\_mod\ =\ spell\_data-\/>parent\_mod;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00162}00162\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00163}00163\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__modloader_8h_a8342c5f7a97f7d7ada992295eb451353}{g\_current\_mod}}\ =\ spell\_data-\/>parent\_mod;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00164}00164\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00165}00165\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (temp\ !=\ \mbox{\hyperlink{sf__modloader_8h_a8342c5f7a97f7d7ada992295eb451353}{g\_current\_mod}})}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00166}00166\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (spell\_count\_for\_mod\ !=\ 0)}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ spell\_count\_info[256];}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ snprintf(spell\_count\_info,\ \textcolor{keyword}{sizeof}(spell\_count\_info),\ \textcolor{stringliteral}{"{}|\ -\/\ Finished\ Registration\ of\ \%d\ spells\ for\ \%s"{}},\ spell\_count\_for\_mod,\ temp-\/>mod\_id);}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__wrappers_8c_a4fd90de0913ed15b0812918255559a55}{log\_info}}(spell\_count\_info);}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ spell\_count\_for\_mod\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00174}00174\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ info[256];}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ snprintf(info,\ \textcolor{keyword}{sizeof}(info),\ \textcolor{stringliteral}{"{}|\ -\/\ Starting\ Registration\ for\ [\%s\ by\ \%s]"{}},\ parent\_mod-\/>mod\_id,\ parent\_mod-\/>mod\_author);}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__wrappers_8c_a4fd90de0913ed15b0812918255559a55}{log\_info}}(info);}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ temp\ =\ \mbox{\hyperlink{sf__modloader_8h_a8342c5f7a97f7d7ada992295eb451353}{g\_current\_mod}};}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00179}00179\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00180}00180\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00181}00181\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ spell\_count\_for\_mod\ =\ spell\_count\_for\_mod\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00183}00183\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00184}00184\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00185}00185\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Check\ for\ conflicts}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00186}00186\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (spell\_id\_map.find(spell\_id)\ !=\ spell\_id\_map.end())}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00187}00187\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ error\_msg[256];}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a64ca7d92af978ccdfb97fd8ad71ea8e5}{SFMod}}\ *conflict\_mod\ =\ spell\_id\_map[spell\_id];}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (spell\_id\ <\ 242)}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ snprintf(error\_msg,\ \textcolor{keyword}{sizeof}(error\_msg),\ \textcolor{stringliteral}{"{}|\ -\/\ \%s\ has\ Overwritten\ a\ vanilla\ spell\ ID\ [\%d],\ this\ was\ previously\ registered\ by\ [\%s]"{}},\ parent\_mod-\/>mod\_id,\ spell\_id,\ conflict\_mod-\/>mod\_id);}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__wrappers_8c_a825433b084e07dce191049d45ecdde2a}{log\_warning}}(error\_msg);}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ snprintf(error\_msg,\ \textcolor{keyword}{sizeof}(error\_msg),\ \textcolor{stringliteral}{"{}|\ -\/\ Mod\ Conflict\ Detected\ [\%s]:\ Spell\ ID\ [\%d]\ is\ already\ registered\ by\ [\%s]"{}},\ parent\_mod-\/>mod\_id,\ spell\_id,\ conflict\_mod-\/>mod\_id);}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__wrappers_8c_aad4d6cb3f073a7fff67de1c1daa2c1f7}{log\_error}}(error\_msg);}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__modloader_8c_a8e9db14599932818820eed01fa118197}{g\_error\_count}}\ =\ \mbox{\hyperlink{sf__modloader_8c_a8e9db14599932818820eed01fa118197}{g\_error\_count}}\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00201}00201\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00202}00202\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00203}00203\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (spell\_effect\_id\_map.find(spell\_effect\_id)\ !=\ spell\_effect\_id\_map.end())}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00204}00204\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00205}00205\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ error\_msg[256];}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a64ca7d92af978ccdfb97fd8ad71ea8e5}{SFMod}}\ *conflict\_mod\ =\ spell\_effect\_id\_map[spell\_effect\_id];}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00207}00207\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (spell\_effect\_id\ <\ 0xa6)}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ snprintf(error\_msg,\ \textcolor{keyword}{sizeof}(error\_msg),\ \textcolor{stringliteral}{"{}|\ -\/\ \%s\ has\ Overwritten\ a\ vanilla\ spell\ effect\ ID\ [\%d]\ this\ was\ previously\ registered\ by\ [\%s]"{}},\ parent\_mod-\/>mod\_id,\ spell\_effect\_id,\ conflict\_mod-\/>mod\_id);}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__wrappers_8c_a825433b084e07dce191049d45ecdde2a}{log\_warning}}(error\_msg);}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ snprintf(error\_msg,\ \textcolor{keyword}{sizeof}(error\_msg),\ \textcolor{stringliteral}{"{}|\ -\/\ Mod\ Conflict\ Detected\ [\%s]:\ Spell\ Effect\ ID\ [\%d]\ is\ already\ registered\ by\ [\%s]"{}},\ parent\_mod-\/>mod\_id,\ spell\_effect\_id,\ conflict\_mod-\/>mod\_id);}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__wrappers_8c_aad4d6cb3f073a7fff67de1c1daa2c1f7}{log\_error}}(error\_msg);}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__modloader_8c_a8e9db14599932818820eed01fa118197}{g\_error\_count}}\ =\ \mbox{\hyperlink{sf__modloader_8c_a8e9db14599932818820eed01fa118197}{g\_error\_count}}\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00218}00218\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00219}00219\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00220}00220\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Update\ Conflict\ Maps}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00221}00221\ \ \ \ \ \ \ \ \ spell\_id\_map[spell\_id]\ =\ parent\_mod;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00222}00222\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00223}00223\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (spell\_effect\_id\ !=\ 0x00)}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00224}00224\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00225}00225\ \ \ \ \ \ \ \ \ \ \ \ \ spell\_effect\_id\_map[spell\_effect\_id]\ =\ parent\_mod;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00226}00226\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00227}00227\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00228}00228\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Do\ Registration}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00229}00229\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (spell\_type\_handler\ !=\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00230}00230\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__spelltype__registry_8cpp_adabe7e18f8cb78c181a4a4bb296cd4da}{registerSpellTypeHandler}}(spell\_id,\ spell\_type\_handler);}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00232}00232\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00233}00233\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00234}00234\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (spell\_effect\_handler\ !=\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00235}00235\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00236}00236\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__spelleffect__registry_8cpp_ac13bcfd9c0ce01357985fa5e3928fadd}{registerEffectHandler}}(spell\_effect\_id,\ spell\_effect\_handler);}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00237}00237\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00238}00238\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00239}00239\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (spell\_refresh\_handler\ !=\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00240}00240\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00241}00241\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__spellrefresh__registry_8cpp_a62f532402dc7bbafc449a62a06948fff}{registerSpellRefreshHandler}}(spell\_id,\ spell\_refresh\_handler);}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00242}00242\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00243}00243\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00244}00244\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (spell\_end\_handler\ !=\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00245}00245\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__spellend__registry_8cpp_a7ecd2b950e4a9c4d0e87f8e9f18f81a6}{registerSpellEndHandler}}(spell\_id,\ spell\_end\_handler);}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00247}00247\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00248}00248\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00249}00249\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (sub\_effect\_handler\ !=\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00250}00250\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00251}00251\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__subeffect__registry_8cpp_a8c60d0b898c4269742ebb3f19049215e}{registerSubEffectHandler}}(spell\_id,\ sub\_effect\_handler);}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00252}00252\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00253}00253\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00254}00254\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (onhit\_handler\ !=\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00255}00255\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00256}00256\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__onhit__registry_8cpp_a8fb8bc103c9a7b0f89558250af0293ca}{registerOnHitHandler}}(spell\_id,\ onhit\_handler,\ onhit\_phase);}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00257}00257\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00258}00258\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00259}00259\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (deal\_damage\_handler\ !=\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00260}00260\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00261}00261\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__spelldamage__registry_8cpp_a8fdf321eedee2c47adbc88de0e747760}{registerSpellDamageHandler}}(spell\_id,\ deal\_damage\_handler,\ damage\_phase);}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00262}00262\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00263}00263\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00264}00264\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ai\_single\_handler\ !=\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00265}00265\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00266}00266\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__ai__single__target__registry_8cpp_aede39ae4f5d3c3444fdbd8c00485dca5}{registerAiSingleTargetHandler}}(spell\_id,\ ai\_single\_handler);}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00267}00267\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00268}00268\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00269}00269\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ai\_aoe\_handler\ !=\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00270}00270\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00271}00271\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__ai__aoe__registry_8cpp_acffe2137690f4a0d3b6b3f8175125359}{registerAiAOEHandler}}(spell\_id,\ ai\_aoe\_handler);}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00272}00272\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00273}00273\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00274}00274\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ai\_avoidance\_handler\ !=\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00275}00275\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00276}00276\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__ai__avoidance__registry_8cpp_a4941f53c1f2a56469734b1eaa68f53b2}{registerAiAvoidanceHandler}}(spell\_id,\ ai\_avoidance\_handler);}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00277}00277\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00278}00278\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00279}00279\ }
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00280}00280\ \ \ \ \ \textcolor{keywordflow}{if}\ (spell\_count\_for\_mod\ !=\ 0)}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00281}00281\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00282}00282\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ spell\_count\_info[256];}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00283}00283\ \ \ \ \ \ \ \ \ snprintf(spell\_count\_info,\ \textcolor{keyword}{sizeof}(spell\_count\_info),\ \textcolor{stringliteral}{"{}|\ -\/\ Finished\ Registration\ of\ \%d\ spells\ for\ \%s"{}},\ spell\_count\_for\_mod,\ temp-\/>mod\_id);}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00284}00284\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__wrappers_8c_a4fd90de0913ed15b0812918255559a55}{log\_info}}(spell\_count\_info);}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00285}00285\ \ \ \ \ \ \ \ \ spell\_count\_for\_mod\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00286}00286\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__mod__registry_8cpp_source_l00287}00287\ \}}
+
+\end{DoxyCode}

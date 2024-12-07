@@ -1,0 +1,93 @@
+\doxysection{src/internal/registry/spell\+\_\+data\+\_\+registries/sf\+\_\+spelldamage\+\_\+registry.cpp File Reference}
+\hypertarget{sf__spelldamage__registry_8cpp}{}\label{sf__spelldamage__registry_8cpp}\index{src/internal/registry/spell\_data\_registries/sf\_spelldamage\_registry.cpp@{src/internal/registry/spell\_data\_registries/sf\_spelldamage\_registry.cpp}}
+{\ttfamily \#include "{}sf\+\_\+spelldamage\+\_\+registry.\+h"{}}\newline
+{\ttfamily \#include "{}../../core/sf\+\_\+wrappers.\+h"{}}\newline
+{\ttfamily \#include "{}../../core/sf\+\_\+modloader.\+h"{}}\newline
+{\ttfamily \#include "{}../../handlers/sf\+\_\+spelldamage\+\_\+handlers.\+h"{}}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$map$>$}\newline
+{\ttfamily \#include $<$cstdint$>$}\newline
+Include dependency graph for sf\+\_\+spelldamage\+\_\+registry.\+cpp\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spelldamage__registry_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{sf__spelldamage__registry_8cpp_a8fdf321eedee2c47adbc88de0e747760}{register\+Spell\+Damage\+Handler}} (uint16\+\_\+t spell\+\_\+line\+\_\+id, \mbox{\hyperlink{sf__registration__functions_8h_a66d6ae6fed8f89847ff4ec8e71bfa461}{damage\+\_\+handler\+\_\+ptr}} handler, \mbox{\hyperlink{sf__general__structures_8h_a3f1ae4d570090b097230b86e02b1a178}{Spell\+Damage\+Phase}} phase)
+\item 
+\mbox{\hyperlink{sf__registration__functions_8h_a66d6ae6fed8f89847ff4ec8e71bfa461}{damage\+\_\+handler\+\_\+ptr}} \mbox{\hyperlink{sf__spelldamage__registry_8cpp_a39b998f9d47f3f2eed4e98c14ff5c5d2}{get\+\_\+spell\+\_\+damage}} (const uint16\+\_\+t spell\+\_\+line\+\_\+id, \mbox{\hyperlink{sf__general__structures_8h_a3f1ae4d570090b097230b86e02b1a178}{Spell\+Damage\+Phase}} phase)
+\item 
+void \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__spelldamage__registry_8cpp_a72edb1e1cbac99025f4ae918358557ba}{register\+\_\+vanilla\+\_\+spell\+\_\+damage\+\_\+handlers}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{sf__spelldamage__registry_8cpp_a39b998f9d47f3f2eed4e98c14ff5c5d2}\index{sf\_spelldamage\_registry.cpp@{sf\_spelldamage\_registry.cpp}!get\_spell\_damage@{get\_spell\_damage}}
+\index{get\_spell\_damage@{get\_spell\_damage}!sf\_spelldamage\_registry.cpp@{sf\_spelldamage\_registry.cpp}}
+\doxysubsubsection{\texorpdfstring{get\_spell\_damage()}{get\_spell\_damage()}}
+{\footnotesize\ttfamily \label{sf__spelldamage__registry_8cpp_a39b998f9d47f3f2eed4e98c14ff5c5d2} 
+\mbox{\hyperlink{sf__registration__functions_8h_a66d6ae6fed8f89847ff4ec8e71bfa461}{damage\+\_\+handler\+\_\+ptr}} get\+\_\+spell\+\_\+damage (\begin{DoxyParamCaption}\item[{const uint16\+\_\+t}]{spell\+\_\+line\+\_\+id}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_a3f1ae4d570090b097230b86e02b1a178}{Spell\+Damage\+Phase}}}]{phase}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spelldamage__registry_8cpp_source_l00030}{30}} of file \mbox{\hyperlink{sf__spelldamage__registry_8cpp_source}{sf\+\_\+spelldamage\+\_\+registry.\+cpp}}.
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=283pt]{sf__spelldamage__registry_8cpp_a39b998f9d47f3f2eed4e98c14ff5c5d2_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__spelldamage__registry_8cpp_a72edb1e1cbac99025f4ae918358557ba}\index{sf\_spelldamage\_registry.cpp@{sf\_spelldamage\_registry.cpp}!register\_vanilla\_spell\_damage\_handlers@{register\_vanilla\_spell\_damage\_handlers}}
+\index{register\_vanilla\_spell\_damage\_handlers@{register\_vanilla\_spell\_damage\_handlers}!sf\_spelldamage\_registry.cpp@{sf\_spelldamage\_registry.cpp}}
+\doxysubsubsection{\texorpdfstring{register\_vanilla\_spell\_damage\_handlers()}{register\_vanilla\_spell\_damage\_handlers()}}
+{\footnotesize\ttfamily \label{sf__spelldamage__registry_8cpp_a72edb1e1cbac99025f4ae918358557ba} 
+void \+\_\+\+\_\+thiscall register\+\_\+vanilla\+\_\+spell\+\_\+damage\+\_\+handlers (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spelldamage__registry_8cpp_source_l00043}{43}} of file \mbox{\hyperlink{sf__spelldamage__registry_8cpp_source}{sf\+\_\+spelldamage\+\_\+registry.\+cpp}}.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spelldamage__registry_8cpp_a72edb1e1cbac99025f4ae918358557ba_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spelldamage__registry_8cpp_a72edb1e1cbac99025f4ae918358557ba_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__spelldamage__registry_8cpp_a8fdf321eedee2c47adbc88de0e747760}\index{sf\_spelldamage\_registry.cpp@{sf\_spelldamage\_registry.cpp}!registerSpellDamageHandler@{registerSpellDamageHandler}}
+\index{registerSpellDamageHandler@{registerSpellDamageHandler}!sf\_spelldamage\_registry.cpp@{sf\_spelldamage\_registry.cpp}}
+\doxysubsubsection{\texorpdfstring{registerSpellDamageHandler()}{registerSpellDamageHandler()}}
+{\footnotesize\ttfamily \label{sf__spelldamage__registry_8cpp_a8fdf321eedee2c47adbc88de0e747760} 
+void register\+Spell\+Damage\+Handler (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{spell\+\_\+line\+\_\+id}{, }\item[{\mbox{\hyperlink{sf__registration__functions_8h_a66d6ae6fed8f89847ff4ec8e71bfa461}{damage\+\_\+handler\+\_\+ptr}}}]{handler}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_a3f1ae4d570090b097230b86e02b1a178}{Spell\+Damage\+Phase}}}]{phase}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spelldamage__registry_8cpp_source_l00014}{14}} of file \mbox{\hyperlink{sf__spelldamage__registry_8cpp_source}{sf\+\_\+spelldamage\+\_\+registry.\+cpp}}.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spelldamage__registry_8cpp_a8fdf321eedee2c47adbc88de0e747760_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spelldamage__registry_8cpp_a8fdf321eedee2c47adbc88de0e747760_icgraph}
+\end{center}
+\end{figure}

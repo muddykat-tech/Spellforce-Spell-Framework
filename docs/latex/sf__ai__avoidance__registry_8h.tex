@@ -1,0 +1,81 @@
+\doxysection{src/internal/registry/ai\+\_\+data\+\_\+registries/sf\+\_\+ai\+\_\+avoidance\+\_\+registry.h File Reference}
+\hypertarget{sf__ai__avoidance__registry_8h}{}\label{sf__ai__avoidance__registry_8h}\index{src/internal/registry/ai\_data\_registries/sf\_ai\_avoidance\_registry.h@{src/internal/registry/ai\_data\_registries/sf\_ai\_avoidance\_registry.h}}
+{\ttfamily \#include "{}../../../api/sfsf.\+h"{}}\newline
+{\ttfamily \#include "{}../../core/sf\+\_\+wrappers.\+h"{}}\newline
+{\ttfamily \#include "{}../../handlers/sf\+\_\+ai\+\_\+avoidance\+\_\+handlers.\+h"{}}\newline
+{\ttfamily \#include "{}../../core/sf\+\_\+modloader.\+h"{}}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$map$>$}\newline
+{\ttfamily \#include $<$cstdint$>$}\newline
+{\ttfamily \#include $<$list$>$}\newline
+{\ttfamily \#include $<$utility$>$}\newline
+Include dependency graph for sf\+\_\+ai\+\_\+avoidance\+\_\+registry.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__ai__avoidance__registry_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__ai__avoidance__registry_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{sf__ai__avoidance__registry_8h_a4941f53c1f2a56469734b1eaa68f53b2}{register\+Ai\+Avoidance\+Handler}} (uint16\+\_\+t spell\+\_\+line, \mbox{\hyperlink{sf__registration__functions_8h_afa2647c6110962b42e564bc76f92cffa}{ai\+\_\+avoidance\+\_\+handler\+\_\+ptr}} handler)
+\item 
+\mbox{\hyperlink{sf__registration__functions_8h_afa2647c6110962b42e564bc76f92cffa}{ai\+\_\+avoidance\+\_\+handler\+\_\+ptr}} \mbox{\hyperlink{sf__ai__avoidance__registry_8h_ad0c884f35bcf2b0b303134bdad866376}{get\+\_\+ai\+\_\+avoidance\+\_\+handler}} (uint16\+\_\+t spell\+\_\+line)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{sf__ai__avoidance__registry_8h_ad0c884f35bcf2b0b303134bdad866376}\index{sf\_ai\_avoidance\_registry.h@{sf\_ai\_avoidance\_registry.h}!get\_ai\_avoidance\_handler@{get\_ai\_avoidance\_handler}}
+\index{get\_ai\_avoidance\_handler@{get\_ai\_avoidance\_handler}!sf\_ai\_avoidance\_registry.h@{sf\_ai\_avoidance\_registry.h}}
+\doxysubsubsection{\texorpdfstring{get\_ai\_avoidance\_handler()}{get\_ai\_avoidance\_handler()}}
+{\footnotesize\ttfamily \label{sf__ai__avoidance__registry_8h_ad0c884f35bcf2b0b303134bdad866376} 
+\mbox{\hyperlink{sf__registration__functions_8h_afa2647c6110962b42e564bc76f92cffa}{ai\+\_\+avoidance\+\_\+handler\+\_\+ptr}} get\+\_\+ai\+\_\+avoidance\+\_\+handler (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{spell\+\_\+line}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Definition at line \mbox{\hyperlink{sf__ai__avoidance__registry_8cpp_source_l00018}{18}} of file \mbox{\hyperlink{sf__ai__avoidance__registry_8cpp_source}{sf\+\_\+ai\+\_\+avoidance\+\_\+registry.\+cpp}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__ai__avoidance__registry_8h_ad0c884f35bcf2b0b303134bdad866376_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__ai__avoidance__registry_8h_a4941f53c1f2a56469734b1eaa68f53b2}\index{sf\_ai\_avoidance\_registry.h@{sf\_ai\_avoidance\_registry.h}!registerAiAvoidanceHandler@{registerAiAvoidanceHandler}}
+\index{registerAiAvoidanceHandler@{registerAiAvoidanceHandler}!sf\_ai\_avoidance\_registry.h@{sf\_ai\_avoidance\_registry.h}}
+\doxysubsubsection{\texorpdfstring{registerAiAvoidanceHandler()}{registerAiAvoidanceHandler()}}
+{\footnotesize\ttfamily \label{sf__ai__avoidance__registry_8h_a4941f53c1f2a56469734b1eaa68f53b2} 
+void register\+Ai\+Avoidance\+Handler (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{spell\+\_\+line}{, }\item[{\mbox{\hyperlink{sf__registration__functions_8h_afa2647c6110962b42e564bc76f92cffa}{ai\+\_\+avoidance\+\_\+handler\+\_\+ptr}}}]{handler}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Definition at line \mbox{\hyperlink{sf__ai__avoidance__registry_8cpp_source_l00005}{5}} of file \mbox{\hyperlink{sf__ai__avoidance__registry_8cpp_source}{sf\+\_\+ai\+\_\+avoidance\+\_\+registry.\+cpp}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__ai__avoidance__registry_8h_a4941f53c1f2a56469734b1eaa68f53b2_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__ai__avoidance__registry_8h_a4941f53c1f2a56469734b1eaa68f53b2_icgraph}
+\end{center}
+\end{figure}

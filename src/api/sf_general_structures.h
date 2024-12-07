@@ -782,8 +782,17 @@ typedef void(__thiscall *menu_label_set_font_ptr)(void *_this, SF_Font *font);
 
 extern void __thiscall attach_new_label(CMnuContainer *parent, char *label_text, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height);
 
-/* |-========== Macros ==========-| */
-// Here comes a better method for setting up our exposed functions, to define functions also check sf_hooks.h
+/**
+ * @macro DECLARE_FUNCTION
+ * @brief Declares a function with the specified return type, name, and arguments.
+ * 
+ * This macro is used to define functions that we use for hooking into the game and to expose these to the API.
+ * we use it to cut down on boilerplate code typedefs and structures.
+ * 
+ * @param return_type The return type of the function.
+ * @param function_name The name of the function.
+ * @param ... The function parameters and types.
+ */
 #define DECLARE_FUNCTION(type, name, ...) \
     typedef type(__thiscall *name##_ptr)(__VA_ARGS__);
 
