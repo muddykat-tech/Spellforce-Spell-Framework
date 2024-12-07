@@ -1,13 +1,4 @@
 #include "sf_ai_single_target_registry.h"
-#include "../../core/sf_wrappers.h"
-#include "../../handlers/sf_ai_spell_handlers.h"
-#include "../../core/sf_modloader.h"
-
-#include <iostream>
-#include <map>
-#include <cstdint>
-#include <list>
-#include <utility>
 
 static std::map<uint16_t, ai_single_hander_ptr> s_ai_avoidance_handler_map;
 

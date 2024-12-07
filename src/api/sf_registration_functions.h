@@ -8,8 +8,9 @@ typedef uint16_t(__thiscall *damage_handler_ptr)(SF_CGdFigureToolbox *_toolbox, 
 												 uint16_t current_damage, uint16_t is_spell_damage, uint32_t is_ranged_damage, uint16_t spell_id);
 
 typedef void(__thiscall *handler_ptr)(SF_CGdSpell *, uint16_t);
+typedef uint32_t (__thiscall *ai_aoe_handler_ptr)(SF_CGdBattleDevelopment *_this, SF_Coord *position, uint16_t spell_line, SF_CGdResourceSpell *spell_data);
 typedef uint32_t(__thiscall *ai_single_hander_ptr)(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data);
-typedef uint32_t(__thiscall *ai_avoidance_hander_ptr)(CGdAIBattleData *_this, uint16_t figure_index, uint16_t spell_index);
+typedef uint32_t(__thiscall *ai_avoidance_hander_ptr)(CGdAIBattleData *_this, uint16_t figure_index, uint16_t spell_line);
 typedef uint16_t(__thiscall *onhit_handler_ptr)(SF_CGdFigureJobs *, uint16_t source, uint16_t target, uint16_t damage);
 typedef int(__thiscall *refresh_handler_ptr)(SF_CGdSpell *, uint16_t);
 
