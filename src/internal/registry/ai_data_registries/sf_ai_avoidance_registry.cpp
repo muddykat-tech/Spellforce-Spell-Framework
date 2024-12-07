@@ -1,8 +1,8 @@
 #include "sf_ai_avoidance_registry.h"
 
-static std::map<uint16_t, ai_avoidance_hander_ptr> s_ai_avoidance_handler_map;
+static std::map<uint16_t, ai_avoidance_handler_ptr> s_ai_avoidance_handler_map;
 
-void registerAiAvoidanceHandler(uint16_t spell_line, ai_avoidance_hander_ptr handler)
+void registerAiAvoidanceHandler(uint16_t spell_line, ai_avoidance_handler_ptr handler)
 {
     auto check = s_ai_avoidance_handler_map.find(spell_line);
     if (check != s_ai_avoidance_handler_map.end())
@@ -15,7 +15,7 @@ void registerAiAvoidanceHandler(uint16_t spell_line, ai_avoidance_hander_ptr han
     s_ai_avoidance_handler_map[spell_line] = handler;
 }
 
-ai_avoidance_hander_ptr get_ai_avoidance_handler(uint16_t spell_line)
+ai_avoidance_handler_ptr get_ai_avoidance_handler(uint16_t spell_line)
 {
     auto it = s_ai_avoidance_handler_map.find(spell_line);
     if (it == s_ai_avoidance_handler_map.end())

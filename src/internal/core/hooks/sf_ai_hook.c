@@ -56,7 +56,7 @@ uint32_t signum(uint32_t param_1)
 uint32_t rank_support_spell_hook(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
     bool isStackable = hasSpellTag(spell_line, STACKABLE_SPELL);
-    ai_single_hander_ptr handler = get_single_ai_handler(spell_line);
+    ai_single_handler_ptr handler = get_single_ai_handler(spell_line);
     uint32_t rank = handler(_this, target_index, spell_line, spell_data);
     if ((toolboxAPI.hasSpellOnIt(_this->battleData.CGdFigureToolBox, target_index, spell_line)) && (!isStackable))
     {

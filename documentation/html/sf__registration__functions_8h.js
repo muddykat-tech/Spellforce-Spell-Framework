@@ -1,6 +1,6 @@
 var sf__registration__functions_8h =
 [
-    [ "ai_single_hander_ptr", "sf__registration__functions_8h.html#af763da373561d6f947f2660afb0739e5", null ],
+    [ "ai_single_handler_ptr", "sf__registration__functions_8h.html#af763da373561d6f947f2660afb0739e5", null ],
     [ "damage_handler_ptr", "sf__registration__functions_8h.html#a66d6ae6fed8f89847ff4ec8e71bfa461", null ],
     [ "handler_ptr", "sf__registration__functions_8h.html#af76aa0d565c5ebb0b1eb50e2ed3377b3", null ],
     [ "onhit_handler_ptr", "sf__registration__functions_8h.html#afc33c0496ccf8b60de8f29929de6e565", null ],

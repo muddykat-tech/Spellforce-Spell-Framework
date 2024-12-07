@@ -35,7 +35,7 @@ var searchData=
   ['aggroed_32',['AGGROED',['../sf__general__structures_8h.html#ac82390a633ae8fc23e2141e25507f732af7a21d569a98b308fe2432a70499dbd4',1,'sf_general_structures.h']]],
   ['agility_33',['AGILITY',['../sf__figure__functions_8h.html#a35c57de9b4dfd894cc11e998a47b1436a30ab374cb8edbd6517aff455f7a2985b',1,'sf_figure_functions.h']]],
   ['ai_5fblocked_34',['AI_BLOCKED',['../sf__general__structures_8h.html#ac82390a633ae8fc23e2141e25507f732a2d16338928f19950d7df2c22e19fb777',1,'sf_general_structures.h']]],
-  ['ai_5fsingle_5fhander_5fptr_35',['ai_single_hander_ptr',['../sf__registration__functions_8h.html#af763da373561d6f947f2660afb0739e5',1,'sf_registration_functions.h']]],
+  ['ai_5fsingle_5fhandler_5fptr_35',['ai_single_handler_ptr',['../sf__registration__functions_8h.html#af763da373561d6f947f2660afb0739e5',1,'sf_registration_functions.h']]],
   ['ai_5fspell_5fhook_36',['ai_spell_hook',['../sf__ai__hook_8c.html#a0c48d2f8b006d9cdacaab203a350399a',1,'sf_ai_hook.c']]],
   ['aiapi_37',['aiAPI',['../struct_spellforce_spell_framework.html#ad99031dc9d31010bab42163b85bb5b49',1,'SpellforceSpellFramework::aiAPI'],['../sf__hooks_8c.html#a9f46704f751d2e936794090d969bfb63',1,'aiAPI:&#160;sf_hooks.c'],['../sf__hooks_8h.html#a9f46704f751d2e936794090d969bfb63',1,'aiAPI:&#160;sf_hooks.c']]],
   ['amok_5fend_5fhandler_38',['amok_end_handler',['../sf__spellend__handlers_8h.html#a9dfe88787ad7e24541fabddf5700ce9f',1,'sf_spellend_handlers.h']]],

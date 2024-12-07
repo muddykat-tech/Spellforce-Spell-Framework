@@ -9,8 +9,8 @@ typedef uint16_t(__thiscall *damage_handler_ptr)(SF_CGdFigureToolbox *_toolbox, 
 
 typedef void(__thiscall *handler_ptr)(SF_CGdSpell *, uint16_t);
 typedef uint32_t (__thiscall *ai_aoe_handler_ptr)(SF_CGdBattleDevelopment *_this, SF_Coord *position, uint16_t spell_line, SF_CGdResourceSpell *spell_data);
-typedef uint32_t(__thiscall *ai_single_hander_ptr)(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data);
-typedef uint32_t(__thiscall *ai_avoidance_hander_ptr)(CGdAIBattleData *_this, uint16_t figure_index, uint16_t spell_line);
+typedef uint32_t(__thiscall *ai_single_handler_ptr)(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data);
+typedef uint32_t(__thiscall *ai_avoidance_handler_ptr)(CGdAIBattleData *_this, uint16_t figure_index, uint16_t spell_line);
 typedef uint16_t(__thiscall *onhit_handler_ptr)(SF_CGdFigureJobs *, uint16_t source, uint16_t target, uint16_t damage);
 typedef int(__thiscall *refresh_handler_ptr)(SF_CGdSpell *, uint16_t);
 
@@ -26,6 +26,9 @@ typedef struct __attribute__((packed))
 	refresh_handler_ptr spell_refresh_handler;
 	sub_effect_handler_ptr sub_effect_handler;
 	damage_handler_ptr deal_damage_handler;
+	ai_aoe_handler_ptr ai_aoe_handler;
+	ai_single_handler_ptr ai_single_handler;
+	ai_avoidance_handler_ptr ai_avoidance_handler;
 	SpellDamagePhase damage_phase;
 	OnHitPhase hit_phase;
 	SFMod *parent_mod;
@@ -42,6 +45,10 @@ DECLARE_FUNCTION(void, linkSubEffectHandler, SFSpell *spell, sub_effect_handler_
 DECLARE_FUNCTION(void, linkRefreshHandler, SFSpell *spell, refresh_handler_ptr handler);
 DECLARE_FUNCTION(void, linkDealDamageHandler, SFSpell *spell, damage_handler_ptr handler, SpellDamagePhase phase);
 
+DECLARE_FUNCTION(void, linkSingleTargetAIHandler, SFSpell *spell, ai_single_handler_ptr handler);
+DECLARE_FUNCTION(void, linkAOEAIHandler, SFSpell *spell, ai_aoe_handler_ptr handler);
+DECLARE_FUNCTION(void, linkAvoidanceAIHandler, SFSpell *spell, ai_avoidance_handler_ptr handler);
+
 DECLARE_FUNCTION_GROUP(Registration,
 					   registerSpell_ptr registerSpell;
 					   linkTypeHandler_ptr linkTypeHandler;
@@ -51,4 +58,7 @@ DECLARE_FUNCTION_GROUP(Registration,
 					   linkSubEffectHandler_ptr linkSubEffectHandler;
 					   linkRefreshHandler_ptr linkRefreshHandler;
 					   linkDealDamageHandler_ptr linkDealDamageHandler;
-					   linkOnHitHandler_ptr linkOnHitHandler;);
+					   linkOnHitHandler_ptr linkOnHitHandler;
+					   linkAvoidanceAIHandler_ptr linkAvoidanceAIHandler;
+					   linkSingleTargetAIHandler_ptr linkSingleTargetAIHandler;
+					   linkAOEAIHandler_ptr linkAOEAIHandler;);

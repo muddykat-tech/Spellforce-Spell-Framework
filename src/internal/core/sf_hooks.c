@@ -168,6 +168,9 @@ void initialize_data_hooks()
     INCLUDE_FUNCTION(registration, linkSubEffectHandler, &linkSubEffectHandler);
     INCLUDE_FUNCTION(registration, linkRefreshHandler, &linkRefreshHandler);
     INCLUDE_FUNCTION(registration, linkDealDamageHandler, &linkDealDamageHandler);
+    INCLUDE_FUNCTION(registration, linkAOEAIHandler, &linkAOEAIHandler);
+    INCLUDE_FUNCTION(registration, linkAvoidanceAIHandler, &linkAvoidanceAIHandler);
+    INCLUDE_FUNCTION(registration, linkSingleTargetAIHandler, &linkSingleTargetAIHandler);
 }
 
 static void initialize_spelltype_hook()
