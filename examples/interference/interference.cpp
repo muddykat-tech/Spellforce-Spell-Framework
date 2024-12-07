@@ -587,6 +587,18 @@ int __thiscall interference_patronize_shelter_refresh_handler(SF_CGdSpell *_this
     return 1; // adding this line for safety, most likely it won't be ever triggered
 }
 
+uint32_t __thiscall interference_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 1;
+    if ((_this->battleData.current_figure != target_index) ||
+        (_this->battleData.enemy_figures.entityCount == 0) ||
+        (_this->battleData.building_not_ally.entityCount == 0))
+    {
+        rank = 0;
+    }
+    return rank;
+}
+
 /***
  * This function MUST be present in your code with the exact declaration
  * otherwise framework won't load your plugin
@@ -610,6 +622,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     registrationAPI->linkEffectHandler(interference_spell, INTERFERENCE_JOB, &interference_effect_handler);
     registrationAPI->linkRefreshHandler(interference_spell, &interference_patronize_shelter_refresh_handler);
     registrationAPI->linkDealDamageHandler(interference_spell, &interference_deal_damage_handler, SpellDamagePhase::PRE);
+    registrationAPI->linkSingleTargetAIHandler(interference_spell, &interference_ai_handler);
     // SpellDamagePhase controls when damage is registered
     // there are three possible phases: PRE, default, post
     // PRE stands for initial damage, not modified by any other spells

@@ -7,3 +7,6 @@
 #include "../sf_hooks.h"
 #include "../sf_wrappers.h"
 #include "../../registry/ai_data_registries/sf_ai_single_target_registry.h"
+
+
+uint32_t __thiscall rank_support_spell_hook(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data);
