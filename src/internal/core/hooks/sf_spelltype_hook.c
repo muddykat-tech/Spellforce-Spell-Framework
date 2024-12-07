@@ -1,4 +1,4 @@
-#include "../../registry/sf_spelltype_registry.h"
+#include "../../registry/spell_data_registries/sf_spelltype_registry.h"
 #include "../sf_wrappers.h"
 #include "../sf_hooks.h"
 

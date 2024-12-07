@@ -1,0 +1,783 @@
+\doxysection{sf\+\_\+general\+\_\+structures.\+h}
+\hypertarget{sf__general__structures_8h_source}{}\label{sf__general__structures_8h_source}\index{src/api/sf\_general\_structures.h@{src/api/sf\_general\_structures.h}}
+\mbox{\hyperlink{sf__general__structures_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00001}\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{00001}}\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00005}00005\ \textcolor{comment}{/*\ |-\/==========\ Mod\ Structures\ ==========-\/|\ */}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00007}00007\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00008}00008\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00009}00009\ \ \ \ \ \textcolor{keywordtype}{char}\ mod\_id[64];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00010}00010\ \ \ \ \ \textcolor{keywordtype}{char}\ mod\_version[24];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00011}00011\ \ \ \ \ \textcolor{keywordtype}{char}\ mod\_description[128];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00012}00012\ \ \ \ \ \textcolor{keywordtype}{char}\ mod\_author[128];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00013}\mbox{\hyperlink{sf__general__structures_8h_a64ca7d92af978ccdfb97fd8ad71ea8e5}{00013}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_a64ca7d92af978ccdfb97fd8ad71ea8e5}{SFMod}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00015}\mbox{\hyperlink{sf__general__structures_8h_ad39a9954ebb4503540dcaffa72c0d658}{00015}}\ \textcolor{keyword}{typedef}\ void\ (*\mbox{\hyperlink{sf__general__structures_8h_ad39a9954ebb4503540dcaffa72c0d658}{log\_function\_ptr}})(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *);}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00016}00016\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00017}00017\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00018}00018\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ad39a9954ebb4503540dcaffa72c0d658}{log\_function\_ptr}}\ logError;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00019}00019\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ad39a9954ebb4503540dcaffa72c0d658}{log\_function\_ptr}}\ logWarning;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00020}00020\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ad39a9954ebb4503540dcaffa72c0d658}{log\_function\_ptr}}\ logInfo;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00021}\mbox{\hyperlink{sf__general__structures_8h_a1c952b093fb7b451bb336a65c6658ad4}{00021}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_a1c952b093fb7b451bb336a65c6658ad4}{SFLog}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00023}00023\ \textcolor{comment}{/*\ |-\/==========\ General\ Structures\ ==========-\/|\ */}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00025}00025\ \textcolor{comment}{//\ Forward\ Declarations\ for\ looping\ struct\ declarations}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00026}\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{00026}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\_CGdSpell}}\ \mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\_CGdSpell}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00027}\mbox{\hyperlink{sf__general__structures_8h_a17f35cab19a4752dcf2d3fb1ea9a9f0e}{00027}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_a17f35cab19a4752dcf2d3fb1ea9a9f0e}{SF\_CGdFigureToolbox}}\ \mbox{\hyperlink{sf__general__structures_8h_a17f35cab19a4752dcf2d3fb1ea9a9f0e}{SF\_CGdFigureToolbox}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00028}\mbox{\hyperlink{sf__general__structures_8h_a8c1eaf8a100a1e9fee8b637688b23987}{00028}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_a8c1eaf8a100a1e9fee8b637688b23987}{SF\_GdEffect}}\ \mbox{\hyperlink{sf__general__structures_8h_a8c1eaf8a100a1e9fee8b637688b23987}{SF\_GdEffect}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00029}\mbox{\hyperlink{sf__general__structures_8h_a710c54d12a2bf3e29c87578d51d0373d}{00029}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_a710c54d12a2bf3e29c87578d51d0373d}{SF\_CGDEffect}}\ \mbox{\hyperlink{sf__general__structures_8h_a710c54d12a2bf3e29c87578d51d0373d}{SF\_CGDEffect}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00030}\mbox{\hyperlink{sf__general__structures_8h_ae200cc761d9e4257e978beaa16ca50a3}{00030}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ae200cc761d9e4257e978beaa16ca50a3}{SF\_CGdWorld}}\ \mbox{\hyperlink{sf__general__structures_8h_ae200cc761d9e4257e978beaa16ca50a3}{SF\_CGdWorld}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00031}\mbox{\hyperlink{sf__general__structures_8h_afaafd0a4f93b6d4e95de3f0e494c941b}{00031}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_afaafd0a4f93b6d4e95de3f0e494c941b}{SF\_CGdWorldToolBox}}\ \mbox{\hyperlink{sf__general__structures_8h_afaafd0a4f93b6d4e95de3f0e494c941b}{SF\_CGdWorldToolBox}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00032}\mbox{\hyperlink{sf__general__structures_8h_a2739681db2b7bff68f1229d5a5f3d5e4}{00032}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_a2739681db2b7bff68f1229d5a5f3d5e4}{SF\_CGdFigureJobs}}\ \mbox{\hyperlink{sf__general__structures_8h_a2739681db2b7bff68f1229d5a5f3d5e4}{SF\_CGdFigureJobs}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00033}\mbox{\hyperlink{sf__general__structures_8h_a326f52debb4a3a05138160c72536c17e}{00033}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_a326f52debb4a3a05138160c72536c17e}{SF\_CGdBuilding}}\ \mbox{\hyperlink{sf__general__structures_8h_a326f52debb4a3a05138160c72536c17e}{SF\_CGdBuilding}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00034}\mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073}{00034}}\ \textcolor{keyword}{typedef}\ enum\ :\ uint8\_t}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00035}00035\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00036}\mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073a8ec9a0011894bb7df177c27eaa0633b2}{00036}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073a8ec9a0011894bb7df177c27eaa0633b2}{TASK\_WORKER}}\ =\ 2,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00037}\mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073ab47e4d857df1b129c8f4442bd08110cf}{00037}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073ab47e4d857df1b129c8f4442bd08110cf}{TASK\_WOODCUTTER}}\ =\ 3,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00038}\mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073a33fab71304b22dfa4eec62bbbc85826f}{00038}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073a33fab71304b22dfa4eec62bbbc85826f}{TASK\_QUARRY}}\ =\ 4,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00039}\mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073ae909540e36da79f07eb72d565fcd88cf}{00039}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073ae909540e36da79f07eb72d565fcd88cf}{TASK\_MINE}}\ =\ 5,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00040}\mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073abc75637ba7b152e97cd204300f665968}{00040}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073abc75637ba7b152e97cd204300f665968}{TASK\_FORGE}}\ =\ 6,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00041}\mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073a48bd84e659a01c6771a4d4e07695003f}{00041}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073a48bd84e659a01c6771a4d4e07695003f}{TASK\_HERO}}\ =\ 9,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00042}\mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073aff4668f239ada4607cd7a5061b60858d}{00042}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073aff4668f239ada4607cd7a5061b60858d}{TASK\_MAINCHAR}}\ =\ 10,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00043}\mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073a1415a51a3f13b97dff600100e7b57d5d}{00043}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073a1415a51a3f13b97dff600100e7b57d5d}{TASK\_NPC}}\ =\ 11,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00044}\mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073aee01015880f7ab1a3a7c343a1df05d0b}{00044}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073aee01015880f7ab1a3a7c343a1df05d0b}{TASK\_PET}}\ =\ 12,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00045}\mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073a197417afd7dc7ba0509c2ee298b7d022}{00045}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073a197417afd7dc7ba0509c2ee298b7d022}{TASK\_HUNTING\_LODGE}}\ =\ 14,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00046}00046\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073a88bcc326413be3601a4b2a0bc1b2d510}{TASK\_MERCHANT}}\ =\ 17}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00047}\mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073a88bcc326413be3601a4b2a0bc1b2d510}{00047}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073}{CGdFigureTask}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00049}\mbox{\hyperlink{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7}{00049}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00050}00050\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00051}\mbox{\hyperlink{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7a67c68c964d611409fa66e6abdc814c21}{00051}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7a67c68c964d611409fa66e6abdc814c21}{PHASE\_0}}\ =\ 0,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00052}\mbox{\hyperlink{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7addc95d86d3f460d55c86c8611161b75c}{00052}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7addc95d86d3f460d55c86c8611161b75c}{PHASE\_1}},}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00053}\mbox{\hyperlink{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7ace40f24eeadff069119bb911c280b43e}{00053}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7ace40f24eeadff069119bb911c280b43e}{PHASE\_2}},}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00054}\mbox{\hyperlink{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7a44a2c382473b0dfa2ab45afd6e399e71}{00054}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7a44a2c382473b0dfa2ab45afd6e399e71}{PHASE\_3}},}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00055}\mbox{\hyperlink{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7a52537e429cf11babfdce28f09c58d0e3}{00055}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7a52537e429cf11babfdce28f09c58d0e3}{PHASE\_4}},}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00056}\mbox{\hyperlink{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7ad0b4e178cc3b69a5cf3af80dc5605af5}{00056}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7ad0b4e178cc3b69a5cf3af80dc5605af5}{PHASE\_5}},}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00057}00057\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7a4cfd8ec8360eb068921d979f3339f086}{OnHitEnd}}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00058}\mbox{\hyperlink{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7a4cfd8ec8360eb068921d979f3339f086}{00058}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7}{OnHitPhase}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00060}00060\ \textcolor{comment}{//\ Game\ Formated\ them\ for\ bitwise\ operations,\ hence\ the\ magic\ numbers}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00061}\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732}{00061}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00062}00062\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00063}\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a20af34269ed8856e12e156b8c01336a2}{00063}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a20af34269ed8856e12e156b8c01336a2}{UNDEAD}}\ =\ 0x1,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00064}\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a334804a6345aef2899f81fbba7d67c62}{00064}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a334804a6345aef2899f81fbba7d67c62}{RESESRVED\_ONLY}}\ =\ 0x2,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00065}\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732af7a21d569a98b308fe2432a70499dbd4}{00065}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732af7a21d569a98b308fe2432a70499dbd4}{AGGROED}}\ =\ 0x4,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00066}\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a27d71da070e9ad62b2a383a15fba42aa}{00066}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a27d71da070e9ad62b2a383a15fba42aa}{IS\_DEAD}}\ =\ 0x8,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00067}\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732ad20f1b79e9cfc073db19741638050449}{00067}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732ad20f1b79e9cfc073db19741638050449}{REDO}}\ =\ 0x10,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00068}\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a332a5191df460a1a2d955c4078d36de2}{00068}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a332a5191df460a1a2d955c4078d36de2}{F\_CHECK\_SPELLS\_BEFORE\_JOB}}\ =\ 0x20,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00069}\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732ae338184a937457ba053f8ce47759e110}{00069}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732ae338184a937457ba053f8ce47759e110}{F\_CHECK\_SPELLS\_BEFORE\_CHECK\_BATTLE}}\ =\ 0x40,\ \textcolor{comment}{//\ May\ need\ to\ be\ changed\ as\ it\ could\ be\ used\ inplace\ of\ a\ spell\ key\ perhaps?}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00070}\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a5831b2584a4b7dbb3bcccc115fb786ab}{00070}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a5831b2584a4b7dbb3bcccc115fb786ab}{WALK\_JOB\_WAIT}}\ =\ 0x80,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00071}\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a7a1ae9c079a986f5a17afcab7c27ebc0}{00071}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a7a1ae9c079a986f5a17afcab7c27ebc0}{FREEZED}}\ =\ 0x100,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00072}\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a76b0d2ce07dc4a3830a71b7f6efd6f2d}{00072}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a76b0d2ce07dc4a3830a71b7f6efd6f2d}{HAS\_LOOT}}\ =\ 0x200,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00073}\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732ab442ea19e23980b0f5b4a01cf856150f}{00073}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732ab442ea19e23980b0f5b4a01cf856150f}{HAS\_DIALOG}}\ =\ 0x400,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00074}\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732adebb817413857eea6331734b76793159}{00074}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732adebb817413857eea6331734b76793159}{FEMALE}}\ =\ 0x800,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00075}\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a00c5df4fd13b9611fc6e746fff22ca59}{00075}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a00c5df4fd13b9611fc6e746fff22ca59}{GOT\_AGGRO}}\ =\ 0x1000,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00076}\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732acd04451478f0bb20692e4364f9a36d4e}{00076}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732acd04451478f0bb20692e4364f9a36d4e}{RETREAT}}\ =\ 0x2000,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00077}\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732af195cd6d820031404686bd7faca2a91f}{00077}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732af195cd6d820031404686bd7faca2a91f}{NO\_WAY\_TO\_TARGET}}\ =\ 0x4000,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00078}\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a96009a13e8663840f3503c7b743252b3}{00078}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a96009a13e8663840f3503c7b743252b3}{AURA\_RUNNING}}\ =\ 0x8000,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00079}\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a2d16338928f19950d7df2c22e19fb777}{00079}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a2d16338928f19950d7df2c22e19fb777}{AI\_BLOCKED}}\ =\ 0x10000,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00080}\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732ac33feb50bf29fe445421480eddc328d4}{00080}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732ac33feb50bf29fe445421480eddc328d4}{TOWER}}\ =\ 0x20000,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00081}\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a1e27a519334739026d49b32fac6a5cc9}{00081}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a1e27a519334739026d49b32fac6a5cc9}{IS\_SWAPPING}}\ =\ 0x40000,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00082}\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732acbf00c3786039cc2213feb25af13fe39}{00082}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732acbf00c3786039cc2213feb25af13fe39}{CUR\_ACTIVE\_DIALOG}}\ =\ 0x80000,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00083}\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a4820c73bf4b5b69a17ff9c409a8b8e05}{00083}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a4820c73bf4b5b69a17ff9c409a8b8e05}{IS\_IN\_FIGHT}}\ =\ 0x100000,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00084}\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732ad100884e36a0bb2daea58364d8d6ce87}{00084}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732ad100884e36a0bb2daea58364d8d6ce87}{VIEW\_MODE\_1ST\_3RD}}\ =\ 0x200000,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00085}\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a58dc530cf2da9f0379c2faa92dddf585}{00085}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a58dc530cf2da9f0379c2faa92dddf585}{IS\_TALKING}}\ =\ 0x400000,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00086}\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a8d2ae8b2ce864fdd0b4425d29b3491aa}{00086}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a8d2ae8b2ce864fdd0b4425d29b3491aa}{IS\_IMPORTANT\_DIALOG}}\ =\ 0x800000,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00087}\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a05eba8246460e3fc50ea59a0a2f2ae81}{00087}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a05eba8246460e3fc50ea59a0a2f2ae81}{UNKILLABLE}}\ =\ 0x1000000,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00088}\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732aae56225fd7fe1bfe64b0cfcdf3c883bf}{00088}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732aae56225fd7fe1bfe64b0cfcdf3c883bf}{FOLLOW\_MODE}}\ =\ 0x2000000,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00089}\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732ad7ef30b772e367a70c6f3b67b753528e}{00089}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732ad7ef30b772e367a70c6f3b67b753528e}{HIT\_LEFT\_HAND\_NEXT}}\ =\ 0x4000000,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00090}\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732ae98ea00ab9788a6979b7be5d461a81eb}{00090}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732ae98ea00ab9788a6979b7be5d461a81eb}{FOREST\_SPIRIT}}\ =\ 0x8000000,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00091}\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a17ec55aec1ea186830f9f85846069c2b}{00091}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a17ec55aec1ea186830f9f85846069c2b}{VIP}}\ =\ 0x10000000,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00092}\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a165f314aa9d078e445e19164d49cbc9f}{00092}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a165f314aa9d078e445e19164d49cbc9f}{ILLUSION}}\ =\ 0x20000000,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00093}00093\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a881e5b8c00714da0b5327e02f62146fc}{SPAWN}}\ =\ 0x40000000}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00094}\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a881e5b8c00714da0b5327e02f62146fc}{00094}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732}{GdFigureFlags}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00096}\mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571}{00096}}\ \textcolor{keyword}{typedef}\ enum\ :\ uint16\_t}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00097}00097\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00098}\mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571ab3188742eb6061909bbf2e4d6fdad319}{00098}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571ab3188742eb6061909bbf2e4d6fdad319}{MANUAL\_JOB\_CHANGE}}\ =\ 1,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00099}\mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571a6f2f7c178d8c6799180781759e3f8193}{00099}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571a6f2f7c178d8c6799180781759e3f8193}{SKIP\_ONCE}}\ =\ 2,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00100}\mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571aee3ba6008379c90be1e6709d19f8b230}{00100}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571aee3ba6008379c90be1e6709d19f8b230}{MANUAL\_HIT\_TARGET}}\ =\ 4,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00101}\mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571a9a3ba8b680b44afd1a90b05cef7b9232}{00101}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571a9a3ba8b680b44afd1a90b05cef7b9232}{CORPSE\_CANT\_ROT}}\ =\ 8,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00102}\mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571a7d3f0a4cd2666414d28aa9839d43d6e0}{00102}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571a7d3f0a4cd2666414d28aa9839d43d6e0}{START\_WALK}}\ =\ 16,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00103}\mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571adbef8108cc9b9ff34b003ebbd5690173}{00103}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571adbef8108cc9b9ff34b003ebbd5690173}{RUN\_MODE}}\ =\ 32,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00104}\mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571a84089bd648491d49940231590543821f}{00104}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571a84089bd648491d49940231590543821f}{WAR}}\ =\ 64,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00105}\mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571ae15c5636d7ea646b3959f7c508b47cf8}{00105}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571ae15c5636d7ea646b3959f7c508b47cf8}{CHECK\_BATTLE}}\ =\ 128,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00106}\mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571a714e1c712ebb8b1a1e9111a9b8b115fd}{00106}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571a714e1c712ebb8b1a1e9111a9b8b115fd}{PATROL\_MODE}}\ =\ 256,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00107}\mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571a4bf12509aea8527a319f1942812734c6}{00107}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571a4bf12509aea8527a319f1942812734c6}{WAY\_POINTS\_READ\_REVERSE}}\ =\ 512,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00108}\mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571abc00b20775e7ccbf0f68ff02125be03b}{00108}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571abc00b20775e7ccbf0f68ff02125be03b}{SUPERIOR\_PATHING}}\ =\ 1024,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00109}\mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571a2d7da124498b99f7aa18d18e2c5c161f}{00109}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571a2d7da124498b99f7aa18d18e2c5c161f}{ROUND\_HIT}}\ =\ 2048,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00110}\mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571aa73b6c126a384ced217b354678e82122}{00110}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571aa73b6c126a384ced217b354678e82122}{DEATH\_BLOW}}\ =\ 4096,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00111}\mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571a6f56485d0d52b2320047828381642384}{00111}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571a6f56485d0d52b2320047828381642384}{START\_WORK\_AT\_BUILDING\_FORCE\_JOB}}\ =\ 8192,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00112}00112\ \}\ \mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571}{CGdFigureJobFlags}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00113}00113\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00114}00114\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00115}00115\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00116}00116\ \ \ \ \ uint16\_t\ X;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00117}00117\ \ \ \ \ uint16\_t\ Y;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00118}\mbox{\hyperlink{sf__general__structures_8h_aa44e45471f7b6c436abe46e7d9d728c9}{00118}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_aa44e45471f7b6c436abe46e7d9d728c9}{SF\_Coord}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00119}00119\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00120}00120\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00121}00121\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00122}00122\ \ \ \ \ uint32\_t\ R;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00123}00123\ \ \ \ \ uint32\_t\ G;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00124}\mbox{\hyperlink{sf__general__structures_8h_a8bab79a418c30ca6e1cc618503d5be75}{00124}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_a8bab79a418c30ca6e1cc618503d5be75}{SF\_RGColor}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00125}00125\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00126}00126\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00127}00127\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00128}00128\ \ \ \ \ uint16\_t\ spell\_id;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00129}00129\ \ \ \ \ uint16\_t\ job\_id;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00130}\mbox{\hyperlink{sf__general__structures_8h_a5155b93e12786efd5c2faf220aa5b928}{00130}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_a5155b93e12786efd5c2faf220aa5b928}{SF\_SpellEffectInfo}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00131}00131\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00132}00132\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00133}00133\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00134}00134\ \ \ \ \ uint8\_t\ entity\_type;\ \textcolor{comment}{//\ 1\ for\ figure,\ 2\ for\ building,\ 3\ for\ object}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00135}00135\ \ \ \ \ uint16\_t\ entity\_index;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00136}00136\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aa44e45471f7b6c436abe46e7d9d728c9}{SF\_Coord}}\ position;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00137}\mbox{\hyperlink{sf__general__structures_8h_aedd8705d0983d09965ace902f37d0e0b}{00137}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_aedd8705d0983d09965ace902f37d0e0b}{SF\_CGdTargetData}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00138}00138\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00139}00139\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00140}00140\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00141}00141\ \ \ \ \ \textcolor{keywordtype}{void}\ *raw\_data;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00142}00142\ \ \ \ \ uint32\_t\ str\_length;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00143}00143\ \ \ \ \ uint32\_t\ unknown\_length\_var;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00144}00144\ \ \ \ \ \textcolor{keywordtype}{char}\ *data;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00145}\mbox{\hyperlink{sf__general__structures_8h_a3aec067538ae8bb3838f555feac49682}{00145}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_a3aec067538ae8bb3838f555feac49682}{SF\_String}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00146}00146\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00147}00147\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00148}00148\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00149}00149\ \ \ \ \ uint32\_t\ partA;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00150}00150\ \ \ \ \ uint32\_t\ partB;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00151}\mbox{\hyperlink{sf__general__structures_8h_a1b8b1ec284ff51feaf2673b4aa18f4eb}{00151}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_a1b8b1ec284ff51feaf2673b4aa18f4eb}{SF\_Rectangle}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00152}00152\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00153}00153\ \textcolor{comment}{/*\ |-\/==========\ Figure\ Start\ ==========-\/|\ */}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00154}00154\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00155}00155\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00156}00156\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00157}00157\ \ \ \ \ uint16\_t\ figure\_index;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00158}00158\ \ \ \ \ uint16\_t\ agro\_value;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00159}00159\ \ \ \ \ uint16\_t\ hate\_value;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00160}\mbox{\hyperlink{sf__general__structures_8h_adca7a0b2b6c9bdf74a23b05cbb810ec7}{00160}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_adca7a0b2b6c9bdf74a23b05cbb810ec7}{CGdFigureHateEntry}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00161}00161\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00162}00162\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00163}00163\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00164}00164\ \ \ \ \ uint16\_t\ min\_dmg;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00165}00165\ \ \ \ \ uint16\_t\ max\_dmg;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00166}00166\ \ \ \ \ uint16\_t\ min\_rng;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00167}00167\ \ \ \ \ uint16\_t\ max\_rng;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00168}00168\ \ \ \ \ uint16\_t\ wpn\_spd;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00169}00169\ \ \ \ \ uint16\_t\ wpn\_type;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00170}00170\ \ \ \ \ uint16\_t\ wpn\_mat;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00171}\mbox{\hyperlink{sf__general__structures_8h_ab30b3d0a3ef1407e9022aad25007d3ce}{00171}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_ab30b3d0a3ef1407e9022aad25007d3ce}{SF\_CGdFigureWeaponStats}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00172}00172\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00173}00173\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00174}00174\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00175}00175\ \ \ \ \ uint16\_t\ base\_val;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00176}00176\ \ \ \ \ uint16\_t\ bonus\_val;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00177}00177\ \ \ \ \ uint8\_t\ bonus\_multiplier;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00178}00178\ \ \ \ \ uint8\_t\ statistic\_type;\ \textcolor{comment}{//\ NOT\ CONFIRMED}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00179}\mbox{\hyperlink{sf__general__structures_8h_aa312e3ddc91847eff4c403f6993528ea}{00179}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_aa312e3ddc91847eff4c403f6993528ea}{FigureStatistic}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00180}00180\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00181}00181\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00182}00182\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00183}00183\ \ \ \ \ uint16\_t\ base\_val;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00184}00184\ \ \ \ \ uint16\_t\ bonus\_val;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00185}00185\ \ \ \ \ uint8\_t\ bonus\_multiplier;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00186}00186\ \ \ \ \ uint8\_t\ statistic\_type;\ \textcolor{comment}{//\ NOT\ CONFIRMED?}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00187}00187\ \ \ \ \ uint16\_t\ missing\_val;\ \ \ \textcolor{comment}{//\ No\ idea\ what\ this\ is}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00188}\mbox{\hyperlink{sf__general__structures_8h_a51f7266da047c1617a2980d266ba63f6}{00188}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_a51f7266da047c1617a2980d266ba63f6}{FigureStatisticExt}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00189}00189\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00190}00190\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00191}00191\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00192}00192\ \ \ \ \ uint16\_t\ type;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00193}00193\ \ \ \ \ uint16\_t\ unkn1;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00194}00194\ \ \ \ \ uint16\_t\ unkn2;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00195}00195\ \ \ \ \ uint16\_t\ unkn3;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00196}00196\ \ \ \ \ uint16\_t\ unkn4;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00197}00197\ \ \ \ \ uint16\_t\ unkn5;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00198}\mbox{\hyperlink{sf__general__structures_8h_a07619fa231562f2cc55bd33173b4c765}{00198}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_a07619fa231562f2cc55bd33173b4c765}{SF\_SGtFigureAction}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00199}00199\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00200}00200\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00201}00201\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00202}00202\ \ \ \ \ uint16\_t\ GdJobId;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00203}00203\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073}{CGdFigureTask}}\ task;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00204}00204\ \ \ \ \ uint8\_t\ padding;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00205}00205\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571}{CGdFigureJobFlags}}\ flags;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00206}00206\ \ \ \ \ uint8\_t\ pathing\_mode;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00207}00207\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aedd8705d0983d09965ace902f37d0e0b}{SF\_CGdTargetData}}\ target;\ \textcolor{comment}{//\ it\ is\ stored\ WEIRDLY}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00208}00208\ \ \ \ \ uint8\_t\ SGtFigureAction[0xc];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00209}00209\ \ \ \ \ uint16\_t\ xdata\_key;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00210}00210\ \ \ \ \ uint8\_t\ walking\_mode;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00211}00211\ \ \ \ \ uint8\_t\ padding2;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00212}00212\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aa44e45471f7b6c436abe46e7d9d728c9}{SF\_Coord}}\ walk\_to\_pos;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00213}00213\ \ \ \ \ uint8\_t\ unknown[14];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00214}00214\ \ \ \ \ uint8\_t\ current\_waypoint;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00215}\mbox{\hyperlink{sf__general__structures_8h_a33f353e639dcf925b3b022137ecf7432}{00215}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_a33f353e639dcf925b3b022137ecf7432}{AutoClass24}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00216}00216\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00217}00217\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00218}00218\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00219}00219\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aa44e45471f7b6c436abe46e7d9d728c9}{SF\_Coord}}\ position;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00220}00220\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aa44e45471f7b6c436abe46e7d9d728c9}{SF\_Coord}}\ destination;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00221}00221\ \ \ \ \ uint16\_t\ to\_do\_count;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00222}00222\ \ \ \ \ uint16\_t\ to\_do\_count\_remainder;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00223}00223\ \ \ \ \ uint16\_t\ anim\_length;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00224}00224\ \ \ \ \ uint16\_t\ anim\_length\_remainder;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00225}00225\ \ \ \ \ uint8\_t\ activity;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00226}00226\ \ \ \ \ uint8\_t\ unknown1;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00227}00227\ \ \ \ \ uint16\_t\ building;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00228}00228\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732}{GdFigureFlags}}\ flags;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00229}00229\ \ \ \ \ uint8\_t\ race;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00230}00230\ \ \ \ \ uint8\_t\ level;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00231}00231\ \ \ \ \ uint16\_t\ owner;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00232}00232\ \ \ \ \ uint8\_t\ min\_attack\_range;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00233}00233\ \ \ \ \ uint8\_t\ max\_attack\_range;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00234}00234\ \ \ \ \ uint16\_t\ master\_figure;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00235}00235\ \ \ \ \ uint16\_t\ group\_leader;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00236}00236\ \ \ \ \ uint32\_t\ npc\_id;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00237}00237\ \ \ \ \ uint16\_t\ unit\_data\_id;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00238}00238\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aa312e3ddc91847eff4c403f6993528ea}{FigureStatistic}}\ armor;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00239}00239\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aa312e3ddc91847eff4c403f6993528ea}{FigureStatistic}}\ agility;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00240}00240\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aa312e3ddc91847eff4c403f6993528ea}{FigureStatistic}}\ charisma;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00241}00241\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aa312e3ddc91847eff4c403f6993528ea}{FigureStatistic}}\ dexterity;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00242}00242\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a51f7266da047c1617a2980d266ba63f6}{FigureStatisticExt}}\ health;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00243}00243\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aa312e3ddc91847eff4c403f6993528ea}{FigureStatistic}}\ intelligence;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00244}00244\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a51f7266da047c1617a2980d266ba63f6}{FigureStatisticExt}}\ mana\_stuff;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00245}00245\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a51f7266da047c1617a2980d266ba63f6}{FigureStatisticExt}}\ stamina;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00246}00246\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aa312e3ddc91847eff4c403f6993528ea}{FigureStatistic}}\ strength;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00247}00247\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aa312e3ddc91847eff4c403f6993528ea}{FigureStatistic}}\ wisdom;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00248}00248\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aa312e3ddc91847eff4c403f6993528ea}{FigureStatistic}}\ resistance\_fire;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00249}00249\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aa312e3ddc91847eff4c403f6993528ea}{FigureStatistic}}\ resistance\_ice;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00250}00250\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aa312e3ddc91847eff4c403f6993528ea}{FigureStatistic}}\ resistance\_mental;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00251}00251\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aa312e3ddc91847eff4c403f6993528ea}{FigureStatistic}}\ resistance\_black;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00252}00252\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aa312e3ddc91847eff4c403f6993528ea}{FigureStatistic}}\ walk\_speed;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00253}00253\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aa312e3ddc91847eff4c403f6993528ea}{FigureStatistic}}\ fight\_speed;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00254}00254\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aa312e3ddc91847eff4c403f6993528ea}{FigureStatistic}}\ cast\_speed;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00255}00255\ \ \ \ \ uint16\_t\ equipment[16];\ \textcolor{comment}{//\ No\ idea\ how\ this\ works,\ may\ need\ a\ class\ (undefined2[16]\ in\ ghidra,\ but\ is\ 20\ bytes\ FigureStatistic\ is\ 6\ bytes)}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00256}00256\ \ \ \ \ uint16\_t\ head;\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Not\ sure\ what\ this\ does}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00257}00257\ \ \ \ \ uint32\_t\ unknown2[3];\ \ \ \textcolor{comment}{//\ three\ 4\ byte\ data\ points\ in\ a\ row,\ no\ name\ known\ for\ these.}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00258}00258\ \ \ \ \ uint8\_t\ unknown3[168];\ \ \textcolor{comment}{//\ Many\ 1\ byte\ sections\ in\ a\ row}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00259}00259\ \ \ \ \ uint32\_t\ unknown4[7];\ \ \ \textcolor{comment}{//\ Many\ 4\ byte\ sections\ in\ a\ row}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00260}00260\ \ \ \ \ uint16\_t\ unknown5;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00261}00261\ \ \ \ \ uint8\_t\ unknown6[2];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00262}00262\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ab30b3d0a3ef1407e9022aad25007d3ce}{SF\_CGdFigureWeaponStats}}\ weapon\_stats;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00263}00263\ \ \ \ \ uint8\_t\ unknown7[13];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00264}00264\ \ \ \ \ uint8\_t\ good;\ \textcolor{comment}{//\ I\ assume\ perhaps\ alignment?}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00265}00265\ \ \ \ \ uint8\_t\ direction;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00266}00266\ \ \ \ \ uint8\_t\ unknown8;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00267}00267\ \ \ \ \ uint8\_t\ path\_dir;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00268}00268\ \ \ \ \ uint8\_t\ path\_wish\_dir;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00269}00269\ \ \ \ \ uint32\_t\ path\_bits;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00270}00270\ \ \ \ \ uint8\_t\ unknown9;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00271}00271\ \ \ \ \ uint32\_t\ unknown10[3];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00272}00272\ \ \ \ \ uint16\_t\ unknown11;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00273}00273\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_adca7a0b2b6c9bdf74a23b05cbb810ec7}{CGdFigureHateEntry}}\ hate\_entry[10];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00274}00274\ \ \ \ \ uint8\_t\ debug\_flags;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00275}00275\ \ \ \ \ uint8\_t\ unknown12;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00276}00276\ \ \ \ \ uint16\_t\ formation;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00277}00277\ \ \ \ \ uint8\_t\ faction;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00278}00278\ \ \ \ \ uint8\_t\ unknown13;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00279}00279\ \ \ \ \ uint32\_t\ clan\_relations;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00280}00280\ \ \ \ \ uint16\_t\ unknown14;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00281}00281\ \ \ \ \ uint32\_t\ padding1;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00282}00282\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a33f353e639dcf925b3b022137ecf7432}{AutoClass24}}\ ac\_1;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00283}00283\ \ \ \ \ uint8\_t\ padding2[3];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00284}00284\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a33f353e639dcf925b3b022137ecf7432}{AutoClass24}}\ ac\_2;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00285}00285\ \ \ \ \ uint8\_t\ padding3[3];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00286}00286\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a33f353e639dcf925b3b022137ecf7432}{AutoClass24}}\ ac\_4;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00287}00287\ \ \ \ \ uint8\_t\ padding4[3];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00288}00288\ \ \ \ \ uint32\_t\ unknown15[3];\ \textcolor{comment}{//\ Skipping\ some\ variable\ sections,\ contains\ differences\ Also\ Check\ what\ AutoClass24\ is,\ it's\ used\ multiple\ times\ in\ this\ section}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00289}00289\ \ \ \ \ uint8\_t\ dwarf\_rank;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00290}00290\ \ \ \ \ uint8\_t\ set\_type;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00291}\mbox{\hyperlink{sf__general__structures_8h_a3ceef93484bb270fac8a07d6a7c79a3b}{00291}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_a3ceef93484bb270fac8a07d6a7c79a3b}{GdFigure}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00292}00292\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00293}00293\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00294}00294\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00295}00295\ \ \ \ \ uint16\_t\ max\_used;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00296}00296\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a3ceef93484bb270fac8a07d6a7c79a3b}{GdFigure}}\ figures[2000];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00297}\mbox{\hyperlink{sf__general__structures_8h_adcfde5041b3e58539ba533680e23d9b0}{00297}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_adcfde5041b3e58539ba533680e23d9b0}{SF\_CGdFigure}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00298}00298\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00299}00299\ \textcolor{comment}{/*\ |-\/==========\ AutoClass\ Start\ ==========-\/|\ */}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00300}00300\ \textcolor{comment}{//\ These\ classes\ are\ currently\ only\ partially\ understood,\ and\ are\ not\ fully\ annotated}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00301}00301\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00302}00302\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00303}00303\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00304}00304\ \ \ \ \ uint32\_t\ *ac69\_ptr1;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00305}00305\ \ \ \ \ uint32\_t\ *ac69\_ptr2;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00306}00306\ \ \ \ \ uint32\_t\ *ac69\_ptr3;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00307}00307\ \ \ \ \ uint8\_t\ unkn1;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00308}00308\ \ \ \ \ uint8\_t\ unkn2;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00309}00309\ \ \ \ \ uint16\_t\ figure\_index;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00310}\mbox{\hyperlink{sf__general__structures_8h_aa3705057831d559c6a64bd6a4aeb9dd3}{00310}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_aa3705057831d559c6a64bd6a4aeb9dd3}{AutoClass69}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00311}00311\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00312}00312\ \textcolor{comment}{//\ This\ class\ is\ required\ for\ the\ RANDOM\ function,\ AutoClass14\ also\ seems\ to\ hold\ some\ relevance\ to\ the\ game\ world\ as\ well}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00313}00313\ \textcolor{comment}{//\ This\ class\ is\ initialized\ in\ the\ GameInit\ function,\ so\ it\ is\ likely\ very\ important.}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00314}00314\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00315}00315\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00316}00316\ \ \ \ \ uint16\_t\ unknown\_field\_0;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00317}00317\ \ \ \ \ uint16\_t\ unknown\_field\_2;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00318}00318\ \ \ \ \ uint16\_t\ unknown\_field\_4;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00319}00319\ \ \ \ \ uint8\_t\ unknown1[6];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00320}00320\ \ \ \ \ uint32\_t\ current\_step;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00321}00321\ \ \ \ \ uint8\_t\ unknown\_field\_10;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00322}00322\ \ \ \ \ uint8\_t\ unknown2[3];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00323}00323\ \ \ \ \ uint32\_t\ unknown\_field\_14;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00324}00324\ \ \ \ \ uint8\_t\ unknown\_field\_18;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00325}00325\ \ \ \ \ uint8\_t\ unknown\_field\_19;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00326}\mbox{\hyperlink{sf__general__structures_8h_ae56d22e41c81c0beca45d507d4ba44e8}{00326}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_ae56d22e41c81c0beca45d507d4ba44e8}{AutoClass14}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00327}00327\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00328}00328\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00329}00329\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00330}00330\ \ \ \ \ uint16\_t\ uknwn1;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00331}00331\ \ \ \ \ uint16\_t\ uknwn2;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00332}00332\ \ \ \ \ uint16\_t\ uknwn3;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00333}00333\ \ \ \ \ uint8\_t\ uknwn4;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00334}\mbox{\hyperlink{sf__general__structures_8h_ae3cbd78a75ae4e66eb36047cdc42077b}{00334}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_ae3cbd78a75ae4e66eb36047cdc42077b}{SF\_world\_unkn\_1}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00335}00335\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00336}00336\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00337}00337\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00338}00338\ \ \ \ \ uint16\_t\ world\_cell\_flags;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00339}00339\ \ \ \ \ uint16\_t\ sector;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00340}00340\ \ \ \ \ uint8\_t\ uknwn2;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00341}00341\ \ \ \ \ uint8\_t\ tile\_type;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00342}\mbox{\hyperlink{sf__general__structures_8h_a6a3c1882f4a600762262d57e39c67937}{00342}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_a6a3c1882f4a600762262d57e39c67937}{SF\_world\_unkn\_2}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00343}00343\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00344}00344\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00345}00345\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00346}00346\ \ \ \ \ uint8\_t\ uknwn1[10];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00347}00347\ \ \ \ \ uint8\_t\ block\_value;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00348}00348\ \ \ \ \ uint8\_t\ uknwn2[3];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00349}\mbox{\hyperlink{sf__general__structures_8h_ae900cce116daeab95744454174071a59}{00349}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_ae900cce116daeab95744454174071a59}{SF\_world\_unkn\_3}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00350}00350\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00351}00351\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00352}00352\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00353}00353\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a1b8b1ec284ff51feaf2673b4aa18f4eb}{SF\_Rectangle}}\ rect;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00354}00354\ \ \ \ \ uint8\_t\ unkn1;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00355}\mbox{\hyperlink{sf__general__structures_8h_ae13f138354027494424638aa18bc4ca9}{00355}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_ae13f138354027494424638aa18bc4ca9}{SF\_world\_unkn\_4}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00356}00356\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00357}00357\ \textcolor{comment}{/*\ |-\/==========\ Spell\ Start\ ==========-\/|\ */}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00358}00358\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00359}00359\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00360}00360\ \ \ \ \ uint16\_t\ to\_do\_count;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00361}00361\ \ \ \ \ uint16\_t\ spell\_id;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00362}00362\ \ \ \ \ uint16\_t\ spell\_line;\ \textcolor{comment}{//\ aka\ spell\ type\ in\ shovel's\ editor}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00363}00363\ \ \ \ \ uint16\_t\ spell\_job;\ \ \textcolor{comment}{//\ aka\ spell\ line\ in\ older\ code}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00364}00364\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aedd8705d0983d09965ace902f37d0e0b}{SF\_CGdTargetData}}\ source;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00365}00365\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aedd8705d0983d09965ace902f37d0e0b}{SF\_CGdTargetData}}\ target;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00366}00366\ \ \ \ \ uint16\_t\ xdata\_key;\ \textcolor{comment}{//\ IDK\ (Seems\ to\ be\ used\ in\ ref\ for\ things,\ seen\ usage\ in\ getting\ target\ data\ and\ others)}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00367}00367\ \ \ \ \ uint16\_t\ DLLNode;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00368}00368\ \ \ \ \ uint8\_t\ flags;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00369}\mbox{\hyperlink{sf__general__structures_8h_a0dd974e2c227c0130f5ad6d5d87ba39f}{00369}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_a0dd974e2c227c0130f5ad6d5d87ba39f}{SF\_GdSpell}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00370}00370\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00371}00371\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))\ \mbox{\hyperlink{sf__general__structures_8h_a2739681db2b7bff68f1229d5a5f3d5e4}{SF\_CGdFigureJobs}}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00372}00372\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00373}00373\ \ \ \ \ uint32\_t\ *CGdAStar;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00374}00374\ \ \ \ \ uint32\_t\ *CGdAiBattle;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00375}00375\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ae56d22e41c81c0beca45d507d4ba44e8}{AutoClass14}}\ *OpaqueClass;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00376}00376\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a326f52debb4a3a05138160c72536c17e}{SF\_CGdBuilding}}\ *CGdBuilding;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00377}00377\ \ \ \ \ uint32\_t\ *CGdBuildingToolBox;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00378}00378\ \ \ \ \ uint32\_t\ *CGdDoubleLinkList;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00379}00379\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a710c54d12a2bf3e29c87578d51d0373d}{SF\_CGDEffect}}\ *CGdEffect;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00380}00380\ \ \ \ \ uint32\_t\ *AutoClass30;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00381}00381\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_adcfde5041b3e58539ba533680e23d9b0}{SF\_CGdFigure}}\ *CGdFigure;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00382}00382\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a17f35cab19a4752dcf2d3fb1ea9a9f0e}{SF\_CGdFigureToolbox}}\ *CGdFigureToolBox;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00383}00383\ \ \ \ \ uint32\_t\ *CGdFormation;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00384}00384\ \ \ \ \ uint32\_t\ *AutoClass34;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00385}00385\ \ \ \ \ uint32\_t\ *CGdObject;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00386}00386\ \ \ \ \ uint32\_t\ *CGdObjectToolBox;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00387}00387\ \ \ \ \ uint32\_t\ *CGdPlayer;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00388}00388\ \ \ \ \ uint32\_t\ *AutoClass46;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00389}00389\ \ \ \ \ uint32\_t\ *AutoClass47;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00390}00390\ \ \ \ \ uint32\_t\ *CGdResource;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00391}00391\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\_CGdSpell}}\ *CGdSpell;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00392}00392\ \ \ \ \ uint32\_t\ *AutoClass48;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00393}00393\ \ \ \ \ uint32\_t\ *AutoClass22;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00394}00394\ \ \ \ \ uint32\_t\ *AutoClass50;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00395}00395\ \ \ \ \ uint32\_t\ *CGdVisibility;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00396}00396\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ae200cc761d9e4257e978beaa16ca50a3}{SF\_CGdWorld}}\ *CGdWorld;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00397}00397\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_afaafd0a4f93b6d4e95de3f0e494c941b}{SF\_CGdWorldToolBox}}\ *CGdWorldToolBox;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00398}00398\ \ \ \ \ uint32\_t\ *CGdXDataList;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00399}00399\ \ \ \ \ uint8\_t\ padding[572];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00400}00400\ \ \ \ \ uint32\_t\ noManaUsage;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00401}00401\ \ \ \ \ \textcolor{keywordtype}{void}\ *unkn1;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00402}00402\ \ \ \ \ \textcolor{keywordtype}{void}\ *unkn2;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00403}00403\ \ \ \ \ uint32\_t\ padding2;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00404}00404\ \ \ \ \ \textcolor{keywordtype}{void}\ *unkn3;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00405}00405\ \ \ \ \ uint32\_t\ padding3;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00406}00406\ \ \ \ \ \textcolor{keywordtype}{void}\ *unkn4;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00407}00407\ \ \ \ \ uint32\_t\ padding4;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00408}00408\ \};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00409}00409\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00410}00410\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))\ \mbox{\hyperlink{sf__general__structures_8h_a17f35cab19a4752dcf2d3fb1ea9a9f0e}{SF\_CGdFigureToolbox}}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00411}00411\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00412}00412\ \ \ \ \ uint32\_t\ *CGdAIBattle;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00413}00413\ \ \ \ \ uint32\_t\ *CGdAIMain;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00414}00414\ \ \ \ \ uint32\_t\ *CGdAStar;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00415}00415\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ae56d22e41c81c0beca45d507d4ba44e8}{AutoClass14}}\ *maybe\_random;\ \textcolor{comment}{//\ Unconfirmed}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00416}00416\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a326f52debb4a3a05138160c72536c17e}{SF\_CGdBuilding}}\ *CGdBuilding;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00417}00417\ \ \ \ \ uint32\_t\ *CGdBuildingToolbox;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00418}00418\ \ \ \ \ uint32\_t\ *CGdDoubleLinkedList;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00419}00419\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a710c54d12a2bf3e29c87578d51d0373d}{SF\_CGDEffect}}\ *CGdEffect;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00420}00420\ \ \ \ \ uint32\_t\ *autoclass30;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00421}00421\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_adcfde5041b3e58539ba533680e23d9b0}{SF\_CGdFigure}}\ *CGdFigure;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00422}00422\ \ \ \ \ uint32\_t\ *CGdFigureJobs;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00423}00423\ \ \ \ \ uint32\_t\ *CGdFormation;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00424}00424\ \ \ \ \ uint32\_t\ *autoclass34;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00425}00425\ \ \ \ \ uint32\_t\ *autoclass50;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00426}00426\ \ \ \ \ uint32\_t\ *CGdInfluenceMap;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00427}00427\ \ \ \ \ uint32\_t\ *autoclass36;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00428}00428\ \ \ \ \ uint32\_t\ *CGdObject;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00429}00429\ \ \ \ \ uint32\_t\ *CGdObjectToolBox;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00430}00430\ \ \ \ \ uint32\_t\ *CGdPlayer;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00431}00431\ \ \ \ \ uint32\_t\ *autoclass46;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00432}00432\ \ \ \ \ uint32\_t\ *CGdResource;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00433}00433\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\_CGdSpell}}\ *CGdSpell;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00434}00434\ \ \ \ \ uint32\_t\ *autoclass22;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00435}00435\ \ \ \ \ uint32\_t\ *CGdVisibility;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00436}00436\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ae200cc761d9e4257e978beaa16ca50a3}{SF\_CGdWorld}}\ *CGdWorld;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00437}00437\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_afaafd0a4f93b6d4e95de3f0e494c941b}{SF\_CGdWorldToolBox}}\ *CGdWorldToolBox;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00438}00438\ \ \ \ \ uint32\_t\ *CGdXDataList;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00439}00439\ \ \ \ \ uint32\_t\ *undefined4\_1;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00440}00440\ \ \ \ \ uint32\_t\ *undefined4\_2;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00441}00441\ \ \ \ \ uint32\_t\ *undefined;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00442}00442\ \};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00443}00443\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00444}00444\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))\ \mbox{\hyperlink{sf__general__structures_8h_ae200cc761d9e4257e978beaa16ca50a3}{SF\_CGdWorld}}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00445}00445\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00446}00446\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ae3cbd78a75ae4e66eb36047cdc42077b}{SF\_world\_unkn\_1}}\ unknown1[10001];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00447}00447\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a3aec067538ae8bb3838f555feac49682}{SF\_String}}\ map\_name;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00448}00448\ \ \ \ \ uint16\_t\ map\_size;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00449}00449\ \ \ \ \ uint8\_t\ unknown2;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00450}00450\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a6a3c1882f4a600762262d57e39c67937}{SF\_world\_unkn\_2}}\ cells[1048576];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00451}00451\ \ \ \ \ uint16\_t\ heightmap[1048576];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00452}00452\ \ \ \ \ uint16\_t\ unknown3;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00453}00453\ \ \ \ \ uint8\_t\ unknown4[131070];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00454}00454\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ae13f138354027494424638aa18bc4ca9}{SF\_world\_unkn\_4}}\ unknown5[100];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00455}00455\ \ \ \ \ uint16\_t\ change\_count;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00456}00456\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ae900cce116daeab95744454174071a59}{SF\_world\_unkn\_3}}\ unknown6[255];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00457}00457\ \ \ \ \ uint8\_t\ unknown7[63];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00458}00458\ \};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00459}00459\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00460}00460\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))\ \mbox{\hyperlink{sf__general__structures_8h_afaafd0a4f93b6d4e95de3f0e494c941b}{SF\_CGdWorldToolBox}}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00461}00461\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00462}00462\ \ \ \ \ uint32\_t\ *CGdAStar;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00463}00463\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ae56d22e41c81c0beca45d507d4ba44e8}{AutoClass14}}\ *OpaqueClass;\ \textcolor{comment}{//\ Unconfirmed}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00464}00464\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a326f52debb4a3a05138160c72536c17e}{SF\_CGdBuilding}}\ *CGdBuilding;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00465}00465\ \ \ \ \ uint32\_t\ *CGdBuildingToolbox;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00466}00466\ \ \ \ \ uint32\_t\ *CGdDoubleLinkedList;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00467}00467\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a710c54d12a2bf3e29c87578d51d0373d}{SF\_CGDEffect}}\ *CGdEffect;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00468}00468\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_adcfde5041b3e58539ba533680e23d9b0}{SF\_CGdFigure}}\ *CGdFigure;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00469}00469\ \ \ \ \ uint32\_t\ *CGdFigureJobs;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00470}00470\ \ \ \ \ uint32\_t\ *autoclass47;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00471}00471\ \ \ \ \ uint32\_t\ *CGdObject;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00472}00472\ \ \ \ \ uint32\_t\ *CGdObjectToolBox;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00473}00473\ \ \ \ \ uint32\_t\ *CGdResource;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00474}00474\ \ \ \ \ uint32\_t\ *autoclass22;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00475}00475\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ae200cc761d9e4257e978beaa16ca50a3}{SF\_CGdWorld}}\ *\mbox{\hyperlink{sf__general__structures_8h_ae200cc761d9e4257e978beaa16ca50a3}{SF\_CGdWorld}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00476}00476\ \ \ \ \ uint32\_t\ *CGdXDataList;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00477}00477\ \ \ \ \ uint32\_t\ data[10000];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00478}00478\ \ \ \ \ uint32\_t\ uknown1;\ \textcolor{comment}{//\ 4x\ uint8\_t}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00479}00479\ \ \ \ \ uint32\_t\ unknown2;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00480}00480\ \};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00481}00481\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00482}00482\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))\ \mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\_CGdSpell}}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00483}00483\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00484}00484\ \ \ \ \ \textcolor{keywordtype}{void}\ *SF\_CGdAiMain;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00485}00485\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ae56d22e41c81c0beca45d507d4ba44e8}{AutoClass14}}\ *OpaqueClass;\ \textcolor{comment}{//\ For\ Random}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00486}00486\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a326f52debb4a3a05138160c72536c17e}{SF\_CGdBuilding}}\ *CGdBuilding;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00487}00487\ \ \ \ \ \textcolor{keywordtype}{void}\ *SF\_CGdBuildingToolbox;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00488}00488\ \ \ \ \ \textcolor{keywordtype}{void}\ *SF\_CGdDoubleLinkedList;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00489}00489\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a710c54d12a2bf3e29c87578d51d0373d}{SF\_CGDEffect}}\ *SF\_CGdEffect;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00490}00490\ \ \ \ \ \textcolor{keywordtype}{void}\ *unkn1;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00491}00491\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_adcfde5041b3e58539ba533680e23d9b0}{SF\_CGdFigure}}\ *\mbox{\hyperlink{sf__general__structures_8h_adcfde5041b3e58539ba533680e23d9b0}{SF\_CGdFigure}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00492}00492\ \ \ \ \ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{sf__general__structures_8h_a2739681db2b7bff68f1229d5a5f3d5e4}{SF\_CGdFigureJobs}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00493}00493\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a17f35cab19a4752dcf2d3fb1ea9a9f0e}{SF\_CGdFigureToolbox}}\ *SF\_CGdFigureToolBox;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00494}00494\ \ \ \ \ \textcolor{keywordtype}{void}\ *SF\_CGdFormation;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00495}00495\ \ \ \ \ \textcolor{keywordtype}{void}\ *unkn2;\ \textcolor{comment}{//\ Seems\ to\ be\ used\ as\ first\ param\ for\ GetChanceToResistSpell}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00496}00496\ \ \ \ \ \textcolor{keywordtype}{void}\ *SF\_CGdObject;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00497}00497\ \ \ \ \ \textcolor{keywordtype}{void}\ *SF\_CGdObjectToolBox;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00498}00498\ \ \ \ \ \textcolor{keywordtype}{void}\ *SF\_CGdPlayer;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00499}00499\ \ \ \ \ \textcolor{keywordtype}{void}\ *SF\_CGdResource;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00500}00500\ \ \ \ \ \textcolor{keywordtype}{void}\ *unkn3;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00501}00501\ \ \ \ \ \textcolor{keywordtype}{void}\ *unkn4;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00502}00502\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ae200cc761d9e4257e978beaa16ca50a3}{SF\_CGdWorld}}\ *\mbox{\hyperlink{sf__general__structures_8h_ae200cc761d9e4257e978beaa16ca50a3}{SF\_CGdWorld}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00503}00503\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_afaafd0a4f93b6d4e95de3f0e494c941b}{SF\_CGdWorldToolBox}}\ *\mbox{\hyperlink{sf__general__structures_8h_afaafd0a4f93b6d4e95de3f0e494c941b}{SF\_CGdWorldToolBox}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00504}00504\ \ \ \ \ \textcolor{keywordtype}{void}\ *SF\_CGdXDataList;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00505}00505\ \ \ \ \ uint16\_t\ max\_used;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00506}00506\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a0dd974e2c227c0130f5ad6d5d87ba39f}{SF\_GdSpell}}\ active\_spell\_list[800];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00507}00507\ \ \ \ \ \textcolor{keywordtype}{void}\ *unkn5;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00508}00508\ \ \ \ \ uint32\_t\ unkn6;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00509}00509\ \};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00510}00510\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00511}00511\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))\ \mbox{\hyperlink{sf__general__structures_8h_a8c1eaf8a100a1e9fee8b637688b23987}{SF\_GdEffect}}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00512}00512\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00513}00513\ \ \ \ \ uint16\_t\ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a}{CGdEffectType}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00514}00514\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aedd8705d0983d09965ace902f37d0e0b}{SF\_CGdTargetData}}\ source;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00515}00515\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aedd8705d0983d09965ace902f37d0e0b}{SF\_CGdTargetData}}\ target;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00516}00516\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aa44e45471f7b6c436abe46e7d9d728c9}{SF\_Coord}}\ position;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00517}00517\ \ \ \ \ uint32\_t\ start\_step;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00518}00518\ \ \ \ \ uint32\_t\ unkn1;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00519}00519\ \ \ \ \ uint16\_t\ length;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00520}00520\ \ \ \ \ uint16\_t\ xdata\_key;\ \textcolor{comment}{//\ IDK\ (Seems\ to\ be\ used\ in\ ref\ for\ things,\ seen\ usage\ in\ getting\ target\ data\ and\ others)}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00521}00521\ \ \ \ \ uint16\_t\ unkn2;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00522}00522\ \ \ \ \ uint16\_t\ unkn3;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00523}00523\ \ \ \ \ uint16\_t\ unkn4;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00524}00524\ \ \ \ \ uint16\_t\ unkn5;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00525}00525\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aa44e45471f7b6c436abe46e7d9d728c9}{SF\_Coord}}\ position2;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00526}00526\ \};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00527}00527\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00528}00528\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))\ \mbox{\hyperlink{sf__general__structures_8h_a710c54d12a2bf3e29c87578d51d0373d}{SF\_CGDEffect}}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00529}00529\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00530}00530\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ae56d22e41c81c0beca45d507d4ba44e8}{AutoClass14}}\ *OpaqueClass;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00531}00531\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a326f52debb4a3a05138160c72536c17e}{SF\_CGdBuilding}}\ *CGdBuilding;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00532}00532\ \ \ \ \ \textcolor{keywordtype}{void}\ *SF\_CGdBuildingToolbox;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00533}00533\ \ \ \ \ \textcolor{keywordtype}{void}\ *SF\_CGdDoubleLinkedList;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00534}00534\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_adcfde5041b3e58539ba533680e23d9b0}{SF\_CGdFigure}}\ *\mbox{\hyperlink{sf__general__structures_8h_adcfde5041b3e58539ba533680e23d9b0}{SF\_CGdFigure}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00535}00535\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a17f35cab19a4752dcf2d3fb1ea9a9f0e}{SF\_CGdFigureToolbox}}\ *SF\_CGdFigureToolBox;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00536}00536\ \ \ \ \ \textcolor{keywordtype}{void}\ *AutoClass34;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00537}00537\ \ \ \ \ \textcolor{keywordtype}{void}\ *SF\_CGdObject;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00538}00538\ \ \ \ \ \textcolor{keywordtype}{void}\ *SF\_CGdResource;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00539}00539\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\_CGdSpell}}\ *CGdSpell;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00540}00540\ \ \ \ \ \textcolor{keywordtype}{void}\ *AutoClass22;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00541}00541\ \ \ \ \ \textcolor{keywordtype}{void}\ *AutoClass50;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00542}00542\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ae200cc761d9e4257e978beaa16ca50a3}{SF\_CGdWorld}}\ *\mbox{\hyperlink{sf__general__structures_8h_ae200cc761d9e4257e978beaa16ca50a3}{SF\_CGdWorld}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00543}00543\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_afaafd0a4f93b6d4e95de3f0e494c941b}{SF\_CGdWorldToolBox}}\ *\mbox{\hyperlink{sf__general__structures_8h_afaafd0a4f93b6d4e95de3f0e494c941b}{SF\_CGdWorldToolBox}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00544}00544\ \ \ \ \ \textcolor{keywordtype}{void}\ *SF\_CGdXDataList;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00545}00545\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a8c1eaf8a100a1e9fee8b637688b23987}{SF\_GdEffect}}\ active\_effect\_list[2000];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00546}00546\ \ \ \ \ uint16\_t\ max\_used;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00547}00547\ \};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00548}00548\ \textcolor{comment}{/*\ |-\/=============\ Buildings\ Structures\ ==========-\/\ |*/}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00549}00549\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00550}00550\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}\ ((packed))}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00551}00551\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00552}00552\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_aa44e45471f7b6c436abe46e7d9d728c9}{SF\_Coord}}\ position;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00553}00553\ \ \ \ \ uint16\_t\ owner;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00554}00554\ \ \ \ \ uint8\_t\ type;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00555}00555\ \ \ \ \ uint8\_t\ race;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00556}00556\ \ \ \ \ uint8\_t\ flags;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00557}00557\ \ \ \ \ uint16\_t\ build\_up;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00558}00558\ \ \ \ \ uint16\_t\ build\_max;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00559}00559\ \ \ \ \ uint16\_t\ health\_current;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00560}00560\ \ \ \ \ uint16\_t\ life\_current\_max;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00561}00561\ \ \ \ \ uint16\_t\ health\_max;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00562}00562\ \ \ \ \ uint16\_t\ DLLNode;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00563}00563\ \ \ \ \ uint16\_t\ xdata\_key;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00564}00564\ \ \ \ \ uint16\_t\ angle;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00565}00565\ \ \ \ \ uint32\_t\ unknown[5];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00566}00566\ \ \ \ \ uint8\_t\ worker\_count;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00567}00567\ \ \ \ \ uint8\_t\ worker\_count\_max;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00568}00568\ \ \ \ \ uint8\_t\ level;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00569}00569\ \ \ \ \ uint32\_t\ unknown2;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00570}\mbox{\hyperlink{sf__general__structures_8h_acbab0b1215e69f72f6905bd6b1e73b8e}{00570}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_acbab0b1215e69f72f6905bd6b1e73b8e}{GdBuilding}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00571}00571\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00572}00572\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))\ \mbox{\hyperlink{sf__general__structures_8h_a326f52debb4a3a05138160c72536c17e}{SF\_CGdBuilding}}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00573}00573\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00574}00574\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_ae56d22e41c81c0beca45d507d4ba44e8}{AutoClass14}}\ *autoClass14;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00575}00575\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_acbab0b1215e69f72f6905bd6b1e73b8e}{GdBuilding}}\ buildings[1000];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00576}00576\ \ \ \ \ uint16\_t\ max\_used;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00577}00577\ \ \ \ \ \textcolor{keywordtype}{void}\ *astruct\_31;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00578}00578\ \ \ \ \ uint32\_t\ unknown1;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00579}00579\ \ \ \ \ \textcolor{keywordtype}{void}\ *astruct\_39;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00580}00580\ \ \ \ \ uint32\_t\ unknown2;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00581}00581\ \};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00582}00582\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00583}00583\ \textcolor{comment}{/*\ |-\/==========\ Internal\ Structures\ ==========-\/|\ */}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00584}00584\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00585}00585\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00586}00586\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00587}00587\ \ \ \ \ uint32\_t\ vftable\_ptr;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00588}00588\ \ \ \ \ uint8\_t\ CAppMenu\_data[0x688];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00589}\mbox{\hyperlink{sf__general__structures_8h_a747e81e6fc592fdba2378ffb92c90625}{00589}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_a747e81e6fc592fdba2378ffb92c90625}{CAppMenu}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00590}00590\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00591}00591\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00592}00592\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00593}00593\ \ \ \ \ uint8\_t\ font\_data[0x1fa0];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00594}\mbox{\hyperlink{sf__general__structures_8h_af97891752509725cbcb2481b85181ee9}{00594}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_af97891752509725cbcb2481b85181ee9}{SF\_Font}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00595}00595\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00596}00596\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00597}00597\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00598}00598\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_af97891752509725cbcb2481b85181ee9}{SF\_Font}}\ *smth\_font[32];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00599}00599\ \ \ \ \ uint8\_t\ unkn\_data[0x8];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00600}\mbox{\hyperlink{sf__general__structures_8h_aab247d013cf0680517ac4722412d6440}{00600}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_aab247d013cf0680517ac4722412d6440}{SF\_FontStruct}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00601}00601\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00602}00602\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00603}00603\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00604}00604\ \ \ \ \ uint32\_t\ R;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00605}00605\ \ \ \ \ uint32\_t\ G;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00606}00606\ \ \ \ \ uint32\_t\ B;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00607}\mbox{\hyperlink{sf__general__structures_8h_aabfd8cbc5556407d59606b8fc3e48c2c}{00607}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_aabfd8cbc5556407d59606b8fc3e48c2c}{SF\_Color}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00608}00608\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00609}00609\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00610}00610\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00611}00611\ \ \ \ \ uint8\_t\ data[0x128];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00612}00612\ \ \ \ \ uint32\_t\ parent\_ptr;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00613}00613\ \ \ \ \ uint8\_t\ data2[0xdc];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00614}\mbox{\hyperlink{sf__general__structures_8h_a49644afe3c0b842e649ab777a073bdbd}{00614}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_a49644afe3c0b842e649ab777a073bdbd}{CMnuBase\_data}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00615}00615\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00616}00616\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00617}00617\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00618}00618\ \ \ \ \ uint32\_t\ vftablePTR;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00619}00619\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a49644afe3c0b842e649ab777a073bdbd}{CMnuBase\_data}}\ \mbox{\hyperlink{sf__general__structures_8h_a49644afe3c0b842e649ab777a073bdbd}{CMnuBase\_data}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00620}00620\ \ \ \ \ uint8\_t\ CMnuVisControl\_data[0x9C];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00621}00621\ \ \ \ \ uint8\_t\ CMnuLabel\_data[0xc0];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00622}\mbox{\hyperlink{sf__general__structures_8h_a1b96a8d15a7b76099bd6683f104dc217}{00622}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_a1b96a8d15a7b76099bd6683f104dc217}{CMnuLabel}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00623}00623\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00624}00624\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00625}00625\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00626}00626\ \ \ \ \ uint32\_t\ vftablePTR;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00627}00627\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a49644afe3c0b842e649ab777a073bdbd}{CMnuBase\_data}}\ \mbox{\hyperlink{sf__general__structures_8h_a49644afe3c0b842e649ab777a073bdbd}{CMnuBase\_data}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00628}00628\ \ \ \ \ uint8\_t\ CMnuVisControl\_data[0x9C];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00629}00629\ \ \ \ \ uint8\_t\ CMnuContainer\_data[0x98];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00630}\mbox{\hyperlink{sf__general__structures_8h_aa4b2c10b9c9570a024b495014e652c71}{00630}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_aa4b2c10b9c9570a024b495014e652c71}{CMnuContainer}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00631}00631\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00632}00632\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00633}00633\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00634}00634\ \ \ \ \ uint8\_t\ unkn1[0x8];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00635}00635\ \ \ \ \ uint8\_t\ offset\_0x8;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00636}00636\ \ \ \ \ uint8\_t\ unkn2[0x3];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00637}00637\ \ \ \ \ uint32\_t\ offset\_0xc;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00638}00638\ \ \ \ \ uint32\_t\ offset\_0x10;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00639}00639\ \ \ \ \ uint8\_t\ offset\_0x14;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00640}00640\ \ \ \ \ uint8\_t\ unkn3[0x3];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00641}00641\ \ \ \ \ uint32\_t\ offset\_0x18;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00642}00642\ \ \ \ \ uint32\_t\ offset\_0x1c;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00643}00643\ \ \ \ \ uint8\_t\ unknown[0x44];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00644}00644\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a3aec067538ae8bb3838f555feac49682}{SF\_String}}\ unknown\_string;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00645}\mbox{\hyperlink{sf__general__structures_8h_a41f332f52d29afd3ec69e7ce3a342adf}{00645}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_a41f332f52d29afd3ec69e7ce3a342adf}{data\_CUiStartMenu}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00646}00646\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00647}00647\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\_\_attribute\_\_}}((packed))}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00648}00648\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00649}00649\ \ \ \ \ uint32\_t\ vftablePTR;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00650}00650\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{sf__general__structures_8h_a49644afe3c0b842e649ab777a073bdbd}{CMnuBase\_data}}[0x208];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00651}00651\ \ \ \ \ uint8\_t\ CMnuVisControl\_data[0x9C];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00652}00652\ \ \ \ \ uint8\_t\ CMnuContainer\_data[0x98];}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00653}00653\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a41f332f52d29afd3ec69e7ce3a342adf}{data\_CUiStartMenu}}\ CUiStartMenu\_data;}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00654}\mbox{\hyperlink{sf__general__structures_8h_ae6c281c594fe42f390ef3a9d3456378e}{00654}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_ae6c281c594fe42f390ef3a9d3456378e}{CUiStartMenu}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00655}00655\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00656}\mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355}{00656}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00657}00657\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00658}\mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355af92c9cd68f6d74da57d97e43e3518664}{00658}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355af92c9cd68f6d74da57d97e43e3518664}{EFFECT\_EFFECT\_INDEX}}\ =\ 0x06,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00659}\mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355ac6660c115883204a951ddbbacc021b4d}{00659}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355ac6660c115883204a951ddbbacc021b4d}{EFFECT\_SPELL\_INDEX}}\ =\ 0x11,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00660}\mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a1ab4721cbe300ffa4b0d6c68bdd80858}{00660}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a1ab4721cbe300ffa4b0d6c68bdd80858}{EFFECT\_SPELL\_ID}}\ =\ 0x09,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00661}\mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a5c1e1f0adff95e4bc9146465e16df9ba}{00661}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a5c1e1f0adff95e4bc9146465e16df9ba}{EFFECT\_ENTITY\_INDEX2}}\ =\ 0x1A,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00662}\mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a61d8bacc33743558c22716f576c09a7a}{00662}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a61d8bacc33743558c22716f576c09a7a}{EFFECT\_SUBSPELL\_ID}}\ =\ 0x1C,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00663}\mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355ac368a816f86c93599ccaf4cc83ca72b8}{00663}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355ac368a816f86c93599ccaf4cc83ca72b8}{EFFECT\_PHYSICAL\_DAMAGE}}\ =\ 0x1E,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00664}\mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355abf76662bac9c32c99c4847777a416c43}{00664}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355abf76662bac9c32c99c4847777a416c43}{EFFECT\_ENTITY\_INDEX}}\ =\ 0x2F,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00665}\mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a1103b3d7d2d9229d30f4cb7db27fcb99}{00665}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a1103b3d7d2d9229d30f4cb7db27fcb99}{EFFECT\_ENTITY\_INDEX3}}\ =\ 0x2D,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00666}\mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a70b8c84cbc27ae99d210dd5be3bbd2e6}{00666}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a70b8c84cbc27ae99d210dd5be3bbd2e6}{EFFECT\_ENTITY\_TYPE}}\ =\ 0x30,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00667}\mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a057bd74da3f12a193cd1ed9f1c039793}{00667}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a057bd74da3f12a193cd1ed9f1c039793}{EFFECT\_ENTITY\_TYPE2}}\ =\ 0x13,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00668}\mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a56396aef199bc826464e01412f6ad267}{00668}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a56396aef199bc826464e01412f6ad267}{EFFECT\_DO\_NOT\_ADD\_SUBSPELL}}\ =\ 0x33,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00669}\mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a792986ae89325aaf058ac819239e682e}{00669}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a792986ae89325aaf058ac819239e682e}{SPELL\_TICK\_COUNT\_AUX}}\ =\ 0x05,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00670}\mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a9645396ec61f65e96b3a66e10928f74e}{00670}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a9645396ec61f65e96b3a66e10928f74e}{SPELL\_TICK\_COUNT}}\ =\ 0x12,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00671}\mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a566e0a8f8302a99b3a58b39309498169}{00671}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a566e0a8f8302a99b3a58b39309498169}{SPELL\_DOUBLE\_DAMAGE}}\ =\ 0x26,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00672}\mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355ab13261395a2dce02b3f22289d12a44e2}{00672}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355ab13261395a2dce02b3f22289d12a44e2}{SPELL\_TARGET}}\ =\ 0x33,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00673}\mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a466b63fe0e5a65061f2a49d338613acf}{00673}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a466b63fe0e5a65061f2a49d338613acf}{SPELL\_PESTILENCE\_DAMAGE}}\ =\ 0x0E,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00674}\mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a52faeabe45c367646d1d5c284330da65}{00674}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a52faeabe45c367646d1d5c284330da65}{SPELL\_STAT\_MUL\_MODIFIER}}\ =\ 0x0A,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00675}\mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a07005f8d2f53f625c54ddab97d578e31}{00675}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a07005f8d2f53f625c54ddab97d578e31}{SPELL\_STAT\_MUL\_MODIFIER2}}\ =\ 0x27,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00676}\mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a4222adc5ecb712e4569c72841051499e}{00676}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a4222adc5ecb712e4569c72841051499e}{SPELL\_STAT\_MUL\_MODIFIER3}}\ =\ 0x2B,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00677}\mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a1a42d78c83f9f7e2ee6dc60f83e17c56}{00677}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a1a42d78c83f9f7e2ee6dc60f83e17c56}{SPELL\_STAT\_MUL\_MODIFIER4}}\ =\ 0x2C,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00678}00678\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a6c400d88ba9221a3edc111cd5dbc9dd6}{SPELL\_CONSERVATION\_SHIELD}}\ =\ 0x0B}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00679}\mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a6c400d88ba9221a3edc111cd5dbc9dd6}{00679}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355}{SpellDataKey}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00680}00680\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00681}\mbox{\hyperlink{sf__general__structures_8h_a3f1ae4d570090b097230b86e02b1a178}{00681}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00682}00682\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00683}\mbox{\hyperlink{sf__general__structures_8h_a3f1ae4d570090b097230b86e02b1a178abfbf875310a12806703353540abf4285}{00683}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a3f1ae4d570090b097230b86e02b1a178abfbf875310a12806703353540abf4285}{PRE}},}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00684}\mbox{\hyperlink{sf__general__structures_8h_a3f1ae4d570090b097230b86e02b1a178a88ec7d5086d2469ba843c7fcceade8a6}{00684}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a3f1ae4d570090b097230b86e02b1a178a88ec7d5086d2469ba843c7fcceade8a6}{DEFAULT}},}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00685}\mbox{\hyperlink{sf__general__structures_8h_a3f1ae4d570090b097230b86e02b1a178a368c5bc07109370b819193871352b926}{00685}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a3f1ae4d570090b097230b86e02b1a178a368c5bc07109370b819193871352b926}{POST}},}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00686}00686\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a3f1ae4d570090b097230b86e02b1a178a2addb49878f50c95dc669e5fdbd130a2}{COUNT}}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00687}\mbox{\hyperlink{sf__general__structures_8h_a3f1ae4d570090b097230b86e02b1a178a2addb49878f50c95dc669e5fdbd130a2}{00687}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_a3f1ae4d570090b097230b86e02b1a178}{SpellDamagePhase}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00688}00688\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00689}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a}{00689}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00690}00690\ \{}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00691}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa812135967747ee0e76940d1cb4e10a0e}{00691}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa812135967747ee0e76940d1cb4e10a0e}{kGdEffectNone}}\ =\ 0,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00692}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa899e296628dec06a5e12b3853c78ea5b}{00692}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa899e296628dec06a5e12b3853c78ea5b}{kGdEffectSpellCast}}\ =\ 1,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00693}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aab69a6e3d0cdd77c0ff1286d3648f7540}{00693}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aab69a6e3d0cdd77c0ff1286d3648f7540}{kGdEffectSpellHitWorld}}\ =\ 2,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00694}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa69591905b02ea44de77b562f10f4e6fb}{00694}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa69591905b02ea44de77b562f10f4e6fb}{kGdEffectSpellHitTarget}}\ =\ 3,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00695}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa2f4558513434163c5007ed77e94024ca}{00695}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa2f4558513434163c5007ed77e94024ca}{kGdEffectSpellDOTHitTarget}}\ =\ 4,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00696}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aaa5a1a7f98bcb090bf3cae6be95cfc666}{00696}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aaa5a1a7f98bcb090bf3cae6be95cfc666}{kGdEffectSpellMissTarget}}\ =\ 5,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00697}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa9909184df0bfe5c7b1e8aae701adb1e9}{00697}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa9909184df0bfe5c7b1e8aae701adb1e9}{kGdEffectSpellResolve}}\ =\ 6,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00698}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aafd6342040161e88b5b07ebad6d337eee}{00698}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aafd6342040161e88b5b07ebad6d337eee}{kGdEffectSummonWorker}}\ =\ 7,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00699}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aaa799a3709e98c898dcbbb360f977cf9e}{00699}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aaa799a3709e98c898dcbbb360f977cf9e}{kGdEffectWorkerAppears}}\ =\ 8,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00700}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aac38d5203a2a2d69273ec842f88d8d2a6}{00700}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aac38d5203a2a2d69273ec842f88d8d2a6}{kGdEffectSummonHero}}\ =\ 9,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00701}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aaa7db3bc9ee72a453f853b7058d901aec}{00701}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aaa7db3bc9ee72a453f853b7058d901aec}{kGdEffectHeroAppears}}\ =\ 10,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00702}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aab4d1d2ad1ac85cf14d5442ebcf2fee59}{00702}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aab4d1d2ad1ac85cf14d5442ebcf2fee59}{kGdEffectSpellTargetResisted}}\ =\ 11,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00703}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aaf66f552e9e29f48d4fc0b219b438ed6b}{00703}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aaf66f552e9e29f48d4fc0b219b438ed6b}{kGdEffectSpellResolveSelf}}\ =\ 12,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00704}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa81708d29e5599bc50c291c3cc2be50bf}{00704}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa81708d29e5599bc50c291c3cc2be50bf}{kGdEffectMeteorFall}}\ =\ 13,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00705}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa4fbc211770196fc3c55c299af9ae787c}{00705}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa4fbc211770196fc3c55c299af9ae787c}{kGdEffectMeteorHit}}\ =\ 14,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00706}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa5b446aec0d6fda573d41239417e4968e}{00706}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa5b446aec0d6fda573d41239417e4968e}{kGdEffectBlizzardFall}}\ =\ 15,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00707}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa22f006135bd5dd46161d9f45526cb96d}{00707}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa22f006135bd5dd46161d9f45526cb96d}{kGdEffectBlizzardHit}}\ =\ 16,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00708}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa808948cbd766d0c8221ca9ee0a5656d3}{00708}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa808948cbd766d0c8221ca9ee0a5656d3}{kGdEffectStoneFall}}\ =\ 17,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00709}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa906afc92f137e17e09a268ac7a444254}{00709}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa906afc92f137e17e09a268ac7a444254}{kGdEffectStoneHit}}\ =\ 18,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00710}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa6fd3597a5f8b450ceb1425caf9a39952}{00710}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa6fd3597a5f8b450ceb1425caf9a39952}{kGdEffectPetAppears}}\ =\ 19,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00711}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aac12ce9d6cdbad63ba4aba8fb299b4f3f}{00711}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aac12ce9d6cdbad63ba4aba8fb299b4f3f}{kGdEffectTest}}\ =\ 20,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00712}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa2e303db4f1d0275e3b50b8fa98df3198}{00712}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa2e303db4f1d0275e3b50b8fa98df3198}{kGdEffectMonumentClaimed}}\ =\ 21,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00713}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa6b8a06187a8fc772a860f9aa81c37cc3}{00713}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa6b8a06187a8fc772a860f9aa81c37cc3}{kGdEffectMonumentWorking}}\ =\ 22,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00714}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aaee2a6e021f5bb091d9ce2c60c2e8c395}{00714}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aaee2a6e021f5bb091d9ce2c60c2e8c395}{kGdEffectAuraResolve}}\ =\ 23,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00715}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa499ffe017f8e5936288a1663b64e01bc}{00715}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa499ffe017f8e5936288a1663b64e01bc}{kGdEffectProjectile}}\ =\ 24,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00716}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aaff60d58d73562aa3c04bbc58a0c32119}{00716}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aaff60d58d73562aa3c04bbc58a0c32119}{kGdEffectBuilding}}\ =\ 25,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00717}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aad6a7d19b1dd2d6793aa035e78341b0bf}{00717}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aad6a7d19b1dd2d6793aa035e78341b0bf}{kGdEffectPlayerBind}}\ =\ 26,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00718}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa261a3023fcef7756bc77d4ed902aaf6f}{00718}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa261a3023fcef7756bc77d4ed902aaf6f}{kGdEffectSummonMainChar}}\ =\ 27,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00719}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aab7d1b32d16bb6c3c4aa45cbff9fc6c8c}{00719}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aab7d1b32d16bb6c3c4aa45cbff9fc6c8c}{kGdEffectMainCharAppears}}\ =\ 28,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00720}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aac84d99e1dcdd1b241b23e42f57918a27}{00720}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aac84d99e1dcdd1b241b23e42f57918a27}{kGdEffectTitanProduction}}\ =\ 29,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00721}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa5113f07aff5f227beee463ec7433900f}{00721}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa5113f07aff5f227beee463ec7433900f}{kGdEffectTitanAppears}}\ =\ 30,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00722}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa34ea7792ebc09d1059524a77faf8d789}{00722}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa34ea7792ebc09d1059524a77faf8d789}{kGdEffectMentalTowerCast}}\ =\ 31,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00723}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aad79d0345b12728f5d032209b95c50786}{00723}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aad79d0345b12728f5d032209b95c50786}{kGdEffectMentalTowerIdle}}\ =\ 32,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00724}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa468672f3274483d4807ba825cde144a0}{00724}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa468672f3274483d4807ba825cde144a0}{kGdEffectMonumentBullet}}\ =\ 33,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00725}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aabfd0a5bffdc303c2e9ec759282bbff07}{00725}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aabfd0a5bffdc303c2e9ec759282bbff07}{kGdEffectMonumentHitFigure}}\ =\ 34,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00726}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa053580e27d9ec2972f6cf57d9748152a}{00726}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa053580e27d9ec2972f6cf57d9748152a}{kGdEffectSpellAssistanceHitFigure}}\ =\ 35,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00727}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa0161661e33d73637fa1bdd8626fba726}{00727}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa0161661e33d73637fa1bdd8626fba726}{kGdEffectChainResolve}}\ =\ 36,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00728}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa2689bb06191c323ddf6a31d52fc3c4e0}{00728}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa2689bb06191c323ddf6a31d52fc3c4e0}{kGdEffectSpellVoodooHitFigure}}\ =\ 37,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00729}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aaab63ed929ecf24873a1045c0cabd412f}{00729}}\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aaab63ed929ecf24873a1045c0cabd412f}{kGdEffectSpellManaShieldHitFigure}}\ =\ 38,}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00730}00730\ \ \ \ \ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa2305fb41c8855c0f4ff3e23229321583}{kGdEffectMax}}\ =\ 39}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00731}\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa2305fb41c8855c0f4ff3e23229321583}{00731}}\ \}\ \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a}{CGdEffectType}};}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00732}00732\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00733}00733\ \textcolor{comment}{/*\ |-\/==========\ Internal\ Functions\ ==========-\/|\ */}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00734}00734\ \textcolor{comment}{//\ These\ functions\ are\ used\ in\ SFSF\ internally,\ and\ may\ be\ moved.}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00735}00735\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00736}\mbox{\hyperlink{sf__general__structures_8h_a79f1216fa524f80356c60c2f1c6a2456}{00736}}\ \textcolor{keyword}{typedef}\ void(\_\_thiscall\ *\mbox{\hyperlink{sf__general__structures_8h_a79f1216fa524f80356c60c2f1c6a2456}{console\_print\_ptr}})(uint32\_t,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *);}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00737}\mbox{\hyperlink{sf__general__structures_8h_a6694222e4b9549b92231e7afa2107b57}{00737}}\ \textcolor{keyword}{typedef}\ uint16\_t(\_\_thiscall\ *\mbox{\hyperlink{sf__general__structures_8h_a6694222e4b9549b92231e7afa2107b57}{get\_spell\_spell\_line\_ptr}})(\textcolor{keywordtype}{void}\ *,\ uint16\_t);}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00738}\mbox{\hyperlink{sf__general__structures_8h_a8c9b4c8637d55a626fdb72a8f9b58922}{00738}}\ \textcolor{keyword}{typedef}\ uint32\_t(\_\_thiscall\ *\mbox{\hyperlink{sf__general__structures_8h_a8c9b4c8637d55a626fdb72a8f9b58922}{figure\_toolbox\_get\_unkn\_ptr}})(\textcolor{keywordtype}{void}\ *,\ uint16\_t);}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00739}\mbox{\hyperlink{sf__general__structures_8h_a777aa0a7a267165f9a196f9b293a35c4}{00739}}\ \textcolor{keyword}{typedef}\ void(\_\_thiscall\ *\mbox{\hyperlink{sf__general__structures_8h_a777aa0a7a267165f9a196f9b293a35c4}{figure\_toolbox\_add\_spell\_ptr}})(\textcolor{keywordtype}{void}\ *,\ uint16\_t,\ uint16\_t);}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00740}\mbox{\hyperlink{sf__general__structures_8h_aa419a4385eff93c7fdabade2c545aded}{00740}}\ \textcolor{keyword}{typedef}\ bool(\_\_thiscall\ *\mbox{\hyperlink{sf__general__structures_8h_aa419a4385eff93c7fdabade2c545aded}{figure\_toolbox\_is\_targetable\_ptr}})(\textcolor{keywordtype}{void}\ *CGdFigureToolbox,\ uint16\_t\ figure\_index);}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00741}\mbox{\hyperlink{sf__general__structures_8h_ae52358dbffb2bfc0b421a928eb0e779f}{00741}}\ \textcolor{keyword}{typedef}\ uint32\_t(\_\_thiscall\ *\mbox{\hyperlink{sf__general__structures_8h_ae52358dbffb2bfc0b421a928eb0e779f}{FUN\_0069eaf0\_ptr}})(\textcolor{keywordtype}{void}\ *ac69,\ \textcolor{keywordtype}{void}\ *ac69\_2,\ \textcolor{keywordtype}{void}\ *ac69\_3,\ \textcolor{keywordtype}{void}\ *ac69\_4);}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00742}\mbox{\hyperlink{sf__general__structures_8h_a82640f13fec97cfc97c0ffa265528d19}{00742}}\ \textcolor{keyword}{typedef}\ void\ (*\mbox{\hyperlink{sf__general__structures_8h_a82640f13fec97cfc97c0ffa265528d19}{fidfree\_ptr}})(uint32\_t\ *memory\_ptr);}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00743}\mbox{\hyperlink{sf__general__structures_8h_a834aa4e5d61d6ad1de3c5f5848abf932}{00743}}\ \textcolor{keyword}{typedef}\ void(\_\_thiscall\ *\mbox{\hyperlink{sf__general__structures_8h_a834aa4e5d61d6ad1de3c5f5848abf932}{menu\_label\_ptr}})(\mbox{\hyperlink{sf__general__structures_8h_a1b96a8d15a7b76099bd6683f104dc217}{CMnuLabel}}\ *\_this);}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00744}\mbox{\hyperlink{sf__general__structures_8h_a3a212a2bab16f5e6c3c81b564d609ae9}{00744}}\ \textcolor{keyword}{typedef}\ void(\_\_thiscall\ *\mbox{\hyperlink{sf__general__structures_8h_a3a212a2bab16f5e6c3c81b564d609ae9}{menu\_label\_set\_string\_ptr}})(\mbox{\hyperlink{sf__general__structures_8h_a1b96a8d15a7b76099bd6683f104dc217}{CMnuLabel}}\ *\_this,\ \mbox{\hyperlink{sf__general__structures_8h_a3aec067538ae8bb3838f555feac49682}{SF\_String}}\ *string);}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00745}\mbox{\hyperlink{sf__general__structures_8h_abb19b1c51539a52b999170f114584722}{00745}}\ \textcolor{keyword}{typedef}\ void(\_\_thiscall\ *\mbox{\hyperlink{sf__general__structures_8h_abb19b1c51539a52b999170f114584722}{initialize\_menu\_container\_ptr}})(\mbox{\hyperlink{sf__general__structures_8h_aa4b2c10b9c9570a024b495014e652c71}{CMnuContainer}}\ *\_this);}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00746}\mbox{\hyperlink{sf__general__structures_8h_a5b8c6c5f47cca11977c79654edd4fada}{00746}}\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{sf__general__structures_8h_a3aec067538ae8bb3838f555feac49682}{SF\_String}}\ *(\_\_thiscall\ *\mbox{\hyperlink{sf__general__structures_8h_a5b8c6c5f47cca11977c79654edd4fada}{construct\_default\_sf\_string\_ptr}})(\mbox{\hyperlink{sf__general__structures_8h_a3aec067538ae8bb3838f555feac49682}{SF\_String}}\ *\_this);}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00747}00747\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00748}\mbox{\hyperlink{sf__general__structures_8h_a083e68ce4713d284eb72d09404b174a6}{00748}}\ \textcolor{keyword}{typedef}\ void(\_\_thiscall\ *\mbox{\hyperlink{sf__general__structures_8h_a083e68ce4713d284eb72d09404b174a6}{construct\_start\_menu\_ptr}})(\mbox{\hyperlink{sf__general__structures_8h_ae6c281c594fe42f390ef3a9d3456378e}{CUiStartMenu}}\ *\_this,\ uint32\_t\ p1);}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00749}00749\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00750}\mbox{\hyperlink{sf__general__structures_8h_a9017afd3d59671398dcba18538b8b8fc}{00750}}\ \textcolor{keyword}{typedef}\ void(\_\_thiscall\ *\mbox{\hyperlink{sf__general__structures_8h_a9017afd3d59671398dcba18538b8b8fc}{mnu\_label\_init\_data\_ptr}})(\mbox{\hyperlink{sf__general__structures_8h_a1b96a8d15a7b76099bd6683f104dc217}{CMnuLabel}}\ *\_this,\ \textcolor{keywordtype}{float}\ xpos,\ \textcolor{keywordtype}{float}\ ypos,\ \textcolor{keywordtype}{float}\ width,\ \textcolor{keywordtype}{float}\ height,\ \mbox{\hyperlink{sf__general__structures_8h_a3aec067538ae8bb3838f555feac49682}{SF\_String}}\ *string);}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00751}\mbox{\hyperlink{sf__general__structures_8h_a959316cdd55be021bfd0c8079cac8f4f}{00751}}\ \textcolor{keyword}{typedef}\ void(\_\_thiscall\ *\mbox{\hyperlink{sf__general__structures_8h_a959316cdd55be021bfd0c8079cac8f4f}{message\_box\_ptr}})(uint32\_t\ \mbox{\hyperlink{sf__general__structures_8h_a747e81e6fc592fdba2378ffb92c90625}{CAppMenu}},\ uint16\_t\ description\_id,\ \mbox{\hyperlink{sf__general__structures_8h_a3aec067538ae8bb3838f555feac49682}{SF\_String}}\ *string\_ptr,\ uint16\_t\ hasOffset);}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00752}00752\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00753}\mbox{\hyperlink{sf__general__structures_8h_a1ef3ef233abb55a4392db0aa82a654e0}{00753}}\ \textcolor{keyword}{typedef}\ void(\_\_thiscall\ *\mbox{\hyperlink{sf__general__structures_8h_a1ef3ef233abb55a4392db0aa82a654e0}{menu\_label\_constructor\_ptr}})(\mbox{\hyperlink{sf__general__structures_8h_a1b96a8d15a7b76099bd6683f104dc217}{CMnuLabel}}\ *\_this);}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00754}\mbox{\hyperlink{sf__general__structures_8h_acc2efadfffc955b944400b3006ab7344}{00754}}\ \textcolor{keyword}{typedef}\ void(\_\_thiscall\ *\mbox{\hyperlink{sf__general__structures_8h_acc2efadfffc955b944400b3006ab7344}{set\_label\_flags\_ptr}})(\mbox{\hyperlink{sf__general__structures_8h_a1b96a8d15a7b76099bd6683f104dc217}{CMnuLabel}}\ *\_this,\ uint32\_t\ flags);}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00755}00755\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00756}\mbox{\hyperlink{sf__general__structures_8h_a3ce0902fdc64b610961f5fa408d452f7}{00756}}\ \textcolor{keyword}{typedef}\ void(\_\_fastcall\ *\mbox{\hyperlink{sf__general__structures_8h_a3ce0902fdc64b610961f5fa408d452f7}{original\_menu\_func\_ptr}})(uint32\_t\ param1);}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00757}00757\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00758}\mbox{\hyperlink{sf__general__structures_8h_aa48f85cc726097517700b72afc013c87}{00758}}\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{void}\ *(\_\_cdecl\ *\mbox{\hyperlink{sf__general__structures_8h_aa48f85cc726097517700b72afc013c87}{new\_operator\_ptr}})(uint32\_t\ param\_1);}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00759}\mbox{\hyperlink{sf__general__structures_8h_abe77c012ba01b4cd2d108bb7e7ff3a4d}{00759}}\ \textcolor{keyword}{typedef}\ void(\_\_thiscall\ *\mbox{\hyperlink{sf__general__structures_8h_abe77c012ba01b4cd2d108bb7e7ff3a4d}{container\_add\_control\_ptr}})(\mbox{\hyperlink{sf__general__structures_8h_aa4b2c10b9c9570a024b495014e652c71}{CMnuContainer}}\ *\_this,\ \textcolor{keywordtype}{void}\ *CMnuBase,\ \textcolor{keywordtype}{char}\ *c1,\ \textcolor{keywordtype}{char}\ *c2,\ uint32\_t\ p4);}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00760}\mbox{\hyperlink{sf__general__structures_8h_ab4a877cdf7704b29f7b1a09a459a4a98}{00760}}\ \textcolor{keyword}{typedef}\ void(\_\_thiscall\ *\mbox{\hyperlink{sf__general__structures_8h_ab4a877cdf7704b29f7b1a09a459a4a98}{menu\_label\_set\_data\_ptr}})(\mbox{\hyperlink{sf__general__structures_8h_a1b96a8d15a7b76099bd6683f104dc217}{CMnuLabel}}\ *\_this,\ uint32\_t\ color\_red,\ uint32\_t\ color\_green,\ uint32\_t\ color\_blue,\ uint8\_t\ unknchar);}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00761}\mbox{\hyperlink{sf__general__structures_8h_a4409f85c2cd03eabf735b64d1f0d8c01}{00761}}\ \textcolor{keyword}{typedef}\ void(\_\_thiscall\ *\mbox{\hyperlink{sf__general__structures_8h_a4409f85c2cd03eabf735b64d1f0d8c01}{get\_sf\_color\_ptr}})(\mbox{\hyperlink{sf__general__structures_8h_a3aec067538ae8bb3838f555feac49682}{SF\_String}}\ *\_this,\ uint32\_t\ color\_id);}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00762}\mbox{\hyperlink{sf__general__structures_8h_a59949b7d52615db72af6f2527029d21a}{00762}}\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{sf__general__structures_8h_aab247d013cf0680517ac4722412d6440}{SF\_FontStruct}}\ *(\_\_thiscall\ *\mbox{\hyperlink{sf__general__structures_8h_a59949b7d52615db72af6f2527029d21a}{get\_smth\_fonts\_ptr}})(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00763}\mbox{\hyperlink{sf__general__structures_8h_a777a4dfb668807471094b748e5152aba}{00763}}\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{sf__general__structures_8h_af97891752509725cbcb2481b85181ee9}{SF\_Font}}\ *(\_\_thiscall\ *\mbox{\hyperlink{sf__general__structures_8h_a777a4dfb668807471094b748e5152aba}{get\_font\_ptr}})(\mbox{\hyperlink{sf__general__structures_8h_aab247d013cf0680517ac4722412d6440}{SF\_FontStruct}}\ *\_this,\ uint32\_t\ font\_id);}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00764}\mbox{\hyperlink{sf__general__structures_8h_a7818ce44011f5f2d723bfa87aa127fcf}{00764}}\ \textcolor{keyword}{typedef}\ void(\_\_thiscall\ *\mbox{\hyperlink{sf__general__structures_8h_a7818ce44011f5f2d723bfa87aa127fcf}{menu\_label\_set\_font\_ptr}})(\textcolor{keywordtype}{void}\ *\_this,\ \mbox{\hyperlink{sf__general__structures_8h_af97891752509725cbcb2481b85181ee9}{SF\_Font}}\ *font);}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00765}00765\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00766}00766\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{void}\ \_\_thiscall\ \mbox{\hyperlink{sf__general__structures_8h_ab4f08eefec549de8444fd0207158d0ab}{attach\_new\_label}}(\mbox{\hyperlink{sf__general__structures_8h_aa4b2c10b9c9570a024b495014e652c71}{CMnuContainer}}\ *parent,\ \textcolor{keywordtype}{char}\ *label\_text,\ uint8\_t\ font\_index,\ uint16\_t\ x\_pos,\ uint16\_t\ y\_pos,\ uint16\_t\ width,\ uint16\_t\ height);}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00767}00767\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00768}00768\ \textcolor{comment}{/*\ |-\/==========\ Macros\ ==========-\/|\ */}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00769}00769\ \textcolor{comment}{//\ Here\ comes\ a\ better\ method\ for\ setting\ up\ our\ exposed\ functions,\ to\ define\ functions\ also\ check\ sf\_hooks.h}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00770}\mbox{\hyperlink{sf__general__structures_8h_a8fc1a791568a2848b8b001524eee155c}{00770}}\ \textcolor{preprocessor}{\#define\ DECLARE\_FUNCTION(type,\ name,\ ...)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00771}00771\ \textcolor{preprocessor}{\ \ \ \ typedef\ type(\_\_thiscall\ *name\#\#\_ptr)(\_\_VA\_ARGS\_\_);}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00772}00772\ }
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00773}\mbox{\hyperlink{sf__general__structures_8h_a7b4790d37e7ac68e99b4cc12ab91328e}{00773}}\ \textcolor{preprocessor}{\#define\ DECLARE\_FUNCTION\_GROUP(group,\ ...)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00774}00774\ \textcolor{preprocessor}{\ \ \ \ typedef\ struct\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00775}00775\ \textcolor{preprocessor}{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00776}00776\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \_\_VA\_ARGS\_\_\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{sf__general__structures_8h_source_l00777}00777\ \textcolor{preprocessor}{\ \ \ \ \}\ group\#\#Functions;}}
+
+\end{DoxyCode}

@@ -1,0 +1,425 @@
+\doxysection{src/internal/core/hooks/sf\+\_\+onhit\+\_\+hook.c File Reference}
+\hypertarget{sf__onhit__hook_8c}{}\label{sf__onhit__hook_8c}\index{src/internal/core/hooks/sf\_onhit\_hook.c@{src/internal/core/hooks/sf\_onhit\_hook.c}}
+{\ttfamily \#include "{}sf\+\_\+onhit\+\_\+hook.\+h"{}}\newline
+{\ttfamily \#include "{}../sf\+\_\+wrappers.\+h"{}}\newline
+{\ttfamily \#include "{}../sf\+\_\+hooks.\+h"{}}\newline
+{\ttfamily \#include "{}../sf\+\_\+modloader.\+h"{}}\newline
+{\ttfamily \#include "{}../../registry/sf\+\_\+onhit\+\_\+registry.\+h"{}}\newline
+{\ttfamily \#include "{}../../registry/sf\+\_\+mod\+\_\+registry.\+h"{}}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$list$>$}\newline
+{\ttfamily \#include $<$utility$>$}\newline
+Include dependency graph for sf\+\_\+onhit\+\_\+hook.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__onhit__hook_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef uint16\+\_\+t(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__onhit__hook_8c_a2892feb762f3129a835efdea7240a17c}{get\+\_\+reduced\+\_\+damage\+\_\+ptr}}) (void \texorpdfstring{$\ast$}{*}Auto\+Class34, uint16\+\_\+t source\+\_\+index, uint16\+\_\+t target\+\_\+index, uint16\+\_\+t unkn)
+\item 
+typedef uint16\+\_\+t(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__onhit__hook_8c_ad8ff3ea7dd287974d75f24b9aba82c53}{get\+\_\+reduced\+\_\+building\+\_\+damage\+\_\+ptr}}) (void \texorpdfstring{$\ast$}{*}Auto\+Class32, uint16\+\_\+t source\+\_\+index, uint16\+\_\+t target\+\_\+index, uint16\+\_\+t damage)
+\item 
+typedef uint16\+\_\+t(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__onhit__hook_8c_a431c968d516023fb5040d6146b599f14}{get\+\_\+hit\+\_\+chance\+\_\+ptr}}) (void \texorpdfstring{$\ast$}{*}Auto\+Class34, uint16\+\_\+t source\+\_\+index, uint16\+\_\+t target\+\_\+index)
+\item 
+typedef uint16\+\_\+t(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__onhit__hook_8c_a58e00ab7dc81fb58801626d98defaa27}{get\+\_\+leveled\+\_\+spell\+\_\+ptr}}) (void \texorpdfstring{$\ast$}{*}CGd\+Resource, uint16\+\_\+t source\+\_\+spell\+\_\+id, uint16\+\_\+t spell\+\_\+level)
+\item 
+typedef void(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__onhit__hook_8c_a02d96be9aeebb4a494be5d0de47fac9b}{FUN\+\_\+006c3a60\+\_\+ptr}}) (void \texorpdfstring{$\ast$}{*}Auto\+Class30, uint16\+\_\+t source\+\_\+index, uint16\+\_\+t target\+\_\+index, uint8\+\_\+t unkn, uint32\+\_\+t unkn2)
+\item 
+typedef uint32\+\_\+t(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__onhit__hook_8c_ac9da902d3248459ff808aff4856684b8}{FUN\+\_\+0071d7b0\+\_\+ptr}}) (void \texorpdfstring{$\ast$}{*}CGd\+Object, uint16\+\_\+t object\+\_\+index)
+\item 
+typedef uint32\+\_\+t(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__onhit__hook_8c_aafec6154b49caac7291602f59bfe7413}{FUN\+\_\+00755180\+\_\+ptr}}) (uint32\+\_\+t param1)
+\item 
+typedef uint32\+\_\+t(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__onhit__hook_8c_a9ac8a9eb864f8c9dabf503d2c3d45eaa}{object\+Deal\+Damage\+\_\+ptr}}) (void \texorpdfstring{$\ast$}{*}CGd\+Object\+Tool\+Box, uint16\+\_\+t source\+\_\+index, uint16\+\_\+t target\+\_\+index, uint16\+\_\+t damage, uint32\+\_\+t unknown)
+\item 
+typedef uint32\+\_\+t(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__onhit__hook_8c_a44458ce7f2b81338e0f6862f28bdab23}{get\+Weapon\+Effects\+\_\+ptr}}) (void \texorpdfstring{$\ast$}{*}CGd\+Resource, uint32\+\_\+t \texorpdfstring{$\ast$}{*}param1, uint16\+\_\+t weapon\+\_\+id)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+uint16\+\_\+t \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__onhit__hook_8c_a69d941158155931cc3f4f0289372b2c3}{get\+Current\+Dex}} (\mbox{\hyperlink{sf__general__structures_8h_adcfde5041b3e58539ba533680e23d9b0}{SF\+\_\+\+CGd\+Figure}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t figure\+\_\+index)
+\item 
+uint16\+\_\+t \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__onhit__hook_8c_adbcaaa404231f4f989ce388bb454a830}{get\+Current\+Int}} (\mbox{\hyperlink{sf__general__structures_8h_adcfde5041b3e58539ba533680e23d9b0}{SF\+\_\+\+CGd\+Figure}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t figure\+\_\+index)
+\item 
+uint16\+\_\+t \mbox{\hyperlink{sf__onhit__hook_8c_a2464fc9e505e4fdc5fd8f66f41b91965}{get\+\_\+effect\+\_\+chance}} (uint16\+\_\+t dex\+\_\+val, uint16\+\_\+t int\+\_\+val, uint16\+\_\+t spell\+\_\+line)
+\item 
+void \mbox{\hyperlink{sf__onhit__hook_8c_aab9fd18e448dfed4d72a3d8d9507bcc8}{initialize\+\_\+onhit\+\_\+data\+\_\+hooks}} ()
+\item 
+void \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__onhit__hook_8c_affbf587ee967cb3013b7244bf2615832}{get\+Target\+Data}} (\mbox{\hyperlink{sf__general__structures_8h_a33f353e639dcf925b3b022137ecf7432}{Auto\+Class24}} \texorpdfstring{$\ast$}{*}\+\_\+this, \mbox{\hyperlink{sf__general__structures_8h_aedd8705d0983d09965ace902f37d0e0b}{SF\+\_\+\+CGd\+Target\+Data}} \texorpdfstring{$\ast$}{*}target)
+\item 
+bool \mbox{\hyperlink{sf__onhit__hook_8c_a02411a5016dfa987f9f46df8ff4ca332}{is\+Job\+Do\+Nothing}} (uint16\+\_\+t job\+\_\+id)
+\item 
+bool \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__onhit__hook_8c_a0ca3dd8cf7def5592a69450b5caaac2a}{is\+Figure\+Job\+Spell}} (\mbox{\hyperlink{sf__general__structures_8h_a2739681db2b7bff68f1229d5a5f3d5e4}{SF\+\_\+\+CGd\+Figure\+Jobs}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t figure\+\_\+id)
+\item 
+bool \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__onhit__hook_8c_a9040c116d6469bd454aabd4a3928b8ee}{can\+Job\+Be\+Interrupted}} (\mbox{\hyperlink{sf__figure__functions_8h_a442e6d6b095c6831e3fc0254fdba8ce5}{Figure\+Jobs}} job\+\_\+id)
+\item 
+uint16\+\_\+t \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__onhit__hook_8c_aaa8d2409151f4ca3bc8504769afc4b93}{get\+Attack\+Interruption\+Chance}} (\mbox{\hyperlink{sf__general__structures_8h_adcfde5041b3e58539ba533680e23d9b0}{SF\+\_\+\+CGd\+Figure}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t source\+\_\+index, uint16\+\_\+t target\+\_\+index)
+\item 
+uint16\+\_\+t \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__onhit__hook_8c_ac83116cd45e33f37e8cb2b4fa7f35667}{handle\+\_\+riposte\+\_\+set}} (\mbox{\hyperlink{sf__general__structures_8h_a2739681db2b7bff68f1229d5a5f3d5e4}{SF\+\_\+\+CGd\+Figure\+Jobs}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t source\+\_\+index, uint16\+\_\+t target\+\_\+index, uint16\+\_\+t weapon\+\_\+damage)
+\item 
+uint16\+\_\+t \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__onhit__hook_8c_a0db72468a720d756df0ffdce356c5de7}{handle\+\_\+berserk\+\_\+set}} (\mbox{\hyperlink{sf__general__structures_8h_a2739681db2b7bff68f1229d5a5f3d5e4}{SF\+\_\+\+CGd\+Figure\+Jobs}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t source\+\_\+index, uint16\+\_\+t target\+\_\+index, uint16\+\_\+t weapon\+\_\+damage)
+\item 
+uint16\+\_\+t \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__onhit__hook_8c_ab5e89f7825a70fdbe8586af9086bd997}{handle\+\_\+trueshot\+\_\+set}} (\mbox{\hyperlink{sf__general__structures_8h_a2739681db2b7bff68f1229d5a5f3d5e4}{SF\+\_\+\+CGd\+Figure\+Jobs}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t source\+\_\+index, uint16\+\_\+t target\+\_\+index, uint16\+\_\+t weapon\+\_\+damage)
+\item 
+void \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__onhit__hook_8c_aefde32f4f9aa9831328593444c8811b9}{sf\+\_\+onhit\+\_\+hook}} (\mbox{\hyperlink{sf__general__structures_8h_a2739681db2b7bff68f1229d5a5f3d5e4}{SF\+\_\+\+CGd\+Figure\+Jobs}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t source\+\_\+index, uint32\+\_\+t param\+\_\+2, uint8\+\_\+t param\+\_\+3)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{sf__onhit__hook_8c_a2892feb762f3129a835efdea7240a17c}{get\+\_\+reduced\+\_\+damage\+\_\+ptr}} \mbox{\hyperlink{sf__onhit__hook_8c_ab95b55be8193c497bf4194cbc03283dc}{g\+\_\+get\+\_\+reduced\+\_\+damage}}
+\item 
+\mbox{\hyperlink{sf__onhit__hook_8c_a431c968d516023fb5040d6146b599f14}{get\+\_\+hit\+\_\+chance\+\_\+ptr}} \mbox{\hyperlink{sf__onhit__hook_8c_a233281d42171a39e8b5d4e4aac6afdce}{g\+\_\+get\+\_\+hit\+\_\+chance}}
+\item 
+\mbox{\hyperlink{sf__onhit__hook_8c_a58e00ab7dc81fb58801626d98defaa27}{get\+\_\+leveled\+\_\+spell\+\_\+ptr}} \mbox{\hyperlink{sf__onhit__hook_8c_aec8f28f75614b928aa82417eb08b3d14}{g\+\_\+get\+\_\+leveled\+\_\+spell}}
+\item 
+\mbox{\hyperlink{sf__onhit__hook_8c_a02d96be9aeebb4a494be5d0de47fac9b}{FUN\+\_\+006c3a60\+\_\+ptr}} \mbox{\hyperlink{sf__onhit__hook_8c_aa3cb8b22ad1fe2c07699001838c6f978}{g\+\_\+\+FUN\+\_\+006c3a60}}
+\item 
+\mbox{\hyperlink{sf__onhit__hook_8c_ad8ff3ea7dd287974d75f24b9aba82c53}{get\+\_\+reduced\+\_\+building\+\_\+damage\+\_\+ptr}} \mbox{\hyperlink{sf__onhit__hook_8c_a65cc4274ae980aa7e6384ee17b5b6db2}{g\+\_\+get\+\_\+reduced\+\_\+building\+\_\+damage}}
+\item 
+\mbox{\hyperlink{sf__onhit__hook_8c_ac9da902d3248459ff808aff4856684b8}{FUN\+\_\+0071d7b0\+\_\+ptr}} \mbox{\hyperlink{sf__onhit__hook_8c_a046a1a51fd002de4f8c5531c07a773af}{g\+\_\+\+FUN\+\_\+0071d7b0}}
+\item 
+\mbox{\hyperlink{sf__onhit__hook_8c_aafec6154b49caac7291602f59bfe7413}{FUN\+\_\+00755180\+\_\+ptr}} \mbox{\hyperlink{sf__onhit__hook_8c_a53d9ef014be8a874aaa53079d0f05007}{g\+\_\+\+FUN\+\_\+00755180}}
+\item 
+\mbox{\hyperlink{sf__onhit__hook_8c_a9ac8a9eb864f8c9dabf503d2c3d45eaa}{object\+Deal\+Damage\+\_\+ptr}} \mbox{\hyperlink{sf__onhit__hook_8c_a28635fb79fee5828d7bc5d042793014e}{g\+\_\+object\+Deal\+Damage}}
+\item 
+\mbox{\hyperlink{sf__onhit__hook_8c_a44458ce7f2b81338e0f6862f28bdab23}{get\+Weapon\+Effects\+\_\+ptr}} \mbox{\hyperlink{sf__onhit__hook_8c_a57d3a363abd676dc961b0936412d4df5}{g\+\_\+get\+Weapon\+Effects}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{sf__onhit__hook_8c_a02d96be9aeebb4a494be5d0de47fac9b}\index{sf\_onhit\_hook.c@{sf\_onhit\_hook.c}!FUN\_006c3a60\_ptr@{FUN\_006c3a60\_ptr}}
+\index{FUN\_006c3a60\_ptr@{FUN\_006c3a60\_ptr}!sf\_onhit\_hook.c@{sf\_onhit\_hook.c}}
+\doxysubsubsection{\texorpdfstring{FUN\_006c3a60\_ptr}{FUN\_006c3a60\_ptr}}
+{\footnotesize\ttfamily \label{sf__onhit__hook_8c_a02d96be9aeebb4a494be5d0de47fac9b} 
+typedef void(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} FUN\+\_\+006c3a60\+\_\+ptr) (void \texorpdfstring{$\ast$}{*}Auto\+Class30, uint16\+\_\+t source\+\_\+index, uint16\+\_\+t target\+\_\+index, uint8\+\_\+t unkn, uint32\+\_\+t unkn2)}
+
+
+
+Definition at line \mbox{\hyperlink{sf__onhit__hook_8c_source_l00019}{19}} of file \mbox{\hyperlink{sf__onhit__hook_8c_source}{sf\+\_\+onhit\+\_\+hook.\+c}}.
+
+\Hypertarget{sf__onhit__hook_8c_ac9da902d3248459ff808aff4856684b8}\index{sf\_onhit\_hook.c@{sf\_onhit\_hook.c}!FUN\_0071d7b0\_ptr@{FUN\_0071d7b0\_ptr}}
+\index{FUN\_0071d7b0\_ptr@{FUN\_0071d7b0\_ptr}!sf\_onhit\_hook.c@{sf\_onhit\_hook.c}}
+\doxysubsubsection{\texorpdfstring{FUN\_0071d7b0\_ptr}{FUN\_0071d7b0\_ptr}}
+{\footnotesize\ttfamily \label{sf__onhit__hook_8c_ac9da902d3248459ff808aff4856684b8} 
+typedef uint32\+\_\+t(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} FUN\+\_\+0071d7b0\+\_\+ptr) (void \texorpdfstring{$\ast$}{*}CGd\+Object, uint16\+\_\+t object\+\_\+index)}
+
+
+
+Definition at line \mbox{\hyperlink{sf__onhit__hook_8c_source_l00020}{20}} of file \mbox{\hyperlink{sf__onhit__hook_8c_source}{sf\+\_\+onhit\+\_\+hook.\+c}}.
+
+\Hypertarget{sf__onhit__hook_8c_aafec6154b49caac7291602f59bfe7413}\index{sf\_onhit\_hook.c@{sf\_onhit\_hook.c}!FUN\_00755180\_ptr@{FUN\_00755180\_ptr}}
+\index{FUN\_00755180\_ptr@{FUN\_00755180\_ptr}!sf\_onhit\_hook.c@{sf\_onhit\_hook.c}}
+\doxysubsubsection{\texorpdfstring{FUN\_00755180\_ptr}{FUN\_00755180\_ptr}}
+{\footnotesize\ttfamily \label{sf__onhit__hook_8c_aafec6154b49caac7291602f59bfe7413} 
+typedef uint32\+\_\+t(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} FUN\+\_\+00755180\+\_\+ptr) (uint32\+\_\+t param1)}
+
+
+
+Definition at line \mbox{\hyperlink{sf__onhit__hook_8c_source_l00021}{21}} of file \mbox{\hyperlink{sf__onhit__hook_8c_source}{sf\+\_\+onhit\+\_\+hook.\+c}}.
+
+\Hypertarget{sf__onhit__hook_8c_a431c968d516023fb5040d6146b599f14}\index{sf\_onhit\_hook.c@{sf\_onhit\_hook.c}!get\_hit\_chance\_ptr@{get\_hit\_chance\_ptr}}
+\index{get\_hit\_chance\_ptr@{get\_hit\_chance\_ptr}!sf\_onhit\_hook.c@{sf\_onhit\_hook.c}}
+\doxysubsubsection{\texorpdfstring{get\_hit\_chance\_ptr}{get\_hit\_chance\_ptr}}
+{\footnotesize\ttfamily \label{sf__onhit__hook_8c_a431c968d516023fb5040d6146b599f14} 
+typedef uint16\+\_\+t(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} get\+\_\+hit\+\_\+chance\+\_\+ptr) (void \texorpdfstring{$\ast$}{*}Auto\+Class34, uint16\+\_\+t source\+\_\+index, uint16\+\_\+t target\+\_\+index)}
+
+
+
+Definition at line \mbox{\hyperlink{sf__onhit__hook_8c_source_l00017}{17}} of file \mbox{\hyperlink{sf__onhit__hook_8c_source}{sf\+\_\+onhit\+\_\+hook.\+c}}.
+
+\Hypertarget{sf__onhit__hook_8c_a58e00ab7dc81fb58801626d98defaa27}\index{sf\_onhit\_hook.c@{sf\_onhit\_hook.c}!get\_leveled\_spell\_ptr@{get\_leveled\_spell\_ptr}}
+\index{get\_leveled\_spell\_ptr@{get\_leveled\_spell\_ptr}!sf\_onhit\_hook.c@{sf\_onhit\_hook.c}}
+\doxysubsubsection{\texorpdfstring{get\_leveled\_spell\_ptr}{get\_leveled\_spell\_ptr}}
+{\footnotesize\ttfamily \label{sf__onhit__hook_8c_a58e00ab7dc81fb58801626d98defaa27} 
+typedef uint16\+\_\+t(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} get\+\_\+leveled\+\_\+spell\+\_\+ptr) (void \texorpdfstring{$\ast$}{*}CGd\+Resource, uint16\+\_\+t source\+\_\+spell\+\_\+id, uint16\+\_\+t spell\+\_\+level)}
+
+
+
+Definition at line \mbox{\hyperlink{sf__onhit__hook_8c_source_l00018}{18}} of file \mbox{\hyperlink{sf__onhit__hook_8c_source}{sf\+\_\+onhit\+\_\+hook.\+c}}.
+
+\Hypertarget{sf__onhit__hook_8c_ad8ff3ea7dd287974d75f24b9aba82c53}\index{sf\_onhit\_hook.c@{sf\_onhit\_hook.c}!get\_reduced\_building\_damage\_ptr@{get\_reduced\_building\_damage\_ptr}}
+\index{get\_reduced\_building\_damage\_ptr@{get\_reduced\_building\_damage\_ptr}!sf\_onhit\_hook.c@{sf\_onhit\_hook.c}}
+\doxysubsubsection{\texorpdfstring{get\_reduced\_building\_damage\_ptr}{get\_reduced\_building\_damage\_ptr}}
+{\footnotesize\ttfamily \label{sf__onhit__hook_8c_ad8ff3ea7dd287974d75f24b9aba82c53} 
+typedef uint16\+\_\+t(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} get\+\_\+reduced\+\_\+building\+\_\+damage\+\_\+ptr) (void \texorpdfstring{$\ast$}{*}Auto\+Class32, uint16\+\_\+t source\+\_\+index, uint16\+\_\+t target\+\_\+index, uint16\+\_\+t damage)}
+
+
+
+Definition at line \mbox{\hyperlink{sf__onhit__hook_8c_source_l00016}{16}} of file \mbox{\hyperlink{sf__onhit__hook_8c_source}{sf\+\_\+onhit\+\_\+hook.\+c}}.
+
+\Hypertarget{sf__onhit__hook_8c_a2892feb762f3129a835efdea7240a17c}\index{sf\_onhit\_hook.c@{sf\_onhit\_hook.c}!get\_reduced\_damage\_ptr@{get\_reduced\_damage\_ptr}}
+\index{get\_reduced\_damage\_ptr@{get\_reduced\_damage\_ptr}!sf\_onhit\_hook.c@{sf\_onhit\_hook.c}}
+\doxysubsubsection{\texorpdfstring{get\_reduced\_damage\_ptr}{get\_reduced\_damage\_ptr}}
+{\footnotesize\ttfamily \label{sf__onhit__hook_8c_a2892feb762f3129a835efdea7240a17c} 
+typedef uint16\+\_\+t(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} get\+\_\+reduced\+\_\+damage\+\_\+ptr) (void \texorpdfstring{$\ast$}{*}Auto\+Class34, uint16\+\_\+t source\+\_\+index, uint16\+\_\+t target\+\_\+index, uint16\+\_\+t unkn)}
+
+
+
+Definition at line \mbox{\hyperlink{sf__onhit__hook_8c_source_l00015}{15}} of file \mbox{\hyperlink{sf__onhit__hook_8c_source}{sf\+\_\+onhit\+\_\+hook.\+c}}.
+
+\Hypertarget{sf__onhit__hook_8c_a44458ce7f2b81338e0f6862f28bdab23}\index{sf\_onhit\_hook.c@{sf\_onhit\_hook.c}!getWeaponEffects\_ptr@{getWeaponEffects\_ptr}}
+\index{getWeaponEffects\_ptr@{getWeaponEffects\_ptr}!sf\_onhit\_hook.c@{sf\_onhit\_hook.c}}
+\doxysubsubsection{\texorpdfstring{getWeaponEffects\_ptr}{getWeaponEffects\_ptr}}
+{\footnotesize\ttfamily \label{sf__onhit__hook_8c_a44458ce7f2b81338e0f6862f28bdab23} 
+typedef uint32\+\_\+t(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} get\+Weapon\+Effects\+\_\+ptr) (void \texorpdfstring{$\ast$}{*}CGd\+Resource, uint32\+\_\+t \texorpdfstring{$\ast$}{*}param1, uint16\+\_\+t weapon\+\_\+id)}
+
+
+
+Definition at line \mbox{\hyperlink{sf__onhit__hook_8c_source_l00023}{23}} of file \mbox{\hyperlink{sf__onhit__hook_8c_source}{sf\+\_\+onhit\+\_\+hook.\+c}}.
+
+\Hypertarget{sf__onhit__hook_8c_a9ac8a9eb864f8c9dabf503d2c3d45eaa}\index{sf\_onhit\_hook.c@{sf\_onhit\_hook.c}!objectDealDamage\_ptr@{objectDealDamage\_ptr}}
+\index{objectDealDamage\_ptr@{objectDealDamage\_ptr}!sf\_onhit\_hook.c@{sf\_onhit\_hook.c}}
+\doxysubsubsection{\texorpdfstring{objectDealDamage\_ptr}{objectDealDamage\_ptr}}
+{\footnotesize\ttfamily \label{sf__onhit__hook_8c_a9ac8a9eb864f8c9dabf503d2c3d45eaa} 
+typedef uint32\+\_\+t(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} object\+Deal\+Damage\+\_\+ptr) (void \texorpdfstring{$\ast$}{*}CGd\+Object\+Tool\+Box, uint16\+\_\+t source\+\_\+index, uint16\+\_\+t target\+\_\+index, uint16\+\_\+t damage, uint32\+\_\+t unknown)}
+
+
+
+Definition at line \mbox{\hyperlink{sf__onhit__hook_8c_source_l00022}{22}} of file \mbox{\hyperlink{sf__onhit__hook_8c_source}{sf\+\_\+onhit\+\_\+hook.\+c}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{sf__onhit__hook_8c_a9040c116d6469bd454aabd4a3928b8ee}\index{sf\_onhit\_hook.c@{sf\_onhit\_hook.c}!canJobBeInterrupted@{canJobBeInterrupted}}
+\index{canJobBeInterrupted@{canJobBeInterrupted}!sf\_onhit\_hook.c@{sf\_onhit\_hook.c}}
+\doxysubsubsection{\texorpdfstring{canJobBeInterrupted()}{canJobBeInterrupted()}}
+{\footnotesize\ttfamily \label{sf__onhit__hook_8c_a9040c116d6469bd454aabd4a3928b8ee} 
+bool \+\_\+\+\_\+thiscall can\+Job\+Be\+Interrupted (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__figure__functions_8h_a442e6d6b095c6831e3fc0254fdba8ce5}{Figure\+Jobs}}}]{job\+\_\+id}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__onhit__hook_8c_source_l00119}{119}} of file \mbox{\hyperlink{sf__onhit__hook_8c_source}{sf\+\_\+onhit\+\_\+hook.\+c}}.
+
+\Hypertarget{sf__onhit__hook_8c_a2464fc9e505e4fdc5fd8f66f41b91965}\index{sf\_onhit\_hook.c@{sf\_onhit\_hook.c}!get\_effect\_chance@{get\_effect\_chance}}
+\index{get\_effect\_chance@{get\_effect\_chance}!sf\_onhit\_hook.c@{sf\_onhit\_hook.c}}
+\doxysubsubsection{\texorpdfstring{get\_effect\_chance()}{get\_effect\_chance()}}
+{\footnotesize\ttfamily \label{sf__onhit__hook_8c_a2464fc9e505e4fdc5fd8f66f41b91965} 
+uint16\+\_\+t get\+\_\+effect\+\_\+chance (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{dex\+\_\+val}{, }\item[{uint16\+\_\+t}]{int\+\_\+val}{, }\item[{uint16\+\_\+t}]{spell\+\_\+line}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__onhit__hook_8c_source_l00062}{62}} of file \mbox{\hyperlink{sf__onhit__hook_8c_source}{sf\+\_\+onhit\+\_\+hook.\+c}}.
+
+\Hypertarget{sf__onhit__hook_8c_aaa8d2409151f4ca3bc8504769afc4b93}\index{sf\_onhit\_hook.c@{sf\_onhit\_hook.c}!getAttackInterruptionChance@{getAttackInterruptionChance}}
+\index{getAttackInterruptionChance@{getAttackInterruptionChance}!sf\_onhit\_hook.c@{sf\_onhit\_hook.c}}
+\doxysubsubsection{\texorpdfstring{getAttackInterruptionChance()}{getAttackInterruptionChance()}}
+{\footnotesize\ttfamily \label{sf__onhit__hook_8c_aaa8d2409151f4ca3bc8504769afc4b93} 
+uint16\+\_\+t \+\_\+\+\_\+thiscall get\+Attack\+Interruption\+Chance (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_adcfde5041b3e58539ba533680e23d9b0}{SF\+\_\+\+CGd\+Figure}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{source\+\_\+index}{, }\item[{uint16\+\_\+t}]{target\+\_\+index}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__onhit__hook_8c_source_l00132}{132}} of file \mbox{\hyperlink{sf__onhit__hook_8c_source}{sf\+\_\+onhit\+\_\+hook.\+c}}.
+
+\Hypertarget{sf__onhit__hook_8c_a69d941158155931cc3f4f0289372b2c3}\index{sf\_onhit\_hook.c@{sf\_onhit\_hook.c}!getCurrentDex@{getCurrentDex}}
+\index{getCurrentDex@{getCurrentDex}!sf\_onhit\_hook.c@{sf\_onhit\_hook.c}}
+\doxysubsubsection{\texorpdfstring{getCurrentDex()}{getCurrentDex()}}
+{\footnotesize\ttfamily \label{sf__onhit__hook_8c_a69d941158155931cc3f4f0289372b2c3} 
+uint16\+\_\+t \+\_\+\+\_\+thiscall get\+Current\+Dex (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_adcfde5041b3e58539ba533680e23d9b0}{SF\+\_\+\+CGd\+Figure}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{figure\+\_\+index}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__onhit__hook_8c_source_l00037}{37}} of file \mbox{\hyperlink{sf__onhit__hook_8c_source}{sf\+\_\+onhit\+\_\+hook.\+c}}.
+
+\Hypertarget{sf__onhit__hook_8c_adbcaaa404231f4f989ce388bb454a830}\index{sf\_onhit\_hook.c@{sf\_onhit\_hook.c}!getCurrentInt@{getCurrentInt}}
+\index{getCurrentInt@{getCurrentInt}!sf\_onhit\_hook.c@{sf\_onhit\_hook.c}}
+\doxysubsubsection{\texorpdfstring{getCurrentInt()}{getCurrentInt()}}
+{\footnotesize\ttfamily \label{sf__onhit__hook_8c_adbcaaa404231f4f989ce388bb454a830} 
+uint16\+\_\+t \+\_\+\+\_\+thiscall get\+Current\+Int (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_adcfde5041b3e58539ba533680e23d9b0}{SF\+\_\+\+CGd\+Figure}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{figure\+\_\+index}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__onhit__hook_8c_source_l00049}{49}} of file \mbox{\hyperlink{sf__onhit__hook_8c_source}{sf\+\_\+onhit\+\_\+hook.\+c}}.
+
+\Hypertarget{sf__onhit__hook_8c_affbf587ee967cb3013b7244bf2615832}\index{sf\_onhit\_hook.c@{sf\_onhit\_hook.c}!getTargetData@{getTargetData}}
+\index{getTargetData@{getTargetData}!sf\_onhit\_hook.c@{sf\_onhit\_hook.c}}
+\doxysubsubsection{\texorpdfstring{getTargetData()}{getTargetData()}}
+{\footnotesize\ttfamily \label{sf__onhit__hook_8c_affbf587ee967cb3013b7244bf2615832} 
+void \+\_\+\+\_\+thiscall get\+Target\+Data (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a33f353e639dcf925b3b022137ecf7432}{Auto\+Class24}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_aedd8705d0983d09965ace902f37d0e0b}{SF\+\_\+\+CGd\+Target\+Data}} \texorpdfstring{$\ast$}{*}}]{target}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__onhit__hook_8c_source_l00083}{83}} of file \mbox{\hyperlink{sf__onhit__hook_8c_source}{sf\+\_\+onhit\+\_\+hook.\+c}}.
+
+\Hypertarget{sf__onhit__hook_8c_a0db72468a720d756df0ffdce356c5de7}\index{sf\_onhit\_hook.c@{sf\_onhit\_hook.c}!handle\_berserk\_set@{handle\_berserk\_set}}
+\index{handle\_berserk\_set@{handle\_berserk\_set}!sf\_onhit\_hook.c@{sf\_onhit\_hook.c}}
+\doxysubsubsection{\texorpdfstring{handle\_berserk\_set()}{handle\_berserk\_set()}}
+{\footnotesize\ttfamily \label{sf__onhit__hook_8c_a0db72468a720d756df0ffdce356c5de7} 
+uint16\+\_\+t \+\_\+\+\_\+thiscall handle\+\_\+berserk\+\_\+set (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a2739681db2b7bff68f1229d5a5f3d5e4}{SF\+\_\+\+CGd\+Figure\+Jobs}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{source\+\_\+index}{, }\item[{uint16\+\_\+t}]{target\+\_\+index}{, }\item[{uint16\+\_\+t}]{weapon\+\_\+damage}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__onhit__hook_8c_source_l00174}{174}} of file \mbox{\hyperlink{sf__onhit__hook_8c_source}{sf\+\_\+onhit\+\_\+hook.\+c}}.
+
+\Hypertarget{sf__onhit__hook_8c_ac83116cd45e33f37e8cb2b4fa7f35667}\index{sf\_onhit\_hook.c@{sf\_onhit\_hook.c}!handle\_riposte\_set@{handle\_riposte\_set}}
+\index{handle\_riposte\_set@{handle\_riposte\_set}!sf\_onhit\_hook.c@{sf\_onhit\_hook.c}}
+\doxysubsubsection{\texorpdfstring{handle\_riposte\_set()}{handle\_riposte\_set()}}
+{\footnotesize\ttfamily \label{sf__onhit__hook_8c_ac83116cd45e33f37e8cb2b4fa7f35667} 
+uint16\+\_\+t \+\_\+\+\_\+thiscall handle\+\_\+riposte\+\_\+set (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a2739681db2b7bff68f1229d5a5f3d5e4}{SF\+\_\+\+CGd\+Figure\+Jobs}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{source\+\_\+index}{, }\item[{uint16\+\_\+t}]{target\+\_\+index}{, }\item[{uint16\+\_\+t}]{weapon\+\_\+damage}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__onhit__hook_8c_source_l00156}{156}} of file \mbox{\hyperlink{sf__onhit__hook_8c_source}{sf\+\_\+onhit\+\_\+hook.\+c}}.
+
+\Hypertarget{sf__onhit__hook_8c_ab5e89f7825a70fdbe8586af9086bd997}\index{sf\_onhit\_hook.c@{sf\_onhit\_hook.c}!handle\_trueshot\_set@{handle\_trueshot\_set}}
+\index{handle\_trueshot\_set@{handle\_trueshot\_set}!sf\_onhit\_hook.c@{sf\_onhit\_hook.c}}
+\doxysubsubsection{\texorpdfstring{handle\_trueshot\_set()}{handle\_trueshot\_set()}}
+{\footnotesize\ttfamily \label{sf__onhit__hook_8c_ab5e89f7825a70fdbe8586af9086bd997} 
+uint16\+\_\+t \+\_\+\+\_\+thiscall handle\+\_\+trueshot\+\_\+set (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a2739681db2b7bff68f1229d5a5f3d5e4}{SF\+\_\+\+CGd\+Figure\+Jobs}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{source\+\_\+index}{, }\item[{uint16\+\_\+t}]{target\+\_\+index}{, }\item[{uint16\+\_\+t}]{weapon\+\_\+damage}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__onhit__hook_8c_source_l00191}{191}} of file \mbox{\hyperlink{sf__onhit__hook_8c_source}{sf\+\_\+onhit\+\_\+hook.\+c}}.
+
+\Hypertarget{sf__onhit__hook_8c_aab9fd18e448dfed4d72a3d8d9507bcc8}\index{sf\_onhit\_hook.c@{sf\_onhit\_hook.c}!initialize\_onhit\_data\_hooks@{initialize\_onhit\_data\_hooks}}
+\index{initialize\_onhit\_data\_hooks@{initialize\_onhit\_data\_hooks}!sf\_onhit\_hook.c@{sf\_onhit\_hook.c}}
+\doxysubsubsection{\texorpdfstring{initialize\_onhit\_data\_hooks()}{initialize\_onhit\_data\_hooks()}}
+{\footnotesize\ttfamily \label{sf__onhit__hook_8c_aab9fd18e448dfed4d72a3d8d9507bcc8} 
+void initialize\+\_\+onhit\+\_\+data\+\_\+hooks (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__onhit__hook_8c_source_l00070}{70}} of file \mbox{\hyperlink{sf__onhit__hook_8c_source}{sf\+\_\+onhit\+\_\+hook.\+c}}.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=287pt]{sf__onhit__hook_8c_aab9fd18e448dfed4d72a3d8d9507bcc8_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__onhit__hook_8c_a0ca3dd8cf7def5592a69450b5caaac2a}\index{sf\_onhit\_hook.c@{sf\_onhit\_hook.c}!isFigureJobSpell@{isFigureJobSpell}}
+\index{isFigureJobSpell@{isFigureJobSpell}!sf\_onhit\_hook.c@{sf\_onhit\_hook.c}}
+\doxysubsubsection{\texorpdfstring{isFigureJobSpell()}{isFigureJobSpell()}}
+{\footnotesize\ttfamily \label{sf__onhit__hook_8c_a0ca3dd8cf7def5592a69450b5caaac2a} 
+bool \+\_\+\+\_\+thiscall is\+Figure\+Job\+Spell (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a2739681db2b7bff68f1229d5a5f3d5e4}{SF\+\_\+\+CGd\+Figure\+Jobs}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{figure\+\_\+id}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__onhit__hook_8c_source_l00100}{100}} of file \mbox{\hyperlink{sf__onhit__hook_8c_source}{sf\+\_\+onhit\+\_\+hook.\+c}}.
+
+\Hypertarget{sf__onhit__hook_8c_a02411a5016dfa987f9f46df8ff4ca332}\index{sf\_onhit\_hook.c@{sf\_onhit\_hook.c}!isJobDoNothing@{isJobDoNothing}}
+\index{isJobDoNothing@{isJobDoNothing}!sf\_onhit\_hook.c@{sf\_onhit\_hook.c}}
+\doxysubsubsection{\texorpdfstring{isJobDoNothing()}{isJobDoNothing()}}
+{\footnotesize\ttfamily \label{sf__onhit__hook_8c_a02411a5016dfa987f9f46df8ff4ca332} 
+bool is\+Job\+Do\+Nothing (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{job\+\_\+id}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__onhit__hook_8c_source_l00090}{90}} of file \mbox{\hyperlink{sf__onhit__hook_8c_source}{sf\+\_\+onhit\+\_\+hook.\+c}}.
+
+\Hypertarget{sf__onhit__hook_8c_aefde32f4f9aa9831328593444c8811b9}\index{sf\_onhit\_hook.c@{sf\_onhit\_hook.c}!sf\_onhit\_hook@{sf\_onhit\_hook}}
+\index{sf\_onhit\_hook@{sf\_onhit\_hook}!sf\_onhit\_hook.c@{sf\_onhit\_hook.c}}
+\doxysubsubsection{\texorpdfstring{sf\_onhit\_hook()}{sf\_onhit\_hook()}}
+{\footnotesize\ttfamily \label{sf__onhit__hook_8c_aefde32f4f9aa9831328593444c8811b9} 
+void \+\_\+\+\_\+thiscall sf\+\_\+onhit\+\_\+hook (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a2739681db2b7bff68f1229d5a5f3d5e4}{SF\+\_\+\+CGd\+Figure\+Jobs}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{source\+\_\+index}{, }\item[{uint32\+\_\+t}]{param\+\_\+2}{, }\item[{uint8\+\_\+t}]{param\+\_\+3}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__onhit__hook_8c_source_l00208}{208}} of file \mbox{\hyperlink{sf__onhit__hook_8c_source}{sf\+\_\+onhit\+\_\+hook.\+c}}.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{sf__onhit__hook_8c_aefde32f4f9aa9831328593444c8811b9_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{sf__onhit__hook_8c_aa3cb8b22ad1fe2c07699001838c6f978}\index{sf\_onhit\_hook.c@{sf\_onhit\_hook.c}!g\_FUN\_006c3a60@{g\_FUN\_006c3a60}}
+\index{g\_FUN\_006c3a60@{g\_FUN\_006c3a60}!sf\_onhit\_hook.c@{sf\_onhit\_hook.c}}
+\doxysubsubsection{\texorpdfstring{g\_FUN\_006c3a60}{g\_FUN\_006c3a60}}
+{\footnotesize\ttfamily \label{sf__onhit__hook_8c_aa3cb8b22ad1fe2c07699001838c6f978} 
+\mbox{\hyperlink{sf__onhit__hook_8c_a02d96be9aeebb4a494be5d0de47fac9b}{FUN\+\_\+006c3a60\+\_\+ptr}} g\+\_\+\+FUN\+\_\+006c3a60}
+
+
+
+Definition at line \mbox{\hyperlink{sf__onhit__hook_8c_source_l00028}{28}} of file \mbox{\hyperlink{sf__onhit__hook_8c_source}{sf\+\_\+onhit\+\_\+hook.\+c}}.
+
+\Hypertarget{sf__onhit__hook_8c_a046a1a51fd002de4f8c5531c07a773af}\index{sf\_onhit\_hook.c@{sf\_onhit\_hook.c}!g\_FUN\_0071d7b0@{g\_FUN\_0071d7b0}}
+\index{g\_FUN\_0071d7b0@{g\_FUN\_0071d7b0}!sf\_onhit\_hook.c@{sf\_onhit\_hook.c}}
+\doxysubsubsection{\texorpdfstring{g\_FUN\_0071d7b0}{g\_FUN\_0071d7b0}}
+{\footnotesize\ttfamily \label{sf__onhit__hook_8c_a046a1a51fd002de4f8c5531c07a773af} 
+\mbox{\hyperlink{sf__onhit__hook_8c_ac9da902d3248459ff808aff4856684b8}{FUN\+\_\+0071d7b0\+\_\+ptr}} g\+\_\+\+FUN\+\_\+0071d7b0}
+
+
+
+Definition at line \mbox{\hyperlink{sf__onhit__hook_8c_source_l00030}{30}} of file \mbox{\hyperlink{sf__onhit__hook_8c_source}{sf\+\_\+onhit\+\_\+hook.\+c}}.
+
+\Hypertarget{sf__onhit__hook_8c_a53d9ef014be8a874aaa53079d0f05007}\index{sf\_onhit\_hook.c@{sf\_onhit\_hook.c}!g\_FUN\_00755180@{g\_FUN\_00755180}}
+\index{g\_FUN\_00755180@{g\_FUN\_00755180}!sf\_onhit\_hook.c@{sf\_onhit\_hook.c}}
+\doxysubsubsection{\texorpdfstring{g\_FUN\_00755180}{g\_FUN\_00755180}}
+{\footnotesize\ttfamily \label{sf__onhit__hook_8c_a53d9ef014be8a874aaa53079d0f05007} 
+\mbox{\hyperlink{sf__onhit__hook_8c_aafec6154b49caac7291602f59bfe7413}{FUN\+\_\+00755180\+\_\+ptr}} g\+\_\+\+FUN\+\_\+00755180}
+
+
+
+Definition at line \mbox{\hyperlink{sf__onhit__hook_8c_source_l00031}{31}} of file \mbox{\hyperlink{sf__onhit__hook_8c_source}{sf\+\_\+onhit\+\_\+hook.\+c}}.
+
+\Hypertarget{sf__onhit__hook_8c_a233281d42171a39e8b5d4e4aac6afdce}\index{sf\_onhit\_hook.c@{sf\_onhit\_hook.c}!g\_get\_hit\_chance@{g\_get\_hit\_chance}}
+\index{g\_get\_hit\_chance@{g\_get\_hit\_chance}!sf\_onhit\_hook.c@{sf\_onhit\_hook.c}}
+\doxysubsubsection{\texorpdfstring{g\_get\_hit\_chance}{g\_get\_hit\_chance}}
+{\footnotesize\ttfamily \label{sf__onhit__hook_8c_a233281d42171a39e8b5d4e4aac6afdce} 
+\mbox{\hyperlink{sf__onhit__hook_8c_a431c968d516023fb5040d6146b599f14}{get\+\_\+hit\+\_\+chance\+\_\+ptr}} g\+\_\+get\+\_\+hit\+\_\+chance}
+
+
+
+Definition at line \mbox{\hyperlink{sf__onhit__hook_8c_source_l00026}{26}} of file \mbox{\hyperlink{sf__onhit__hook_8c_source}{sf\+\_\+onhit\+\_\+hook.\+c}}.
+
+\Hypertarget{sf__onhit__hook_8c_aec8f28f75614b928aa82417eb08b3d14}\index{sf\_onhit\_hook.c@{sf\_onhit\_hook.c}!g\_get\_leveled\_spell@{g\_get\_leveled\_spell}}
+\index{g\_get\_leveled\_spell@{g\_get\_leveled\_spell}!sf\_onhit\_hook.c@{sf\_onhit\_hook.c}}
+\doxysubsubsection{\texorpdfstring{g\_get\_leveled\_spell}{g\_get\_leveled\_spell}}
+{\footnotesize\ttfamily \label{sf__onhit__hook_8c_aec8f28f75614b928aa82417eb08b3d14} 
+\mbox{\hyperlink{sf__onhit__hook_8c_a58e00ab7dc81fb58801626d98defaa27}{get\+\_\+leveled\+\_\+spell\+\_\+ptr}} g\+\_\+get\+\_\+leveled\+\_\+spell}
+
+
+
+Definition at line \mbox{\hyperlink{sf__onhit__hook_8c_source_l00027}{27}} of file \mbox{\hyperlink{sf__onhit__hook_8c_source}{sf\+\_\+onhit\+\_\+hook.\+c}}.
+
+\Hypertarget{sf__onhit__hook_8c_a65cc4274ae980aa7e6384ee17b5b6db2}\index{sf\_onhit\_hook.c@{sf\_onhit\_hook.c}!g\_get\_reduced\_building\_damage@{g\_get\_reduced\_building\_damage}}
+\index{g\_get\_reduced\_building\_damage@{g\_get\_reduced\_building\_damage}!sf\_onhit\_hook.c@{sf\_onhit\_hook.c}}
+\doxysubsubsection{\texorpdfstring{g\_get\_reduced\_building\_damage}{g\_get\_reduced\_building\_damage}}
+{\footnotesize\ttfamily \label{sf__onhit__hook_8c_a65cc4274ae980aa7e6384ee17b5b6db2} 
+\mbox{\hyperlink{sf__onhit__hook_8c_ad8ff3ea7dd287974d75f24b9aba82c53}{get\+\_\+reduced\+\_\+building\+\_\+damage\+\_\+ptr}} g\+\_\+get\+\_\+reduced\+\_\+building\+\_\+damage}
+
+
+
+Definition at line \mbox{\hyperlink{sf__onhit__hook_8c_source_l00029}{29}} of file \mbox{\hyperlink{sf__onhit__hook_8c_source}{sf\+\_\+onhit\+\_\+hook.\+c}}.
+
+\Hypertarget{sf__onhit__hook_8c_ab95b55be8193c497bf4194cbc03283dc}\index{sf\_onhit\_hook.c@{sf\_onhit\_hook.c}!g\_get\_reduced\_damage@{g\_get\_reduced\_damage}}
+\index{g\_get\_reduced\_damage@{g\_get\_reduced\_damage}!sf\_onhit\_hook.c@{sf\_onhit\_hook.c}}
+\doxysubsubsection{\texorpdfstring{g\_get\_reduced\_damage}{g\_get\_reduced\_damage}}
+{\footnotesize\ttfamily \label{sf__onhit__hook_8c_ab95b55be8193c497bf4194cbc03283dc} 
+\mbox{\hyperlink{sf__onhit__hook_8c_a2892feb762f3129a835efdea7240a17c}{get\+\_\+reduced\+\_\+damage\+\_\+ptr}} g\+\_\+get\+\_\+reduced\+\_\+damage}
+
+
+
+Definition at line \mbox{\hyperlink{sf__onhit__hook_8c_source_l00025}{25}} of file \mbox{\hyperlink{sf__onhit__hook_8c_source}{sf\+\_\+onhit\+\_\+hook.\+c}}.
+
+\Hypertarget{sf__onhit__hook_8c_a57d3a363abd676dc961b0936412d4df5}\index{sf\_onhit\_hook.c@{sf\_onhit\_hook.c}!g\_getWeaponEffects@{g\_getWeaponEffects}}
+\index{g\_getWeaponEffects@{g\_getWeaponEffects}!sf\_onhit\_hook.c@{sf\_onhit\_hook.c}}
+\doxysubsubsection{\texorpdfstring{g\_getWeaponEffects}{g\_getWeaponEffects}}
+{\footnotesize\ttfamily \label{sf__onhit__hook_8c_a57d3a363abd676dc961b0936412d4df5} 
+\mbox{\hyperlink{sf__onhit__hook_8c_a44458ce7f2b81338e0f6862f28bdab23}{get\+Weapon\+Effects\+\_\+ptr}} g\+\_\+get\+Weapon\+Effects}
+
+
+
+Definition at line \mbox{\hyperlink{sf__onhit__hook_8c_source_l00033}{33}} of file \mbox{\hyperlink{sf__onhit__hook_8c_source}{sf\+\_\+onhit\+\_\+hook.\+c}}.
+
+\Hypertarget{sf__onhit__hook_8c_a28635fb79fee5828d7bc5d042793014e}\index{sf\_onhit\_hook.c@{sf\_onhit\_hook.c}!g\_objectDealDamage@{g\_objectDealDamage}}
+\index{g\_objectDealDamage@{g\_objectDealDamage}!sf\_onhit\_hook.c@{sf\_onhit\_hook.c}}
+\doxysubsubsection{\texorpdfstring{g\_objectDealDamage}{g\_objectDealDamage}}
+{\footnotesize\ttfamily \label{sf__onhit__hook_8c_a28635fb79fee5828d7bc5d042793014e} 
+\mbox{\hyperlink{sf__onhit__hook_8c_a9ac8a9eb864f8c9dabf503d2c3d45eaa}{object\+Deal\+Damage\+\_\+ptr}} g\+\_\+object\+Deal\+Damage}
+
+
+
+Definition at line \mbox{\hyperlink{sf__onhit__hook_8c_source_l00032}{32}} of file \mbox{\hyperlink{sf__onhit__hook_8c_source}{sf\+\_\+onhit\+\_\+hook.\+c}}.
+

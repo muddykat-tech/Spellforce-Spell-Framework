@@ -1,5 +1,5 @@
 #include "../sf_wrappers.h"
-#include "../../registry/sf_spellrefresh_registry.h"
+#include "../../registry/spell_data_registries/sf_spellrefresh_registry.h"
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>

@@ -1,0 +1,43 @@
+\doxysection{sf\+\_\+spelldamage\+\_\+handlers.\+h}
+\hypertarget{sf__spelldamage__handlers_8h_source}{}\label{sf__spelldamage__handlers_8h_source}\index{src/internal/handlers/sf\_spelldamage\_handlers.h@{src/internal/handlers/sf\_spelldamage\_handlers.h}}
+\mbox{\hyperlink{sf__spelldamage__handlers_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ SF\_SPELLDAMAGE\_HANDLER\_H}}
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ SF\_SPELLDAMAGE\_HANDLER\_H}}
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sfsf_8h}{../../api/sfsf.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__asi_8h}{../../asi/sf\_asi.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00007}00007\ uint16\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__spelldamage__handlers_8h_a51ecc4f761fea26391833f88538ee0f9}{mana\_shield\_dmg\_handler}}(\mbox{\hyperlink{sf__general__structures_8h_a17f35cab19a4752dcf2d3fb1ea9a9f0e}{SF\_CGdFigureToolbox}}\ *\_this,\ uint16\_t\ source,\ uint16\_t\ target,}
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00008}00008\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ current\_damage,\ uint16\_t\ is\_spell\_damage,\ uint32\_t\ is\_ranged\_damage,\ uint16\_t\ spell\_id);}
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00010}00010\ uint16\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__spelldamage__handlers_8h_a7a5bf2fa2e189901d67428fd1bfedeb5}{death\_grasp\_dmg\_handler}}(\mbox{\hyperlink{sf__general__structures_8h_a17f35cab19a4752dcf2d3fb1ea9a9f0e}{SF\_CGdFigureToolbox}}\ *\_this,\ uint16\_t\ source,\ uint16\_t\ target,}
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00011}00011\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ current\_damage,\ uint16\_t\ is\_spell\_damage,\ uint32\_t\ is\_ranged\_damage,\ uint16\_t\ spell\_id);}
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00013}00013\ uint16\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__spelldamage__handlers_8h_a55832fe033a001bfe03a23608a687858}{feedback\_dmg\_handler}}(\mbox{\hyperlink{sf__general__structures_8h_a17f35cab19a4752dcf2d3fb1ea9a9f0e}{SF\_CGdFigureToolbox}}\ *\_this,\ uint16\_t\ source,\ uint16\_t\ target,}
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00014}00014\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ current\_damage,\ uint16\_t\ is\_spell\_damage,\ uint32\_t\ is\_ranged\_damage,\ uint16\_t\ spell\_id);}
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00016}00016\ uint16\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__spelldamage__handlers_8h_ab971b1bface1ca699766e7390bb1bf6b}{feign\_death\_dmg\_handler}}(\mbox{\hyperlink{sf__general__structures_8h_a17f35cab19a4752dcf2d3fb1ea9a9f0e}{SF\_CGdFigureToolbox}}\ *\_this,\ uint16\_t\ source,\ uint16\_t\ target,}
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00017}00017\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ current\_damage,\ uint16\_t\ is\_spell\_damage,\ uint32\_t\ is\_ranged\_damage,\ uint16\_t\ spell\_id);}
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00019}00019\ uint16\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__spelldamage__handlers_8h_ade79dfcf3fdd9f231097d13bd597a0ec}{conservation\_dmg\_handler}}(\mbox{\hyperlink{sf__general__structures_8h_a17f35cab19a4752dcf2d3fb1ea9a9f0e}{SF\_CGdFigureToolbox}}\ *\_this,\ uint16\_t\ source,\ uint16\_t\ target,}
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00020}00020\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ current\_damage,\ uint16\_t\ is\_spell\_damage,\ uint32\_t\ is\_ranged\_damage,\ uint16\_t\ spell\_id);}
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00022}00022\ uint16\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__spelldamage__handlers_8h_a6af975ada169b4be5a6298357c997cf0}{dmg\_shield\_dmg\_handler}}(\mbox{\hyperlink{sf__general__structures_8h_a17f35cab19a4752dcf2d3fb1ea9a9f0e}{SF\_CGdFigureToolbox}}\ *\_this,\ uint16\_t\ source,\ uint16\_t\ target,}
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ current\_damage,\ uint16\_t\ is\_spell\_damage,\ uint32\_t\ is\_ranged\_damage,\ uint16\_t\ spell\_id);}
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00025}00025\ uint16\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__spelldamage__handlers_8h_a7a42a485840d7e5ffdc3f112bcb7f5d2}{invulnerability\_dmg\_handler}}(\mbox{\hyperlink{sf__general__structures_8h_a17f35cab19a4752dcf2d3fb1ea9a9f0e}{SF\_CGdFigureToolbox}}\ *\_this,\ uint16\_t\ source,\ uint16\_t\ target,}
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ current\_damage,\ uint16\_t\ is\_spell\_damage,\ uint32\_t\ is\_ranged\_damage,\ uint16\_t\ spell\_id);}
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00028}00028\ uint16\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__spelldamage__handlers_8h_a103760811c6954d740d3371e4a99681d}{durability\_dmg\_handler}}(\mbox{\hyperlink{sf__general__structures_8h_a17f35cab19a4752dcf2d3fb1ea9a9f0e}{SF\_CGdFigureToolbox}}\ *\_this,\ uint16\_t\ source,\ uint16\_t\ target,}
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ current\_damage,\ uint16\_t\ is\_spell\_damage,\ uint32\_t\ is\_ranged\_damage,\ uint16\_t\ spell\_id);}
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00031}00031\ uint16\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__spelldamage__handlers_8h_a3980e17e51545a1e5c6c2b03c7d4f92c}{steelskin\_dmg\_handler}}(\mbox{\hyperlink{sf__general__structures_8h_a17f35cab19a4752dcf2d3fb1ea9a9f0e}{SF\_CGdFigureToolbox}}\ *\_this,\ uint16\_t\ source,\ uint16\_t\ target,}
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ current\_damage,\ uint16\_t\ is\_spell\_damage,\ uint32\_t\ is\_ranged\_damage,\ uint16\_t\ spell\_id);}
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00034}00034\ uint16\_t\ \_\_thiscall\ \mbox{\hyperlink{sf__spelldamage__handlers_8h_a00fca112d45def173b867a27e10382cf}{hypnotize\_dmg\_handler}}(\mbox{\hyperlink{sf__general__structures_8h_a17f35cab19a4752dcf2d3fb1ea9a9f0e}{SF\_CGdFigureToolbox}}\ *\_this,\ uint16\_t\ source,\ uint16\_t\ target,}
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ current\_damage,\ uint16\_t\ is\_spell\_damage,\ uint32\_t\ is\_ranged\_damage,\ uint16\_t\ spell\_id);}
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{sf__spelldamage__handlers_8h_source_l00037}00037\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

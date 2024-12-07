@@ -3,7 +3,7 @@
 #include "../sf_wrappers.h"
 #include "../sf_hooks.h"
 
-#include "../../registry/sf_spelldamage_registry.h"
+#include "../../registry/spell_data_registries/sf_spelldamage_registry.h"
 #include "../../../api/sf_general_structures.h"
 
 #include <stdint.h>

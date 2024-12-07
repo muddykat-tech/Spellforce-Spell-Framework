@@ -1,0 +1,25 @@
+var searchData=
+[
+  ['sf_5f154_0',['SF_154',['../namespace_a_s_i.html#a0d3678d7eaf95729a8566ad9bff50546aac76b24c5f42e94fc317e0b93e756c66',1,'ASI']]],
+  ['sf_5f161_1',['SF_161',['../namespace_a_s_i.html#a0d3678d7eaf95729a8566ad9bff50546a4196d74fc031c06b6cadb95f0f0106a7',1,'ASI']]],
+  ['sf_5fbeta_2',['SF_BETA',['../namespace_a_s_i.html#a0d3678d7eaf95729a8566ad9bff50546abefce345291d262e260541ddcf2f1bcd',1,'ASI']]],
+  ['skip_5fonce_3',['SKIP_ONCE',['../sf__general__structures_8h.html#a6978b403a7119e4900450f3243eb3571a6f2f7c178d8c6799180781759e3f8193',1,'sf_general_structures.h']]],
+  ['spawn_4',['SPAWN',['../sf__general__structures_8h.html#ac82390a633ae8fc23e2141e25507f732a881e5b8c00714da0b5327e02f62146fc',1,'sf_general_structures.h']]],
+  ['spell_5fconservation_5fshield_5',['SPELL_CONSERVATION_SHIELD',['../sf__general__structures_8h.html#a59e7b4825ade86985ea9ff0cd38d4355a6c400d88ba9221a3edc111cd5dbc9dd6',1,'sf_general_structures.h']]],
+  ['spell_5fdouble_5fdamage_6',['SPELL_DOUBLE_DAMAGE',['../sf__general__structures_8h.html#a59e7b4825ade86985ea9ff0cd38d4355a566e0a8f8302a99b3a58b39309498169',1,'sf_general_structures.h']]],
+  ['spell_5fpestilence_5fdamage_7',['SPELL_PESTILENCE_DAMAGE',['../sf__general__structures_8h.html#a59e7b4825ade86985ea9ff0cd38d4355a466b63fe0e5a65061f2a49d338613acf',1,'sf_general_structures.h']]],
+  ['spell_5fstat_5fmul_5fmodifier_8',['SPELL_STAT_MUL_MODIFIER',['../sf__general__structures_8h.html#a59e7b4825ade86985ea9ff0cd38d4355a52faeabe45c367646d1d5c284330da65',1,'sf_general_structures.h']]],
+  ['spell_5fstat_5fmul_5fmodifier2_9',['SPELL_STAT_MUL_MODIFIER2',['../sf__general__structures_8h.html#a59e7b4825ade86985ea9ff0cd38d4355a07005f8d2f53f625c54ddab97d578e31',1,'sf_general_structures.h']]],
+  ['spell_5fstat_5fmul_5fmodifier3_10',['SPELL_STAT_MUL_MODIFIER3',['../sf__general__structures_8h.html#a59e7b4825ade86985ea9ff0cd38d4355a4222adc5ecb712e4569c72841051499e',1,'sf_general_structures.h']]],
+  ['spell_5fstat_5fmul_5fmodifier4_11',['SPELL_STAT_MUL_MODIFIER4',['../sf__general__structures_8h.html#a59e7b4825ade86985ea9ff0cd38d4355a1a42d78c83f9f7e2ee6dc60f83e17c56',1,'sf_general_structures.h']]],
+  ['spell_5ftag_5fcount_12',['SPELL_TAG_COUNT',['../sf__registration__functions_8h.html#a1ef25133f998082d0974a3d43088f1e5a6740fa18a18d436b8719ebebf3a2b214',1,'sf_registration_functions.h']]],
+  ['spell_5ftarget_13',['SPELL_TARGET',['../sf__general__structures_8h.html#a59e7b4825ade86985ea9ff0cd38d4355ab13261395a2dce02b3f22289d12a44e2',1,'sf_general_structures.h']]],
+  ['spell_5ftick_5fcount_14',['SPELL_TICK_COUNT',['../sf__general__structures_8h.html#a59e7b4825ade86985ea9ff0cd38d4355a9645396ec61f65e96b3a66e10928f74e',1,'sf_general_structures.h']]],
+  ['spell_5ftick_5fcount_5faux_15',['SPELL_TICK_COUNT_AUX',['../sf__general__structures_8h.html#a59e7b4825ade86985ea9ff0cd38d4355a792986ae89325aaf058ac819239e682e',1,'sf_general_structures.h']]],
+  ['stamina_16',['STAMINA',['../sf__figure__functions_8h.html#a35c57de9b4dfd894cc11e998a47b1436a6bf06a15de893533dd8b5ea926d0e248',1,'sf_figure_functions.h']]],
+  ['start_5fwalk_17',['START_WALK',['../sf__general__structures_8h.html#a6978b403a7119e4900450f3243eb3571a7d3f0a4cd2666414d28aa9839d43d6e0',1,'sf_general_structures.h']]],
+  ['start_5fwork_5fat_5fbuilding_5fforce_5fjob_18',['START_WORK_AT_BUILDING_FORCE_JOB',['../sf__general__structures_8h.html#a6978b403a7119e4900450f3243eb3571a6f56485d0d52b2320047828381642384',1,'sf_general_structures.h']]],
+  ['strength_19',['STRENGTH',['../sf__figure__functions_8h.html#a35c57de9b4dfd894cc11e998a47b1436a4ec80738f71bd12e613343cb7b09bfb4',1,'sf_figure_functions.h']]],
+  ['summon_5fspell_20',['SUMMON_SPELL',['../sf__registration__functions_8h.html#a1ef25133f998082d0974a3d43088f1e5a7de03f78cea4172d4c5f54f3275baf56',1,'sf_registration_functions.h']]],
+  ['superior_5fpathing_21',['SUPERIOR_PATHING',['../sf__general__structures_8h.html#a6978b403a7119e4900450f3243eb3571abc00b20775e7ccbf0f68ff02125be03b',1,'sf_general_structures.h']]]
+];

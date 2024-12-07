@@ -2,7 +2,7 @@
 #include "../sf_wrappers.h"
 #include "../sf_hooks.h"
 #include "../sf_modloader.h"
-#include "../../registry/sf_onhit_registry.h"
+#include "../../registry/spell_data_registries/sf_onhit_registry.h"
 #include "../../registry/sf_mod_registry.h"
 
 #include <stdint.h>

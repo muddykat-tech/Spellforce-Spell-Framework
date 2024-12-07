@@ -2,7 +2,7 @@
 #include "sf_modloader.h"
 #include "sf_hooks.h"
 #include "../handlers/sf_spelltype_handlers.h"
-#include "../registry/sf_spelltype_registry.h"
+#include "../registry/spell_data_registries/sf_spelltype_registry.h"
 #include "../registry/sf_mod_registry.h"
 
 #include "hooks/sf_refresh_hook.h"

@@ -1,0 +1,15 @@
+digraph "__declspec"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node1 [id="Node000001",label="__declspec",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [id="edge1_Node000001_Node000002",color="steelblue1",style="solid",tooltip=" "];
+  Node2 [id="Node000002",label="custom_spelleffect\l_handler",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$_test_mod_8cpp.html#acc38bfd9b0aed24def57a7178fe6026d",tooltip=" "];
+  Node1 -> Node3 [id="edge2_Node000001_Node000003",color="steelblue1",style="solid",tooltip=" "];
+  Node3 [id="Node000003",label="custom_spellend_handler",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$_test_mod_8cpp.html#ab37a1d8b7453db85f4361afd791ebefb",tooltip=" "];
+  Node1 -> Node4 [id="edge3_Node000001_Node000004",color="steelblue1",style="solid",tooltip=" "];
+  Node4 [id="Node000004",label="custom_spelltype_handler",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$_test_mod_8cpp.html#aeed4023ed0fd8be795016d09e69bb4bd",tooltip=" "];
+}

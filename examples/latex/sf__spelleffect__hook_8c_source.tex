@@ -1,0 +1,40 @@
+\doxysection{sf\+\_\+spelleffect\+\_\+hook.\+c}
+\hypertarget{sf__spelleffect__hook_8c_source}{}\label{sf__spelleffect__hook_8c_source}\index{src/internal/core/hooks/sf\_spelleffect\_hook.c@{src/internal/core/hooks/sf\_spelleffect\_hook.c}}
+\mbox{\hyperlink{sf__spelleffect__hook_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{sf__spelleffect__hook_8c_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__wrappers_8h}{../sf\_wrappers.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__spelleffect__hook_8c_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__hooks_8h}{../sf\_hooks.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__spelleffect__hook_8c_source_l00003}00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__spelleffect__registry_8h}{../../registry/sf\_spelleffect\_registry.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__spelleffect__hook_8c_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sf__spelleffect__hook_8h}{sf\_spelleffect\_hook.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{sf__spelleffect__hook_8c_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{sf__spelleffect__hook_8c_source_l00006}\mbox{\hyperlink{sf__spelleffect__hook_8c_a7bc8319c080c36bf60a565521774fe48}{00006}}\ \textcolor{keywordtype}{void}\ \_\_thiscall\ \mbox{\hyperlink{sf__spelleffect__hook_8c_a7bc8319c080c36bf60a565521774fe48}{sf\_spelleffect\_hook}}(\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\_CGdSpell}}\ *\_this)}
+\DoxyCodeLine{\Hypertarget{sf__spelleffect__hook_8c_source_l00007}00007\ \{}
+\DoxyCodeLine{\Hypertarget{sf__spelleffect__hook_8c_source_l00008}00008\ \ \ \ \ uint16\_t\ spell\_index;}
+\DoxyCodeLine{\Hypertarget{sf__spelleffect__hook_8c_source_l00009}00009\ \ \ \ \ \textcolor{keywordflow}{for}\ (spell\_index\ =\ 1;\ spell\_index\ <=\ \_this-\/>max\_used;\ ++spell\_index)}
+\DoxyCodeLine{\Hypertarget{sf__spelleffect__hook_8c_source_l00010}00010\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__spelleffect__hook_8c_source_l00011}00011\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\_this-\/>active\_spell\_list[spell\_index].spell\_id\ !=\ 0)}
+\DoxyCodeLine{\Hypertarget{sf__spelleffect__hook_8c_source_l00012}00012\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__spelleffect__hook_8c_source_l00013}00013\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{short}\ to\_do\_count\ =\ \_this-\/>active\_spell\_list[spell\_index].to\_do\_count;}
+\DoxyCodeLine{\Hypertarget{sf__spelleffect__hook_8c_source_l00014}00014\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (to\_do\_count\ <=\ 0)}
+\DoxyCodeLine{\Hypertarget{sf__spelleffect__hook_8c_source_l00015}00015\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__spelleffect__hook_8c_source_l00016}00016\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ to\_do\_count\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{sf__spelleffect__hook_8c_source_l00017}00017\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__spelleffect__hook_8c_source_l00018}00018\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{sf__spelleffect__hook_8c_source_l00019}00019\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__spelleffect__hook_8c_source_l00020}00020\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ to\_do\_count\ =\ to\_do\_count\ +\ -\/1;}
+\DoxyCodeLine{\Hypertarget{sf__spelleffect__hook_8c_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__spelleffect__hook_8c_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ \_this-\/>active\_spell\_list[spell\_index].to\_do\_count\ =\ to\_do\_count;}
+\DoxyCodeLine{\Hypertarget{sf__spelleffect__hook_8c_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (to\_do\_count\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{sf__spelleffect__hook_8c_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__spelleffect__hook_8c_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ spell\_job\ =\ \_this-\/>active\_spell\_list[spell\_index].spell\_job;}
+\DoxyCodeLine{\Hypertarget{sf__spelleffect__hook_8c_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{sf__registration__functions_8h_af76aa0d565c5ebb0b1eb50e2ed3377b3}{handler\_ptr}}\ func\ =\ \mbox{\hyperlink{sf__spelleffect__registry_8cpp_ac270f513e989effbb094a1f1f62ad15b}{get\_spell\_effect}}(spell\_job);}
+\DoxyCodeLine{\Hypertarget{sf__spelleffect__hook_8c_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (func\ !=\ NULL)}
+\DoxyCodeLine{\Hypertarget{sf__spelleffect__hook_8c_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{sf__spelleffect__hook_8c_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ func(\_this,\ spell\_index);}
+\DoxyCodeLine{\Hypertarget{sf__spelleffect__hook_8c_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__spelleffect__hook_8c_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__spelleffect__hook_8c_source_l00032}00032\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__spelleffect__hook_8c_source_l00033}00033\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{sf__spelleffect__hook_8c_source_l00034}00034\ \}}
+
+\end{DoxyCode}

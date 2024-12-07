@@ -1,0 +1,1679 @@
+\doxysection{src/api/sf\+\_\+general\+\_\+structures.h File Reference}
+\hypertarget{sf__general__structures_8h}{}\label{sf__general__structures_8h}\index{src/api/sf\_general\_structures.h@{src/api/sf\_general\_structures.h}}
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+Include dependency graph for sf\+\_\+general\+\_\+structures.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=202pt]{sf__general__structures_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__general__structures_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{sf__general__structures_8h_a8fc1a791568a2848b8b001524eee155c}{DECLARE\+\_\+\+FUNCTION}}(type,  name, ...)
+\item 
+\#define \mbox{\hyperlink{sf__general__structures_8h_a7b4790d37e7ac68e99b4cc12ab91328e}{DECLARE\+\_\+\+FUNCTION\+\_\+\+GROUP}}(group, ...)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef void(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__general__structures_8h_ad39a9954ebb4503540dcaffa72c0d658}{log\+\_\+function\+\_\+ptr}}) (const char \texorpdfstring{$\ast$}{*})
+\item 
+typedef struct \mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}}
+\item 
+typedef struct \mbox{\hyperlink{sf__general__structures_8h_a17f35cab19a4752dcf2d3fb1ea9a9f0e}{SF\+\_\+\+CGd\+Figure\+Toolbox}} \mbox{\hyperlink{sf__general__structures_8h_a17f35cab19a4752dcf2d3fb1ea9a9f0e}{SF\+\_\+\+CGd\+Figure\+Toolbox}}
+\item 
+typedef struct \mbox{\hyperlink{sf__general__structures_8h_a8c1eaf8a100a1e9fee8b637688b23987}{SF\+\_\+\+Gd\+Effect}} \mbox{\hyperlink{sf__general__structures_8h_a8c1eaf8a100a1e9fee8b637688b23987}{SF\+\_\+\+Gd\+Effect}}
+\item 
+typedef struct \mbox{\hyperlink{sf__general__structures_8h_a710c54d12a2bf3e29c87578d51d0373d}{SF\+\_\+\+CGDEffect}} \mbox{\hyperlink{sf__general__structures_8h_a710c54d12a2bf3e29c87578d51d0373d}{SF\+\_\+\+CGDEffect}}
+\item 
+typedef struct \mbox{\hyperlink{sf__general__structures_8h_ae200cc761d9e4257e978beaa16ca50a3}{SF\+\_\+\+CGd\+World}} \mbox{\hyperlink{sf__general__structures_8h_ae200cc761d9e4257e978beaa16ca50a3}{SF\+\_\+\+CGd\+World}}
+\item 
+typedef struct \mbox{\hyperlink{sf__general__structures_8h_afaafd0a4f93b6d4e95de3f0e494c941b}{SF\+\_\+\+CGd\+World\+Tool\+Box}} \mbox{\hyperlink{sf__general__structures_8h_afaafd0a4f93b6d4e95de3f0e494c941b}{SF\+\_\+\+CGd\+World\+Tool\+Box}}
+\item 
+typedef struct \mbox{\hyperlink{sf__general__structures_8h_a2739681db2b7bff68f1229d5a5f3d5e4}{SF\+\_\+\+CGd\+Figure\+Jobs}} \mbox{\hyperlink{sf__general__structures_8h_a2739681db2b7bff68f1229d5a5f3d5e4}{SF\+\_\+\+CGd\+Figure\+Jobs}}
+\item 
+typedef struct \mbox{\hyperlink{sf__general__structures_8h_a326f52debb4a3a05138160c72536c17e}{SF\+\_\+\+CGd\+Building}} \mbox{\hyperlink{sf__general__structures_8h_a326f52debb4a3a05138160c72536c17e}{SF\+\_\+\+CGd\+Building}}
+\item 
+typedef void(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__general__structures_8h_a79f1216fa524f80356c60c2f1c6a2456}{console\+\_\+print\+\_\+ptr}}) (uint32\+\_\+t, const char \texorpdfstring{$\ast$}{*})
+\item 
+typedef uint16\+\_\+t(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__general__structures_8h_a6694222e4b9549b92231e7afa2107b57}{get\+\_\+spell\+\_\+spell\+\_\+line\+\_\+ptr}}) (void \texorpdfstring{$\ast$}{*}, uint16\+\_\+t)
+\item 
+typedef uint32\+\_\+t(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__general__structures_8h_a8c9b4c8637d55a626fdb72a8f9b58922}{figure\+\_\+toolbox\+\_\+get\+\_\+unkn\+\_\+ptr}}) (void \texorpdfstring{$\ast$}{*}, uint16\+\_\+t)
+\item 
+typedef void(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__general__structures_8h_a777aa0a7a267165f9a196f9b293a35c4}{figure\+\_\+toolbox\+\_\+add\+\_\+spell\+\_\+ptr}}) (void \texorpdfstring{$\ast$}{*}, uint16\+\_\+t, uint16\+\_\+t)
+\item 
+typedef bool(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__general__structures_8h_aa419a4385eff93c7fdabade2c545aded}{figure\+\_\+toolbox\+\_\+is\+\_\+targetable\+\_\+ptr}}) (void \texorpdfstring{$\ast$}{*}CGd\+Figure\+Toolbox, uint16\+\_\+t figure\+\_\+index)
+\item 
+typedef uint32\+\_\+t(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__general__structures_8h_ae52358dbffb2bfc0b421a928eb0e779f}{FUN\+\_\+0069eaf0\+\_\+ptr}}) (void \texorpdfstring{$\ast$}{*}ac69, void \texorpdfstring{$\ast$}{*}ac69\+\_\+2, void \texorpdfstring{$\ast$}{*}ac69\+\_\+3, void \texorpdfstring{$\ast$}{*}ac69\+\_\+4)
+\item 
+typedef void(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__general__structures_8h_a82640f13fec97cfc97c0ffa265528d19}{fidfree\+\_\+ptr}}) (uint32\+\_\+t \texorpdfstring{$\ast$}{*}memory\+\_\+ptr)
+\item 
+typedef void(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__general__structures_8h_a834aa4e5d61d6ad1de3c5f5848abf932}{menu\+\_\+label\+\_\+ptr}}) (\mbox{\hyperlink{sf__general__structures_8h_a1b96a8d15a7b76099bd6683f104dc217}{CMnu\+Label}} \texorpdfstring{$\ast$}{*}\+\_\+this)
+\item 
+typedef void(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__general__structures_8h_a3a212a2bab16f5e6c3c81b564d609ae9}{menu\+\_\+label\+\_\+set\+\_\+string\+\_\+ptr}}) (\mbox{\hyperlink{sf__general__structures_8h_a1b96a8d15a7b76099bd6683f104dc217}{CMnu\+Label}} \texorpdfstring{$\ast$}{*}\+\_\+this, \mbox{\hyperlink{sf__general__structures_8h_a3aec067538ae8bb3838f555feac49682}{SF\+\_\+\+String}} \texorpdfstring{$\ast$}{*}string)
+\item 
+typedef void(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__general__structures_8h_abb19b1c51539a52b999170f114584722}{initialize\+\_\+menu\+\_\+container\+\_\+ptr}}) (\mbox{\hyperlink{sf__general__structures_8h_aa4b2c10b9c9570a024b495014e652c71}{CMnu\+Container}} \texorpdfstring{$\ast$}{*}\+\_\+this)
+\item 
+typedef \mbox{\hyperlink{sf__general__structures_8h_a3aec067538ae8bb3838f555feac49682}{SF\+\_\+\+String}} \texorpdfstring{$\ast$}{*}(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__general__structures_8h_a5b8c6c5f47cca11977c79654edd4fada}{construct\+\_\+default\+\_\+sf\+\_\+string\+\_\+ptr}}) (\mbox{\hyperlink{sf__general__structures_8h_a3aec067538ae8bb3838f555feac49682}{SF\+\_\+\+String}} \texorpdfstring{$\ast$}{*}\+\_\+this)
+\item 
+typedef void(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__general__structures_8h_a083e68ce4713d284eb72d09404b174a6}{construct\+\_\+start\+\_\+menu\+\_\+ptr}}) (\mbox{\hyperlink{sf__general__structures_8h_ae6c281c594fe42f390ef3a9d3456378e}{CUi\+Start\+Menu}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint32\+\_\+t p1)
+\item 
+typedef void(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__general__structures_8h_a9017afd3d59671398dcba18538b8b8fc}{mnu\+\_\+label\+\_\+init\+\_\+data\+\_\+ptr}}) (\mbox{\hyperlink{sf__general__structures_8h_a1b96a8d15a7b76099bd6683f104dc217}{CMnu\+Label}} \texorpdfstring{$\ast$}{*}\+\_\+this, float xpos, float ypos, float width, float height, \mbox{\hyperlink{sf__general__structures_8h_a3aec067538ae8bb3838f555feac49682}{SF\+\_\+\+String}} \texorpdfstring{$\ast$}{*}string)
+\item 
+typedef void(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__general__structures_8h_a959316cdd55be021bfd0c8079cac8f4f}{message\+\_\+box\+\_\+ptr}}) (uint32\+\_\+t \mbox{\hyperlink{sf__general__structures_8h_a747e81e6fc592fdba2378ffb92c90625}{CApp\+Menu}}, uint16\+\_\+t description\+\_\+id, \mbox{\hyperlink{sf__general__structures_8h_a3aec067538ae8bb3838f555feac49682}{SF\+\_\+\+String}} \texorpdfstring{$\ast$}{*}string\+\_\+ptr, uint16\+\_\+t has\+Offset)
+\item 
+typedef void(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__general__structures_8h_a1ef3ef233abb55a4392db0aa82a654e0}{menu\+\_\+label\+\_\+constructor\+\_\+ptr}}) (\mbox{\hyperlink{sf__general__structures_8h_a1b96a8d15a7b76099bd6683f104dc217}{CMnu\+Label}} \texorpdfstring{$\ast$}{*}\+\_\+this)
+\item 
+typedef void(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__general__structures_8h_acc2efadfffc955b944400b3006ab7344}{set\+\_\+label\+\_\+flags\+\_\+ptr}}) (\mbox{\hyperlink{sf__general__structures_8h_a1b96a8d15a7b76099bd6683f104dc217}{CMnu\+Label}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint32\+\_\+t flags)
+\item 
+typedef void(\+\_\+\+\_\+fastcall \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__general__structures_8h_a3ce0902fdc64b610961f5fa408d452f7}{original\+\_\+menu\+\_\+func\+\_\+ptr}}) (uint32\+\_\+t param1)
+\item 
+typedef void \texorpdfstring{$\ast$}{*}(\+\_\+\+\_\+cdecl \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__general__structures_8h_aa48f85cc726097517700b72afc013c87}{new\+\_\+operator\+\_\+ptr}}) (uint32\+\_\+t param\+\_\+1)
+\item 
+typedef void(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__general__structures_8h_abe77c012ba01b4cd2d108bb7e7ff3a4d}{container\+\_\+add\+\_\+control\+\_\+ptr}}) (\mbox{\hyperlink{sf__general__structures_8h_aa4b2c10b9c9570a024b495014e652c71}{CMnu\+Container}} \texorpdfstring{$\ast$}{*}\+\_\+this, void \texorpdfstring{$\ast$}{*}CMnu\+Base, char \texorpdfstring{$\ast$}{*}c1, char \texorpdfstring{$\ast$}{*}c2, uint32\+\_\+t p4)
+\item 
+typedef void(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__general__structures_8h_ab4a877cdf7704b29f7b1a09a459a4a98}{menu\+\_\+label\+\_\+set\+\_\+data\+\_\+ptr}}) (\mbox{\hyperlink{sf__general__structures_8h_a1b96a8d15a7b76099bd6683f104dc217}{CMnu\+Label}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint32\+\_\+t color\+\_\+red, uint32\+\_\+t color\+\_\+green, uint32\+\_\+t color\+\_\+blue, uint8\+\_\+t unknchar)
+\item 
+typedef void(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__general__structures_8h_a4409f85c2cd03eabf735b64d1f0d8c01}{get\+\_\+sf\+\_\+color\+\_\+ptr}}) (\mbox{\hyperlink{sf__general__structures_8h_a3aec067538ae8bb3838f555feac49682}{SF\+\_\+\+String}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint32\+\_\+t color\+\_\+id)
+\item 
+typedef \mbox{\hyperlink{sf__general__structures_8h_aab247d013cf0680517ac4722412d6440}{SF\+\_\+\+Font\+Struct}} \texorpdfstring{$\ast$}{*}(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__general__structures_8h_a59949b7d52615db72af6f2527029d21a}{get\+\_\+smth\+\_\+fonts\+\_\+ptr}}) (void)
+\item 
+typedef \mbox{\hyperlink{sf__general__structures_8h_af97891752509725cbcb2481b85181ee9}{SF\+\_\+\+Font}} \texorpdfstring{$\ast$}{*}(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__general__structures_8h_a777a4dfb668807471094b748e5152aba}{get\+\_\+font\+\_\+ptr}}) (\mbox{\hyperlink{sf__general__structures_8h_aab247d013cf0680517ac4722412d6440}{SF\+\_\+\+Font\+Struct}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint32\+\_\+t font\+\_\+id)
+\item 
+typedef void(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__general__structures_8h_a7818ce44011f5f2d723bfa87aa127fcf}{menu\+\_\+label\+\_\+set\+\_\+font\+\_\+ptr}}) (void \texorpdfstring{$\ast$}{*}\+\_\+this, \mbox{\hyperlink{sf__general__structures_8h_af97891752509725cbcb2481b85181ee9}{SF\+\_\+\+Font}} \texorpdfstring{$\ast$}{*}font)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073}{CGd\+Figure\+Task}} \+: uint8\+\_\+t \{ \newline
+\mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073a8ec9a0011894bb7df177c27eaa0633b2}{TASK\+\_\+\+WORKER}} = 2
+, \mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073ab47e4d857df1b129c8f4442bd08110cf}{TASK\+\_\+\+WOODCUTTER}} = 3
+, \mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073a33fab71304b22dfa4eec62bbbc85826f}{TASK\+\_\+\+QUARRY}} = 4
+, \mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073ae909540e36da79f07eb72d565fcd88cf}{TASK\+\_\+\+MINE}} = 5
+, \newline
+\mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073abc75637ba7b152e97cd204300f665968}{TASK\+\_\+\+FORGE}} = 6
+, \mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073a48bd84e659a01c6771a4d4e07695003f}{TASK\+\_\+\+HERO}} = 9
+, \mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073aff4668f239ada4607cd7a5061b60858d}{TASK\+\_\+\+MAINCHAR}} = 10
+, \mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073a1415a51a3f13b97dff600100e7b57d5d}{TASK\+\_\+\+NPC}} = 11
+, \newline
+\mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073aee01015880f7ab1a3a7c343a1df05d0b}{TASK\+\_\+\+PET}} = 12
+, \mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073a197417afd7dc7ba0509c2ee298b7d022}{TASK\+\_\+\+HUNTING\+\_\+\+LODGE}} = 14
+, \mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073a88bcc326413be3601a4b2a0bc1b2d510}{TASK\+\_\+\+MERCHANT}} = 17
+ \}
+\item 
+enum \mbox{\hyperlink{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7}{On\+Hit\+Phase}} \{ \newline
+\mbox{\hyperlink{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7a67c68c964d611409fa66e6abdc814c21}{PHASE\+\_\+0}} = 0
+, \mbox{\hyperlink{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7addc95d86d3f460d55c86c8611161b75c}{PHASE\+\_\+1}}
+, \mbox{\hyperlink{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7ace40f24eeadff069119bb911c280b43e}{PHASE\+\_\+2}}
+, \mbox{\hyperlink{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7a44a2c382473b0dfa2ab45afd6e399e71}{PHASE\+\_\+3}}
+, \newline
+\mbox{\hyperlink{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7a52537e429cf11babfdce28f09c58d0e3}{PHASE\+\_\+4}}
+, \mbox{\hyperlink{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7ad0b4e178cc3b69a5cf3af80dc5605af5}{PHASE\+\_\+5}}
+, \mbox{\hyperlink{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7a4cfd8ec8360eb068921d979f3339f086}{On\+Hit\+End}}
+ \}
+\item 
+enum \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732}{Gd\+Figure\+Flags}} \{ \newline
+\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a20af34269ed8856e12e156b8c01336a2}{UNDEAD}} = 0x1
+, \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a334804a6345aef2899f81fbba7d67c62}{RESESRVED\+\_\+\+ONLY}} = 0x2
+, \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732af7a21d569a98b308fe2432a70499dbd4}{AGGROED}} = 0x4
+, \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a27d71da070e9ad62b2a383a15fba42aa}{IS\+\_\+\+DEAD}} = 0x8
+, \newline
+\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732ad20f1b79e9cfc073db19741638050449}{REDO}} = 0x10
+, \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a332a5191df460a1a2d955c4078d36de2}{F\+\_\+\+CHECK\+\_\+\+SPELLS\+\_\+\+BEFORE\+\_\+\+JOB}} = 0x20
+, \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732ae338184a937457ba053f8ce47759e110}{F\+\_\+\+CHECK\+\_\+\+SPELLS\+\_\+\+BEFORE\+\_\+\+CHECK\+\_\+\+BATTLE}} = 0x40
+, \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a5831b2584a4b7dbb3bcccc115fb786ab}{WALK\+\_\+\+JOB\+\_\+\+WAIT}} = 0x80
+, \newline
+\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a7a1ae9c079a986f5a17afcab7c27ebc0}{FREEZED}} = 0x100
+, \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a76b0d2ce07dc4a3830a71b7f6efd6f2d}{HAS\+\_\+\+LOOT}} = 0x200
+, \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732ab442ea19e23980b0f5b4a01cf856150f}{HAS\+\_\+\+DIALOG}} = 0x400
+, \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732adebb817413857eea6331734b76793159}{FEMALE}} = 0x800
+, \newline
+\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a00c5df4fd13b9611fc6e746fff22ca59}{GOT\+\_\+\+AGGRO}} = 0x1000
+, \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732acd04451478f0bb20692e4364f9a36d4e}{RETREAT}} = 0x2000
+, \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732af195cd6d820031404686bd7faca2a91f}{NO\+\_\+\+WAY\+\_\+\+TO\+\_\+\+TARGET}} = 0x4000
+, \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a96009a13e8663840f3503c7b743252b3}{AURA\+\_\+\+RUNNING}} = 0x8000
+, \newline
+\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a2d16338928f19950d7df2c22e19fb777}{AI\+\_\+\+BLOCKED}} = 0x10000
+, \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732ac33feb50bf29fe445421480eddc328d4}{TOWER}} = 0x20000
+, \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a1e27a519334739026d49b32fac6a5cc9}{IS\+\_\+\+SWAPPING}} = 0x40000
+, \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732acbf00c3786039cc2213feb25af13fe39}{CUR\+\_\+\+ACTIVE\+\_\+\+DIALOG}} = 0x80000
+, \newline
+\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a4820c73bf4b5b69a17ff9c409a8b8e05}{IS\+\_\+\+IN\+\_\+\+FIGHT}} = 0x100000
+, \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732ad100884e36a0bb2daea58364d8d6ce87}{VIEW\+\_\+\+MODE\+\_\+1\+ST\+\_\+3\+RD}} = 0x200000
+, \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a58dc530cf2da9f0379c2faa92dddf585}{IS\+\_\+\+TALKING}} = 0x400000
+, \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a8d2ae8b2ce864fdd0b4425d29b3491aa}{IS\+\_\+\+IMPORTANT\+\_\+\+DIALOG}} = 0x800000
+, \newline
+\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a05eba8246460e3fc50ea59a0a2f2ae81}{UNKILLABLE}} = 0x1000000
+, \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732aae56225fd7fe1bfe64b0cfcdf3c883bf}{FOLLOW\+\_\+\+MODE}} = 0x2000000
+, \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732ad7ef30b772e367a70c6f3b67b753528e}{HIT\+\_\+\+LEFT\+\_\+\+HAND\+\_\+\+NEXT}} = 0x4000000
+, \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732ae98ea00ab9788a6979b7be5d461a81eb}{FOREST\+\_\+\+SPIRIT}} = 0x8000000
+, \newline
+\mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a17ec55aec1ea186830f9f85846069c2b}{VIP}} = 0x10000000
+, \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a165f314aa9d078e445e19164d49cbc9f}{ILLUSION}} = 0x20000000
+, \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a881e5b8c00714da0b5327e02f62146fc}{SPAWN}} = 0x40000000
+ \}
+\item 
+enum \mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571}{CGd\+Figure\+Job\+Flags}} \+: uint16\+\_\+t \{ \newline
+\mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571ab3188742eb6061909bbf2e4d6fdad319}{MANUAL\+\_\+\+JOB\+\_\+\+CHANGE}} = 1
+, \mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571a6f2f7c178d8c6799180781759e3f8193}{SKIP\+\_\+\+ONCE}} = 2
+, \mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571aee3ba6008379c90be1e6709d19f8b230}{MANUAL\+\_\+\+HIT\+\_\+\+TARGET}} = 4
+, \mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571a9a3ba8b680b44afd1a90b05cef7b9232}{CORPSE\+\_\+\+CANT\+\_\+\+ROT}} = 8
+, \newline
+\mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571a7d3f0a4cd2666414d28aa9839d43d6e0}{START\+\_\+\+WALK}} = 16
+, \mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571adbef8108cc9b9ff34b003ebbd5690173}{RUN\+\_\+\+MODE}} = 32
+, \mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571a84089bd648491d49940231590543821f}{WAR}} = 64
+, \mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571ae15c5636d7ea646b3959f7c508b47cf8}{CHECK\+\_\+\+BATTLE}} = 128
+, \newline
+\mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571a714e1c712ebb8b1a1e9111a9b8b115fd}{PATROL\+\_\+\+MODE}} = 256
+, \mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571a4bf12509aea8527a319f1942812734c6}{WAY\+\_\+\+POINTS\+\_\+\+READ\+\_\+\+REVERSE}} = 512
+, \mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571abc00b20775e7ccbf0f68ff02125be03b}{SUPERIOR\+\_\+\+PATHING}} = 1024
+, \mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571a2d7da124498b99f7aa18d18e2c5c161f}{ROUND\+\_\+\+HIT}} = 2048
+, \newline
+\mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571aa73b6c126a384ced217b354678e82122}{DEATH\+\_\+\+BLOW}} = 4096
+, \mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571a6f56485d0d52b2320047828381642384}{START\+\_\+\+WORK\+\_\+\+AT\+\_\+\+BUILDING\+\_\+\+FORCE\+\_\+\+JOB}} = 8192
+ \}
+\item 
+enum \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355}{Spell\+Data\+Key}} \{ \newline
+\mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355af92c9cd68f6d74da57d97e43e3518664}{EFFECT\+\_\+\+EFFECT\+\_\+\+INDEX}} = 0x06
+, \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355ac6660c115883204a951ddbbacc021b4d}{EFFECT\+\_\+\+SPELL\+\_\+\+INDEX}} = 0x11
+, \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a1ab4721cbe300ffa4b0d6c68bdd80858}{EFFECT\+\_\+\+SPELL\+\_\+\+ID}} = 0x09
+, \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a5c1e1f0adff95e4bc9146465e16df9ba}{EFFECT\+\_\+\+ENTITY\+\_\+\+INDEX2}} = 0x1A
+, \newline
+\mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a61d8bacc33743558c22716f576c09a7a}{EFFECT\+\_\+\+SUBSPELL\+\_\+\+ID}} = 0x1C
+, \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355ac368a816f86c93599ccaf4cc83ca72b8}{EFFECT\+\_\+\+PHYSICAL\+\_\+\+DAMAGE}} = 0x1E
+, \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355abf76662bac9c32c99c4847777a416c43}{EFFECT\+\_\+\+ENTITY\+\_\+\+INDEX}} = 0x2F
+, \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a1103b3d7d2d9229d30f4cb7db27fcb99}{EFFECT\+\_\+\+ENTITY\+\_\+\+INDEX3}} = 0x2D
+, \newline
+\mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a70b8c84cbc27ae99d210dd5be3bbd2e6}{EFFECT\+\_\+\+ENTITY\+\_\+\+TYPE}} = 0x30
+, \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a057bd74da3f12a193cd1ed9f1c039793}{EFFECT\+\_\+\+ENTITY\+\_\+\+TYPE2}} = 0x13
+, \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a56396aef199bc826464e01412f6ad267}{EFFECT\+\_\+\+DO\+\_\+\+NOT\+\_\+\+ADD\+\_\+\+SUBSPELL}} = 0x33
+, \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a792986ae89325aaf058ac819239e682e}{SPELL\+\_\+\+TICK\+\_\+\+COUNT\+\_\+\+AUX}} = 0x05
+, \newline
+\mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a9645396ec61f65e96b3a66e10928f74e}{SPELL\+\_\+\+TICK\+\_\+\+COUNT}} = 0x12
+, \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a566e0a8f8302a99b3a58b39309498169}{SPELL\+\_\+\+DOUBLE\+\_\+\+DAMAGE}} = 0x26
+, \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355ab13261395a2dce02b3f22289d12a44e2}{SPELL\+\_\+\+TARGET}} = 0x33
+, \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a466b63fe0e5a65061f2a49d338613acf}{SPELL\+\_\+\+PESTILENCE\+\_\+\+DAMAGE}} = 0x0E
+, \newline
+\mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a52faeabe45c367646d1d5c284330da65}{SPELL\+\_\+\+STAT\+\_\+\+MUL\+\_\+\+MODIFIER}} = 0x0A
+, \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a07005f8d2f53f625c54ddab97d578e31}{SPELL\+\_\+\+STAT\+\_\+\+MUL\+\_\+\+MODIFIER2}} = 0x27
+, \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a4222adc5ecb712e4569c72841051499e}{SPELL\+\_\+\+STAT\+\_\+\+MUL\+\_\+\+MODIFIER3}} = 0x2B
+, \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a1a42d78c83f9f7e2ee6dc60f83e17c56}{SPELL\+\_\+\+STAT\+\_\+\+MUL\+\_\+\+MODIFIER4}} = 0x2C
+, \newline
+\mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a6c400d88ba9221a3edc111cd5dbc9dd6}{SPELL\+\_\+\+CONSERVATION\+\_\+\+SHIELD}} = 0x0B
+ \}
+\item 
+enum \mbox{\hyperlink{sf__general__structures_8h_a3f1ae4d570090b097230b86e02b1a178}{Spell\+Damage\+Phase}} \{ \mbox{\hyperlink{sf__general__structures_8h_a3f1ae4d570090b097230b86e02b1a178abfbf875310a12806703353540abf4285}{PRE}}
+, \mbox{\hyperlink{sf__general__structures_8h_a3f1ae4d570090b097230b86e02b1a178a88ec7d5086d2469ba843c7fcceade8a6}{DEFAULT}}
+, \mbox{\hyperlink{sf__general__structures_8h_a3f1ae4d570090b097230b86e02b1a178a368c5bc07109370b819193871352b926}{POST}}
+, \mbox{\hyperlink{sf__general__structures_8h_a3f1ae4d570090b097230b86e02b1a178a2addb49878f50c95dc669e5fdbd130a2}{COUNT}}
+ \}
+\item 
+enum \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a}{CGd\+Effect\+Type}} \{ \newline
+\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa812135967747ee0e76940d1cb4e10a0e}{k\+Gd\+Effect\+None}} = 0
+, \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa899e296628dec06a5e12b3853c78ea5b}{k\+Gd\+Effect\+Spell\+Cast}} = 1
+, \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aab69a6e3d0cdd77c0ff1286d3648f7540}{k\+Gd\+Effect\+Spell\+Hit\+World}} = 2
+, \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa69591905b02ea44de77b562f10f4e6fb}{k\+Gd\+Effect\+Spell\+Hit\+Target}} = 3
+, \newline
+\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa2f4558513434163c5007ed77e94024ca}{k\+Gd\+Effect\+Spell\+DOTHit\+Target}} = 4
+, \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aaa5a1a7f98bcb090bf3cae6be95cfc666}{k\+Gd\+Effect\+Spell\+Miss\+Target}} = 5
+, \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa9909184df0bfe5c7b1e8aae701adb1e9}{k\+Gd\+Effect\+Spell\+Resolve}} = 6
+, \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aafd6342040161e88b5b07ebad6d337eee}{k\+Gd\+Effect\+Summon\+Worker}} = 7
+, \newline
+\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aaa799a3709e98c898dcbbb360f977cf9e}{k\+Gd\+Effect\+Worker\+Appears}} = 8
+, \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aac38d5203a2a2d69273ec842f88d8d2a6}{k\+Gd\+Effect\+Summon\+Hero}} = 9
+, \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aaa7db3bc9ee72a453f853b7058d901aec}{k\+Gd\+Effect\+Hero\+Appears}} = 10
+, \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aab4d1d2ad1ac85cf14d5442ebcf2fee59}{k\+Gd\+Effect\+Spell\+Target\+Resisted}} = 11
+, \newline
+\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aaf66f552e9e29f48d4fc0b219b438ed6b}{k\+Gd\+Effect\+Spell\+Resolve\+Self}} = 12
+, \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa81708d29e5599bc50c291c3cc2be50bf}{k\+Gd\+Effect\+Meteor\+Fall}} = 13
+, \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa4fbc211770196fc3c55c299af9ae787c}{k\+Gd\+Effect\+Meteor\+Hit}} = 14
+, \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa5b446aec0d6fda573d41239417e4968e}{k\+Gd\+Effect\+Blizzard\+Fall}} = 15
+, \newline
+\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa22f006135bd5dd46161d9f45526cb96d}{k\+Gd\+Effect\+Blizzard\+Hit}} = 16
+, \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa808948cbd766d0c8221ca9ee0a5656d3}{k\+Gd\+Effect\+Stone\+Fall}} = 17
+, \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa906afc92f137e17e09a268ac7a444254}{k\+Gd\+Effect\+Stone\+Hit}} = 18
+, \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa6fd3597a5f8b450ceb1425caf9a39952}{k\+Gd\+Effect\+Pet\+Appears}} = 19
+, \newline
+\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aac12ce9d6cdbad63ba4aba8fb299b4f3f}{k\+Gd\+Effect\+Test}} = 20
+, \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa2e303db4f1d0275e3b50b8fa98df3198}{k\+Gd\+Effect\+Monument\+Claimed}} = 21
+, \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa6b8a06187a8fc772a860f9aa81c37cc3}{k\+Gd\+Effect\+Monument\+Working}} = 22
+, \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aaee2a6e021f5bb091d9ce2c60c2e8c395}{k\+Gd\+Effect\+Aura\+Resolve}} = 23
+, \newline
+\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa499ffe017f8e5936288a1663b64e01bc}{k\+Gd\+Effect\+Projectile}} = 24
+, \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aaff60d58d73562aa3c04bbc58a0c32119}{k\+Gd\+Effect\+Building}} = 25
+, \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aad6a7d19b1dd2d6793aa035e78341b0bf}{k\+Gd\+Effect\+Player\+Bind}} = 26
+, \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa261a3023fcef7756bc77d4ed902aaf6f}{k\+Gd\+Effect\+Summon\+Main\+Char}} = 27
+, \newline
+\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aab7d1b32d16bb6c3c4aa45cbff9fc6c8c}{k\+Gd\+Effect\+Main\+Char\+Appears}} = 28
+, \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aac84d99e1dcdd1b241b23e42f57918a27}{k\+Gd\+Effect\+Titan\+Production}} = 29
+, \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa5113f07aff5f227beee463ec7433900f}{k\+Gd\+Effect\+Titan\+Appears}} = 30
+, \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa34ea7792ebc09d1059524a77faf8d789}{k\+Gd\+Effect\+Mental\+Tower\+Cast}} = 31
+, \newline
+\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aad79d0345b12728f5d032209b95c50786}{k\+Gd\+Effect\+Mental\+Tower\+Idle}} = 32
+, \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa468672f3274483d4807ba825cde144a0}{k\+Gd\+Effect\+Monument\+Bullet}} = 33
+, \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aabfd0a5bffdc303c2e9ec759282bbff07}{k\+Gd\+Effect\+Monument\+Hit\+Figure}} = 34
+, \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa053580e27d9ec2972f6cf57d9748152a}{k\+Gd\+Effect\+Spell\+Assistance\+Hit\+Figure}} = 35
+, \newline
+\mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa0161661e33d73637fa1bdd8626fba726}{k\+Gd\+Effect\+Chain\+Resolve}} = 36
+, \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa2689bb06191c323ddf6a31d52fc3c4e0}{k\+Gd\+Effect\+Spell\+Voodoo\+Hit\+Figure}} = 37
+, \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aaab63ed929ecf24873a1045c0cabd412f}{k\+Gd\+Effect\+Spell\+Mana\+Shield\+Hit\+Figure}} = 38
+, \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa2305fb41c8855c0f4ff3e23229321583}{k\+Gd\+Effect\+Max}} = 39
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}{\+\_\+\+\_\+attribute\+\_\+\+\_\+}} ((packed))
+\item 
+void \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__general__structures_8h_ab4f08eefec549de8444fd0207158d0ab}{attach\+\_\+new\+\_\+label}} (\mbox{\hyperlink{sf__general__structures_8h_aa4b2c10b9c9570a024b495014e652c71}{CMnu\+Container}} \texorpdfstring{$\ast$}{*}parent, char \texorpdfstring{$\ast$}{*}label\+\_\+text, uint8\+\_\+t font\+\_\+index, uint16\+\_\+t x\+\_\+pos, uint16\+\_\+t y\+\_\+pos, uint16\+\_\+t width, uint16\+\_\+t height)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_a64ca7d92af978ccdfb97fd8ad71ea8e5}{SFMod}}
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_a1c952b093fb7b451bb336a65c6658ad4}{SFLog}}
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_aa44e45471f7b6c436abe46e7d9d728c9}{SF\+\_\+\+Coord}}
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_a8bab79a418c30ca6e1cc618503d5be75}{SF\+\_\+\+RGColor}}
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_a5155b93e12786efd5c2faf220aa5b928}{SF\+\_\+\+Spell\+Effect\+Info}}
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_aedd8705d0983d09965ace902f37d0e0b}{SF\+\_\+\+CGd\+Target\+Data}}
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_a3aec067538ae8bb3838f555feac49682}{SF\+\_\+\+String}}
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_a1b8b1ec284ff51feaf2673b4aa18f4eb}{SF\+\_\+\+Rectangle}}
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_adca7a0b2b6c9bdf74a23b05cbb810ec7}{CGd\+Figure\+Hate\+Entry}}
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_ab30b3d0a3ef1407e9022aad25007d3ce}{SF\+\_\+\+CGd\+Figure\+Weapon\+Stats}}
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_aa312e3ddc91847eff4c403f6993528ea}{Figure\+Statistic}}
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_a51f7266da047c1617a2980d266ba63f6}{Figure\+Statistic\+Ext}}
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_a07619fa231562f2cc55bd33173b4c765}{SF\+\_\+\+SGt\+Figure\+Action}}
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_a33f353e639dcf925b3b022137ecf7432}{Auto\+Class24}}
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_a3ceef93484bb270fac8a07d6a7c79a3b}{Gd\+Figure}}
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_adcfde5041b3e58539ba533680e23d9b0}{SF\+\_\+\+CGd\+Figure}}
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_aa3705057831d559c6a64bd6a4aeb9dd3}{Auto\+Class69}}
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_ae56d22e41c81c0beca45d507d4ba44e8}{Auto\+Class14}}
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_ae3cbd78a75ae4e66eb36047cdc42077b}{SF\+\_\+world\+\_\+unkn\+\_\+1}}
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_a6a3c1882f4a600762262d57e39c67937}{SF\+\_\+world\+\_\+unkn\+\_\+2}}
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_ae900cce116daeab95744454174071a59}{SF\+\_\+world\+\_\+unkn\+\_\+3}}
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_ae13f138354027494424638aa18bc4ca9}{SF\+\_\+world\+\_\+unkn\+\_\+4}}
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_a0dd974e2c227c0130f5ad6d5d87ba39f}{SF\+\_\+\+Gd\+Spell}}
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_acbab0b1215e69f72f6905bd6b1e73b8e}{Gd\+Building}}
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_a747e81e6fc592fdba2378ffb92c90625}{CApp\+Menu}}
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_af97891752509725cbcb2481b85181ee9}{SF\+\_\+\+Font}}
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_aab247d013cf0680517ac4722412d6440}{SF\+\_\+\+Font\+Struct}}
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_aabfd8cbc5556407d59606b8fc3e48c2c}{SF\+\_\+\+Color}}
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_a49644afe3c0b842e649ab777a073bdbd}{CMnu\+Base\+\_\+data}}
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_a1b96a8d15a7b76099bd6683f104dc217}{CMnu\+Label}}
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_aa4b2c10b9c9570a024b495014e652c71}{CMnu\+Container}}
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_a41f332f52d29afd3ec69e7ce3a342adf}{data\+\_\+\+CUi\+Start\+Menu}}
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_ae6c281c594fe42f390ef3a9d3456378e}{CUi\+Start\+Menu}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{sf__general__structures_8h_a8fc1a791568a2848b8b001524eee155c}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION}{DECLARE\_FUNCTION}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a8fc1a791568a2848b8b001524eee155c} 
+\#define DECLARE\+\_\+\+FUNCTION(\begin{DoxyParamCaption}\item[{}]{type}{, }\item[{}]{name}{, }\item[{}]{}...{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{typedef}\ type(\_\_thiscall\ *name\#\#\_ptr)(\_\_VA\_ARGS\_\_);}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00770}{770}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a7b4790d37e7ac68e99b4cc12ab91328e}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!DECLARE\_FUNCTION\_GROUP@{DECLARE\_FUNCTION\_GROUP}}
+\index{DECLARE\_FUNCTION\_GROUP@{DECLARE\_FUNCTION\_GROUP}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION\_GROUP}{DECLARE\_FUNCTION\_GROUP}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a7b4790d37e7ac68e99b4cc12ab91328e} 
+\#define DECLARE\+\_\+\+FUNCTION\+\_\+\+GROUP(\begin{DoxyParamCaption}\item[{}]{group}{, }\item[{}]{}...{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \_\_VA\_ARGS\_\_\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}\ group\#\#Functions;}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00773}{773}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{sf__general__structures_8h_a79f1216fa524f80356c60c2f1c6a2456}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!console\_print\_ptr@{console\_print\_ptr}}
+\index{console\_print\_ptr@{console\_print\_ptr}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{console\_print\_ptr}{console\_print\_ptr}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a79f1216fa524f80356c60c2f1c6a2456} 
+typedef void(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} console\+\_\+print\+\_\+ptr) (uint32\+\_\+t, const char \texorpdfstring{$\ast$}{*})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00736}{736}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a5b8c6c5f47cca11977c79654edd4fada}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!construct\_default\_sf\_string\_ptr@{construct\_default\_sf\_string\_ptr}}
+\index{construct\_default\_sf\_string\_ptr@{construct\_default\_sf\_string\_ptr}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{construct\_default\_sf\_string\_ptr}{construct\_default\_sf\_string\_ptr}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a5b8c6c5f47cca11977c79654edd4fada} 
+typedef \mbox{\hyperlink{sf__general__structures_8h_a3aec067538ae8bb3838f555feac49682}{SF\+\_\+\+String}} \texorpdfstring{$\ast$}{*}(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} construct\+\_\+default\+\_\+sf\+\_\+string\+\_\+ptr) (\mbox{\hyperlink{sf__general__structures_8h_a3aec067538ae8bb3838f555feac49682}{SF\+\_\+\+String}} \texorpdfstring{$\ast$}{*}\+\_\+this)}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00746}{746}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a083e68ce4713d284eb72d09404b174a6}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!construct\_start\_menu\_ptr@{construct\_start\_menu\_ptr}}
+\index{construct\_start\_menu\_ptr@{construct\_start\_menu\_ptr}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{construct\_start\_menu\_ptr}{construct\_start\_menu\_ptr}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a083e68ce4713d284eb72d09404b174a6} 
+typedef void(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} construct\+\_\+start\+\_\+menu\+\_\+ptr) (\mbox{\hyperlink{sf__general__structures_8h_ae6c281c594fe42f390ef3a9d3456378e}{CUi\+Start\+Menu}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint32\+\_\+t p1)}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00748}{748}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_abe77c012ba01b4cd2d108bb7e7ff3a4d}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!container\_add\_control\_ptr@{container\_add\_control\_ptr}}
+\index{container\_add\_control\_ptr@{container\_add\_control\_ptr}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{container\_add\_control\_ptr}{container\_add\_control\_ptr}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_abe77c012ba01b4cd2d108bb7e7ff3a4d} 
+typedef void(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} container\+\_\+add\+\_\+control\+\_\+ptr) (\mbox{\hyperlink{sf__general__structures_8h_aa4b2c10b9c9570a024b495014e652c71}{CMnu\+Container}} \texorpdfstring{$\ast$}{*}\+\_\+this, void \texorpdfstring{$\ast$}{*}CMnu\+Base, char \texorpdfstring{$\ast$}{*}c1, char \texorpdfstring{$\ast$}{*}c2, uint32\+\_\+t p4)}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00759}{759}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a82640f13fec97cfc97c0ffa265528d19}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!fidfree\_ptr@{fidfree\_ptr}}
+\index{fidfree\_ptr@{fidfree\_ptr}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{fidfree\_ptr}{fidfree\_ptr}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a82640f13fec97cfc97c0ffa265528d19} 
+typedef void(\texorpdfstring{$\ast$}{*} fidfree\+\_\+ptr) (uint32\+\_\+t \texorpdfstring{$\ast$}{*}memory\+\_\+ptr)}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00742}{742}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a777aa0a7a267165f9a196f9b293a35c4}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!figure\_toolbox\_add\_spell\_ptr@{figure\_toolbox\_add\_spell\_ptr}}
+\index{figure\_toolbox\_add\_spell\_ptr@{figure\_toolbox\_add\_spell\_ptr}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{figure\_toolbox\_add\_spell\_ptr}{figure\_toolbox\_add\_spell\_ptr}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a777aa0a7a267165f9a196f9b293a35c4} 
+typedef void(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} figure\+\_\+toolbox\+\_\+add\+\_\+spell\+\_\+ptr) (void \texorpdfstring{$\ast$}{*}, uint16\+\_\+t, uint16\+\_\+t)}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00739}{739}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a8c9b4c8637d55a626fdb72a8f9b58922}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!figure\_toolbox\_get\_unkn\_ptr@{figure\_toolbox\_get\_unkn\_ptr}}
+\index{figure\_toolbox\_get\_unkn\_ptr@{figure\_toolbox\_get\_unkn\_ptr}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{figure\_toolbox\_get\_unkn\_ptr}{figure\_toolbox\_get\_unkn\_ptr}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a8c9b4c8637d55a626fdb72a8f9b58922} 
+typedef uint32\+\_\+t(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} figure\+\_\+toolbox\+\_\+get\+\_\+unkn\+\_\+ptr) (void \texorpdfstring{$\ast$}{*}, uint16\+\_\+t)}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00738}{738}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_aa419a4385eff93c7fdabade2c545aded}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!figure\_toolbox\_is\_targetable\_ptr@{figure\_toolbox\_is\_targetable\_ptr}}
+\index{figure\_toolbox\_is\_targetable\_ptr@{figure\_toolbox\_is\_targetable\_ptr}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{figure\_toolbox\_is\_targetable\_ptr}{figure\_toolbox\_is\_targetable\_ptr}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_aa419a4385eff93c7fdabade2c545aded} 
+typedef bool(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} figure\+\_\+toolbox\+\_\+is\+\_\+targetable\+\_\+ptr) (void \texorpdfstring{$\ast$}{*}CGd\+Figure\+Toolbox, uint16\+\_\+t figure\+\_\+index)}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00740}{740}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_ae52358dbffb2bfc0b421a928eb0e779f}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!FUN\_0069eaf0\_ptr@{FUN\_0069eaf0\_ptr}}
+\index{FUN\_0069eaf0\_ptr@{FUN\_0069eaf0\_ptr}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{FUN\_0069eaf0\_ptr}{FUN\_0069eaf0\_ptr}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_ae52358dbffb2bfc0b421a928eb0e779f} 
+typedef uint32\+\_\+t(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} FUN\+\_\+0069eaf0\+\_\+ptr) (void \texorpdfstring{$\ast$}{*}ac69, void \texorpdfstring{$\ast$}{*}ac69\+\_\+2, void \texorpdfstring{$\ast$}{*}ac69\+\_\+3, void \texorpdfstring{$\ast$}{*}ac69\+\_\+4)}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00741}{741}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a777a4dfb668807471094b748e5152aba}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!get\_font\_ptr@{get\_font\_ptr}}
+\index{get\_font\_ptr@{get\_font\_ptr}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{get\_font\_ptr}{get\_font\_ptr}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a777a4dfb668807471094b748e5152aba} 
+typedef \mbox{\hyperlink{sf__general__structures_8h_af97891752509725cbcb2481b85181ee9}{SF\+\_\+\+Font}} \texorpdfstring{$\ast$}{*}(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} get\+\_\+font\+\_\+ptr) (\mbox{\hyperlink{sf__general__structures_8h_aab247d013cf0680517ac4722412d6440}{SF\+\_\+\+Font\+Struct}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint32\+\_\+t font\+\_\+id)}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00763}{763}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a4409f85c2cd03eabf735b64d1f0d8c01}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!get\_sf\_color\_ptr@{get\_sf\_color\_ptr}}
+\index{get\_sf\_color\_ptr@{get\_sf\_color\_ptr}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{get\_sf\_color\_ptr}{get\_sf\_color\_ptr}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a4409f85c2cd03eabf735b64d1f0d8c01} 
+typedef void(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} get\+\_\+sf\+\_\+color\+\_\+ptr) (\mbox{\hyperlink{sf__general__structures_8h_a3aec067538ae8bb3838f555feac49682}{SF\+\_\+\+String}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint32\+\_\+t color\+\_\+id)}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00761}{761}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a59949b7d52615db72af6f2527029d21a}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!get\_smth\_fonts\_ptr@{get\_smth\_fonts\_ptr}}
+\index{get\_smth\_fonts\_ptr@{get\_smth\_fonts\_ptr}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{get\_smth\_fonts\_ptr}{get\_smth\_fonts\_ptr}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a59949b7d52615db72af6f2527029d21a} 
+typedef \mbox{\hyperlink{sf__general__structures_8h_aab247d013cf0680517ac4722412d6440}{SF\+\_\+\+Font\+Struct}} \texorpdfstring{$\ast$}{*}(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} get\+\_\+smth\+\_\+fonts\+\_\+ptr) (void)}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00762}{762}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a6694222e4b9549b92231e7afa2107b57}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!get\_spell\_spell\_line\_ptr@{get\_spell\_spell\_line\_ptr}}
+\index{get\_spell\_spell\_line\_ptr@{get\_spell\_spell\_line\_ptr}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{get\_spell\_spell\_line\_ptr}{get\_spell\_spell\_line\_ptr}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a6694222e4b9549b92231e7afa2107b57} 
+typedef uint16\+\_\+t(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} get\+\_\+spell\+\_\+spell\+\_\+line\+\_\+ptr) (void \texorpdfstring{$\ast$}{*}, uint16\+\_\+t)}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00737}{737}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_abb19b1c51539a52b999170f114584722}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!initialize\_menu\_container\_ptr@{initialize\_menu\_container\_ptr}}
+\index{initialize\_menu\_container\_ptr@{initialize\_menu\_container\_ptr}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{initialize\_menu\_container\_ptr}{initialize\_menu\_container\_ptr}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_abb19b1c51539a52b999170f114584722} 
+typedef void(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} initialize\+\_\+menu\+\_\+container\+\_\+ptr) (\mbox{\hyperlink{sf__general__structures_8h_aa4b2c10b9c9570a024b495014e652c71}{CMnu\+Container}} \texorpdfstring{$\ast$}{*}\+\_\+this)}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00745}{745}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_ad39a9954ebb4503540dcaffa72c0d658}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!log\_function\_ptr@{log\_function\_ptr}}
+\index{log\_function\_ptr@{log\_function\_ptr}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{log\_function\_ptr}{log\_function\_ptr}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_ad39a9954ebb4503540dcaffa72c0d658} 
+typedef void(\texorpdfstring{$\ast$}{*} log\+\_\+function\+\_\+ptr) (const char \texorpdfstring{$\ast$}{*})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00015}{15}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a1ef3ef233abb55a4392db0aa82a654e0}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!menu\_label\_constructor\_ptr@{menu\_label\_constructor\_ptr}}
+\index{menu\_label\_constructor\_ptr@{menu\_label\_constructor\_ptr}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{menu\_label\_constructor\_ptr}{menu\_label\_constructor\_ptr}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a1ef3ef233abb55a4392db0aa82a654e0} 
+typedef void(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} menu\+\_\+label\+\_\+constructor\+\_\+ptr) (\mbox{\hyperlink{sf__general__structures_8h_a1b96a8d15a7b76099bd6683f104dc217}{CMnu\+Label}} \texorpdfstring{$\ast$}{*}\+\_\+this)}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00753}{753}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a834aa4e5d61d6ad1de3c5f5848abf932}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!menu\_label\_ptr@{menu\_label\_ptr}}
+\index{menu\_label\_ptr@{menu\_label\_ptr}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{menu\_label\_ptr}{menu\_label\_ptr}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a834aa4e5d61d6ad1de3c5f5848abf932} 
+typedef void(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} menu\+\_\+label\+\_\+ptr) (\mbox{\hyperlink{sf__general__structures_8h_a1b96a8d15a7b76099bd6683f104dc217}{CMnu\+Label}} \texorpdfstring{$\ast$}{*}\+\_\+this)}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00743}{743}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_ab4a877cdf7704b29f7b1a09a459a4a98}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!menu\_label\_set\_data\_ptr@{menu\_label\_set\_data\_ptr}}
+\index{menu\_label\_set\_data\_ptr@{menu\_label\_set\_data\_ptr}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{menu\_label\_set\_data\_ptr}{menu\_label\_set\_data\_ptr}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_ab4a877cdf7704b29f7b1a09a459a4a98} 
+typedef void(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} menu\+\_\+label\+\_\+set\+\_\+data\+\_\+ptr) (\mbox{\hyperlink{sf__general__structures_8h_a1b96a8d15a7b76099bd6683f104dc217}{CMnu\+Label}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint32\+\_\+t color\+\_\+red, uint32\+\_\+t color\+\_\+green, uint32\+\_\+t color\+\_\+blue, uint8\+\_\+t unknchar)}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00760}{760}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a7818ce44011f5f2d723bfa87aa127fcf}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!menu\_label\_set\_font\_ptr@{menu\_label\_set\_font\_ptr}}
+\index{menu\_label\_set\_font\_ptr@{menu\_label\_set\_font\_ptr}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{menu\_label\_set\_font\_ptr}{menu\_label\_set\_font\_ptr}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a7818ce44011f5f2d723bfa87aa127fcf} 
+typedef void(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} menu\+\_\+label\+\_\+set\+\_\+font\+\_\+ptr) (void \texorpdfstring{$\ast$}{*}\+\_\+this, \mbox{\hyperlink{sf__general__structures_8h_af97891752509725cbcb2481b85181ee9}{SF\+\_\+\+Font}} \texorpdfstring{$\ast$}{*}font)}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00764}{764}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a3a212a2bab16f5e6c3c81b564d609ae9}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!menu\_label\_set\_string\_ptr@{menu\_label\_set\_string\_ptr}}
+\index{menu\_label\_set\_string\_ptr@{menu\_label\_set\_string\_ptr}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{menu\_label\_set\_string\_ptr}{menu\_label\_set\_string\_ptr}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a3a212a2bab16f5e6c3c81b564d609ae9} 
+typedef void(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} menu\+\_\+label\+\_\+set\+\_\+string\+\_\+ptr) (\mbox{\hyperlink{sf__general__structures_8h_a1b96a8d15a7b76099bd6683f104dc217}{CMnu\+Label}} \texorpdfstring{$\ast$}{*}\+\_\+this, \mbox{\hyperlink{sf__general__structures_8h_a3aec067538ae8bb3838f555feac49682}{SF\+\_\+\+String}} \texorpdfstring{$\ast$}{*}string)}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00744}{744}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a959316cdd55be021bfd0c8079cac8f4f}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!message\_box\_ptr@{message\_box\_ptr}}
+\index{message\_box\_ptr@{message\_box\_ptr}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{message\_box\_ptr}{message\_box\_ptr}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a959316cdd55be021bfd0c8079cac8f4f} 
+typedef void(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} message\+\_\+box\+\_\+ptr) (uint32\+\_\+t \mbox{\hyperlink{sf__general__structures_8h_a747e81e6fc592fdba2378ffb92c90625}{CApp\+Menu}}, uint16\+\_\+t description\+\_\+id, \mbox{\hyperlink{sf__general__structures_8h_a3aec067538ae8bb3838f555feac49682}{SF\+\_\+\+String}} \texorpdfstring{$\ast$}{*}string\+\_\+ptr, uint16\+\_\+t has\+Offset)}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00751}{751}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a9017afd3d59671398dcba18538b8b8fc}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!mnu\_label\_init\_data\_ptr@{mnu\_label\_init\_data\_ptr}}
+\index{mnu\_label\_init\_data\_ptr@{mnu\_label\_init\_data\_ptr}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{mnu\_label\_init\_data\_ptr}{mnu\_label\_init\_data\_ptr}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a9017afd3d59671398dcba18538b8b8fc} 
+typedef void(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} mnu\+\_\+label\+\_\+init\+\_\+data\+\_\+ptr) (\mbox{\hyperlink{sf__general__structures_8h_a1b96a8d15a7b76099bd6683f104dc217}{CMnu\+Label}} \texorpdfstring{$\ast$}{*}\+\_\+this, float xpos, float ypos, float width, float height, \mbox{\hyperlink{sf__general__structures_8h_a3aec067538ae8bb3838f555feac49682}{SF\+\_\+\+String}} \texorpdfstring{$\ast$}{*}string)}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00750}{750}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_aa48f85cc726097517700b72afc013c87}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!new\_operator\_ptr@{new\_operator\_ptr}}
+\index{new\_operator\_ptr@{new\_operator\_ptr}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{new\_operator\_ptr}{new\_operator\_ptr}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_aa48f85cc726097517700b72afc013c87} 
+typedef void \texorpdfstring{$\ast$}{*}(\+\_\+\+\_\+cdecl \texorpdfstring{$\ast$}{*} new\+\_\+operator\+\_\+ptr) (uint32\+\_\+t param\+\_\+1)}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00758}{758}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a3ce0902fdc64b610961f5fa408d452f7}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!original\_menu\_func\_ptr@{original\_menu\_func\_ptr}}
+\index{original\_menu\_func\_ptr@{original\_menu\_func\_ptr}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{original\_menu\_func\_ptr}{original\_menu\_func\_ptr}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a3ce0902fdc64b610961f5fa408d452f7} 
+typedef void(\+\_\+\+\_\+fastcall \texorpdfstring{$\ast$}{*} original\+\_\+menu\+\_\+func\+\_\+ptr) (uint32\+\_\+t param1)}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00756}{756}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_acc2efadfffc955b944400b3006ab7344}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!set\_label\_flags\_ptr@{set\_label\_flags\_ptr}}
+\index{set\_label\_flags\_ptr@{set\_label\_flags\_ptr}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{set\_label\_flags\_ptr}{set\_label\_flags\_ptr}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_acc2efadfffc955b944400b3006ab7344} 
+typedef void(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} set\+\_\+label\+\_\+flags\+\_\+ptr) (\mbox{\hyperlink{sf__general__structures_8h_a1b96a8d15a7b76099bd6683f104dc217}{CMnu\+Label}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint32\+\_\+t flags)}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00754}{754}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a326f52debb4a3a05138160c72536c17e}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SF\_CGdBuilding@{SF\_CGdBuilding}}
+\index{SF\_CGdBuilding@{SF\_CGdBuilding}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{SF\_CGdBuilding}{SF\_CGdBuilding}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a326f52debb4a3a05138160c72536c17e} 
+typedef struct \mbox{\hyperlink{sf__general__structures_8h_a326f52debb4a3a05138160c72536c17e}{SF\+\_\+\+CGd\+Building}} \mbox{\hyperlink{sf__general__structures_8h_a326f52debb4a3a05138160c72536c17e}{SF\+\_\+\+CGd\+Building}}}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00033}{33}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a710c54d12a2bf3e29c87578d51d0373d}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SF\_CGDEffect@{SF\_CGDEffect}}
+\index{SF\_CGDEffect@{SF\_CGDEffect}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{SF\_CGDEffect}{SF\_CGDEffect}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a710c54d12a2bf3e29c87578d51d0373d} 
+typedef struct \mbox{\hyperlink{sf__general__structures_8h_a710c54d12a2bf3e29c87578d51d0373d}{SF\+\_\+\+CGDEffect}} \mbox{\hyperlink{sf__general__structures_8h_a710c54d12a2bf3e29c87578d51d0373d}{SF\+\_\+\+CGDEffect}}}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00029}{29}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a2739681db2b7bff68f1229d5a5f3d5e4}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SF\_CGdFigureJobs@{SF\_CGdFigureJobs}}
+\index{SF\_CGdFigureJobs@{SF\_CGdFigureJobs}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{SF\_CGdFigureJobs}{SF\_CGdFigureJobs}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a2739681db2b7bff68f1229d5a5f3d5e4} 
+typedef struct \mbox{\hyperlink{sf__general__structures_8h_a2739681db2b7bff68f1229d5a5f3d5e4}{SF\+\_\+\+CGd\+Figure\+Jobs}} \mbox{\hyperlink{sf__general__structures_8h_a2739681db2b7bff68f1229d5a5f3d5e4}{SF\+\_\+\+CGd\+Figure\+Jobs}}}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00032}{32}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a17f35cab19a4752dcf2d3fb1ea9a9f0e}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SF\_CGdFigureToolbox@{SF\_CGdFigureToolbox}}
+\index{SF\_CGdFigureToolbox@{SF\_CGdFigureToolbox}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{SF\_CGdFigureToolbox}{SF\_CGdFigureToolbox}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a17f35cab19a4752dcf2d3fb1ea9a9f0e} 
+typedef struct \mbox{\hyperlink{sf__general__structures_8h_a17f35cab19a4752dcf2d3fb1ea9a9f0e}{SF\+\_\+\+CGd\+Figure\+Toolbox}} \mbox{\hyperlink{sf__general__structures_8h_a17f35cab19a4752dcf2d3fb1ea9a9f0e}{SF\+\_\+\+CGd\+Figure\+Toolbox}}}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00027}{27}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SF\_CGdSpell@{SF\_CGdSpell}}
+\index{SF\_CGdSpell@{SF\_CGdSpell}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{SF\_CGdSpell}{SF\_CGdSpell}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6} 
+typedef struct \mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}}}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00026}{26}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_ae200cc761d9e4257e978beaa16ca50a3}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SF\_CGdWorld@{SF\_CGdWorld}}
+\index{SF\_CGdWorld@{SF\_CGdWorld}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{SF\_CGdWorld}{SF\_CGdWorld}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_ae200cc761d9e4257e978beaa16ca50a3} 
+typedef struct \mbox{\hyperlink{sf__general__structures_8h_ae200cc761d9e4257e978beaa16ca50a3}{SF\+\_\+\+CGd\+World}} \mbox{\hyperlink{sf__general__structures_8h_ae200cc761d9e4257e978beaa16ca50a3}{SF\+\_\+\+CGd\+World}}}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00030}{30}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_afaafd0a4f93b6d4e95de3f0e494c941b}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SF\_CGdWorldToolBox@{SF\_CGdWorldToolBox}}
+\index{SF\_CGdWorldToolBox@{SF\_CGdWorldToolBox}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{SF\_CGdWorldToolBox}{SF\_CGdWorldToolBox}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_afaafd0a4f93b6d4e95de3f0e494c941b} 
+typedef struct \mbox{\hyperlink{sf__general__structures_8h_afaafd0a4f93b6d4e95de3f0e494c941b}{SF\+\_\+\+CGd\+World\+Tool\+Box}} \mbox{\hyperlink{sf__general__structures_8h_afaafd0a4f93b6d4e95de3f0e494c941b}{SF\+\_\+\+CGd\+World\+Tool\+Box}}}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00031}{31}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a8c1eaf8a100a1e9fee8b637688b23987}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SF\_GdEffect@{SF\_GdEffect}}
+\index{SF\_GdEffect@{SF\_GdEffect}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{SF\_GdEffect}{SF\_GdEffect}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a8c1eaf8a100a1e9fee8b637688b23987} 
+typedef struct \mbox{\hyperlink{sf__general__structures_8h_a8c1eaf8a100a1e9fee8b637688b23987}{SF\+\_\+\+Gd\+Effect}} \mbox{\hyperlink{sf__general__structures_8h_a8c1eaf8a100a1e9fee8b637688b23987}{SF\+\_\+\+Gd\+Effect}}}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00028}{28}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!CGdEffectType@{CGdEffectType}}
+\index{CGdEffectType@{CGdEffectType}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{CGdEffectType}{CGdEffectType}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+enum \mbox{\hyperlink{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a}{CGd\+Effect\+Type}}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectNone@{kGdEffectNone}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectNone@{kGdEffectNone}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa812135967747ee0e76940d1cb4e10a0e}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+None&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectSpellCast@{kGdEffectSpellCast}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectSpellCast@{kGdEffectSpellCast}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa899e296628dec06a5e12b3853c78ea5b}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Spell\+Cast&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectSpellHitWorld@{kGdEffectSpellHitWorld}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectSpellHitWorld@{kGdEffectSpellHitWorld}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aab69a6e3d0cdd77c0ff1286d3648f7540}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Spell\+Hit\+World&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectSpellHitTarget@{kGdEffectSpellHitTarget}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectSpellHitTarget@{kGdEffectSpellHitTarget}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa69591905b02ea44de77b562f10f4e6fb}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Spell\+Hit\+Target&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectSpellDOTHitTarget@{kGdEffectSpellDOTHitTarget}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectSpellDOTHitTarget@{kGdEffectSpellDOTHitTarget}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa2f4558513434163c5007ed77e94024ca}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Spell\+DOTHit\+Target&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectSpellMissTarget@{kGdEffectSpellMissTarget}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectSpellMissTarget@{kGdEffectSpellMissTarget}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aaa5a1a7f98bcb090bf3cae6be95cfc666}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Spell\+Miss\+Target&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectSpellResolve@{kGdEffectSpellResolve}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectSpellResolve@{kGdEffectSpellResolve}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa9909184df0bfe5c7b1e8aae701adb1e9}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Spell\+Resolve&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectSummonWorker@{kGdEffectSummonWorker}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectSummonWorker@{kGdEffectSummonWorker}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aafd6342040161e88b5b07ebad6d337eee}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Summon\+Worker&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectWorkerAppears@{kGdEffectWorkerAppears}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectWorkerAppears@{kGdEffectWorkerAppears}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aaa799a3709e98c898dcbbb360f977cf9e}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Worker\+Appears&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectSummonHero@{kGdEffectSummonHero}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectSummonHero@{kGdEffectSummonHero}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aac38d5203a2a2d69273ec842f88d8d2a6}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Summon\+Hero&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectHeroAppears@{kGdEffectHeroAppears}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectHeroAppears@{kGdEffectHeroAppears}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aaa7db3bc9ee72a453f853b7058d901aec}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Hero\+Appears&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectSpellTargetResisted@{kGdEffectSpellTargetResisted}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectSpellTargetResisted@{kGdEffectSpellTargetResisted}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aab4d1d2ad1ac85cf14d5442ebcf2fee59}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Spell\+Target\+Resisted&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectSpellResolveSelf@{kGdEffectSpellResolveSelf}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectSpellResolveSelf@{kGdEffectSpellResolveSelf}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aaf66f552e9e29f48d4fc0b219b438ed6b}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Spell\+Resolve\+Self&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectMeteorFall@{kGdEffectMeteorFall}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectMeteorFall@{kGdEffectMeteorFall}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa81708d29e5599bc50c291c3cc2be50bf}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Meteor\+Fall&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectMeteorHit@{kGdEffectMeteorHit}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectMeteorHit@{kGdEffectMeteorHit}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa4fbc211770196fc3c55c299af9ae787c}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Meteor\+Hit&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectBlizzardFall@{kGdEffectBlizzardFall}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectBlizzardFall@{kGdEffectBlizzardFall}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa5b446aec0d6fda573d41239417e4968e}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Blizzard\+Fall&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectBlizzardHit@{kGdEffectBlizzardHit}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectBlizzardHit@{kGdEffectBlizzardHit}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa22f006135bd5dd46161d9f45526cb96d}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Blizzard\+Hit&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectStoneFall@{kGdEffectStoneFall}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectStoneFall@{kGdEffectStoneFall}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa808948cbd766d0c8221ca9ee0a5656d3}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Stone\+Fall&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectStoneHit@{kGdEffectStoneHit}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectStoneHit@{kGdEffectStoneHit}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa906afc92f137e17e09a268ac7a444254}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Stone\+Hit&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectPetAppears@{kGdEffectPetAppears}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectPetAppears@{kGdEffectPetAppears}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa6fd3597a5f8b450ceb1425caf9a39952}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Pet\+Appears&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectTest@{kGdEffectTest}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectTest@{kGdEffectTest}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aac12ce9d6cdbad63ba4aba8fb299b4f3f}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Test&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectMonumentClaimed@{kGdEffectMonumentClaimed}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectMonumentClaimed@{kGdEffectMonumentClaimed}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa2e303db4f1d0275e3b50b8fa98df3198}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Monument\+Claimed&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectMonumentWorking@{kGdEffectMonumentWorking}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectMonumentWorking@{kGdEffectMonumentWorking}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa6b8a06187a8fc772a860f9aa81c37cc3}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Monument\+Working&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectAuraResolve@{kGdEffectAuraResolve}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectAuraResolve@{kGdEffectAuraResolve}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aaee2a6e021f5bb091d9ce2c60c2e8c395}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Aura\+Resolve&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectProjectile@{kGdEffectProjectile}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectProjectile@{kGdEffectProjectile}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa499ffe017f8e5936288a1663b64e01bc}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Projectile&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectBuilding@{kGdEffectBuilding}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectBuilding@{kGdEffectBuilding}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aaff60d58d73562aa3c04bbc58a0c32119}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Building&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectPlayerBind@{kGdEffectPlayerBind}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectPlayerBind@{kGdEffectPlayerBind}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aad6a7d19b1dd2d6793aa035e78341b0bf}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Player\+Bind&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectSummonMainChar@{kGdEffectSummonMainChar}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectSummonMainChar@{kGdEffectSummonMainChar}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa261a3023fcef7756bc77d4ed902aaf6f}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Summon\+Main\+Char&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectMainCharAppears@{kGdEffectMainCharAppears}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectMainCharAppears@{kGdEffectMainCharAppears}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aab7d1b32d16bb6c3c4aa45cbff9fc6c8c}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Main\+Char\+Appears&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectTitanProduction@{kGdEffectTitanProduction}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectTitanProduction@{kGdEffectTitanProduction}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aac84d99e1dcdd1b241b23e42f57918a27}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Titan\+Production&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectTitanAppears@{kGdEffectTitanAppears}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectTitanAppears@{kGdEffectTitanAppears}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa5113f07aff5f227beee463ec7433900f}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Titan\+Appears&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectMentalTowerCast@{kGdEffectMentalTowerCast}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectMentalTowerCast@{kGdEffectMentalTowerCast}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa34ea7792ebc09d1059524a77faf8d789}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Mental\+Tower\+Cast&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectMentalTowerIdle@{kGdEffectMentalTowerIdle}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectMentalTowerIdle@{kGdEffectMentalTowerIdle}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aad79d0345b12728f5d032209b95c50786}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Mental\+Tower\+Idle&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectMonumentBullet@{kGdEffectMonumentBullet}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectMonumentBullet@{kGdEffectMonumentBullet}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa468672f3274483d4807ba825cde144a0}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Monument\+Bullet&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectMonumentHitFigure@{kGdEffectMonumentHitFigure}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectMonumentHitFigure@{kGdEffectMonumentHitFigure}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aabfd0a5bffdc303c2e9ec759282bbff07}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Monument\+Hit\+Figure&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectSpellAssistanceHitFigure@{kGdEffectSpellAssistanceHitFigure}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectSpellAssistanceHitFigure@{kGdEffectSpellAssistanceHitFigure}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa053580e27d9ec2972f6cf57d9748152a}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Spell\+Assistance\+Hit\+Figure&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectChainResolve@{kGdEffectChainResolve}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectChainResolve@{kGdEffectChainResolve}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa0161661e33d73637fa1bdd8626fba726}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Chain\+Resolve&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectSpellVoodooHitFigure@{kGdEffectSpellVoodooHitFigure}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectSpellVoodooHitFigure@{kGdEffectSpellVoodooHitFigure}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa2689bb06191c323ddf6a31d52fc3c4e0}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Spell\+Voodoo\+Hit\+Figure&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectSpellManaShieldHitFigure@{kGdEffectSpellManaShieldHitFigure}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectSpellManaShieldHitFigure@{kGdEffectSpellManaShieldHitFigure}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aaab63ed929ecf24873a1045c0cabd412f}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Spell\+Mana\+Shield\+Hit\+Figure&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kGdEffectMax@{kGdEffectMax}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!kGdEffectMax@{kGdEffectMax}}}\Hypertarget{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883aa2305fb41c8855c0f4ff3e23229321583}\label{sf__general__structures_8h_a5dd3c40db85ccf451e0ea2888e91883a} 
+k\+Gd\+Effect\+Max&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00689}{689}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!CGdFigureJobFlags@{CGdFigureJobFlags}}
+\index{CGdFigureJobFlags@{CGdFigureJobFlags}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{CGdFigureJobFlags}{CGdFigureJobFlags}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571} 
+enum \mbox{\hyperlink{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571}{CGd\+Figure\+Job\+Flags}} \+: uint16\+\_\+t}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MANUAL\_JOB\_CHANGE@{MANUAL\_JOB\_CHANGE}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!MANUAL\_JOB\_CHANGE@{MANUAL\_JOB\_CHANGE}}}\Hypertarget{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571ab3188742eb6061909bbf2e4d6fdad319}\label{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571} 
+MANUAL\+\_\+\+JOB\+\_\+\+CHANGE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SKIP\_ONCE@{SKIP\_ONCE}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SKIP\_ONCE@{SKIP\_ONCE}}}\Hypertarget{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571a6f2f7c178d8c6799180781759e3f8193}\label{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571} 
+SKIP\+\_\+\+ONCE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MANUAL\_HIT\_TARGET@{MANUAL\_HIT\_TARGET}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!MANUAL\_HIT\_TARGET@{MANUAL\_HIT\_TARGET}}}\Hypertarget{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571aee3ba6008379c90be1e6709d19f8b230}\label{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571} 
+MANUAL\+\_\+\+HIT\+\_\+\+TARGET&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CORPSE\_CANT\_ROT@{CORPSE\_CANT\_ROT}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!CORPSE\_CANT\_ROT@{CORPSE\_CANT\_ROT}}}\Hypertarget{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571a9a3ba8b680b44afd1a90b05cef7b9232}\label{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571} 
+CORPSE\+\_\+\+CANT\+\_\+\+ROT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{START\_WALK@{START\_WALK}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!START\_WALK@{START\_WALK}}}\Hypertarget{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571a7d3f0a4cd2666414d28aa9839d43d6e0}\label{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571} 
+START\+\_\+\+WALK&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RUN\_MODE@{RUN\_MODE}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!RUN\_MODE@{RUN\_MODE}}}\Hypertarget{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571adbef8108cc9b9ff34b003ebbd5690173}\label{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571} 
+RUN\+\_\+\+MODE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WAR@{WAR}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!WAR@{WAR}}}\Hypertarget{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571a84089bd648491d49940231590543821f}\label{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571} 
+WAR&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CHECK\_BATTLE@{CHECK\_BATTLE}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!CHECK\_BATTLE@{CHECK\_BATTLE}}}\Hypertarget{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571ae15c5636d7ea646b3959f7c508b47cf8}\label{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571} 
+CHECK\+\_\+\+BATTLE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PATROL\_MODE@{PATROL\_MODE}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!PATROL\_MODE@{PATROL\_MODE}}}\Hypertarget{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571a714e1c712ebb8b1a1e9111a9b8b115fd}\label{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571} 
+PATROL\+\_\+\+MODE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WAY\_POINTS\_READ\_REVERSE@{WAY\_POINTS\_READ\_REVERSE}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!WAY\_POINTS\_READ\_REVERSE@{WAY\_POINTS\_READ\_REVERSE}}}\Hypertarget{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571a4bf12509aea8527a319f1942812734c6}\label{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571} 
+WAY\+\_\+\+POINTS\+\_\+\+READ\+\_\+\+REVERSE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SUPERIOR\_PATHING@{SUPERIOR\_PATHING}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SUPERIOR\_PATHING@{SUPERIOR\_PATHING}}}\Hypertarget{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571abc00b20775e7ccbf0f68ff02125be03b}\label{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571} 
+SUPERIOR\+\_\+\+PATHING&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ROUND\_HIT@{ROUND\_HIT}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!ROUND\_HIT@{ROUND\_HIT}}}\Hypertarget{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571a2d7da124498b99f7aa18d18e2c5c161f}\label{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571} 
+ROUND\+\_\+\+HIT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEATH\_BLOW@{DEATH\_BLOW}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!DEATH\_BLOW@{DEATH\_BLOW}}}\Hypertarget{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571aa73b6c126a384ced217b354678e82122}\label{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571} 
+DEATH\+\_\+\+BLOW&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{START\_WORK\_AT\_BUILDING\_FORCE\_JOB@{START\_WORK\_AT\_BUILDING\_FORCE\_JOB}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!START\_WORK\_AT\_BUILDING\_FORCE\_JOB@{START\_WORK\_AT\_BUILDING\_FORCE\_JOB}}}\Hypertarget{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571a6f56485d0d52b2320047828381642384}\label{sf__general__structures_8h_a6978b403a7119e4900450f3243eb3571} 
+START\+\_\+\+WORK\+\_\+\+AT\+\_\+\+BUILDING\+\_\+\+FORCE\+\_\+\+JOB&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00096}{96}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!CGdFigureTask@{CGdFigureTask}}
+\index{CGdFigureTask@{CGdFigureTask}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{CGdFigureTask}{CGdFigureTask}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073} 
+enum \mbox{\hyperlink{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073}{CGd\+Figure\+Task}} \+: uint8\+\_\+t}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TASK\_WORKER@{TASK\_WORKER}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!TASK\_WORKER@{TASK\_WORKER}}}\Hypertarget{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073a8ec9a0011894bb7df177c27eaa0633b2}\label{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073} 
+TASK\+\_\+\+WORKER&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TASK\_WOODCUTTER@{TASK\_WOODCUTTER}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!TASK\_WOODCUTTER@{TASK\_WOODCUTTER}}}\Hypertarget{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073ab47e4d857df1b129c8f4442bd08110cf}\label{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073} 
+TASK\+\_\+\+WOODCUTTER&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TASK\_QUARRY@{TASK\_QUARRY}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!TASK\_QUARRY@{TASK\_QUARRY}}}\Hypertarget{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073a33fab71304b22dfa4eec62bbbc85826f}\label{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073} 
+TASK\+\_\+\+QUARRY&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TASK\_MINE@{TASK\_MINE}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!TASK\_MINE@{TASK\_MINE}}}\Hypertarget{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073ae909540e36da79f07eb72d565fcd88cf}\label{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073} 
+TASK\+\_\+\+MINE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TASK\_FORGE@{TASK\_FORGE}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!TASK\_FORGE@{TASK\_FORGE}}}\Hypertarget{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073abc75637ba7b152e97cd204300f665968}\label{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073} 
+TASK\+\_\+\+FORGE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TASK\_HERO@{TASK\_HERO}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!TASK\_HERO@{TASK\_HERO}}}\Hypertarget{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073a48bd84e659a01c6771a4d4e07695003f}\label{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073} 
+TASK\+\_\+\+HERO&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TASK\_MAINCHAR@{TASK\_MAINCHAR}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!TASK\_MAINCHAR@{TASK\_MAINCHAR}}}\Hypertarget{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073aff4668f239ada4607cd7a5061b60858d}\label{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073} 
+TASK\+\_\+\+MAINCHAR&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TASK\_NPC@{TASK\_NPC}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!TASK\_NPC@{TASK\_NPC}}}\Hypertarget{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073a1415a51a3f13b97dff600100e7b57d5d}\label{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073} 
+TASK\+\_\+\+NPC&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TASK\_PET@{TASK\_PET}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!TASK\_PET@{TASK\_PET}}}\Hypertarget{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073aee01015880f7ab1a3a7c343a1df05d0b}\label{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073} 
+TASK\+\_\+\+PET&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TASK\_HUNTING\_LODGE@{TASK\_HUNTING\_LODGE}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!TASK\_HUNTING\_LODGE@{TASK\_HUNTING\_LODGE}}}\Hypertarget{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073a197417afd7dc7ba0509c2ee298b7d022}\label{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073} 
+TASK\+\_\+\+HUNTING\+\_\+\+LODGE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TASK\_MERCHANT@{TASK\_MERCHANT}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!TASK\_MERCHANT@{TASK\_MERCHANT}}}\Hypertarget{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073a88bcc326413be3601a4b2a0bc1b2d510}\label{sf__general__structures_8h_a54c3638e61af929e03829f9caa622073} 
+TASK\+\_\+\+MERCHANT&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00034}{34}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!GdFigureFlags@{GdFigureFlags}}
+\index{GdFigureFlags@{GdFigureFlags}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{GdFigureFlags}{GdFigureFlags}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732} 
+enum \mbox{\hyperlink{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732}{Gd\+Figure\+Flags}}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{UNDEAD@{UNDEAD}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!UNDEAD@{UNDEAD}}}\Hypertarget{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a20af34269ed8856e12e156b8c01336a2}\label{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732} 
+UNDEAD&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RESESRVED\_ONLY@{RESESRVED\_ONLY}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!RESESRVED\_ONLY@{RESESRVED\_ONLY}}}\Hypertarget{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a334804a6345aef2899f81fbba7d67c62}\label{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732} 
+RESESRVED\+\_\+\+ONLY&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{AGGROED@{AGGROED}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!AGGROED@{AGGROED}}}\Hypertarget{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732af7a21d569a98b308fe2432a70499dbd4}\label{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732} 
+AGGROED&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{IS\_DEAD@{IS\_DEAD}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!IS\_DEAD@{IS\_DEAD}}}\Hypertarget{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a27d71da070e9ad62b2a383a15fba42aa}\label{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732} 
+IS\+\_\+\+DEAD&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{REDO@{REDO}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!REDO@{REDO}}}\Hypertarget{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732ad20f1b79e9cfc073db19741638050449}\label{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732} 
+REDO&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{F\_CHECK\_SPELLS\_BEFORE\_JOB@{F\_CHECK\_SPELLS\_BEFORE\_JOB}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!F\_CHECK\_SPELLS\_BEFORE\_JOB@{F\_CHECK\_SPELLS\_BEFORE\_JOB}}}\Hypertarget{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a332a5191df460a1a2d955c4078d36de2}\label{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732} 
+F\+\_\+\+CHECK\+\_\+\+SPELLS\+\_\+\+BEFORE\+\_\+\+JOB&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{F\_CHECK\_SPELLS\_BEFORE\_CHECK\_BATTLE@{F\_CHECK\_SPELLS\_BEFORE\_CHECK\_BATTLE}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!F\_CHECK\_SPELLS\_BEFORE\_CHECK\_BATTLE@{F\_CHECK\_SPELLS\_BEFORE\_CHECK\_BATTLE}}}\Hypertarget{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732ae338184a937457ba053f8ce47759e110}\label{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732} 
+F\+\_\+\+CHECK\+\_\+\+SPELLS\+\_\+\+BEFORE\+\_\+\+CHECK\+\_\+\+BATTLE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WALK\_JOB\_WAIT@{WALK\_JOB\_WAIT}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!WALK\_JOB\_WAIT@{WALK\_JOB\_WAIT}}}\Hypertarget{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a5831b2584a4b7dbb3bcccc115fb786ab}\label{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732} 
+WALK\+\_\+\+JOB\+\_\+\+WAIT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FREEZED@{FREEZED}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!FREEZED@{FREEZED}}}\Hypertarget{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a7a1ae9c079a986f5a17afcab7c27ebc0}\label{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732} 
+FREEZED&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{HAS\_LOOT@{HAS\_LOOT}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!HAS\_LOOT@{HAS\_LOOT}}}\Hypertarget{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a76b0d2ce07dc4a3830a71b7f6efd6f2d}\label{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732} 
+HAS\+\_\+\+LOOT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{HAS\_DIALOG@{HAS\_DIALOG}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!HAS\_DIALOG@{HAS\_DIALOG}}}\Hypertarget{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732ab442ea19e23980b0f5b4a01cf856150f}\label{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732} 
+HAS\+\_\+\+DIALOG&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FEMALE@{FEMALE}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!FEMALE@{FEMALE}}}\Hypertarget{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732adebb817413857eea6331734b76793159}\label{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732} 
+FEMALE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{GOT\_AGGRO@{GOT\_AGGRO}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!GOT\_AGGRO@{GOT\_AGGRO}}}\Hypertarget{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a00c5df4fd13b9611fc6e746fff22ca59}\label{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732} 
+GOT\+\_\+\+AGGRO&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RETREAT@{RETREAT}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!RETREAT@{RETREAT}}}\Hypertarget{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732acd04451478f0bb20692e4364f9a36d4e}\label{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732} 
+RETREAT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NO\_WAY\_TO\_TARGET@{NO\_WAY\_TO\_TARGET}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!NO\_WAY\_TO\_TARGET@{NO\_WAY\_TO\_TARGET}}}\Hypertarget{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732af195cd6d820031404686bd7faca2a91f}\label{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732} 
+NO\+\_\+\+WAY\+\_\+\+TO\+\_\+\+TARGET&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{AURA\_RUNNING@{AURA\_RUNNING}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!AURA\_RUNNING@{AURA\_RUNNING}}}\Hypertarget{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a96009a13e8663840f3503c7b743252b3}\label{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732} 
+AURA\+\_\+\+RUNNING&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{AI\_BLOCKED@{AI\_BLOCKED}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!AI\_BLOCKED@{AI\_BLOCKED}}}\Hypertarget{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a2d16338928f19950d7df2c22e19fb777}\label{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732} 
+AI\+\_\+\+BLOCKED&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TOWER@{TOWER}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!TOWER@{TOWER}}}\Hypertarget{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732ac33feb50bf29fe445421480eddc328d4}\label{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732} 
+TOWER&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{IS\_SWAPPING@{IS\_SWAPPING}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!IS\_SWAPPING@{IS\_SWAPPING}}}\Hypertarget{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a1e27a519334739026d49b32fac6a5cc9}\label{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732} 
+IS\+\_\+\+SWAPPING&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CUR\_ACTIVE\_DIALOG@{CUR\_ACTIVE\_DIALOG}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!CUR\_ACTIVE\_DIALOG@{CUR\_ACTIVE\_DIALOG}}}\Hypertarget{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732acbf00c3786039cc2213feb25af13fe39}\label{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732} 
+CUR\+\_\+\+ACTIVE\+\_\+\+DIALOG&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{IS\_IN\_FIGHT@{IS\_IN\_FIGHT}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!IS\_IN\_FIGHT@{IS\_IN\_FIGHT}}}\Hypertarget{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a4820c73bf4b5b69a17ff9c409a8b8e05}\label{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732} 
+IS\+\_\+\+IN\+\_\+\+FIGHT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VIEW\_MODE\_1ST\_3RD@{VIEW\_MODE\_1ST\_3RD}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!VIEW\_MODE\_1ST\_3RD@{VIEW\_MODE\_1ST\_3RD}}}\Hypertarget{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732ad100884e36a0bb2daea58364d8d6ce87}\label{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732} 
+VIEW\+\_\+\+MODE\+\_\+1\+ST\+\_\+3\+RD&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{IS\_TALKING@{IS\_TALKING}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!IS\_TALKING@{IS\_TALKING}}}\Hypertarget{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a58dc530cf2da9f0379c2faa92dddf585}\label{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732} 
+IS\+\_\+\+TALKING&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{IS\_IMPORTANT\_DIALOG@{IS\_IMPORTANT\_DIALOG}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!IS\_IMPORTANT\_DIALOG@{IS\_IMPORTANT\_DIALOG}}}\Hypertarget{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a8d2ae8b2ce864fdd0b4425d29b3491aa}\label{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732} 
+IS\+\_\+\+IMPORTANT\+\_\+\+DIALOG&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{UNKILLABLE@{UNKILLABLE}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!UNKILLABLE@{UNKILLABLE}}}\Hypertarget{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a05eba8246460e3fc50ea59a0a2f2ae81}\label{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732} 
+UNKILLABLE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FOLLOW\_MODE@{FOLLOW\_MODE}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!FOLLOW\_MODE@{FOLLOW\_MODE}}}\Hypertarget{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732aae56225fd7fe1bfe64b0cfcdf3c883bf}\label{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732} 
+FOLLOW\+\_\+\+MODE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{HIT\_LEFT\_HAND\_NEXT@{HIT\_LEFT\_HAND\_NEXT}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!HIT\_LEFT\_HAND\_NEXT@{HIT\_LEFT\_HAND\_NEXT}}}\Hypertarget{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732ad7ef30b772e367a70c6f3b67b753528e}\label{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732} 
+HIT\+\_\+\+LEFT\+\_\+\+HAND\+\_\+\+NEXT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FOREST\_SPIRIT@{FOREST\_SPIRIT}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!FOREST\_SPIRIT@{FOREST\_SPIRIT}}}\Hypertarget{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732ae98ea00ab9788a6979b7be5d461a81eb}\label{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732} 
+FOREST\+\_\+\+SPIRIT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{VIP@{VIP}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!VIP@{VIP}}}\Hypertarget{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a17ec55aec1ea186830f9f85846069c2b}\label{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732} 
+VIP&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ILLUSION@{ILLUSION}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!ILLUSION@{ILLUSION}}}\Hypertarget{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a165f314aa9d078e445e19164d49cbc9f}\label{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732} 
+ILLUSION&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SPAWN@{SPAWN}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SPAWN@{SPAWN}}}\Hypertarget{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732a881e5b8c00714da0b5327e02f62146fc}\label{sf__general__structures_8h_ac82390a633ae8fc23e2141e25507f732} 
+SPAWN&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00061}{61}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!OnHitPhase@{OnHitPhase}}
+\index{OnHitPhase@{OnHitPhase}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{OnHitPhase}{OnHitPhase}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7} 
+enum \mbox{\hyperlink{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7}{On\+Hit\+Phase}}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PHASE\_0@{PHASE\_0}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!PHASE\_0@{PHASE\_0}}}\Hypertarget{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7a67c68c964d611409fa66e6abdc814c21}\label{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7} 
+PHASE\+\_\+0&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PHASE\_1@{PHASE\_1}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!PHASE\_1@{PHASE\_1}}}\Hypertarget{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7addc95d86d3f460d55c86c8611161b75c}\label{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7} 
+PHASE\+\_\+1&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PHASE\_2@{PHASE\_2}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!PHASE\_2@{PHASE\_2}}}\Hypertarget{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7ace40f24eeadff069119bb911c280b43e}\label{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7} 
+PHASE\+\_\+2&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PHASE\_3@{PHASE\_3}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!PHASE\_3@{PHASE\_3}}}\Hypertarget{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7a44a2c382473b0dfa2ab45afd6e399e71}\label{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7} 
+PHASE\+\_\+3&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PHASE\_4@{PHASE\_4}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!PHASE\_4@{PHASE\_4}}}\Hypertarget{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7a52537e429cf11babfdce28f09c58d0e3}\label{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7} 
+PHASE\+\_\+4&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PHASE\_5@{PHASE\_5}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!PHASE\_5@{PHASE\_5}}}\Hypertarget{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7ad0b4e178cc3b69a5cf3af80dc5605af5}\label{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7} 
+PHASE\+\_\+5&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OnHitEnd@{OnHitEnd}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!OnHitEnd@{OnHitEnd}}}\Hypertarget{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7a4cfd8ec8360eb068921d979f3339f086}\label{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7} 
+On\+Hit\+End&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00049}{49}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a3f1ae4d570090b097230b86e02b1a178}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SpellDamagePhase@{SpellDamagePhase}}
+\index{SpellDamagePhase@{SpellDamagePhase}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{SpellDamagePhase}{SpellDamagePhase}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a3f1ae4d570090b097230b86e02b1a178} 
+enum \mbox{\hyperlink{sf__general__structures_8h_a3f1ae4d570090b097230b86e02b1a178}{Spell\+Damage\+Phase}}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PRE@{PRE}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!PRE@{PRE}}}\Hypertarget{sf__general__structures_8h_a3f1ae4d570090b097230b86e02b1a178abfbf875310a12806703353540abf4285}\label{sf__general__structures_8h_a3f1ae4d570090b097230b86e02b1a178} 
+PRE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEFAULT@{DEFAULT}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!DEFAULT@{DEFAULT}}}\Hypertarget{sf__general__structures_8h_a3f1ae4d570090b097230b86e02b1a178a88ec7d5086d2469ba843c7fcceade8a6}\label{sf__general__structures_8h_a3f1ae4d570090b097230b86e02b1a178} 
+DEFAULT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{POST@{POST}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!POST@{POST}}}\Hypertarget{sf__general__structures_8h_a3f1ae4d570090b097230b86e02b1a178a368c5bc07109370b819193871352b926}\label{sf__general__structures_8h_a3f1ae4d570090b097230b86e02b1a178} 
+POST&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{COUNT@{COUNT}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!COUNT@{COUNT}}}\Hypertarget{sf__general__structures_8h_a3f1ae4d570090b097230b86e02b1a178a2addb49878f50c95dc669e5fdbd130a2}\label{sf__general__structures_8h_a3f1ae4d570090b097230b86e02b1a178} 
+COUNT&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00681}{681}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SpellDataKey@{SpellDataKey}}
+\index{SpellDataKey@{SpellDataKey}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{SpellDataKey}{SpellDataKey}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355} 
+enum \mbox{\hyperlink{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355}{Spell\+Data\+Key}}}
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EFFECT\_EFFECT\_INDEX@{EFFECT\_EFFECT\_INDEX}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!EFFECT\_EFFECT\_INDEX@{EFFECT\_EFFECT\_INDEX}}}\Hypertarget{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355af92c9cd68f6d74da57d97e43e3518664}\label{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355} 
+EFFECT\+\_\+\+EFFECT\+\_\+\+INDEX&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EFFECT\_SPELL\_INDEX@{EFFECT\_SPELL\_INDEX}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!EFFECT\_SPELL\_INDEX@{EFFECT\_SPELL\_INDEX}}}\Hypertarget{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355ac6660c115883204a951ddbbacc021b4d}\label{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355} 
+EFFECT\+\_\+\+SPELL\+\_\+\+INDEX&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EFFECT\_SPELL\_ID@{EFFECT\_SPELL\_ID}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!EFFECT\_SPELL\_ID@{EFFECT\_SPELL\_ID}}}\Hypertarget{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a1ab4721cbe300ffa4b0d6c68bdd80858}\label{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355} 
+EFFECT\+\_\+\+SPELL\+\_\+\+ID&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EFFECT\_ENTITY\_INDEX2@{EFFECT\_ENTITY\_INDEX2}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!EFFECT\_ENTITY\_INDEX2@{EFFECT\_ENTITY\_INDEX2}}}\Hypertarget{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a5c1e1f0adff95e4bc9146465e16df9ba}\label{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355} 
+EFFECT\+\_\+\+ENTITY\+\_\+\+INDEX2&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EFFECT\_SUBSPELL\_ID@{EFFECT\_SUBSPELL\_ID}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!EFFECT\_SUBSPELL\_ID@{EFFECT\_SUBSPELL\_ID}}}\Hypertarget{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a61d8bacc33743558c22716f576c09a7a}\label{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355} 
+EFFECT\+\_\+\+SUBSPELL\+\_\+\+ID&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EFFECT\_PHYSICAL\_DAMAGE@{EFFECT\_PHYSICAL\_DAMAGE}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!EFFECT\_PHYSICAL\_DAMAGE@{EFFECT\_PHYSICAL\_DAMAGE}}}\Hypertarget{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355ac368a816f86c93599ccaf4cc83ca72b8}\label{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355} 
+EFFECT\+\_\+\+PHYSICAL\+\_\+\+DAMAGE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EFFECT\_ENTITY\_INDEX@{EFFECT\_ENTITY\_INDEX}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!EFFECT\_ENTITY\_INDEX@{EFFECT\_ENTITY\_INDEX}}}\Hypertarget{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355abf76662bac9c32c99c4847777a416c43}\label{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355} 
+EFFECT\+\_\+\+ENTITY\+\_\+\+INDEX&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EFFECT\_ENTITY\_INDEX3@{EFFECT\_ENTITY\_INDEX3}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!EFFECT\_ENTITY\_INDEX3@{EFFECT\_ENTITY\_INDEX3}}}\Hypertarget{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a1103b3d7d2d9229d30f4cb7db27fcb99}\label{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355} 
+EFFECT\+\_\+\+ENTITY\+\_\+\+INDEX3&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EFFECT\_ENTITY\_TYPE@{EFFECT\_ENTITY\_TYPE}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!EFFECT\_ENTITY\_TYPE@{EFFECT\_ENTITY\_TYPE}}}\Hypertarget{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a70b8c84cbc27ae99d210dd5be3bbd2e6}\label{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355} 
+EFFECT\+\_\+\+ENTITY\+\_\+\+TYPE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EFFECT\_ENTITY\_TYPE2@{EFFECT\_ENTITY\_TYPE2}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!EFFECT\_ENTITY\_TYPE2@{EFFECT\_ENTITY\_TYPE2}}}\Hypertarget{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a057bd74da3f12a193cd1ed9f1c039793}\label{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355} 
+EFFECT\+\_\+\+ENTITY\+\_\+\+TYPE2&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EFFECT\_DO\_NOT\_ADD\_SUBSPELL@{EFFECT\_DO\_NOT\_ADD\_SUBSPELL}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!EFFECT\_DO\_NOT\_ADD\_SUBSPELL@{EFFECT\_DO\_NOT\_ADD\_SUBSPELL}}}\Hypertarget{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a56396aef199bc826464e01412f6ad267}\label{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355} 
+EFFECT\+\_\+\+DO\+\_\+\+NOT\+\_\+\+ADD\+\_\+\+SUBSPELL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SPELL\_TICK\_COUNT\_AUX@{SPELL\_TICK\_COUNT\_AUX}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SPELL\_TICK\_COUNT\_AUX@{SPELL\_TICK\_COUNT\_AUX}}}\Hypertarget{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a792986ae89325aaf058ac819239e682e}\label{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355} 
+SPELL\+\_\+\+TICK\+\_\+\+COUNT\+\_\+\+AUX&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SPELL\_TICK\_COUNT@{SPELL\_TICK\_COUNT}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SPELL\_TICK\_COUNT@{SPELL\_TICK\_COUNT}}}\Hypertarget{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a9645396ec61f65e96b3a66e10928f74e}\label{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355} 
+SPELL\+\_\+\+TICK\+\_\+\+COUNT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SPELL\_DOUBLE\_DAMAGE@{SPELL\_DOUBLE\_DAMAGE}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SPELL\_DOUBLE\_DAMAGE@{SPELL\_DOUBLE\_DAMAGE}}}\Hypertarget{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a566e0a8f8302a99b3a58b39309498169}\label{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355} 
+SPELL\+\_\+\+DOUBLE\+\_\+\+DAMAGE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SPELL\_TARGET@{SPELL\_TARGET}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SPELL\_TARGET@{SPELL\_TARGET}}}\Hypertarget{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355ab13261395a2dce02b3f22289d12a44e2}\label{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355} 
+SPELL\+\_\+\+TARGET&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SPELL\_PESTILENCE\_DAMAGE@{SPELL\_PESTILENCE\_DAMAGE}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SPELL\_PESTILENCE\_DAMAGE@{SPELL\_PESTILENCE\_DAMAGE}}}\Hypertarget{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a466b63fe0e5a65061f2a49d338613acf}\label{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355} 
+SPELL\+\_\+\+PESTILENCE\+\_\+\+DAMAGE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SPELL\_STAT\_MUL\_MODIFIER@{SPELL\_STAT\_MUL\_MODIFIER}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SPELL\_STAT\_MUL\_MODIFIER@{SPELL\_STAT\_MUL\_MODIFIER}}}\Hypertarget{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a52faeabe45c367646d1d5c284330da65}\label{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355} 
+SPELL\+\_\+\+STAT\+\_\+\+MUL\+\_\+\+MODIFIER&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SPELL\_STAT\_MUL\_MODIFIER2@{SPELL\_STAT\_MUL\_MODIFIER2}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SPELL\_STAT\_MUL\_MODIFIER2@{SPELL\_STAT\_MUL\_MODIFIER2}}}\Hypertarget{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a07005f8d2f53f625c54ddab97d578e31}\label{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355} 
+SPELL\+\_\+\+STAT\+\_\+\+MUL\+\_\+\+MODIFIER2&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SPELL\_STAT\_MUL\_MODIFIER3@{SPELL\_STAT\_MUL\_MODIFIER3}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SPELL\_STAT\_MUL\_MODIFIER3@{SPELL\_STAT\_MUL\_MODIFIER3}}}\Hypertarget{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a4222adc5ecb712e4569c72841051499e}\label{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355} 
+SPELL\+\_\+\+STAT\+\_\+\+MUL\+\_\+\+MODIFIER3&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SPELL\_STAT\_MUL\_MODIFIER4@{SPELL\_STAT\_MUL\_MODIFIER4}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SPELL\_STAT\_MUL\_MODIFIER4@{SPELL\_STAT\_MUL\_MODIFIER4}}}\Hypertarget{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a1a42d78c83f9f7e2ee6dc60f83e17c56}\label{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355} 
+SPELL\+\_\+\+STAT\+\_\+\+MUL\+\_\+\+MODIFIER4&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SPELL\_CONSERVATION\_SHIELD@{SPELL\_CONSERVATION\_SHIELD}!sf\_general\_structures.h@{sf\_general\_structures.h}}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SPELL\_CONSERVATION\_SHIELD@{SPELL\_CONSERVATION\_SHIELD}}}\Hypertarget{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355a6c400d88ba9221a3edc111cd5dbc9dd6}\label{sf__general__structures_8h_a59e7b4825ade86985ea9ff0cd38d4355} 
+SPELL\+\_\+\+CONSERVATION\+\_\+\+SHIELD&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00656}{656}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!\_\_attribute\_\_@{\_\_attribute\_\_}}
+\index{\_\_attribute\_\_@{\_\_attribute\_\_}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{\_\_attribute\_\_()}{\_\_attribute\_\_()}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_ab898071398b359603a35c202e9c65f3b} 
+struct \+\_\+\+\_\+attribute\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{(packed)}]{}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00001}{1}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_ab4f08eefec549de8444fd0207158d0ab}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!attach\_new\_label@{attach\_new\_label}}
+\index{attach\_new\_label@{attach\_new\_label}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{attach\_new\_label()}{attach\_new\_label()}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_ab4f08eefec549de8444fd0207158d0ab} 
+void \+\_\+\+\_\+thiscall attach\+\_\+new\+\_\+label (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_aa4b2c10b9c9570a024b495014e652c71}{CMnu\+Container}} \texorpdfstring{$\ast$}{*}}]{parent}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{label\+\_\+text}{, }\item[{uint8\+\_\+t}]{font\+\_\+index}{, }\item[{uint16\+\_\+t}]{x\+\_\+pos}{, }\item[{uint16\+\_\+t}]{y\+\_\+pos}{, }\item[{uint16\+\_\+t}]{width}{, }\item[{uint16\+\_\+t}]{height}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Definition at line \mbox{\hyperlink{sf__wrappers_8c_source_l00205}{205}} of file \mbox{\hyperlink{sf__wrappers_8c_source}{sf\+\_\+wrappers.\+c}}.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__general__structures_8h_ab4f08eefec549de8444fd0207158d0ab_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{sf__general__structures_8h_ae56d22e41c81c0beca45d507d4ba44e8}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!AutoClass14@{AutoClass14}}
+\index{AutoClass14@{AutoClass14}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{AutoClass14}{AutoClass14}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_ae56d22e41c81c0beca45d507d4ba44e8} 
+Auto\+Class14}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00326}{326}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a33f353e639dcf925b3b022137ecf7432}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!AutoClass24@{AutoClass24}}
+\index{AutoClass24@{AutoClass24}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{AutoClass24}{AutoClass24}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a33f353e639dcf925b3b022137ecf7432} 
+Auto\+Class24}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00215}{215}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_aa3705057831d559c6a64bd6a4aeb9dd3}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!AutoClass69@{AutoClass69}}
+\index{AutoClass69@{AutoClass69}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{AutoClass69}{AutoClass69}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_aa3705057831d559c6a64bd6a4aeb9dd3} 
+Auto\+Class69}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00310}{310}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a747e81e6fc592fdba2378ffb92c90625}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!CAppMenu@{CAppMenu}}
+\index{CAppMenu@{CAppMenu}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{CAppMenu}{CAppMenu}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a747e81e6fc592fdba2378ffb92c90625} 
+CApp\+Menu}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00589}{589}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_adca7a0b2b6c9bdf74a23b05cbb810ec7}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!CGdFigureHateEntry@{CGdFigureHateEntry}}
+\index{CGdFigureHateEntry@{CGdFigureHateEntry}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{CGdFigureHateEntry}{CGdFigureHateEntry}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_adca7a0b2b6c9bdf74a23b05cbb810ec7} 
+CGd\+Figure\+Hate\+Entry}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00160}{160}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a49644afe3c0b842e649ab777a073bdbd}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!CMnuBase\_data@{CMnuBase\_data}}
+\index{CMnuBase\_data@{CMnuBase\_data}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{CMnuBase\_data}{CMnuBase\_data}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a49644afe3c0b842e649ab777a073bdbd} 
+CMnu\+Base\+\_\+data}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00614}{614}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_aa4b2c10b9c9570a024b495014e652c71}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!CMnuContainer@{CMnuContainer}}
+\index{CMnuContainer@{CMnuContainer}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{CMnuContainer}{CMnuContainer}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_aa4b2c10b9c9570a024b495014e652c71} 
+CMnu\+Container}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00630}{630}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a1b96a8d15a7b76099bd6683f104dc217}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!CMnuLabel@{CMnuLabel}}
+\index{CMnuLabel@{CMnuLabel}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{CMnuLabel}{CMnuLabel}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a1b96a8d15a7b76099bd6683f104dc217} 
+CMnu\+Label}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00622}{622}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_ae6c281c594fe42f390ef3a9d3456378e}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!CUiStartMenu@{CUiStartMenu}}
+\index{CUiStartMenu@{CUiStartMenu}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{CUiStartMenu}{CUiStartMenu}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_ae6c281c594fe42f390ef3a9d3456378e} 
+CUi\+Start\+Menu}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00654}{654}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a41f332f52d29afd3ec69e7ce3a342adf}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!data\_CUiStartMenu@{data\_CUiStartMenu}}
+\index{data\_CUiStartMenu@{data\_CUiStartMenu}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{data\_CUiStartMenu}{data\_CUiStartMenu}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a41f332f52d29afd3ec69e7ce3a342adf} 
+data\+\_\+\+CUi\+Start\+Menu}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00645}{645}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_aa312e3ddc91847eff4c403f6993528ea}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!FigureStatistic@{FigureStatistic}}
+\index{FigureStatistic@{FigureStatistic}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{FigureStatistic}{FigureStatistic}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_aa312e3ddc91847eff4c403f6993528ea} 
+Figure\+Statistic}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00179}{179}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a51f7266da047c1617a2980d266ba63f6}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!FigureStatisticExt@{FigureStatisticExt}}
+\index{FigureStatisticExt@{FigureStatisticExt}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{FigureStatisticExt}{FigureStatisticExt}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a51f7266da047c1617a2980d266ba63f6} 
+Figure\+Statistic\+Ext}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00188}{188}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_acbab0b1215e69f72f6905bd6b1e73b8e}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!GdBuilding@{GdBuilding}}
+\index{GdBuilding@{GdBuilding}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{GdBuilding}{GdBuilding}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_acbab0b1215e69f72f6905bd6b1e73b8e} 
+Gd\+Building}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00570}{570}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a3ceef93484bb270fac8a07d6a7c79a3b}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!GdFigure@{GdFigure}}
+\index{GdFigure@{GdFigure}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{GdFigure}{GdFigure}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a3ceef93484bb270fac8a07d6a7c79a3b} 
+Gd\+Figure}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00291}{291}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_adcfde5041b3e58539ba533680e23d9b0}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SF\_CGdFigure@{SF\_CGdFigure}}
+\index{SF\_CGdFigure@{SF\_CGdFigure}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{SF\_CGdFigure}{SF\_CGdFigure}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_adcfde5041b3e58539ba533680e23d9b0} 
+SF\+\_\+\+CGd\+Figure}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00297}{297}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_ab30b3d0a3ef1407e9022aad25007d3ce}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SF\_CGdFigureWeaponStats@{SF\_CGdFigureWeaponStats}}
+\index{SF\_CGdFigureWeaponStats@{SF\_CGdFigureWeaponStats}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{SF\_CGdFigureWeaponStats}{SF\_CGdFigureWeaponStats}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_ab30b3d0a3ef1407e9022aad25007d3ce} 
+SF\+\_\+\+CGd\+Figure\+Weapon\+Stats}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00171}{171}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_aedd8705d0983d09965ace902f37d0e0b}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SF\_CGdTargetData@{SF\_CGdTargetData}}
+\index{SF\_CGdTargetData@{SF\_CGdTargetData}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{SF\_CGdTargetData}{SF\_CGdTargetData}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_aedd8705d0983d09965ace902f37d0e0b} 
+SF\+\_\+\+CGd\+Target\+Data}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00137}{137}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_aabfd8cbc5556407d59606b8fc3e48c2c}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SF\_Color@{SF\_Color}}
+\index{SF\_Color@{SF\_Color}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{SF\_Color}{SF\_Color}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_aabfd8cbc5556407d59606b8fc3e48c2c} 
+SF\+\_\+\+Color}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00607}{607}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_aa44e45471f7b6c436abe46e7d9d728c9}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SF\_Coord@{SF\_Coord}}
+\index{SF\_Coord@{SF\_Coord}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{SF\_Coord}{SF\_Coord}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_aa44e45471f7b6c436abe46e7d9d728c9} 
+SF\+\_\+\+Coord}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00118}{118}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_af97891752509725cbcb2481b85181ee9}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SF\_Font@{SF\_Font}}
+\index{SF\_Font@{SF\_Font}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{SF\_Font}{SF\_Font}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_af97891752509725cbcb2481b85181ee9} 
+SF\+\_\+\+Font}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00594}{594}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_aab247d013cf0680517ac4722412d6440}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SF\_FontStruct@{SF\_FontStruct}}
+\index{SF\_FontStruct@{SF\_FontStruct}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{SF\_FontStruct}{SF\_FontStruct}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_aab247d013cf0680517ac4722412d6440} 
+SF\+\_\+\+Font\+Struct}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00600}{600}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a0dd974e2c227c0130f5ad6d5d87ba39f}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SF\_GdSpell@{SF\_GdSpell}}
+\index{SF\_GdSpell@{SF\_GdSpell}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{SF\_GdSpell}{SF\_GdSpell}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a0dd974e2c227c0130f5ad6d5d87ba39f} 
+SF\+\_\+\+Gd\+Spell}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00369}{369}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a1b8b1ec284ff51feaf2673b4aa18f4eb}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SF\_Rectangle@{SF\_Rectangle}}
+\index{SF\_Rectangle@{SF\_Rectangle}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{SF\_Rectangle}{SF\_Rectangle}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a1b8b1ec284ff51feaf2673b4aa18f4eb} 
+SF\+\_\+\+Rectangle}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00151}{151}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a8bab79a418c30ca6e1cc618503d5be75}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SF\_RGColor@{SF\_RGColor}}
+\index{SF\_RGColor@{SF\_RGColor}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{SF\_RGColor}{SF\_RGColor}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a8bab79a418c30ca6e1cc618503d5be75} 
+SF\+\_\+\+RGColor}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00124}{124}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a07619fa231562f2cc55bd33173b4c765}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SF\_SGtFigureAction@{SF\_SGtFigureAction}}
+\index{SF\_SGtFigureAction@{SF\_SGtFigureAction}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{SF\_SGtFigureAction}{SF\_SGtFigureAction}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a07619fa231562f2cc55bd33173b4c765} 
+SF\+\_\+\+SGt\+Figure\+Action}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00198}{198}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a5155b93e12786efd5c2faf220aa5b928}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SF\_SpellEffectInfo@{SF\_SpellEffectInfo}}
+\index{SF\_SpellEffectInfo@{SF\_SpellEffectInfo}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{SF\_SpellEffectInfo}{SF\_SpellEffectInfo}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a5155b93e12786efd5c2faf220aa5b928} 
+SF\+\_\+\+Spell\+Effect\+Info}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00130}{130}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a3aec067538ae8bb3838f555feac49682}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SF\_String@{SF\_String}}
+\index{SF\_String@{SF\_String}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{SF\_String}{SF\_String}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a3aec067538ae8bb3838f555feac49682} 
+SF\+\_\+\+String}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00145}{145}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_ae3cbd78a75ae4e66eb36047cdc42077b}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SF\_world\_unkn\_1@{SF\_world\_unkn\_1}}
+\index{SF\_world\_unkn\_1@{SF\_world\_unkn\_1}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{SF\_world\_unkn\_1}{SF\_world\_unkn\_1}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_ae3cbd78a75ae4e66eb36047cdc42077b} 
+SF\+\_\+world\+\_\+unkn\+\_\+1}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00334}{334}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a6a3c1882f4a600762262d57e39c67937}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SF\_world\_unkn\_2@{SF\_world\_unkn\_2}}
+\index{SF\_world\_unkn\_2@{SF\_world\_unkn\_2}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{SF\_world\_unkn\_2}{SF\_world\_unkn\_2}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a6a3c1882f4a600762262d57e39c67937} 
+SF\+\_\+world\+\_\+unkn\+\_\+2}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00342}{342}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_ae900cce116daeab95744454174071a59}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SF\_world\_unkn\_3@{SF\_world\_unkn\_3}}
+\index{SF\_world\_unkn\_3@{SF\_world\_unkn\_3}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{SF\_world\_unkn\_3}{SF\_world\_unkn\_3}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_ae900cce116daeab95744454174071a59} 
+SF\+\_\+world\+\_\+unkn\+\_\+3}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00349}{349}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_ae13f138354027494424638aa18bc4ca9}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SF\_world\_unkn\_4@{SF\_world\_unkn\_4}}
+\index{SF\_world\_unkn\_4@{SF\_world\_unkn\_4}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{SF\_world\_unkn\_4}{SF\_world\_unkn\_4}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_ae13f138354027494424638aa18bc4ca9} 
+SF\+\_\+world\+\_\+unkn\+\_\+4}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00355}{355}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a1c952b093fb7b451bb336a65c6658ad4}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SFLog@{SFLog}}
+\index{SFLog@{SFLog}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{SFLog}{SFLog}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a1c952b093fb7b451bb336a65c6658ad4} 
+SFLog}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00021}{21}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
+\Hypertarget{sf__general__structures_8h_a64ca7d92af978ccdfb97fd8ad71ea8e5}\index{sf\_general\_structures.h@{sf\_general\_structures.h}!SFMod@{SFMod}}
+\index{SFMod@{SFMod}!sf\_general\_structures.h@{sf\_general\_structures.h}}
+\doxysubsubsection{\texorpdfstring{SFMod}{SFMod}}
+{\footnotesize\ttfamily \label{sf__general__structures_8h_a64ca7d92af978ccdfb97fd8ad71ea8e5} 
+SFMod}
+
+
+
+Definition at line \mbox{\hyperlink{sf__general__structures_8h_source_l00013}{13}} of file \mbox{\hyperlink{sf__general__structures_8h_source}{sf\+\_\+general\+\_\+structures.\+h}}.
+
