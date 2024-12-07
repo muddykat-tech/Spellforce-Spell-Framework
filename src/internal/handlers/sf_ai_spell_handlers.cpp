@@ -519,7 +519,7 @@ uint32_t __thiscall default_support_ai_handler(SF_CGdBattleDevelopment *_this, u
     return 2;
 }
 
-//Weird shit, might need fix?
+// Weird shit, might need fix?
 uint32_t __thiscall sacrifice_mana_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 5;
@@ -548,6 +548,25 @@ uint32_t __thiscall sacrifice_mana_ai_handler(SF_CGdBattleDevelopment *_this, ui
     else
     {
         rank = 0;
+    }
+    return rank;
+}
+
+uint32_t __thiscall tower_extinct_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 1;
+    ushort_list_node node = _this->battleData.another_figure_list[_this->battleData.current_figure];
+    uint16_t list_length = ((uint32_t) node.data - (uint32_t)node.first) >> 1;
+    if ((_this->battleData.enemy_figures.entityCount == 0) || (list_length == 0))
+    {
+        rank = 0;
+    }
+    else
+    {
+        _this->battleData.current_source_maybe.entity_index = _this->battleData.current_figure;
+        _this->battleData.current_source_maybe.entity_type = 1;
+        _this->battleData.current_source_maybe.position.X = _this->battleData.current_figure_pos.X;
+        _this->battleData.current_source_maybe.position.Y = _this->battleData.current_figure_pos.Y;
     }
     return rank;
 }

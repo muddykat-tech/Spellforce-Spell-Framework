@@ -21,6 +21,7 @@
 #include "hooks/sf_spelltype_hook.h"
 #include "hooks/sf_console_hook.h"
 #include "hooks/sf_onhit_hook.h"
+#include "hooks/sf_ai_hook.h"
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -276,6 +277,14 @@ static void initialize_onhit_hook()
     *(int *)(ASI::AddrOf(0x2e0b01)) = (int)(&sf_onhit_hook) - ASI::AddrOf(0x2e0b05);
     ASI::EndRewrite(onhit_mreg);
 }
+static void initialize_ai_support_spell_hook()
+{
+    ASI::MemoryRegion ai_support_mreg(ASI::AddrOf(0x35d353), 5);
+    ASI::BeginRewrite(ai_support_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x35d353)) = 0xE8; // CALL instruction
+    *(int *)(ASI::AddrOf(0x35d354)) = (int)(&rank_support_spell_hook) - ASI::AddrOf(0x35d358);
+    ASI::EndRewrite(ai_support_mreg);
+}
 
 void initialize_beta_hooks()
 {
@@ -302,6 +311,9 @@ void initialize_beta_hooks()
 
     log_info("Hooking On Hit Trigger");
     initialize_onhit_hook();
+
+    log_info ("Hooking AI Support Spell Handling");
+    initialize_ai_support_spell_hook();
 }
 
 /**

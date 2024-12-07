@@ -26,7 +26,9 @@ handler_ptr get_spell_effect(uint16_t spell_job)
     auto it = s_effect_handler_map.find(spell_job);
     if (it == s_effect_handler_map.end())
     {
-        log_error("Unknown Job ID, No effect handler registered.");
+        char message[256];
+        sprintf(message, "%s Unknown Job ID [%d], No effect handler registered.", g_current_mod->mod_id, spell_job);
+        log_warning(message);
         return NULL;
     }
     return it->second;
