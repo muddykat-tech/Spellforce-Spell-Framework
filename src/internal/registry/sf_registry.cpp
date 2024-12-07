@@ -35,7 +35,7 @@
 #include <windows.h>
 #include <iostream>
 
-// Exposed in sfsf.
+// Exposed in sfsf.h
 SpellforceSpellFramework frameworkAPI;
 SFMod *g_current_mod;
 SFMod *g_framework_mod;

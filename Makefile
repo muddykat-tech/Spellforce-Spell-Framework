@@ -7,8 +7,8 @@ FW_LDFLAGS = -m32 -shared -static-libgcc -static-libstdc++ -s -Wl,-Bstatic,--who
 
 # Object files for the new architecture
 HOOK_OBJ = obj/sf_onhit_hook.o obj/sf_refresh_hook.o obj/sf_endspell_hook.o obj/sf_menu_hook.o obj/sf_spelleffect_hook.o obj/sf_subeffect_hook.o obj/sf_spelltype_hook.o obj/sf_damage_hook.o obj/sf_console_hook.o obj/sf_ai_hook.o obj/sf_hooks.o
-REGISTRY_OBJ = obj/sf_registry.o obj/sf_mod_registry.o obj/sf_spelltype_registry.o obj/sf_spelleffect_registry.o obj/sf_spellend_registry.o obj/sf_subeffect_registry.o obj/sf_spellrefresh_registry.o obj/sf_vanilla_registry.o obj/sf_spelldamage_registry.o obj/sf_onhit_registry.o
-HANDLER_OBJ = obj/sf_spelltype_handlers.o obj/sf_spelleffect_handlers.o obj/sf_spellend_handlers.o obj/sf_sub_effect_handlers.o obj/sf_spellrefresh_handlers.o obj/sf_spelldamage_handlers.o obj/sf_onhit_handlers.o obj/sf_ai_avoidance_handlers.o 
+REGISTRY_OBJ = obj/sf_registry.o obj/sf_mod_registry.o obj/sf_spelltype_registry.o obj/sf_spelleffect_registry.o obj/sf_spellend_registry.o obj/sf_subeffect_registry.o obj/sf_spellrefresh_registry.o obj/sf_vanilla_registry.o obj/sf_spelldamage_registry.o obj/sf_onhit_registry.o obj/sf_ai_avoidance_registry.o obj/sf_ai_single_target_registry.o
+HANDLER_OBJ = obj/sf_spelltype_handlers.o obj/sf_spelleffect_handlers.o obj/sf_spellend_handlers.o obj/sf_sub_effect_handlers.o obj/sf_spellrefresh_handlers.o obj/sf_spelldamage_handlers.o obj/sf_onhit_handlers.o obj/sf_ai_avoidance_handlers.o obj/sf_ai_spell_handlers.o
 
 NTERNALS_OBJ = obj/sfsf.o obj/sf_modloader.o obj/sf_asi.o obj/sf_wrappers.o ${REGISTRY_OBJ} ${HANDLER_OBJ} ${HOOK_OBJ}
 TEST_MOD_OBJ = obj/TestMod.o
@@ -18,6 +18,7 @@ CORE_SRC = ${INTERNALS_SRC}/core
 HOOKS_SRC = ${CORE_SRC}/hooks
 REGISTRY_SRC = ${INTERNALS_SRC}/registry
 SPELL_DATA_REGISTRY_SRC = ${REGISTRY_SRC}/spell_data_registries
+AI_DATA_REGISTRY_SRC = ${REGISTRY_SRC}/ai_data_registries
 HANDLERS_SRC = ${INTERNALS_SRC}/handlers
 # Check if running in PowerShell
 # Phony targets
@@ -139,6 +140,15 @@ obj/sf_spelldamage_handlers.o: ${HANDLERS_SRC}/sf_spelldamage_handlers.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
 
 obj/sf_spelldamage_registry.o: ${SPELL_DATA_REGISTRY_SRC}/sf_spelldamage_registry.cpp | obj
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+
+obj/sf_ai_spell_handlers.o: ${HANDLERS_SRC}/sf_ai_spell_handlers.cpp | obj
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+
+obj/sf_ai_avoidance_registry.o: ${AI_DATA_REGISTRY_SRC}/sf_ai_avoidance_registry.cpp | obj
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+
+obj/sf_ai_single_target_registry.o: ${AI_DATA_REGISTRY_SRC}/sf_ai_single_target_registry.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
 
 # Mod build

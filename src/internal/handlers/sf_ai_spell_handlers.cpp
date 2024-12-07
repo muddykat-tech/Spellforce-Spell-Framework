@@ -1,4 +1,5 @@
 #include "sf_ai_spell_handlers.h"
+#include "../core/sf_wrappers.h"
 
 uint32_t __thiscall target_healing_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {

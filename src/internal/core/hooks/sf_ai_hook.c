@@ -1,5 +1,11 @@
 #include "sf_ai_hook.h"
 
+#include "../sf_wrappers.h"
+#include "../sf_hooks.h"
+
+#include "../../registry/ai_data_registries/sf_ai_avoidance_registry.h"
+#include "../../registry/ai_data_registries/sf_ai_single_target_registry.h"
+
 void clearAction(SF_SGtFigureAction *_this)
 {
     _this->type = 0xffff;
@@ -50,9 +56,9 @@ uint32_t signum(uint32_t param_1)
 uint32_t rank_support_spell_hook(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
     bool isStackable = hasSpellTag(spell_line, STACKABLE_SPELL);
-    //CALL the getter
-    uint32_t rank = 1; //call the function we get;
-    if ((toolboxAPI.hasSpellOnIt(_this->battleData.CGdFigureToolBox, target_index, spell_line))&& (!isStackable))
+    ai_single_hander_ptr handler = get_single_ai_handler(spell_line);
+    uint32_t rank = handler(_this, target_index, spell_line, spell_data);
+    if ((toolboxAPI.hasSpellOnIt(_this->battleData.CGdFigureToolBox, target_index, spell_line)) && (!isStackable))
     {
         rank = 0;
     }

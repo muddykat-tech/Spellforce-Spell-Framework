@@ -3,7 +3,7 @@
 #include "../core/sf_wrappers.h"
 #include <cstdio>
 
-int __thiscall sf_ai_avoidance_hypnotize_handler(CGdAIBattleData *_this, uint16_t figure_index, uint16_t spell_index)
+uint32_t __thiscall sf_ai_avoidance_hypnotize_handler(CGdAIBattleData *_this, uint16_t figure_index, uint16_t spell_index)
 {
     if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, figure_index, spell_index))
     {
@@ -12,16 +12,16 @@ int __thiscall sf_ai_avoidance_hypnotize_handler(CGdAIBattleData *_this, uint16_
     return 100;
 }
 
-int __thiscall sf_ai_avoidance_freeze_handler(CGdAIBattleData *_this, uint16_t figure_index, uint16_t spell_index)
+uint32_t __thiscall sf_ai_avoidance_freeze_handler(CGdAIBattleData *_this, uint16_t figure_index, uint16_t spell_index)
 {
     if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, figure_index, spell_index))
-    {
+    { 
         return 500;
     }
     return 100;
 }
 
-int __thiscall sf_ai_avoidance_invulnerability_handler(CGdAIBattleData *_this, uint16_t figure_index, uint16_t spell_index)
+uint32_t __thiscall sf_ai_avoidance_invulnerability_handler(CGdAIBattleData *_this, uint16_t figure_index, uint16_t spell_index)
 {
     if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, figure_index, spell_index))
     {
@@ -30,7 +30,7 @@ int __thiscall sf_ai_avoidance_invulnerability_handler(CGdAIBattleData *_this, u
     return 100;
 }
 
-int __thiscall sf_ai_avoidance_shield_handler(CGdAIBattleData *_this, uint16_t figure_index, uint16_t spell_index)
+uint32_t __thiscall sf_ai_avoidance_shield_handler(CGdAIBattleData *_this, uint16_t figure_index, uint16_t spell_index)
 {
     if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, figure_index, spell_index))
     {
@@ -39,7 +39,7 @@ int __thiscall sf_ai_avoidance_shield_handler(CGdAIBattleData *_this, uint16_t f
     return 100;
 }
 
-int __thiscall sf_ai_avoidance_default_handler(CGdAIBattleData *_this, uint16_t figure_index, uint16_t spell_index)
+uint32_t __thiscall sf_ai_avoidance_default_handler(CGdAIBattleData *_this, uint16_t figure_index, uint16_t spell_index)
 {
     return 100;
 }
