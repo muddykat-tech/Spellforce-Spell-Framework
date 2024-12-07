@@ -518,6 +518,7 @@ uint32_t __thiscall default_support_ai_handler(SF_CGdBattleDevelopment *_this, u
     return 2;
 }
 
+//Weird shit, might need fix?
 uint32_t __thiscall sacrifice_mana_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 5;
@@ -531,16 +532,19 @@ uint32_t __thiscall sacrifice_mana_ai_handler(SF_CGdBattleDevelopment *_this, ui
         {
             rank = 0;
         }
-        else 
+        else
         {
             if (max_health == 0)
             {
                 rank = 0;
             }
-            rank = (current_health * 2 - max_health) / (max_health * max_health);
+            else
+            {
+                rank = (current_health * 2 - max_health) / (max_health * max_health);
+            }
         }
     }
-    else 
+    else
     {
         rank = 0;
     }
