@@ -1,4 +1,4 @@
-#include "sf_ai_avoidance_handlers.h"
+#include "sf_ai_singletarget_registry.h"
 #include "../../core/sf_wrappers.h"
 #include "../../handlers/sf_ai_spell_handlers.h"
 #include "../../core/sf_modloader.h"
@@ -32,7 +32,7 @@ ai_single_hander_ptr get_single_ai_handler(uint16_t spell_line)
     if (it == s_ai_handler_map.end())
     {
         // Element doesn't exist, insert the default value
-        log_warning("Unknown Job ID for Spell End Effect, Assigning a default handler.");
+        log_warning("Unknown spell line for ai single target handler, Assigning a default handler.");
         it = s_ai_handler_map.emplace(spell_line, &default_support_ai_handler).first;
     }
     return it->second;

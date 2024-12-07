@@ -1,5 +1,6 @@
 var dir_7c9c5794ca21d46921d6ad00eebb9fa9 =
 [
+    [ "ai_data_registries", "dir_f29c48006ea332bc58db1332671c35cd.html", "dir_f29c48006ea332bc58db1332671c35cd" ],
     [ "spell_data_registries", "dir_4b00acc7ff3804a973ffcd1cc7e23e0a.html", "dir_4b00acc7ff3804a973ffcd1cc7e23e0a" ],
     [ "sf_mod_registry.cpp", "sf__mod__registry_8cpp.html", "sf__mod__registry_8cpp" ],
     [ "sf_mod_registry.h", "sf__mod__registry_8h.html", "sf__mod__registry_8h" ],

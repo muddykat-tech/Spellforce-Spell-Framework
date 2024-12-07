@@ -1,12 +1,12 @@
 var searchData=
 [
-  ['get_5ffont_5fptr_0',['get_font_ptr',['../sf__general__structures_8h.html#a777a4dfb668807471094b748e5152aba',1,'sf_general_structures.h']]],
-  ['get_5fhit_5fchance_5fptr_1',['get_hit_chance_ptr',['../sf__onhit__hook_8c.html#a431c968d516023fb5040d6146b599f14',1,'sf_onhit_hook.c']]],
-  ['get_5fleveled_5fspell_5fptr_2',['get_leveled_spell_ptr',['../sf__onhit__hook_8c.html#a58e00ab7dc81fb58801626d98defaa27',1,'sf_onhit_hook.c']]],
-  ['get_5freduced_5fbuilding_5fdamage_5fptr_3',['get_reduced_building_damage_ptr',['../sf__onhit__hook_8c.html#ad8ff3ea7dd287974d75f24b9aba82c53',1,'sf_onhit_hook.c']]],
-  ['get_5freduced_5fdamage_5fptr_4',['get_reduced_damage_ptr',['../sf__onhit__hook_8c.html#a2892feb762f3129a835efdea7240a17c',1,'sf_onhit_hook.c']]],
-  ['get_5fsf_5fcolor_5fptr_5',['get_sf_color_ptr',['../sf__general__structures_8h.html#a4409f85c2cd03eabf735b64d1f0d8c01',1,'sf_general_structures.h']]],
-  ['get_5fsmth_5ffonts_5fptr_6',['get_smth_fonts_ptr',['../sf__general__structures_8h.html#a59949b7d52615db72af6f2527029d21a',1,'sf_general_structures.h']]],
-  ['get_5fspell_5fspell_5fline_5fptr_7',['get_spell_spell_line_ptr',['../sf__general__structures_8h.html#a6694222e4b9549b92231e7afa2107b57',1,'sf_general_structures.h']]],
-  ['getweaponeffects_5fptr_8',['getWeaponEffects_ptr',['../sf__onhit__hook_8c.html#a44458ce7f2b81338e0f6862f28bdab23',1,'sf_onhit_hook.c']]]
+  ['fidfree_5fptr_0',['fidfree_ptr',['../sf__general__structures_8h.html#a82640f13fec97cfc97c0ffa265528d19',1,'sf_general_structures.h']]],
+  ['figure_5ftoolbox_5fadd_5fspell_5fptr_1',['figure_toolbox_add_spell_ptr',['../sf__general__structures_8h.html#a777aa0a7a267165f9a196f9b293a35c4',1,'sf_general_structures.h']]],
+  ['figure_5ftoolbox_5fget_5funkn_5fptr_2',['figure_toolbox_get_unkn_ptr',['../sf__general__structures_8h.html#a8c9b4c8637d55a626fdb72a8f9b58922',1,'sf_general_structures.h']]],
+  ['figure_5ftoolbox_5fis_5ftargetable_5fptr_3',['figure_toolbox_is_targetable_ptr',['../sf__general__structures_8h.html#aa419a4385eff93c7fdabade2c545aded',1,'sf_general_structures.h']]],
+  ['frameworkapi_4',['FrameworkAPI',['../sfsf_8h.html#a398b372a8c4fd7f3bed4cdf9b40715f2',1,'sfsf.h']]],
+  ['fun_5f0069eaf0_5fptr_5',['FUN_0069eaf0_ptr',['../sf__general__structures_8h.html#ae52358dbffb2bfc0b421a928eb0e779f',1,'sf_general_structures.h']]],
+  ['fun_5f006c3a60_5fptr_6',['FUN_006c3a60_ptr',['../sf__onhit__hook_8c.html#a02d96be9aeebb4a494be5d0de47fac9b',1,'sf_onhit_hook.c']]],
+  ['fun_5f0071d7b0_5fptr_7',['FUN_0071d7b0_ptr',['../sf__onhit__hook_8c.html#ac9da902d3248459ff808aff4856684b8',1,'sf_onhit_hook.c']]],
+  ['fun_5f00755180_5fptr_8',['FUN_00755180_ptr',['../sf__onhit__hook_8c.html#aafec6154b49caac7291602f59bfe7413',1,'sf_onhit_hook.c']]]
 ];

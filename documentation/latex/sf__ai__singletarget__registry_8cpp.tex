@@ -1,0 +1,65 @@
+\doxysection{src/internal/registry/ai\+\_\+data\+\_\+registries/sf\+\_\+ai\+\_\+singletarget\+\_\+registry.cpp File Reference}
+\hypertarget{sf__ai__singletarget__registry_8cpp}{}\label{sf__ai__singletarget__registry_8cpp}\index{src/internal/registry/ai\_data\_registries/sf\_ai\_singletarget\_registry.cpp@{src/internal/registry/ai\_data\_registries/sf\_ai\_singletarget\_registry.cpp}}
+{\ttfamily \#include "{}sf\+\_\+ai\+\_\+avoidance\+\_\+handlers.\+h"{}}\newline
+{\ttfamily \#include "{}../../core/sf\+\_\+wrappers.\+h"{}}\newline
+{\ttfamily \#include "{}../../handlers/sf\+\_\+ai\+\_\+spell\+\_\+handlers.\+h"{}}\newline
+{\ttfamily \#include "{}../../core/sf\+\_\+modloader.\+h"{}}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$map$>$}\newline
+{\ttfamily \#include $<$cstdint$>$}\newline
+{\ttfamily \#include $<$list$>$}\newline
+{\ttfamily \#include $<$utility$>$}\newline
+Include dependency graph for sf\+\_\+ai\+\_\+singletarget\+\_\+registry.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__ai__singletarget__registry_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{sf__ai__singletarget__registry_8cpp_a383232dca347b6b029aea7d5a5b12582}{register\+Ai\+Single\+Target\+Handler}} (uint16\+\_\+t spell\+\_\+line, \mbox{\hyperlink{sf__registration__functions_8h_af763da373561d6f947f2660afb0739e5}{ai\+\_\+single\+\_\+hander\+\_\+ptr}} handler)
+\item 
+\mbox{\hyperlink{sf__registration__functions_8h_af763da373561d6f947f2660afb0739e5}{ai\+\_\+single\+\_\+hander\+\_\+ptr}} \mbox{\hyperlink{sf__ai__singletarget__registry_8cpp_af09a409d2777c23f60760fa3b0431f07}{get\+\_\+single\+\_\+ai\+\_\+handler}} (uint16\+\_\+t spell\+\_\+line)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{sf__ai__singletarget__registry_8cpp_af09a409d2777c23f60760fa3b0431f07}\index{sf\_ai\_singletarget\_registry.cpp@{sf\_ai\_singletarget\_registry.cpp}!get\_single\_ai\_handler@{get\_single\_ai\_handler}}
+\index{get\_single\_ai\_handler@{get\_single\_ai\_handler}!sf\_ai\_singletarget\_registry.cpp@{sf\_ai\_singletarget\_registry.cpp}}
+\doxysubsubsection{\texorpdfstring{get\_single\_ai\_handler()}{get\_single\_ai\_handler()}}
+{\footnotesize\ttfamily \label{sf__ai__singletarget__registry_8cpp_af09a409d2777c23f60760fa3b0431f07} 
+\mbox{\hyperlink{sf__registration__functions_8h_af763da373561d6f947f2660afb0739e5}{ai\+\_\+single\+\_\+hander\+\_\+ptr}} get\+\_\+single\+\_\+ai\+\_\+handler (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{spell\+\_\+line}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__ai__singletarget__registry_8cpp_source_l00029}{29}} of file \mbox{\hyperlink{sf__ai__singletarget__registry_8cpp_source}{sf\+\_\+ai\+\_\+singletarget\+\_\+registry.\+cpp}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__ai__singletarget__registry_8cpp_af09a409d2777c23f60760fa3b0431f07_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__ai__singletarget__registry_8cpp_a383232dca347b6b029aea7d5a5b12582}\index{sf\_ai\_singletarget\_registry.cpp@{sf\_ai\_singletarget\_registry.cpp}!registerAiSingleTargetHandler@{registerAiSingleTargetHandler}}
+\index{registerAiSingleTargetHandler@{registerAiSingleTargetHandler}!sf\_ai\_singletarget\_registry.cpp@{sf\_ai\_singletarget\_registry.cpp}}
+\doxysubsubsection{\texorpdfstring{registerAiSingleTargetHandler()}{registerAiSingleTargetHandler()}}
+{\footnotesize\ttfamily \label{sf__ai__singletarget__registry_8cpp_a383232dca347b6b029aea7d5a5b12582} 
+void register\+Ai\+Single\+Target\+Handler (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{spell\+\_\+line}{, }\item[{\mbox{\hyperlink{sf__registration__functions_8h_af763da373561d6f947f2660afb0739e5}{ai\+\_\+single\+\_\+hander\+\_\+ptr}}}]{handler}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__ai__singletarget__registry_8cpp_source_l00016}{16}} of file \mbox{\hyperlink{sf__ai__singletarget__registry_8cpp_source}{sf\+\_\+ai\+\_\+singletarget\+\_\+registry.\+cpp}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__ai__singletarget__registry_8cpp_a383232dca347b6b029aea7d5a5b12582_cgraph}
+\end{center}
+\end{figure}

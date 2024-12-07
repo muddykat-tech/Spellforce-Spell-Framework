@@ -17,10 +17,11 @@ var searchData=
   ['spell_5ftarget_14',['SPELL_TARGET',['../sf__general__structures_8h.html#a59e7b4825ade86985ea9ff0cd38d4355ab13261395a2dce02b3f22289d12a44e2',1,'sf_general_structures.h']]],
   ['spell_5ftick_5fcount_15',['SPELL_TICK_COUNT',['../sf__general__structures_8h.html#a59e7b4825ade86985ea9ff0cd38d4355a9645396ec61f65e96b3a66e10928f74e',1,'sf_general_structures.h']]],
   ['spell_5ftick_5fcount_5faux_16',['SPELL_TICK_COUNT_AUX',['../sf__general__structures_8h.html#a59e7b4825ade86985ea9ff0cd38d4355a792986ae89325aaf058ac819239e682e',1,'sf_general_structures.h']]],
-  ['stamina_17',['STAMINA',['../sf__figure__functions_8h.html#a35c57de9b4dfd894cc11e998a47b1436a6bf06a15de893533dd8b5ea926d0e248',1,'sf_figure_functions.h']]],
-  ['start_5fwalk_18',['START_WALK',['../sf__general__structures_8h.html#a6978b403a7119e4900450f3243eb3571a7d3f0a4cd2666414d28aa9839d43d6e0',1,'sf_general_structures.h']]],
-  ['start_5fwork_5fat_5fbuilding_5fforce_5fjob_19',['START_WORK_AT_BUILDING_FORCE_JOB',['../sf__general__structures_8h.html#a6978b403a7119e4900450f3243eb3571a6f56485d0d52b2320047828381642384',1,'sf_general_structures.h']]],
-  ['strength_20',['STRENGTH',['../sf__figure__functions_8h.html#a35c57de9b4dfd894cc11e998a47b1436a4ec80738f71bd12e613343cb7b09bfb4',1,'sf_figure_functions.h']]],
-  ['summon_5fspell_21',['SUMMON_SPELL',['../sf__general__structures_8h.html#a42506507e4f7b927f1ec61d982197ff6a7de03f78cea4172d4c5f54f3275baf56',1,'sf_general_structures.h']]],
-  ['superior_5fpathing_22',['SUPERIOR_PATHING',['../sf__general__structures_8h.html#a6978b403a7119e4900450f3243eb3571abc00b20775e7ccbf0f68ff02125be03b',1,'sf_general_structures.h']]]
+  ['stackable_5fspell_17',['STACKABLE_SPELL',['../sf__general__structures_8h.html#a42506507e4f7b927f1ec61d982197ff6a2799ca0988a588f1e6a32587ef17c12a',1,'sf_general_structures.h']]],
+  ['stamina_18',['STAMINA',['../sf__figure__functions_8h.html#a35c57de9b4dfd894cc11e998a47b1436a6bf06a15de893533dd8b5ea926d0e248',1,'sf_figure_functions.h']]],
+  ['start_5fwalk_19',['START_WALK',['../sf__general__structures_8h.html#a6978b403a7119e4900450f3243eb3571a7d3f0a4cd2666414d28aa9839d43d6e0',1,'sf_general_structures.h']]],
+  ['start_5fwork_5fat_5fbuilding_5fforce_5fjob_20',['START_WORK_AT_BUILDING_FORCE_JOB',['../sf__general__structures_8h.html#a6978b403a7119e4900450f3243eb3571a6f56485d0d52b2320047828381642384',1,'sf_general_structures.h']]],
+  ['strength_21',['STRENGTH',['../sf__figure__functions_8h.html#a35c57de9b4dfd894cc11e998a47b1436a4ec80738f71bd12e613343cb7b09bfb4',1,'sf_figure_functions.h']]],
+  ['summon_5fspell_22',['SUMMON_SPELL',['../sf__general__structures_8h.html#a42506507e4f7b927f1ec61d982197ff6a7de03f78cea4172d4c5f54f3275baf56',1,'sf_general_structures.h']]],
+  ['superior_5fpathing_23',['SUPERIOR_PATHING',['../sf__general__structures_8h.html#a6978b403a7119e4900450f3243eb3571abc00b20775e7ccbf0f68ff02125be03b',1,'sf_general_structures.h']]]
 ];

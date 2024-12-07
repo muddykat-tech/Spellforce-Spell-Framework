@@ -1,5 +1,12 @@
 var NAVTREEINDEX5 =
 {
+"sf__spelleffect__handlers_8cpp.html#a13154833817b454f32a601e1ccfe566f":[2,0,0,3,1,8,87],
+"sf__spelleffect__handlers_8cpp.html#a142bb66b06df2bdf8b134cf6cfa5c0ea":[2,0,0,3,1,8,35],
+"sf__spelleffect__handlers_8cpp.html#a1517121e6c281603ac9e6e72792e3183":[2,0,0,3,1,8,27],
+"sf__spelleffect__handlers_8cpp.html#a17b80cdad231508e47cc5a5291036903":[2,0,0,3,1,8,136],
+"sf__spelleffect__handlers_8cpp.html#a194a4dcc1d472b7eb3745fc854e82cdb":[2,0,0,3,1,8,16],
+"sf__spelleffect__handlers_8cpp.html#a1a3102ac5d0d5a18b3b48ede11bf1c6c":[2,0,0,3,1,8,23],
+"sf__spelleffect__handlers_8cpp.html#a1b6e4f1b43570ba88bd503038a6900ba":[2,0,0,3,1,8,137],
 "sf__spelleffect__handlers_8cpp.html#a1b8ade706b1ad213232db9446062dc5f":[2,0,0,3,1,8,89],
 "sf__spelleffect__handlers_8cpp.html#a1c696fa1c85e7739578220d0f04ad4f8":[2,0,0,3,1,8,32],
 "sf__spelleffect__handlers_8cpp.html#a1f6445e62d7a3d416b760aa8752b333e":[2,0,0,3,1,8,104],
@@ -242,12 +249,5 @@ var NAVTREEINDEX5 =
 "sf__spelleffect__handlers_8h.html#a87112ca8b5ff10a4291b486d6d9a397a":[2,0,0,3,1,9,111],
 "sf__spelleffect__handlers_8h.html#a89670a1cb36043f6b79a7d88dcc2a396":[2,0,0,3,1,9,10],
 "sf__spelleffect__handlers_8h.html#a898dc2f87eb94a039ad56c4d0bf35615":[2,0,0,3,1,9,33],
-"sf__spelleffect__handlers_8h.html#a8d30d984b509c6c64d308fc29ecb0fab":[2,0,0,3,1,9,106],
-"sf__spelleffect__handlers_8h.html#a8d54a818b7fcd42cd1d9aa0cbf5ae894":[2,0,0,3,1,9,40],
-"sf__spelleffect__handlers_8h.html#a91f02419f1567812b72d37ca42b6618d":[2,0,0,3,1,9,26],
-"sf__spelleffect__handlers_8h.html#a92ce0514896323c05666abc55856e4e4":[2,0,0,3,1,9,36],
-"sf__spelleffect__handlers_8h.html#a94f284f9b8c526a66ad773f80083b306":[2,0,0,3,1,9,145],
-"sf__spelleffect__handlers_8h.html#a95f0ec181a061c625e06963be6c7fccf":[2,0,0,3,1,9,144],
-"sf__spelleffect__handlers_8h.html#a960274324157926c3bd487e77e074b0c":[2,0,0,3,1,9,101],
-"sf__spelleffect__handlers_8h.html#a963cc58271f9000e0a64f813561c6614":[2,0,0,3,1,9,1]
+"sf__spelleffect__handlers_8h.html#a8d30d984b509c6c64d308fc29ecb0fab":[2,0,0,3,1,9,106]
 };

@@ -189,6 +189,7 @@ var sf__general__structures_8h =
       [ "AOE_SPELL", "sf__general__structures_8h.html#a42506507e4f7b927f1ec61d982197ff6a507ec2994ace38f1875d34facbc533b1", null ],
       [ "SEIGE_AURA_SPELL", "sf__general__structures_8h.html#a42506507e4f7b927f1ec61d982197ff6ab65d599a3c5d725b62b5fd59b39e0b03", null ],
       [ "AURA_SPELL", "sf__general__structures_8h.html#a42506507e4f7b927f1ec61d982197ff6a2758b0306da34c89d61e35d9b7803b5a", null ],
+      [ "STACKABLE_SPELL", "sf__general__structures_8h.html#a42506507e4f7b927f1ec61d982197ff6a2799ca0988a588f1e6a32587ef17c12a", null ],
       [ "SPELL_TAG_COUNT", "sf__general__structures_8h.html#a42506507e4f7b927f1ec61d982197ff6a6740fa18a18d436b8719ebebf3a2b214", null ]
     ] ],
     [ "__attribute__", "sf__general__structures_8h.html#ab898071398b359603a35c202e9c65f3b", null ],
