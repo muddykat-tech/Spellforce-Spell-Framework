@@ -1,6 +1,5 @@
 #include "sf_ai_spell_handlers.h"
 #include "../core/sf_wrappers.h"
-#include <cstdio>
 
 uint32_t __thiscall target_healing_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
@@ -557,12 +556,9 @@ uint32_t __thiscall tower_extinct_ai_handler(SF_CGdBattleDevelopment *_this, uin
 {
     uint32_t rank = 1;
     ushort_list_node node = _this->battleData.another_figure_list[_this->battleData.current_figure];
-    uint16_t list_length = (node.data - node.first) >> 1;
+    uint16_t list_length = ((uint32_t) node.data - (uint32_t)node.first) >> 1;
     if ((_this->battleData.enemy_figures.entityCount == 0) || (list_length == 0))
     {
-        char message[256];
-        sprintf(message, "List Length: %hd Entity Count: %hd ", list_length, _this->battleData.enemy_figures.entityCount);
-        log_info(message);
         rank = 0;
     }
     else
