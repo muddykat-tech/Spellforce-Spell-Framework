@@ -46,7 +46,7 @@ var searchData=
   ['spell_5frefresh_5fhandler_43',['spell_refresh_handler',['../struct_s_f_spell.html#aa5c70102adb11f588097353d7fea7f4e',1,'SFSpell']]],
   ['spell_5ftags_44',['spell_tags',['../struct_s_f_spell.html#a885abd703ee32eba0d7c0366d53a5032',1,'SFSpell']]],
   ['spell_5ftype_5fhandler_45',['spell_type_handler',['../struct_s_f_spell.html#acd3261cc02f6fee301fafb1bd1eaab10',1,'SFSpell']]],
-  ['spellapi_46',['spellAPI',['../struct_spellforce_spell_framework.html#ae0db8536cdd7cf556d3ab786982da3b4',1,'SpellforceSpellFramework::spellAPI'],['../_test_mod_8cpp.html#a5b988b6614b887f35da8a75c213820b8',1,'spellAPI:&#160;TestMod.cpp'],['../sf__hooks_8c.html#abbb7953e765f98bb525822ff276a1e53',1,'spellAPI:&#160;sf_hooks.c'],['../sf__hooks_8h.html#abbb7953e765f98bb525822ff276a1e53',1,'spellAPI:&#160;TestMod.cpp']]],
+  ['spellapi_46',['spellAPI',['../struct_spellforce_spell_framework.html#ae0db8536cdd7cf556d3ab786982da3b4',1,'SpellforceSpellFramework::spellAPI'],['../_test_mod_8cpp.html#a5b988b6614b887f35da8a75c213820b8',1,'spellAPI:&#160;TestMod.cpp'],['../group___hooks.html#gabbb7953e765f98bb525822ff276a1e53',1,'spellAPI:&#160;sf_hooks.c'],['../group___hooks.html#gabbb7953e765f98bb525822ff276a1e53',1,'spellAPI:&#160;TestMod.cpp']]],
   ['spellclearfigureflag_47',['spellClearFigureFlag',['../struct_spell_functions.html#a1f9f903da05906083ae26af888297523',1,'SpellFunctions']]],
   ['stamina_48',['stamina',['../struct_gd_figure.html#a02d0545e8513ef7cff4c8a8418abce73',1,'GdFigure']]],
   ['start_5fstep_49',['start_step',['../struct_s_f___gd_effect.html#aef72da12127e7b58809aacaae0ecb645',1,'SF_GdEffect']]],

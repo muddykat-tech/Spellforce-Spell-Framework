@@ -1,7 +1,7 @@
 /** 
  * @defgroup EndSpellHook End Spell Hook
  * @ingroup Hooks
- * Used to inject 'endspell' handlers registered by mods and sfsf into spellforce
+ * @brief Used to inject 'endspell' handlers registered by mods and sfsf into spellforce
  */
 
 #include "../sf_wrappers.h"

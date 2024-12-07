@@ -2,7 +2,7 @@ var searchData=
 [
   ['get_5fai_5faoe_5fhandler_0',['get_ai_aoe_handler',['../sf__ai__aoe__registry_8cpp.html#af884288b43d43b3a8c6f4ee98e23e9cb',1,'get_ai_aoe_handler(uint16_t spell_line):&#160;sf_ai_aoe_registry.cpp'],['../sf__ai__aoe__registry_8h.html#af884288b43d43b3a8c6f4ee98e23e9cb',1,'get_ai_aoe_handler(uint16_t spell_line):&#160;sf_ai_aoe_registry.cpp']]],
   ['get_5fai_5favoidance_5fhandler_1',['get_ai_avoidance_handler',['../sf__ai__avoidance__registry_8cpp.html#ad0c884f35bcf2b0b303134bdad866376',1,'get_ai_avoidance_handler(uint16_t spell_line):&#160;sf_ai_avoidance_registry.cpp'],['../sf__ai__avoidance__registry_8h.html#ad0c884f35bcf2b0b303134bdad866376',1,'get_ai_avoidance_handler(uint16_t spell_line):&#160;sf_ai_avoidance_registry.cpp']]],
-  ['get_5feffect_5fchance_2',['get_effect_chance',['../sf__onhit__hook_8c.html#a2464fc9e505e4fdc5fd8f66f41b91965',1,'sf_onhit_hook.c']]],
+  ['get_5feffect_5fchance_2',['get_effect_chance',['../group___onhit_hook.html#ga2464fc9e505e4fdc5fd8f66f41b91965',1,'sf_onhit_hook.c']]],
   ['get_5ffilename_3',['get_filename',['../sf__modloader_8c.html#a788cc97af2cc99599a46bf63e8e21f1e',1,'sf_modloader.c']]],
   ['get_5fonhit_5fphase_4',['get_onhit_phase',['../sf__onhit__registry_8cpp.html#a8823d3901de4ccbe4b7813b11565572c',1,'get_onhit_phase(OnHitPhase phase):&#160;sf_onhit_registry.cpp'],['../sf__onhit__registry_8h.html#a91bd91cca8eb368d39efad7ce7bae9a1',1,'get_onhit_phase(OnHitPhase hitphase):&#160;sf_onhit_registry.cpp']]],
   ['get_5fsingle_5fai_5fhandler_5',['get_single_ai_handler',['../sf__ai__single__target__registry_8cpp.html#a971d5f33ee21660e72921eacc54daa80',1,'get_single_ai_handler(uint16_t spell_line):&#160;sf_ai_single_target_registry.cpp'],['../sf__ai__single__target__registry_8h.html#a971d5f33ee21660e72921eacc54daa80',1,'get_single_ai_handler(uint16_t spell_line):&#160;sf_ai_single_target_registry.cpp']]],
@@ -12,14 +12,14 @@ var searchData=
   ['get_5fspell_5fhandler_9',['get_spell_handler',['../sf__spelltype__registry_8cpp.html#af0733a266ae6b4cb44943b9e9a3a0dfa',1,'get_spell_handler(const uint16_t key):&#160;sf_spelltype_registry.cpp'],['../sf__spelltype__registry_8h.html#af0733a266ae6b4cb44943b9e9a3a0dfa',1,'get_spell_handler(const uint16_t key):&#160;sf_spelltype_registry.cpp']]],
   ['get_5fspell_5frefresh_10',['get_spell_refresh',['../sf__spellrefresh__registry_8cpp.html#af136a234eef8a48e76be83c9a457c054',1,'get_spell_refresh(uint16_t spell_line_id):&#160;sf_spellrefresh_registry.cpp'],['../sf__spellrefresh__registry_8h.html#a3b50f8f994834f6409aa95f5d20dabe2',1,'get_spell_refresh(const uint16_t spell_job):&#160;sf_spellrefresh_registry.cpp']]],
   ['get_5fsub_5feffect_5fhandler_11',['get_sub_effect_handler',['../sf__subeffect__registry_8cpp.html#a0b20af65c9e86bd5c6265c65595dfa2e',1,'get_sub_effect_handler(uint16_t spell_line):&#160;sf_subeffect_registry.cpp'],['../sf__subeffect__registry_8h.html#a0b20af65c9e86bd5c6265c65595dfa2e',1,'get_sub_effect_handler(uint16_t spell_line):&#160;sf_subeffect_registry.cpp']]],
-  ['getattackinterruptionchance_12',['getAttackInterruptionChance',['../sf__onhit__hook_8c.html#aaa8d2409151f4ca3bc8504769afc4b93',1,'sf_onhit_hook.c']]],
-  ['getcurrentdex_13',['getCurrentDex',['../sf__onhit__hook_8c.html#a69d941158155931cc3f4f0289372b2c3',1,'sf_onhit_hook.c']]],
-  ['getcurrentint_14',['getCurrentInt',['../sf__onhit__hook_8c.html#adbcaaa404231f4f989ce388bb454a830',1,'sf_onhit_hook.c']]],
+  ['getattackinterruptionchance_12',['getAttackInterruptionChance',['../group___onhit_hook.html#gaaa8d2409151f4ca3bc8504769afc4b93',1,'sf_onhit_hook.c']]],
+  ['getcurrentdex_13',['getCurrentDex',['../group___onhit_hook.html#ga69d941158155931cc3f4f0289372b2c3',1,'sf_onhit_hook.c']]],
+  ['getcurrentint_14',['getCurrentInt',['../group___onhit_hook.html#gadbcaaa404231f4f989ce388bb454a830',1,'sf_onhit_hook.c']]],
   ['getdistance_15',['getDistance',['../sf__wrappers_8c.html#a3c287532656896e928bad09d4e9565e4',1,'getDistance(SF_Coord *pointA, SF_Coord *pointB):&#160;sf_wrappers.c'],['../sf__wrappers_8h.html#a3c287532656896e928bad09d4e9565e4',1,'getDistance(SF_Coord *pointA, SF_Coord *pointB):&#160;sf_wrappers.c']]],
   ['geteuclideandistancefromring_16',['GetEuclideanDistanceFromRing',['../group___a_i_hook.html#ga8b05ede347b93b11df8a6d828d3f1776',1,'sf_ai_hook.c']]],
   ['getsector_17',['getSector',['../group___a_i_hook.html#gae8785a71043ac84c08d23c97623a4bdc',1,'sf_ai_hook.c']]],
   ['getspelltags_18',['getSpellTags',['../sf__mod__registry_8cpp.html#af3ffd25a39d8cd3e76880a062109e619',1,'getSpellTags(uint16_t spell_line_id):&#160;sf_mod_registry.cpp'],['../sf__mod__registry_8h.html#af3ffd25a39d8cd3e76880a062109e619',1,'getSpellTags(uint16_t spell_line_id):&#160;sf_mod_registry.cpp']]],
-  ['gettargetdata_19',['getTargetData',['../sf__onhit__hook_8c.html#affbf587ee967cb3013b7244bf2615832',1,'sf_onhit_hook.c']]],
+  ['gettargetdata_19',['getTargetData',['../group___onhit_hook.html#gaffbf587ee967cb3013b7244bf2615832',1,'sf_onhit_hook.c']]],
   ['guard_5fend_5fhandler_20',['guard_end_handler',['../sf__spellend__handlers_8h.html#ab0e46c234e93094634c597e3a613bccb',1,'sf_spellend_handlers.h']]],
   ['guard_5fhandler_21',['guard_handler',['../sf__spelltype__handlers_8cpp.html#aa2101be351a8a8fe596cb4aa48cbd034',1,'guard_handler(SF_CGdSpell *_this, uint16_t spell_index):&#160;sf_spelltype_handlers.cpp'],['../sf__spelltype__handlers_8h.html#aa2101be351a8a8fe596cb4aa48cbd034',1,'guard_handler(SF_CGdSpell *_this, uint16_t spell_index):&#160;sf_spelltype_handlers.cpp']]]
 ];

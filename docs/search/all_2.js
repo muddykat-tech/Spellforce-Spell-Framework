@@ -13,7 +13,7 @@ var searchData=
   ['can_5fbe_5ftarget_5fmaybe_10',['can_be_target_maybe',['../struct_c_gd_a_i_battle_data.html#a5c78bb0a9a089c1d00cc5eb6ef4ff849',1,'CGdAIBattleData']]],
   ['canfiguredoaction_11',['canFigureDoAction',['../struct_ai_functions.html#ac81f9fc571f4cb4415ca5e5918c0e9e2',1,'AiFunctions']]],
   ['canfiguredoaction_5fptr_12',['canFigureDoAction_ptr',['../sf__ai__functions_8h.html#a34f4644781a175c4e52b7f84a19fc812',1,'sf_ai_functions.h']]],
-  ['canjobbeinterrupted_13',['canJobBeInterrupted',['../sf__onhit__hook_8c.html#a9040c116d6469bd454aabd4a3928b8ee',1,'sf_onhit_hook.c']]],
+  ['canjobbeinterrupted_13',['canJobBeInterrupted',['../group___onhit_hook.html#ga9040c116d6469bd454aabd4a3928b8ee',1,'sf_onhit_hook.c']]],
   ['cannibalize_5fend_5fhandler_14',['cannibalize_end_handler',['../sf__spellend__handlers_8h.html#af45ed6404d7196c3db3fa6e5d415a60d',1,'sf_spellend_handlers.h']]],
   ['cannibalize_5fhandler_15',['cannibalize_handler',['../sf__spelltype__handlers_8cpp.html#a2f94a791e554cc8345155ffb9dcb9546',1,'cannibalize_handler(SF_CGdSpell *_this, uint16_t spell_index):&#160;sf_spelltype_handlers.cpp'],['../sf__spelltype__handlers_8h.html#a2f94a791e554cc8345155ffb9dcb9546',1,'cannibalize_handler(SF_CGdSpell *_this, uint16_t spell_index):&#160;sf_spelltype_handlers.cpp']]],
   ['cappmenu_16',['CAppMenu',['../struct_c_app_menu.html',1,'']]],

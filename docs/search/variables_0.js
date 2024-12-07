@@ -25,7 +25,7 @@ var searchData=
   ['ai_5faoe_5fhandler_22',['ai_aoe_handler',['../struct_s_f_spell.html#acbf4f03e3a84f69fdb9e3cb976e9e730',1,'SFSpell']]],
   ['ai_5favoidance_5fhandler_23',['ai_avoidance_handler',['../struct_s_f_spell.html#a61694d15492919b05f55662736f395ed',1,'SFSpell']]],
   ['ai_5fsingle_5fhandler_24',['ai_single_handler',['../struct_s_f_spell.html#a98082f853deba91d37a9732d5bbc0ab4',1,'SFSpell']]],
-  ['aiapi_25',['aiAPI',['../struct_spellforce_spell_framework.html#ad99031dc9d31010bab42163b85bb5b49',1,'SpellforceSpellFramework::aiAPI'],['../sf__hooks_8c.html#a9f46704f751d2e936794090d969bfb63',1,'aiAPI:&#160;sf_hooks.c'],['../sf__hooks_8h.html#a9f46704f751d2e936794090d969bfb63',1,'aiAPI:&#160;sf_hooks.c']]],
+  ['aiapi_25',['aiAPI',['../struct_spellforce_spell_framework.html#ad99031dc9d31010bab42163b85bb5b49',1,'SpellforceSpellFramework::aiAPI'],['../group___hooks.html#ga9f46704f751d2e936794090d969bfb63',1,'aiAPI:&#160;sf_hooks.c'],['../group___hooks.html#ga9f46704f751d2e936794090d969bfb63',1,'aiAPI:&#160;sf_hooks.c']]],
   ['ally_5ffigures_26',['ally_figures',['../struct_c_gd_a_i_battle_data.html#a7e9ca55c192f9566b0d5b55c23eb1de7',1,'CGdAIBattleData']]],
   ['angle_27',['angle',['../struct_gd_building.html#aa229ae74f617cad8ad9f7b888f675f73',1,'GdBuilding']]],
   ['anim_5flength_28',['anim_length',['../struct_gd_figure.html#acfb144a7598464c3fb38102997430635',1,'GdFigure']]],

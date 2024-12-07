@@ -27,6 +27,10 @@
 #include <stdio.h>
 #include <string.h>
 
+/** @addtogroup Hooks
+ * @{
+ */
+
 SpellFunctions spellAPI;
 EffectFunctions effectAPI;
 ToolboxFunctions toolboxAPI;
@@ -35,6 +39,13 @@ IteratorFunctions iteratorAPI;
 AiFunctions aiAPI;
 RegistrationFunctions registrationAPI;
 
+/**
+ * @brief Used to initialize all disparate hooks in one place.
+ * @details This function is also used to initalize indiviual function hooks.
+ * Individual Function hooks are simply storing a pointer to a function that's within Spellforce.
+ * Wrapper Functions grab a pointer from our own codebase.
+ * @see sf_wrappers.c 
+ */
 void initialize_data_hooks()
 {
     log_info("| - Internal Use Hooks");
@@ -292,3 +303,7 @@ void initialize_beta_hooks()
     log_info("Hooking On Hit Trigger");
     initialize_onhit_hook();
 }
+
+/**
+ * @}
+ */

@@ -1,7 +1,7 @@
 /** 
  * @defgroup ConsoleHook Console Hook
  * @ingroup Hooks
- * Used for hooking into the Ingame Console
+ * @brief Used for hooking into the Ingame Console
  */
 
 #include "../sf_wrappers.h"

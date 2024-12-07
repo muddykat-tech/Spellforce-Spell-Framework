@@ -223,7 +223,7 @@ Variables</h2></td></tr>
 </li>
 <li><b>Mod Registration Phase</b>:<ul>
 <li>Registers spells and functions from loaded mods. <dl class="section warning"><dt>Warning</dt><dd>Incorrect setup of hooks or APIs can lead to crashes. Mods must adhere to the framework's API for compatibility. </dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="sf__registry_8cpp.html#a2a689bd8779670d6d2cf54a6be3265c8" title="Registers the framework API addresses.">registerFrameworkAPI()</a>, <a class="el" href="sf__hooks_8c.html#a053468e9037e13eede0757a9c0dc4f90">initialize_data_hooks()</a>, <a class="el" href="sf__vanilla__registry_8cpp.html#ad464df22114c57d7e41361edf691ac01">initialize_vanilla_spells()</a>, <a class="el" href="sf__spelleffect__registry_8cpp.html#a074a9e5dad13819ccfdcb6830d0ec8b7">register_vanilla_effect_handlers()</a>, <a class="el" href="sf__spellend__registry_8cpp.html#ac737d76fe9fb2039f0109366cbded12d">register_vanilla_spell_end_handlers()</a>, <a class="el" href="sf__subeffect__registry_8cpp.html#a9a8146362cdec001aac19aa84590ef1a">register_vanilla_sub_effect_handlers()</a>, <a class="el" href="sf__spellrefresh__registry_8cpp.html#a43b02c5e6d7550c7fd35d46caa3d67d0">register_vanilla_spell_refresh_handlers()</a>, <a class="el" href="sf__spelldamage__registry_8cpp.html#a72edb1e1cbac99025f4ae918358557ba">register_vanilla_spell_damage_handlers()</a>, <a class="el" href="sf__modloader_8c.html#a56273b58bfd284c452925e7f24e2b252">initialize_mods()</a>, <a class="el" href="sf__mod__registry_8cpp.html#ab760f8f899f39400156538bbd0c21c68" title="Registers the mod spells and performs basic conflict checking.">register_mod_spells()</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="sf__registry_8cpp.html#a2a689bd8779670d6d2cf54a6be3265c8" title="Registers the framework API addresses.">registerFrameworkAPI()</a>, <a class="el" href="group___hooks.html#ga053468e9037e13eede0757a9c0dc4f90" title="used to initialize all disparate hooks in one place.">initialize_data_hooks()</a>, <a class="el" href="sf__vanilla__registry_8cpp.html#ad464df22114c57d7e41361edf691ac01">initialize_vanilla_spells()</a>, <a class="el" href="sf__spelleffect__registry_8cpp.html#a074a9e5dad13819ccfdcb6830d0ec8b7">register_vanilla_effect_handlers()</a>, <a class="el" href="sf__spellend__registry_8cpp.html#ac737d76fe9fb2039f0109366cbded12d">register_vanilla_spell_end_handlers()</a>, <a class="el" href="sf__subeffect__registry_8cpp.html#a9a8146362cdec001aac19aa84590ef1a">register_vanilla_sub_effect_handlers()</a>, <a class="el" href="sf__spellrefresh__registry_8cpp.html#a43b02c5e6d7550c7fd35d46caa3d67d0">register_vanilla_spell_refresh_handlers()</a>, <a class="el" href="sf__spelldamage__registry_8cpp.html#a72edb1e1cbac99025f4ae918358557ba">register_vanilla_spell_damage_handlers()</a>, <a class="el" href="sf__modloader_8c.html#a56273b58bfd284c452925e7f24e2b252">initialize_mods()</a>, <a class="el" href="sf__mod__registry_8cpp.html#ab760f8f899f39400156538bbd0c21c68" title="Registers the mod spells and performs basic conflict checking.">register_mod_spells()</a> </dd></dl>
 </li>
 </ul>
 </li>
@@ -236,7 +236,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="sf__registry_8h_aa653b9256d033c2d02e806489c6a4271_cgraph.png" border="0" usemap="#asf__registry_8h_aa653b9256d033c2d02e806489c6a4271_cgraph" alt=""/></div>
 <map name="asf__registry_8h_aa653b9256d033c2d02e806489c6a4271_cgraph" id="asf__registry_8h_aa653b9256d033c2d02e806489c6a4271_cgraph">
 <area shape="rect" title="Initializes the Spellforce Spell Framework (SFSF)." alt="" coords="5,2211,142,2237"/>
-<area shape="rect" href="sf__hooks_8c.html#a053468e9037e13eede0757a9c0dc4f90" title=" " alt="" coords="194,1349,336,1376"/>
+<area shape="rect" href="group___hooks.html#ga053468e9037e13eede0757a9c0dc4f90" title="used to initialize all disparate hooks in one place." alt="" coords="194,1349,336,1376"/>
 <area shape="poly" title=" " alt="" coords="75,2210,255,1391,260,1392,80,2211"/>
 <area shape="rect" href="sf__wrappers_8c.html#a4fd90de0913ed15b0812918255559a55" title=" " alt="" coords="638,2084,704,2111"/>
 <area shape="poly" title=" " alt="" coords="80,2209,96,2183,120,2151,151,2119,188,2095,246,2074,306,2061,367,2056,427,2055,538,2066,623,2082,622,2087,537,2071,427,2061,367,2061,307,2067,247,2079,191,2100,154,2124,124,2155,100,2186,84,2212"/>
@@ -272,9 +272,9 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="266,1349,279,1254,305,1109,321,1034,341,964,363,906,387,866,399,855,403,859,391,870,368,909,346,966,327,1035,310,1110,284,1255,271,1349"/>
 <area shape="rect" href="group___menu_hook.html#ga8076488696ac2dd10539d2908d8dd408" title=" " alt="" coords="405,880,544,923"/>
 <area shape="poly" title=" " alt="" coords="264,1349,267,1277,282,1167,297,1105,319,1044,348,985,387,933,391,929,394,933,391,936,353,988,324,1046,302,1107,287,1168,272,1277,269,1349"/>
-<area shape="rect" href="sf__onhit__hook_8c.html#aab9fd18e448dfed4d72a3d8d9507bcc8" title=" " alt="" coords="407,947,542,989"/>
+<area shape="rect" href="group___onhit_hook.html#gaab9fd18e448dfed4d72a3d8d9507bcc8" title=" " alt="" coords="407,947,542,989"/>
 <area shape="poly" title=" " alt="" coords="265,1349,271,1287,289,1194,305,1143,326,1091,353,1043,387,1000,393,994,396,998,391,1003,357,1046,331,1094,310,1144,294,1195,276,1287,270,1349"/>
-<area shape="rect" href="sf__spelltype__hook_8c.html#a1bc35d41762c3fcc7495cf54585283aa" title=" " alt="" coords="411,1013,538,1056"/>
+<area shape="rect" href="group___spell_type_hook.html#ga1bc35d41762c3fcc7495cf54585283aa" title=" " alt="" coords="411,1013,538,1056"/>
 <area shape="poly" title=" " alt="" coords="266,1348,276,1297,297,1222,313,1180,333,1139,358,1101,387,1066,396,1059,399,1063,391,1070,362,1104,338,1142,318,1182,302,1223,281,1298,271,1349"/>
 <area shape="rect" href="sf__wrappers_8c.html#ad057ef7976901ef0ba76e8b78eb53898" title=" " alt="" coords="414,1080,535,1123"/>
 <area shape="poly" title=" " alt="" coords="268,1348,283,1308,307,1253,342,1193,363,1165,387,1139,400,1129,404,1133,391,1143,367,1168,346,1196,312,1256,288,1310,273,1350"/>
@@ -307,9 +307,9 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="271,1376,284,1469,309,1610,326,1683,345,1750,367,1805,391,1842,398,1848,394,1852,387,1846,362,1808,340,1752,321,1685,304,1611,279,1470,266,1377"/>
 <area shape="rect" href="sf__wrappers_8c.html#ad7e79f06e19f919ffb1ea67493886ff8" title=" " alt="" coords="420,1907,529,1933"/>
 <area shape="poly" title=" " alt="" coords="271,1376,282,1478,306,1634,323,1715,342,1790,365,1852,391,1893,408,1905,405,1910,387,1896,360,1854,337,1792,317,1716,301,1635,277,1479,265,1377"/>
-<area shape="rect" href="sf__refresh__hook_8c.html#ad1c59c07883c319b2e33cb35737b4e97" title=" " alt="" coords="418,1755,532,1781"/>
+<area shape="rect" href="group___refresh_hook.html#gad1c59c07883c319b2e33cb35737b4e97" title=" " alt="" coords="418,1755,532,1781"/>
 <area shape="poly" title=" " alt="" coords="270,1376,275,1439,293,1535,308,1588,329,1640,356,1690,391,1734,405,1746,402,1750,387,1738,352,1693,324,1643,303,1589,287,1536,270,1440,264,1377"/>
-<area shape="rect" href="sf__spelltype__hook_8c.html#ab55b7421576dfd7ea00096b427741d9b" title=" " alt="" coords="412,1957,538,1984"/>
+<area shape="rect" href="group___spell_type_hook.html#gab55b7421576dfd7ea00096b427741d9b" title=" " alt="" coords="412,1957,538,1984"/>
 <area shape="poly" title=" " alt="" coords="270,1376,281,1486,303,1657,319,1747,339,1830,363,1898,377,1924,391,1944,400,1951,396,1955,387,1947,372,1927,358,1900,334,1831,314,1748,298,1658,275,1487,265,1376"/>
 <area shape="rect" href="sf__wrappers_8c.html#ab97dc11635deb183cfe8b9dc8b2fc064" title=" " alt="" coords="404,2008,545,2035"/>
 <area shape="poly" title=" " alt="" coords="270,1376,279,1495,300,1681,316,1779,337,1870,361,1944,376,1973,391,1994,394,1997,390,2001,387,1998,371,1975,357,1946,331,1871,311,1780,295,1682,274,1495,265,1377"/>

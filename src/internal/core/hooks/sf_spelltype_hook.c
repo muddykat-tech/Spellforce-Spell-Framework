@@ -1,3 +1,11 @@
+/** 
+ * @defgroup SpellTypeHook Spell Type Hook
+ * @ingroup Hooks
+ * @brief Used to inject new Spell Types into Spellforce.
+ * @addtogroup SpellTypeHook
+ * @{
+ */
+
 #include "../../registry/spell_data_registries/sf_spelltype_registry.h"
 #include "../sf_wrappers.h"
 #include "../sf_hooks.h"
@@ -72,3 +80,5 @@ uint16_t __thiscall sf_spelltype_hook(SF_CGdSpell *_this, uint16_t spell_id, uin
     }
     return spell_index;
 }
+
+/** @} */

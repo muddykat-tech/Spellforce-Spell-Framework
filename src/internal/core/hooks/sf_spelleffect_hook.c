@@ -1,3 +1,11 @@
+/** 
+ * @defgroup EffectHook Effect Hook
+ * @ingroup Hooks
+ * @brief Used to inject Spell Effect Handlers into Spellforce.
+ * @addtogroup EffectHook
+ * @{
+ */
+
 #include "../sf_wrappers.h"
 #include "../sf_hooks.h"
 #include "../../registry/spell_data_registries/sf_spelleffect_registry.h"
@@ -32,3 +40,5 @@ void __thiscall sf_spelleffect_hook(SF_CGdSpell *_this)
         }
     }
 }
+
+/** @} */

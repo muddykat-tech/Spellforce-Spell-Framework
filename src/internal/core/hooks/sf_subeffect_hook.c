@@ -1,3 +1,11 @@
+/** 
+ * @defgroup SubEffectHook SubEffect Hook
+ * @ingroup Hooks
+ * @brief Used to inject sub effects into spellforce
+ * @addtogroup SubEffectHook
+ * @{
+ */
+
 #include "../../registry/spell_data_registries/sf_subeffect_registry.h"
 #include "../sf_wrappers.h"
 #include "../sf_hooks.h"
@@ -18,3 +26,5 @@ void __thiscall sf_subeffect_hook(SF_CGDEffect *_this, uint16_t effect_id)
         }
     }
 }
+
+/** @} */

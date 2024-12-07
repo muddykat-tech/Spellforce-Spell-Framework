@@ -92,91 +92,91 @@ $(function(){ initResizable(false); });
 </div><!--header-->
 <div class="contents">
 <a href="sf__ai__hook_8c.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;<a class="code" href="sf__ai__hook_8h.html">sf_ai_hook.h</a>&quot;</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;<a class="code" href="sf__wrappers_8h.html">../sf_wrappers.h</a>&quot;</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;<a class="code" href="sf__hooks_8h.html">../sf_hooks.h</a>&quot;</span></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;<a class="code" href="sf__ai__avoidance__registry_8h.html">../../registry/ai_data_registries/sf_ai_avoidance_registry.h</a>&quot;</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &quot;<a class="code" href="sf__ai__single__target__registry_8h.html">../../registry/ai_data_registries/sf_ai_single_target_registry.h</a>&quot;</span></div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="foldopen" id="foldopen00019" data-start="{" data-end="}">
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="group___a_i_hook.html#ga30823a9211a51bf169522f4aa64f18cb">   19</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group___a_i_hook.html#ga30823a9211a51bf169522f4aa64f18cb">clearAction</a>(<a class="code hl_struct" href="struct_s_f___s_gt_figure_action.html">SF_SGtFigureAction</a> *_this)</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>{</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    _this-&gt;<a class="code hl_variable" href="struct_s_f___s_gt_figure_action.html#a9b4d7f3a9248cba548c0c9bdb0a88df3">type</a> = 0xffff;</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    _this-&gt;<a class="code hl_variable" href="struct_s_f___s_gt_figure_action.html#ab191ad504569823a59392aa9fb689d9d">subtype</a> = 0;</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    _this-&gt;<a class="code hl_variable" href="struct_s_f___s_gt_figure_action.html#ac8f7439adb45ee2bf607a72fc13d3967">unkn2</a> = 0;</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    _this-&gt;<a class="code hl_variable" href="struct_s_f___s_gt_figure_action.html#aa1762ffb64bd2051c32044bd7f3ae2be">unkn3</a> = 0;</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    _this-&gt;<a class="code hl_variable" href="struct_s_f___s_gt_figure_action.html#a07da167aaa164b1e5a2014fb5efb7fe7">unkn4</a> = 0;</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    _this-&gt;<a class="code hl_variable" href="struct_s_f___s_gt_figure_action.html#aab7efd05b32bf00f4d78cac8bb1135f0">unkn5</a> = 0;</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>}</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;<a class="code" href="sf__ai__hook_8h.html">sf_ai_hook.h</a>&quot;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;<a class="code" href="sf__wrappers_8h.html">../sf_wrappers.h</a>&quot;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;<a class="code" href="sf__hooks_8h.html">../sf_hooks.h</a>&quot;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="sf__ai__avoidance__registry_8h.html">../../registry/ai_data_registries/sf_ai_avoidance_registry.h</a>&quot;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;<a class="code" href="sf__ai__single__target__registry_8h.html">../../registry/ai_data_registries/sf_ai_single_target_registry.h</a>&quot;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="foldopen" id="foldopen00018" data-start="{" data-end="}">
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="group___a_i_hook.html#ga30823a9211a51bf169522f4aa64f18cb">   18</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="group___a_i_hook.html#ga30823a9211a51bf169522f4aa64f18cb">clearAction</a>(<a class="code hl_struct" href="struct_s_f___s_gt_figure_action.html">SF_SGtFigureAction</a> *_this)</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>{</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    _this-&gt;<a class="code hl_variable" href="struct_s_f___s_gt_figure_action.html#a9b4d7f3a9248cba548c0c9bdb0a88df3">type</a> = 0xffff;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    _this-&gt;<a class="code hl_variable" href="struct_s_f___s_gt_figure_action.html#ab191ad504569823a59392aa9fb689d9d">subtype</a> = 0;</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    _this-&gt;<a class="code hl_variable" href="struct_s_f___s_gt_figure_action.html#ac8f7439adb45ee2bf607a72fc13d3967">unkn2</a> = 0;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    _this-&gt;<a class="code hl_variable" href="struct_s_f___s_gt_figure_action.html#aa1762ffb64bd2051c32044bd7f3ae2be">unkn3</a> = 0;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    _this-&gt;<a class="code hl_variable" href="struct_s_f___s_gt_figure_action.html#a07da167aaa164b1e5a2014fb5efb7fe7">unkn4</a> = 0;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    _this-&gt;<a class="code hl_variable" href="struct_s_f___s_gt_figure_action.html#aab7efd05b32bf00f4d78cac8bb1135f0">unkn5</a> = 0;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>}</div>
 </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
-<div class="foldopen" id="foldopen00029" data-start="{" data-end="}">
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="group___a_i_hook.html#gadbfebe2587f5680512bab3f489b05a2b">   29</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group___a_i_hook.html#gadbfebe2587f5680512bab3f489b05a2b">isSpellAction</a>(<a class="code hl_struct" href="struct_s_f___s_gt_figure_action.html">SF_SGtFigureAction</a> *_this)</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>{</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <span class="keywordflow">if</span> ((_this-&gt;<a class="code hl_variable" href="struct_s_f___s_gt_figure_action.html#a9b4d7f3a9248cba548c0c9bdb0a88df3">type</a> != 0) &amp;&amp; (_this-&gt;<a class="code hl_variable" href="struct_s_f___s_gt_figure_action.html#a9b4d7f3a9248cba548c0c9bdb0a88df3">type</a> &lt; 10000))</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    {</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    }</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>}</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="foldopen" id="foldopen00028" data-start="{" data-end="}">
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="group___a_i_hook.html#gadbfebe2587f5680512bab3f489b05a2b">   28</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group___a_i_hook.html#gadbfebe2587f5680512bab3f489b05a2b">isSpellAction</a>(<a class="code hl_struct" href="struct_s_f___s_gt_figure_action.html">SF_SGtFigureAction</a> *_this)</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>{</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <span class="keywordflow">if</span> ((_this-&gt;<a class="code hl_variable" href="struct_s_f___s_gt_figure_action.html#a9b4d7f3a9248cba548c0c9bdb0a88df3">type</a> != 0) &amp;&amp; (_this-&gt;<a class="code hl_variable" href="struct_s_f___s_gt_figure_action.html#a9b4d7f3a9248cba548c0c9bdb0a88df3">type</a> &lt; 10000))</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    {</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    }</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>}</div>
 </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
-<div class="foldopen" id="foldopen00038" data-start="{" data-end="}">
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="group___a_i_hook.html#gae8785a71043ac84c08d23c97623a4bdc">   38</a></span>uint16_t __thiscall <a class="code hl_function" href="group___a_i_hook.html#gae8785a71043ac84c08d23c97623a4bdc">getSector</a>(<a class="code hl_struct" href="struct_s_f___c_gd_world.html">SF_CGdWorld</a> *_this, <a class="code hl_struct" href="struct_s_f___coord.html">SF_Coord</a> *position)</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>{</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    uint32_t index = position-&gt;<a class="code hl_variable" href="struct_s_f___coord.html#aa3b47ef0b6e966001ae237d08b5556d1">X</a> + position-&gt;<a class="code hl_variable" href="struct_s_f___coord.html#a6064e1492d53a1111d704721b52de1d1">Y</a> * 0x400;</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="keywordflow">return</span> _this-&gt;<a class="code hl_variable" href="struct_s_f___c_gd_world.html#aca4e116be21c972af21a3c3275b01e45">cells</a>[index].<a class="code hl_variable" href="struct_s_f__world__unkn__2.html#a106907b2878a4e46bca62b25721afc51">sector</a>;</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>}</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
+<div class="foldopen" id="foldopen00037" data-start="{" data-end="}">
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="group___a_i_hook.html#gae8785a71043ac84c08d23c97623a4bdc">   37</a></span>uint16_t __thiscall <a class="code hl_function" href="group___a_i_hook.html#gae8785a71043ac84c08d23c97623a4bdc">getSector</a>(<a class="code hl_struct" href="struct_s_f___c_gd_world.html">SF_CGdWorld</a> *_this, <a class="code hl_struct" href="struct_s_f___coord.html">SF_Coord</a> *position)</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>{</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    uint32_t index = position-&gt;<a class="code hl_variable" href="struct_s_f___coord.html#aa3b47ef0b6e966001ae237d08b5556d1">X</a> + position-&gt;<a class="code hl_variable" href="struct_s_f___coord.html#a6064e1492d53a1111d704721b52de1d1">Y</a> * 0x400;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="keywordflow">return</span> _this-&gt;<a class="code hl_variable" href="struct_s_f___c_gd_world.html#aca4e116be21c972af21a3c3275b01e45">cells</a>[index].<a class="code hl_variable" href="struct_s_f__world__unkn__2.html#a106907b2878a4e46bca62b25721afc51">sector</a>;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>}</div>
 </div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
-<div class="foldopen" id="foldopen00044" data-start="{" data-end="}">
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="group___a_i_hook.html#ga8b05ede347b93b11df8a6d828d3f1776">   44</a></span>uint32_t <a class="code hl_function" href="group___a_i_hook.html#ga8b05ede347b93b11df8a6d828d3f1776">GetEuclideanDistanceFromRing</a>(<span class="keywordtype">int</span> x1, <span class="keywordtype">int</span> y1, <span class="keywordtype">int</span> x2, <span class="keywordtype">int</span> y2, <span class="keywordtype">int</span> inner_radius, <span class="keywordtype">int</span> outer_radius)</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>{</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    <span class="keywordtype">int</span> iVar1;</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    iVar1 = (y1 - y2) * (y1 - y2) + (x1 - x2) * (x1 - x2);</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keywordflow">if</span> (iVar1 &lt; (inner_radius * inner_radius - 1))</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    {</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        <span class="keywordflow">return</span> inner_radius * inner_radius - iVar1;</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    }</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    <span class="keywordflow">if</span> ((outer_radius * outer_radius + 1) &lt; iVar1)</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    {</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        <span class="keywordflow">return</span> iVar1 - outer_radius * outer_radius;</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    }</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>}</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="foldopen" id="foldopen00043" data-start="{" data-end="}">
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="group___a_i_hook.html#ga8b05ede347b93b11df8a6d828d3f1776">   43</a></span>uint32_t <a class="code hl_function" href="group___a_i_hook.html#ga8b05ede347b93b11df8a6d828d3f1776">GetEuclideanDistanceFromRing</a>(<span class="keywordtype">int</span> x1, <span class="keywordtype">int</span> y1, <span class="keywordtype">int</span> x2, <span class="keywordtype">int</span> y2, <span class="keywordtype">int</span> inner_radius, <span class="keywordtype">int</span> outer_radius)</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>{</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keywordtype">int</span> iVar1;</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    iVar1 = (y1 - y2) * (y1 - y2) + (x1 - x2) * (x1 - x2);</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="keywordflow">if</span> (iVar1 &lt; (inner_radius * inner_radius - 1))</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    {</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        <span class="keywordflow">return</span> inner_radius * inner_radius - iVar1;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    }</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="keywordflow">if</span> ((outer_radius * outer_radius + 1) &lt; iVar1)</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    {</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        <span class="keywordflow">return</span> iVar1 - outer_radius * outer_radius;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    }</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>}</div>
 </div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
-<div class="foldopen" id="foldopen00060" data-start="{" data-end="}">
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="group___a_i_hook.html#ga4ff157855ad65cfd8f8e94d74fa35998">   60</a></span>uint32_t <a class="code hl_function" href="group___a_i_hook.html#ga4ff157855ad65cfd8f8e94d74fa35998">signum</a>(uint32_t param_1)</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>{</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keywordflow">return</span> (param_1 ^ (<span class="keywordtype">int</span>)param_1 &gt;&gt; 0x1f) - ((int)param_1 &gt;&gt; 0x1f);</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>}</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="foldopen" id="foldopen00059" data-start="{" data-end="}">
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno"><a class="line" href="group___a_i_hook.html#ga4ff157855ad65cfd8f8e94d74fa35998">   59</a></span>uint32_t <a class="code hl_function" href="group___a_i_hook.html#ga4ff157855ad65cfd8f8e94d74fa35998">signum</a>(uint32_t param_1)</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>{</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="keywordflow">return</span> (param_1 ^ (<span class="keywordtype">int</span>)param_1 &gt;&gt; 0x1f) - ((int)param_1 &gt;&gt; 0x1f);</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>}</div>
 </div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
-<div class="foldopen" id="foldopen00068" data-start="{" data-end="}">
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno"><a class="line" href="group___a_i_hook.html#gaf54f024fccce5a4ae77213ac9f815c2c">   68</a></span>uint32_t <a class="code hl_function" href="group___a_i_hook.html#gaf54f024fccce5a4ae77213ac9f815c2c">rank_support_spell_hook</a>(<a class="code hl_struct" href="struct_s_f___c_gd_battle_development.html">SF_CGdBattleDevelopment</a> *_this, uint16_t target_index, uint16_t spell_line, <a class="code hl_struct" href="struct_s_f___c_gd_resource_spell.html">SF_CGdResourceSpell</a> *spell_data)</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>{</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    <span class="keywordtype">bool</span> isStackable = <a class="code hl_function" href="sf__wrappers_8c.html#aad92c6ec5283b3732feeefd0d62ab629">hasSpellTag</a>(spell_line, <a class="code hl_enumvalue" href="sf__general__structures_8h.html#a42506507e4f7b927f1ec61d982197ff6a2799ca0988a588f1e6a32587ef17c12a">STACKABLE_SPELL</a>);</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    <a class="code hl_typedef" href="sf__registration__functions_8h.html#a87df9b4cbebca6416ebbf724d2e93292">ai_single_handler_ptr</a> handler = <a class="code hl_function" href="sf__ai__single__target__registry_8cpp.html#a971d5f33ee21660e72921eacc54daa80">get_single_ai_handler</a>(spell_line);</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    uint32_t rank = handler(_this, target_index, spell_line, spell_data);</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    <span class="keywordflow">if</span> ((<a class="code hl_variable" href="_test_mod_8cpp.html#af5cc9e62d950cef0fc6386b8162d5cf0">toolboxAPI</a>.<a class="code hl_variable" href="struct_toolbox_functions.html#a4252a801c57cf3f1c933c14a5c33cb49">hasSpellOnIt</a>(_this-&gt;<a class="code hl_variable" href="struct_s_f___c_gd_battle_development.html#a86048e10c8fdc07e7435c4e8a30fa7d4">battleData</a>.<a class="code hl_variable" href="struct_c_gd_a_i_battle_data.html#a77cc620f2f395cea22515870bb2d1b09">CGdFigureToolBox</a>, target_index, spell_line)) &amp;&amp; (!isStackable))</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    {</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        rank = 0;</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    }</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    <span class="keywordflow">return</span> rank;</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>}</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
+<div class="foldopen" id="foldopen00067" data-start="{" data-end="}">
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="group___a_i_hook.html#gaf54f024fccce5a4ae77213ac9f815c2c">   67</a></span>uint32_t <a class="code hl_function" href="group___a_i_hook.html#gaf54f024fccce5a4ae77213ac9f815c2c">rank_support_spell_hook</a>(<a class="code hl_struct" href="struct_s_f___c_gd_battle_development.html">SF_CGdBattleDevelopment</a> *_this, uint16_t target_index, uint16_t spell_line, <a class="code hl_struct" href="struct_s_f___c_gd_resource_spell.html">SF_CGdResourceSpell</a> *spell_data)</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>{</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <span class="keywordtype">bool</span> isStackable = <a class="code hl_function" href="sf__wrappers_8c.html#aad92c6ec5283b3732feeefd0d62ab629">hasSpellTag</a>(spell_line, <a class="code hl_enumvalue" href="sf__general__structures_8h.html#a42506507e4f7b927f1ec61d982197ff6a2799ca0988a588f1e6a32587ef17c12a">STACKABLE_SPELL</a>);</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    <a class="code hl_typedef" href="sf__registration__functions_8h.html#a87df9b4cbebca6416ebbf724d2e93292">ai_single_handler_ptr</a> handler = <a class="code hl_function" href="sf__ai__single__target__registry_8cpp.html#a971d5f33ee21660e72921eacc54daa80">get_single_ai_handler</a>(spell_line);</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    uint32_t rank = handler(_this, target_index, spell_line, spell_data);</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    <span class="keywordflow">if</span> ((<a class="code hl_variable" href="_test_mod_8cpp.html#af5cc9e62d950cef0fc6386b8162d5cf0">toolboxAPI</a>.<a class="code hl_variable" href="struct_toolbox_functions.html#a4252a801c57cf3f1c933c14a5c33cb49">hasSpellOnIt</a>(_this-&gt;<a class="code hl_variable" href="struct_s_f___c_gd_battle_development.html#a86048e10c8fdc07e7435c4e8a30fa7d4">battleData</a>.<a class="code hl_variable" href="struct_c_gd_a_i_battle_data.html#a77cc620f2f395cea22515870bb2d1b09">CGdFigureToolBox</a>, target_index, spell_line)) &amp;&amp; (!isStackable))</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    {</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        rank = 0;</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    }</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    <span class="keywordflow">return</span> rank;</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>}</div>
 </div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
 <div class="ttc" id="a_test_mod_8cpp_html_af5cc9e62d950cef0fc6386b8162d5cf0"><div class="ttname"><a href="_test_mod_8cpp.html#af5cc9e62d950cef0fc6386b8162d5cf0">toolboxAPI</a></div><div class="ttdeci">ToolboxFunctions * toolboxAPI</div><div class="ttdef"><b>Definition</b> <a href="_test_mod_8cpp_source.html#l00012">TestMod.cpp:12</a></div></div>
-<div class="ttc" id="agroup___a_i_hook_html_ga30823a9211a51bf169522f4aa64f18cb"><div class="ttname"><a href="group___a_i_hook.html#ga30823a9211a51bf169522f4aa64f18cb">clearAction</a></div><div class="ttdeci">void clearAction(SF_SGtFigureAction *_this)</div><div class="ttdef"><b>Definition</b> <a href="#l00019">sf_ai_hook.c:19</a></div></div>
-<div class="ttc" id="agroup___a_i_hook_html_ga4ff157855ad65cfd8f8e94d74fa35998"><div class="ttname"><a href="group___a_i_hook.html#ga4ff157855ad65cfd8f8e94d74fa35998">signum</a></div><div class="ttdeci">uint32_t signum(uint32_t param_1)</div><div class="ttdef"><b>Definition</b> <a href="#l00060">sf_ai_hook.c:60</a></div></div>
-<div class="ttc" id="agroup___a_i_hook_html_ga8b05ede347b93b11df8a6d828d3f1776"><div class="ttname"><a href="group___a_i_hook.html#ga8b05ede347b93b11df8a6d828d3f1776">GetEuclideanDistanceFromRing</a></div><div class="ttdeci">uint32_t GetEuclideanDistanceFromRing(int x1, int y1, int x2, int y2, int inner_radius, int outer_radius)</div><div class="ttdef"><b>Definition</b> <a href="#l00044">sf_ai_hook.c:44</a></div></div>
-<div class="ttc" id="agroup___a_i_hook_html_gadbfebe2587f5680512bab3f489b05a2b"><div class="ttname"><a href="group___a_i_hook.html#gadbfebe2587f5680512bab3f489b05a2b">isSpellAction</a></div><div class="ttdeci">bool isSpellAction(SF_SGtFigureAction *_this)</div><div class="ttdef"><b>Definition</b> <a href="#l00029">sf_ai_hook.c:29</a></div></div>
-<div class="ttc" id="agroup___a_i_hook_html_gae8785a71043ac84c08d23c97623a4bdc"><div class="ttname"><a href="group___a_i_hook.html#gae8785a71043ac84c08d23c97623a4bdc">getSector</a></div><div class="ttdeci">uint16_t __thiscall getSector(SF_CGdWorld *_this, SF_Coord *position)</div><div class="ttdef"><b>Definition</b> <a href="#l00038">sf_ai_hook.c:38</a></div></div>
-<div class="ttc" id="agroup___a_i_hook_html_gaf54f024fccce5a4ae77213ac9f815c2c"><div class="ttname"><a href="group___a_i_hook.html#gaf54f024fccce5a4ae77213ac9f815c2c">rank_support_spell_hook</a></div><div class="ttdeci">uint32_t rank_support_spell_hook(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)</div><div class="ttdoc">Injects into the ranking system for a single target AI spell.</div><div class="ttdef"><b>Definition</b> <a href="#l00068">sf_ai_hook.c:68</a></div></div>
+<div class="ttc" id="agroup___a_i_hook_html_ga30823a9211a51bf169522f4aa64f18cb"><div class="ttname"><a href="group___a_i_hook.html#ga30823a9211a51bf169522f4aa64f18cb">clearAction</a></div><div class="ttdeci">void clearAction(SF_SGtFigureAction *_this)</div><div class="ttdef"><b>Definition</b> <a href="#l00018">sf_ai_hook.c:18</a></div></div>
+<div class="ttc" id="agroup___a_i_hook_html_ga4ff157855ad65cfd8f8e94d74fa35998"><div class="ttname"><a href="group___a_i_hook.html#ga4ff157855ad65cfd8f8e94d74fa35998">signum</a></div><div class="ttdeci">uint32_t signum(uint32_t param_1)</div><div class="ttdef"><b>Definition</b> <a href="#l00059">sf_ai_hook.c:59</a></div></div>
+<div class="ttc" id="agroup___a_i_hook_html_ga8b05ede347b93b11df8a6d828d3f1776"><div class="ttname"><a href="group___a_i_hook.html#ga8b05ede347b93b11df8a6d828d3f1776">GetEuclideanDistanceFromRing</a></div><div class="ttdeci">uint32_t GetEuclideanDistanceFromRing(int x1, int y1, int x2, int y2, int inner_radius, int outer_radius)</div><div class="ttdef"><b>Definition</b> <a href="#l00043">sf_ai_hook.c:43</a></div></div>
+<div class="ttc" id="agroup___a_i_hook_html_gadbfebe2587f5680512bab3f489b05a2b"><div class="ttname"><a href="group___a_i_hook.html#gadbfebe2587f5680512bab3f489b05a2b">isSpellAction</a></div><div class="ttdeci">bool isSpellAction(SF_SGtFigureAction *_this)</div><div class="ttdef"><b>Definition</b> <a href="#l00028">sf_ai_hook.c:28</a></div></div>
+<div class="ttc" id="agroup___a_i_hook_html_gae8785a71043ac84c08d23c97623a4bdc"><div class="ttname"><a href="group___a_i_hook.html#gae8785a71043ac84c08d23c97623a4bdc">getSector</a></div><div class="ttdeci">uint16_t __thiscall getSector(SF_CGdWorld *_this, SF_Coord *position)</div><div class="ttdef"><b>Definition</b> <a href="#l00037">sf_ai_hook.c:37</a></div></div>
+<div class="ttc" id="agroup___a_i_hook_html_gaf54f024fccce5a4ae77213ac9f815c2c"><div class="ttname"><a href="group___a_i_hook.html#gaf54f024fccce5a4ae77213ac9f815c2c">rank_support_spell_hook</a></div><div class="ttdeci">uint32_t rank_support_spell_hook(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)</div><div class="ttdoc">Injects into the ranking system for a single target AI spell.</div><div class="ttdef"><b>Definition</b> <a href="#l00067">sf_ai_hook.c:67</a></div></div>
 <div class="ttc" id="asf__ai__avoidance__registry_8h_html"><div class="ttname"><a href="sf__ai__avoidance__registry_8h.html">sf_ai_avoidance_registry.h</a></div></div>
 <div class="ttc" id="asf__ai__hook_8h_html"><div class="ttname"><a href="sf__ai__hook_8h.html">sf_ai_hook.h</a></div></div>
 <div class="ttc" id="asf__ai__single__target__registry_8cpp_html_a971d5f33ee21660e72921eacc54daa80"><div class="ttname"><a href="sf__ai__single__target__registry_8cpp.html#a971d5f33ee21660e72921eacc54daa80">get_single_ai_handler</a></div><div class="ttdeci">ai_single_handler_ptr get_single_ai_handler(uint16_t spell_line)</div><div class="ttdef"><b>Definition</b> <a href="sf__ai__single__target__registry_8cpp_source.html#l00018">sf_ai_single_target_registry.cpp:18</a></div></div>

@@ -1,3 +1,11 @@
+/** 
+ * @defgroup OnhitHook On Hit Hook
+ * @ingroup Hooks
+ * @brief Used to inject Onhit Handlers into Spellforce.
+ * @addtogroup OnhitHook
+ * @{
+ */
+
 #include "sf_onhit_hook.h"
 #include "../sf_wrappers.h"
 #include "../sf_hooks.h"
@@ -491,3 +499,5 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
         }
     }
 }
+
+/**@} */

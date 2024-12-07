@@ -73,7 +73,7 @@ var searchData=
   ['ai_5fblocked_70',['AI_BLOCKED',['../sf__general__structures_8h.html#ac82390a633ae8fc23e2141e25507f732a2d16338928f19950d7df2c22e19fb777',1,'sf_general_structures.h']]],
   ['ai_5fsingle_5fhandler_71',['ai_single_handler',['../struct_s_f_spell.html#a98082f853deba91d37a9732d5bbc0ab4',1,'SFSpell']]],
   ['ai_5fsingle_5fhandler_5fptr_72',['ai_single_handler_ptr',['../sf__registration__functions_8h.html#a87df9b4cbebca6416ebbf724d2e93292',1,'sf_registration_functions.h']]],
-  ['aiapi_73',['aiAPI',['../struct_spellforce_spell_framework.html#ad99031dc9d31010bab42163b85bb5b49',1,'SpellforceSpellFramework::aiAPI'],['../sf__hooks_8c.html#a9f46704f751d2e936794090d969bfb63',1,'aiAPI:&#160;sf_hooks.c'],['../sf__hooks_8h.html#a9f46704f751d2e936794090d969bfb63',1,'aiAPI:&#160;sf_hooks.c']]],
+  ['aiapi_73',['aiAPI',['../struct_spellforce_spell_framework.html#ad99031dc9d31010bab42163b85bb5b49',1,'SpellforceSpellFramework::aiAPI'],['../group___hooks.html#ga9f46704f751d2e936794090d969bfb63',1,'aiAPI:&#160;sf_hooks.c'],['../group___hooks.html#ga9f46704f751d2e936794090d969bfb63',1,'aiAPI:&#160;sf_hooks.c']]],
   ['aifunctions_74',['AiFunctions',['../struct_ai_functions.html',1,'']]],
   ['ally_5ffigures_75',['ally_figures',['../struct_c_gd_a_i_battle_data.html#a7e9ca55c192f9566b0d5b55c23eb1de7',1,'CGdAIBattleData']]],
   ['amok_5fend_5fhandler_76',['amok_end_handler',['../sf__spellend__handlers_8h.html#a9dfe88787ad7e24541fabddf5700ce9f',1,'sf_spellend_handlers.h']]],

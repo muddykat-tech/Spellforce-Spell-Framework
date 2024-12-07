@@ -1,9 +1,8 @@
 /** 
  * @defgroup AIHook AI Hooks
  * @ingroup Hooks
- * Hooks and Functions related to AI functionality.
- * Note that the main hook is the 
- * @ref rank_support_spell_hook
+ * @brief Hooks and Functions related to AI functionality.
+ * @details The main function that hooks into spellforce is \ref rank_support_spell_hook.
  * @addtogroup AIHook
  * @{
  */

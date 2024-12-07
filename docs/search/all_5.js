@@ -29,7 +29,7 @@ var searchData=
   ['figure_5ftoolbox_5fis_5ftargetable_5fptr_26',['figure_toolbox_is_targetable_ptr',['../sf__general__structures_8h.html#aa419a4385eff93c7fdabade2c545aded',1,'sf_general_structures.h']]],
   ['figureaggro_27',['figureAggro',['../struct_spell_functions.html#ae04f0c02b20b8e77d226025a5f42f008',1,'SpellFunctions']]],
   ['figureaggro_5fptr_28',['figureAggro_ptr',['../sf__spell__functions_8h.html#a268cdf67e71ed8318b1ff634302ffb0d',1,'sf_spell_functions.h']]],
-  ['figureapi_29',['figureAPI',['../struct_spellforce_spell_framework.html#ac27c1b2addee2094e99d71dcac3f43a9',1,'SpellforceSpellFramework::figureAPI'],['../_test_mod_8cpp.html#a721b8129088d90091730781611ecee94',1,'figureAPI:&#160;TestMod.cpp'],['../sf__hooks_8c.html#ae5424c0f69d85cabda2866498e788521',1,'figureAPI:&#160;sf_hooks.c'],['../sf__hooks_8h.html#ae5424c0f69d85cabda2866498e788521',1,'figureAPI:&#160;TestMod.cpp']]],
+  ['figureapi_29',['figureAPI',['../struct_spellforce_spell_framework.html#ac27c1b2addee2094e99d71dcac3f43a9',1,'SpellforceSpellFramework::figureAPI'],['../_test_mod_8cpp.html#a721b8129088d90091730781611ecee94',1,'figureAPI:&#160;TestMod.cpp'],['../group___hooks.html#gae5424c0f69d85cabda2866498e788521',1,'figureAPI:&#160;sf_hooks.c'],['../group___hooks.html#gae5424c0f69d85cabda2866498e788521',1,'figureAPI:&#160;TestMod.cpp']]],
   ['figurefunctions_30',['FigureFunctions',['../struct_figure_functions.html',1,'']]],
   ['figureiteratorinit_31',['figureIteratorInit',['../struct_iterator_functions.html#aced0eeb7f36c3430169a2de32cc41279',1,'IteratorFunctions']]],
   ['figureiteratorinit_5fptr_32',['figureIteratorInit_ptr',['../sf__iterator__functions_8h.html#a45d324a98dfbeef7997c83c1838b8a08',1,'sf_iterator_functions.h']]],
@@ -88,9 +88,9 @@ var searchData=
   ['freezed_85',['FREEZED',['../sf__general__structures_8h.html#ac82390a633ae8fc23e2141e25507f732a7a1ae9c079a986f5a17afcab7c27ebc0',1,'sf_general_structures.h']]],
   ['ftable_5fptr_86',['ftable_ptr',['../struct_c_gd_figure_iterator.html#ac6dbd14172aecb6cbfd9d1738ebd3b74',1,'CGdFigureIterator']]],
   ['fun_5f0069eaf0_5fptr_87',['FUN_0069eaf0_ptr',['../sf__general__structures_8h.html#ae52358dbffb2bfc0b421a928eb0e779f',1,'sf_general_structures.h']]],
-  ['fun_5f006c3a60_5fptr_88',['FUN_006c3a60_ptr',['../sf__onhit__hook_8c.html#a02d96be9aeebb4a494be5d0de47fac9b',1,'sf_onhit_hook.c']]],
+  ['fun_5f006c3a60_5fptr_88',['FUN_006c3a60_ptr',['../group___onhit_hook.html#ga02d96be9aeebb4a494be5d0de47fac9b',1,'sf_onhit_hook.c']]],
   ['fun_5f006e3a90_89',['FUN_006e3a90',['../struct_figure_functions.html#a7a5cddebff6c3ab9bd26d0b0bce393b4',1,'FigureFunctions']]],
   ['fun_5f006e3a90_5fptr_90',['FUN_006e3a90_ptr',['../sf__figure__functions_8h.html#a30061c1b4559e159f92b830324ace195',1,'sf_figure_functions.h']]],
-  ['fun_5f0071d7b0_5fptr_91',['FUN_0071d7b0_ptr',['../sf__onhit__hook_8c.html#ac9da902d3248459ff808aff4856684b8',1,'sf_onhit_hook.c']]],
-  ['fun_5f00755180_5fptr_92',['FUN_00755180_ptr',['../sf__onhit__hook_8c.html#aafec6154b49caac7291602f59bfe7413',1,'sf_onhit_hook.c']]]
+  ['fun_5f0071d7b0_5fptr_91',['FUN_0071d7b0_ptr',['../group___onhit_hook.html#gac9da902d3248459ff808aff4856684b8',1,'sf_onhit_hook.c']]],
+  ['fun_5f00755180_5fptr_92',['FUN_00755180_ptr',['../group___onhit_hook.html#gaafec6154b49caac7291602f59bfe7413',1,'sf_onhit_hook.c']]]
 ];

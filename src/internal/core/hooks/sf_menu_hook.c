@@ -1,7 +1,7 @@
 /** 
  * @defgroup MenuHook Menu Hook
  * @ingroup Hooks
- * Only Used internally to inject text onto the Main Menu of Spellforce
+ * @brief Only Used internally to inject text onto the Main Menu of Spellforce
  * @note The menu functions and general UI elements of Spellforce are poorly understood and may have unknown consequences 
  * @addtogroup MenuHook
  * @{
