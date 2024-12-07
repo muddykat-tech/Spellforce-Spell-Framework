@@ -1,4 +1,4 @@
-#include "sf_ai_avoidance_handlers.h"
+#include "sf_ai_spell_handlers.h.h"
 #include "../../core/sf_wrappers.h"
 #include "../../handlers/sf_ai_spell_handlers.h"
 #include "../../core/sf_modloader.h"
