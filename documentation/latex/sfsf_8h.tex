@@ -1,0 +1,132 @@
+\doxysection{src/api/sfsf.h File Reference}
+\hypertarget{sfsf_8h}{}\label{sfsf_8h}\index{src/api/sfsf.h@{src/api/sfsf.h}}
+{\ttfamily \#include "{}sf\+\_\+general\+\_\+structures.\+h"{}}\newline
+{\ttfamily \#include "{}sf\+\_\+figure\+\_\+functions.\+h"{}}\newline
+{\ttfamily \#include "{}sf\+\_\+iterator\+\_\+functions.\+h"{}}\newline
+{\ttfamily \#include "{}sf\+\_\+spell\+\_\+functions.\+h"{}}\newline
+{\ttfamily \#include "{}sf\+\_\+effect\+\_\+functions.\+h"{}}\newline
+{\ttfamily \#include "{}sf\+\_\+toolbox\+\_\+functions.\+h"{}}\newline
+{\ttfamily \#include "{}sf\+\_\+registration\+\_\+functions.\+h"{}}\newline
+{\ttfamily \#include "{}sf\+\_\+ai\+\_\+functions.\+h"{}}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+Include dependency graph for sfsf.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sfsf_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sfsf_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_spellforce_spell_framework}{Spellforce\+Spell\+Framework}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef void(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sfsf_8h_a3e28bae564f385436562931344d348d7}{initialize\+Module\+\_\+ptr}}) (void \texorpdfstring{$\ast$}{*})
+\item 
+typedef \mbox{\hyperlink{sf__general__structures_8h_a64ca7d92af978ccdfb97fd8ad71ea8e5}{SFMod}} \texorpdfstring{$\ast$}{*}(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sfsf_8h_ae8841c666a9cb90c0f6b9c9f14c91ffd}{register\+Mod\+\_\+ptr}}) (void \texorpdfstring{$\ast$}{*})
+\item 
+typedef \mbox{\hyperlink{sf__general__structures_8h_a64ca7d92af978ccdfb97fd8ad71ea8e5}{SFMod}} \texorpdfstring{$\ast$}{*}(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sfsf_8h_aa01c39b32297e6eaa930a49fcae6ca46}{create\+Mod\+Info\+\_\+ptr}}) (const char \texorpdfstring{$\ast$}{*}mod\+\_\+id, const char \texorpdfstring{$\ast$}{*}mod\+\_\+version, const char \texorpdfstring{$\ast$}{*}mod\+\_\+author, const char \texorpdfstring{$\ast$}{*}mod\+\_\+description)
+\item 
+typedef void(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sfsf_8h_a00dc0a7ddf1f4e403e5093b20e90120e}{log\+Info\+Func}}) (const char \texorpdfstring{$\ast$}{*})
+\item 
+typedef void(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sfsf_8h_af76aa0d565c5ebb0b1eb50e2ed3377b3}{handler\+\_\+ptr}}) (\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}, uint16\+\_\+t)
+\item 
+typedef int(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sfsf_8h_a6c693fbf9a67b42cfa2dce6d4a4e0b4b}{refresh\+\_\+handler\+\_\+ptr}}) (\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}, uint16\+\_\+t)
+\item 
+typedef struct \mbox{\hyperlink{struct_spellforce_spell_framework}{Spellforce\+Spell\+Framework}} \mbox{\hyperlink{sfsf_8h_a398b372a8c4fd7f3bed4cdf9b40715f2}{Framework\+API}}
+\item 
+typedef struct \mbox{\hyperlink{struct_spellforce_spell_framework}{Spellforce\+Spell\+Framework}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sfsf_8h_a4b8557c91a1a696449e04272a12b9637}{p\+Framework\+API}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{sfsf_8h_aa01c39b32297e6eaa930a49fcae6ca46}\index{sfsf.h@{sfsf.h}!createModInfo\_ptr@{createModInfo\_ptr}}
+\index{createModInfo\_ptr@{createModInfo\_ptr}!sfsf.h@{sfsf.h}}
+\doxysubsubsection{\texorpdfstring{createModInfo\_ptr}{createModInfo\_ptr}}
+{\footnotesize\ttfamily \label{sfsf_8h_aa01c39b32297e6eaa930a49fcae6ca46} 
+typedef \mbox{\hyperlink{sf__general__structures_8h_a64ca7d92af978ccdfb97fd8ad71ea8e5}{SFMod}} \texorpdfstring{$\ast$}{*}(\texorpdfstring{$\ast$}{*} create\+Mod\+Info\+\_\+ptr) (const char \texorpdfstring{$\ast$}{*}mod\+\_\+id, const char \texorpdfstring{$\ast$}{*}mod\+\_\+version, const char \texorpdfstring{$\ast$}{*}mod\+\_\+author, const char \texorpdfstring{$\ast$}{*}mod\+\_\+description)}
+
+
+
+Definition at line \mbox{\hyperlink{sfsf_8h_source_l00018}{18}} of file \mbox{\hyperlink{sfsf_8h_source}{sfsf.\+h}}.
+
+\Hypertarget{sfsf_8h_a398b372a8c4fd7f3bed4cdf9b40715f2}\index{sfsf.h@{sfsf.h}!FrameworkAPI@{FrameworkAPI}}
+\index{FrameworkAPI@{FrameworkAPI}!sfsf.h@{sfsf.h}}
+\doxysubsubsection{\texorpdfstring{FrameworkAPI}{FrameworkAPI}}
+{\footnotesize\ttfamily \label{sfsf_8h_a398b372a8c4fd7f3bed4cdf9b40715f2} 
+typedef struct \mbox{\hyperlink{struct_spellforce_spell_framework}{Spellforce\+Spell\+Framework}} \mbox{\hyperlink{sfsf_8h_a398b372a8c4fd7f3bed4cdf9b40715f2}{Framework\+API}}}
+
+
+
+Definition at line \mbox{\hyperlink{sfsf_8h_source_l00039}{39}} of file \mbox{\hyperlink{sfsf_8h_source}{sfsf.\+h}}.
+
+\Hypertarget{sfsf_8h_af76aa0d565c5ebb0b1eb50e2ed3377b3}\index{sfsf.h@{sfsf.h}!handler\_ptr@{handler\_ptr}}
+\index{handler\_ptr@{handler\_ptr}!sfsf.h@{sfsf.h}}
+\doxysubsubsection{\texorpdfstring{handler\_ptr}{handler\_ptr}}
+{\footnotesize\ttfamily \label{sfsf_8h_af76aa0d565c5ebb0b1eb50e2ed3377b3} 
+typedef void(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} handler\+\_\+ptr) (\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}, uint16\+\_\+t)}
+
+
+
+Definition at line \mbox{\hyperlink{sfsf_8h_source_l00021}{21}} of file \mbox{\hyperlink{sfsf_8h_source}{sfsf.\+h}}.
+
+\Hypertarget{sfsf_8h_a3e28bae564f385436562931344d348d7}\index{sfsf.h@{sfsf.h}!initializeModule\_ptr@{initializeModule\_ptr}}
+\index{initializeModule\_ptr@{initializeModule\_ptr}!sfsf.h@{sfsf.h}}
+\doxysubsubsection{\texorpdfstring{initializeModule\_ptr}{initializeModule\_ptr}}
+{\footnotesize\ttfamily \label{sfsf_8h_a3e28bae564f385436562931344d348d7} 
+typedef void(\texorpdfstring{$\ast$}{*} initialize\+Module\+\_\+ptr) (void \texorpdfstring{$\ast$}{*})}
+
+
+
+Definition at line \mbox{\hyperlink{sfsf_8h_source_l00016}{16}} of file \mbox{\hyperlink{sfsf_8h_source}{sfsf.\+h}}.
+
+\Hypertarget{sfsf_8h_a00dc0a7ddf1f4e403e5093b20e90120e}\index{sfsf.h@{sfsf.h}!logInfoFunc@{logInfoFunc}}
+\index{logInfoFunc@{logInfoFunc}!sfsf.h@{sfsf.h}}
+\doxysubsubsection{\texorpdfstring{logInfoFunc}{logInfoFunc}}
+{\footnotesize\ttfamily \label{sfsf_8h_a00dc0a7ddf1f4e403e5093b20e90120e} 
+typedef void(\texorpdfstring{$\ast$}{*} log\+Info\+Func) (const char \texorpdfstring{$\ast$}{*})}
+
+
+
+Definition at line \mbox{\hyperlink{sfsf_8h_source_l00020}{20}} of file \mbox{\hyperlink{sfsf_8h_source}{sfsf.\+h}}.
+
+\Hypertarget{sfsf_8h_a4b8557c91a1a696449e04272a12b9637}\index{sfsf.h@{sfsf.h}!pFrameworkAPI@{pFrameworkAPI}}
+\index{pFrameworkAPI@{pFrameworkAPI}!sfsf.h@{sfsf.h}}
+\doxysubsubsection{\texorpdfstring{pFrameworkAPI}{pFrameworkAPI}}
+{\footnotesize\ttfamily \label{sfsf_8h_a4b8557c91a1a696449e04272a12b9637} 
+typedef struct \mbox{\hyperlink{struct_spellforce_spell_framework}{Spellforce\+Spell\+Framework}}\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sfsf_8h_a4b8557c91a1a696449e04272a12b9637}{p\+Framework\+API}}}
+
+
+
+Definition at line \mbox{\hyperlink{sfsf_8h_source_l00040}{40}} of file \mbox{\hyperlink{sfsf_8h_source}{sfsf.\+h}}.
+
+\Hypertarget{sfsf_8h_a6c693fbf9a67b42cfa2dce6d4a4e0b4b}\index{sfsf.h@{sfsf.h}!refresh\_handler\_ptr@{refresh\_handler\_ptr}}
+\index{refresh\_handler\_ptr@{refresh\_handler\_ptr}!sfsf.h@{sfsf.h}}
+\doxysubsubsection{\texorpdfstring{refresh\_handler\_ptr}{refresh\_handler\_ptr}}
+{\footnotesize\ttfamily \label{sfsf_8h_a6c693fbf9a67b42cfa2dce6d4a4e0b4b} 
+typedef int(\+\_\+\+\_\+thiscall \texorpdfstring{$\ast$}{*} refresh\+\_\+handler\+\_\+ptr) (\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}, uint16\+\_\+t)}
+
+
+
+Definition at line \mbox{\hyperlink{sfsf_8h_source_l00022}{22}} of file \mbox{\hyperlink{sfsf_8h_source}{sfsf.\+h}}.
+
+\Hypertarget{sfsf_8h_ae8841c666a9cb90c0f6b9c9f14c91ffd}\index{sfsf.h@{sfsf.h}!registerMod\_ptr@{registerMod\_ptr}}
+\index{registerMod\_ptr@{registerMod\_ptr}!sfsf.h@{sfsf.h}}
+\doxysubsubsection{\texorpdfstring{registerMod\_ptr}{registerMod\_ptr}}
+{\footnotesize\ttfamily \label{sfsf_8h_ae8841c666a9cb90c0f6b9c9f14c91ffd} 
+typedef \mbox{\hyperlink{sf__general__structures_8h_a64ca7d92af978ccdfb97fd8ad71ea8e5}{SFMod}} \texorpdfstring{$\ast$}{*}(\texorpdfstring{$\ast$}{*} register\+Mod\+\_\+ptr) (void \texorpdfstring{$\ast$}{*})}
+
+
+
+Definition at line \mbox{\hyperlink{sfsf_8h_source_l00017}{17}} of file \mbox{\hyperlink{sfsf_8h_source}{sfsf.\+h}}.
+

@@ -1,0 +1,641 @@
+\doxysection{src/internal/handlers/sf\+\_\+spellrefresh\+\_\+handlers.cpp File Reference}
+\hypertarget{sf__spellrefresh__handlers_8cpp}{}\label{sf__spellrefresh__handlers_8cpp}\index{src/internal/handlers/sf\_spellrefresh\_handlers.cpp@{src/internal/handlers/sf\_spellrefresh\_handlers.cpp}}
+{\ttfamily \#include "{}../core/sf\+\_\+hooks.\+h"{}}\newline
+{\ttfamily \#include "{}../core/sf\+\_\+wrappers.\+h"{}}\newline
+{\ttfamily \#include "{}../registry/sf\+\_\+mod\+\_\+registry.\+h"{}}\newline
+{\ttfamily \#include "{}sf\+\_\+spellrefresh\+\_\+handlers.\+h"{}}\newline
+Include dependency graph for sf\+\_\+spellrefresh\+\_\+handlers.\+cpp\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__handlers_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_a587baa6487811f3281106202e088ab57}{first\+\_\+block\+\_\+refresh\+\_\+handler}} (\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+index)
+\item 
+int \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_a6b57132ca81388232b5accedcf3ba240}{slowness\+\_\+refresh\+\_\+handler}} (\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+index)
+\item 
+int \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_add78355ddb1a0bc99ba760ba82db7f6d}{decay\+\_\+refresh\+\_\+handler}} (\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+index)
+\item 
+int \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_a4aba53b716a2a681df2eb78072fd2d10}{inflexibility\+\_\+refresh\+\_\+handler}} (\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+index)
+\item 
+int \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_ac8e357f25293ebcab938ca638cf30aac}{weaken\+\_\+refresh\+\_\+handler}} (\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+index)
+\item 
+int \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_a426617d87a810960e89cf7b5f96792dc}{quickness\+\_\+refresh\+\_\+handler}} (\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+index)
+\item 
+int \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_a430579f4c70c489a2e018a00d6f71746}{flexibility\+\_\+refresh\+\_\+handler}} (\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+index)
+\item 
+int \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_a74c6d5e7cc31c7d67df1d7f4c752af4f}{strength\+\_\+refresh\+\_\+handler}} (\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+index)
+\item 
+int \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_a8e20e0b072a1cb724c73719adffea809}{brilliance\+\_\+refresh\+\_\+handler}} (\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+index)
+\item 
+int \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_a848d872608c94e8ae63fb84f4c72364c}{suffocation\+\_\+refresh\+\_\+handler}} (\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+index)
+\item 
+int \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_afda20753837545e4edebbdd12af43e88}{inablility\+\_\+refresh\+\_\+handler}} (\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+index)
+\item 
+int \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_ad2a69996de79c7371e94b33c8afb5c13}{slow\+\_\+fighting\+\_\+refresh\+\_\+handler}} (\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+index)
+\item 
+int \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_a2e3714d96562dd76282b7c00187121a1}{dexterity\+\_\+refresh\+\_\+handler}} (\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+index)
+\item 
+int \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_a04cb536fb5bf6bdb6a3640ec6e5d9ffc}{endurance\+\_\+refresh\+\_\+handler}} (\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+index)
+\item 
+int \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_a4145f57c6424330df160eb2ef1546a2f}{fast\+\_\+fighting\+\_\+refresh\+\_\+handler}} (\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+index)
+\item 
+int \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_a8bcbf61f8d76c5de922ca52443ed675c}{charisma\+\_\+refresh\+\_\+handler}} (\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+index)
+\item 
+int \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_a27d2a2379a0a7746191008ecbc63462a}{enlightenment\+\_\+refresh\+\_\+handler}} (\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+index)
+\item 
+int \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_a47fe8af9b0210575ce726cfe75d45b7e}{melt\+\_\+resistance\+\_\+refresh\+\_\+handler}} (\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+index)
+\item 
+int \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_aaf60c4f42ee5b7ddd6c05885896b088b}{chill\+\_\+resistance\+\_\+refresh\+\_\+handler}} (\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+index)
+\item 
+int \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_a9fc30a5d1455423526030260e548c254}{white\+\_\+almightness\+\_\+refresh\+\_\+handler}} (\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+index)
+\item 
+int \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_a26baa110adad7d76f960146162f9d806}{black\+\_\+almightness\+\_\+refresh\+\_\+handler}} (\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+index)
+\item 
+int \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_a34eae0d959884c32f2ef3fbd4caddf1b}{mutation\+\_\+refresh\+\_\+handler}} (\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+index)
+\item 
+int \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_a98af80c1ec1226dc55f6afeecc0ff071}{eternity\+\_\+refresh\+\_\+handler}} (\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+index)
+\item 
+int \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_a54b21dcae85503c0b7708bedf1900ae6}{warcry\+\_\+berserk\+\_\+refresh\+\_\+handler}} (\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+index)
+\item 
+int \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_abec40c43f8c7886e5f4aab1598bd1af2}{patronize\+\_\+shelter\+\_\+refresh\+\_\+handler}} (\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+index)
+\item 
+int \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_a8dc443eb382384b58ee6ee9f6cb3f4f1}{endurance\+\_\+durability\+\_\+refresh\+\_\+handler}} (\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+index)
+\item 
+int \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_af00057ad4a804955814e09c167aac95c}{pestilence\+\_\+refresh\+\_\+handler}} (\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+index)
+\item 
+int \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_a2533a2bd48479e8ddf631e3ece590e6d}{domination\+\_\+spell\+\_\+refresh\+\_\+handler}} (\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+index)
+\item 
+int \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_a1ee77167bb978a63add5c9472b838796}{case\+\_\+da\+\_\+refresh\+\_\+handler}} (\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t spell\+\_\+index)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{sf__spellrefresh__handlers_8cpp_a26baa110adad7d76f960146162f9d806}\index{sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}!black\_almightness\_refresh\_handler@{black\_almightness\_refresh\_handler}}
+\index{black\_almightness\_refresh\_handler@{black\_almightness\_refresh\_handler}!sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}}
+\doxysubsubsection{\texorpdfstring{black\_almightness\_refresh\_handler()}{black\_almightness\_refresh\_handler()}}
+{\footnotesize\ttfamily \label{sf__spellrefresh__handlers_8cpp_a26baa110adad7d76f960146162f9d806} 
+int \+\_\+\+\_\+thiscall black\+\_\+almightness\+\_\+refresh\+\_\+handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+index}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source_l00487}{487}} of file \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source}{sf\+\_\+spellrefresh\+\_\+handlers.\+cpp}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__handlers_8cpp_a26baa110adad7d76f960146162f9d806_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__spellrefresh__handlers_8cpp_a8e20e0b072a1cb724c73719adffea809}\index{sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}!brilliance\_refresh\_handler@{brilliance\_refresh\_handler}}
+\index{brilliance\_refresh\_handler@{brilliance\_refresh\_handler}!sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}}
+\doxysubsubsection{\texorpdfstring{brilliance\_refresh\_handler()}{brilliance\_refresh\_handler()}}
+{\footnotesize\ttfamily \label{sf__spellrefresh__handlers_8cpp_a8e20e0b072a1cb724c73719adffea809} 
+int \+\_\+\+\_\+thiscall brilliance\+\_\+refresh\+\_\+handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+index}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source_l00196}{196}} of file \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source}{sf\+\_\+spellrefresh\+\_\+handlers.\+cpp}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__handlers_8cpp_a8e20e0b072a1cb724c73719adffea809_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__spellrefresh__handlers_8cpp_a1ee77167bb978a63add5c9472b838796}\index{sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}!case\_da\_refresh\_handler@{case\_da\_refresh\_handler}}
+\index{case\_da\_refresh\_handler@{case\_da\_refresh\_handler}!sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}}
+\doxysubsubsection{\texorpdfstring{case\_da\_refresh\_handler()}{case\_da\_refresh\_handler()}}
+{\footnotesize\ttfamily \label{sf__spellrefresh__handlers_8cpp_a1ee77167bb978a63add5c9472b838796} 
+int \+\_\+\+\_\+thiscall case\+\_\+da\+\_\+refresh\+\_\+handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+index}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source_l00807}{807}} of file \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source}{sf\+\_\+spellrefresh\+\_\+handlers.\+cpp}}.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__handlers_8cpp_a1ee77167bb978a63add5c9472b838796_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__handlers_8cpp_a1ee77167bb978a63add5c9472b838796_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__spellrefresh__handlers_8cpp_a8bcbf61f8d76c5de922ca52443ed675c}\index{sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}!charisma\_refresh\_handler@{charisma\_refresh\_handler}}
+\index{charisma\_refresh\_handler@{charisma\_refresh\_handler}!sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}}
+\doxysubsubsection{\texorpdfstring{charisma\_refresh\_handler()}{charisma\_refresh\_handler()}}
+{\footnotesize\ttfamily \label{sf__spellrefresh__handlers_8cpp_a8bcbf61f8d76c5de922ca52443ed675c} 
+int \+\_\+\+\_\+thiscall charisma\+\_\+refresh\+\_\+handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+index}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source_l00366}{366}} of file \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source}{sf\+\_\+spellrefresh\+\_\+handlers.\+cpp}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__handlers_8cpp_a8bcbf61f8d76c5de922ca52443ed675c_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__spellrefresh__handlers_8cpp_aaf60c4f42ee5b7ddd6c05885896b088b}\index{sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}!chill\_resistance\_refresh\_handler@{chill\_resistance\_refresh\_handler}}
+\index{chill\_resistance\_refresh\_handler@{chill\_resistance\_refresh\_handler}!sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}}
+\doxysubsubsection{\texorpdfstring{chill\_resistance\_refresh\_handler()}{chill\_resistance\_refresh\_handler()}}
+{\footnotesize\ttfamily \label{sf__spellrefresh__handlers_8cpp_aaf60c4f42ee5b7ddd6c05885896b088b} 
+int \+\_\+\+\_\+thiscall chill\+\_\+resistance\+\_\+refresh\+\_\+handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+index}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source_l00441}{441}} of file \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source}{sf\+\_\+spellrefresh\+\_\+handlers.\+cpp}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__handlers_8cpp_aaf60c4f42ee5b7ddd6c05885896b088b_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__spellrefresh__handlers_8cpp_add78355ddb1a0bc99ba760ba82db7f6d}\index{sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}!decay\_refresh\_handler@{decay\_refresh\_handler}}
+\index{decay\_refresh\_handler@{decay\_refresh\_handler}!sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}}
+\doxysubsubsection{\texorpdfstring{decay\_refresh\_handler()}{decay\_refresh\_handler()}}
+{\footnotesize\ttfamily \label{sf__spellrefresh__handlers_8cpp_add78355ddb1a0bc99ba760ba82db7f6d} 
+int \+\_\+\+\_\+thiscall decay\+\_\+refresh\+\_\+handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+index}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source_l00056}{56}} of file \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source}{sf\+\_\+spellrefresh\+\_\+handlers.\+cpp}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__handlers_8cpp_add78355ddb1a0bc99ba760ba82db7f6d_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__spellrefresh__handlers_8cpp_a2e3714d96562dd76282b7c00187121a1}\index{sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}!dexterity\_refresh\_handler@{dexterity\_refresh\_handler}}
+\index{dexterity\_refresh\_handler@{dexterity\_refresh\_handler}!sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}}
+\doxysubsubsection{\texorpdfstring{dexterity\_refresh\_handler()}{dexterity\_refresh\_handler()}}
+{\footnotesize\ttfamily \label{sf__spellrefresh__handlers_8cpp_a2e3714d96562dd76282b7c00187121a1} 
+int \+\_\+\+\_\+thiscall dexterity\+\_\+refresh\+\_\+handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+index}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source_l00296}{296}} of file \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source}{sf\+\_\+spellrefresh\+\_\+handlers.\+cpp}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__handlers_8cpp_a2e3714d96562dd76282b7c00187121a1_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__spellrefresh__handlers_8cpp_a2533a2bd48479e8ddf631e3ece590e6d}\index{sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}!domination\_spell\_refresh\_handler@{domination\_spell\_refresh\_handler}}
+\index{domination\_spell\_refresh\_handler@{domination\_spell\_refresh\_handler}!sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}}
+\doxysubsubsection{\texorpdfstring{domination\_spell\_refresh\_handler()}{domination\_spell\_refresh\_handler()}}
+{\footnotesize\ttfamily \label{sf__spellrefresh__handlers_8cpp_a2533a2bd48479e8ddf631e3ece590e6d} 
+int \+\_\+\+\_\+thiscall domination\+\_\+spell\+\_\+refresh\+\_\+handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+index}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source_l00766}{766}} of file \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source}{sf\+\_\+spellrefresh\+\_\+handlers.\+cpp}}.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__handlers_8cpp_a2533a2bd48479e8ddf631e3ece590e6d_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__handlers_8cpp_a2533a2bd48479e8ddf631e3ece590e6d_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__spellrefresh__handlers_8cpp_a8dc443eb382384b58ee6ee9f6cb3f4f1}\index{sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}!endurance\_durability\_refresh\_handler@{endurance\_durability\_refresh\_handler}}
+\index{endurance\_durability\_refresh\_handler@{endurance\_durability\_refresh\_handler}!sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}}
+\doxysubsubsection{\texorpdfstring{endurance\_durability\_refresh\_handler()}{endurance\_durability\_refresh\_handler()}}
+{\footnotesize\ttfamily \label{sf__spellrefresh__handlers_8cpp_a8dc443eb382384b58ee6ee9f6cb3f4f1} 
+int \+\_\+\+\_\+thiscall endurance\+\_\+durability\+\_\+refresh\+\_\+handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+index}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source_l00700}{700}} of file \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source}{sf\+\_\+spellrefresh\+\_\+handlers.\+cpp}}.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__handlers_8cpp_a8dc443eb382384b58ee6ee9f6cb3f4f1_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__handlers_8cpp_a8dc443eb382384b58ee6ee9f6cb3f4f1_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__spellrefresh__handlers_8cpp_a04cb536fb5bf6bdb6a3640ec6e5d9ffc}\index{sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}!endurance\_refresh\_handler@{endurance\_refresh\_handler}}
+\index{endurance\_refresh\_handler@{endurance\_refresh\_handler}!sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}}
+\doxysubsubsection{\texorpdfstring{endurance\_refresh\_handler()}{endurance\_refresh\_handler()}}
+{\footnotesize\ttfamily \label{sf__spellrefresh__handlers_8cpp_a04cb536fb5bf6bdb6a3640ec6e5d9ffc} 
+int \+\_\+\+\_\+thiscall endurance\+\_\+refresh\+\_\+handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+index}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source_l00318}{318}} of file \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source}{sf\+\_\+spellrefresh\+\_\+handlers.\+cpp}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__handlers_8cpp_a04cb536fb5bf6bdb6a3640ec6e5d9ffc_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__spellrefresh__handlers_8cpp_a27d2a2379a0a7746191008ecbc63462a}\index{sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}!enlightenment\_refresh\_handler@{enlightenment\_refresh\_handler}}
+\index{enlightenment\_refresh\_handler@{enlightenment\_refresh\_handler}!sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}}
+\doxysubsubsection{\texorpdfstring{enlightenment\_refresh\_handler()}{enlightenment\_refresh\_handler()}}
+{\footnotesize\ttfamily \label{sf__spellrefresh__handlers_8cpp_a27d2a2379a0a7746191008ecbc63462a} 
+int \+\_\+\+\_\+thiscall enlightenment\+\_\+refresh\+\_\+handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+index}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source_l00389}{389}} of file \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source}{sf\+\_\+spellrefresh\+\_\+handlers.\+cpp}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__handlers_8cpp_a27d2a2379a0a7746191008ecbc63462a_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__spellrefresh__handlers_8cpp_a98af80c1ec1226dc55f6afeecc0ff071}\index{sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}!eternity\_refresh\_handler@{eternity\_refresh\_handler}}
+\index{eternity\_refresh\_handler@{eternity\_refresh\_handler}!sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}}
+\doxysubsubsection{\texorpdfstring{eternity\_refresh\_handler()}{eternity\_refresh\_handler()}}
+{\footnotesize\ttfamily \label{sf__spellrefresh__handlers_8cpp_a98af80c1ec1226dc55f6afeecc0ff071} 
+int \+\_\+\+\_\+thiscall eternity\+\_\+refresh\+\_\+handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+index}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source_l00589}{589}} of file \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source}{sf\+\_\+spellrefresh\+\_\+handlers.\+cpp}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__handlers_8cpp_a98af80c1ec1226dc55f6afeecc0ff071_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__spellrefresh__handlers_8cpp_a4145f57c6424330df160eb2ef1546a2f}\index{sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}!fast\_fighting\_refresh\_handler@{fast\_fighting\_refresh\_handler}}
+\index{fast\_fighting\_refresh\_handler@{fast\_fighting\_refresh\_handler}!sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}}
+\doxysubsubsection{\texorpdfstring{fast\_fighting\_refresh\_handler()}{fast\_fighting\_refresh\_handler()}}
+{\footnotesize\ttfamily \label{sf__spellrefresh__handlers_8cpp_a4145f57c6424330df160eb2ef1546a2f} 
+int \+\_\+\+\_\+thiscall fast\+\_\+fighting\+\_\+refresh\+\_\+handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+index}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source_l00343}{343}} of file \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source}{sf\+\_\+spellrefresh\+\_\+handlers.\+cpp}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__handlers_8cpp_a4145f57c6424330df160eb2ef1546a2f_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__spellrefresh__handlers_8cpp_a587baa6487811f3281106202e088ab57}\index{sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}!first\_block\_refresh\_handler@{first\_block\_refresh\_handler}}
+\index{first\_block\_refresh\_handler@{first\_block\_refresh\_handler}!sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}}
+\doxysubsubsection{\texorpdfstring{first\_block\_refresh\_handler()}{first\_block\_refresh\_handler()}}
+{\footnotesize\ttfamily \label{sf__spellrefresh__handlers_8cpp_a587baa6487811f3281106202e088ab57} 
+int \+\_\+\+\_\+thiscall first\+\_\+block\+\_\+refresh\+\_\+handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+index}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source_l00009}{9}} of file \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source}{sf\+\_\+spellrefresh\+\_\+handlers.\+cpp}}.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__handlers_8cpp_a587baa6487811f3281106202e088ab57_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__handlers_8cpp_a587baa6487811f3281106202e088ab57_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__spellrefresh__handlers_8cpp_a430579f4c70c489a2e018a00d6f71746}\index{sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}!flexibility\_refresh\_handler@{flexibility\_refresh\_handler}}
+\index{flexibility\_refresh\_handler@{flexibility\_refresh\_handler}!sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}}
+\doxysubsubsection{\texorpdfstring{flexibility\_refresh\_handler()}{flexibility\_refresh\_handler()}}
+{\footnotesize\ttfamily \label{sf__spellrefresh__handlers_8cpp_a430579f4c70c489a2e018a00d6f71746} 
+int \+\_\+\+\_\+thiscall flexibility\+\_\+refresh\+\_\+handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+index}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source_l00151}{151}} of file \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source}{sf\+\_\+spellrefresh\+\_\+handlers.\+cpp}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__handlers_8cpp_a430579f4c70c489a2e018a00d6f71746_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__spellrefresh__handlers_8cpp_afda20753837545e4edebbdd12af43e88}\index{sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}!inablility\_refresh\_handler@{inablility\_refresh\_handler}}
+\index{inablility\_refresh\_handler@{inablility\_refresh\_handler}!sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}}
+\doxysubsubsection{\texorpdfstring{inablility\_refresh\_handler()}{inablility\_refresh\_handler()}}
+{\footnotesize\ttfamily \label{sf__spellrefresh__handlers_8cpp_afda20753837545e4edebbdd12af43e88} 
+int \+\_\+\+\_\+thiscall inablility\+\_\+refresh\+\_\+handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+index}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source_l00250}{250}} of file \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source}{sf\+\_\+spellrefresh\+\_\+handlers.\+cpp}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__handlers_8cpp_afda20753837545e4edebbdd12af43e88_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__spellrefresh__handlers_8cpp_a4aba53b716a2a681df2eb78072fd2d10}\index{sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}!inflexibility\_refresh\_handler@{inflexibility\_refresh\_handler}}
+\index{inflexibility\_refresh\_handler@{inflexibility\_refresh\_handler}!sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}}
+\doxysubsubsection{\texorpdfstring{inflexibility\_refresh\_handler()}{inflexibility\_refresh\_handler()}}
+{\footnotesize\ttfamily \label{sf__spellrefresh__handlers_8cpp_a4aba53b716a2a681df2eb78072fd2d10} 
+int \+\_\+\+\_\+thiscall inflexibility\+\_\+refresh\+\_\+handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+index}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source_l00080}{80}} of file \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source}{sf\+\_\+spellrefresh\+\_\+handlers.\+cpp}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__handlers_8cpp_a4aba53b716a2a681df2eb78072fd2d10_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__spellrefresh__handlers_8cpp_a47fe8af9b0210575ce726cfe75d45b7e}\index{sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}!melt\_resistance\_refresh\_handler@{melt\_resistance\_refresh\_handler}}
+\index{melt\_resistance\_refresh\_handler@{melt\_resistance\_refresh\_handler}!sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}}
+\doxysubsubsection{\texorpdfstring{melt\_resistance\_refresh\_handler()}{melt\_resistance\_refresh\_handler()}}
+{\footnotesize\ttfamily \label{sf__spellrefresh__handlers_8cpp_a47fe8af9b0210575ce726cfe75d45b7e} 
+int \+\_\+\+\_\+thiscall melt\+\_\+resistance\+\_\+refresh\+\_\+handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+index}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source_l00418}{418}} of file \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source}{sf\+\_\+spellrefresh\+\_\+handlers.\+cpp}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__handlers_8cpp_a47fe8af9b0210575ce726cfe75d45b7e_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__spellrefresh__handlers_8cpp_a34eae0d959884c32f2ef3fbd4caddf1b}\index{sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}!mutation\_refresh\_handler@{mutation\_refresh\_handler}}
+\index{mutation\_refresh\_handler@{mutation\_refresh\_handler}!sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}}
+\doxysubsubsection{\texorpdfstring{mutation\_refresh\_handler()}{mutation\_refresh\_handler()}}
+{\footnotesize\ttfamily \label{sf__spellrefresh__handlers_8cpp_a34eae0d959884c32f2ef3fbd4caddf1b} 
+int \+\_\+\+\_\+thiscall mutation\+\_\+refresh\+\_\+handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+index}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source_l00510}{510}} of file \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source}{sf\+\_\+spellrefresh\+\_\+handlers.\+cpp}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__handlers_8cpp_a34eae0d959884c32f2ef3fbd4caddf1b_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__spellrefresh__handlers_8cpp_abec40c43f8c7886e5f4aab1598bd1af2}\index{sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}!patronize\_shelter\_refresh\_handler@{patronize\_shelter\_refresh\_handler}}
+\index{patronize\_shelter\_refresh\_handler@{patronize\_shelter\_refresh\_handler}!sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}}
+\doxysubsubsection{\texorpdfstring{patronize\_shelter\_refresh\_handler()}{patronize\_shelter\_refresh\_handler()}}
+{\footnotesize\ttfamily \label{sf__spellrefresh__handlers_8cpp_abec40c43f8c7886e5f4aab1598bd1af2} 
+int \+\_\+\+\_\+thiscall patronize\+\_\+shelter\+\_\+refresh\+\_\+handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+index}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source_l00659}{659}} of file \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source}{sf\+\_\+spellrefresh\+\_\+handlers.\+cpp}}.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__handlers_8cpp_abec40c43f8c7886e5f4aab1598bd1af2_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__handlers_8cpp_abec40c43f8c7886e5f4aab1598bd1af2_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__spellrefresh__handlers_8cpp_af00057ad4a804955814e09c167aac95c}\index{sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}!pestilence\_refresh\_handler@{pestilence\_refresh\_handler}}
+\index{pestilence\_refresh\_handler@{pestilence\_refresh\_handler}!sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}}
+\doxysubsubsection{\texorpdfstring{pestilence\_refresh\_handler()}{pestilence\_refresh\_handler()}}
+{\footnotesize\ttfamily \label{sf__spellrefresh__handlers_8cpp_af00057ad4a804955814e09c167aac95c} 
+int \+\_\+\+\_\+thiscall pestilence\+\_\+refresh\+\_\+handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+index}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source_l00742}{742}} of file \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source}{sf\+\_\+spellrefresh\+\_\+handlers.\+cpp}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__handlers_8cpp_af00057ad4a804955814e09c167aac95c_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__spellrefresh__handlers_8cpp_a426617d87a810960e89cf7b5f96792dc}\index{sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}!quickness\_refresh\_handler@{quickness\_refresh\_handler}}
+\index{quickness\_refresh\_handler@{quickness\_refresh\_handler}!sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}}
+\doxysubsubsection{\texorpdfstring{quickness\_refresh\_handler()}{quickness\_refresh\_handler()}}
+{\footnotesize\ttfamily \label{sf__spellrefresh__handlers_8cpp_a426617d87a810960e89cf7b5f96792dc} 
+int \+\_\+\+\_\+thiscall quickness\+\_\+refresh\+\_\+handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+index}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source_l00128}{128}} of file \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source}{sf\+\_\+spellrefresh\+\_\+handlers.\+cpp}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__handlers_8cpp_a426617d87a810960e89cf7b5f96792dc_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__spellrefresh__handlers_8cpp_ad2a69996de79c7371e94b33c8afb5c13}\index{sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}!slow\_fighting\_refresh\_handler@{slow\_fighting\_refresh\_handler}}
+\index{slow\_fighting\_refresh\_handler@{slow\_fighting\_refresh\_handler}!sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}}
+\doxysubsubsection{\texorpdfstring{slow\_fighting\_refresh\_handler()}{slow\_fighting\_refresh\_handler()}}
+{\footnotesize\ttfamily \label{sf__spellrefresh__handlers_8cpp_ad2a69996de79c7371e94b33c8afb5c13} 
+int \+\_\+\+\_\+thiscall slow\+\_\+fighting\+\_\+refresh\+\_\+handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+index}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source_l00273}{273}} of file \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source}{sf\+\_\+spellrefresh\+\_\+handlers.\+cpp}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__handlers_8cpp_ad2a69996de79c7371e94b33c8afb5c13_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__spellrefresh__handlers_8cpp_a6b57132ca81388232b5accedcf3ba240}\index{sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}!slowness\_refresh\_handler@{slowness\_refresh\_handler}}
+\index{slowness\_refresh\_handler@{slowness\_refresh\_handler}!sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}}
+\doxysubsubsection{\texorpdfstring{slowness\_refresh\_handler()}{slowness\_refresh\_handler()}}
+{\footnotesize\ttfamily \label{sf__spellrefresh__handlers_8cpp_a6b57132ca81388232b5accedcf3ba240} 
+int \+\_\+\+\_\+thiscall slowness\+\_\+refresh\+\_\+handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+index}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source_l00031}{31}} of file \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source}{sf\+\_\+spellrefresh\+\_\+handlers.\+cpp}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__handlers_8cpp_a6b57132ca81388232b5accedcf3ba240_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__spellrefresh__handlers_8cpp_a74c6d5e7cc31c7d67df1d7f4c752af4f}\index{sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}!strength\_refresh\_handler@{strength\_refresh\_handler}}
+\index{strength\_refresh\_handler@{strength\_refresh\_handler}!sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}}
+\doxysubsubsection{\texorpdfstring{strength\_refresh\_handler()}{strength\_refresh\_handler()}}
+{\footnotesize\ttfamily \label{sf__spellrefresh__handlers_8cpp_a74c6d5e7cc31c7d67df1d7f4c752af4f} 
+int \+\_\+\+\_\+thiscall strength\+\_\+refresh\+\_\+handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+index}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source_l00174}{174}} of file \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source}{sf\+\_\+spellrefresh\+\_\+handlers.\+cpp}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__handlers_8cpp_a74c6d5e7cc31c7d67df1d7f4c752af4f_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__spellrefresh__handlers_8cpp_a848d872608c94e8ae63fb84f4c72364c}\index{sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}!suffocation\_refresh\_handler@{suffocation\_refresh\_handler}}
+\index{suffocation\_refresh\_handler@{suffocation\_refresh\_handler}!sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}}
+\doxysubsubsection{\texorpdfstring{suffocation\_refresh\_handler()}{suffocation\_refresh\_handler()}}
+{\footnotesize\ttfamily \label{sf__spellrefresh__handlers_8cpp_a848d872608c94e8ae63fb84f4c72364c} 
+int \+\_\+\+\_\+thiscall suffocation\+\_\+refresh\+\_\+handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+index}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source_l00223}{223}} of file \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source}{sf\+\_\+spellrefresh\+\_\+handlers.\+cpp}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__handlers_8cpp_a848d872608c94e8ae63fb84f4c72364c_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__spellrefresh__handlers_8cpp_a54b21dcae85503c0b7708bedf1900ae6}\index{sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}!warcry\_berserk\_refresh\_handler@{warcry\_berserk\_refresh\_handler}}
+\index{warcry\_berserk\_refresh\_handler@{warcry\_berserk\_refresh\_handler}!sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}}
+\doxysubsubsection{\texorpdfstring{warcry\_berserk\_refresh\_handler()}{warcry\_berserk\_refresh\_handler()}}
+{\footnotesize\ttfamily \label{sf__spellrefresh__handlers_8cpp_a54b21dcae85503c0b7708bedf1900ae6} 
+int \+\_\+\+\_\+thiscall warcry\+\_\+berserk\+\_\+refresh\+\_\+handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+index}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source_l00617}{617}} of file \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source}{sf\+\_\+spellrefresh\+\_\+handlers.\+cpp}}.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__handlers_8cpp_a54b21dcae85503c0b7708bedf1900ae6_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__handlers_8cpp_a54b21dcae85503c0b7708bedf1900ae6_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__spellrefresh__handlers_8cpp_ac8e357f25293ebcab938ca638cf30aac}\index{sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}!weaken\_refresh\_handler@{weaken\_refresh\_handler}}
+\index{weaken\_refresh\_handler@{weaken\_refresh\_handler}!sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}}
+\doxysubsubsection{\texorpdfstring{weaken\_refresh\_handler()}{weaken\_refresh\_handler()}}
+{\footnotesize\ttfamily \label{sf__spellrefresh__handlers_8cpp_ac8e357f25293ebcab938ca638cf30aac} 
+int \+\_\+\+\_\+thiscall weaken\+\_\+refresh\+\_\+handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+index}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source_l00104}{104}} of file \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source}{sf\+\_\+spellrefresh\+\_\+handlers.\+cpp}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__handlers_8cpp_ac8e357f25293ebcab938ca638cf30aac_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__spellrefresh__handlers_8cpp_a9fc30a5d1455423526030260e548c254}\index{sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}!white\_almightness\_refresh\_handler@{white\_almightness\_refresh\_handler}}
+\index{white\_almightness\_refresh\_handler@{white\_almightness\_refresh\_handler}!sf\_spellrefresh\_handlers.cpp@{sf\_spellrefresh\_handlers.cpp}}
+\doxysubsubsection{\texorpdfstring{white\_almightness\_refresh\_handler()}{white\_almightness\_refresh\_handler()}}
+{\footnotesize\ttfamily \label{sf__spellrefresh__handlers_8cpp_a9fc30a5d1455423526030260e548c254} 
+int \+\_\+\+\_\+thiscall white\+\_\+almightness\+\_\+refresh\+\_\+handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a65e220538ceb4410156fdcd2afcf91e6}{SF\+\_\+\+CGd\+Spell}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t}]{spell\+\_\+index}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source_l00464}{464}} of file \mbox{\hyperlink{sf__spellrefresh__handlers_8cpp_source}{sf\+\_\+spellrefresh\+\_\+handlers.\+cpp}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__spellrefresh__handlers_8cpp_a9fc30a5d1455423526030260e548c254_icgraph}
+\end{center}
+\end{figure}

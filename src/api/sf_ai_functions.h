@@ -1,3 +1,14 @@
+/**
+ * @file sf_ai_functions.h
+ * @brief Header file for defining AI-related battle functions for managing spellcasting,
+ *        NPC behavior, and target actions in the game.
+ * 
+ * This file provides the necessary data structures and function declarations
+ * used by the AI to interact with the game's entities, actions, and battle mechanics.
+ * Functions include getting and setting AI actions, managing AI figures, and handling
+ * spell casting behaviors.
+ */
+
 #pragma once
 #include <stdint.h>
 #include <stdbool.h>

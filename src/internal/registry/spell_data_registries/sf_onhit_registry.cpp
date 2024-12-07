@@ -56,7 +56,3 @@ std::list<std::pair<uint16_t, onhit_handler_ptr>> get_onhit_phase(OnHitPhase pha
     log_info(info_msg); */
     return it->second; // Return the list associated with the phase
 }
-
-void register_vanilla_onhit_handlers()
-{
-}

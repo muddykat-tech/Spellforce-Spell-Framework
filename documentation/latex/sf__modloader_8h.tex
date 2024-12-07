@@ -1,0 +1,96 @@
+\doxysection{src/internal/core/sf\+\_\+modloader.h File Reference}
+\hypertarget{sf__modloader_8h}{}\label{sf__modloader_8h}\index{src/internal/core/sf\_modloader.h@{src/internal/core/sf\_modloader.h}}
+{\ttfamily \#include "{}../../api/sfsf.\+h"{}}\newline
+Include dependency graph for sf\+\_\+modloader.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__modloader_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__modloader_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{sf__modloader_8h_a47ecab81a8b65ed68eda5e841f699043}{\+\_\+\+\_\+declspec}} (dllexport) void \mbox{\hyperlink{sf__modloader_8c_a56273b58bfd284c452925e7f24e2b252}{initialize\+\_\+mods}}()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{sf__modloader_8h_a3fbcfa4d468e6676194270102744f8c3}{g\+\_\+mod\+\_\+count}}
+\item 
+int \mbox{\hyperlink{sf__modloader_8h_a8e9db14599932818820eed01fa118197}{g\+\_\+error\+\_\+count}}
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_a64ca7d92af978ccdfb97fd8ad71ea8e5}{SFMod}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__modloader_8h_a8342c5f7a97f7d7ada992295eb451353}{g\+\_\+current\+\_\+mod}}
+\item 
+\mbox{\hyperlink{sf__general__structures_8h_a64ca7d92af978ccdfb97fd8ad71ea8e5}{SFMod}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sf__modloader_8h_af11e4aae0bd5dfd212aee4af4c095baf}{g\+\_\+framework\+\_\+mod}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{sf__modloader_8h_a47ecab81a8b65ed68eda5e841f699043}\index{sf\_modloader.h@{sf\_modloader.h}!\_\_declspec@{\_\_declspec}}
+\index{\_\_declspec@{\_\_declspec}!sf\_modloader.h@{sf\_modloader.h}}
+\doxysubsubsection{\texorpdfstring{\_\_declspec()}{\_\_declspec()}}
+{\footnotesize\ttfamily \label{sf__modloader_8h_a47ecab81a8b65ed68eda5e841f699043} 
+\+\_\+\+\_\+declspec (\begin{DoxyParamCaption}\item[{dllexport}]{}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_test_mod_8cpp_source_l00081}{81}} of file \mbox{\hyperlink{_test_mod_8cpp_source}{Test\+Mod.\+cpp}}.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=311pt]{sf__modloader_8h_a47ecab81a8b65ed68eda5e841f699043_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{sf__modloader_8h_a8342c5f7a97f7d7ada992295eb451353}\index{sf\_modloader.h@{sf\_modloader.h}!g\_current\_mod@{g\_current\_mod}}
+\index{g\_current\_mod@{g\_current\_mod}!sf\_modloader.h@{sf\_modloader.h}}
+\doxysubsubsection{\texorpdfstring{g\_current\_mod}{g\_current\_mod}}
+{\footnotesize\ttfamily \label{sf__modloader_8h_a8342c5f7a97f7d7ada992295eb451353} 
+\mbox{\hyperlink{sf__general__structures_8h_a64ca7d92af978ccdfb97fd8ad71ea8e5}{SFMod}}\texorpdfstring{$\ast$}{*} g\+\_\+current\+\_\+mod\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Definition at line \mbox{\hyperlink{sf__registry_8cpp_source_l00040}{40}} of file \mbox{\hyperlink{sf__registry_8cpp_source}{sf\+\_\+registry.\+cpp}}.
+
+\Hypertarget{sf__modloader_8h_a8e9db14599932818820eed01fa118197}\index{sf\_modloader.h@{sf\_modloader.h}!g\_error\_count@{g\_error\_count}}
+\index{g\_error\_count@{g\_error\_count}!sf\_modloader.h@{sf\_modloader.h}}
+\doxysubsubsection{\texorpdfstring{g\_error\_count}{g\_error\_count}}
+{\footnotesize\ttfamily \label{sf__modloader_8h_a8e9db14599932818820eed01fa118197} 
+int g\+\_\+error\+\_\+count\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Definition at line \mbox{\hyperlink{sf__modloader_8c_source_l00014}{14}} of file \mbox{\hyperlink{sf__modloader_8c_source}{sf\+\_\+modloader.\+c}}.
+
+\Hypertarget{sf__modloader_8h_af11e4aae0bd5dfd212aee4af4c095baf}\index{sf\_modloader.h@{sf\_modloader.h}!g\_framework\_mod@{g\_framework\_mod}}
+\index{g\_framework\_mod@{g\_framework\_mod}!sf\_modloader.h@{sf\_modloader.h}}
+\doxysubsubsection{\texorpdfstring{g\_framework\_mod}{g\_framework\_mod}}
+{\footnotesize\ttfamily \label{sf__modloader_8h_af11e4aae0bd5dfd212aee4af4c095baf} 
+\mbox{\hyperlink{sf__general__structures_8h_a64ca7d92af978ccdfb97fd8ad71ea8e5}{SFMod}}\texorpdfstring{$\ast$}{*} g\+\_\+framework\+\_\+mod\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Definition at line \mbox{\hyperlink{sf__registry_8cpp_source_l00041}{41}} of file \mbox{\hyperlink{sf__registry_8cpp_source}{sf\+\_\+registry.\+cpp}}.
+
+\Hypertarget{sf__modloader_8h_a3fbcfa4d468e6676194270102744f8c3}\index{sf\_modloader.h@{sf\_modloader.h}!g\_mod\_count@{g\_mod\_count}}
+\index{g\_mod\_count@{g\_mod\_count}!sf\_modloader.h@{sf\_modloader.h}}
+\doxysubsubsection{\texorpdfstring{g\_mod\_count}{g\_mod\_count}}
+{\footnotesize\ttfamily \label{sf__modloader_8h_a3fbcfa4d468e6676194270102744f8c3} 
+int g\+\_\+mod\+\_\+count\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Definition at line \mbox{\hyperlink{sf__modloader_8c_source_l00013}{13}} of file \mbox{\hyperlink{sf__modloader_8c_source}{sf\+\_\+modloader.\+c}}.
+

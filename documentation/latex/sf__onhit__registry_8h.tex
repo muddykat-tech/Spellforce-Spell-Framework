@@ -1,0 +1,84 @@
+\doxysection{src/internal/registry/spell\+\_\+data\+\_\+registries/sf\+\_\+onhit\+\_\+registry.h File Reference}
+\hypertarget{sf__onhit__registry_8h}{}\label{sf__onhit__registry_8h}\index{src/internal/registry/spell\_data\_registries/sf\_onhit\_registry.h@{src/internal/registry/spell\_data\_registries/sf\_onhit\_registry.h}}
+{\ttfamily \#include "{}../../../api/sfsf.\+h"{}}\newline
+{\ttfamily \#include $<$list$>$}\newline
+{\ttfamily \#include $<$utility$>$}\newline
+Include dependency graph for sf\+\_\+onhit\+\_\+registry.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__onhit__registry_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__onhit__registry_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+std\+::list$<$ std\+::pair$<$ uint16\+\_\+t, \mbox{\hyperlink{sf__registration__functions_8h_afc33c0496ccf8b60de8f29929de6e565}{onhit\+\_\+handler\+\_\+ptr}} $>$ $>$ \mbox{\hyperlink{sf__onhit__registry_8h_a91bd91cca8eb368d39efad7ce7bae9a1}{get\+\_\+onhit\+\_\+phase}} (\mbox{\hyperlink{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7}{On\+Hit\+Phase}} hitphase)
+\item 
+void \mbox{\hyperlink{sf__onhit__registry_8h_a8fb8bc103c9a7b0f89558250af0293ca}{register\+On\+Hit\+Handler}} (uint16\+\_\+t spell\+\_\+line\+\_\+id, \mbox{\hyperlink{sf__registration__functions_8h_afc33c0496ccf8b60de8f29929de6e565}{onhit\+\_\+handler\+\_\+ptr}} handler, \mbox{\hyperlink{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7}{On\+Hit\+Phase}} phase)
+\item 
+void \+\_\+\+\_\+thiscall \mbox{\hyperlink{sf__onhit__registry_8h_ad415c8624f0460170fe35bd2d2208fcc}{register\+\_\+vanilla\+\_\+onhit\+\_\+handlers}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{sf__onhit__registry_8h_a91bd91cca8eb368d39efad7ce7bae9a1}\index{sf\_onhit\_registry.h@{sf\_onhit\_registry.h}!get\_onhit\_phase@{get\_onhit\_phase}}
+\index{get\_onhit\_phase@{get\_onhit\_phase}!sf\_onhit\_registry.h@{sf\_onhit\_registry.h}}
+\doxysubsubsection{\texorpdfstring{get\_onhit\_phase()}{get\_onhit\_phase()}}
+{\footnotesize\ttfamily \label{sf__onhit__registry_8h_a91bd91cca8eb368d39efad7ce7bae9a1} 
+std\+::list$<$ std\+::pair$<$ uint16\+\_\+t, \mbox{\hyperlink{sf__registration__functions_8h_afc33c0496ccf8b60de8f29929de6e565}{onhit\+\_\+handler\+\_\+ptr}} $>$ $>$ get\+\_\+onhit\+\_\+phase (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7}{On\+Hit\+Phase}}}]{hitphase}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Definition at line \mbox{\hyperlink{sf__onhit__registry_8cpp_source_l00044}{44}} of file \mbox{\hyperlink{sf__onhit__registry_8cpp_source}{sf\+\_\+onhit\+\_\+registry.\+cpp}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=280pt]{sf__onhit__registry_8h_a91bd91cca8eb368d39efad7ce7bae9a1_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{sf__onhit__registry_8h_ad415c8624f0460170fe35bd2d2208fcc}\index{sf\_onhit\_registry.h@{sf\_onhit\_registry.h}!register\_vanilla\_onhit\_handlers@{register\_vanilla\_onhit\_handlers}}
+\index{register\_vanilla\_onhit\_handlers@{register\_vanilla\_onhit\_handlers}!sf\_onhit\_registry.h@{sf\_onhit\_registry.h}}
+\doxysubsubsection{\texorpdfstring{register\_vanilla\_onhit\_handlers()}{register\_vanilla\_onhit\_handlers()}}
+{\footnotesize\ttfamily \label{sf__onhit__registry_8h_ad415c8624f0460170fe35bd2d2208fcc} 
+void \+\_\+\+\_\+thiscall register\+\_\+vanilla\+\_\+onhit\+\_\+handlers (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__onhit__registry_8cpp_source_l00060}{60}} of file \mbox{\hyperlink{sf__onhit__registry_8cpp_source}{sf\+\_\+onhit\+\_\+registry.\+cpp}}.
+
+\Hypertarget{sf__onhit__registry_8h_a8fb8bc103c9a7b0f89558250af0293ca}\index{sf\_onhit\_registry.h@{sf\_onhit\_registry.h}!registerOnHitHandler@{registerOnHitHandler}}
+\index{registerOnHitHandler@{registerOnHitHandler}!sf\_onhit\_registry.h@{sf\_onhit\_registry.h}}
+\doxysubsubsection{\texorpdfstring{registerOnHitHandler()}{registerOnHitHandler()}}
+{\footnotesize\ttfamily \label{sf__onhit__registry_8h_a8fb8bc103c9a7b0f89558250af0293ca} 
+void register\+On\+Hit\+Handler (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{spell\+\_\+line\+\_\+id}{, }\item[{\mbox{\hyperlink{sf__registration__functions_8h_afc33c0496ccf8b60de8f29929de6e565}{onhit\+\_\+handler\+\_\+ptr}}}]{handler}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_a3e8710f28511f2f23efc53abe698d2b7}{On\+Hit\+Phase}}}]{phase}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Definition at line \mbox{\hyperlink{sf__onhit__registry_8cpp_source_l00015}{15}} of file \mbox{\hyperlink{sf__onhit__registry_8cpp_source}{sf\+\_\+onhit\+\_\+registry.\+cpp}}.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__onhit__registry_8h_a8fb8bc103c9a7b0f89558250af0293ca_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__onhit__registry_8h_a8fb8bc103c9a7b0f89558250af0293ca_icgraph}
+\end{center}
+\end{figure}

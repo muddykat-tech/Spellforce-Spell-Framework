@@ -33,7 +33,8 @@ typedef enum : uint16_t
     AOE_SPELL = 0x80,
     SEIGE_AURA_SPELL = 0x100,
     AURA_SPELL = 0x200,
-    SPELL_TAG_COUNT = 11
+    STACKABLE_SPELL = 0x400,
+    SPELL_TAG_COUNT = 12
 } SpellTag;
 
 /* |-========== General Structures ==========-| */

@@ -1,0 +1,243 @@
+\doxysection{src/api/sf\+\_\+ai\+\_\+functions.h File Reference}
+\hypertarget{sf__ai__functions_8h}{}\label{sf__ai__functions_8h}\index{src/api/sf\_ai\_functions.h@{src/api/sf\_ai\_functions.h}}
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include "{}sf\+\_\+general\+\_\+structures.\+h"{}}\newline
+Include dependency graph for sf\+\_\+ai\+\_\+functions.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=255pt]{sf__ai__functions_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sf__ai__functions_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{sf__ai__functions_8h_ab898071398b359603a35c202e9c65f3b}{\+\_\+\+\_\+attribute\+\_\+\+\_\+}} ((packed))
+\item 
+struct \mbox{\hyperlink{sf__ai__functions_8h_adb715832ffacb80abf49da19f6d4cf78}{\+\_\+\+\_\+attribute}} ((packed))
+\item 
+\mbox{\hyperlink{sf__ai__functions_8h_ae86f67d1d8ec942c92b655419d5fb6cd}{DECLARE\+\_\+\+FUNCTION}} (\mbox{\hyperlink{sf__general__structures_8h_a07619fa231562f2cc55bd33173b4c765}{SF\+\_\+\+SGt\+Figure\+Action}} \texorpdfstring{$\ast$}{*}, get\+Target\+Action, \mbox{\hyperlink{sf__general__structures_8h_adcfde5041b3e58539ba533680e23d9b0}{SF\+\_\+\+CGd\+Figure}} \texorpdfstring{$\ast$}{*}figure, \mbox{\hyperlink{sf__general__structures_8h_a07619fa231562f2cc55bd33173b4c765}{SF\+\_\+\+SGt\+Figure\+Action}} \texorpdfstring{$\ast$}{*}action, uint16\+\_\+t \mbox{\hyperlink{sf__toolbox__functions_8h_a1df661aef5db9714e4b8646fa8e7cbdc}{figure\+\_\+id}})
+\item 
+\mbox{\hyperlink{sf__ai__functions_8h_a3a7803fb5f049d17564d3cae070a2500}{DECLARE\+\_\+\+FUNCTION}} (\mbox{\hyperlink{sf__general__structures_8h_a07619fa231562f2cc55bd33173b4c765}{SF\+\_\+\+SGt\+Figure\+Action}} \texorpdfstring{$\ast$}{*}, get\+Figure\+Action, \mbox{\hyperlink{sf__general__structures_8h_adcfde5041b3e58539ba533680e23d9b0}{SF\+\_\+\+CGd\+Figure}} \texorpdfstring{$\ast$}{*}figure, \mbox{\hyperlink{sf__general__structures_8h_a07619fa231562f2cc55bd33173b4c765}{SF\+\_\+\+SGt\+Figure\+Action}} \texorpdfstring{$\ast$}{*}action, uint16\+\_\+t \mbox{\hyperlink{sf__toolbox__functions_8h_a1df661aef5db9714e4b8646fa8e7cbdc}{figure\+\_\+id}}, uint8\+\_\+t action\+\_\+index)
+\item 
+\mbox{\hyperlink{sf__ai__functions_8h_a36023d1a49b11d8aa52091cbaa973156}{DECLARE\+\_\+\+FUNCTION}} (void, set\+AICurrent\+Action\+Ranking, \mbox{\hyperlink{sf__ai__functions_8h_afa0b3dda911f5160951038e1311f754c}{SF\+\_\+\+CGd\+Battle\+Development}} \texorpdfstring{$\ast$}{*}\+\_\+this, int rank)
+\item 
+\mbox{\hyperlink{sf__ai__functions_8h_a4dd27a933faab7e4f1f0115a9ea27756}{DECLARE\+\_\+\+FUNCTION}} (int, get\+AICurrent\+Action\+Ranking, \mbox{\hyperlink{sf__ai__functions_8h_afa0b3dda911f5160951038e1311f754c}{SF\+\_\+\+CGd\+Battle\+Development}} \texorpdfstring{$\ast$}{*}\+\_\+this)
+\item 
+\mbox{\hyperlink{sf__ai__functions_8h_a437e45f4cb487a4dabcc605ed1019650}{DECLARE\+\_\+\+FUNCTION}} (bool, can\+Figure\+Do\+Action, \mbox{\hyperlink{sf__ai__functions_8h_afa0b3dda911f5160951038e1311f754c}{SF\+\_\+\+CGd\+Battle\+Development}} \texorpdfstring{$\ast$}{*}\+\_\+this, \mbox{\hyperlink{sf__general__structures_8h_a07619fa231562f2cc55bd33173b4c765}{SF\+\_\+\+SGt\+Figure\+Action}} \texorpdfstring{$\ast$}{*}action)
+\item 
+\mbox{\hyperlink{sf__ai__functions_8h_a28fc5bfcec341cfd77b5b1b8d85d9892}{DECLARE\+\_\+\+FUNCTION}} (void, get\+Action\+Stats, \mbox{\hyperlink{sf__ai__functions_8h_afa0b3dda911f5160951038e1311f754c}{SF\+\_\+\+CGd\+Battle\+Development}} \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t \texorpdfstring{$\ast$}{*}min\+Range, uint16\+\_\+t \texorpdfstring{$\ast$}{*}max\+Range, \mbox{\hyperlink{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}{SF\+\_\+\+CGd\+Resource\+Spell}} \texorpdfstring{$\ast$}{*}spell\+Data)
+\item 
+\mbox{\hyperlink{sf__ai__functions_8h_adf6d52dd1d2d403e2ea8d1ad29937ef6}{DECLARE\+\_\+\+FUNCTION}} (bool, is\+AIVector\+Empty, void \texorpdfstring{$\ast$}{*}\+\_\+this)
+\item 
+\mbox{\hyperlink{sf__ai__functions_8h_abae74ddfe93304b89bdff99d179b4850}{DECLARE\+\_\+\+FUNCTION}} (uint16\+\_\+t \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}, get\+AIVector\+First\+Element, void \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}pvalue)
+\item 
+\mbox{\hyperlink{sf__ai__functions_8h_a9603792b1345f08306dee034571314c4}{DECLARE\+\_\+\+FUNCTION}} (uint16\+\_\+t \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}, get\+AIVector\+Get\+Current, void \texorpdfstring{$\ast$}{*}\+\_\+this, uint16\+\_\+t \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}value)
+\item 
+\mbox{\hyperlink{sf__ai__functions_8h_acc39c6dc6423a4bf5f4804b5f9badd09}{DECLARE\+\_\+\+FUNCTION}} (int, get\+AIVector\+Length, void \texorpdfstring{$\ast$}{*}\+\_\+this)
+\item 
+\mbox{\hyperlink{sf__ai__functions_8h_ab678987bc5879f19d1dbdc1e9e649177}{DECLARE\+\_\+\+FUNCTION}} (uint16\+\_\+t, get\+Cast\+Type, void \texorpdfstring{$\ast$}{*}resource, uint16\+\_\+t spell\+ID)
+\item 
+\mbox{\hyperlink{sf__ai__functions_8h_a79a1efe8ecbf8f6a8507d955a01e87ff}{DECLARE\+\_\+\+FUNCTION}} (void \texorpdfstring{$\ast$}{*}, AC60\+Add\+Or\+Get\+Entity, void \texorpdfstring{$\ast$}{*}\+\_\+autoclass60, uint16\+\_\+t entity\+\_\+index)
+\item 
+\mbox{\hyperlink{sf__ai__functions_8h_a72affa73fc0d5c1b2b4ec97a8add990d}{DECLARE\+\_\+\+FUNCTION}} (\mbox{\hyperlink{sf__general__structures_8h_aa44e45471f7b6c436abe46e7d9d728c9}{SF\+\_\+\+Coord}} \texorpdfstring{$\ast$}{*}, get\+Position\+To\+Cast\+Ally, \mbox{\hyperlink{sf__ai__functions_8h_afa0b3dda911f5160951038e1311f754c}{SF\+\_\+\+CGd\+Battle\+Development}} \texorpdfstring{$\ast$}{*}\+\_\+this, \mbox{\hyperlink{sf__general__structures_8h_aa44e45471f7b6c436abe46e7d9d728c9}{SF\+\_\+\+Coord}} \texorpdfstring{$\ast$}{*}param\+\_\+1, void \texorpdfstring{$\ast$}{*}std\+\_\+vector\+\_\+uint16\+\_\+t)
+\item 
+\mbox{\hyperlink{sf__ai__functions_8h_a5386b2c0bfad97c1231a8508b9c14f22}{DECLARE\+\_\+\+FUNCTION}} (\mbox{\hyperlink{sf__general__structures_8h_aa44e45471f7b6c436abe46e7d9d728c9}{SF\+\_\+\+Coord}} \texorpdfstring{$\ast$}{*}, get\+Position\+To\+Cast\+Enemy, \mbox{\hyperlink{sf__ai__functions_8h_afa0b3dda911f5160951038e1311f754c}{SF\+\_\+\+CGd\+Battle\+Development}} \texorpdfstring{$\ast$}{*}\+\_\+this, \mbox{\hyperlink{sf__general__structures_8h_aa44e45471f7b6c436abe46e7d9d728c9}{SF\+\_\+\+Coord}} \texorpdfstring{$\ast$}{*}param\+\_\+1, void \texorpdfstring{$\ast$}{*}std\+\_\+vector\+\_\+uint16\+\_\+t)
+\item 
+\mbox{\hyperlink{sf__ai__functions_8h_a3ce9a94fe2d9f8bd6915dff9511f8e36}{DECLARE\+\_\+\+FUNCTION}} (bool, is\+Unknown\+World\+Feature, \mbox{\hyperlink{sf__general__structures_8h_afaafd0a4f93b6d4e95de3f0e494c941b}{SF\+\_\+\+CGd\+World\+Tool\+Box}} \texorpdfstring{$\ast$}{*}, uint16\+\_\+t figure\+\_\+index, \mbox{\hyperlink{sf__general__structures_8h_aa44e45471f7b6c436abe46e7d9d728c9}{SF\+\_\+\+Coord}} \texorpdfstring{$\ast$}{*}param2, \mbox{\hyperlink{sf__general__structures_8h_aa44e45471f7b6c436abe46e7d9d728c9}{SF\+\_\+\+Coord}} \texorpdfstring{$\ast$}{*}param3, uint32\+\_\+t param4, \mbox{\hyperlink{sf__general__structures_8h_aa44e45471f7b6c436abe46e7d9d728c9}{SF\+\_\+\+Coord}} \texorpdfstring{$\ast$}{*}param5, uint16\+\_\+t param6)
+\item 
+\mbox{\hyperlink{sf__ai__functions_8h_a49e7fe82c9b51d388a800e0325e31bae}{DECLARE\+\_\+\+FUNCTION\+\_\+\+GROUP}} (Ai, get\+Target\+Action\+\_\+ptr get\+Target\+Action;get\+Figure\+Action\+\_\+ptr get\+Figure\+Action;can\+Figure\+Do\+Action\+\_\+ptr can\+Figure\+Do\+Action;set\+AICurrent\+Action\+Ranking\+\_\+ptr set\+AICurrent\+Action\+Ranking;get\+AICurrent\+Action\+Ranking\+\_\+ptr get\+AICurrent\+Action\+Ranking;is\+AIVector\+Empty\+\_\+ptr is\+AIVector\+Empty;get\+AIVector\+First\+Element\+\_\+ptr get\+AIVector\+First\+Element;get\+AIVector\+Get\+Current\+\_\+ptr get\+AIVector\+Get\+Current;get\+AIVector\+Length\+\_\+ptr get\+AIVector\+Length;AC60\+Add\+Or\+Get\+Entity\+\_\+ptr AC60\+Add\+Or\+Get\+Entity;get\+Action\+Stats\+\_\+ptr get\+Action\+Stats;get\+Cast\+Type\+\_\+ptr get\+Cast\+Type;get\+Position\+To\+Cast\+Ally\+\_\+ptr get\+Position\+To\+Cast\+Ally;get\+Position\+To\+Cast\+Enemy\+\_\+ptr get\+Position\+To\+Cast\+Enemy;is\+Unknown\+World\+Feature\+\_\+ptr is\+Unknown\+World\+Feature;)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{sf__ai__functions_8h_adf7edd1d8e4e17c44cd5488cd7cc308e}{ushort\+\_\+list\+\_\+node}}
+\item 
+\mbox{\hyperlink{sf__ai__functions_8h_a3b2f327c9acacac6607e05b8bf8d3044}{Auto\+Class60\+\_\+data}}
+\item 
+\mbox{\hyperlink{sf__ai__functions_8h_a76be63358a79fc66bf634f23e8e5f06c}{Auto\+Class60}}
+\item 
+\mbox{\hyperlink{sf__ai__functions_8h_abe9802c6c942020f09667f94085e5bfc}{CGd\+AIBattle\+Data}}
+\item 
+\mbox{\hyperlink{sf__ai__functions_8h_afa0b3dda911f5160951038e1311f754c}{SF\+\_\+\+CGd\+Battle\+Development}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{sf__ai__functions_8h_adb715832ffacb80abf49da19f6d4cf78}\index{sf\_ai\_functions.h@{sf\_ai\_functions.h}!\_\_attribute@{\_\_attribute}}
+\index{\_\_attribute@{\_\_attribute}!sf\_ai\_functions.h@{sf\_ai\_functions.h}}
+\doxysubsubsection{\texorpdfstring{\_\_attribute()}{\_\_attribute()}}
+{\footnotesize\ttfamily \label{sf__ai__functions_8h_adb715832ffacb80abf49da19f6d4cf78} 
+struct \+\_\+\+\_\+attribute (\begin{DoxyParamCaption}\item[{(packed)}]{}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__ai__functions_8h_source_l00011}{11}} of file \mbox{\hyperlink{sf__ai__functions_8h_source}{sf\+\_\+ai\+\_\+functions.\+h}}.
+
+\Hypertarget{sf__ai__functions_8h_ab898071398b359603a35c202e9c65f3b}\index{sf\_ai\_functions.h@{sf\_ai\_functions.h}!\_\_attribute\_\_@{\_\_attribute\_\_}}
+\index{\_\_attribute\_\_@{\_\_attribute\_\_}!sf\_ai\_functions.h@{sf\_ai\_functions.h}}
+\doxysubsubsection{\texorpdfstring{\_\_attribute\_\_()}{\_\_attribute\_\_()}}
+{\footnotesize\ttfamily \label{sf__ai__functions_8h_ab898071398b359603a35c202e9c65f3b} 
+struct \+\_\+\+\_\+attribute\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{(packed)}]{}{}\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sf__ai__functions_8h_source_l00001}{1}} of file \mbox{\hyperlink{sf__ai__functions_8h_source}{sf\+\_\+ai\+\_\+functions.\+h}}.
+
+\Hypertarget{sf__ai__functions_8h_a437e45f4cb487a4dabcc605ed1019650}\index{sf\_ai\_functions.h@{sf\_ai\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_ai\_functions.h@{sf\_ai\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [1/15]}}
+{\footnotesize\ttfamily \label{sf__ai__functions_8h_a437e45f4cb487a4dabcc605ed1019650} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{bool}]{}{, }\item[{can\+Figure\+Do\+Action}]{}{, }\item[{\mbox{\hyperlink{sf__ai__functions_8h_afa0b3dda911f5160951038e1311f754c}{SF\+\_\+\+CGd\+Battle\+Development}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_a07619fa231562f2cc55bd33173b4c765}{SF\+\_\+\+SGt\+Figure\+Action}} \texorpdfstring{$\ast$}{*}}]{action}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__ai__functions_8h_adf6d52dd1d2d403e2ea8d1ad29937ef6}\index{sf\_ai\_functions.h@{sf\_ai\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_ai\_functions.h@{sf\_ai\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [2/15]}}
+{\footnotesize\ttfamily \label{sf__ai__functions_8h_adf6d52dd1d2d403e2ea8d1ad29937ef6} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{bool}]{}{, }\item[{is\+AIVector\+Empty}]{}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__ai__functions_8h_a3ce9a94fe2d9f8bd6915dff9511f8e36}\index{sf\_ai\_functions.h@{sf\_ai\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_ai\_functions.h@{sf\_ai\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [3/15]}}
+{\footnotesize\ttfamily \label{sf__ai__functions_8h_a3ce9a94fe2d9f8bd6915dff9511f8e36} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{bool}]{}{, }\item[{is\+Unknown\+World\+Feature}]{}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_afaafd0a4f93b6d4e95de3f0e494c941b}{SF\+\_\+\+CGd\+World\+Tool\+Box}} \texorpdfstring{$\ast$}{*}}]{}{, }\item[{uint16\+\_\+t}]{figure\+\_\+index}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_aa44e45471f7b6c436abe46e7d9d728c9}{SF\+\_\+\+Coord}} \texorpdfstring{$\ast$}{*}}]{param2}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_aa44e45471f7b6c436abe46e7d9d728c9}{SF\+\_\+\+Coord}} \texorpdfstring{$\ast$}{*}}]{param3}{, }\item[{uint32\+\_\+t}]{param4}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_aa44e45471f7b6c436abe46e7d9d728c9}{SF\+\_\+\+Coord}} \texorpdfstring{$\ast$}{*}}]{param5}{, }\item[{uint16\+\_\+t}]{param6}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__ai__functions_8h_a4dd27a933faab7e4f1f0115a9ea27756}\index{sf\_ai\_functions.h@{sf\_ai\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_ai\_functions.h@{sf\_ai\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [4/15]}}
+{\footnotesize\ttfamily \label{sf__ai__functions_8h_a4dd27a933faab7e4f1f0115a9ea27756} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{int}]{}{, }\item[{get\+AICurrent\+Action\+Ranking}]{}{, }\item[{\mbox{\hyperlink{sf__ai__functions_8h_afa0b3dda911f5160951038e1311f754c}{SF\+\_\+\+CGd\+Battle\+Development}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__ai__functions_8h_acc39c6dc6423a4bf5f4804b5f9badd09}\index{sf\_ai\_functions.h@{sf\_ai\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_ai\_functions.h@{sf\_ai\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [5/15]}}
+{\footnotesize\ttfamily \label{sf__ai__functions_8h_acc39c6dc6423a4bf5f4804b5f9badd09} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{int}]{}{, }\item[{get\+AIVector\+Length}]{}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__ai__functions_8h_a72affa73fc0d5c1b2b4ec97a8add990d}\index{sf\_ai\_functions.h@{sf\_ai\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_ai\_functions.h@{sf\_ai\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [6/15]}}
+{\footnotesize\ttfamily \label{sf__ai__functions_8h_a72affa73fc0d5c1b2b4ec97a8add990d} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_aa44e45471f7b6c436abe46e7d9d728c9}{SF\+\_\+\+Coord}} \texorpdfstring{$\ast$}{*}}]{}{, }\item[{get\+Position\+To\+Cast\+Ally}]{}{, }\item[{\mbox{\hyperlink{sf__ai__functions_8h_afa0b3dda911f5160951038e1311f754c}{SF\+\_\+\+CGd\+Battle\+Development}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_aa44e45471f7b6c436abe46e7d9d728c9}{SF\+\_\+\+Coord}} \texorpdfstring{$\ast$}{*}}]{param\+\_\+1}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{std\+\_\+vector\+\_\+uint16\+\_\+t}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__ai__functions_8h_a5386b2c0bfad97c1231a8508b9c14f22}\index{sf\_ai\_functions.h@{sf\_ai\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_ai\_functions.h@{sf\_ai\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [7/15]}}
+{\footnotesize\ttfamily \label{sf__ai__functions_8h_a5386b2c0bfad97c1231a8508b9c14f22} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_aa44e45471f7b6c436abe46e7d9d728c9}{SF\+\_\+\+Coord}} \texorpdfstring{$\ast$}{*}}]{}{, }\item[{get\+Position\+To\+Cast\+Enemy}]{}{, }\item[{\mbox{\hyperlink{sf__ai__functions_8h_afa0b3dda911f5160951038e1311f754c}{SF\+\_\+\+CGd\+Battle\+Development}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_aa44e45471f7b6c436abe46e7d9d728c9}{SF\+\_\+\+Coord}} \texorpdfstring{$\ast$}{*}}]{param\+\_\+1}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{std\+\_\+vector\+\_\+uint16\+\_\+t}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__ai__functions_8h_a3a7803fb5f049d17564d3cae070a2500}\index{sf\_ai\_functions.h@{sf\_ai\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_ai\_functions.h@{sf\_ai\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [8/15]}}
+{\footnotesize\ttfamily \label{sf__ai__functions_8h_a3a7803fb5f049d17564d3cae070a2500} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a07619fa231562f2cc55bd33173b4c765}{SF\+\_\+\+SGt\+Figure\+Action}} \texorpdfstring{$\ast$}{*}}]{}{, }\item[{get\+Figure\+Action}]{}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_adcfde5041b3e58539ba533680e23d9b0}{SF\+\_\+\+CGd\+Figure}} \texorpdfstring{$\ast$}{*}}]{figure}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_a07619fa231562f2cc55bd33173b4c765}{SF\+\_\+\+SGt\+Figure\+Action}} \texorpdfstring{$\ast$}{*}}]{action}{, }\item[{uint16\+\_\+t}]{figure\+\_\+id}{, }\item[{uint8\+\_\+t}]{action\+\_\+index}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__ai__functions_8h_ae86f67d1d8ec942c92b655419d5fb6cd}\index{sf\_ai\_functions.h@{sf\_ai\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_ai\_functions.h@{sf\_ai\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [9/15]}}
+{\footnotesize\ttfamily \label{sf__ai__functions_8h_ae86f67d1d8ec942c92b655419d5fb6cd} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sf__general__structures_8h_a07619fa231562f2cc55bd33173b4c765}{SF\+\_\+\+SGt\+Figure\+Action}} \texorpdfstring{$\ast$}{*}}]{}{, }\item[{get\+Target\+Action}]{}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_adcfde5041b3e58539ba533680e23d9b0}{SF\+\_\+\+CGd\+Figure}} \texorpdfstring{$\ast$}{*}}]{figure}{, }\item[{\mbox{\hyperlink{sf__general__structures_8h_a07619fa231562f2cc55bd33173b4c765}{SF\+\_\+\+SGt\+Figure\+Action}} \texorpdfstring{$\ast$}{*}}]{action}{, }\item[{uint16\+\_\+t}]{figure\+\_\+id}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__ai__functions_8h_abae74ddfe93304b89bdff99d179b4850}\index{sf\_ai\_functions.h@{sf\_ai\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_ai\_functions.h@{sf\_ai\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [10/15]}}
+{\footnotesize\ttfamily \label{sf__ai__functions_8h_abae74ddfe93304b89bdff99d179b4850} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{uint16\+\_\+t \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{}{, }\item[{get\+AIVector\+First\+Element}]{}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{pvalue}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__ai__functions_8h_a9603792b1345f08306dee034571314c4}\index{sf\_ai\_functions.h@{sf\_ai\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_ai\_functions.h@{sf\_ai\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [11/15]}}
+{\footnotesize\ttfamily \label{sf__ai__functions_8h_a9603792b1345f08306dee034571314c4} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{uint16\+\_\+t \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{}{, }\item[{get\+AIVector\+Get\+Current}]{}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{value}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__ai__functions_8h_ab678987bc5879f19d1dbdc1e9e649177}\index{sf\_ai\_functions.h@{sf\_ai\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_ai\_functions.h@{sf\_ai\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [12/15]}}
+{\footnotesize\ttfamily \label{sf__ai__functions_8h_ab678987bc5879f19d1dbdc1e9e649177} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{}{, }\item[{get\+Cast\+Type}]{}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{resource}{, }\item[{uint16\+\_\+t}]{spell\+ID}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__ai__functions_8h_a79a1efe8ecbf8f6a8507d955a01e87ff}\index{sf\_ai\_functions.h@{sf\_ai\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_ai\_functions.h@{sf\_ai\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [13/15]}}
+{\footnotesize\ttfamily \label{sf__ai__functions_8h_a79a1efe8ecbf8f6a8507d955a01e87ff} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{}{, }\item[{AC60\+Add\+Or\+Get\+Entity}]{}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{\+\_\+autoclass60}{, }\item[{uint16\+\_\+t}]{entity\+\_\+index}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__ai__functions_8h_a28fc5bfcec341cfd77b5b1b8d85d9892}\index{sf\_ai\_functions.h@{sf\_ai\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_ai\_functions.h@{sf\_ai\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [14/15]}}
+{\footnotesize\ttfamily \label{sf__ai__functions_8h_a28fc5bfcec341cfd77b5b1b8d85d9892} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{void}]{}{, }\item[{get\+Action\+Stats}]{}{, }\item[{\mbox{\hyperlink{sf__ai__functions_8h_afa0b3dda911f5160951038e1311f754c}{SF\+\_\+\+CGd\+Battle\+Development}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{uint16\+\_\+t \texorpdfstring{$\ast$}{*}}]{min\+Range}{, }\item[{uint16\+\_\+t \texorpdfstring{$\ast$}{*}}]{max\+Range}{, }\item[{\mbox{\hyperlink{sf__spell__functions_8h_a89b47ba315c541ed76ff336111d27c5d}{SF\+\_\+\+CGd\+Resource\+Spell}} \texorpdfstring{$\ast$}{*}}]{spell\+Data}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__ai__functions_8h_a36023d1a49b11d8aa52091cbaa973156}\index{sf\_ai\_functions.h@{sf\_ai\_functions.h}!DECLARE\_FUNCTION@{DECLARE\_FUNCTION}}
+\index{DECLARE\_FUNCTION@{DECLARE\_FUNCTION}!sf\_ai\_functions.h@{sf\_ai\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION()}{DECLARE\_FUNCTION()}\hspace{0.1cm}{\footnotesize\ttfamily [15/15]}}
+{\footnotesize\ttfamily \label{sf__ai__functions_8h_a36023d1a49b11d8aa52091cbaa973156} 
+DECLARE\+\_\+\+FUNCTION (\begin{DoxyParamCaption}\item[{void}]{}{, }\item[{set\+AICurrent\+Action\+Ranking}]{}{, }\item[{\mbox{\hyperlink{sf__ai__functions_8h_afa0b3dda911f5160951038e1311f754c}{SF\+\_\+\+CGd\+Battle\+Development}} \texorpdfstring{$\ast$}{*}}]{\+\_\+this}{, }\item[{int}]{rank}{}\end{DoxyParamCaption})}
+
+\Hypertarget{sf__ai__functions_8h_a49e7fe82c9b51d388a800e0325e31bae}\index{sf\_ai\_functions.h@{sf\_ai\_functions.h}!DECLARE\_FUNCTION\_GROUP@{DECLARE\_FUNCTION\_GROUP}}
+\index{DECLARE\_FUNCTION\_GROUP@{DECLARE\_FUNCTION\_GROUP}!sf\_ai\_functions.h@{sf\_ai\_functions.h}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_FUNCTION\_GROUP()}{DECLARE\_FUNCTION\_GROUP()}}
+{\footnotesize\ttfamily \label{sf__ai__functions_8h_a49e7fe82c9b51d388a800e0325e31bae} 
+DECLARE\+\_\+\+FUNCTION\+\_\+\+GROUP (\begin{DoxyParamCaption}\item[{Ai}]{}{, }\item[{get\+Target\+Action\+\_\+ptr get\+Target\+Action;get\+Figure\+Action\+\_\+ptr get\+Figure\+Action;can\+Figure\+Do\+Action\+\_\+ptr can\+Figure\+Do\+Action;set\+AICurrent\+Action\+Ranking\+\_\+ptr set\+AICurrent\+Action\+Ranking;get\+AICurrent\+Action\+Ranking\+\_\+ptr get\+AICurrent\+Action\+Ranking;is\+AIVector\+Empty\+\_\+ptr is\+AIVector\+Empty;get\+AIVector\+First\+Element\+\_\+ptr get\+AIVector\+First\+Element;get\+AIVector\+Get\+Current\+\_\+ptr get\+AIVector\+Get\+Current;get\+AIVector\+Length\+\_\+ptr get\+AIVector\+Length;AC60\+Add\+Or\+Get\+Entity\+\_\+ptr AC60\+Add\+Or\+Get\+Entity;get\+Action\+Stats\+\_\+ptr get\+Action\+Stats;get\+Cast\+Type\+\_\+ptr get\+Cast\+Type;get\+Position\+To\+Cast\+Ally\+\_\+ptr get\+Position\+To\+Cast\+Ally;get\+Position\+To\+Cast\+Enemy\+\_\+ptr get\+Position\+To\+Cast\+Enemy;is\+Unknown\+World\+Feature\+\_\+ptr is\+Unknown\+World\+Feature;}]{}{}\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{sf__ai__functions_8h_a76be63358a79fc66bf634f23e8e5f06c}\index{sf\_ai\_functions.h@{sf\_ai\_functions.h}!AutoClass60@{AutoClass60}}
+\index{AutoClass60@{AutoClass60}!sf\_ai\_functions.h@{sf\_ai\_functions.h}}
+\doxysubsubsection{\texorpdfstring{AutoClass60}{AutoClass60}}
+{\footnotesize\ttfamily \label{sf__ai__functions_8h_a76be63358a79fc66bf634f23e8e5f06c} 
+Auto\+Class60}
+
+
+
+Definition at line \mbox{\hyperlink{sf__ai__functions_8h_source_l00024}{24}} of file \mbox{\hyperlink{sf__ai__functions_8h_source}{sf\+\_\+ai\+\_\+functions.\+h}}.
+
+\Hypertarget{sf__ai__functions_8h_a3b2f327c9acacac6607e05b8bf8d3044}\index{sf\_ai\_functions.h@{sf\_ai\_functions.h}!AutoClass60\_data@{AutoClass60\_data}}
+\index{AutoClass60\_data@{AutoClass60\_data}!sf\_ai\_functions.h@{sf\_ai\_functions.h}}
+\doxysubsubsection{\texorpdfstring{AutoClass60\_data}{AutoClass60\_data}}
+{\footnotesize\ttfamily \label{sf__ai__functions_8h_a3b2f327c9acacac6607e05b8bf8d3044} 
+Auto\+Class60\+\_\+data}
+
+
+
+Definition at line \mbox{\hyperlink{sf__ai__functions_8h_source_l00018}{18}} of file \mbox{\hyperlink{sf__ai__functions_8h_source}{sf\+\_\+ai\+\_\+functions.\+h}}.
+
+\Hypertarget{sf__ai__functions_8h_abe9802c6c942020f09667f94085e5bfc}\index{sf\_ai\_functions.h@{sf\_ai\_functions.h}!CGdAIBattleData@{CGdAIBattleData}}
+\index{CGdAIBattleData@{CGdAIBattleData}!sf\_ai\_functions.h@{sf\_ai\_functions.h}}
+\doxysubsubsection{\texorpdfstring{CGdAIBattleData}{CGdAIBattleData}}
+{\footnotesize\ttfamily \label{sf__ai__functions_8h_abe9802c6c942020f09667f94085e5bfc} 
+CGd\+AIBattle\+Data}
+
+
+
+Definition at line \mbox{\hyperlink{sf__ai__functions_8h_source_l00115}{115}} of file \mbox{\hyperlink{sf__ai__functions_8h_source}{sf\+\_\+ai\+\_\+functions.\+h}}.
+
+\Hypertarget{sf__ai__functions_8h_afa0b3dda911f5160951038e1311f754c}\index{sf\_ai\_functions.h@{sf\_ai\_functions.h}!SF\_CGdBattleDevelopment@{SF\_CGdBattleDevelopment}}
+\index{SF\_CGdBattleDevelopment@{SF\_CGdBattleDevelopment}!sf\_ai\_functions.h@{sf\_ai\_functions.h}}
+\doxysubsubsection{\texorpdfstring{SF\_CGdBattleDevelopment}{SF\_CGdBattleDevelopment}}
+{\footnotesize\ttfamily \label{sf__ai__functions_8h_afa0b3dda911f5160951038e1311f754c} 
+SF\+\_\+\+CGd\+Battle\+Development}
+
+
+
+Definition at line \mbox{\hyperlink{sf__ai__functions_8h_source_l00122}{122}} of file \mbox{\hyperlink{sf__ai__functions_8h_source}{sf\+\_\+ai\+\_\+functions.\+h}}.
+
+\Hypertarget{sf__ai__functions_8h_adf7edd1d8e4e17c44cd5488cd7cc308e}\index{sf\_ai\_functions.h@{sf\_ai\_functions.h}!ushort\_list\_node@{ushort\_list\_node}}
+\index{ushort\_list\_node@{ushort\_list\_node}!sf\_ai\_functions.h@{sf\_ai\_functions.h}}
+\doxysubsubsection{\texorpdfstring{ushort\_list\_node}{ushort\_list\_node}}
+{\footnotesize\ttfamily \label{sf__ai__functions_8h_adf7edd1d8e4e17c44cd5488cd7cc308e} 
+ushort\+\_\+list\+\_\+node}
+
+
+
+Definition at line \mbox{\hyperlink{sf__ai__functions_8h_source_l00011}{11}} of file \mbox{\hyperlink{sf__ai__functions_8h_source}{sf\+\_\+ai\+\_\+functions.\+h}}.
+
