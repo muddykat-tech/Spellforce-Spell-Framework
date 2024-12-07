@@ -1,6 +1,20 @@
 var searchData=
 [
-  ['buildingdealdamage_0',['buildingDealDamage',['../struct_toolbox_functions.html#a966a2dbb2d911dbe8ae16db4b825722e',1,'ToolboxFunctions']]],
-  ['buildingiteratorinit_1',['buildingIteratorInit',['../struct_iterator_functions.html#af6027e683c72be4dd07f6f2b5d7bc2cd',1,'IteratorFunctions']]],
-  ['buildingiteratorsetpointers_2',['buildingIteratorSetPointers',['../struct_iterator_functions.html#a148690c09172b5579ebdea65ddd83a82',1,'IteratorFunctions']]]
+  ['b_0',['B',['../struct_s_f___color.html#a5ce66c9abb9788759002fba9f943bd86',1,'SF_Color']]],
+  ['base_5fval_1',['base_val',['../struct_figure_statistic.html#adecfb0e44cdc201ed4e5225f129cf6cb',1,'FigureStatistic::base_val'],['../struct_figure_statistic_ext.html#ab0c82aff68cc613013b334bb2e5290f3',1,'FigureStatisticExt::base_val']]],
+  ['battledata_2',['battleData',['../struct_s_f___c_gd_battle_development.html#a86048e10c8fdc07e7435c4e8a30fa7d4',1,'SF_CGdBattleDevelopment']]],
+  ['battlefactory_3',['battleFactory',['../struct_s_f___c_gd_battle_development.html#a9844ddcf5419af8f60f9241ed322b609',1,'SF_CGdBattleDevelopment']]],
+  ['block_5fvalue_4',['block_value',['../struct_s_f__world__unkn__3.html#ab91a27958f9c45c53e5015ee2e9f9981',1,'SF_world_unkn_3']]],
+  ['bonus_5fmultiplier_5',['bonus_multiplier',['../struct_figure_statistic.html#a718d3dc6f34df83c02e01e20f17637d3',1,'FigureStatistic::bonus_multiplier'],['../struct_figure_statistic_ext.html#abe2cbb04b3644d51a838573d1ff3aaa1',1,'FigureStatisticExt::bonus_multiplier']]],
+  ['bonus_5fval_6',['bonus_val',['../struct_figure_statistic.html#a5c7821df331ebd5be44bc8c533475002',1,'FigureStatistic::bonus_val'],['../struct_figure_statistic_ext.html#a2b0c93d925c0881d69b3076922e25375',1,'FigureStatisticExt::bonus_val']]],
+  ['btable_5fptr_7',['btable_ptr',['../struct_c_gd_building_iterator.html#acbf05fa8ad0e954f03aa15bbda71302d',1,'CGdBuildingIterator']]],
+  ['build_5fmax_8',['build_max',['../struct_gd_building.html#aa7b3738c075567a4c9b3469f383715c4',1,'GdBuilding']]],
+  ['build_5fup_9',['build_up',['../struct_gd_building.html#ac502e61458014752308917c9bf3ef958',1,'GdBuilding']]],
+  ['building_10',['building',['../struct_gd_figure.html#a34a5e5098ac8185fdf37f7464d2a5acd',1,'GdFigure']]],
+  ['building_5fally_11',['building_ally',['../struct_c_gd_a_i_battle_data.html#a288c3ee04a0b83e48f2bc76a5a657bc5',1,'CGdAIBattleData']]],
+  ['building_5fnot_5fally_12',['building_not_ally',['../struct_c_gd_a_i_battle_data.html#a927bb84b8ccd160661d029c653083965',1,'CGdAIBattleData']]],
+  ['buildingdealdamage_13',['buildingDealDamage',['../struct_toolbox_functions.html#a966a2dbb2d911dbe8ae16db4b825722e',1,'ToolboxFunctions']]],
+  ['buildingiteratorinit_14',['buildingIteratorInit',['../struct_iterator_functions.html#af6027e683c72be4dd07f6f2b5d7bc2cd',1,'IteratorFunctions']]],
+  ['buildingiteratorsetpointers_15',['buildingIteratorSetPointers',['../struct_iterator_functions.html#a148690c09172b5579ebdea65ddd83a82',1,'IteratorFunctions']]],
+  ['buildings_16',['buildings',['../struct_s_f___c_gd_building.html#a90777909b3f208638bcd083e27c8cf73',1,'SF_CGdBuilding']]]
 ];

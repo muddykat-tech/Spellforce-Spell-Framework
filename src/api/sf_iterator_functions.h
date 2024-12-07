@@ -54,6 +54,11 @@ DECLARE_FUNCTION(void, buildingIteratorSetPointers, CGdBuildingIterator *iterato
 
 DECLARE_FUNCTION(uint16_t, getNextBuilding, CGdBuildingIterator *_this);
 
+/**
+ * 
+ * @ingroup API
+ * @brief Group of functions related to Iteration, Often used for AOE or Chain Like Spells.
+ */
 typedef struct
 {
 	figureIteratorInit_ptr figureIteratorInit;

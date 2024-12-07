@@ -115,7 +115,7 @@ Include dependency graph for sf_mod_registry.h:</div>
 <area shape="poly" title=" " alt="" coords="595,49,595,80,590,80,590,49"/>
 <area shape="rect" title=" " alt="" coords="849,96,887,123"/>
 <area shape="poly" title=" " alt="" coords="660,42,835,93,834,98,658,47"/>
-<area shape="rect" href="sf__general__structures_8h.html" title=" " alt="" coords="434,395,591,421"/>
+<area shape="rect" href="sf__general__structures_8h.html" title="Group of Structures and Enums used throught SFSF." alt="" coords="434,395,591,421"/>
 <area shape="poly" title=" " alt="" coords="482,200,460,227,437,264,428,284,424,305,424,326,431,345,448,368,471,385,468,389,444,371,426,348,419,327,418,305,423,283,432,261,455,224,478,196"/>
 <area shape="rect" title=" " alt="" coords="372,469,436,496"/>
 <area shape="poly" title=" " alt="" coords="442,194,336,211,206,238,144,256,89,275,45,298,17,322,9,342,9,369,17,397,31,419,54,434,88,446,177,464,274,473,357,478,357,483,274,479,176,469,87,451,52,439,28,423,12,399,4,370,4,341,13,318,42,293,87,271,142,251,205,233,335,206,441,189"/>
@@ -194,13 +194,14 @@ This graph shows which files directly or indirectly include this file:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ab760f8f899f39400156538bbd0c21c68" id="r_ab760f8f899f39400156538bbd0c21c68"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab760f8f899f39400156538bbd0c21c68">register_mod_spells</a> ()</td></tr>
+<tr class="memdesc:ab760f8f899f39400156538bbd0c21c68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers the mod spells and performs basic conflict checking.  <br /></td></tr>
 <tr class="separator:ab760f8f899f39400156538bbd0c21c68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af3ffd25a39d8cd3e76880a062109e619" id="r_af3ffd25a39d8cd3e76880a062109e619"><td class="memItemLeft" align="right" valign="top">uint16_t __thiscall&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af3ffd25a39d8cd3e76880a062109e619">getSpellTags</a> (uint16_t spell_line_id)</td></tr>
 <tr class="separator:af3ffd25a39d8cd3e76880a062109e619"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a938a112888fa66ca03ebb37f831d7b84" id="r_a938a112888fa66ca03ebb37f831d7b84"><td class="memItemLeft" align="right" valign="top">std::list&lt; <a class="el" href="sf__registration__functions_8h.html#a2ad426e9a8e695a45844a45fd5e4dd91">SFSpell</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a938a112888fa66ca03ebb37f831d7b84">g_internal_spell_list</a></td></tr>
+<tr class="memitem:a938a112888fa66ca03ebb37f831d7b84" id="r_a938a112888fa66ca03ebb37f831d7b84"><td class="memItemLeft" align="right" valign="top">std::list&lt; <a class="el" href="struct_s_f_spell.html">SFSpell</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a938a112888fa66ca03ebb37f831d7b84">g_internal_spell_list</a></td></tr>
 <tr class="separator:a938a112888fa66ca03ebb37f831d7b84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
@@ -259,9 +260,10 @@ Here is the caller graph for this function:</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Registers the mod spells and performs basic conflict checking.</p>
+
+<p>Registers the mod spells and performs basic conflict checking. </p>
 <p>This function iterates over the g_internal_spell_list and registers each spell by adding it to the spell_id_map and spell_effect_id_map. It checks for conflicts by checking if the spell_id or spell_effect_id is already registered by another mod. If a conflict is detected, an error message is logged. If no conflict is detected, the spell is added to the respective map.</p>
-<p>Additionally, it registers the spell type handler, spell effect handler, and spell end handler if the SFSpell struct has a non-null handler pointer.</p>
+<p>Additionally, it registers the spell type handler, spell effect handler, and spell end handler if the <a class="el" href="struct_s_f_spell.html">SFSpell</a> struct has a non-null handler pointer.</p>
 <p>After registering all the spells, the memory allocated for each spell is freed. </p>
 
 <p class="definition">Definition at line <a class="el" href="sf__mod__registry_8cpp_source.html#l00136">136</a> of file <a class="el" href="sf__mod__registry_8cpp_source.html">sf_mod_registry.cpp</a>.</p>
@@ -270,7 +272,7 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__mod__registry_8h_ab760f8f899f39400156538bbd0c21c68_cgraph.png" border="0" usemap="#asf__mod__registry_8h_ab760f8f899f39400156538bbd0c21c68_cgraph" alt=""/></div>
 <map name="asf__mod__registry_8h_ab760f8f899f39400156538bbd0c21c68_cgraph" id="asf__mod__registry_8h_ab760f8f899f39400156538bbd0c21c68_cgraph">
-<area shape="rect" title=" " alt="" coords="5,298,143,324"/>
+<area shape="rect" title="Registers the mod spells and performs basic conflict checking." alt="" coords="5,298,143,324"/>
 <area shape="rect" href="sf__wrappers_8c.html#aad4d6cb3f073a7fff67de1c1daa2c1f7" title=" " alt="" coords="451,7,522,34"/>
 <area shape="poly" title=" " alt="" coords="74,297,82,248,101,179,116,143,135,107,159,75,189,48,218,30,250,18,316,5,381,4,436,9,435,14,381,9,317,10,251,23,220,35,192,52,163,78,140,110,121,145,106,181,87,249,79,298"/>
 <area shape="rect" href="sf__wrappers_8c.html#a4fd90de0913ed15b0812918255559a55" title=" " alt="" coords="454,70,520,96"/>
@@ -297,7 +299,7 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="79,324,88,374,107,445,121,484,140,522,164,557,192,588,197,591,194,596,189,592,160,561,136,525,116,486,101,447,82,375,74,325"/>
 <area shape="rect" href="sf__subeffect__registry_8cpp.html#a8c60d0b898c4269742ebb3f19049215e" title=" " alt="" coords="204,551,370,578"/>
 <area shape="poly" title=" " alt="" coords="81,324,92,366,113,424,146,485,167,513,192,537,198,541,195,546,189,541,163,516,142,488,108,426,87,368,76,326"/>
-<area shape="rect" href="sf__console__hook_8c.html#af6b694e632c7b92e802468161b511edf" title=" " alt="" coords="589,70,680,96"/>
+<area shape="rect" href="group___console_hook.html#gaf6b694e632c7b92e802468161b511edf" title=" " alt="" coords="589,70,680,96"/>
 <area shape="poly" title=" " alt="" coords="521,32,588,61,586,66,519,37"/>
 <area shape="rect" href="namespace_a_s_i.html#a05ca5acefdcb7e955f472b60e5511a1a" title="returns &quot;real&quot; virtual address of given memory offset" alt="" coords="731,44,823,71"/>
 <area shape="poly" title=" " alt="" coords="680,72,715,66,716,71,681,78"/>
@@ -325,7 +327,7 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="sf__mod__registry_8h_ab760f8f899f39400156538bbd0c21c68_icgraph.png" border="0" usemap="#asf__mod__registry_8h_ab760f8f899f39400156538bbd0c21c68_icgraph" alt=""/></div>
 <map name="asf__mod__registry_8h_ab760f8f899f39400156538bbd0c21c68_icgraph" id="asf__mod__registry_8h_ab760f8f899f39400156538bbd0c21c68_icgraph">
-<area shape="rect" title=" " alt="" coords="303,5,440,32"/>
+<area shape="rect" title="Registers the mod spells and performs basic conflict checking." alt="" coords="303,5,440,32"/>
 <area shape="rect" href="sf__registry_8cpp.html#aa653b9256d033c2d02e806489c6a4271" title="Initializes the Spellforce Spell Framework (SFSF)." alt="" coords="119,5,255,32"/>
 <area shape="poly" title=" " alt="" coords="287,21,255,21,255,16,287,16"/>
 <area shape="rect" href="sfsf_8cpp.html#a26e64fb39b69bcd9d1274d279f1561b9" title="Entry point for the DLL." alt="" coords="5,5,71,32"/>
@@ -346,7 +348,7 @@ Here is the caller graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::list&lt;<a class="el" href="sf__registration__functions_8h.html#a2ad426e9a8e695a45844a45fd5e4dd91">SFSpell</a> *&gt; g_internal_spell_list</td>
+          <td class="memname">std::list&lt;<a class="el" href="struct_s_f_spell.html">SFSpell</a> *&gt; g_internal_spell_list</td>
         </tr>
       </table>
   </td>

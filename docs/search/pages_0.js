@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['api_0',['Spellforce Spell Framework API',['../index.html',1,'']]]
+  ['framework_0',['Spellforce Spell Framework',['../index.html',1,'']]]
 ];

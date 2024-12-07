@@ -1,3 +1,10 @@
+/** 
+ * @defgroup Hooks Assembly Hooks
+ * @ingroup Internal
+ * @details This group contains all the hooks used in SFSF. 
+ * @see initialize_data_hooks()
+ */
+
 #include "sf_wrappers.h"
 #include "sf_modloader.h"
 #include "sf_hooks.h"

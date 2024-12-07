@@ -89,9 +89,8 @@ $(function(){ initResizable(false); });
 <div id="doc-content">
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle"><div class="title">sf_toolbox_functions.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -108,7 +107,7 @@ Include dependency graph for sf_toolbox_functions.h:</div>
 <area shape="poly" title=" " alt="" coords="105,51,77,71,54,97,43,126,40,156,34,155,38,125,50,95,74,67,102,46"/>
 <area shape="rect" title=" " alt="" coords="163,171,237,197"/>
 <area shape="poly" title=" " alt="" coords="187,46,214,67,236,95,240,112,238,129,223,159,218,157,233,127,235,112,231,97,211,71,184,51"/>
-<area shape="rect" href="sf__general__structures_8h.html" title=" " alt="" coords="64,96,222,123"/>
+<area shape="rect" href="sf__general__structures_8h.html" title="Group of Structures and Enums used throught SFSF." alt="" coords="64,96,222,123"/>
 <area shape="poly" title=" " alt="" coords="146,49,146,80,140,80,140,49"/>
 <area shape="poly" title=" " alt="" coords="126,125,70,164,67,159,123,121"/>
 <area shape="poly" title=" " alt="" coords="155,122,183,157,179,160,151,125"/>
@@ -294,753 +293,299 @@ This graph shows which files directly or indirectly include this file:</div>
 <p><a href="sf__toolbox__functions_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
-Classes</h2></td></tr>
+Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_toolbox_functions.html">ToolboxFunctions</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds most of the Toolbox Functions relevent for custom spells. Includes functions for the manipulation of Figures.  <a href="struct_toolbox_functions.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ac95e32195fb62e68222454c546e0678e" id="r_ac95e32195fb62e68222454c546e0678e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac95e32195fb62e68222454c546e0678e">DECLARE_FUNCTION</a> (void, dealDamage, <a class="el" href="sf__general__structures_8h.html#a17f35cab19a4752dcf2d3fb1ea9a9f0e">SF_CGdFigureToolbox</a> *<a class="el" href="#ad9ee9f2be03c14a38976a7aa466f9402">CGdFigureToolbox</a>, uint16_t source_index, uint16_t target_index, uint32_t damage, uint32_t is_spell_damage, uint32_t param5, uint32_t param6)</td></tr>
-<tr class="separator:ac95e32195fb62e68222454c546e0678e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70204056079eb853b48269d2bc42524b" id="r_a70204056079eb853b48269d2bc42524b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a70204056079eb853b48269d2bc42524b">DECLARE_FUNCTION</a> (bool, isTargetable, <a class="el" href="sf__general__structures_8h.html#a17f35cab19a4752dcf2d3fb1ea9a9f0e">SF_CGdFigureToolbox</a> *<a class="el" href="#ad9ee9f2be03c14a38976a7aa466f9402">CGdFigureToolbox</a>, uint16_t figure_index)</td></tr>
-<tr class="separator:a70204056079eb853b48269d2bc42524b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0341d053c6e4f1939ab1eec7b1c3ab8d" id="r_a0341d053c6e4f1939ab1eec7b1c3ab8d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0341d053c6e4f1939ab1eec7b1c3ab8d">DECLARE_FUNCTION</a> (uint16_t, figuresCheckHostile, <a class="el" href="sf__general__structures_8h.html#a17f35cab19a4752dcf2d3fb1ea9a9f0e">SF_CGdFigureToolbox</a> *<a class="el" href="#ad9ee9f2be03c14a38976a7aa466f9402">CGdFigureToolbox</a>, uint16_t source_index, uint16_t target_index)</td></tr>
-<tr class="separator:a0341d053c6e4f1939ab1eec7b1c3ab8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3912c7ebe39f6623e0e4bd49a881b6ec" id="r_a3912c7ebe39f6623e0e4bd49a881b6ec"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3912c7ebe39f6623e0e4bd49a881b6ec">DECLARE_FUNCTION</a> (void, buildingDealDamage, void *CGdBuildingToolBox, uint16_t <a class="el" href="#a1df661aef5db9714e4b8646fa8e7cbdc">figure_id</a>, uint16_t building_id, uint16_t damage, uint32_t is_spell_damage)</td></tr>
-<tr class="separator:a3912c7ebe39f6623e0e4bd49a881b6ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7dab165de408682f9eeb5dd78f921079" id="r_a7dab165de408682f9eeb5dd78f921079"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7dab165de408682f9eeb5dd78f921079">DECLARE_FUNCTION</a> (uint16_t, figuresCheckNeutral, <a class="el" href="sf__general__structures_8h.html#a17f35cab19a4752dcf2d3fb1ea9a9f0e">SF_CGdFigureToolbox</a> *<a class="el" href="#ad9ee9f2be03c14a38976a7aa466f9402">CGdFigureToolbox</a>, uint16_t source_index, uint16_t target_index)</td></tr>
-<tr class="separator:a7dab165de408682f9eeb5dd78f921079"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5506f9a1d66b8d25a66041ed06210a2" id="r_aa5506f9a1d66b8d25a66041ed06210a2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa5506f9a1d66b8d25a66041ed06210a2">DECLARE_FUNCTION</a> (uint16_t, figuresCheckFriendly, <a class="el" href="sf__general__structures_8h.html#a17f35cab19a4752dcf2d3fb1ea9a9f0e">SF_CGdFigureToolbox</a> *<a class="el" href="#ad9ee9f2be03c14a38976a7aa466f9402">CGdFigureToolbox</a>, uint16_t source_index, uint16_t target_index)</td></tr>
-<tr class="separator:aa5506f9a1d66b8d25a66041ed06210a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89937b1108ce2e176ea0eeb680e57b43" id="r_a89937b1108ce2e176ea0eeb680e57b43"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a89937b1108ce2e176ea0eeb680e57b43">DECLARE_FUNCTION</a> (uint32_t, hasSpellOnIt, <a class="el" href="sf__general__structures_8h.html#a17f35cab19a4752dcf2d3fb1ea9a9f0e">SF_CGdFigureToolbox</a> *<a class="el" href="#ad9ee9f2be03c14a38976a7aa466f9402">CGdFigureToolbox</a>, uint16_t figure_index, uint16_t spell_line_id)</td></tr>
-<tr class="separator:a89937b1108ce2e176ea0eeb680e57b43"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b35e6cf329753a40f669c30219dedcb" id="r_a5b35e6cf329753a40f669c30219dedcb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5b35e6cf329753a40f669c30219dedcb">DECLARE_FUNCTION</a> (void, rescaleLevelStats, <a class="el" href="sf__general__structures_8h.html#a17f35cab19a4752dcf2d3fb1ea9a9f0e">SF_CGdFigureToolbox</a> *<a class="el" href="#ad9ee9f2be03c14a38976a7aa466f9402">CGdFigureToolbox</a>, uint16_t figure_index)</td></tr>
-<tr class="separator:a5b35e6cf329753a40f669c30219dedcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6be9dfad55d9c7a783e3eb622c5f63cf" id="r_a6be9dfad55d9c7a783e3eb622c5f63cf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6be9dfad55d9c7a783e3eb622c5f63cf">DECLARE_FUNCTION</a> (void, addSpellToFigure, <a class="el" href="sf__general__structures_8h.html#a17f35cab19a4752dcf2d3fb1ea9a9f0e">SF_CGdFigureToolbox</a> *<a class="el" href="#ad9ee9f2be03c14a38976a7aa466f9402">CGdFigureToolbox</a>, uint16_t figure_index, uint16_t spell_index)</td></tr>
-<tr class="separator:a6be9dfad55d9c7a783e3eb622c5f63cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9b3e40485a72e5f1145fd433fa3cc21c" id="r_a9b3e40485a72e5f1145fd433fa3cc21c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9b3e40485a72e5f1145fd433fa3cc21c">DECLARE_FUNCTION</a> (uint16_t, getFigureFromWorld, void *CGdWorldToolBox, uint16_t param1, uint16_t param2, uint32_t param3)</td></tr>
-<tr class="separator:a9b3e40485a72e5f1145fd433fa3cc21c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a954cac99b63368eb1f2952cd2562b6fd" id="r_a954cac99b63368eb1f2952cd2562b6fd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a954cac99b63368eb1f2952cd2562b6fd">DECLARE_FUNCTION</a> (uint16_t, getSpellIndexOfType, <a class="el" href="sf__general__structures_8h.html#a17f35cab19a4752dcf2d3fb1ea9a9f0e">SF_CGdFigureToolbox</a> *<a class="el" href="#ad9ee9f2be03c14a38976a7aa466f9402">CGdFigureToolbox</a>, uint16_t target_index, uint16_t spell_line, uint16_t last_known_index)</td></tr>
-<tr class="separator:a954cac99b63368eb1f2952cd2562b6fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8504f39952dc097599564510e6cbe1d8" id="r_a8504f39952dc097599564510e6cbe1d8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8504f39952dc097599564510e6cbe1d8">DECLARE_FUNCTION</a> (uint16_t, getSpellIndexFromDLL, uint32_t *CGdDoubleLinkedList, uint16_t spell_job_start_node)</td></tr>
-<tr class="separator:a8504f39952dc097599564510e6cbe1d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a621bddea58e009fc4cf442d25ad16402" id="r_a621bddea58e009fc4cf442d25ad16402"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a621bddea58e009fc4cf442d25ad16402">DECLARE_FUNCTION</a> (uint16_t, getNextNode, uint32_t *CGdDoubleLinkedList, uint16_t current_node)</td></tr>
-<tr class="separator:a621bddea58e009fc4cf442d25ad16402"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c36260d7183a0dfe97a1bac66a000e5" id="r_a1c36260d7183a0dfe97a1bac66a000e5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1c36260d7183a0dfe97a1bac66a000e5">DECLARE_FUNCTION</a> (void, figureSetNewJob, void *CGdFigureJobs, uint32_t <a class="el" href="#a1df661aef5db9714e4b8646fa8e7cbdc">figure_id</a>, uint32_t new_job, uint32_t param_3, uint32_t param_4, uint32_t param_5)</td></tr>
-<tr class="separator:a1c36260d7183a0dfe97a1bac66a000e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7df35ab8b0950fadd607931466284fc3" id="r_a7df35ab8b0950fadd607931466284fc3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7df35ab8b0950fadd607931466284fc3">DECLARE_FUNCTION</a> (uint32_t, removeSpellFromList, <a class="el" href="sf__general__structures_8h.html#a17f35cab19a4752dcf2d3fb1ea9a9f0e">SF_CGdFigureToolbox</a> *<a class="el" href="#ad9ee9f2be03c14a38976a7aa466f9402">CGdFigureToolbox</a>, uint16_t param_1, uint16_t param_2)</td></tr>
-<tr class="separator:a7df35ab8b0950fadd607931466284fc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a383732afd7ce50aa8e0d4540c5f4670b" id="r_a383732afd7ce50aa8e0d4540c5f4670b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a383732afd7ce50aa8e0d4540c5f4670b">DECLARE_FUNCTION</a> (uint16_t, addUnit, <a class="el" href="sf__general__structures_8h.html#a17f35cab19a4752dcf2d3fb1ea9a9f0e">SF_CGdFigureToolbox</a> *_this, uint16_t posX, uint16_t posY, uint16_t owner, uint16_t figure_type, uint16_t spawn_effect, int npc_id, int faction, int disable_ai)</td></tr>
-<tr class="separator:a383732afd7ce50aa8e0d4540c5f4670b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a95eed628083f31b2725674a2e149b6b1" id="r_a95eed628083f31b2725674a2e149b6b1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a95eed628083f31b2725674a2e149b6b1">DECLARE_FUNCTION</a> (bool, findClosestFreePosition, <a class="el" href="sf__general__structures_8h.html#afaafd0a4f93b6d4e95de3f0e494c941b">SF_CGdWorldToolBox</a> *_this, <a class="el" href="sf__general__structures_8h.html#aa44e45471f7b6c436abe46e7d9d728c9">SF_Coord</a> *param_1, <a class="el" href="sf__general__structures_8h.html#aa44e45471f7b6c436abe46e7d9d728c9">SF_Coord</a> *param_2, uint16_t sector, <a class="el" href="sf__general__structures_8h.html#aa44e45471f7b6c436abe46e7d9d728c9">SF_Coord</a> *return_value) DECLARE_FUNCTION(bool</td></tr>
-<tr class="separator:a95eed628083f31b2725674a2e149b6b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:a007132d5785ba177732c22a8453f8cf8" id="r_a007132d5785ba177732c22a8453f8cf8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a007132d5785ba177732c22a8453f8cf8">isUnitMelee</a></td></tr>
-<tr class="separator:a007132d5785ba177732c22a8453f8cf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9ee9f2be03c14a38976a7aa466f9402" id="r_ad9ee9f2be03c14a38976a7aa466f9402"><td class="memItemLeft" align="right" valign="top"><a class="el" href="sf__general__structures_8h.html#a17f35cab19a4752dcf2d3fb1ea9a9f0e">SF_CGdFigureToolbox</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad9ee9f2be03c14a38976a7aa466f9402">CGdFigureToolbox</a></td></tr>
-<tr class="separator:ad9ee9f2be03c14a38976a7aa466f9402"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1df661aef5db9714e4b8646fa8e7cbdc" id="r_a1df661aef5db9714e4b8646fa8e7cbdc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="sf__general__structures_8h.html#a17f35cab19a4752dcf2d3fb1ea9a9f0e">SF_CGdFigureToolbox</a> uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1df661aef5db9714e4b8646fa8e7cbdc">figure_id</a></td></tr>
-<tr class="separator:a1df661aef5db9714e4b8646fa8e7cbdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a311944b70a323a37e4106c5d5e15735c" id="r_a311944b70a323a37e4106c5d5e15735c"><td class="memItemLeft" align="right" valign="top">typedef void(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a311944b70a323a37e4106c5d5e15735c">dealDamage_ptr</a>) (<a class="el" href="struct_s_f___c_gd_figure_toolbox.html">SF_CGdFigureToolbox</a> *CGdFigureToolbox, uint16_t source_index, uint16_t target_index, uint32_t damage, uint32_t is_spell_damage, uint32_t param5, uint32_t param6)</td></tr>
+<tr class="separator:a311944b70a323a37e4106c5d5e15735c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a8bb96d25460502d82e3e0e26bda699" id="r_a4a8bb96d25460502d82e3e0e26bda699"><td class="memItemLeft" align="right" valign="top">typedef bool(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4a8bb96d25460502d82e3e0e26bda699">isTargetable_ptr</a>) (<a class="el" href="struct_s_f___c_gd_figure_toolbox.html">SF_CGdFigureToolbox</a> *CGdFigureToolbox, uint16_t figure_index)</td></tr>
+<tr class="separator:a4a8bb96d25460502d82e3e0e26bda699"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08e77f11b6a68b2a1da02afcdd5c079c" id="r_a08e77f11b6a68b2a1da02afcdd5c079c"><td class="memItemLeft" align="right" valign="top">typedef uint16_t(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a08e77f11b6a68b2a1da02afcdd5c079c">figuresCheckHostile_ptr</a>) (<a class="el" href="struct_s_f___c_gd_figure_toolbox.html">SF_CGdFigureToolbox</a> *CGdFigureToolbox, uint16_t source_index, uint16_t target_index)</td></tr>
+<tr class="separator:a08e77f11b6a68b2a1da02afcdd5c079c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8205bd4a3d72052ff59b88e9ea10f3d" id="r_ad8205bd4a3d72052ff59b88e9ea10f3d"><td class="memItemLeft" align="right" valign="top">typedef void(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad8205bd4a3d72052ff59b88e9ea10f3d">buildingDealDamage_ptr</a>) (void *CGdBuildingToolBox, uint16_t figure_id, uint16_t building_id, uint16_t damage, uint32_t is_spell_damage)</td></tr>
+<tr class="separator:ad8205bd4a3d72052ff59b88e9ea10f3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae03c33331bc89ca7f833897416e52cf2" id="r_ae03c33331bc89ca7f833897416e52cf2"><td class="memItemLeft" align="right" valign="top">typedef uint16_t(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae03c33331bc89ca7f833897416e52cf2">figuresCheckNeutral_ptr</a>) (<a class="el" href="struct_s_f___c_gd_figure_toolbox.html">SF_CGdFigureToolbox</a> *CGdFigureToolbox, uint16_t source_index, uint16_t target_index)</td></tr>
+<tr class="separator:ae03c33331bc89ca7f833897416e52cf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad80205c0659a6ae0de259e1ac4905d3c" id="r_ad80205c0659a6ae0de259e1ac4905d3c"><td class="memItemLeft" align="right" valign="top">typedef uint16_t(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad80205c0659a6ae0de259e1ac4905d3c">figuresCheckFriendly_ptr</a>) (<a class="el" href="struct_s_f___c_gd_figure_toolbox.html">SF_CGdFigureToolbox</a> *CGdFigureToolbox, uint16_t source_index, uint16_t target_index)</td></tr>
+<tr class="separator:ad80205c0659a6ae0de259e1ac4905d3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b239bb349617379e75345a8745fb79a" id="r_a5b239bb349617379e75345a8745fb79a"><td class="memItemLeft" align="right" valign="top">typedef uint32_t(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5b239bb349617379e75345a8745fb79a">hasSpellOnIt_ptr</a>) (<a class="el" href="struct_s_f___c_gd_figure_toolbox.html">SF_CGdFigureToolbox</a> *CGdFigureToolbox, uint16_t figure_index, uint16_t spell_line_id)</td></tr>
+<tr class="separator:a5b239bb349617379e75345a8745fb79a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1a643a2cf203f752944d5d669118025" id="r_ab1a643a2cf203f752944d5d669118025"><td class="memItemLeft" align="right" valign="top">typedef void(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab1a643a2cf203f752944d5d669118025">rescaleLevelStats_ptr</a>) (<a class="el" href="struct_s_f___c_gd_figure_toolbox.html">SF_CGdFigureToolbox</a> *CGdFigureToolbox, uint16_t figure_index)</td></tr>
+<tr class="separator:ab1a643a2cf203f752944d5d669118025"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1609befc160be514b378b7e69f523994" id="r_a1609befc160be514b378b7e69f523994"><td class="memItemLeft" align="right" valign="top">typedef void(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1609befc160be514b378b7e69f523994">addSpellToFigure_ptr</a>) (<a class="el" href="struct_s_f___c_gd_figure_toolbox.html">SF_CGdFigureToolbox</a> *CGdFigureToolbox, uint16_t figure_index, uint16_t spell_index)</td></tr>
+<tr class="separator:a1609befc160be514b378b7e69f523994"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0697f61034be67837615b029df2c148a" id="r_a0697f61034be67837615b029df2c148a"><td class="memItemLeft" align="right" valign="top">typedef uint16_t(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0697f61034be67837615b029df2c148a">getFigureFromWorld_ptr</a>) (void *CGdWorldToolBox, uint16_t param1, uint16_t param2, uint32_t param3)</td></tr>
+<tr class="separator:a0697f61034be67837615b029df2c148a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8eb9b7d0acb0e04ae1e101564289ac07" id="r_a8eb9b7d0acb0e04ae1e101564289ac07"><td class="memItemLeft" align="right" valign="top">typedef uint16_t(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8eb9b7d0acb0e04ae1e101564289ac07">getSpellIndexOfType_ptr</a>) (<a class="el" href="struct_s_f___c_gd_figure_toolbox.html">SF_CGdFigureToolbox</a> *CGdFigureToolbox, uint16_t target_index, uint16_t spell_line, uint16_t last_known_index)</td></tr>
+<tr class="separator:a8eb9b7d0acb0e04ae1e101564289ac07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ad54eeb80b6895e66fd336c2009a4bc" id="r_a2ad54eeb80b6895e66fd336c2009a4bc"><td class="memItemLeft" align="right" valign="top">typedef uint16_t(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2ad54eeb80b6895e66fd336c2009a4bc">getSpellIndexFromDLL_ptr</a>) (uint32_t *CGdDoubleLinkedList, uint16_t spell_job_start_node)</td></tr>
+<tr class="separator:a2ad54eeb80b6895e66fd336c2009a4bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab2c382dadc87e7d4be7c82b845d20e1f" id="r_ab2c382dadc87e7d4be7c82b845d20e1f"><td class="memItemLeft" align="right" valign="top">typedef uint16_t(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab2c382dadc87e7d4be7c82b845d20e1f">getNextNode_ptr</a>) (uint32_t *CGdDoubleLinkedList, uint16_t current_node)</td></tr>
+<tr class="separator:ab2c382dadc87e7d4be7c82b845d20e1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af784cc894ff535e2db016bc4a1443b64" id="r_af784cc894ff535e2db016bc4a1443b64"><td class="memItemLeft" align="right" valign="top">typedef void(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af784cc894ff535e2db016bc4a1443b64">figureSetNewJob_ptr</a>) (void *CGdFigureJobs, uint32_t figure_id, uint32_t new_job, uint32_t param_3, uint32_t param_4, uint32_t param_5)</td></tr>
+<tr class="separator:af784cc894ff535e2db016bc4a1443b64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5df9983af6ac02a89170e9f5806777b2" id="r_a5df9983af6ac02a89170e9f5806777b2"><td class="memItemLeft" align="right" valign="top">typedef uint32_t(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5df9983af6ac02a89170e9f5806777b2">removeSpellFromList_ptr</a>) (<a class="el" href="struct_s_f___c_gd_figure_toolbox.html">SF_CGdFigureToolbox</a> *CGdFigureToolbox, uint16_t param_1, uint16_t param_2)</td></tr>
+<tr class="separator:a5df9983af6ac02a89170e9f5806777b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41d7c54eac8d59d85a7721a3b487e713" id="r_a41d7c54eac8d59d85a7721a3b487e713"><td class="memItemLeft" align="right" valign="top">typedef uint16_t(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a41d7c54eac8d59d85a7721a3b487e713">addUnit_ptr</a>) (<a class="el" href="struct_s_f___c_gd_figure_toolbox.html">SF_CGdFigureToolbox</a> *_this, uint16_t posX, uint16_t posY, uint16_t owner, uint16_t figure_type, uint16_t spawn_effect, int npc_id, int faction, int disable_ai)</td></tr>
+<tr class="separator:a41d7c54eac8d59d85a7721a3b487e713"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e2b17f65d6a7bbe80ead43dfe462175" id="r_a2e2b17f65d6a7bbe80ead43dfe462175"><td class="memItemLeft" align="right" valign="top">typedef bool(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2e2b17f65d6a7bbe80ead43dfe462175">findClosestFreePosition_ptr</a>) (<a class="el" href="struct_s_f___c_gd_world_tool_box.html">SF_CGdWorldToolBox</a> *_this, <a class="el" href="struct_s_f___coord.html">SF_Coord</a> *param_1, <a class="el" href="struct_s_f___coord.html">SF_Coord</a> *param_2, uint16_t sector, <a class="el" href="struct_s_f___coord.html">SF_Coord</a> *return_value)</td></tr>
+<tr class="separator:a2e2b17f65d6a7bbe80ead43dfe462175"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0271c8b065b5a74134d5e833290ece37" id="r_a0271c8b065b5a74134d5e833290ece37"><td class="memItemLeft" align="right" valign="top">typedef bool(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0271c8b065b5a74134d5e833290ece37">isUnitMelee_ptr</a>) (<a class="el" href="struct_s_f___c_gd_figure_toolbox.html">SF_CGdFigureToolbox</a> *CGdFigureToolbox, uint16_t figure_id)</td></tr>
+<tr class="separator:a0271c8b065b5a74134d5e833290ece37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="a95eed628083f31b2725674a2e149b6b1" name="a95eed628083f31b2725674a2e149b6b1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a95eed628083f31b2725674a2e149b6b1">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[1/17]</span></h2>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="a1609befc160be514b378b7e69f523994" name="a1609befc160be514b378b7e69f523994"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1609befc160be514b378b7e69f523994">&#9670;&#160;</a></span>addSpellToFigure_ptr</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">findClosestFreePosition</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#afaafd0a4f93b6d4e95de3f0e494c941b">SF_CGdWorldToolBox</a> *</td>          <td class="paramname"><span class="paramname"><em>_this</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#aa44e45471f7b6c436abe46e7d9d728c9">SF_Coord</a> *</td>          <td class="paramname"><span class="paramname"><em>param_1</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#aa44e45471f7b6c436abe46e7d9d728c9">SF_Coord</a> *</td>          <td class="paramname"><span class="paramname"><em>param_2</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>sector</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#aa44e45471f7b6c436abe46e7d9d728c9">SF_Coord</a> *</td>          <td class="paramname"><span class="paramname"><em>return_value</em></span>&#160;)</td>
+          <td class="memname">typedef void(__thiscall * addSpellToFigure_ptr) (<a class="el" href="struct_s_f___c_gd_figure_toolbox.html">SF_CGdFigureToolbox</a> *CGdFigureToolbox, uint16_t figure_index, uint16_t spell_index)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p class="definition">Definition at line <a class="el" href="sf__toolbox__functions_8h_source.html#l00015">15</a> of file <a class="el" href="sf__toolbox__functions_8h_source.html">sf_toolbox_functions.h</a>.</p>
+
 </div>
 </div>
-<a id="a70204056079eb853b48269d2bc42524b" name="a70204056079eb853b48269d2bc42524b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a70204056079eb853b48269d2bc42524b">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[2/17]</span></h2>
+<a id="a41d7c54eac8d59d85a7721a3b487e713" name="a41d7c54eac8d59d85a7721a3b487e713"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a41d7c54eac8d59d85a7721a3b487e713">&#9670;&#160;</a></span>addUnit_ptr</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">isTargetable</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a17f35cab19a4752dcf2d3fb1ea9a9f0e">SF_CGdFigureToolbox</a> *</td>          <td class="paramname"><span class="paramname"><em>CGdFigureToolbox</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>figure_index</em></span>&#160;)</td>
+          <td class="memname">typedef uint16_t(__thiscall * addUnit_ptr) (<a class="el" href="struct_s_f___c_gd_figure_toolbox.html">SF_CGdFigureToolbox</a> *_this, uint16_t posX, uint16_t posY, uint16_t owner, uint16_t figure_type, uint16_t spawn_effect, int npc_id, int faction, int disable_ai)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p class="definition">Definition at line <a class="el" href="sf__toolbox__functions_8h_source.html#l00023">23</a> of file <a class="el" href="sf__toolbox__functions_8h_source.html">sf_toolbox_functions.h</a>.</p>
+
 </div>
 </div>
-<a id="a383732afd7ce50aa8e0d4540c5f4670b" name="a383732afd7ce50aa8e0d4540c5f4670b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a383732afd7ce50aa8e0d4540c5f4670b">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[3/17]</span></h2>
+<a id="ad8205bd4a3d72052ff59b88e9ea10f3d" name="ad8205bd4a3d72052ff59b88e9ea10f3d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8205bd4a3d72052ff59b88e9ea10f3d">&#9670;&#160;</a></span>buildingDealDamage_ptr</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">addUnit</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a17f35cab19a4752dcf2d3fb1ea9a9f0e">SF_CGdFigureToolbox</a> *</td>          <td class="paramname"><span class="paramname"><em>_this</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>posX</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>posY</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>owner</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>figure_type</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>spawn_effect</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>npc_id</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>faction</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>disable_ai</em></span>&#160;)</td>
+          <td class="memname">typedef void(__thiscall * buildingDealDamage_ptr) (void *CGdBuildingToolBox, uint16_t figure_id, uint16_t building_id, uint16_t damage, uint32_t is_spell_damage)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p class="definition">Definition at line <a class="el" href="sf__toolbox__functions_8h_source.html#l00010">10</a> of file <a class="el" href="sf__toolbox__functions_8h_source.html">sf_toolbox_functions.h</a>.</p>
+
 </div>
 </div>
-<a id="aa5506f9a1d66b8d25a66041ed06210a2" name="aa5506f9a1d66b8d25a66041ed06210a2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa5506f9a1d66b8d25a66041ed06210a2">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[4/17]</span></h2>
+<a id="a311944b70a323a37e4106c5d5e15735c" name="a311944b70a323a37e4106c5d5e15735c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a311944b70a323a37e4106c5d5e15735c">&#9670;&#160;</a></span>dealDamage_ptr</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">figuresCheckFriendly</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a17f35cab19a4752dcf2d3fb1ea9a9f0e">SF_CGdFigureToolbox</a> *</td>          <td class="paramname"><span class="paramname"><em>CGdFigureToolbox</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>source_index</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>target_index</em></span>&#160;)</td>
+          <td class="memname">typedef void(__thiscall * dealDamage_ptr) (<a class="el" href="struct_s_f___c_gd_figure_toolbox.html">SF_CGdFigureToolbox</a> *CGdFigureToolbox, uint16_t source_index, uint16_t target_index, uint32_t damage, uint32_t is_spell_damage, uint32_t param5, uint32_t param6)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p class="definition">Definition at line <a class="el" href="sf__toolbox__functions_8h_source.html#l00007">7</a> of file <a class="el" href="sf__toolbox__functions_8h_source.html">sf_toolbox_functions.h</a>.</p>
+
 </div>
 </div>
-<a id="a0341d053c6e4f1939ab1eec7b1c3ab8d" name="a0341d053c6e4f1939ab1eec7b1c3ab8d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0341d053c6e4f1939ab1eec7b1c3ab8d">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[5/17]</span></h2>
+<a id="ad80205c0659a6ae0de259e1ac4905d3c" name="ad80205c0659a6ae0de259e1ac4905d3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad80205c0659a6ae0de259e1ac4905d3c">&#9670;&#160;</a></span>figuresCheckFriendly_ptr</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">figuresCheckHostile</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a17f35cab19a4752dcf2d3fb1ea9a9f0e">SF_CGdFigureToolbox</a> *</td>          <td class="paramname"><span class="paramname"><em>CGdFigureToolbox</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>source_index</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>target_index</em></span>&#160;)</td>
+          <td class="memname">typedef uint16_t(__thiscall * figuresCheckFriendly_ptr) (<a class="el" href="struct_s_f___c_gd_figure_toolbox.html">SF_CGdFigureToolbox</a> *CGdFigureToolbox, uint16_t source_index, uint16_t target_index)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p class="definition">Definition at line <a class="el" href="sf__toolbox__functions_8h_source.html#l00012">12</a> of file <a class="el" href="sf__toolbox__functions_8h_source.html">sf_toolbox_functions.h</a>.</p>
+
 </div>
 </div>
-<a id="a7dab165de408682f9eeb5dd78f921079" name="a7dab165de408682f9eeb5dd78f921079"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7dab165de408682f9eeb5dd78f921079">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[6/17]</span></h2>
+<a id="a08e77f11b6a68b2a1da02afcdd5c079c" name="a08e77f11b6a68b2a1da02afcdd5c079c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08e77f11b6a68b2a1da02afcdd5c079c">&#9670;&#160;</a></span>figuresCheckHostile_ptr</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">figuresCheckNeutral</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a17f35cab19a4752dcf2d3fb1ea9a9f0e">SF_CGdFigureToolbox</a> *</td>          <td class="paramname"><span class="paramname"><em>CGdFigureToolbox</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>source_index</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>target_index</em></span>&#160;)</td>
+          <td class="memname">typedef uint16_t(__thiscall * figuresCheckHostile_ptr) (<a class="el" href="struct_s_f___c_gd_figure_toolbox.html">SF_CGdFigureToolbox</a> *CGdFigureToolbox, uint16_t source_index, uint16_t target_index)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p class="definition">Definition at line <a class="el" href="sf__toolbox__functions_8h_source.html#l00009">9</a> of file <a class="el" href="sf__toolbox__functions_8h_source.html">sf_toolbox_functions.h</a>.</p>
+
 </div>
 </div>
-<a id="a9b3e40485a72e5f1145fd433fa3cc21c" name="a9b3e40485a72e5f1145fd433fa3cc21c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9b3e40485a72e5f1145fd433fa3cc21c">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[7/17]</span></h2>
+<a id="ae03c33331bc89ca7f833897416e52cf2" name="ae03c33331bc89ca7f833897416e52cf2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae03c33331bc89ca7f833897416e52cf2">&#9670;&#160;</a></span>figuresCheckNeutral_ptr</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">getFigureFromWorld</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>CGdWorldToolBox</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>param1</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>param2</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>param3</em></span>&#160;)</td>
+          <td class="memname">typedef uint16_t(__thiscall * figuresCheckNeutral_ptr) (<a class="el" href="struct_s_f___c_gd_figure_toolbox.html">SF_CGdFigureToolbox</a> *CGdFigureToolbox, uint16_t source_index, uint16_t target_index)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p class="definition">Definition at line <a class="el" href="sf__toolbox__functions_8h_source.html#l00011">11</a> of file <a class="el" href="sf__toolbox__functions_8h_source.html">sf_toolbox_functions.h</a>.</p>
+
 </div>
 </div>
-<a id="a621bddea58e009fc4cf442d25ad16402" name="a621bddea58e009fc4cf442d25ad16402"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a621bddea58e009fc4cf442d25ad16402">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[8/17]</span></h2>
+<a id="af784cc894ff535e2db016bc4a1443b64" name="af784cc894ff535e2db016bc4a1443b64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af784cc894ff535e2db016bc4a1443b64">&#9670;&#160;</a></span>figureSetNewJob_ptr</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">getNextNode</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *</td>          <td class="paramname"><span class="paramname"><em>CGdDoubleLinkedList</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>current_node</em></span>&#160;)</td>
+          <td class="memname">typedef void(__thiscall * figureSetNewJob_ptr) (void *CGdFigureJobs, uint32_t figure_id, uint32_t new_job, uint32_t param_3, uint32_t param_4, uint32_t param_5)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p class="definition">Definition at line <a class="el" href="sf__toolbox__functions_8h_source.html#l00020">20</a> of file <a class="el" href="sf__toolbox__functions_8h_source.html">sf_toolbox_functions.h</a>.</p>
+
 </div>
 </div>
-<a id="a8504f39952dc097599564510e6cbe1d8" name="a8504f39952dc097599564510e6cbe1d8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8504f39952dc097599564510e6cbe1d8">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[9/17]</span></h2>
+<a id="a2e2b17f65d6a7bbe80ead43dfe462175" name="a2e2b17f65d6a7bbe80ead43dfe462175"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e2b17f65d6a7bbe80ead43dfe462175">&#9670;&#160;</a></span>findClosestFreePosition_ptr</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">getSpellIndexFromDLL</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *</td>          <td class="paramname"><span class="paramname"><em>CGdDoubleLinkedList</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>spell_job_start_node</em></span>&#160;)</td>
+          <td class="memname">typedef bool(__thiscall * findClosestFreePosition_ptr) (<a class="el" href="struct_s_f___c_gd_world_tool_box.html">SF_CGdWorldToolBox</a> *_this, <a class="el" href="struct_s_f___coord.html">SF_Coord</a> *param_1, <a class="el" href="struct_s_f___coord.html">SF_Coord</a> *param_2, uint16_t sector, <a class="el" href="struct_s_f___coord.html">SF_Coord</a> *return_value)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p class="definition">Definition at line <a class="el" href="sf__toolbox__functions_8h_source.html#l00025">25</a> of file <a class="el" href="sf__toolbox__functions_8h_source.html">sf_toolbox_functions.h</a>.</p>
+
 </div>
 </div>
-<a id="a954cac99b63368eb1f2952cd2562b6fd" name="a954cac99b63368eb1f2952cd2562b6fd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a954cac99b63368eb1f2952cd2562b6fd">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[10/17]</span></h2>
+<a id="a0697f61034be67837615b029df2c148a" name="a0697f61034be67837615b029df2c148a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0697f61034be67837615b029df2c148a">&#9670;&#160;</a></span>getFigureFromWorld_ptr</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">getSpellIndexOfType</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a17f35cab19a4752dcf2d3fb1ea9a9f0e">SF_CGdFigureToolbox</a> *</td>          <td class="paramname"><span class="paramname"><em>CGdFigureToolbox</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>target_index</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>spell_line</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>last_known_index</em></span>&#160;)</td>
+          <td class="memname">typedef uint16_t(__thiscall * getFigureFromWorld_ptr) (void *CGdWorldToolBox, uint16_t param1, uint16_t param2, uint32_t param3)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p class="definition">Definition at line <a class="el" href="sf__toolbox__functions_8h_source.html#l00016">16</a> of file <a class="el" href="sf__toolbox__functions_8h_source.html">sf_toolbox_functions.h</a>.</p>
+
 </div>
 </div>
-<a id="a89937b1108ce2e176ea0eeb680e57b43" name="a89937b1108ce2e176ea0eeb680e57b43"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a89937b1108ce2e176ea0eeb680e57b43">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[11/17]</span></h2>
+<a id="ab2c382dadc87e7d4be7c82b845d20e1f" name="ab2c382dadc87e7d4be7c82b845d20e1f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab2c382dadc87e7d4be7c82b845d20e1f">&#9670;&#160;</a></span>getNextNode_ptr</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">hasSpellOnIt</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a17f35cab19a4752dcf2d3fb1ea9a9f0e">SF_CGdFigureToolbox</a> *</td>          <td class="paramname"><span class="paramname"><em>CGdFigureToolbox</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>figure_index</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>spell_line_id</em></span>&#160;)</td>
+          <td class="memname">typedef uint16_t(__thiscall * getNextNode_ptr) (uint32_t *CGdDoubleLinkedList, uint16_t current_node)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p class="definition">Definition at line <a class="el" href="sf__toolbox__functions_8h_source.html#l00019">19</a> of file <a class="el" href="sf__toolbox__functions_8h_source.html">sf_toolbox_functions.h</a>.</p>
+
 </div>
 </div>
-<a id="a7df35ab8b0950fadd607931466284fc3" name="a7df35ab8b0950fadd607931466284fc3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7df35ab8b0950fadd607931466284fc3">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[12/17]</span></h2>
+<a id="a2ad54eeb80b6895e66fd336c2009a4bc" name="a2ad54eeb80b6895e66fd336c2009a4bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ad54eeb80b6895e66fd336c2009a4bc">&#9670;&#160;</a></span>getSpellIndexFromDLL_ptr</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">removeSpellFromList</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a17f35cab19a4752dcf2d3fb1ea9a9f0e">SF_CGdFigureToolbox</a> *</td>          <td class="paramname"><span class="paramname"><em>CGdFigureToolbox</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>param_1</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>param_2</em></span>&#160;)</td>
+          <td class="memname">typedef uint16_t(__thiscall * getSpellIndexFromDLL_ptr) (uint32_t *CGdDoubleLinkedList, uint16_t spell_job_start_node)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p class="definition">Definition at line <a class="el" href="sf__toolbox__functions_8h_source.html#l00018">18</a> of file <a class="el" href="sf__toolbox__functions_8h_source.html">sf_toolbox_functions.h</a>.</p>
+
 </div>
 </div>
-<a id="a6be9dfad55d9c7a783e3eb622c5f63cf" name="a6be9dfad55d9c7a783e3eb622c5f63cf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6be9dfad55d9c7a783e3eb622c5f63cf">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[13/17]</span></h2>
+<a id="a8eb9b7d0acb0e04ae1e101564289ac07" name="a8eb9b7d0acb0e04ae1e101564289ac07"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8eb9b7d0acb0e04ae1e101564289ac07">&#9670;&#160;</a></span>getSpellIndexOfType_ptr</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">addSpellToFigure</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a17f35cab19a4752dcf2d3fb1ea9a9f0e">SF_CGdFigureToolbox</a> *</td>          <td class="paramname"><span class="paramname"><em>CGdFigureToolbox</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>figure_index</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>spell_index</em></span>&#160;)</td>
+          <td class="memname">typedef uint16_t(__thiscall * getSpellIndexOfType_ptr) (<a class="el" href="struct_s_f___c_gd_figure_toolbox.html">SF_CGdFigureToolbox</a> *CGdFigureToolbox, uint16_t target_index, uint16_t spell_line, uint16_t last_known_index)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p class="definition">Definition at line <a class="el" href="sf__toolbox__functions_8h_source.html#l00017">17</a> of file <a class="el" href="sf__toolbox__functions_8h_source.html">sf_toolbox_functions.h</a>.</p>
+
 </div>
 </div>
-<a id="a3912c7ebe39f6623e0e4bd49a881b6ec" name="a3912c7ebe39f6623e0e4bd49a881b6ec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3912c7ebe39f6623e0e4bd49a881b6ec">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[14/17]</span></h2>
+<a id="a5b239bb349617379e75345a8745fb79a" name="a5b239bb349617379e75345a8745fb79a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b239bb349617379e75345a8745fb79a">&#9670;&#160;</a></span>hasSpellOnIt_ptr</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">buildingDealDamage</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>CGdBuildingToolBox</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>figure_id</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>building_id</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>damage</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>is_spell_damage</em></span>&#160;)</td>
+          <td class="memname">typedef uint32_t(__thiscall * hasSpellOnIt_ptr) (<a class="el" href="struct_s_f___c_gd_figure_toolbox.html">SF_CGdFigureToolbox</a> *CGdFigureToolbox, uint16_t figure_index, uint16_t spell_line_id)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p class="definition">Definition at line <a class="el" href="sf__toolbox__functions_8h_source.html#l00013">13</a> of file <a class="el" href="sf__toolbox__functions_8h_source.html">sf_toolbox_functions.h</a>.</p>
+
 </div>
 </div>
-<a id="ac95e32195fb62e68222454c546e0678e" name="ac95e32195fb62e68222454c546e0678e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac95e32195fb62e68222454c546e0678e">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[15/17]</span></h2>
+<a id="a4a8bb96d25460502d82e3e0e26bda699" name="a4a8bb96d25460502d82e3e0e26bda699"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a8bb96d25460502d82e3e0e26bda699">&#9670;&#160;</a></span>isTargetable_ptr</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">dealDamage</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a17f35cab19a4752dcf2d3fb1ea9a9f0e">SF_CGdFigureToolbox</a> *</td>          <td class="paramname"><span class="paramname"><em>CGdFigureToolbox</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>source_index</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>target_index</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>damage</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>is_spell_damage</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>param5</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>param6</em></span>&#160;)</td>
+          <td class="memname">typedef bool(__thiscall * isTargetable_ptr) (<a class="el" href="struct_s_f___c_gd_figure_toolbox.html">SF_CGdFigureToolbox</a> *CGdFigureToolbox, uint16_t figure_index)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p class="definition">Definition at line <a class="el" href="sf__toolbox__functions_8h_source.html#l00008">8</a> of file <a class="el" href="sf__toolbox__functions_8h_source.html">sf_toolbox_functions.h</a>.</p>
+
 </div>
 </div>
-<a id="a1c36260d7183a0dfe97a1bac66a000e5" name="a1c36260d7183a0dfe97a1bac66a000e5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1c36260d7183a0dfe97a1bac66a000e5">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[16/17]</span></h2>
+<a id="a0271c8b065b5a74134d5e833290ece37" name="a0271c8b065b5a74134d5e833290ece37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0271c8b065b5a74134d5e833290ece37">&#9670;&#160;</a></span>isUnitMelee_ptr</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">figureSetNewJob</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>CGdFigureJobs</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>figure_id</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>new_job</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>param_3</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>param_4</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>param_5</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a5b35e6cf329753a40f669c30219dedcb" name="a5b35e6cf329753a40f669c30219dedcb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5b35e6cf329753a40f669c30219dedcb">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[17/17]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">rescaleLevelStats</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a17f35cab19a4752dcf2d3fb1ea9a9f0e">SF_CGdFigureToolbox</a> *</td>          <td class="paramname"><span class="paramname"><em>CGdFigureToolbox</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>figure_index</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Variable Documentation</h2>
-<a id="ad9ee9f2be03c14a38976a7aa466f9402" name="ad9ee9f2be03c14a38976a7aa466f9402"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad9ee9f2be03c14a38976a7aa466f9402">&#9670;&#160;</a></span>CGdFigureToolbox</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="sf__general__structures_8h.html#a17f35cab19a4752dcf2d3fb1ea9a9f0e">SF_CGdFigureToolbox</a>* CGdFigureToolbox</td>
+          <td class="memname">typedef bool(__thiscall * isUnitMelee_ptr) (<a class="el" href="struct_s_f___c_gd_figure_toolbox.html">SF_CGdFigureToolbox</a> *CGdFigureToolbox, uint16_t figure_id)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1049,35 +594,35 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a1df661aef5db9714e4b8646fa8e7cbdc" name="a1df661aef5db9714e4b8646fa8e7cbdc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1df661aef5db9714e4b8646fa8e7cbdc">&#9670;&#160;</a></span>figure_id</h2>
+<a id="a5df9983af6ac02a89170e9f5806777b2" name="a5df9983af6ac02a89170e9f5806777b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5df9983af6ac02a89170e9f5806777b2">&#9670;&#160;</a></span>removeSpellFromList_ptr</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="sf__general__structures_8h.html#a17f35cab19a4752dcf2d3fb1ea9a9f0e">SF_CGdFigureToolbox</a> uint16_t figure_id</td>
+          <td class="memname">typedef uint32_t(__thiscall * removeSpellFromList_ptr) (<a class="el" href="struct_s_f___c_gd_figure_toolbox.html">SF_CGdFigureToolbox</a> *CGdFigureToolbox, uint16_t param_1, uint16_t param_2)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__toolbox__functions_8h_source.html#l00026">26</a> of file <a class="el" href="sf__toolbox__functions_8h_source.html">sf_toolbox_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__toolbox__functions_8h_source.html#l00021">21</a> of file <a class="el" href="sf__toolbox__functions_8h_source.html">sf_toolbox_functions.h</a>.</p>
 
 </div>
 </div>
-<a id="a007132d5785ba177732c22a8453f8cf8" name="a007132d5785ba177732c22a8453f8cf8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a007132d5785ba177732c22a8453f8cf8">&#9670;&#160;</a></span>isUnitMelee</h2>
+<a id="ab1a643a2cf203f752944d5d669118025" name="ab1a643a2cf203f752944d5d669118025"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1a643a2cf203f752944d5d669118025">&#9670;&#160;</a></span>rescaleLevelStats_ptr</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">isUnitMelee</td>
+          <td class="memname">typedef void(__thiscall * rescaleLevelStats_ptr) (<a class="el" href="struct_s_f___c_gd_figure_toolbox.html">SF_CGdFigureToolbox</a> *CGdFigureToolbox, uint16_t figure_index)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__toolbox__functions_8h_source.html#l00026">26</a> of file <a class="el" href="sf__toolbox__functions_8h_source.html">sf_toolbox_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__toolbox__functions_8h_source.html#l00014">14</a> of file <a class="el" href="sf__toolbox__functions_8h_source.html">sf_toolbox_functions.h</a>.</p>
 
 </div>
 </div>

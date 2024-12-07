@@ -147,7 +147,7 @@ Include dependency graph for sf_registry.cpp:</div>
 <area shape="poly" title=" " alt="" coords="1436,26,1553,31,1707,42,1879,62,2052,93,2062,96,2061,101,2051,99,1879,67,1706,47,1553,36,1436,32"/>
 <area shape="rect" href="sfsf_8h.html" title=" " alt="" coords="1169,285,1268,312"/>
 <area shape="poly" title=" " alt="" coords="1455,224,1273,283,1271,278,1454,219"/>
-<area shape="rect" href="sf__general__structures_8h.html" title=" " alt="" coords="773,517,930,544"/>
+<area shape="rect" href="sf__general__structures_8h.html" title="Group of Structures and Enums used throught SFSF." alt="" coords="773,517,930,544"/>
 <area shape="poly" title=" " alt="" coords="1199,315,886,511,883,507,1197,310"/>
 <area shape="rect" title=" " alt="" coords="1293,592,1357,619"/>
 <area shape="poly" title=" " alt="" coords="1269,306,1370,325,1493,355,1553,373,1605,394,1647,416,1675,441,1686,461,1690,480,1687,498,1678,514,1663,528,1644,540,1596,561,1539,577,1479,589,1373,603,1372,598,1478,584,1538,572,1594,556,1642,535,1660,523,1674,510,1682,496,1685,480,1681,463,1671,444,1644,421,1603,399,1551,378,1492,360,1369,330,1268,311"/>
@@ -252,9 +252,9 @@ Functions</h2></td></tr>
 Variables</h2></td></tr>
 <tr class="memitem:a0a7a03471daa2a86ac7f7616a5b0427e" id="r_a0a7a03471daa2a86ac7f7616a5b0427e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_spellforce_spell_framework.html">SpellforceSpellFramework</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0a7a03471daa2a86ac7f7616a5b0427e">frameworkAPI</a></td></tr>
 <tr class="separator:a0a7a03471daa2a86ac7f7616a5b0427e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8342c5f7a97f7d7ada992295eb451353" id="r_a8342c5f7a97f7d7ada992295eb451353"><td class="memItemLeft" align="right" valign="top"><a class="el" href="sf__general__structures_8h.html#a64ca7d92af978ccdfb97fd8ad71ea8e5">SFMod</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8342c5f7a97f7d7ada992295eb451353">g_current_mod</a></td></tr>
+<tr class="memitem:a8342c5f7a97f7d7ada992295eb451353" id="r_a8342c5f7a97f7d7ada992295eb451353"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_mod.html">SFMod</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8342c5f7a97f7d7ada992295eb451353">g_current_mod</a></td></tr>
 <tr class="separator:a8342c5f7a97f7d7ada992295eb451353"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af11e4aae0bd5dfd212aee4af4c095baf" id="r_af11e4aae0bd5dfd212aee4af4c095baf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="sf__general__structures_8h.html#a64ca7d92af978ccdfb97fd8ad71ea8e5">SFMod</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af11e4aae0bd5dfd212aee4af4c095baf">g_framework_mod</a></td></tr>
+<tr class="memitem:af11e4aae0bd5dfd212aee4af4c095baf" id="r_af11e4aae0bd5dfd212aee4af4c095baf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f_mod.html">SFMod</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af11e4aae0bd5dfd212aee4af4c095baf">g_framework_mod</a></td></tr>
 <tr class="separator:af11e4aae0bd5dfd212aee4af4c095baf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -300,7 +300,7 @@ Variables</h2></td></tr>
 </li>
 <li><b>Mod Registration Phase</b>:<ul>
 <li>Registers spells and functions from loaded mods. <dl class="section warning"><dt>Warning</dt><dd>Incorrect setup of hooks or APIs can lead to crashes. Mods must adhere to the framework's API for compatibility. </dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a2a689bd8779670d6d2cf54a6be3265c8" title="Registers the framework API addresses.">registerFrameworkAPI()</a>, <a class="el" href="sf__hooks_8c.html#a053468e9037e13eede0757a9c0dc4f90">initialize_data_hooks()</a>, <a class="el" href="sf__vanilla__registry_8cpp.html#ad464df22114c57d7e41361edf691ac01">initialize_vanilla_spells()</a>, <a class="el" href="sf__spelleffect__registry_8cpp.html#a074a9e5dad13819ccfdcb6830d0ec8b7">register_vanilla_effect_handlers()</a>, <a class="el" href="sf__spellend__registry_8cpp.html#ac737d76fe9fb2039f0109366cbded12d">register_vanilla_spell_end_handlers()</a>, <a class="el" href="sf__subeffect__registry_8cpp.html#a9a8146362cdec001aac19aa84590ef1a">register_vanilla_sub_effect_handlers()</a>, <a class="el" href="sf__spellrefresh__registry_8cpp.html#a43b02c5e6d7550c7fd35d46caa3d67d0">register_vanilla_spell_refresh_handlers()</a>, <a class="el" href="sf__spelldamage__registry_8cpp.html#a72edb1e1cbac99025f4ae918358557ba">register_vanilla_spell_damage_handlers()</a>, <a class="el" href="sf__modloader_8c.html#a56273b58bfd284c452925e7f24e2b252">initialize_mods()</a>, <a class="el" href="sf__mod__registry_8cpp.html#ab760f8f899f39400156538bbd0c21c68">register_mod_spells()</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a2a689bd8779670d6d2cf54a6be3265c8" title="Registers the framework API addresses.">registerFrameworkAPI()</a>, <a class="el" href="sf__hooks_8c.html#a053468e9037e13eede0757a9c0dc4f90">initialize_data_hooks()</a>, <a class="el" href="sf__vanilla__registry_8cpp.html#ad464df22114c57d7e41361edf691ac01">initialize_vanilla_spells()</a>, <a class="el" href="sf__spelleffect__registry_8cpp.html#a074a9e5dad13819ccfdcb6830d0ec8b7">register_vanilla_effect_handlers()</a>, <a class="el" href="sf__spellend__registry_8cpp.html#ac737d76fe9fb2039f0109366cbded12d">register_vanilla_spell_end_handlers()</a>, <a class="el" href="sf__subeffect__registry_8cpp.html#a9a8146362cdec001aac19aa84590ef1a">register_vanilla_sub_effect_handlers()</a>, <a class="el" href="sf__spellrefresh__registry_8cpp.html#a43b02c5e6d7550c7fd35d46caa3d67d0">register_vanilla_spell_refresh_handlers()</a>, <a class="el" href="sf__spelldamage__registry_8cpp.html#a72edb1e1cbac99025f4ae918358557ba">register_vanilla_spell_damage_handlers()</a>, <a class="el" href="sf__modloader_8c.html#a56273b58bfd284c452925e7f24e2b252">initialize_mods()</a>, <a class="el" href="sf__mod__registry_8cpp.html#ab760f8f899f39400156538bbd0c21c68" title="Registers the mod spells and performs basic conflict checking.">register_mod_spells()</a> </dd></dl>
 </li>
 </ul>
 </li>
@@ -321,7 +321,7 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="91,2208,134,2177,188,2146,202,2139,204,2144,191,2150,137,2182,94,2212"/>
 <area shape="rect" href="sf__vanilla__registry_8cpp.html#ad464df22114c57d7e41361edf691ac01" title=" " alt="" coords="209,299,322,341"/>
 <area shape="poly" title=" " alt="" coords="74,2210,258,357,263,357,79,2211"/>
-<area shape="rect" href="sf__mod__registry_8cpp.html#ab760f8f899f39400156538bbd0c21c68" title=" " alt="" coords="197,2160,334,2187"/>
+<area shape="rect" href="sf__mod__registry_8cpp.html#ab760f8f899f39400156538bbd0c21c68" title="Registers the mod spells and performs basic conflict checking." alt="" coords="197,2160,334,2187"/>
 <area shape="poly" title=" " alt="" coords="126,2207,197,2189,198,2194,128,2213"/>
 <area shape="rect" href="sf__spelleffect__registry_8cpp.html#a074a9e5dad13819ccfdcb6830d0ec8b7" title=" " alt="" coords="192,2261,339,2304"/>
 <area shape="poly" title=" " alt="" coords="120,2235,179,2254,178,2259,119,2240"/>
@@ -345,9 +345,9 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="265,1349,274,1234,296,1053,312,959,333,871,357,799,372,770,387,749,411,733,414,737,391,753,376,773,362,801,338,872,318,960,301,1054,280,1234,270,1349"/>
 <area shape="rect" href="sf__wrappers_8c.html#aad92c6ec5283b3732feeefd0d62ab629" title=" " alt="" coords="428,763,521,789"/>
 <area shape="poly" title=" " alt="" coords="265,1349,276,1242,299,1077,316,991,336,911,359,845,373,819,387,799,413,783,416,787,391,803,377,822,364,847,341,912,321,992,304,1078,281,1243,270,1349"/>
-<area shape="rect" href="sf__console__hook_8c.html#ad95110eea0d834055b5fc04eb031e45b" title=" " alt="" coords="414,813,535,856"/>
+<area shape="rect" href="group___console_hook.html#gad95110eea0d834055b5fc04eb031e45b" title=" " alt="" coords="414,813,535,856"/>
 <area shape="poly" title=" " alt="" coords="266,1349,279,1254,305,1109,321,1034,341,964,363,906,387,866,399,855,403,859,391,870,368,909,346,966,327,1035,310,1110,284,1255,271,1349"/>
-<area shape="rect" href="sf__menu__hook_8c.html#a8076488696ac2dd10539d2908d8dd408" title=" " alt="" coords="405,880,544,923"/>
+<area shape="rect" href="group___menu_hook.html#ga8076488696ac2dd10539d2908d8dd408" title=" " alt="" coords="405,880,544,923"/>
 <area shape="poly" title=" " alt="" coords="264,1349,267,1277,282,1167,297,1105,319,1044,348,985,387,933,391,929,394,933,391,936,353,988,324,1046,302,1107,287,1168,272,1277,269,1349"/>
 <area shape="rect" href="sf__onhit__hook_8c.html#aab9fd18e448dfed4d72a3d8d9507bcc8" title=" " alt="" coords="407,947,542,989"/>
 <area shape="poly" title=" " alt="" coords="265,1349,271,1287,289,1194,305,1143,326,1091,353,1043,387,1000,393,994,396,998,391,1003,357,1046,331,1094,310,1144,294,1195,276,1287,270,1349"/>
@@ -473,7 +473,7 @@ Here is the call graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="157,67,353,67,353,72,157,72"/>
 <area shape="rect" href="sf__wrappers_8c.html#acf9d8a5367491e7f2b294fe979783e22" title=" " alt="" coords="209,107,304,133"/>
 <area shape="poly" title=" " alt="" coords="131,81,196,100,194,105,129,86"/>
-<area shape="rect" href="sf__console__hook_8c.html#af6b694e632c7b92e802468161b511edf" title=" " alt="" coords="495,107,586,133"/>
+<area shape="rect" href="group___console_hook.html#gaf6b694e632c7b92e802468161b511edf" title=" " alt="" coords="495,107,586,133"/>
 <area shape="poly" title=" " alt="" coords="437,79,489,98,487,103,435,84"/>
 <area shape="rect" href="namespace_a_s_i.html#a05ca5acefdcb7e955f472b60e5511a1a" title="returns &quot;real&quot; virtual address of given memory offset" alt="" coords="637,81,729,108"/>
 <area shape="poly" title=" " alt="" coords="586,109,621,103,622,108,587,115"/>
@@ -527,7 +527,7 @@ Here is the caller graph for this function:</div>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="sf__general__structures_8h.html#a64ca7d92af978ccdfb97fd8ad71ea8e5">SFMod</a>* g_current_mod</td>
+          <td class="memname"><a class="el" href="struct_s_f_mod.html">SFMod</a>* g_current_mod</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -543,7 +543,7 @@ Here is the caller graph for this function:</div>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="sf__general__structures_8h.html#a64ca7d92af978ccdfb97fd8ad71ea8e5">SFMod</a>* g_framework_mod</td>
+          <td class="memname"><a class="el" href="struct_s_f_mod.html">SFMod</a>* g_framework_mod</td>
         </tr>
       </table>
 </div><div class="memdoc">

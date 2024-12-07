@@ -1,3 +1,9 @@
+/**
+ * @file sf_general_structures.h
+ * @brief Group of Structures and Enums used throught SFSF
+ * @ingroup API
+ */
+
 #pragma once
 #include <stdint.h>
 #include <stdbool.h>

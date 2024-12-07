@@ -1,9 +1,20 @@
-#include "../sf_wrappers.h"
+/** 
+ * @defgroup ConsoleHook Console Hook
+ * @ingroup Hooks
+ * Used for hooking into the Ingame Console
+ */
 
+#include "../sf_wrappers.h"
 #include "sf_console_hook.h"
 
+/**
+ * @ingroup ConsoleHook
+ */
 static console_print_ptr s_console_print;
 
+/**
+ * @ingroup ConsoleHook
+ */
 void console_log(const char *message)
 {
     if (s_console_print != NULL)
@@ -19,6 +30,9 @@ void console_log(const char *message)
     log_message("sfsf.log", message);
 }
 
+/**
+ * @ingroup ConsoleHook
+ */
 void initialize_console_data_hooks()
 {
     uint32_t CAppMain_ptr = ASI::AddrOf(0x9229A8);

@@ -1,3 +1,13 @@
+/**
+ * @mainpage Spellforce Spell Framework
+ * - @ref API "SFSF Api" 
+ * - @ref Internal "SFSF Internals"
+*/
+
+/**
+ * @defgroup Internal
+ */
+
 #include <windows.h>
 #include "core/sf_hooks.h"
 #include "core/sf_wrappers.h"

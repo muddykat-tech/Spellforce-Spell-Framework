@@ -91,39 +91,43 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">sf_endspell_hook.c</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="sf__endspell__hook_8c.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &quot;<a class="code" href="sf__wrappers_8h.html">../sf_wrappers.h</a>&quot;</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;<a class="code" href="sf__hooks_8h.html">../sf_hooks.h</a>&quot;</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;<a class="code" href="sf__spellend__registry_8h.html">../../registry/spell_data_registries/sf_spellend_registry.h</a>&quot;</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;string.h&gt;</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;<a class="code" href="sf__endspell__hook_8h.html">sf_endspell_hook.h</a>&quot;</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="foldopen" id="foldopen00012" data-start="{" data-end="}">
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="sf__endspell__hook_8c.html#aee626a16e719383c36fc0a739dbbd81c">   12</a></span><span class="keywordtype">void</span> __thiscall <a class="code hl_function" href="sf__endspell__hook_8c.html#aee626a16e719383c36fc0a739dbbd81c">sf_endspell_hook</a>(<a class="code hl_typedef" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *_this, uint16_t spell_index)</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>{</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="comment">// We need a map of end spell handlers?</span></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="comment">// And a default handler that does nothing</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="comment">// handler takes (SF_CGdSpell *_this, uint16_t spell_index) as params</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    uint16_t spell_line = _this-&gt;active_spell_list[spell_index].spell_line;</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <a class="code hl_typedef" href="sf__registration__functions_8h.html#af76aa0d565c5ebb0b1eb50e2ed3377b3">handler_ptr</a> spellend_handler = <a class="code hl_function" href="sf__spellend__registry_8cpp.html#a63fcc6788d213fca27dd2d28143e1208">get_spell_end</a>(spell_line);</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keywordflow">if</span> (spellend_handler != NULL)</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    {</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        spellend_handler(_this, spell_index);</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    }</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>}</div>
+<a href="sf__endspell__hook_8c.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;<a class="code" href="sf__wrappers_8h.html">../sf_wrappers.h</a>&quot;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;<a class="code" href="sf__hooks_8h.html">../sf_hooks.h</a>&quot;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;<a class="code" href="sf__spellend__registry_8h.html">../../registry/spell_data_registries/sf_spellend_registry.h</a>&quot;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;string.h&gt;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;<a class="code" href="sf__endspell__hook_8h.html">sf_endspell_hook.h</a>&quot;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="foldopen" id="foldopen00022" data-start="{" data-end="}">
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="group___end_spell_hook.html#gaee626a16e719383c36fc0a739dbbd81c">   22</a></span><span class="keywordtype">void</span> __thiscall <a class="code hl_function" href="group___end_spell_hook.html#gaee626a16e719383c36fc0a739dbbd81c">sf_endspell_hook</a>(<a class="code hl_struct" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, uint16_t spell_index)</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>{</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="comment">// We need a map of end spell handlers?</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="comment">// And a default handler that does nothing</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="comment">// handler takes (SF_CGdSpell *_this, uint16_t spell_index) as params</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    uint16_t spell_line = _this-&gt;<a class="code hl_variable" href="struct_s_f___c_gd_spell.html#ad47a2714e07011fe9a16688cc25fe4ff">active_spell_list</a>[spell_index].<a class="code hl_variable" href="struct_s_f___gd_spell.html#a700c65191fc5e4cc39121e761f2c6e25">spell_line</a>;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <a class="code hl_typedef" href="sf__registration__functions_8h.html#af76aa0d565c5ebb0b1eb50e2ed3377b3">handler_ptr</a> spellend_handler = <a class="code hl_function" href="sf__spellend__registry_8cpp.html#a63fcc6788d213fca27dd2d28143e1208">get_spell_end</a>(spell_line);</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <span class="keywordflow">if</span> (spellend_handler != NULL)</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    {</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        spellend_handler(_this, spell_index);</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    }</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>}</div>
 </div>
-<div class="ttc" id="asf__endspell__hook_8c_html_aee626a16e719383c36fc0a739dbbd81c"><div class="ttname"><a href="sf__endspell__hook_8c.html#aee626a16e719383c36fc0a739dbbd81c">sf_endspell_hook</a></div><div class="ttdeci">void __thiscall sf_endspell_hook(SF_CGdSpell *_this, uint16_t spell_index)</div><div class="ttdef"><b>Definition</b> <a href="#l00012">sf_endspell_hook.c:12</a></div></div>
+<div class="ttc" id="agroup___end_spell_hook_html_gaee626a16e719383c36fc0a739dbbd81c"><div class="ttname"><a href="group___end_spell_hook.html#gaee626a16e719383c36fc0a739dbbd81c">sf_endspell_hook</a></div><div class="ttdeci">void __thiscall sf_endspell_hook(SF_CGdSpell *_this, uint16_t spell_index)</div><div class="ttdef"><b>Definition</b> <a href="#l00022">sf_endspell_hook.c:22</a></div></div>
 <div class="ttc" id="asf__endspell__hook_8h_html"><div class="ttname"><a href="sf__endspell__hook_8h.html">sf_endspell_hook.h</a></div></div>
-<div class="ttc" id="asf__general__structures_8h_html_a65e220538ceb4410156fdcd2afcf91e6"><div class="ttname"><a href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a></div><div class="ttdeci">struct SF_CGdSpell SF_CGdSpell</div><div class="ttdef"><b>Definition</b> <a href="sf__general__structures_8h_source.html#l00043">sf_general_structures.h:43</a></div></div>
 <div class="ttc" id="asf__hooks_8h_html"><div class="ttname"><a href="sf__hooks_8h.html">sf_hooks.h</a></div></div>
 <div class="ttc" id="asf__registration__functions_8h_html_af76aa0d565c5ebb0b1eb50e2ed3377b3"><div class="ttname"><a href="sf__registration__functions_8h.html#af76aa0d565c5ebb0b1eb50e2ed3377b3">handler_ptr</a></div><div class="ttdeci">void(__thiscall * handler_ptr)(SF_CGdSpell *, uint16_t)</div><div class="ttdef"><b>Definition</b> <a href="sf__registration__functions_8h_source.html#l00010">sf_registration_functions.h:10</a></div></div>
 <div class="ttc" id="asf__spellend__registry_8cpp_html_a63fcc6788d213fca27dd2d28143e1208"><div class="ttname"><a href="sf__spellend__registry_8cpp.html#a63fcc6788d213fca27dd2d28143e1208">get_spell_end</a></div><div class="ttdeci">handler_ptr get_spell_end(uint16_t spell_line)</div><div class="ttdef"><b>Definition</b> <a href="sf__spellend__registry_8cpp_source.html#l00026">sf_spellend_registry.cpp:26</a></div></div>
 <div class="ttc" id="asf__spellend__registry_8h_html"><div class="ttname"><a href="sf__spellend__registry_8h.html">sf_spellend_registry.h</a></div></div>
 <div class="ttc" id="asf__wrappers_8h_html"><div class="ttname"><a href="sf__wrappers_8h.html">sf_wrappers.h</a></div></div>
+<div class="ttc" id="astruct_s_f___c_gd_spell_html"><div class="ttname"><a href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a></div><div class="ttdef"><b>Definition</b> <a href="sf__general__structures_8h_source.html#l00508">sf_general_structures.h:509</a></div></div>
+<div class="ttc" id="astruct_s_f___c_gd_spell_html_ad47a2714e07011fe9a16688cc25fe4ff"><div class="ttname"><a href="struct_s_f___c_gd_spell.html#ad47a2714e07011fe9a16688cc25fe4ff">SF_CGdSpell::active_spell_list</a></div><div class="ttdeci">SF_GdSpell active_spell_list[800]</div><div class="ttdef"><b>Definition</b> <a href="sf__general__structures_8h_source.html#l00532">sf_general_structures.h:532</a></div></div>
+<div class="ttc" id="astruct_s_f___gd_spell_html_a700c65191fc5e4cc39121e761f2c6e25"><div class="ttname"><a href="struct_s_f___gd_spell.html#a700c65191fc5e4cc39121e761f2c6e25">SF_GdSpell::spell_line</a></div><div class="ttdeci">uint16_t spell_line</div><div class="ttdef"><b>Definition</b> <a href="sf__general__structures_8h_source.html#l00388">sf_general_structures.h:388</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

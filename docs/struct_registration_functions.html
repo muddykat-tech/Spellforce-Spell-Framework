@@ -85,45 +85,172 @@ $(function(){ initResizable(false); });
 <div id="doc-content">
 <div class="header">
   <div class="summary">
-<a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="struct_registration_functions-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">RegistrationFunctions Struct Reference</div></div>
+<a href="#pub-attribs">Data Fields</a>  </div>
+  <div class="headertitle"><div class="title">RegistrationFunctions Struct Reference<div class="ingroups"><a class="el" href="group___a_p_i.html">API Documentation</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
+<p>A structure dedicated to the registration of spells This structure holds functions that are used to create a representation of a spell within the framework. We then translate this representation into a viable Spellforce Spell.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="sf__registration__functions_8h_source.html">sf_registration_functions.h</a>&gt;</code></p>
+<div class="dynheader">
+Collaboration diagram for RegistrationFunctions:</div>
+<div class="dyncontent">
+<div class="center"><img src="struct_registration_functions__coll__graph.png" border="0" usemap="#a_registration_functions_coll__map" alt="Collaboration graph"/></div>
+<map name="a_registration_functions_coll__map" id="a_registration_functions_coll__map">
+<area shape="rect" title="A structure dedicated to the registration of spells This structure holds functions that are used to c..." alt="" coords="3760,649,3908,675"/>
+<area shape="rect" href="struct_s_f_spell.html" title=" " alt="" coords="3495,649,3562,675"/>
+<area shape="poly" title=" " alt="" coords="3577,659,3760,659,3760,665,3577,665"/>
+<area shape="rect" href="struct_s_f___c_gd_spell.html" title=" " alt="" coords="1320,745,1422,771"/>
+<area shape="poly" title=" " alt="" coords="1379,729,1407,662,1428,624,1452,588,1471,569,1489,554,1525,535,1558,515,1574,500,1588,478,1594,460,1596,436,1596,376,1597,318,1603,294,1612,278,1645,248,1677,226,1708,208,1739,196,1801,184,1864,186,1930,195,2001,208,2079,219,2166,223,3256,223,3298,226,3333,235,3362,250,3387,269,3409,293,3429,322,3473,391,3491,426,3505,462,3522,537,3529,603,3530,649,3525,649,3524,603,3517,538,3500,464,3486,428,3468,394,3425,325,3405,297,3383,273,3359,254,3331,240,3297,232,3256,229,2166,229,2078,224,2000,213,1929,200,1864,191,1802,190,1741,201,1711,213,1680,230,1649,253,1616,281,1607,296,1603,319,1601,377,1601,436,1599,461,1593,481,1578,503,1562,519,1528,540,1492,559,1474,573,1456,592,1432,627,1412,665,1384,731"/>
+<area shape="rect" href="struct_s_f___c_g_d_effect.html" title=" " alt="" coords="1627,694,1736,721"/>
+<area shape="poly" title=" " alt="" coords="1436,746,1590,721,1626,715,1627,720,1591,726,1437,751"/>
+<area shape="rect" href="struct_s_f___c_gd_figure_toolbox.html" title=" " alt="" coords="2247,491,2400,518"/>
+<area shape="poly" title=" " alt="" coords="1401,733,1453,700,1610,625,1701,588,1773,564,1901,536,2031,519,2150,508,2246,504,2246,509,2151,514,2032,524,1902,542,1774,569,1702,593,1612,630,1456,704,1404,738"/>
+<area shape="rect" href="struct_s_f___c_gd_figure_jobs.html" title=" " alt="" coords="2574,774,2710,801"/>
+<area shape="poly" title=" " alt="" coords="1399,781,1430,809,1456,828,1497,844,1532,850,1615,854,1756,865,1877,870,1983,870,2082,865,2286,840,2547,801,2573,797,2574,802,2547,806,2287,846,2082,870,1983,875,1877,876,1756,871,1614,859,1532,855,1496,849,1453,832,1427,813,1395,785"/>
+<area shape="rect" href="struct_c_gd_a_i_battle_data.html" title="The main structure for handling AI battle data." alt="" coords="2874,1154,2997,1181"/>
+<area shape="poly" title=" " alt="" coords="1405,780,1421,796,1433,814,1444,846,1447,875,1441,928,1437,953,1436,978,1442,1004,1457,1033,1489,1071,1524,1091,1615,1120,1754,1161,1874,1184,1982,1192,2084,1189,2187,1179,2298,1165,2424,1152,2571,1143,2709,1137,2769,1138,2847,1145,2882,1151,2881,1156,2846,1150,2769,1143,2709,1143,2571,1149,2425,1158,2299,1171,2188,1184,2084,1194,1982,1197,1873,1189,1753,1166,1614,1125,1521,1096,1486,1075,1452,1036,1437,1006,1431,978,1431,952,1435,927,1442,875,1439,847,1428,817,1416,799,1402,784"/>
+<area shape="rect" href="struct_auto_class14.html" title=" " alt="" coords="798,445,894,471"/>
+<area shape="poly" title=" " alt="" coords="856,486,865,521,881,563,904,604,935,639,955,649,992,662,1098,692,1321,745,1319,750,1097,697,990,667,953,654,931,643,899,607,876,565,860,523,851,487"/>
+<area shape="rect" href="struct_s_f___c_gd_building.html" title=" " alt="" coords="1054,305,1172,331"/>
+<area shape="poly" title=" " alt="" coords="875,433,932,395,1006,357,1073,330,1075,335,1008,362,934,399,878,437"/>
+<area shape="poly" title=" " alt="" coords="882,478,934,509,1062,574,1120,597,1197,620,1256,633,1306,640,1393,644,1481,647,1532,654,1591,668,1653,691,1651,696,1590,673,1531,660,1481,653,1393,649,1306,645,1255,638,1196,625,1118,602,1060,579,932,514,879,483"/>
+<area shape="poly" title=" " alt="" coords="858,430,893,368,918,331,948,295,983,261,1022,233,1065,214,1112,207,1524,207,1734,204,1822,204,1904,211,1981,228,2059,258,2139,305,2225,374,2236,390,2239,406,2241,422,2249,439,2274,467,2302,489,2299,493,2271,471,2244,442,2236,424,2234,407,2231,392,2221,377,2136,310,2056,263,1980,233,1903,216,1822,209,1734,209,1524,213,1112,213,1066,220,1024,238,986,265,952,298,923,334,898,371,863,432"/>
+<area shape="rect" href="struct_s_f___c_gd_world_tool_box.html" title=" " alt="" coords="1935,807,2088,834"/>
+<area shape="poly" title=" " alt="" coords="910,455,1011,458,1142,467,1287,487,1360,501,1431,520,1505,547,1598,588,1687,635,1724,659,1751,680,1760,691,1763,702,1767,711,1775,720,1809,738,1840,743,1873,746,1912,757,1957,781,1993,805,1990,809,1954,785,1910,762,1872,751,1839,748,1807,743,1772,724,1762,714,1758,704,1755,694,1747,684,1721,663,1684,640,1595,593,1503,552,1430,525,1359,506,1286,492,1141,473,1011,463,910,460"/>
+<area shape="poly" title=" " alt="" coords="902,437,993,409,1120,376,1276,343,1452,315,1642,298,1740,296,1839,299,1938,307,2035,322,2131,344,2224,373,2288,406,2392,466,2493,529,2530,555,2549,574,2563,605,2565,633,2565,661,2573,693,2600,738,2629,772,2625,775,2596,741,2569,695,2560,661,2559,633,2558,607,2545,577,2526,559,2490,534,2389,470,2285,410,2222,378,2129,349,2034,327,1937,312,1839,304,1740,302,1642,304,1453,320,1277,348,1122,381,995,414,903,442"/>
+<area shape="poly" title=" " alt="" coords="1134,344,1203,454,1290,600,1365,743,1360,746,1285,602,1199,457,1129,346"/>
+<area shape="poly" title=" " alt="" coords="1155,337,1232,383,1267,408,1289,430,1297,445,1301,460,1300,487,1300,512,1304,524,1313,536,1346,562,1378,576,1410,580,1443,580,1477,578,1513,579,1551,587,1592,605,1619,625,1642,649,1674,692,1670,695,1638,653,1615,629,1589,610,1550,592,1513,584,1477,583,1443,585,1410,586,1377,581,1343,567,1309,540,1299,526,1295,513,1294,487,1295,460,1292,447,1285,433,1264,412,1230,388,1152,342"/>
+<area shape="poly" title=" " alt="" coords="1188,321,1288,329,1614,357,1750,360,1924,362,2014,366,2097,374,2169,387,2224,408,2238,422,2249,439,2306,489,2302,493,2245,443,2234,426,2221,412,2167,393,2096,379,2013,371,1924,368,1750,366,1614,362,1287,334,1188,326"/>
+<area shape="poly" title=" " alt="" coords="1188,332,1272,354,1375,385,1485,425,1592,472,1640,498,1675,523,1751,584,1834,650,1913,720,1999,805,1995,809,1910,724,1831,654,1748,588,1672,527,1637,503,1589,477,1483,429,1373,390,1271,360,1187,337"/>
+<area shape="poly" title=" " alt="" coords="1153,295,1284,237,1368,208,1454,186,1571,166,1672,153,1763,148,1847,151,1931,164,2018,187,2114,220,2224,265,2329,307,2412,343,2448,366,2482,395,2516,433,2549,482,2563,511,2569,538,2567,586,2562,636,2565,663,2573,693,2599,738,2628,772,2624,776,2595,741,2569,695,2559,664,2557,636,2562,586,2564,538,2558,513,2545,485,2512,436,2479,399,2445,370,2409,348,2327,312,2222,270,2112,225,2016,192,1930,169,1847,157,1763,153,1673,158,1572,171,1455,191,1369,213,1286,242,1155,300"/>
+<area shape="poly" title=" " alt="" coords="1134,291,1162,263,1195,237,1261,200,1318,180,1454,157,1621,121,1769,83,1902,49,2027,25,2088,19,2149,17,2210,22,2273,33,2337,52,2404,78,2474,114,2549,159,2614,209,2671,267,2722,332,2765,403,2802,477,2834,554,2860,632,2881,709,2911,858,2928,989,2935,1092,2937,1154,2931,1154,2930,1092,2922,990,2906,859,2876,711,2855,633,2829,556,2797,479,2760,405,2717,335,2667,271,2610,213,2545,163,2472,118,2402,83,2336,57,2272,38,2210,27,2149,23,2089,24,2028,30,1904,54,1770,88,1622,126,1455,162,1319,186,1264,205,1198,242,1165,267,1138,295"/>
+<area shape="rect" href="struct_gd_building.html" title=" " alt="" coords="343,294,427,321"/>
+<area shape="poly" title=" " alt="" coords="443,306,1054,315,1054,320,443,311"/>
+<area shape="rect" href="struct_s_f___coord.html" title=" " alt="" coords="5,955,86,982"/>
+<area shape="poly" title=" " alt="" coords="52,940,74,866,107,778,180,634,258,498,372,320,377,323,262,501,184,637,112,781,79,868,57,941"/>
+<area shape="rect" href="struct_gd_figure.html" title=" " alt="" coords="809,1109,884,1135"/>
+<area shape="poly" title=" " alt="" coords="100,952,253,917,349,899,449,883,548,873,637,872,710,882,739,892,761,907,778,927,785,949,785,971,780,993,772,1038,775,1061,786,1085,797,1097,811,1106,808,1111,794,1101,781,1088,770,1062,767,1038,775,992,779,970,780,950,774,930,758,911,737,897,709,887,636,877,548,879,450,888,350,904,254,922,102,957"/>
+<area shape="rect" href="struct_auto_class24.html" title=" " alt="" coords="496,1285,593,1311"/>
+<area shape="poly" title=" " alt="" coords="52,997,63,1059,85,1139,102,1181,124,1220,151,1256,184,1287,221,1308,262,1322,304,1329,348,1331,430,1324,497,1309,499,1315,431,1329,348,1337,304,1335,260,1327,219,1313,181,1291,147,1260,120,1223,98,1183,80,1141,57,1061,47,998"/>
+<area shape="rect" href="struct_s_f___c_gd_target_data.html" title=" " alt="" coords="183,1234,319,1261"/>
+<area shape="poly" title=" " alt="" coords="68,993,242,1232,237,1235,64,996"/>
+<area shape="rect" href="struct_s_f___gd_effect.html" title=" " alt="" coords="496,765,593,791"/>
+<area shape="poly" title=" " alt="" coords="53,940,74,897,89,876,108,859,156,830,207,809,261,793,315,782,416,773,496,772,496,778,416,778,316,788,262,798,209,814,158,835,111,863,93,880,78,900,58,942"/>
+<area shape="poly" title=" " alt="" coords="52,997,70,1118,87,1194,112,1269,126,1310,136,1350,155,1421,168,1450,186,1471,213,1485,250,1490,2643,1490,2705,1489,2754,1483,2798,1465,2844,1427,2869,1398,2888,1365,2903,1329,2914,1294,2927,1227,2931,1181,2936,1181,2932,1228,2919,1295,2908,1331,2893,1367,2873,1401,2848,1431,2801,1469,2756,1488,2705,1495,2643,1495,249,1495,211,1490,183,1475,163,1452,150,1423,131,1351,121,1312,107,1271,82,1196,65,1119,47,998"/>
+<area shape="poly" title=" " alt="" coords="1752,701,1773,699,1999,698,2139,695,2222,688,2255,676,2281,662,2322,631,2363,599,2390,585,2423,573,2501,554,2581,540,2663,532,2744,529,2906,534,3062,550,3204,575,3328,602,3495,649,3493,654,3327,607,3203,580,3061,556,2906,539,2744,534,2663,538,2582,546,2502,559,2425,578,2392,590,2366,604,2325,635,2283,667,2257,681,2223,693,2139,700,1999,703,1773,705,1752,706"/>
+<area shape="poly" title=" " alt="" coords="1657,733,1627,755,1591,773,1547,782,1502,783,1422,773,1422,768,1502,778,1547,776,1589,768,1624,751,1654,729"/>
+<area shape="poly" title=" " alt="" coords="1735,684,1747,673,1756,654,1757,635,1759,616,1772,597,1799,583,1835,574,1925,566,2017,565,2088,562,2156,558,2185,554,2222,546,2261,532,2295,516,2297,521,2263,537,2223,551,2186,560,2156,563,2088,567,2017,570,1925,571,1836,579,1801,588,1775,601,1764,618,1762,635,1761,655,1751,676,1738,688"/>
+<area shape="poly" title=" " alt="" coords="1710,729,1740,753,1774,773,1836,788,1935,806,1934,811,1835,793,1772,778,1737,757,1707,734"/>
+<area shape="poly" title=" " alt="" coords="1752,711,2112,741,2547,776,2573,778,2573,783,2547,781,2111,746,1752,716"/>
+<area shape="rect" href="struct_s_f___c_gd_figure.html" title="A structure for the global list of figures and related statistics for them." alt="" coords="1059,1101,1167,1127"/>
+<area shape="poly" title=" " alt="" coords="1131,1087,1170,1031,1237,916,1275,851,1309,803,1347,770,1350,774,1313,807,1280,854,1242,918,1175,1034,1136,1090"/>
+<area shape="poly" title=" " alt="" coords="1138,1088,1195,1043,1253,1006,1305,980,1398,942,1442,924,1487,901,1535,870,1589,828,1615,801,1639,771,1671,720,1675,723,1643,774,1619,804,1592,832,1539,875,1490,906,1444,928,1400,947,1307,985,1256,1011,1198,1047,1142,1092"/>
+<area shape="poly" title=" " alt="" coords="1183,1115,1354,1121,1572,1117,1679,1109,1776,1095,1855,1073,1886,1059,1910,1043,1920,1031,1924,1018,1924,992,1922,963,1925,947,1933,931,1950,911,1968,896,2003,879,2041,866,2086,844,2127,822,2160,806,2189,787,2221,755,2242,725,2261,692,2289,623,2308,561,2317,518,2322,519,2313,562,2294,625,2266,694,2247,728,2225,759,2193,791,2162,811,2129,827,2089,849,2043,871,2005,884,1971,901,1954,915,1938,934,1930,949,1927,963,1929,991,1930,1019,1924,1033,1913,1047,1889,1064,1857,1078,1777,1100,1680,1114,1572,1123,1354,1126,1183,1121"/>
+<area shape="poly" title=" " alt="" coords="1182,1095,1559,999,1764,940,1848,912,1910,886,1956,860,1992,833,1995,837,1959,864,1913,891,1850,917,1766,945,1561,1004,1183,1101"/>
+<area shape="poly" title=" " alt="" coords="1183,1123,1196,1125,1361,1128,1590,1126,1741,1128,1874,1137,1993,1145,2103,1147,2156,1143,2209,1136,2261,1125,2314,1108,2369,1085,2425,1056,2484,1019,2545,973,2565,954,2583,932,2609,883,2626,836,2635,801,2640,802,2631,838,2614,885,2587,935,2569,958,2549,978,2487,1023,2428,1060,2371,1090,2316,1113,2262,1130,2209,1142,2157,1149,2103,1152,1993,1150,1874,1142,1741,1134,1590,1131,1361,1133,1196,1130,1182,1129"/>
+<area shape="poly" title=" " alt="" coords="1141,1136,1214,1196,1262,1227,1312,1252,1350,1264,1381,1267,1454,1270,1649,1286,1814,1296,2094,1302,2375,1299,2736,1297,2769,1300,2794,1306,2817,1307,2845,1297,2876,1272,2900,1240,2917,1207,2927,1180,2932,1182,2922,1209,2905,1243,2880,1276,2848,1302,2818,1312,2793,1311,2768,1305,2736,1302,2375,1304,2094,1307,1814,1301,1649,1291,1454,1275,1381,1273,1349,1269,1310,1257,1259,1231,1211,1200,1138,1140"/>
+<area shape="poly" title=" " alt="" coords="899,1118,1059,1113,1059,1118,899,1123"/>
+<area shape="rect" href="struct_figure_statistic.html" title=" " alt="" coords="492,1059,597,1086"/>
+<area shape="poly" title=" " alt="" coords="613,1079,760,1102,809,1112,808,1117,759,1107,612,1085"/>
+<area shape="rect" href="struct_figure_statistic_ext.html" title=" " alt="" coords="482,1183,607,1210"/>
+<area shape="poly" title=" " alt="" coords="622,1196,690,1190,759,1174,797,1156,827,1134,830,1138,799,1160,761,1179,691,1195,623,1201"/>
+<area shape="rect" href="struct_s_f___c_gd_figure_weapon_stats.html" title=" " alt="" coords="451,1110,638,1137"/>
+<area shape="poly" title=" " alt="" coords="653,1120,809,1120,809,1125,653,1126"/>
+<area shape="rect" href="struct_c_gd_figure_hate_entry.html" title=" " alt="" coords="473,1335,616,1362"/>
+<area shape="poly" title=" " alt="" coords="631,1350,665,1346,698,1338,730,1325,758,1306,771,1286,774,1266,775,1244,781,1217,807,1170,832,1134,837,1137,811,1173,786,1219,780,1244,779,1267,776,1288,762,1309,733,1330,700,1343,665,1352,632,1355"/>
+<area shape="poly" title=" " alt="" coords="607,1293,683,1280,722,1266,758,1247,793,1200,834,1135,839,1138,797,1203,761,1251,725,1271,685,1285,608,1298"/>
+<area shape="poly" title=" " alt="" coords="287,1266,314,1280,344,1290,383,1297,423,1301,496,1300,496,1305,423,1306,382,1303,342,1295,312,1285,285,1271"/>
+<area shape="poly" title=" " alt="" coords="269,1220,345,1103,389,1024,425,940,430,920,431,901,429,868,430,836,437,819,449,802,471,786,495,779,497,784,473,791,453,805,442,821,436,837,434,867,437,901,435,921,430,942,393,1026,350,1105,273,1223"/>
+<area shape="rect" href="struct_s_f___gd_spell.html" title=" " alt="" coords="665,1357,756,1383"/>
+<area shape="poly" title=" " alt="" coords="334,1240,417,1238,506,1240,586,1250,617,1259,639,1271,648,1280,653,1290,654,1311,654,1330,664,1350,669,1354,666,1358,660,1353,649,1332,648,1311,647,1292,644,1283,636,1275,615,1263,585,1255,506,1245,417,1243,334,1245"/>
+<area shape="poly" title=" " alt="" coords="324,1270,335,1290,345,1307,371,1332,393,1348,418,1360,452,1372,465,1378,469,1385,459,1397,457,1399,458,1401,496,1408,606,1414,820,1419,1681,1422,2643,1422,2704,1423,2753,1420,2797,1405,2845,1372,2865,1351,2883,1326,2908,1271,2923,1219,2930,1181,2935,1181,2928,1220,2913,1273,2887,1328,2870,1354,2848,1376,2799,1410,2754,1425,2704,1428,2643,1427,1680,1427,819,1424,606,1419,496,1414,455,1406,451,1399,455,1393,463,1385,462,1382,450,1377,416,1365,390,1353,367,1336,341,1310,330,1292,319,1273"/>
+<area shape="poly" title=" " alt="" coords="2353,479,2404,444,2474,406,2513,389,2554,375,2597,366,2640,362,3256,362,3324,364,3377,375,3401,386,3424,400,3473,446,3491,470,3505,498,3522,556,3529,610,3530,649,3525,649,3524,610,3517,557,3500,500,3486,473,3469,449,3421,405,3399,390,3375,380,3323,370,3256,367,2640,367,2598,371,2556,380,2515,394,2476,411,2407,449,2356,484"/>
+<area shape="poly" title=" " alt="" coords="2231,498,2136,493,2020,492,1896,500,1774,519,1678,542,1604,564,1536,597,1456,654,1432,676,1411,701,1382,746,1378,743,1407,698,1428,672,1453,649,1533,593,1602,559,1677,536,1773,514,1896,495,2020,487,2136,488,2231,493"/>
+<area shape="poly" title=" " alt="" coords="2305,532,2270,570,2248,589,2224,604,2184,623,2149,635,2116,641,2084,643,2018,639,1935,631,1911,629,1871,623,1839,615,1809,615,1775,628,1766,638,1763,649,1760,662,1751,676,1722,696,1719,691,1747,672,1755,660,1757,648,1761,635,1772,624,1808,609,1839,610,1872,618,1912,624,1936,626,2019,633,2084,638,2115,636,2147,630,2182,618,2221,600,2245,585,2266,566,2301,529"/>
+<area shape="poly" title=" " alt="" coords="2353,527,2627,772,2623,776,2350,531"/>
+<area shape="poly" title=" " alt="" coords="2412,520,2480,541,2548,573,2649,636,2722,694,2754,727,2784,765,2849,863,2870,903,2887,945,2913,1030,2928,1103,2935,1153,2930,1154,2923,1104,2908,1031,2882,947,2865,905,2844,866,2779,768,2750,730,2719,698,2646,641,2546,578,2479,546,2410,525"/>
+<area shape="rect" href="struct_s_f___c_gd_world.html" title=" " alt="" coords="1060,902,1166,929"/>
+<area shape="poly" title=" " alt="" coords="1122,886,1149,834,1170,807,1195,785,1225,770,1257,760,1319,754,1320,759,1258,766,1227,775,1198,790,1174,811,1154,837,1127,888"/>
+<area shape="poly" title=" " alt="" coords="1180,897,1417,836,1527,805,1589,784,1634,752,1667,719,1670,723,1637,756,1592,789,1529,810,1418,841,1181,902"/>
+<area shape="poly" title=" " alt="" coords="1124,887,1148,824,1170,747,1173,684,1171,602,1174,522,1181,489,1194,466,1215,451,1245,441,1318,431,1454,425,1553,421,1662,421,1888,433,2090,453,2223,472,2285,488,2283,493,2222,477,2089,458,1888,438,1662,426,1553,426,1454,430,1319,436,1246,447,1218,456,1198,469,1186,491,1179,522,1176,602,1178,684,1175,748,1153,825,1129,889"/>
+<area shape="poly" title=" " alt="" coords="1181,915,1316,915,1498,909,1704,892,1809,877,1911,857,1947,846,1980,832,1983,837,1949,851,1912,862,1810,882,1705,897,1499,915,1316,921,1181,920"/>
+<area shape="poly" title=" " alt="" coords="1182,920,1196,921,1313,923,1430,921,1704,916,1916,906,2128,886,2400,852,2474,842,2546,825,2611,799,2613,804,2548,830,2475,847,2400,857,2129,891,1917,911,1704,921,1430,926,1313,929,1196,926,1181,925"/>
+<area shape="poly" title=" " alt="" coords="1147,936,1278,1022,1365,1072,1455,1117,1533,1146,1615,1165,1705,1184,1797,1199,1984,1218,2171,1225,2350,1223,2516,1214,2663,1201,2873,1175,2873,1180,2663,1206,2516,1219,2350,1228,2170,1230,1984,1223,1796,1204,1704,1189,1614,1170,1532,1151,1453,1122,1362,1077,1275,1026,1144,940"/>
+<area shape="rect" href="struct_s_f__world__unkn__1.html" title=" " alt="" coords="784,917,909,943"/>
+<area shape="poly" title=" " alt="" coords="924,927,1030,922,1060,919,1060,925,1030,927,924,932"/>
+<area shape="rect" href="struct_s_f___string.html" title=" " alt="" coords="807,1047,886,1074"/>
+<area shape="poly" title=" " alt="" coords="900,1044,963,1022,1029,989,1068,958,1098,927,1102,931,1072,962,1031,994,966,1027,902,1049"/>
+<area shape="poly" title=" " alt="" coords="891,1080,911,1095,923,1109,935,1123,1002,1169,1059,1198,1197,1246,1312,1283,1426,1312,1540,1334,1656,1350,1775,1361,1899,1367,2166,1371,2643,1371,2704,1370,2751,1364,2795,1347,2845,1313,2876,1282,2900,1245,2927,1180,2932,1182,2904,1247,2880,1285,2848,1318,2798,1351,2753,1369,2704,1376,2643,1377,2166,1377,1899,1373,1775,1366,1655,1355,1539,1339,1425,1317,1310,1288,1195,1251,1056,1203,999,1174,931,1127,919,1113,907,1099,887,1085"/>
+<area shape="rect" href="struct_s_f__world__unkn__2.html" title=" " alt="" coords="784,967,909,994"/>
+<area shape="poly" title=" " alt="" coords="924,969,976,960,1029,948,1083,927,1085,932,1031,953,977,966,925,975"/>
+<area shape="rect" href="struct_s_f__world__unkn__4.html" title=" " alt="" coords="784,815,909,842"/>
+<area shape="poly" title=" " alt="" coords="925,839,978,851,1031,868,1092,899,1090,904,1029,873,976,856,924,844"/>
+<area shape="rect" href="struct_s_f___rectangle.html" title=" " alt="" coords="492,815,597,842"/>
+<area shape="poly" title=" " alt="" coords="612,826,783,826,783,831,612,831"/>
+<area shape="rect" href="struct_s_f__world__unkn__3.html" title=" " alt="" coords="784,866,909,893"/>
+<area shape="poly" title=" " alt="" coords="925,887,1060,906,1060,911,924,893"/>
+<area shape="poly" title=" " alt="" coords="1957,842,1912,851,1839,857,1765,855,1691,847,1621,835,1496,804,1408,775,1409,770,1498,798,1622,830,1692,842,1765,850,1839,852,1911,846,1956,836"/>
+<area shape="poly" title=" " alt="" coords="1944,840,1904,846,1860,847,1815,842,1772,827,1741,805,1716,776,1686,723,1691,720,1721,773,1745,801,1775,822,1816,836,1860,842,1903,840,1943,835"/>
+<area shape="poly" title=" " alt="" coords="2038,795,2110,736,2142,715,2168,701,2193,686,2221,662,2252,624,2279,583,2314,517,2318,520,2283,586,2256,627,2225,665,2196,690,2171,706,2145,720,2113,740,2041,799"/>
+<area shape="poly" title=" " alt="" coords="2103,813,2573,788,2573,794,2103,819"/>
+<area shape="poly" title=" " alt="" coords="2091,836,2236,873,2427,930,2533,965,2640,1005,2746,1050,2848,1100,2888,1126,2921,1152,2917,1156,2885,1130,2845,1104,2744,1055,2638,1010,2531,970,2426,935,2234,878,2089,841"/>
+<area shape="poly" title=" " alt="" coords="608,771,1172,730,1313,716,1454,705,1627,703,1627,709,1454,710,1313,721,1173,735,608,777"/>
+<area shape="poly" title=" " alt="" coords="762,1347,846,1299,910,1258,966,1210,1028,1139,1040,1114,1052,1087,1084,1044,1115,1015,1143,984,1170,940,1178,907,1177,878,1178,850,1184,835,1195,819,1212,809,1244,796,1323,770,1325,775,1246,801,1214,813,1198,823,1188,837,1183,851,1182,878,1183,907,1175,942,1147,988,1118,1018,1088,1048,1056,1090,1045,1117,1032,1142,970,1214,913,1263,849,1304,765,1351"/>
+<area shape="poly" title=" " alt="" coords="2717,768,2918,726,3040,703,3163,685,3350,668,3494,660,3494,666,3351,673,3164,690,3041,709,2919,731,2718,773"/>
+<area shape="poly" title=" " alt="" coords="2670,810,2753,895,2802,951,2849,1010,2897,1089,2930,1152,2925,1155,2893,1092,2844,1013,2798,954,2749,899,2666,813"/>
+<area shape="rect" href="struct_s_f___c_gd_battle_development.html" title="High&#45;level structure managing AI battle development." alt="" coords="3163,763,3347,790"/>
+<area shape="poly" title=" " alt="" coords="3351,789,3412,785,3442,777,3469,764,3490,745,3505,721,3522,675,3527,677,3510,723,3494,748,3472,768,3444,782,3413,790,3351,794"/>
+<area shape="poly" title=" " alt="" coords="2937,1138,2948,1060,2967,960,2991,865,3006,828,3022,802,3052,781,3100,763,3229,729,3367,701,3470,678,3494,671,3495,676,3471,683,3368,706,3230,734,3102,768,3055,786,3026,805,3011,830,2996,867,2972,962,2954,1061,2943,1139"/>
+<area shape="poly" title=" " alt="" coords="2943,1138,2971,1069,3016,978,3045,929,3079,882,3118,838,3162,800,3182,788,3185,793,3165,804,3122,842,3084,885,3050,932,3020,981,2975,1072,2948,1140"/>
+<area shape="rect" href="struct_auto_class60.html" title="Holds a list of entities with associated data and an entity count." alt="" coords="2594,1563,2690,1590"/>
+<area shape="poly" title=" " alt="" coords="2701,1592,2737,1597,2775,1598,2812,1591,2845,1573,2866,1545,2884,1501,2898,1445,2909,1383,2924,1263,2931,1181,2936,1181,2930,1263,2915,1384,2903,1446,2889,1502,2870,1548,2848,1578,2814,1596,2776,1603,2737,1603,2700,1597"/>
+<area shape="rect" href="struct_auto_class60__data.html" title="Stores data related to a specific entity in the AI system." alt="" coords="2259,1563,2388,1590"/>
+<area shape="poly" title=" " alt="" coords="2403,1574,2593,1574,2593,1579,2403,1579"/>
+<area shape="rect" href="struct_s_f___s_gt_figure_action.html" title=" " alt="" coords="2571,1158,2712,1185"/>
+<area shape="poly" title=" " alt="" coords="2727,1168,2873,1166,2873,1171,2727,1173"/>
+<area shape="rect" href="structushort__list__node.html" title="Represents a node in a list of unsigned short values." alt="" coords="2584,1259,2700,1286"/>
+<area shape="poly" title=" " alt="" coords="2710,1287,2742,1291,2777,1291,2812,1287,2845,1276,2873,1256,2897,1230,2926,1180,2930,1183,2901,1233,2877,1260,2848,1281,2813,1292,2778,1297,2742,1296,2709,1292"/>
+<area shape="rect" href="struct_s_f_mod.html" title=" " alt="" coords="3223,814,3287,841"/>
+<area shape="poly" title=" " alt="" coords="3302,835,3342,839,3386,839,3430,830,3469,811,3484,797,3496,780,3512,742,3521,705,3524,676,3529,676,3526,706,3517,744,3500,783,3488,800,3472,815,3431,836,3386,844,3341,845,3302,840"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:a24d828815d21cef4d6f5510a9a66c06d" id="r_a24d828815d21cef4d6f5510a9a66c06d"><td class="memItemLeft" align="right" valign="top">registerSpell_ptr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a24d828815d21cef4d6f5510a9a66c06d">registerSpell</a></td></tr>
+Data Fields</h2></td></tr>
+<tr class="memitem:a24d828815d21cef4d6f5510a9a66c06d" id="r_a24d828815d21cef4d6f5510a9a66c06d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="sf__registration__functions_8h.html#ac6a7d1085bcda2c8fdae2a14aff994a6">registerSpell_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a24d828815d21cef4d6f5510a9a66c06d">registerSpell</a></td></tr>
 <tr class="separator:a24d828815d21cef4d6f5510a9a66c06d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a483400b654381f997e92abf1a7a85595" id="r_a483400b654381f997e92abf1a7a85595"><td class="memItemLeft" align="right" valign="top">linkTypeHandler_ptr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a483400b654381f997e92abf1a7a85595">linkTypeHandler</a></td></tr>
+<tr class="memitem:a483400b654381f997e92abf1a7a85595" id="r_a483400b654381f997e92abf1a7a85595"><td class="memItemLeft" align="right" valign="top"><a class="el" href="sf__registration__functions_8h.html#ac2fe805202225f2150b4c92379d9e2df">linkTypeHandler_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a483400b654381f997e92abf1a7a85595">linkTypeHandler</a></td></tr>
 <tr class="separator:a483400b654381f997e92abf1a7a85595"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a95ccc4a50e01860f045f2244e0f60064" id="r_a95ccc4a50e01860f045f2244e0f60064"><td class="memItemLeft" align="right" valign="top">linkEffectHandler_ptr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a95ccc4a50e01860f045f2244e0f60064">linkEffectHandler</a></td></tr>
+<tr class="memitem:a95ccc4a50e01860f045f2244e0f60064" id="r_a95ccc4a50e01860f045f2244e0f60064"><td class="memItemLeft" align="right" valign="top"><a class="el" href="sf__registration__functions_8h.html#a49a2b0ccb161dafad0c4afaf76a027dc">linkEffectHandler_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a95ccc4a50e01860f045f2244e0f60064">linkEffectHandler</a></td></tr>
 <tr class="separator:a95ccc4a50e01860f045f2244e0f60064"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a53abcaab39ea523a9d44e44f7bfc42d0" id="r_a53abcaab39ea523a9d44e44f7bfc42d0"><td class="memItemLeft" align="right" valign="top">linkEndHandler_ptr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a53abcaab39ea523a9d44e44f7bfc42d0">linkEndHandler</a></td></tr>
+<tr class="memitem:a53abcaab39ea523a9d44e44f7bfc42d0" id="r_a53abcaab39ea523a9d44e44f7bfc42d0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="sf__registration__functions_8h.html#ac916edcf4aa9bd19f1c2d22fafe32f9c">linkEndHandler_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a53abcaab39ea523a9d44e44f7bfc42d0">linkEndHandler</a></td></tr>
 <tr class="separator:a53abcaab39ea523a9d44e44f7bfc42d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acc04eb6c8eee1e556b633c3d2ff2fd9d" id="r_acc04eb6c8eee1e556b633c3d2ff2fd9d"><td class="memItemLeft" align="right" valign="top">applySpellTag_ptr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acc04eb6c8eee1e556b633c3d2ff2fd9d">applySpellTag</a></td></tr>
+<tr class="memitem:acc04eb6c8eee1e556b633c3d2ff2fd9d" id="r_acc04eb6c8eee1e556b633c3d2ff2fd9d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="sf__registration__functions_8h.html#a6069e8fa721b821f4c4def317dce1e51">applySpellTag_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acc04eb6c8eee1e556b633c3d2ff2fd9d">applySpellTag</a></td></tr>
 <tr class="separator:acc04eb6c8eee1e556b633c3d2ff2fd9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3163197e4387708906f280ecaa40d96c" id="r_a3163197e4387708906f280ecaa40d96c"><td class="memItemLeft" align="right" valign="top">linkSubEffectHandler_ptr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3163197e4387708906f280ecaa40d96c">linkSubEffectHandler</a></td></tr>
+<tr class="memitem:a3163197e4387708906f280ecaa40d96c" id="r_a3163197e4387708906f280ecaa40d96c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="sf__registration__functions_8h.html#af85a79793616b28eeeb43114a2cacf54">linkSubEffectHandler_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3163197e4387708906f280ecaa40d96c">linkSubEffectHandler</a></td></tr>
 <tr class="separator:a3163197e4387708906f280ecaa40d96c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a59892480238bbcac59332b8cf9762fb9" id="r_a59892480238bbcac59332b8cf9762fb9"><td class="memItemLeft" align="right" valign="top">linkRefreshHandler_ptr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a59892480238bbcac59332b8cf9762fb9">linkRefreshHandler</a></td></tr>
+<tr class="memitem:a59892480238bbcac59332b8cf9762fb9" id="r_a59892480238bbcac59332b8cf9762fb9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="sf__registration__functions_8h.html#a6133c8817717372f974e5a02b23d3fec">linkRefreshHandler_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a59892480238bbcac59332b8cf9762fb9">linkRefreshHandler</a></td></tr>
 <tr class="separator:a59892480238bbcac59332b8cf9762fb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ff120c03b8e92f6f465cbd9cfac1356" id="r_a9ff120c03b8e92f6f465cbd9cfac1356"><td class="memItemLeft" align="right" valign="top">linkDealDamageHandler_ptr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9ff120c03b8e92f6f465cbd9cfac1356">linkDealDamageHandler</a></td></tr>
+<tr class="memitem:a9ff120c03b8e92f6f465cbd9cfac1356" id="r_a9ff120c03b8e92f6f465cbd9cfac1356"><td class="memItemLeft" align="right" valign="top"><a class="el" href="sf__registration__functions_8h.html#a2930321c20573b9715ef53aa8e1c55b6">linkDealDamageHandler_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9ff120c03b8e92f6f465cbd9cfac1356">linkDealDamageHandler</a></td></tr>
 <tr class="separator:a9ff120c03b8e92f6f465cbd9cfac1356"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9609ef301479b8af28ab43dc30e5e9be" id="r_a9609ef301479b8af28ab43dc30e5e9be"><td class="memItemLeft" align="right" valign="top">linkOnHitHandler_ptr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9609ef301479b8af28ab43dc30e5e9be">linkOnHitHandler</a></td></tr>
+<tr class="memitem:a9609ef301479b8af28ab43dc30e5e9be" id="r_a9609ef301479b8af28ab43dc30e5e9be"><td class="memItemLeft" align="right" valign="top"><a class="el" href="sf__registration__functions_8h.html#ae8f77dac0ca0ff740e136435581575dd">linkOnHitHandler_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9609ef301479b8af28ab43dc30e5e9be">linkOnHitHandler</a></td></tr>
 <tr class="separator:a9609ef301479b8af28ab43dc30e5e9be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a892173f2171aaa50c8339c6bce33422a" id="r_a892173f2171aaa50c8339c6bce33422a"><td class="memItemLeft" align="right" valign="top">linkAvoidanceAIHandler_ptr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a892173f2171aaa50c8339c6bce33422a">linkAvoidanceAIHandler</a></td></tr>
+<tr class="memitem:a892173f2171aaa50c8339c6bce33422a" id="r_a892173f2171aaa50c8339c6bce33422a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="sf__registration__functions_8h.html#a74cd6443b8bcd68015a47d7129420739">linkAvoidanceAIHandler_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a892173f2171aaa50c8339c6bce33422a">linkAvoidanceAIHandler</a></td></tr>
 <tr class="separator:a892173f2171aaa50c8339c6bce33422a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a357ad875193975b7c36e5821b332222c" id="r_a357ad875193975b7c36e5821b332222c"><td class="memItemLeft" align="right" valign="top">linkSingleTargetAIHandler_ptr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a357ad875193975b7c36e5821b332222c">linkSingleTargetAIHandler</a></td></tr>
+<tr class="memitem:a357ad875193975b7c36e5821b332222c" id="r_a357ad875193975b7c36e5821b332222c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="sf__registration__functions_8h.html#a55b68dc582617991fd392df4094cdfab">linkSingleTargetAIHandler_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a357ad875193975b7c36e5821b332222c">linkSingleTargetAIHandler</a></td></tr>
 <tr class="separator:a357ad875193975b7c36e5821b332222c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29db039d5ef8ff2094aa29ad29d74343" id="r_a29db039d5ef8ff2094aa29ad29d74343"><td class="memItemLeft" align="right" valign="top">linkAOEAIHandler_ptr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a29db039d5ef8ff2094aa29ad29d74343">linkAOEAIHandler</a></td></tr>
+<tr class="memitem:a29db039d5ef8ff2094aa29ad29d74343" id="r_a29db039d5ef8ff2094aa29ad29d74343"><td class="memItemLeft" align="right" valign="top"><a class="el" href="sf__registration__functions_8h.html#a239dfd549457dc87c17f411a54ac4fae">linkAOEAIHandler_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a29db039d5ef8ff2094aa29ad29d74343">linkAOEAIHandler</a></td></tr>
 <tr class="separator:a29db039d5ef8ff2094aa29ad29d74343"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="sf__registration__functions_8h_source.html#l00052">52</a> of file <a class="el" href="sf__registration__functions_8h_source.html">sf_registration_functions.h</a>.</p>
-</div><h2 class="groupheader">Member Data Documentation</h2>
+<div class="textblock"><p>A structure dedicated to the registration of spells This structure holds functions that are used to create a representation of a spell within the framework. We then translate this representation into a viable Spellforce Spell. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="sf__mod__registry_8cpp.html">sf_mod_registry.cpp</a> <a class="el" href="sf__mod__registry_8cpp.html#ab760f8f899f39400156538bbd0c21c68" title="Registers the mod spells and performs basic conflict checking.">register_mod_spells()</a> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="sf__registration__functions_8h_source.html#l00059">59</a> of file <a class="el" href="sf__registration__functions_8h_source.html">sf_registration_functions.h</a>.</p>
+</div><h2 class="groupheader">Field Documentation</h2>
 <a id="acc04eb6c8eee1e556b633c3d2ff2fd9d" name="acc04eb6c8eee1e556b633c3d2ff2fd9d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acc04eb6c8eee1e556b633c3d2ff2fd9d">&#9670;&#160;</a></span>applySpellTag</h2>
 
@@ -131,12 +258,12 @@ Public Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">applySpellTag_ptr RegistrationFunctions::applySpellTag</td>
+          <td class="memname"><a class="el" href="sf__registration__functions_8h.html#a6069e8fa721b821f4c4def317dce1e51">applySpellTag_ptr</a> RegistrationFunctions::applySpellTag</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__registration__functions_8h_source.html#l00058">58</a> of file <a class="el" href="sf__registration__functions_8h_source.html">sf_registration_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__registration__functions_8h_source.html#l00065">65</a> of file <a class="el" href="sf__registration__functions_8h_source.html">sf_registration_functions.h</a>.</p>
 
 </div>
 </div>
@@ -147,12 +274,12 @@ Public Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">linkAOEAIHandler_ptr RegistrationFunctions::linkAOEAIHandler</td>
+          <td class="memname"><a class="el" href="sf__registration__functions_8h.html#a239dfd549457dc87c17f411a54ac4fae">linkAOEAIHandler_ptr</a> RegistrationFunctions::linkAOEAIHandler</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__registration__functions_8h_source.html#l00065">65</a> of file <a class="el" href="sf__registration__functions_8h_source.html">sf_registration_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__registration__functions_8h_source.html#l00072">72</a> of file <a class="el" href="sf__registration__functions_8h_source.html">sf_registration_functions.h</a>.</p>
 
 </div>
 </div>
@@ -163,12 +290,12 @@ Public Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">linkAvoidanceAIHandler_ptr RegistrationFunctions::linkAvoidanceAIHandler</td>
+          <td class="memname"><a class="el" href="sf__registration__functions_8h.html#a74cd6443b8bcd68015a47d7129420739">linkAvoidanceAIHandler_ptr</a> RegistrationFunctions::linkAvoidanceAIHandler</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__registration__functions_8h_source.html#l00063">63</a> of file <a class="el" href="sf__registration__functions_8h_source.html">sf_registration_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__registration__functions_8h_source.html#l00070">70</a> of file <a class="el" href="sf__registration__functions_8h_source.html">sf_registration_functions.h</a>.</p>
 
 </div>
 </div>
@@ -179,12 +306,12 @@ Public Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">linkDealDamageHandler_ptr RegistrationFunctions::linkDealDamageHandler</td>
+          <td class="memname"><a class="el" href="sf__registration__functions_8h.html#a2930321c20573b9715ef53aa8e1c55b6">linkDealDamageHandler_ptr</a> RegistrationFunctions::linkDealDamageHandler</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__registration__functions_8h_source.html#l00061">61</a> of file <a class="el" href="sf__registration__functions_8h_source.html">sf_registration_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__registration__functions_8h_source.html#l00068">68</a> of file <a class="el" href="sf__registration__functions_8h_source.html">sf_registration_functions.h</a>.</p>
 
 </div>
 </div>
@@ -195,12 +322,12 @@ Public Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">linkEffectHandler_ptr RegistrationFunctions::linkEffectHandler</td>
+          <td class="memname"><a class="el" href="sf__registration__functions_8h.html#a49a2b0ccb161dafad0c4afaf76a027dc">linkEffectHandler_ptr</a> RegistrationFunctions::linkEffectHandler</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__registration__functions_8h_source.html#l00056">56</a> of file <a class="el" href="sf__registration__functions_8h_source.html">sf_registration_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__registration__functions_8h_source.html#l00063">63</a> of file <a class="el" href="sf__registration__functions_8h_source.html">sf_registration_functions.h</a>.</p>
 
 </div>
 </div>
@@ -211,12 +338,12 @@ Public Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">linkEndHandler_ptr RegistrationFunctions::linkEndHandler</td>
+          <td class="memname"><a class="el" href="sf__registration__functions_8h.html#ac916edcf4aa9bd19f1c2d22fafe32f9c">linkEndHandler_ptr</a> RegistrationFunctions::linkEndHandler</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__registration__functions_8h_source.html#l00057">57</a> of file <a class="el" href="sf__registration__functions_8h_source.html">sf_registration_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__registration__functions_8h_source.html#l00064">64</a> of file <a class="el" href="sf__registration__functions_8h_source.html">sf_registration_functions.h</a>.</p>
 
 </div>
 </div>
@@ -227,12 +354,12 @@ Public Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">linkOnHitHandler_ptr RegistrationFunctions::linkOnHitHandler</td>
+          <td class="memname"><a class="el" href="sf__registration__functions_8h.html#ae8f77dac0ca0ff740e136435581575dd">linkOnHitHandler_ptr</a> RegistrationFunctions::linkOnHitHandler</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__registration__functions_8h_source.html#l00062">62</a> of file <a class="el" href="sf__registration__functions_8h_source.html">sf_registration_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__registration__functions_8h_source.html#l00069">69</a> of file <a class="el" href="sf__registration__functions_8h_source.html">sf_registration_functions.h</a>.</p>
 
 </div>
 </div>
@@ -243,12 +370,12 @@ Public Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">linkRefreshHandler_ptr RegistrationFunctions::linkRefreshHandler</td>
+          <td class="memname"><a class="el" href="sf__registration__functions_8h.html#a6133c8817717372f974e5a02b23d3fec">linkRefreshHandler_ptr</a> RegistrationFunctions::linkRefreshHandler</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__registration__functions_8h_source.html#l00060">60</a> of file <a class="el" href="sf__registration__functions_8h_source.html">sf_registration_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__registration__functions_8h_source.html#l00067">67</a> of file <a class="el" href="sf__registration__functions_8h_source.html">sf_registration_functions.h</a>.</p>
 
 </div>
 </div>
@@ -259,12 +386,12 @@ Public Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">linkSingleTargetAIHandler_ptr RegistrationFunctions::linkSingleTargetAIHandler</td>
+          <td class="memname"><a class="el" href="sf__registration__functions_8h.html#a55b68dc582617991fd392df4094cdfab">linkSingleTargetAIHandler_ptr</a> RegistrationFunctions::linkSingleTargetAIHandler</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__registration__functions_8h_source.html#l00064">64</a> of file <a class="el" href="sf__registration__functions_8h_source.html">sf_registration_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__registration__functions_8h_source.html#l00071">71</a> of file <a class="el" href="sf__registration__functions_8h_source.html">sf_registration_functions.h</a>.</p>
 
 </div>
 </div>
@@ -275,12 +402,12 @@ Public Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">linkSubEffectHandler_ptr RegistrationFunctions::linkSubEffectHandler</td>
+          <td class="memname"><a class="el" href="sf__registration__functions_8h.html#af85a79793616b28eeeb43114a2cacf54">linkSubEffectHandler_ptr</a> RegistrationFunctions::linkSubEffectHandler</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__registration__functions_8h_source.html#l00059">59</a> of file <a class="el" href="sf__registration__functions_8h_source.html">sf_registration_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__registration__functions_8h_source.html#l00066">66</a> of file <a class="el" href="sf__registration__functions_8h_source.html">sf_registration_functions.h</a>.</p>
 
 </div>
 </div>
@@ -291,12 +418,12 @@ Public Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">linkTypeHandler_ptr RegistrationFunctions::linkTypeHandler</td>
+          <td class="memname"><a class="el" href="sf__registration__functions_8h.html#ac2fe805202225f2150b4c92379d9e2df">linkTypeHandler_ptr</a> RegistrationFunctions::linkTypeHandler</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__registration__functions_8h_source.html#l00055">55</a> of file <a class="el" href="sf__registration__functions_8h_source.html">sf_registration_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__registration__functions_8h_source.html#l00062">62</a> of file <a class="el" href="sf__registration__functions_8h_source.html">sf_registration_functions.h</a>.</p>
 
 </div>
 </div>
@@ -307,12 +434,12 @@ Public Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">registerSpell_ptr RegistrationFunctions::registerSpell</td>
+          <td class="memname"><a class="el" href="sf__registration__functions_8h.html#ac6a7d1085bcda2c8fdae2a14aff994a6">registerSpell_ptr</a> RegistrationFunctions::registerSpell</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__registration__functions_8h_source.html#l00054">54</a> of file <a class="el" href="sf__registration__functions_8h_source.html">sf_registration_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__registration__functions_8h_source.html#l00061">61</a> of file <a class="el" href="sf__registration__functions_8h_source.html">sf_registration_functions.h</a>.</p>
 
 </div>
 </div>

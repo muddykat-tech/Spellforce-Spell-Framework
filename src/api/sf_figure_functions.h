@@ -212,7 +212,10 @@ DECLARE_FUNCTION(void, setTask, SF_CGdFigure *_figure, uint16_t figure_index, CG
 // Unknown Functons
 DECLARE_FUNCTION(bool, FUN_006e3a90, uint32_t *CGdFigureJobs, uint16_t figure_id);
 
-
+/**
+ * @ingroup API
+ * @brief Group of functions to manipulate the behavior and statistics of the game figures (units)
+ */
 typedef struct
 {
     isAlive_ptr isAlive;

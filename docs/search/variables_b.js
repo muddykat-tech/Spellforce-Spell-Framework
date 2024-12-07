@@ -1,5 +1,26 @@
 var searchData=
 [
-  ['old_5freg_5fperm_0',['old_reg_perm',['../struct_a_s_i_1_1_memory_region.html#a8357aac6c7ffd5a3f5e22d72b678a62e',1,'ASI::MemoryRegion']]],
-  ['onspellremove_1',['onSpellRemove',['../struct_spell_functions.html#abfc56830d1de7707b3ba9d0a45cc9380',1,'SpellFunctions']]]
+  ['mana_5fcost_0',['mana_cost',['../struct_s_f___c_gd_resource_spell.html#a49f26b730eed71605a62ed1f2a8d7438',1,'SF_CGdResourceSpell']]],
+  ['mana_5fstuff_1',['mana_stuff',['../struct_gd_figure.html#a6c8aec972274c9f03dfd0a82fe863f11',1,'GdFigure']]],
+  ['manual_5fhit_5ftarget_5fmaybe_2',['manual_hit_target_maybe',['../struct_c_gd_a_i_battle_data.html#a5442ee85e7812bfb046b64461878b956',1,'CGdAIBattleData']]],
+  ['map_5fname_3',['map_name',['../struct_s_f___c_gd_world.html#aaecae11b1a5c196618dc0202cf039ca4',1,'SF_CGdWorld']]],
+  ['map_5fsize_4',['map_size',['../struct_s_f___c_gd_world.html#aeaa44e76e01d48dc7f37c72315046be6',1,'SF_CGdWorld']]],
+  ['master_5ffigure_5',['master_figure',['../struct_gd_figure.html#a27519cab2859a7d91f770275357aa54b',1,'GdFigure']]],
+  ['max_5fattack_5frange_6',['max_attack_range',['../struct_gd_figure.html#a4a06afd6f5b326f84bdb1ed056b08887',1,'GdFigure']]],
+  ['max_5fdmg_7',['max_dmg',['../struct_s_f___c_gd_figure_weapon_stats.html#a37b06ab30fe49493ee1953cbb145a37d',1,'SF_CGdFigureWeaponStats']]],
+  ['max_5frange_8',['max_range',['../struct_s_f___c_gd_resource_spell.html#ab7174759377fcd53fc6d5b4ff6d248a8',1,'SF_CGdResourceSpell']]],
+  ['max_5frng_9',['max_rng',['../struct_s_f___c_gd_figure_weapon_stats.html#ab5953fd6925f30b07d74ab10f8f84067',1,'SF_CGdFigureWeaponStats']]],
+  ['max_5fused_10',['max_used',['../struct_s_f___c_gd_figure.html#af51ccdfcd75a36c74b0a5965549c15d6',1,'SF_CGdFigure::max_used'],['../struct_s_f___c_gd_spell.html#adad06d22595599ef274858aa2bac5df2',1,'SF_CGdSpell::max_used'],['../struct_s_f___c_g_d_effect.html#ada8c5fb5796fe7f20dbb0149930ccb72',1,'SF_CGDEffect::max_used'],['../struct_s_f___c_gd_building.html#ab7e088eb7450bfb7a0683df57d3bc8ee',1,'SF_CGdBuilding::max_used']]],
+  ['maybe_5frandom_11',['maybe_random',['../struct_s_f___c_gd_figure_toolbox.html#ade948407606fabecf50179fc7f7395bb',1,'SF_CGdFigureToolbox']]],
+  ['memory_5flength_12',['memory_length',['../struct_a_s_i_1_1_memory_region.html#af6b5610ea57e91c7776d5e5f3cdaeb98',1,'ASI::MemoryRegion']]],
+  ['memory_5foffset_13',['memory_offset',['../struct_a_s_i_1_1_memory_region.html#a62921b8dc6bee1c5d6016e5406170815',1,'ASI::MemoryRegion']]],
+  ['min_5fattack_5frange_14',['min_attack_range',['../struct_gd_figure.html#a4772bf1de18f631597b71322093033cc',1,'GdFigure']]],
+  ['min_5fdmg_15',['min_dmg',['../struct_s_f___c_gd_figure_weapon_stats.html#ae0c0a0e3c013e66e03808c929b4fe3e7',1,'SF_CGdFigureWeaponStats']]],
+  ['min_5frange_16',['min_range',['../struct_s_f___c_gd_resource_spell.html#ac9cb84ce24c5d81004ad453aea2ab6ad',1,'SF_CGdResourceSpell']]],
+  ['min_5frng_17',['min_rng',['../struct_s_f___c_gd_figure_weapon_stats.html#ab660a2571057393e3bd19eb8ca96f054',1,'SF_CGdFigureWeaponStats']]],
+  ['missing_5fval_18',['missing_val',['../struct_figure_statistic_ext.html#ae1f6b4439db46979205fdf07ad1b4e5c',1,'FigureStatisticExt']]],
+  ['mod_5fauthor_19',['mod_author',['../struct_s_f_mod.html#afb68db7dba8f8f8ba83e002ef6f08798',1,'SFMod']]],
+  ['mod_5fdescription_20',['mod_description',['../struct_s_f_mod.html#a8f896547fbc749b9733aba0ddbd683cd',1,'SFMod']]],
+  ['mod_5fid_21',['mod_id',['../struct_s_f_mod.html#a45a0016a0b40578f64784d87ba36ecfa',1,'SFMod']]],
+  ['mod_5fversion_22',['mod_version',['../struct_s_f_mod.html#abad5eb60a69c3058eae89231e3b7c41c',1,'SFMod']]]
 ];

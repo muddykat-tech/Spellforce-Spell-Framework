@@ -120,7 +120,7 @@ uint16_t __thiscall getSpellTags(uint16_t spell_line_id)
 }
 
 /**
- * Registers the mod spells and performs basic conflict checking.
+ * @brief Registers the mod spells and performs basic conflict checking.
  *
  * This function iterates over the g_internal_spell_list and registers each spell by
  * adding it to the spell_id_map and spell_effect_id_map. It checks for conflicts

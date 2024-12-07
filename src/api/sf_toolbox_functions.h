@@ -25,6 +25,10 @@ DECLARE_FUNCTION(bool, findClosestFreePosition, SF_CGdWorldToolBox* _this, SF_Co
                     uint16_t sector, SF_Coord *return_value)
 DECLARE_FUNCTION(bool, isUnitMelee, SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t figure_id);
 
+/**
+ * @ingroup API
+ * @brief Holds most of the Toolbox Functions relevent for custom spells. Includes functions for the manipulation of Figures.
+ */
 typedef struct
 {
     dealDamage_ptr dealDamage;

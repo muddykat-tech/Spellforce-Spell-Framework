@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['memoryregion_0',['MemoryRegion',['../struct_a_s_i_1_1_memory_region.html',1,'ASI']]]
+  ['gdbuilding_0',['GdBuilding',['../struct_gd_building.html',1,'']]],
+  ['gdfigure_1',['GdFigure',['../struct_gd_figure.html',1,'']]]
 ];

@@ -84,6 +84,8 @@ $(function(){ initResizable(false); });
 </div><!-- top -->
 <div id="doc-content">
 <div class="header">
+  <div class="summary">
+<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle"><div class="title">CGdAIBattleData Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -92,10 +94,1703 @@ $(function(){ initResizable(false); });
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>&gt;</code></p>
+<div class="dynheader">
+Collaboration diagram for CGdAIBattleData:</div>
+<div class="dyncontent">
+<div class="center"><img src="struct_c_gd_a_i_battle_data__coll__graph.png" border="0" usemap="#a_c_gd_a_i_battle_data_coll__map" alt="Collaboration graph"/></div>
+<map name="a_c_gd_a_i_battle_data_coll__map" id="a_c_gd_a_i_battle_data_coll__map">
+<area shape="rect" title="The main structure for handling AI battle data." alt="" coords="2860,969,2983,996"/>
+<area shape="rect" href="struct_s_f___c_gd_building.html" title=" " alt="" coords="1059,585,1177,612"/>
+<area shape="poly" title=" " alt="" coords="1141,572,1160,549,1175,522,1182,501,1184,483,1182,449,1183,416,1188,398,1199,378,1220,358,1242,348,1265,341,1291,327,1302,316,1315,304,1454,225,1513,196,1569,173,1628,156,1691,145,1764,138,1850,136,2632,136,2650,138,2667,144,2699,168,2728,204,2755,252,2780,308,2802,372,2842,512,2873,657,2897,792,2921,968,2916,969,2891,793,2868,658,2837,513,2797,373,2775,310,2750,254,2723,207,2695,172,2664,149,2649,143,2632,141,1850,141,1764,143,1692,150,1629,161,1571,178,1515,201,1456,230,1318,309,1306,319,1294,331,1267,346,1244,353,1223,362,1203,382,1193,400,1188,417,1188,449,1189,483,1187,502,1180,524,1164,552,1145,575"/>
+<area shape="rect" href="struct_s_f___c_gd_figure_jobs.html" title=" " alt="" coords="2563,969,2699,996"/>
+<area shape="poly" title=" " alt="" coords="1174,619,1179,625,1189,641,1193,657,1192,686,1190,715,1194,729,1203,744,1213,753,1224,759,1246,763,1270,766,1294,781,1304,794,1308,807,1311,820,1319,835,1351,880,1379,915,1412,942,1460,967,1525,979,1637,986,1938,991,2422,985,2536,985,2562,984,2562,990,2536,991,2422,991,1938,996,1636,992,1524,984,1458,972,1409,947,1375,919,1347,884,1314,837,1306,822,1303,809,1299,797,1291,785,1268,771,1245,768,1222,764,1210,758,1199,747,1189,731,1185,716,1186,686,1188,658,1184,643,1175,628,1170,623"/>
+<area shape="rect" href="struct_s_f___c_g_d_effect.html" title=" " alt="" coords="1321,568,1430,595"/>
+<area shape="poly" title=" " alt="" coords="1192,591,1321,582,1321,588,1193,596"/>
+<area shape="rect" href="struct_s_f___c_gd_figure_toolbox.html" title=" " alt="" coords="1931,548,2084,575"/>
+<area shape="poly" title=" " alt="" coords="1193,600,1316,604,1483,605,1612,599,1906,571,1930,568,1930,573,1907,576,1612,605,1483,610,1316,609,1193,605"/>
+<area shape="rect" href="struct_s_f___c_gd_spell.html" title=" " alt="" coords="2284,771,2385,797"/>
+<area shape="poly" title=" " alt="" coords="1168,617,1179,625,1216,654,1243,680,1295,748,1301,762,1305,774,1308,784,1318,792,1353,809,1398,821,1452,831,1512,837,1647,841,1794,837,1941,827,2079,814,2283,789,2284,794,2079,819,1941,832,1794,842,1647,846,1511,842,1451,836,1397,827,1351,814,1315,797,1304,787,1299,775,1296,764,1290,751,1239,684,1213,658,1176,629,1165,622"/>
+<area shape="rect" href="struct_s_f___c_gd_world_tool_box.html" title=" " alt="" coords="1619,325,1772,352"/>
+<area shape="poly" title=" " alt="" coords="1138,571,1188,516,1262,445,1307,409,1354,376,1405,347,1459,324,1506,313,1554,311,1601,315,1642,322,1641,327,1600,320,1554,317,1506,319,1460,329,1408,352,1357,381,1310,414,1266,449,1192,519,1142,575"/>
+<area shape="rect" href="struct_auto_class14.html" title=" " alt="" coords="798,740,894,767"/>
+<area shape="poly" title=" " alt="" coords="861,725,890,685,910,664,932,647,981,630,1059,610,1060,615,982,636,934,652,913,668,894,688,865,728"/>
+<area shape="poly" title=" " alt="" coords="853,781,860,828,874,885,899,945,915,973,935,998,980,1043,1022,1076,1063,1100,1105,1117,1198,1140,1317,1163,1421,1177,1551,1185,1699,1187,1856,1185,2161,1173,2398,1156,2439,1155,2471,1156,2501,1152,2535,1135,2569,1103,2595,1064,2613,1026,2623,996,2628,998,2617,1028,2599,1067,2573,1107,2538,1140,2503,1157,2471,1162,2439,1161,2398,1161,2161,1178,1856,1191,1699,1193,1551,1190,1420,1183,1316,1168,1197,1145,1103,1122,1061,1105,1019,1080,977,1047,931,1002,911,976,894,948,869,887,855,829,847,782"/>
+<area shape="poly" title=" " alt="" coords="904,732,1331,593,1333,598,905,737"/>
+<area shape="poly" title=" " alt="" coords="910,767,1043,798,1122,812,1202,823,1263,826,1325,824,1387,817,1448,806,1568,773,1681,732,1783,686,1870,641,1984,573,1987,577,1872,646,1785,691,1683,737,1570,779,1449,811,1388,822,1325,829,1263,831,1201,828,1121,817,1042,803,909,772"/>
+<area shape="poly" title=" " alt="" coords="880,773,934,802,968,813,995,818,1059,825,1214,845,1346,858,1462,865,1570,866,1796,855,2084,832,2166,828,2201,825,2245,816,2303,795,2305,801,2247,821,2202,830,2166,834,2084,837,1796,860,1570,871,1462,870,1345,863,1214,851,1059,831,994,823,967,818,932,806,878,778"/>
+<area shape="poly" title=" " alt="" coords="856,724,885,664,906,631,931,601,957,580,982,568,1006,558,1033,539,1077,496,1110,454,1161,375,1187,339,1218,306,1260,277,1316,253,1366,243,1418,241,1470,247,1520,259,1609,291,1671,322,1669,327,1607,296,1519,264,1469,253,1418,247,1367,248,1317,259,1263,282,1222,310,1191,342,1165,378,1114,457,1081,500,1037,543,1009,562,984,573,960,584,935,605,910,634,890,667,861,726"/>
+<area shape="rect" href="struct_gd_building.html" title=" " alt="" coords="343,572,427,599"/>
+<area shape="poly" title=" " alt="" coords="443,584,1058,595,1058,600,443,589"/>
+<area shape="rect" href="struct_s_f___coord.html" title=" " alt="" coords="5,723,86,749"/>
+<area shape="poly" title=" " alt="" coords="52,765,69,917,85,1020,106,1127,133,1229,166,1314,184,1347,205,1372,226,1388,250,1393,1248,1393,1553,1398,1795,1401,2061,1400,2324,1393,2559,1378,2657,1367,2738,1352,2798,1335,2819,1325,2834,1314,2850,1290,2865,1254,2890,1159,2907,1063,2916,996,2921,997,2912,1064,2895,1161,2870,1255,2855,1293,2838,1318,2822,1329,2800,1340,2739,1357,2658,1372,2559,1383,2325,1398,2061,1405,1795,1406,1553,1404,1248,1399,249,1399,224,1393,201,1376,180,1350,161,1316,128,1231,101,1129,80,1021,64,917,47,765"/>
+<area shape="poly" title=" " alt="" coords="65,709,84,688,108,670,169,639,233,616,293,600,342,589,343,594,294,605,234,621,171,644,111,674,88,692,68,712"/>
+<area shape="rect" href="struct_gd_figure.html" title=" " alt="" coords="809,981,884,1008"/>
+<area shape="poly" title=" " alt="" coords="101,724,251,701,447,681,545,677,634,680,708,692,738,702,762,716,778,753,802,831,844,980,839,982,796,833,773,755,758,719,736,707,707,697,634,685,545,682,447,686,252,706,101,729"/>
+<area shape="rect" href="struct_auto_class24.html" title=" " alt="" coords="496,1113,593,1140"/>
+<area shape="poly" title=" " alt="" coords="101,743,177,763,267,797,313,820,356,848,396,881,430,920,442,944,446,968,440,1012,436,1033,435,1054,440,1075,453,1097,473,1112,497,1120,495,1125,470,1116,449,1100,435,1077,430,1055,431,1033,435,1011,441,968,437,946,425,923,392,885,353,852,310,825,265,801,175,768,100,748"/>
+<area shape="rect" href="struct_s_f___c_gd_target_data.html" title=" " alt="" coords="183,1113,319,1140"/>
+<area shape="poly" title=" " alt="" coords="55,764,76,844,92,891,112,936,143,990,179,1039,239,1111,235,1115,175,1043,139,992,107,939,87,893,71,845,50,765"/>
+<area shape="rect" href="struct_s_f___gd_effect.html" title=" " alt="" coords="496,489,593,516"/>
+<area shape="poly" title=" " alt="" coords="54,707,75,665,90,644,108,625,154,591,204,564,258,543,312,527,414,508,495,501,496,506,415,513,313,532,259,548,207,569,157,596,111,629,94,647,80,668,59,709"/>
+<area shape="rect" href="struct_s_f___c_gd_figure.html" title="A structure for the global list of figures and related statistics for them." alt="" coords="1064,981,1172,1008"/>
+<area shape="poly" title=" " alt="" coords="1142,1018,1170,1044,1203,1067,1232,1080,1257,1086,1317,1095,1570,1143,1843,1186,2067,1218,2176,1231,2632,1231,2659,1229,2684,1223,2732,1201,2776,1170,2815,1133,2848,1093,2876,1054,2911,995,2915,998,2880,1057,2852,1096,2819,1136,2779,1174,2735,1206,2686,1228,2660,1234,2632,1236,2176,1236,2066,1224,1842,1192,1569,1148,1316,1100,1256,1091,1231,1085,1200,1072,1166,1048,1139,1021"/>
+<area shape="poly" title=" " alt="" coords="1153,1014,1176,1027,1202,1037,1330,1070,1493,1100,1678,1127,1875,1146,2071,1155,2254,1152,2338,1144,2413,1132,2479,1116,2535,1095,2565,1074,2590,1047,2621,995,2626,998,2594,1050,2569,1078,2538,1100,2481,1121,2414,1138,2338,1149,2255,1157,2071,1160,1875,1151,1678,1132,1492,1106,1329,1075,1201,1043,1174,1032,1150,1019"/>
+<area shape="poly" title=" " alt="" coords="1136,967,1205,865,1290,731,1365,594,1370,597,1295,733,1209,867,1140,970"/>
+<area shape="poly" title=" " alt="" coords="1188,1006,1278,1016,1331,1017,1386,1015,1442,1007,1496,993,1548,971,1594,939,1602,930,1606,921,1607,901,1607,879,1617,856,1657,815,1696,793,1740,777,1795,756,1827,746,1853,742,1878,735,1905,719,1939,684,1967,643,1999,574,2004,576,1971,646,1944,687,1908,723,1880,740,1854,747,1828,751,1797,761,1742,782,1699,798,1660,819,1622,859,1612,880,1612,901,1611,923,1606,933,1597,943,1550,975,1498,998,1443,1012,1387,1020,1331,1023,1278,1021,1187,1011"/>
+<area shape="poly" title=" " alt="" coords="1164,1012,1202,1023,1267,1031,1318,1031,1435,1023,1578,1013,1761,994,1943,970,2083,943,2168,920,2203,905,2244,879,2269,859,2290,837,2322,796,2326,799,2294,840,2272,863,2248,883,2206,910,2170,925,2085,948,1944,975,1762,1000,1578,1018,1436,1028,1318,1037,1266,1036,1201,1028,1162,1017"/>
+<area shape="poly" title=" " alt="" coords="1122,966,1147,853,1170,783,1199,715,1221,679,1242,654,1265,630,1290,597,1314,554,1347,516,1376,489,1404,461,1433,421,1440,404,1442,388,1445,373,1458,358,1495,337,1537,326,1579,322,1619,324,1619,329,1579,328,1538,332,1497,342,1461,362,1450,375,1447,389,1445,405,1438,424,1408,465,1379,492,1351,519,1319,558,1295,600,1269,634,1246,658,1225,682,1204,717,1175,785,1152,855,1127,967"/>
+<area shape="poly" title=" " alt="" coords="899,992,1064,992,1064,997,899,997"/>
+<area shape="rect" href="struct_figure_statistic.html" title=" " alt="" coords="492,981,597,1008"/>
+<area shape="poly" title=" " alt="" coords="613,992,809,992,809,997,613,997"/>
+<area shape="rect" href="struct_figure_statistic_ext.html" title=" " alt="" coords="482,1060,607,1087"/>
+<area shape="poly" title=" " alt="" coords="622,1070,690,1062,759,1045,796,1027,826,1006,829,1011,799,1032,761,1051,691,1068,623,1075"/>
+<area shape="rect" href="struct_s_f___c_gd_figure_weapon_stats.html" title=" " alt="" coords="451,728,638,755"/>
+<area shape="poly" title=" " alt="" coords="654,734,710,746,737,757,761,773,784,796,803,823,828,883,842,940,847,981,842,981,837,940,823,884,798,825,780,799,758,777,734,762,708,751,652,740"/>
+<area shape="rect" href="struct_c_gd_figure_hate_entry.html" title=" " alt="" coords="473,779,616,805"/>
+<area shape="poly" title=" " alt="" coords="632,791,707,799,739,805,761,815,781,833,798,854,823,900,838,946,845,980,840,981,833,947,818,902,794,857,777,836,758,820,737,810,706,804,631,797"/>
+<area shape="poly" title=" " alt="" coords="608,1137,644,1141,683,1141,722,1134,758,1120,788,1096,812,1065,828,1033,838,1007,843,1009,833,1035,816,1068,792,1100,761,1125,723,1140,683,1146,644,1146,608,1143"/>
+<area shape="poly" title=" " alt="" coords="275,1150,319,1196,382,1248,419,1271,459,1290,500,1303,543,1308,1248,1308,1374,1311,1471,1317,1569,1323,1694,1325,2632,1325,2668,1324,2698,1318,2724,1310,2746,1298,2788,1262,2834,1210,2853,1183,2870,1154,2894,1092,2909,1036,2916,996,2921,997,2914,1037,2899,1094,2874,1156,2858,1186,2838,1214,2792,1266,2749,1302,2726,1315,2699,1324,2668,1329,2632,1331,1694,1331,1569,1328,1471,1322,1374,1316,1248,1313,543,1313,499,1309,457,1295,416,1276,379,1252,316,1200,271,1154"/>
+<area shape="poly" title=" " alt="" coords="335,1124,496,1124,496,1129,335,1129"/>
+<area shape="rect" href="struct_s_f___gd_spell.html" title=" " alt="" coords="665,1184,756,1211"/>
+<area shape="poly" title=" " alt="" coords="294,1144,344,1161,432,1178,520,1188,665,1195,665,1200,520,1194,431,1184,342,1167,293,1149"/>
+<area shape="poly" title=" " alt="" coords="263,1098,425,751,534,515,539,517,430,753,268,1100"/>
+<area shape="poly" title=" " alt="" coords="2715,980,2859,980,2859,985,2715,985"/>
+<area shape="poly" title=" " alt="" coords="1420,599,1578,673,1821,776,1964,830,2115,882,2269,929,2423,967,2494,977,2562,981,2562,986,2494,982,2422,972,2268,934,2113,888,1962,835,1819,781,1576,678,1418,604"/>
+<area shape="poly" title=" " alt="" coords="1445,566,1459,564,1584,547,1682,539,1781,539,1907,545,1930,547,1930,553,1906,551,1781,544,1682,544,1585,552,1460,569,1446,571"/>
+<area shape="poly" title=" " alt="" coords="1435,555,1442,536,1443,518,1445,500,1458,485,1478,475,1510,469,1603,462,1723,462,1856,469,1989,481,2107,498,2198,518,2229,529,2248,541,2260,556,2267,571,2269,600,2267,631,2273,667,2299,724,2326,769,2321,771,2294,727,2267,669,2261,632,2263,600,2261,572,2256,559,2244,545,2227,534,2196,523,2106,503,1988,487,1856,475,1723,468,1603,467,1511,474,1480,481,1461,489,1450,502,1448,518,1447,537,1440,556"/>
+<area shape="poly" title=" " alt="" coords="1424,557,1433,548,1440,535,1443,524,1443,500,1443,476,1448,464,1457,451,1475,439,1492,433,1526,433,1559,435,1576,431,1594,421,1602,410,1605,399,1609,386,1617,373,1652,350,1654,355,1621,377,1613,388,1611,400,1607,413,1597,425,1578,436,1560,440,1526,439,1493,438,1477,444,1461,455,1453,466,1449,477,1448,500,1449,524,1445,537,1437,551,1428,561"/>
+<area shape="poly" title=" " alt="" coords="2044,538,2074,524,2107,513,2190,497,2256,492,2321,502,2399,531,2490,578,2577,636,2657,700,2729,766,2793,830,2845,887,2911,967,2907,971,2841,891,2789,833,2726,770,2653,704,2573,640,2488,583,2397,536,2320,507,2256,498,2190,502,2109,519,2076,529,2046,543"/>
+<area shape="poly" title=" " alt="" coords="2060,540,2102,530,2150,525,2200,527,2247,540,2311,576,2359,614,2395,656,2424,700,2480,798,2515,853,2562,910,2617,967,2614,971,2558,914,2511,856,2475,801,2420,703,2391,659,2355,618,2308,580,2245,545,2199,532,2150,530,2103,536,2062,546"/>
+<area shape="poly" title=" " alt="" coords="1915,567,1431,582,1431,577,1915,562"/>
+<area shape="poly" title=" " alt="" coords="2100,560,2137,565,2176,574,2214,589,2248,610,2267,628,2283,648,2308,693,2324,737,2333,770,2328,771,2319,738,2303,695,2279,651,2263,631,2244,614,2211,594,2174,580,2136,570,2099,565"/>
+<area shape="poly" title=" " alt="" coords="2392,800,2880,966,2878,971,2390,805"/>
+<area shape="poly" title=" " alt="" coords="2350,810,2379,861,2400,887,2424,910,2457,931,2492,947,2563,969,2562,974,2490,952,2454,935,2421,914,2396,891,2375,864,2345,813"/>
+<area shape="poly" title=" " alt="" coords="2268,773,1430,595,1431,590,2269,768"/>
+<area shape="poly" title=" " alt="" coords="2298,764,2027,577,2030,573,2302,759"/>
+<area shape="rect" href="struct_s_f___c_gd_world.html" title=" " alt="" coords="1066,173,1171,200"/>
+<area shape="poly" title=" " alt="" coords="1148,162,1190,134,1245,105,1308,81,1341,75,1374,72,2632,72,2653,74,2674,81,2711,105,2743,140,2771,181,2814,266,2838,328,2867,423,2889,522,2905,620,2915,714,2923,873,2923,969,2918,969,2918,874,2909,714,2899,621,2884,523,2862,425,2833,330,2809,268,2767,184,2739,143,2707,109,2671,86,2652,80,2632,77,1375,77,1342,80,1309,87,1247,110,1193,139,1150,166"/>
+<area shape="poly" title=" " alt="" coords="1186,179,1201,179,1292,179,1539,184,1856,192,2018,203,2169,220,2299,247,2354,264,2400,284,2453,318,2488,353,2514,397,2539,455,2549,499,2552,554,2549,685,2547,815,2552,869,2563,911,2585,943,2612,967,2608,971,2581,946,2558,913,2546,870,2542,815,2544,685,2547,554,2544,499,2534,457,2510,399,2484,356,2449,322,2397,289,2352,269,2298,252,2168,225,2017,208,1856,197,1539,189,1292,184,1201,184,1187,185"/>
+<area shape="poly" title=" " alt="" coords="1133,214,1162,282,1204,361,1228,396,1250,421,1272,447,1295,483,1302,502,1305,517,1309,532,1318,548,1341,565,1338,569,1314,551,1304,534,1300,519,1297,503,1290,485,1267,450,1246,425,1224,399,1199,364,1158,284,1128,216"/>
+<area shape="poly" title=" " alt="" coords="1134,213,1162,261,1181,285,1203,307,1226,320,1249,324,1271,329,1294,345,1304,361,1307,376,1310,390,1318,405,1351,434,1382,450,1460,472,1526,488,1583,497,1682,502,1782,505,1840,511,1907,524,1973,545,1971,550,1906,529,1839,516,1781,510,1682,507,1583,502,1525,494,1459,477,1380,455,1348,438,1314,408,1305,392,1302,377,1299,363,1290,349,1269,334,1247,329,1225,325,1200,311,1177,289,1157,264,1129,215"/>
+<area shape="poly" title=" " alt="" coords="1187,191,1293,203,1519,232,1694,261,1867,302,2085,369,2134,381,2176,389,2213,403,2231,417,2248,437,2258,457,2263,485,2266,550,2267,617,2273,667,2298,725,2325,769,2321,772,2293,727,2267,669,2262,617,2261,550,2258,485,2253,459,2244,440,2227,421,2210,408,2175,394,2133,387,2083,375,1866,307,1693,266,1518,237,1292,208,1186,196"/>
+<area shape="poly" title=" " alt="" coords="1187,199,1202,203,1313,225,1401,240,1487,258,1596,291,1669,322,1667,327,1594,296,1486,264,1400,245,1312,230,1201,208,1185,204"/>
+<area shape="rect" href="struct_s_f__world__unkn__1.html" title=" " alt="" coords="784,213,909,240"/>
+<area shape="poly" title=" " alt="" coords="924,216,1035,201,1065,196,1066,201,1035,207,925,222"/>
+<area shape="rect" href="struct_s_f___string.html" title=" " alt="" coords="807,36,886,63"/>
+<area shape="poly" title=" " alt="" coords="901,38,1001,25,1117,19,2632,19,2675,22,2710,32,2739,49,2763,71,2784,98,2803,130,2838,207,2860,278,2878,375,2892,488,2903,608,2917,832,2922,969,2917,969,2912,832,2898,609,2887,489,2873,375,2855,279,2833,209,2798,133,2780,101,2759,74,2736,53,2708,37,2674,27,2632,24,1117,24,1002,30,902,43"/>
+<area shape="poly" title=" " alt="" coords="902,60,968,82,1036,114,1076,143,1106,171,1102,175,1072,147,1034,118,966,87,900,65"/>
+<area shape="rect" href="struct_s_f__world__unkn__2.html" title=" " alt="" coords="784,112,909,139"/>
+<area shape="poly" title=" " alt="" coords="925,134,1036,156,1081,170,1079,175,1034,161,924,139"/>
+<area shape="rect" href="struct_s_f__world__unkn__4.html" title=" " alt="" coords="784,163,909,189"/>
+<area shape="poly" title=" " alt="" coords="924,176,1065,182,1065,187,924,182"/>
+<area shape="rect" href="struct_s_f___rectangle.html" title=" " alt="" coords="492,163,597,189"/>
+<area shape="poly" title=" " alt="" coords="612,173,783,173,783,179,612,179"/>
+<area shape="rect" href="struct_s_f__world__unkn__3.html" title=" " alt="" coords="784,264,909,291"/>
+<area shape="poly" title=" " alt="" coords="924,265,979,254,1034,236,1069,218,1098,198,1101,202,1072,223,1036,241,980,259,925,271"/>
+<area shape="poly" title=" " alt="" coords="1740,317,1795,300,1833,295,1863,295,1931,297,2066,292,2174,291,2225,296,2277,308,2335,328,2400,359,2483,406,2550,450,2606,495,2654,543,2698,595,2740,655,2838,804,2864,849,2887,896,2917,968,2912,970,2882,898,2860,852,2833,807,2736,658,2693,598,2650,546,2603,499,2547,455,2480,410,2397,364,2333,333,2276,313,2224,301,2173,296,2066,298,1931,303,1863,300,1833,300,1796,305,1742,322"/>
+<area shape="poly" title=" " alt="" coords="1787,323,1863,317,1954,313,2056,316,2162,328,2269,352,2321,369,2371,390,2418,416,2462,446,2503,482,2539,523,2554,556,2560,602,2560,656,2558,714,2552,828,2554,875,2563,911,2585,943,2612,967,2608,971,2581,946,2558,913,2549,876,2546,828,2552,714,2555,656,2555,603,2548,558,2534,525,2499,485,2459,450,2415,421,2368,395,2319,374,2267,357,2161,334,2055,322,1954,319,1863,322,1787,329"/>
+<area shape="poly" title=" " alt="" coords="1647,361,1596,379,1555,385,1521,384,1491,388,1476,395,1461,408,1450,425,1445,442,1447,476,1451,512,1448,531,1437,551,1416,569,1413,565,1433,548,1443,529,1446,511,1442,476,1440,441,1445,423,1457,405,1473,391,1489,383,1521,378,1555,379,1595,373,1646,356"/>
+<area shape="poly" title=" " alt="" coords="1728,359,1760,381,1797,400,1827,410,1853,413,1879,417,1908,431,1940,458,1967,490,2001,546,1997,549,1962,493,1936,462,1905,436,1877,422,1852,418,1826,415,1795,405,1758,385,1725,363"/>
+<area shape="poly" title=" " alt="" coords="1781,353,1907,384,1961,396,2010,402,2096,410,2135,418,2173,433,2210,459,2248,497,2262,519,2270,539,2270,578,2266,619,2267,642,2273,667,2299,725,2325,769,2321,771,2294,727,2267,669,2261,643,2260,619,2265,578,2264,540,2258,521,2244,500,2207,463,2170,438,2133,423,2095,416,2010,408,1961,401,1906,389,1780,358"/>
+<area shape="poly" title=" " alt="" coords="772,1195,1001,1188,1146,1178,1292,1161,1507,1133,1785,1089,1924,1061,2053,1027,2163,988,2208,966,2244,942,2277,908,2301,867,2318,827,2327,797,2332,798,2323,829,2306,869,2281,911,2248,946,2210,970,2165,992,2055,1032,1926,1066,1785,1094,1508,1138,1293,1167,1147,1183,1001,1193,772,1200"/>
+<area shape="poly" title=" " alt="" coords="609,503,904,522,1097,539,1293,563,1321,567,1320,573,1292,568,1097,545,904,527,608,508"/>
+<area shape="rect" href="struct_auto_class60.html" title="Holds a list of entities with associated data and an entity count." alt="" coords="2583,1439,2679,1465"/>
+<area shape="poly" title=" " alt="" coords="2686,1467,2723,1475,2762,1477,2800,1471,2818,1463,2834,1453,2846,1439,2858,1419,2877,1367,2891,1301,2902,1229,2914,1090,2917,997,2922,997,2919,1090,2907,1230,2896,1302,2882,1368,2862,1422,2851,1442,2837,1457,2821,1468,2802,1476,2762,1482,2722,1480,2685,1473"/>
+<area shape="rect" href="struct_auto_class60__data.html" title="Stores data related to a specific entity in the AI system." alt="" coords="2270,1439,2398,1465"/>
+<area shape="poly" title=" " alt="" coords="2414,1449,2582,1449,2582,1455,2414,1455"/>
+<area shape="rect" href="struct_s_f___s_gt_figure_action.html" title=" " alt="" coords="2560,1489,2702,1516"/>
+<area shape="poly" title=" " alt="" coords="2689,1518,2726,1524,2764,1525,2801,1518,2834,1499,2848,1484,2860,1462,2880,1404,2895,1331,2905,1251,2915,1098,2917,996,2923,997,2921,1098,2910,1252,2900,1332,2885,1405,2865,1464,2852,1487,2837,1503,2803,1523,2765,1530,2725,1529,2689,1523"/>
+<area shape="rect" href="structushort__list__node.html" title="Represents a node in a list of unsigned short values." alt="" coords="2573,1568,2689,1595"/>
+<area shape="poly" title=" " alt="" coords="2688,1596,2724,1603,2763,1605,2801,1598,2818,1590,2834,1579,2850,1561,2863,1536,2885,1467,2901,1383,2910,1290,2918,1111,2918,996,2923,996,2923,1111,2916,1290,2906,1383,2890,1469,2868,1538,2854,1564,2837,1583,2821,1595,2803,1603,2763,1610,2723,1608,2687,1602"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Data Fields</h2></td></tr>
+<tr class="memitem:a1fe76be577090c721d8c323b406fd1e3" id="r_a1fe76be577090c721d8c323b406fd1e3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f___c_gd_building.html">SF_CGdBuilding</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1fe76be577090c721d8c323b406fd1e3">CGdBuilding</a></td></tr>
+<tr class="separator:a1fe76be577090c721d8c323b406fd1e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace84b4b736c024d89bb6fd32cf1206b9" id="r_ace84b4b736c024d89bb6fd32cf1206b9"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ace84b4b736c024d89bb6fd32cf1206b9">CGdBuildingToolBox</a></td></tr>
+<tr class="separator:ace84b4b736c024d89bb6fd32cf1206b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7d31184d5f91bd3984bb4a98884756e" id="r_af7d31184d5f91bd3984bb4a98884756e"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af7d31184d5f91bd3984bb4a98884756e">autoclass30</a></td></tr>
+<tr class="separator:af7d31184d5f91bd3984bb4a98884756e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e848dc8bf51e06dac943a87a0d47097" id="r_a7e848dc8bf51e06dac943a87a0d47097"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f___c_gd_figure.html">SF_CGdFigure</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7e848dc8bf51e06dac943a87a0d47097">CGdFigure</a></td></tr>
+<tr class="separator:a7e848dc8bf51e06dac943a87a0d47097"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84604f511b7ad815325a9e83d8e4a07b" id="r_a84604f511b7ad815325a9e83d8e4a07b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f___c_gd_figure_jobs.html">SF_CGdFigureJobs</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a84604f511b7ad815325a9e83d8e4a07b">CGdFigureJobs</a></td></tr>
+<tr class="separator:a84604f511b7ad815325a9e83d8e4a07b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77cc620f2f395cea22515870bb2d1b09" id="r_a77cc620f2f395cea22515870bb2d1b09"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f___c_gd_figure_toolbox.html">SF_CGdFigureToolbox</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a77cc620f2f395cea22515870bb2d1b09">CGdFigureToolBox</a></td></tr>
+<tr class="separator:a77cc620f2f395cea22515870bb2d1b09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a034da89e2dc0391b513c1e92f3fb0058" id="r_a034da89e2dc0391b513c1e92f3fb0058"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a034da89e2dc0391b513c1e92f3fb0058">autoclass34</a></td></tr>
+<tr class="separator:a034da89e2dc0391b513c1e92f3fb0058"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4191da8c54c0ba4f8344ec03ee3dbbd3" id="r_a4191da8c54c0ba4f8344ec03ee3dbbd3"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4191da8c54c0ba4f8344ec03ee3dbbd3">CGdFormation</a></td></tr>
+<tr class="separator:a4191da8c54c0ba4f8344ec03ee3dbbd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a218a0692f6bb035a5b1886973334f1b0" id="r_a218a0692f6bb035a5b1886973334f1b0"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a218a0692f6bb035a5b1886973334f1b0">CGdDoubleLinkList</a></td></tr>
+<tr class="separator:a218a0692f6bb035a5b1886973334f1b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d81fa8bf967c32eab8ee566b71af2ea" id="r_a4d81fa8bf967c32eab8ee566b71af2ea"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4d81fa8bf967c32eab8ee566b71af2ea">CGdInfluenceMap</a></td></tr>
+<tr class="separator:a4d81fa8bf967c32eab8ee566b71af2ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23d0184b4b9c19ae1ad7dc334d73dd1f" id="r_a23d0184b4b9c19ae1ad7dc334d73dd1f"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a23d0184b4b9c19ae1ad7dc334d73dd1f">CGdObject</a></td></tr>
+<tr class="separator:a23d0184b4b9c19ae1ad7dc334d73dd1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5050c738084785fb1b70978a2950b5b0" id="r_a5050c738084785fb1b70978a2950b5b0"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5050c738084785fb1b70978a2950b5b0">CGdObjectToolBox</a></td></tr>
+<tr class="separator:a5050c738084785fb1b70978a2950b5b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71118c43e39b79a147aa7b6fd5441d3c" id="r_a71118c43e39b79a147aa7b6fd5441d3c"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a71118c43e39b79a147aa7b6fd5441d3c">CGdPlayer</a></td></tr>
+<tr class="separator:a71118c43e39b79a147aa7b6fd5441d3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f13ab36cfa86e19d9abb19b9417254b" id="r_a5f13ab36cfa86e19d9abb19b9417254b"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5f13ab36cfa86e19d9abb19b9417254b">CGdResource</a></td></tr>
+<tr class="separator:a5f13ab36cfa86e19d9abb19b9417254b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87978d790da81e6517b85d02528a5e8d" id="r_a87978d790da81e6517b85d02528a5e8d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a87978d790da81e6517b85d02528a5e8d">CGdSpell</a></td></tr>
+<tr class="separator:a87978d790da81e6517b85d02528a5e8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91be529400e72152ee29bec8d2993a1e" id="r_a91be529400e72152ee29bec8d2993a1e"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a91be529400e72152ee29bec8d2993a1e">autoclass22</a></td></tr>
+<tr class="separator:a91be529400e72152ee29bec8d2993a1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9198dc0a66ad8c723c6d69fba16bec8" id="r_ab9198dc0a66ad8c723c6d69fba16bec8"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab9198dc0a66ad8c723c6d69fba16bec8">autoclass50</a></td></tr>
+<tr class="separator:ab9198dc0a66ad8c723c6d69fba16bec8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a508d549fd3749c222c5762f4c1057ca9" id="r_a508d549fd3749c222c5762f4c1057ca9"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a508d549fd3749c222c5762f4c1057ca9">CGdVisibility</a></td></tr>
+<tr class="separator:a508d549fd3749c222c5762f4c1057ca9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa08206b11fbb8247d41a205f56cdefa6" id="r_aa08206b11fbb8247d41a205f56cdefa6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f___c_gd_world.html">SF_CGdWorld</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa08206b11fbb8247d41a205f56cdefa6">CGdWorld</a></td></tr>
+<tr class="separator:aa08206b11fbb8247d41a205f56cdefa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc37b8c1f9955454648887d0508ab245" id="r_afc37b8c1f9955454648887d0508ab245"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f___c_gd_world_tool_box.html">SF_CGdWorldToolBox</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afc37b8c1f9955454648887d0508ab245">CGdWorldToolBox</a></td></tr>
+<tr class="separator:afc37b8c1f9955454648887d0508ab245"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12a934665f9830ccd8d781df8333548e" id="r_a12a934665f9830ccd8d781df8333548e"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a12a934665f9830ccd8d781df8333548e">autoclass64</a></td></tr>
+<tr class="separator:a12a934665f9830ccd8d781df8333548e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e9ca55c192f9566b0d5b55c23eb1de7" id="r_a7e9ca55c192f9566b0d5b55c23eb1de7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_auto_class60.html">AutoClass60</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7e9ca55c192f9566b0d5b55c23eb1de7">ally_figures</a></td></tr>
+<tr class="separator:a7e9ca55c192f9566b0d5b55c23eb1de7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b856a413cacf62a03596133f7ee005e" id="r_a4b856a413cacf62a03596133f7ee005e"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4b856a413cacf62a03596133f7ee005e">unkn1</a></td></tr>
+<tr class="separator:a4b856a413cacf62a03596133f7ee005e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac52f278ddac06c12763ab4ab676b8d5c" id="r_ac52f278ddac06c12763ab4ab676b8d5c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_auto_class60.html">AutoClass60</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac52f278ddac06c12763ab4ab676b8d5c">enemy_figures</a></td></tr>
+<tr class="separator:ac52f278ddac06c12763ab4ab676b8d5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc46c8839e15f97bff1fe8a3e73d4af8" id="r_afc46c8839e15f97bff1fe8a3e73d4af8"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afc46c8839e15f97bff1fe8a3e73d4af8">unkn2</a></td></tr>
+<tr class="separator:afc46c8839e15f97bff1fe8a3e73d4af8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a288c3ee04a0b83e48f2bc76a5a657bc5" id="r_a288c3ee04a0b83e48f2bc76a5a657bc5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_auto_class60.html">AutoClass60</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a288c3ee04a0b83e48f2bc76a5a657bc5">building_ally</a></td></tr>
+<tr class="separator:a288c3ee04a0b83e48f2bc76a5a657bc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d9b72ba7a907596ae95e89347921dcb" id="r_a7d9b72ba7a907596ae95e89347921dcb"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7d9b72ba7a907596ae95e89347921dcb">unkn3</a></td></tr>
+<tr class="separator:a7d9b72ba7a907596ae95e89347921dcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a927bb84b8ccd160661d029c653083965" id="r_a927bb84b8ccd160661d029c653083965"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_auto_class60.html">AutoClass60</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a927bb84b8ccd160661d029c653083965">building_not_ally</a></td></tr>
+<tr class="separator:a927bb84b8ccd160661d029c653083965"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24bb5449e63a24966c4f494b80acea26" id="r_a24bb5449e63a24966c4f494b80acea26"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a24bb5449e63a24966c4f494b80acea26">unkn4</a></td></tr>
+<tr class="separator:a24bb5449e63a24966c4f494b80acea26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab22889e7cb0539e47fe81a91e3ea392a" id="r_ab22889e7cb0539e47fe81a91e3ea392a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab22889e7cb0539e47fe81a91e3ea392a">unkn5</a></td></tr>
+<tr class="separator:ab22889e7cb0539e47fe81a91e3ea392a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18c4abff90261dae718e621ed744be78" id="r_a18c4abff90261dae718e621ed744be78"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f___s_gt_figure_action.html">SF_SGtFigureAction</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a18c4abff90261dae718e621ed744be78">current_action</a></td></tr>
+<tr class="separator:a18c4abff90261dae718e621ed744be78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52302b02cf2e59275acafe154478a376" id="r_a52302b02cf2e59275acafe154478a376"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a52302b02cf2e59275acafe154478a376">current_action_min_rng</a></td></tr>
+<tr class="separator:a52302b02cf2e59275acafe154478a376"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab71657bf91b33868b63a0930decea044" id="r_ab71657bf91b33868b63a0930decea044"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab71657bf91b33868b63a0930decea044">current_action_max_rng</a></td></tr>
+<tr class="separator:ab71657bf91b33868b63a0930decea044"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7355f19debe5af37a220a508e84ce499" id="r_a7355f19debe5af37a220a508e84ce499"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f___string.html">SF_String</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7355f19debe5af37a220a508e84ce499">world_name</a></td></tr>
+<tr class="separator:a7355f19debe5af37a220a508e84ce499"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c78bb0a9a089c1d00cc5eb6ef4ff849" id="r_a5c78bb0a9a089c1d00cc5eb6ef4ff849"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5c78bb0a9a089c1d00cc5eb6ef4ff849">can_be_target_maybe</a></td></tr>
+<tr class="separator:a5c78bb0a9a089c1d00cc5eb6ef4ff849"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab16a635d6b4c356ec788703f0b6c81f7" id="r_ab16a635d6b4c356ec788703f0b6c81f7"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab16a635d6b4c356ec788703f0b6c81f7">unkn6</a></td></tr>
+<tr class="separator:ab16a635d6b4c356ec788703f0b6c81f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa068f89934fc9691194df0281b3b5e21" id="r_aa068f89934fc9691194df0281b3b5e21"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa068f89934fc9691194df0281b3b5e21">current_figure_sight_range_maybe</a></td></tr>
+<tr class="separator:aa068f89934fc9691194df0281b3b5e21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97b4d754845d76431b279f362e795d07" id="r_a97b4d754845d76431b279f362e795d07"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a97b4d754845d76431b279f362e795d07">unkn7</a></td></tr>
+<tr class="separator:a97b4d754845d76431b279f362e795d07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a093e2ee9cf14518bc08cda9065aabb97" id="r_a093e2ee9cf14518bc08cda9065aabb97"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a093e2ee9cf14518bc08cda9065aabb97">figures_missing_hp</a></td></tr>
+<tr class="separator:a093e2ee9cf14518bc08cda9065aabb97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85e026b26b885e268ee91b812eedf92e" id="r_a85e026b26b885e268ee91b812eedf92e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a85e026b26b885e268ee91b812eedf92e">current_figure_is_aggroed</a></td></tr>
+<tr class="separator:a85e026b26b885e268ee91b812eedf92e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5649280b3d09eab3efcac910fbebceb7" id="r_a5649280b3d09eab3efcac910fbebceb7"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5649280b3d09eab3efcac910fbebceb7">current_figure_is_not_mainchar_or_hero</a></td></tr>
+<tr class="separator:a5649280b3d09eab3efcac910fbebceb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a23b853e64ffb37a074ca32481e2c1d" id="r_a2a23b853e64ffb37a074ca32481e2c1d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2a23b853e64ffb37a074ca32481e2c1d">current_figure_has_amok</a></td></tr>
+<tr class="separator:a2a23b853e64ffb37a074ca32481e2c1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62e536e5333a6d163657a7c0f0b6ecf0" id="r_a62e536e5333a6d163657a7c0f0b6ecf0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a62e536e5333a6d163657a7c0f0b6ecf0">unkn_flag1</a></td></tr>
+<tr class="separator:a62e536e5333a6d163657a7c0f0b6ecf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a686f45e924e1aff4fbf42a23f768559f" id="r_a686f45e924e1aff4fbf42a23f768559f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a686f45e924e1aff4fbf42a23f768559f">current_figure_is_mainchar</a></td></tr>
+<tr class="separator:a686f45e924e1aff4fbf42a23f768559f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39d53169cb6b38db6a885edd1328082b" id="r_a39d53169cb6b38db6a885edd1328082b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a39d53169cb6b38db6a885edd1328082b">current_figure_is_hero</a></td></tr>
+<tr class="separator:a39d53169cb6b38db6a885edd1328082b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f9bf82c010622dc2ba1c06b830a8266" id="r_a4f9bf82c010622dc2ba1c06b830a8266"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4f9bf82c010622dc2ba1c06b830a8266">current_figure_has_owner</a></td></tr>
+<tr class="separator:a4f9bf82c010622dc2ba1c06b830a8266"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5442ee85e7812bfb046b64461878b956" id="r_a5442ee85e7812bfb046b64461878b956"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5442ee85e7812bfb046b64461878b956">manual_hit_target_maybe</a></td></tr>
+<tr class="separator:a5442ee85e7812bfb046b64461878b956"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ba0ffc8c1707a85cdf4c1a865c5fddc" id="r_a5ba0ffc8c1707a85cdf4c1a865c5fddc"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5ba0ffc8c1707a85cdf4c1a865c5fddc">current_figure_is_tower</a></td></tr>
+<tr class="separator:a5ba0ffc8c1707a85cdf4c1a865c5fddc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf0e20c787426bbc897cd2a67fca43c3" id="r_aaf0e20c787426bbc897cd2a67fca43c3"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaf0e20c787426bbc897cd2a67fca43c3">current_figure_is_warrior</a></td></tr>
+<tr class="separator:aaf0e20c787426bbc897cd2a67fca43c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab006ea95f7b6cf36eeccc4494e26b24b" id="r_ab006ea95f7b6cf36eeccc4494e26b24b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab006ea95f7b6cf36eeccc4494e26b24b">something_related_to_ranking</a></td></tr>
+<tr class="separator:ab006ea95f7b6cf36eeccc4494e26b24b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace65ea42d38d2b7379cce36caa6851df" id="r_ace65ea42d38d2b7379cce36caa6851df"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ace65ea42d38d2b7379cce36caa6851df">current_figure_target_type</a></td></tr>
+<tr class="separator:ace65ea42d38d2b7379cce36caa6851df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adef9d587d726151ee0c431d6c313f8e7" id="r_adef9d587d726151ee0c431d6c313f8e7"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adef9d587d726151ee0c431d6c313f8e7">current_figure_target_index</a></td></tr>
+<tr class="separator:adef9d587d726151ee0c431d6c313f8e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97e4dc595c052e9edee9ec9010d15000" id="r_a97e4dc595c052e9edee9ec9010d15000"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f___coord.html">SF_Coord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a97e4dc595c052e9edee9ec9010d15000">current_figure_target_position</a></td></tr>
+<tr class="separator:a97e4dc595c052e9edee9ec9010d15000"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c290635276ad5437ee9937c53b9a330" id="r_a3c290635276ad5437ee9937c53b9a330"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3c290635276ad5437ee9937c53b9a330">unkn8</a></td></tr>
+<tr class="separator:a3c290635276ad5437ee9937c53b9a330"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6a1686323dd2b58afaaa0c82ebf7297" id="r_ac6a1686323dd2b58afaaa0c82ebf7297"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac6a1686323dd2b58afaaa0c82ebf7297">current_hate</a></td></tr>
+<tr class="separator:ac6a1686323dd2b58afaaa0c82ebf7297"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1a298258ce26f5416c10c8ff613f7b8" id="r_af1a298258ce26f5416c10c8ff613f7b8"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af1a298258ce26f5416c10c8ff613f7b8">current_ranking</a></td></tr>
+<tr class="separator:af1a298258ce26f5416c10c8ff613f7b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acafe3f3cf428af83bcfd536a81c8a818" id="r_acafe3f3cf428af83bcfd536a81c8a818"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acafe3f3cf428af83bcfd536a81c8a818">unkn_list</a> [0xfa2]</td></tr>
+<tr class="separator:acafe3f3cf428af83bcfd536a81c8a818"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b30c6489770231330a07d7e1cbf5091" id="r_a6b30c6489770231330a07d7e1cbf5091"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6b30c6489770231330a07d7e1cbf5091">unkn9</a></td></tr>
+<tr class="separator:a6b30c6489770231330a07d7e1cbf5091"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a520510412cb3c375538402c885407c3f" id="r_a520510412cb3c375538402c885407c3f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a520510412cb3c375538402c885407c3f">current_figure_noaggroattack</a></td></tr>
+<tr class="separator:a520510412cb3c375538402c885407c3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac61a166f120b09010317fefe08a0536d" id="r_ac61a166f120b09010317fefe08a0536d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac61a166f120b09010317fefe08a0536d">is_map_arena3</a></td></tr>
+<tr class="separator:ac61a166f120b09010317fefe08a0536d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a948394bbce932b5ccd4d894c9b56b72f" id="r_a948394bbce932b5ccd4d894c9b56b72f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structushort__list__node.html">ushort_list_node</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a948394bbce932b5ccd4d894c9b56b72f">some_figure_list</a> [2000]</td></tr>
+<tr class="separator:a948394bbce932b5ccd4d894c9b56b72f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeddeab1701ba7816a85635236fc1d8eb" id="r_aeddeab1701ba7816a85635236fc1d8eb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structushort__list__node.html">ushort_list_node</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeddeab1701ba7816a85635236fc1d8eb">unkn_node</a></td></tr>
+<tr class="separator:aeddeab1701ba7816a85635236fc1d8eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a906003950f867316c17623af326b8e35" id="r_a906003950f867316c17623af326b8e35"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structushort__list__node.html">ushort_list_node</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a906003950f867316c17623af326b8e35">another_figure_list</a> [2000]</td></tr>
+<tr class="separator:a906003950f867316c17623af326b8e35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a413bf91d2a2db32a2b6d52481b93881a" id="r_a413bf91d2a2db32a2b6d52481b93881a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a413bf91d2a2db32a2b6d52481b93881a">unkn_array</a> [2000]</td></tr>
+<tr class="separator:a413bf91d2a2db32a2b6d52481b93881a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5283e02b4f0de69292c971f982bfb489" id="r_a5283e02b4f0de69292c971f982bfb489"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5283e02b4f0de69292c971f982bfb489">current_figure</a></td></tr>
+<tr class="separator:a5283e02b4f0de69292c971f982bfb489"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63021eee48c8cabe778b4e352ea26567" id="r_a63021eee48c8cabe778b4e352ea26567"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f___coord.html">SF_Coord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a63021eee48c8cabe778b4e352ea26567">current_figure_pos</a></td></tr>
+<tr class="separator:a63021eee48c8cabe778b4e352ea26567"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f51db082b9a16217a841efafce82df6" id="r_a1f51db082b9a16217a841efafce82df6"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1f51db082b9a16217a841efafce82df6">unkn10</a></td></tr>
+<tr class="separator:a1f51db082b9a16217a841efafce82df6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1197722f86619ee2bb0a7319447d0ce" id="r_af1197722f86619ee2bb0a7319447d0ce"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af1197722f86619ee2bb0a7319447d0ce">current_figure_is_combat_involved_maybe</a></td></tr>
+<tr class="separator:af1197722f86619ee2bb0a7319447d0ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4710b0dc5dc7355175c90790c4f29c3" id="r_aa4710b0dc5dc7355175c90790c4f29c3"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa4710b0dc5dc7355175c90790c4f29c3">current_figure_has_aggro</a></td></tr>
+<tr class="separator:aa4710b0dc5dc7355175c90790c4f29c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae076cde81a4ef6a7b60a93e2ac8f4ee0" id="r_ae076cde81a4ef6a7b60a93e2ac8f4ee0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae076cde81a4ef6a7b60a93e2ac8f4ee0">current_figure_has_demoralization</a></td></tr>
+<tr class="separator:ae076cde81a4ef6a7b60a93e2ac8f4ee0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f99ce8a715db90f254cb1749fa536ff" id="r_a4f99ce8a715db90f254cb1749fa536ff"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4f99ce8a715db90f254cb1749fa536ff">unkn_flag2</a></td></tr>
+<tr class="separator:a4f99ce8a715db90f254cb1749fa536ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f50cfbb9625bd209ca04df8acbb6765" id="r_a8f50cfbb9625bd209ca04df8acbb6765"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8f50cfbb9625bd209ca04df8acbb6765">figures_max_hp</a></td></tr>
+<tr class="separator:a8f50cfbb9625bd209ca04df8acbb6765"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3070774f12a27aa9f42e889d539d9c99" id="r_a3070774f12a27aa9f42e889d539d9c99"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f___c_gd_target_data.html">SF_CGdTargetData</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3070774f12a27aa9f42e889d539d9c99">current_source_maybe</a></td></tr>
+<tr class="separator:a3070774f12a27aa9f42e889d539d9c99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48bf44fab1d91122d4fd446a9e7ac2f4" id="r_a48bf44fab1d91122d4fd446a9e7ac2f4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f___c_gd_target_data.html">SF_CGdTargetData</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a48bf44fab1d91122d4fd446a9e7ac2f4">current_target</a></td></tr>
+<tr class="separator:a48bf44fab1d91122d4fd446a9e7ac2f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0a59714621ebc206ca279e26efad3a9" id="r_aa0a59714621ebc206ca279e26efad3a9"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa0a59714621ebc206ca279e26efad3a9">unkn11</a></td></tr>
+<tr class="separator:aa0a59714621ebc206ca279e26efad3a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7c4923c824142a800fec006d5b5b453" id="r_ae7c4923c824142a800fec006d5b5b453"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae7c4923c824142a800fec006d5b5b453">force_process_figure_maybe</a></td></tr>
+<tr class="separator:ae7c4923c824142a800fec006d5b5b453"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33aebccff274798a1627799ffed703a0" id="r_a33aebccff274798a1627799ffed703a0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_f___c_gd_target_data.html">SF_CGdTargetData</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a33aebccff274798a1627799ffed703a0">unknown_target</a></td></tr>
+<tr class="separator:a33aebccff274798a1627799ffed703a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7c89f7074fb198927346a33c2eb9ab9" id="r_ad7c89f7074fb198927346a33c2eb9ab9"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad7c89f7074fb198927346a33c2eb9ab9">unkn12</a></td></tr>
+<tr class="separator:ad7c89f7074fb198927346a33c2eb9ab9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae42336de3ea690d67bc9284af8b96bff" id="r_ae42336de3ea690d67bc9284af8b96bff"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae42336de3ea690d67bc9284af8b96bff">some_ranking</a></td></tr>
+<tr class="separator:ae42336de3ea690d67bc9284af8b96bff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a582d81db7bd480ce282ba449b64013eb" id="r_a582d81db7bd480ce282ba449b64013eb"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a582d81db7bd480ce282ba449b64013eb">current_figure_is_pet</a></td></tr>
+<tr class="separator:a582d81db7bd480ce282ba449b64013eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae52f49b850db4e79e93c4e7aa7b7c739" id="r_ae52f49b850db4e79e93c4e7aa7b7c739"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae52f49b850db4e79e93c4e7aa7b7c739">current_figure_master</a></td></tr>
+<tr class="separator:ae52f49b850db4e79e93c4e7aa7b7c739"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b5819a32ca219fdb20afa56756c3164" id="r_a3b5819a32ca219fdb20afa56756c3164"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3b5819a32ca219fdb20afa56756c3164">unkn13</a></td></tr>
+<tr class="separator:a3b5819a32ca219fdb20afa56756c3164"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a220b7dcdaad37d840f0c31cb52c09408" id="r_a220b7dcdaad37d840f0c31cb52c09408"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a220b7dcdaad37d840f0c31cb52c09408">unkn14</a></td></tr>
+<tr class="separator:a220b7dcdaad37d840f0c31cb52c09408"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2abc09c387b98c86ad9014ec9bd4d3a1" id="r_a2abc09c387b98c86ad9014ec9bd4d3a1"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2abc09c387b98c86ad9014ec9bd4d3a1">figure_is_charmed_summon_maybe</a></td></tr>
+<tr class="separator:a2abc09c387b98c86ad9014ec9bd4d3a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5fe5f00399b8bfd9c5aa43c86723a16b" id="r_a5fe5f00399b8bfd9c5aa43c86723a16b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5fe5f00399b8bfd9c5aa43c86723a16b">unkn_flag3</a></td></tr>
+<tr class="separator:a5fe5f00399b8bfd9c5aa43c86723a16b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57c450372f2c54077939e4512102afbb" id="r_a57c450372f2c54077939e4512102afbb"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a57c450372f2c54077939e4512102afbb">current_target_level_possibly</a></td></tr>
+<tr class="separator:a57c450372f2c54077939e4512102afbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e3e9f0d5a220760f5686dd600f9ac9e" id="r_a1e3e9f0d5a220760f5686dd600f9ac9e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1e3e9f0d5a220760f5686dd600f9ac9e">action_is_siege_aura</a></td></tr>
+<tr class="separator:a1e3e9f0d5a220760f5686dd600f9ac9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The main structure for handling AI battle data. </p>
 <p>This structure encapsulates various components required for managing AI behavior, including information about figures, targets, spells, and world data. It is utilized within the game's AI systems to coordinate and process actions, strategies, and outcomes. </p>
-</div><hr/>The documentation for this struct was generated from the following file:<ul>
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00064">64</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a id="a1e3e9f0d5a220760f5686dd600f9ac9e" name="a1e3e9f0d5a220760f5686dd600f9ac9e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e3e9f0d5a220760f5686dd600f9ac9e">&#9670;&#160;</a></span>action_is_siege_aura</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t CGdAIBattleData::action_is_siege_aura</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00152">152</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a7e9ca55c192f9566b0d5b55c23eb1de7" name="a7e9ca55c192f9566b0d5b55c23eb1de7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e9ca55c192f9566b0d5b55c23eb1de7">&#9670;&#160;</a></span>ally_figures</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_auto_class60.html">AutoClass60</a> CGdAIBattleData::ally_figures</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00087">87</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a906003950f867316c17623af326b8e35" name="a906003950f867316c17623af326b8e35"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a906003950f867316c17623af326b8e35">&#9670;&#160;</a></span>another_figure_list</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structushort__list__node.html">ushort_list_node</a> CGdAIBattleData::another_figure_list[2000]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00128">128</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a91be529400e72152ee29bec8d2993a1e" name="a91be529400e72152ee29bec8d2993a1e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91be529400e72152ee29bec8d2993a1e">&#9670;&#160;</a></span>autoclass22</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* CGdAIBattleData::autoclass22</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00081">81</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="af7d31184d5f91bd3984bb4a98884756e" name="af7d31184d5f91bd3984bb4a98884756e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af7d31184d5f91bd3984bb4a98884756e">&#9670;&#160;</a></span>autoclass30</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* CGdAIBattleData::autoclass30</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Unidentified component </p>
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00068">68</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a034da89e2dc0391b513c1e92f3fb0058" name="a034da89e2dc0391b513c1e92f3fb0058"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a034da89e2dc0391b513c1e92f3fb0058">&#9670;&#160;</a></span>autoclass34</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* CGdAIBattleData::autoclass34</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Unidentified component </p>
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00072">72</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="ab9198dc0a66ad8c723c6d69fba16bec8" name="ab9198dc0a66ad8c723c6d69fba16bec8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab9198dc0a66ad8c723c6d69fba16bec8">&#9670;&#160;</a></span>autoclass50</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* CGdAIBattleData::autoclass50</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00082">82</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a12a934665f9830ccd8d781df8333548e" name="a12a934665f9830ccd8d781df8333548e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a12a934665f9830ccd8d781df8333548e">&#9670;&#160;</a></span>autoclass64</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* CGdAIBattleData::autoclass64</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00086">86</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a288c3ee04a0b83e48f2bc76a5a657bc5" name="a288c3ee04a0b83e48f2bc76a5a657bc5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a288c3ee04a0b83e48f2bc76a5a657bc5">&#9670;&#160;</a></span>building_ally</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_auto_class60.html">AutoClass60</a> CGdAIBattleData::building_ally</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00091">91</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a927bb84b8ccd160661d029c653083965" name="a927bb84b8ccd160661d029c653083965"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a927bb84b8ccd160661d029c653083965">&#9670;&#160;</a></span>building_not_ally</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_auto_class60.html">AutoClass60</a> CGdAIBattleData::building_not_ally</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00093">93</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a5c78bb0a9a089c1d00cc5eb6ef4ff849" name="a5c78bb0a9a089c1d00cc5eb6ef4ff849"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c78bb0a9a089c1d00cc5eb6ef4ff849">&#9670;&#160;</a></span>can_be_target_maybe</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t CGdAIBattleData::can_be_target_maybe</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00100">100</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a1fe76be577090c721d8c323b406fd1e3" name="a1fe76be577090c721d8c323b406fd1e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1fe76be577090c721d8c323b406fd1e3">&#9670;&#160;</a></span>CGdBuilding</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f___c_gd_building.html">SF_CGdBuilding</a>* CGdAIBattleData::CGdBuilding</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Pointer to the building data. </p>
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00066">66</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="ace84b4b736c024d89bb6fd32cf1206b9" name="ace84b4b736c024d89bb6fd32cf1206b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace84b4b736c024d89bb6fd32cf1206b9">&#9670;&#160;</a></span>CGdBuildingToolBox</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* CGdAIBattleData::CGdBuildingToolBox</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>ToolBox for managing building-related operations. </p>
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00067">67</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a218a0692f6bb035a5b1886973334f1b0" name="a218a0692f6bb035a5b1886973334f1b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a218a0692f6bb035a5b1886973334f1b0">&#9670;&#160;</a></span>CGdDoubleLinkList</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* CGdAIBattleData::CGdDoubleLinkList</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00074">74</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a7e848dc8bf51e06dac943a87a0d47097" name="a7e848dc8bf51e06dac943a87a0d47097"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e848dc8bf51e06dac943a87a0d47097">&#9670;&#160;</a></span>CGdFigure</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f___c_gd_figure.html">SF_CGdFigure</a>* CGdAIBattleData::CGdFigure</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Pointer to the Global Figure data structure . </p>
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00069">69</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a84604f511b7ad815325a9e83d8e4a07b" name="a84604f511b7ad815325a9e83d8e4a07b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84604f511b7ad815325a9e83d8e4a07b">&#9670;&#160;</a></span>CGdFigureJobs</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f___c_gd_figure_jobs.html">SF_CGdFigureJobs</a>* CGdAIBattleData::CGdFigureJobs</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Pointer to the Global Figure Job data structure. </p>
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00070">70</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a77cc620f2f395cea22515870bb2d1b09" name="a77cc620f2f395cea22515870bb2d1b09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77cc620f2f395cea22515870bb2d1b09">&#9670;&#160;</a></span>CGdFigureToolBox</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f___c_gd_figure_toolbox.html">SF_CGdFigureToolbox</a>* CGdAIBattleData::CGdFigureToolBox</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Toolbox for figure-related operations. </p>
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00071">71</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a4191da8c54c0ba4f8344ec03ee3dbbd3" name="a4191da8c54c0ba4f8344ec03ee3dbbd3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4191da8c54c0ba4f8344ec03ee3dbbd3">&#9670;&#160;</a></span>CGdFormation</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* CGdAIBattleData::CGdFormation</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00073">73</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a4d81fa8bf967c32eab8ee566b71af2ea" name="a4d81fa8bf967c32eab8ee566b71af2ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d81fa8bf967c32eab8ee566b71af2ea">&#9670;&#160;</a></span>CGdInfluenceMap</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* CGdAIBattleData::CGdInfluenceMap</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00075">75</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a23d0184b4b9c19ae1ad7dc334d73dd1f" name="a23d0184b4b9c19ae1ad7dc334d73dd1f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a23d0184b4b9c19ae1ad7dc334d73dd1f">&#9670;&#160;</a></span>CGdObject</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* CGdAIBattleData::CGdObject</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00076">76</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a5050c738084785fb1b70978a2950b5b0" name="a5050c738084785fb1b70978a2950b5b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5050c738084785fb1b70978a2950b5b0">&#9670;&#160;</a></span>CGdObjectToolBox</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* CGdAIBattleData::CGdObjectToolBox</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00077">77</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a71118c43e39b79a147aa7b6fd5441d3c" name="a71118c43e39b79a147aa7b6fd5441d3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71118c43e39b79a147aa7b6fd5441d3c">&#9670;&#160;</a></span>CGdPlayer</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* CGdAIBattleData::CGdPlayer</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00078">78</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a5f13ab36cfa86e19d9abb19b9417254b" name="a5f13ab36cfa86e19d9abb19b9417254b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f13ab36cfa86e19d9abb19b9417254b">&#9670;&#160;</a></span>CGdResource</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* CGdAIBattleData::CGdResource</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00079">79</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a87978d790da81e6517b85d02528a5e8d" name="a87978d790da81e6517b85d02528a5e8d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a87978d790da81e6517b85d02528a5e8d">&#9670;&#160;</a></span>CGdSpell</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a>* CGdAIBattleData::CGdSpell</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00080">80</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a508d549fd3749c222c5762f4c1057ca9" name="a508d549fd3749c222c5762f4c1057ca9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a508d549fd3749c222c5762f4c1057ca9">&#9670;&#160;</a></span>CGdVisibility</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* CGdAIBattleData::CGdVisibility</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00083">83</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="aa08206b11fbb8247d41a205f56cdefa6" name="aa08206b11fbb8247d41a205f56cdefa6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa08206b11fbb8247d41a205f56cdefa6">&#9670;&#160;</a></span>CGdWorld</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f___c_gd_world.html">SF_CGdWorld</a>* CGdAIBattleData::CGdWorld</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Pointer to the game world data. </p>
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00084">84</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="afc37b8c1f9955454648887d0508ab245" name="afc37b8c1f9955454648887d0508ab245"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc37b8c1f9955454648887d0508ab245">&#9670;&#160;</a></span>CGdWorldToolBox</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f___c_gd_world_tool_box.html">SF_CGdWorldToolBox</a>* CGdAIBattleData::CGdWorldToolBox</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Toolbox for managing world-related operations. </p>
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00085">85</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a18c4abff90261dae718e621ed744be78" name="a18c4abff90261dae718e621ed744be78"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a18c4abff90261dae718e621ed744be78">&#9670;&#160;</a></span>current_action</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f___s_gt_figure_action.html">SF_SGtFigureAction</a> CGdAIBattleData::current_action</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00096">96</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="ab71657bf91b33868b63a0930decea044" name="ab71657bf91b33868b63a0930decea044"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab71657bf91b33868b63a0930decea044">&#9670;&#160;</a></span>current_action_max_rng</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t CGdAIBattleData::current_action_max_rng</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00098">98</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a52302b02cf2e59275acafe154478a376" name="a52302b02cf2e59275acafe154478a376"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a52302b02cf2e59275acafe154478a376">&#9670;&#160;</a></span>current_action_min_rng</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t CGdAIBattleData::current_action_min_rng</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00097">97</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a5283e02b4f0de69292c971f982bfb489" name="a5283e02b4f0de69292c971f982bfb489"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5283e02b4f0de69292c971f982bfb489">&#9670;&#160;</a></span>current_figure</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t CGdAIBattleData::current_figure</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00130">130</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="aa4710b0dc5dc7355175c90790c4f29c3" name="aa4710b0dc5dc7355175c90790c4f29c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4710b0dc5dc7355175c90790c4f29c3">&#9670;&#160;</a></span>current_figure_has_aggro</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t CGdAIBattleData::current_figure_has_aggro</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00134">134</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a2a23b853e64ffb37a074ca32481e2c1d" name="a2a23b853e64ffb37a074ca32481e2c1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a23b853e64ffb37a074ca32481e2c1d">&#9670;&#160;</a></span>current_figure_has_amok</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t CGdAIBattleData::current_figure_has_amok</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00107">107</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="ae076cde81a4ef6a7b60a93e2ac8f4ee0" name="ae076cde81a4ef6a7b60a93e2ac8f4ee0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae076cde81a4ef6a7b60a93e2ac8f4ee0">&#9670;&#160;</a></span>current_figure_has_demoralization</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t CGdAIBattleData::current_figure_has_demoralization</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00135">135</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a4f9bf82c010622dc2ba1c06b830a8266" name="a4f9bf82c010622dc2ba1c06b830a8266"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f9bf82c010622dc2ba1c06b830a8266">&#9670;&#160;</a></span>current_figure_has_owner</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t CGdAIBattleData::current_figure_has_owner</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00111">111</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a85e026b26b885e268ee91b812eedf92e" name="a85e026b26b885e268ee91b812eedf92e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85e026b26b885e268ee91b812eedf92e">&#9670;&#160;</a></span>current_figure_is_aggroed</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t CGdAIBattleData::current_figure_is_aggroed</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00105">105</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="af1197722f86619ee2bb0a7319447d0ce" name="af1197722f86619ee2bb0a7319447d0ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af1197722f86619ee2bb0a7319447d0ce">&#9670;&#160;</a></span>current_figure_is_combat_involved_maybe</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t CGdAIBattleData::current_figure_is_combat_involved_maybe</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00133">133</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a39d53169cb6b38db6a885edd1328082b" name="a39d53169cb6b38db6a885edd1328082b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39d53169cb6b38db6a885edd1328082b">&#9670;&#160;</a></span>current_figure_is_hero</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t CGdAIBattleData::current_figure_is_hero</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00110">110</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a686f45e924e1aff4fbf42a23f768559f" name="a686f45e924e1aff4fbf42a23f768559f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a686f45e924e1aff4fbf42a23f768559f">&#9670;&#160;</a></span>current_figure_is_mainchar</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t CGdAIBattleData::current_figure_is_mainchar</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00109">109</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a5649280b3d09eab3efcac910fbebceb7" name="a5649280b3d09eab3efcac910fbebceb7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5649280b3d09eab3efcac910fbebceb7">&#9670;&#160;</a></span>current_figure_is_not_mainchar_or_hero</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t CGdAIBattleData::current_figure_is_not_mainchar_or_hero</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00106">106</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a582d81db7bd480ce282ba449b64013eb" name="a582d81db7bd480ce282ba449b64013eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a582d81db7bd480ce282ba449b64013eb">&#9670;&#160;</a></span>current_figure_is_pet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t CGdAIBattleData::current_figure_is_pet</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00145">145</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a5ba0ffc8c1707a85cdf4c1a865c5fddc" name="a5ba0ffc8c1707a85cdf4c1a865c5fddc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ba0ffc8c1707a85cdf4c1a865c5fddc">&#9670;&#160;</a></span>current_figure_is_tower</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t CGdAIBattleData::current_figure_is_tower</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00113">113</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="aaf0e20c787426bbc897cd2a67fca43c3" name="aaf0e20c787426bbc897cd2a67fca43c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf0e20c787426bbc897cd2a67fca43c3">&#9670;&#160;</a></span>current_figure_is_warrior</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t CGdAIBattleData::current_figure_is_warrior</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00114">114</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="ae52f49b850db4e79e93c4e7aa7b7c739" name="ae52f49b850db4e79e93c4e7aa7b7c739"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae52f49b850db4e79e93c4e7aa7b7c739">&#9670;&#160;</a></span>current_figure_master</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t CGdAIBattleData::current_figure_master</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00146">146</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a520510412cb3c375538402c885407c3f" name="a520510412cb3c375538402c885407c3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a520510412cb3c375538402c885407c3f">&#9670;&#160;</a></span>current_figure_noaggroattack</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t CGdAIBattleData::current_figure_noaggroattack</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00124">124</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a63021eee48c8cabe778b4e352ea26567" name="a63021eee48c8cabe778b4e352ea26567"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a63021eee48c8cabe778b4e352ea26567">&#9670;&#160;</a></span>current_figure_pos</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f___coord.html">SF_Coord</a> CGdAIBattleData::current_figure_pos</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00131">131</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="aa068f89934fc9691194df0281b3b5e21" name="aa068f89934fc9691194df0281b3b5e21"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa068f89934fc9691194df0281b3b5e21">&#9670;&#160;</a></span>current_figure_sight_range_maybe</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t CGdAIBattleData::current_figure_sight_range_maybe</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00102">102</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="adef9d587d726151ee0c431d6c313f8e7" name="adef9d587d726151ee0c431d6c313f8e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adef9d587d726151ee0c431d6c313f8e7">&#9670;&#160;</a></span>current_figure_target_index</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t CGdAIBattleData::current_figure_target_index</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00117">117</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a97e4dc595c052e9edee9ec9010d15000" name="a97e4dc595c052e9edee9ec9010d15000"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a97e4dc595c052e9edee9ec9010d15000">&#9670;&#160;</a></span>current_figure_target_position</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f___coord.html">SF_Coord</a> CGdAIBattleData::current_figure_target_position</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00118">118</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="ace65ea42d38d2b7379cce36caa6851df" name="ace65ea42d38d2b7379cce36caa6851df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace65ea42d38d2b7379cce36caa6851df">&#9670;&#160;</a></span>current_figure_target_type</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t CGdAIBattleData::current_figure_target_type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00116">116</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="ac6a1686323dd2b58afaaa0c82ebf7297" name="ac6a1686323dd2b58afaaa0c82ebf7297"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6a1686323dd2b58afaaa0c82ebf7297">&#9670;&#160;</a></span>current_hate</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t CGdAIBattleData::current_hate</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00120">120</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="af1a298258ce26f5416c10c8ff613f7b8" name="af1a298258ce26f5416c10c8ff613f7b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af1a298258ce26f5416c10c8ff613f7b8">&#9670;&#160;</a></span>current_ranking</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t CGdAIBattleData::current_ranking</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00121">121</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a3070774f12a27aa9f42e889d539d9c99" name="a3070774f12a27aa9f42e889d539d9c99"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3070774f12a27aa9f42e889d539d9c99">&#9670;&#160;</a></span>current_source_maybe</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f___c_gd_target_data.html">SF_CGdTargetData</a> CGdAIBattleData::current_source_maybe</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00138">138</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a48bf44fab1d91122d4fd446a9e7ac2f4" name="a48bf44fab1d91122d4fd446a9e7ac2f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48bf44fab1d91122d4fd446a9e7ac2f4">&#9670;&#160;</a></span>current_target</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f___c_gd_target_data.html">SF_CGdTargetData</a> CGdAIBattleData::current_target</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00139">139</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a57c450372f2c54077939e4512102afbb" name="a57c450372f2c54077939e4512102afbb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57c450372f2c54077939e4512102afbb">&#9670;&#160;</a></span>current_target_level_possibly</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t CGdAIBattleData::current_target_level_possibly</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00151">151</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="ac52f278ddac06c12763ab4ab676b8d5c" name="ac52f278ddac06c12763ab4ab676b8d5c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac52f278ddac06c12763ab4ab676b8d5c">&#9670;&#160;</a></span>enemy_figures</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_auto_class60.html">AutoClass60</a> CGdAIBattleData::enemy_figures</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00089">89</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a2abc09c387b98c86ad9014ec9bd4d3a1" name="a2abc09c387b98c86ad9014ec9bd4d3a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2abc09c387b98c86ad9014ec9bd4d3a1">&#9670;&#160;</a></span>figure_is_charmed_summon_maybe</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t CGdAIBattleData::figure_is_charmed_summon_maybe</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00149">149</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a8f50cfbb9625bd209ca04df8acbb6765" name="a8f50cfbb9625bd209ca04df8acbb6765"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f50cfbb9625bd209ca04df8acbb6765">&#9670;&#160;</a></span>figures_max_hp</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t CGdAIBattleData::figures_max_hp</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00137">137</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a093e2ee9cf14518bc08cda9065aabb97" name="a093e2ee9cf14518bc08cda9065aabb97"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a093e2ee9cf14518bc08cda9065aabb97">&#9670;&#160;</a></span>figures_missing_hp</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t CGdAIBattleData::figures_missing_hp</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00104">104</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="ae7c4923c824142a800fec006d5b5b453" name="ae7c4923c824142a800fec006d5b5b453"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae7c4923c824142a800fec006d5b5b453">&#9670;&#160;</a></span>force_process_figure_maybe</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t CGdAIBattleData::force_process_figure_maybe</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00141">141</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="ac61a166f120b09010317fefe08a0536d" name="ac61a166f120b09010317fefe08a0536d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac61a166f120b09010317fefe08a0536d">&#9670;&#160;</a></span>is_map_arena3</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t CGdAIBattleData::is_map_arena3</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00125">125</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a5442ee85e7812bfb046b64461878b956" name="a5442ee85e7812bfb046b64461878b956"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5442ee85e7812bfb046b64461878b956">&#9670;&#160;</a></span>manual_hit_target_maybe</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t CGdAIBattleData::manual_hit_target_maybe</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00112">112</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a948394bbce932b5ccd4d894c9b56b72f" name="a948394bbce932b5ccd4d894c9b56b72f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a948394bbce932b5ccd4d894c9b56b72f">&#9670;&#160;</a></span>some_figure_list</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structushort__list__node.html">ushort_list_node</a> CGdAIBattleData::some_figure_list[2000]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00126">126</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="ae42336de3ea690d67bc9284af8b96bff" name="ae42336de3ea690d67bc9284af8b96bff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae42336de3ea690d67bc9284af8b96bff">&#9670;&#160;</a></span>some_ranking</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t CGdAIBattleData::some_ranking</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00144">144</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="ab006ea95f7b6cf36eeccc4494e26b24b" name="ab006ea95f7b6cf36eeccc4494e26b24b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab006ea95f7b6cf36eeccc4494e26b24b">&#9670;&#160;</a></span>something_related_to_ranking</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t CGdAIBattleData::something_related_to_ranking</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00115">115</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a4b856a413cacf62a03596133f7ee005e" name="a4b856a413cacf62a03596133f7ee005e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b856a413cacf62a03596133f7ee005e">&#9670;&#160;</a></span>unkn1</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t CGdAIBattleData::unkn1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00088">88</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a1f51db082b9a16217a841efafce82df6" name="a1f51db082b9a16217a841efafce82df6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1f51db082b9a16217a841efafce82df6">&#9670;&#160;</a></span>unkn10</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t CGdAIBattleData::unkn10</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00132">132</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="aa0a59714621ebc206ca279e26efad3a9" name="aa0a59714621ebc206ca279e26efad3a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0a59714621ebc206ca279e26efad3a9">&#9670;&#160;</a></span>unkn11</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t CGdAIBattleData::unkn11</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00140">140</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="ad7c89f7074fb198927346a33c2eb9ab9" name="ad7c89f7074fb198927346a33c2eb9ab9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7c89f7074fb198927346a33c2eb9ab9">&#9670;&#160;</a></span>unkn12</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t CGdAIBattleData::unkn12</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00143">143</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a3b5819a32ca219fdb20afa56756c3164" name="a3b5819a32ca219fdb20afa56756c3164"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b5819a32ca219fdb20afa56756c3164">&#9670;&#160;</a></span>unkn13</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t CGdAIBattleData::unkn13</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00147">147</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a220b7dcdaad37d840f0c31cb52c09408" name="a220b7dcdaad37d840f0c31cb52c09408"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a220b7dcdaad37d840f0c31cb52c09408">&#9670;&#160;</a></span>unkn14</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t CGdAIBattleData::unkn14</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00148">148</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="afc46c8839e15f97bff1fe8a3e73d4af8" name="afc46c8839e15f97bff1fe8a3e73d4af8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc46c8839e15f97bff1fe8a3e73d4af8">&#9670;&#160;</a></span>unkn2</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t CGdAIBattleData::unkn2</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00090">90</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a7d9b72ba7a907596ae95e89347921dcb" name="a7d9b72ba7a907596ae95e89347921dcb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d9b72ba7a907596ae95e89347921dcb">&#9670;&#160;</a></span>unkn3</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t CGdAIBattleData::unkn3</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00092">92</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a24bb5449e63a24966c4f494b80acea26" name="a24bb5449e63a24966c4f494b80acea26"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24bb5449e63a24966c4f494b80acea26">&#9670;&#160;</a></span>unkn4</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t CGdAIBattleData::unkn4</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00094">94</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="ab22889e7cb0539e47fe81a91e3ea392a" name="ab22889e7cb0539e47fe81a91e3ea392a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab22889e7cb0539e47fe81a91e3ea392a">&#9670;&#160;</a></span>unkn5</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t CGdAIBattleData::unkn5</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00095">95</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="ab16a635d6b4c356ec788703f0b6c81f7" name="ab16a635d6b4c356ec788703f0b6c81f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab16a635d6b4c356ec788703f0b6c81f7">&#9670;&#160;</a></span>unkn6</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t CGdAIBattleData::unkn6</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00101">101</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a97b4d754845d76431b279f362e795d07" name="a97b4d754845d76431b279f362e795d07"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a97b4d754845d76431b279f362e795d07">&#9670;&#160;</a></span>unkn7</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t CGdAIBattleData::unkn7</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00103">103</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a3c290635276ad5437ee9937c53b9a330" name="a3c290635276ad5437ee9937c53b9a330"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c290635276ad5437ee9937c53b9a330">&#9670;&#160;</a></span>unkn8</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t CGdAIBattleData::unkn8</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00119">119</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a6b30c6489770231330a07d7e1cbf5091" name="a6b30c6489770231330a07d7e1cbf5091"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b30c6489770231330a07d7e1cbf5091">&#9670;&#160;</a></span>unkn9</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t CGdAIBattleData::unkn9</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00123">123</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a413bf91d2a2db32a2b6d52481b93881a" name="a413bf91d2a2db32a2b6d52481b93881a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a413bf91d2a2db32a2b6d52481b93881a">&#9670;&#160;</a></span>unkn_array</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t CGdAIBattleData::unkn_array[2000]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00129">129</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a62e536e5333a6d163657a7c0f0b6ecf0" name="a62e536e5333a6d163657a7c0f0b6ecf0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62e536e5333a6d163657a7c0f0b6ecf0">&#9670;&#160;</a></span>unkn_flag1</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t CGdAIBattleData::unkn_flag1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00108">108</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a4f99ce8a715db90f254cb1749fa536ff" name="a4f99ce8a715db90f254cb1749fa536ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f99ce8a715db90f254cb1749fa536ff">&#9670;&#160;</a></span>unkn_flag2</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t CGdAIBattleData::unkn_flag2</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00136">136</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a5fe5f00399b8bfd9c5aa43c86723a16b" name="a5fe5f00399b8bfd9c5aa43c86723a16b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5fe5f00399b8bfd9c5aa43c86723a16b">&#9670;&#160;</a></span>unkn_flag3</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t CGdAIBattleData::unkn_flag3</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00150">150</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="acafe3f3cf428af83bcfd536a81c8a818" name="acafe3f3cf428af83bcfd536a81c8a818"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acafe3f3cf428af83bcfd536a81c8a818">&#9670;&#160;</a></span>unkn_list</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t CGdAIBattleData::unkn_list[0xfa2]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Large array for unknown purposes </p>
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00122">122</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="aeddeab1701ba7816a85635236fc1d8eb" name="aeddeab1701ba7816a85635236fc1d8eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeddeab1701ba7816a85635236fc1d8eb">&#9670;&#160;</a></span>unkn_node</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structushort__list__node.html">ushort_list_node</a> CGdAIBattleData::unkn_node</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00127">127</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a33aebccff274798a1627799ffed703a0" name="a33aebccff274798a1627799ffed703a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a33aebccff274798a1627799ffed703a0">&#9670;&#160;</a></span>unknown_target</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f___c_gd_target_data.html">SF_CGdTargetData</a> CGdAIBattleData::unknown_target</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00142">142</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a7355f19debe5af37a220a508e84ce499" name="a7355f19debe5af37a220a508e84ce499"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7355f19debe5af37a220a508e84ce499">&#9670;&#160;</a></span>world_name</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_f___string.html">SF_String</a> CGdAIBattleData::world_name</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__functions_8h_source.html#l00099">99</a> of file <a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this struct was generated from the following file:<ul>
 <li>src/api/<a class="el" href="sf__ai__functions_8h_source.html">sf_ai_functions.h</a></li>
 </ul>
 </div><!-- contents -->

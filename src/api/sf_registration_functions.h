@@ -49,6 +49,13 @@ DECLARE_FUNCTION(void, linkSingleTargetAIHandler, SFSpell *spell, ai_single_hand
 DECLARE_FUNCTION(void, linkAOEAIHandler, SFSpell *spell, ai_aoe_handler_ptr handler);
 DECLARE_FUNCTION(void, linkAvoidanceAIHandler, SFSpell *spell, ai_avoidance_handler_ptr handler);
 
+/**
+ * @ingroup API
+ * @brief A structure dedicated to the registration of spells
+ * This structure holds functions that are used to create a representation of a spell within the framework.
+ * We then translate this representation into a viable Spellforce Spell
+ * @see sf_mod_registry.cpp register_mod_spells()
+ */
 typedef struct
 {
 	registerSpell_ptr registerSpell;

@@ -89,10 +89,9 @@ $(function(){ initResizable(false); });
 <div id="doc-content">
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle"><div class="title">sf_spell_functions.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -109,7 +108,7 @@ Include dependency graph for sf_spell_functions.h:</div>
 <area shape="poly" title=" " alt="" coords="113,35,81,54,54,81,43,110,39,140,34,139,38,109,50,79,78,50,110,30"/>
 <area shape="rect" title=" " alt="" coords="163,155,237,181"/>
 <area shape="poly" title=" " alt="" coords="178,30,210,49,224,63,236,79,240,96,238,113,223,144,218,141,233,111,235,96,231,81,220,66,207,54,175,35"/>
-<area shape="rect" href="sf__general__structures_8h.html" title=" " alt="" coords="64,80,222,107"/>
+<area shape="rect" href="sf__general__structures_8h.html" title="Group of Structures and Enums used throught SFSF." alt="" coords="64,80,222,107"/>
 <area shape="poly" title=" " alt="" coords="146,33,146,64,140,64,140,33"/>
 <area shape="poly" title=" " alt="" coords="126,109,70,148,67,143,123,105"/>
 <area shape="poly" title=" " alt="" coords="155,106,183,141,179,144,151,109"/>
@@ -304,10 +303,61 @@ This graph shows which files directly or indirectly include this file:</div>
 <p><a href="sf__spell__functions_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
-Classes</h2></td></tr>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_f___c_gd_resource_spell.html">SF_CGdResourceSpell</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_spell_functions.html">SpellFunctions</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a collection of function pointers for managing spell-related operations.  <a href="struct_spell_functions.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a701d5a3519e00570dab668db61157eb3" id="r_a701d5a3519e00570dab668db61157eb3"><td class="memItemLeft" align="right" valign="top">typedef void(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a701d5a3519e00570dab668db61157eb3">setXData_ptr</a>) (<a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, uint16_t spell_id, uint8_t xdatakey, uint32_t value)</td></tr>
+<tr class="separator:a701d5a3519e00570dab668db61157eb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0abfe645271ecfc34fb39a25e42e076d" id="r_a0abfe645271ecfc34fb39a25e42e076d"><td class="memItemLeft" align="right" valign="top">typedef void(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0abfe645271ecfc34fb39a25e42e076d">initializeSpellData_ptr</a>) (<a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, uint16_t spell_id, <a class="el" href="sf__general__structures_8h.html#a59e7b4825ade86985ea9ff0cd38d4355">SpellDataKey</a> key)</td></tr>
+<tr class="separator:a0abfe645271ecfc34fb39a25e42e076d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84ad0096f2268f26e71cd63a2058e689" id="r_a84ad0096f2268f26e71cd63a2058e689"><td class="memItemLeft" align="right" valign="top">typedef void(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a84ad0096f2268f26e71cd63a2058e689">setEffectDone_ptr</a>) (<a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, uint16_t spell_id, uint16_t param_2)</td></tr>
+<tr class="separator:a84ad0096f2268f26e71cd63a2058e689"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26bf08bcf2a67d4e8137cba03217070a" id="r_a26bf08bcf2a67d4e8137cba03217070a"><td class="memItemLeft" align="right" valign="top">typedef uint32_t(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a26bf08bcf2a67d4e8137cba03217070a">addToXData_ptr</a>) (<a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, uint16_t spell_id, <a class="el" href="sf__general__structures_8h.html#a59e7b4825ade86985ea9ff0cd38d4355">SpellDataKey</a> key, uint32_t value)</td></tr>
+<tr class="separator:a26bf08bcf2a67d4e8137cba03217070a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43c593f0ff2d722e0d017437af12eaf7" id="r_a43c593f0ff2d722e0d017437af12eaf7"><td class="memItemLeft" align="right" valign="top">typedef uint32_t(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a43c593f0ff2d722e0d017437af12eaf7">getChanceToResistSpell_ptr</a>) (void *autoclass34, uint16_t source, uint16_t target, <a class="el" href="struct_s_f___spell_effect_info.html">SF_SpellEffectInfo</a> effect_info)</td></tr>
+<tr class="separator:a43c593f0ff2d722e0d017437af12eaf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1cc2270f7e92b692956a749eb10b442" id="r_ac1cc2270f7e92b692956a749eb10b442"><td class="memItemLeft" align="right" valign="top">typedef uint16_t(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac1cc2270f7e92b692956a749eb10b442">getRandom_ptr</a>) (void *autoclass14, uint16_t max_value)</td></tr>
+<tr class="separator:ac1cc2270f7e92b692956a749eb10b442"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85858dde9de3850ada6ba57d5cd95561" id="r_a85858dde9de3850ada6ba57d5cd95561"><td class="memItemLeft" align="right" valign="top">typedef void(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a85858dde9de3850ada6ba57d5cd95561">addVisualEffect_ptr</a>) (<a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, uint16_t spell_id, <a class="el" href="sf__general__structures_8h.html#a5dd3c40db85ccf451e0ea2888e91883a">CGdEffectType</a> effect_id, void *unused, <a class="el" href="struct_s_f___c_gd_target_data.html">SF_CGdTargetData</a> *target, uint32_t tick_start, uint16_t tick_count, void *corner_coords)</td></tr>
+<tr class="separator:a85858dde9de3850ada6ba57d5cd95561"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a268cdf67e71ed8318b1ff634302ffb0d" id="r_a268cdf67e71ed8318b1ff634302ffb0d"><td class="memItemLeft" align="right" valign="top">typedef void(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a268cdf67e71ed8318b1ff634302ffb0d">figureAggro_ptr</a>) (<a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, uint16_t spell_id, uint16_t target_index)</td></tr>
+<tr class="separator:a268cdf67e71ed8318b1ff634302ffb0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae351ca4becc26d6eb22009b2a338a1f7" id="r_ae351ca4becc26d6eb22009b2a338a1f7"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="struct_s_f___c_gd_resource_spell.html">SF_CGdResourceSpell</a> *(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae351ca4becc26d6eb22009b2a338a1f7">getResourceSpellData_ptr</a>) (void *, <a class="el" href="struct_s_f___c_gd_resource_spell.html">SF_CGdResourceSpell</a> *spellData, uint16_t index)</td></tr>
+<tr class="separator:ae351ca4becc26d6eb22009b2a338a1f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7bef966a915425cd1bc01ab0e8b30c4f" id="r_a7bef966a915425cd1bc01ab0e8b30c4f"><td class="memItemLeft" align="right" valign="top">typedef uint32_t(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7bef966a915425cd1bc01ab0e8b30c4f">getXData_ptr</a>) (<a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, uint16_t spell_id, <a class="el" href="sf__general__structures_8h.html#a59e7b4825ade86985ea9ff0cd38d4355">SpellDataKey</a> key)</td></tr>
+<tr class="separator:a7bef966a915425cd1bc01ab0e8b30c4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7793afbbde6c5c8aebda9b383ce33805" id="r_a7793afbbde6c5c8aebda9b383ce33805"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="struct_s_f___rectangle.html">SF_Rectangle</a> *(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7793afbbde6c5c8aebda9b383ce33805">getTargetsRectangle_ptr</a>) (<a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, <a class="el" href="struct_s_f___rectangle.html">SF_Rectangle</a> *output, uint16_t spell_id, uint16_t radius, <a class="el" href="struct_s_f___coord.html">SF_Coord</a> *center_maybe)</td></tr>
+<tr class="separator:a7793afbbde6c5c8aebda9b383ce33805"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09af9d1fe4afbc2215ee58872590807e" id="r_a09af9d1fe4afbc2215ee58872590807e"><td class="memItemLeft" align="right" valign="top">typedef void(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a09af9d1fe4afbc2215ee58872590807e">removeDLLNode_ptr</a>) (<a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, uint16_t param_1)</td></tr>
+<tr class="separator:a09af9d1fe4afbc2215ee58872590807e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b334b01b621cc7973ccddcbbd4dacb1" id="r_a3b334b01b621cc7973ccddcbbd4dacb1"><td class="memItemLeft" align="right" valign="top">typedef void(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3b334b01b621cc7973ccddcbbd4dacb1">spellClearFigureFlag_ptr</a>) (<a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, uint16_t spell_id, <a class="el" href="#a588abbdd197bfe8e420ee8a32ee9ba5e">SpellFlagKey</a> key)</td></tr>
+<tr class="separator:a3b334b01b621cc7973ccddcbbd4dacb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e7aaec23f53d98f83c76590bc1cac15" id="r_a4e7aaec23f53d98f83c76590bc1cac15"><td class="memItemLeft" align="right" valign="top">typedef void(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4e7aaec23f53d98f83c76590bc1cac15">onSpellRemove_ptr</a>) (<a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, uint16_t spell_id)</td></tr>
+<tr class="separator:a4e7aaec23f53d98f83c76590bc1cac15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29e17878fa766d5f7c7e0c8b4ddb326a" id="r_a29e17878fa766d5f7c7e0c8b4ddb326a"><td class="memItemLeft" align="right" valign="top">typedef uint16_t(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a29e17878fa766d5f7c7e0c8b4ddb326a">addSpell_ptr</a>) (<a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, uint16_t spell_id, uint16_t param2, <a class="el" href="struct_s_f___c_gd_target_data.html">SF_CGdTargetData</a> *source, <a class="el" href="struct_s_f___c_gd_target_data.html">SF_CGdTargetData</a> *target, uint16_t param5)</td></tr>
+<tr class="separator:a29e17878fa766d5f7c7e0c8b4ddb326a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f478c91767323be4c81e3e448971d90" id="r_a9f478c91767323be4c81e3e448971d90"><td class="memItemLeft" align="right" valign="top">typedef uint16_t(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9f478c91767323be4c81e3e448971d90">getSpellLine_ptr</a>) (<a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, uint16_t spell_id)</td></tr>
+<tr class="separator:a9f478c91767323be4c81e3e448971d90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba44d871a1ef3450c6cf3606a64306e4" id="r_aba44d871a1ef3450c6cf3606a64306e4"><td class="memItemLeft" align="right" valign="top">typedef void(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aba44d871a1ef3450c6cf3606a64306e4">figClrChkSplBfrChkBattle_ptr</a>) (<a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, uint16_t spell_id, uint16_t unk1)</td></tr>
+<tr class="separator:aba44d871a1ef3450c6cf3606a64306e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9620af4c34220f7659d81644c4dec0c4" id="r_a9620af4c34220f7659d81644c4dec0c4"><td class="memItemLeft" align="right" valign="top">typedef void(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9620af4c34220f7659d81644c4dec0c4">figTryClrCHkSPlBfrJob2_ptr</a>) (<a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, uint16_t spell_id)</td></tr>
+<tr class="separator:a9620af4c34220f7659d81644c4dec0c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fbf2cba19446ce61d82d93a5645b706" id="r_a0fbf2cba19446ce61d82d93a5645b706"><td class="memItemLeft" align="right" valign="top">typedef void(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0fbf2cba19446ce61d82d93a5645b706">figTryUnfreeze_ptr</a>) (<a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, uint16_t spell_id, uint16_t unk1)</td></tr>
+<tr class="separator:a0fbf2cba19446ce61d82d93a5645b706"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0af6b630e1a18ea961a7ef1ec48ec4c4" id="r_a0af6b630e1a18ea961a7ef1ec48ec4c4"><td class="memItemLeft" align="right" valign="top">typedef uint16_t(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0af6b630e1a18ea961a7ef1ec48ec4c4">getSpellID_ptr</a>) (<a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, uint16_t spell_index)</td></tr>
+<tr class="separator:a0af6b630e1a18ea961a7ef1ec48ec4c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a526a41665dd0f7cedd36eec2c96d878c" id="r_a526a41665dd0f7cedd36eec2c96d878c"><td class="memItemLeft" align="right" valign="top">typedef uint16_t(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a526a41665dd0f7cedd36eec2c96d878c">getSpellTags_ptr</a>) (uint16_t spell_index)</td></tr>
+<tr class="separator:a526a41665dd0f7cedd36eec2c96d878c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c0b28ba4d80dc62ef727e06bc6d8ac1" id="r_a3c0b28ba4d80dc62ef727e06bc6d8ac1"><td class="memItemLeft" align="right" valign="top">typedef bool(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3c0b28ba4d80dc62ef727e06bc6d8ac1">hasSpellTag_ptr</a>) (uint16_t spell_id, <a class="el" href="sf__general__structures_8h.html#a42506507e4f7b927f1ec61d982197ff6">SpellTag</a> tag)</td></tr>
+<tr class="separator:a3c0b28ba4d80dc62ef727e06bc6d8ac1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef616e5ccd2982cb0602ede56f136581" id="r_aef616e5ccd2982cb0602ede56f136581"><td class="memItemLeft" align="right" valign="top">typedef int(__thiscall *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aef616e5ccd2982cb0602ede56f136581">checkCanApply_ptr</a>) (<a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, uint16_t index)</td></tr>
+<tr class="separator:aef616e5ccd2982cb0602ede56f136581"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -613,63 +663,376 @@ Enumerations</h2></td></tr>
 <br />
  }</td></tr>
 <tr class="separator:a97a36226c9e385e601acd55f07575393"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ab898071398b359603a35c202e9c65f3b" id="r_ab898071398b359603a35c202e9c65f3b"><td class="memItemLeft" align="right" valign="top">struct&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab898071398b359603a35c202e9c65f3b">__attribute__</a> ((packed))</td></tr>
-<tr class="separator:ab898071398b359603a35c202e9c65f3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8bd50b5d8196b39629fe28810eee9db2" id="r_a8bd50b5d8196b39629fe28810eee9db2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8bd50b5d8196b39629fe28810eee9db2">DECLARE_FUNCTION</a> (void, setXData, <a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *_this, uint16_t spell_id, uint8_t xdatakey, uint32_t value)</td></tr>
-<tr class="separator:a8bd50b5d8196b39629fe28810eee9db2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8a361d5f37ad1f7c7b80615679bebda5" id="r_a8a361d5f37ad1f7c7b80615679bebda5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8a361d5f37ad1f7c7b80615679bebda5">DECLARE_FUNCTION</a> (void, <a class="el" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3">initializeSpellData</a>, <a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *_this, uint16_t spell_id, <a class="el" href="sf__general__structures_8h.html#a59e7b4825ade86985ea9ff0cd38d4355">SpellDataKey</a> key)</td></tr>
-<tr class="separator:a8a361d5f37ad1f7c7b80615679bebda5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3d50cdcceddcaf84b914ad6c1b6efc3c" id="r_a3d50cdcceddcaf84b914ad6c1b6efc3c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3d50cdcceddcaf84b914ad6c1b6efc3c">DECLARE_FUNCTION</a> (void, setEffectDone, <a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *_this, uint16_t spell_id, uint16_t param_2)</td></tr>
-<tr class="separator:a3d50cdcceddcaf84b914ad6c1b6efc3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4713679a0197af8b53d09842a53cc05" id="r_aa4713679a0197af8b53d09842a53cc05"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa4713679a0197af8b53d09842a53cc05">DECLARE_FUNCTION</a> (uint32_t, addToXData, <a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *_this, uint16_t spell_id, <a class="el" href="sf__general__structures_8h.html#a59e7b4825ade86985ea9ff0cd38d4355">SpellDataKey</a> key, uint32_t value)</td></tr>
-<tr class="separator:aa4713679a0197af8b53d09842a53cc05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3666dc57e591344471012509a9602d72" id="r_a3666dc57e591344471012509a9602d72"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3666dc57e591344471012509a9602d72">DECLARE_FUNCTION</a> (uint32_t, getChanceToResistSpell, void *autoclass34, uint16_t source, uint16_t target, <a class="el" href="sf__general__structures_8h.html#a5155b93e12786efd5c2faf220aa5b928">SF_SpellEffectInfo</a> effect_info)</td></tr>
-<tr class="separator:a3666dc57e591344471012509a9602d72"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f6ab8062e2808a64fef2259c9e610a1" id="r_a0f6ab8062e2808a64fef2259c9e610a1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0f6ab8062e2808a64fef2259c9e610a1">DECLARE_FUNCTION</a> (uint16_t, getRandom, void *autoclass14, uint16_t max_value)</td></tr>
-<tr class="separator:a0f6ab8062e2808a64fef2259c9e610a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad29f351904b80df56c9f1463ee52dbe9" id="r_ad29f351904b80df56c9f1463ee52dbe9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad29f351904b80df56c9f1463ee52dbe9">DECLARE_FUNCTION</a> (void, addVisualEffect, <a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *_this, uint16_t spell_id, <a class="el" href="sf__general__structures_8h.html#a5dd3c40db85ccf451e0ea2888e91883a">CGdEffectType</a> effect_id, void *unused, <a class="el" href="sf__general__structures_8h.html#aedd8705d0983d09965ace902f37d0e0b">SF_CGdTargetData</a> *target, uint32_t tick_start, uint16_t tick_count, void *corner_coords)</td></tr>
-<tr class="separator:ad29f351904b80df56c9f1463ee52dbe9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9fc4387da97f6a1a833556a7101791a0" id="r_a9fc4387da97f6a1a833556a7101791a0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9fc4387da97f6a1a833556a7101791a0">DECLARE_FUNCTION</a> (void, figureAggro, <a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *_this, uint16_t spell_id, uint16_t target_index)</td></tr>
-<tr class="separator:a9fc4387da97f6a1a833556a7101791a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afd7616fc8ac718bf9199cc9c6a00c852" id="r_afd7616fc8ac718bf9199cc9c6a00c852"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afd7616fc8ac718bf9199cc9c6a00c852">DECLARE_FUNCTION</a> (<a class="el" href="#a89b47ba315c541ed76ff336111d27c5d">SF_CGdResourceSpell</a> *, getResourceSpellData, void *, <a class="el" href="#a89b47ba315c541ed76ff336111d27c5d">SF_CGdResourceSpell</a> *spellData, uint16_t index)</td></tr>
-<tr class="separator:afd7616fc8ac718bf9199cc9c6a00c852"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c8f47e46ff2ccc11d87333652490d66" id="r_a1c8f47e46ff2ccc11d87333652490d66"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1c8f47e46ff2ccc11d87333652490d66">DECLARE_FUNCTION</a> (uint32_t, getXData, <a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *_this, uint16_t spell_id, <a class="el" href="sf__general__structures_8h.html#a59e7b4825ade86985ea9ff0cd38d4355">SpellDataKey</a> key)</td></tr>
-<tr class="separator:a1c8f47e46ff2ccc11d87333652490d66"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8bac7e91e05a4b61eb057c792857d8b6" id="r_a8bac7e91e05a4b61eb057c792857d8b6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8bac7e91e05a4b61eb057c792857d8b6">DECLARE_FUNCTION</a> (<a class="el" href="sf__general__structures_8h.html#a1b8b1ec284ff51feaf2673b4aa18f4eb">SF_Rectangle</a> *, getTargetsRectangle, <a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *_this, <a class="el" href="sf__general__structures_8h.html#a1b8b1ec284ff51feaf2673b4aa18f4eb">SF_Rectangle</a> *output, uint16_t spell_id, uint16_t radius, <a class="el" href="sf__general__structures_8h.html#aa44e45471f7b6c436abe46e7d9d728c9">SF_Coord</a> *center_maybe)</td></tr>
-<tr class="separator:a8bac7e91e05a4b61eb057c792857d8b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abeaf8b34f10e7c2de96ecbc1c0e5394f" id="r_abeaf8b34f10e7c2de96ecbc1c0e5394f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abeaf8b34f10e7c2de96ecbc1c0e5394f">DECLARE_FUNCTION</a> (void, removeDLLNode, <a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *_this, uint16_t param_1)</td></tr>
-<tr class="separator:abeaf8b34f10e7c2de96ecbc1c0e5394f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad579e096acb95e4e30a3cc581a70352b" id="r_ad579e096acb95e4e30a3cc581a70352b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad579e096acb95e4e30a3cc581a70352b">DECLARE_FUNCTION</a> (void, <a class="el" href="sf__wrappers_8c.html#ab97dc11635deb183cfe8b9dc8b2fc064">spellClearFigureFlag</a>, <a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *_this, uint16_t spell_id, <a class="el" href="#a588abbdd197bfe8e420ee8a32ee9ba5e">SpellFlagKey</a> key)</td></tr>
-<tr class="separator:ad579e096acb95e4e30a3cc581a70352b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad0e94ecc005ef7d45e051407bdedfbb" id="r_aad0e94ecc005ef7d45e051407bdedfbb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aad0e94ecc005ef7d45e051407bdedfbb">DECLARE_FUNCTION</a> (void, onSpellRemove, <a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *_this, uint16_t spell_id)</td></tr>
-<tr class="separator:aad0e94ecc005ef7d45e051407bdedfbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae009b67ad04468b339b6f701cae74aae" id="r_ae009b67ad04468b339b6f701cae74aae"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae009b67ad04468b339b6f701cae74aae">DECLARE_FUNCTION</a> (uint16_t, addSpell, <a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *_this, uint16_t spell_id, uint16_t param2, <a class="el" href="sf__general__structures_8h.html#aedd8705d0983d09965ace902f37d0e0b">SF_CGdTargetData</a> *source, <a class="el" href="sf__general__structures_8h.html#aedd8705d0983d09965ace902f37d0e0b">SF_CGdTargetData</a> *target, uint16_t param5)</td></tr>
-<tr class="separator:ae009b67ad04468b339b6f701cae74aae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0adcc92391e54eaf789eb826733f93a2" id="r_a0adcc92391e54eaf789eb826733f93a2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0adcc92391e54eaf789eb826733f93a2">DECLARE_FUNCTION</a> (uint16_t, getSpellLine, <a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *_this, uint16_t spell_id)</td></tr>
-<tr class="separator:a0adcc92391e54eaf789eb826733f93a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf21bc9f31fee188b99cad2914e4735d" id="r_abf21bc9f31fee188b99cad2914e4735d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abf21bc9f31fee188b99cad2914e4735d">DECLARE_FUNCTION</a> (void, figClrChkSplBfrChkBattle, <a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *_this, uint16_t spell_id, uint16_t unk1)</td></tr>
-<tr class="separator:abf21bc9f31fee188b99cad2914e4735d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2dab8627e165c19ebed90faa3c3236c0" id="r_a2dab8627e165c19ebed90faa3c3236c0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2dab8627e165c19ebed90faa3c3236c0">DECLARE_FUNCTION</a> (void, figTryClrCHkSPlBfrJob2, <a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *_this, uint16_t spell_id)</td></tr>
-<tr class="separator:a2dab8627e165c19ebed90faa3c3236c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a35063aede93712a881b8cad5aa38a5d7" id="r_a35063aede93712a881b8cad5aa38a5d7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a35063aede93712a881b8cad5aa38a5d7">DECLARE_FUNCTION</a> (void, figTryUnfreeze, <a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *_this, uint16_t spell_id, uint16_t unk1)</td></tr>
-<tr class="separator:a35063aede93712a881b8cad5aa38a5d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a514048b32172352676ebfa06006f9286" id="r_a514048b32172352676ebfa06006f9286"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a514048b32172352676ebfa06006f9286">DECLARE_FUNCTION</a> (uint16_t, getSpellID, <a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *_this, uint16_t spell_index)</td></tr>
-<tr class="separator:a514048b32172352676ebfa06006f9286"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3b024a66f0147b9c7245f2edfdf922e6" id="r_a3b024a66f0147b9c7245f2edfdf922e6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3b024a66f0147b9c7245f2edfdf922e6">DECLARE_FUNCTION</a> (uint16_t, <a class="el" href="sf__mod__registry_8cpp.html#af3ffd25a39d8cd3e76880a062109e619">getSpellTags</a>, uint16_t spell_index)</td></tr>
-<tr class="separator:a3b024a66f0147b9c7245f2edfdf922e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaae3278904990a10b313a19fa7cf0a78" id="r_aaae3278904990a10b313a19fa7cf0a78"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaae3278904990a10b313a19fa7cf0a78">DECLARE_FUNCTION</a> (bool, <a class="el" href="sf__wrappers_8c.html#aad92c6ec5283b3732feeefd0d62ab629">hasSpellTag</a>, uint16_t spell_id, <a class="el" href="sf__general__structures_8h.html#a42506507e4f7b927f1ec61d982197ff6">SpellTag</a> tag)</td></tr>
-<tr class="separator:aaae3278904990a10b313a19fa7cf0a78"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3d01781c7b0b78749eee3cdfdad71ea2" id="r_a3d01781c7b0b78749eee3cdfdad71ea2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3d01781c7b0b78749eee3cdfdad71ea2">DECLARE_FUNCTION</a> (int, checkCanApply, <a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *_this, uint16_t index)</td></tr>
-<tr class="separator:a3d01781c7b0b78749eee3cdfdad71ea2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:a89b47ba315c541ed76ff336111d27c5d" id="r_a89b47ba315c541ed76ff336111d27c5d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a89b47ba315c541ed76ff336111d27c5d">SF_CGdResourceSpell</a></td></tr>
-<tr class="separator:a89b47ba315c541ed76ff336111d27c5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="a29e17878fa766d5f7c7e0c8b4ddb326a" name="a29e17878fa766d5f7c7e0c8b4ddb326a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a29e17878fa766d5f7c7e0c8b4ddb326a">&#9670;&#160;</a></span>addSpell_ptr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef uint16_t(__thiscall * addSpell_ptr) (<a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, uint16_t spell_id, uint16_t param2, <a class="el" href="struct_s_f___c_gd_target_data.html">SF_CGdTargetData</a> *source, <a class="el" href="struct_s_f___c_gd_target_data.html">SF_CGdTargetData</a> *target, uint16_t param5)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00284">284</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a26bf08bcf2a67d4e8137cba03217070a" name="a26bf08bcf2a67d4e8137cba03217070a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26bf08bcf2a67d4e8137cba03217070a">&#9670;&#160;</a></span>addToXData_ptr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef uint32_t(__thiscall * addToXData_ptr) (<a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, uint16_t spell_id, <a class="el" href="sf__general__structures_8h.html#a59e7b4825ade86985ea9ff0cd38d4355">SpellDataKey</a> key, uint32_t value)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00273">273</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a85858dde9de3850ada6ba57d5cd95561" name="a85858dde9de3850ada6ba57d5cd95561"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85858dde9de3850ada6ba57d5cd95561">&#9670;&#160;</a></span>addVisualEffect_ptr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(__thiscall * addVisualEffect_ptr) (<a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, uint16_t spell_id, <a class="el" href="sf__general__structures_8h.html#a5dd3c40db85ccf451e0ea2888e91883a">CGdEffectType</a> effect_id, void *unused, <a class="el" href="struct_s_f___c_gd_target_data.html">SF_CGdTargetData</a> *target, uint32_t tick_start, uint16_t tick_count, void *corner_coords)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00276">276</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="aef616e5ccd2982cb0602ede56f136581" name="aef616e5ccd2982cb0602ede56f136581"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef616e5ccd2982cb0602ede56f136581">&#9670;&#160;</a></span>checkCanApply_ptr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef int(__thiscall * checkCanApply_ptr) (<a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, uint16_t index)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00292">292</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="aba44d871a1ef3450c6cf3606a64306e4" name="aba44d871a1ef3450c6cf3606a64306e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba44d871a1ef3450c6cf3606a64306e4">&#9670;&#160;</a></span>figClrChkSplBfrChkBattle_ptr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(__thiscall * figClrChkSplBfrChkBattle_ptr) (<a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, uint16_t spell_id, uint16_t unk1)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00286">286</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a9620af4c34220f7659d81644c4dec0c4" name="a9620af4c34220f7659d81644c4dec0c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9620af4c34220f7659d81644c4dec0c4">&#9670;&#160;</a></span>figTryClrCHkSPlBfrJob2_ptr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(__thiscall * figTryClrCHkSPlBfrJob2_ptr) (<a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, uint16_t spell_id)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00287">287</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a0fbf2cba19446ce61d82d93a5645b706" name="a0fbf2cba19446ce61d82d93a5645b706"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0fbf2cba19446ce61d82d93a5645b706">&#9670;&#160;</a></span>figTryUnfreeze_ptr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(__thiscall * figTryUnfreeze_ptr) (<a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, uint16_t spell_id, uint16_t unk1)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00288">288</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a268cdf67e71ed8318b1ff634302ffb0d" name="a268cdf67e71ed8318b1ff634302ffb0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a268cdf67e71ed8318b1ff634302ffb0d">&#9670;&#160;</a></span>figureAggro_ptr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(__thiscall * figureAggro_ptr) (<a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, uint16_t spell_id, uint16_t target_index)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00277">277</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a43c593f0ff2d722e0d017437af12eaf7" name="a43c593f0ff2d722e0d017437af12eaf7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43c593f0ff2d722e0d017437af12eaf7">&#9670;&#160;</a></span>getChanceToResistSpell_ptr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef uint32_t(__thiscall * getChanceToResistSpell_ptr) (void *autoclass34, uint16_t source, uint16_t target, <a class="el" href="struct_s_f___spell_effect_info.html">SF_SpellEffectInfo</a> effect_info)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00274">274</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="ac1cc2270f7e92b692956a749eb10b442" name="ac1cc2270f7e92b692956a749eb10b442"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac1cc2270f7e92b692956a749eb10b442">&#9670;&#160;</a></span>getRandom_ptr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef uint16_t(__thiscall * getRandom_ptr) (void *autoclass14, uint16_t max_value)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00275">275</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="ae351ca4becc26d6eb22009b2a338a1f7" name="ae351ca4becc26d6eb22009b2a338a1f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae351ca4becc26d6eb22009b2a338a1f7">&#9670;&#160;</a></span>getResourceSpellData_ptr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef <a class="el" href="struct_s_f___c_gd_resource_spell.html">SF_CGdResourceSpell</a> *(__thiscall * getResourceSpellData_ptr) (void *, <a class="el" href="struct_s_f___c_gd_resource_spell.html">SF_CGdResourceSpell</a> *spellData, uint16_t index)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00278">278</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a0af6b630e1a18ea961a7ef1ec48ec4c4" name="a0af6b630e1a18ea961a7ef1ec48ec4c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0af6b630e1a18ea961a7ef1ec48ec4c4">&#9670;&#160;</a></span>getSpellID_ptr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef uint16_t(__thiscall * getSpellID_ptr) (<a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, uint16_t spell_index)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00289">289</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a9f478c91767323be4c81e3e448971d90" name="a9f478c91767323be4c81e3e448971d90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f478c91767323be4c81e3e448971d90">&#9670;&#160;</a></span>getSpellLine_ptr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef uint16_t(__thiscall * getSpellLine_ptr) (<a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, uint16_t spell_id)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00285">285</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a526a41665dd0f7cedd36eec2c96d878c" name="a526a41665dd0f7cedd36eec2c96d878c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a526a41665dd0f7cedd36eec2c96d878c">&#9670;&#160;</a></span>getSpellTags_ptr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef uint16_t(__thiscall * getSpellTags_ptr) (uint16_t spell_index)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00290">290</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a7793afbbde6c5c8aebda9b383ce33805" name="a7793afbbde6c5c8aebda9b383ce33805"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7793afbbde6c5c8aebda9b383ce33805">&#9670;&#160;</a></span>getTargetsRectangle_ptr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef <a class="el" href="struct_s_f___rectangle.html">SF_Rectangle</a> *(__thiscall * getTargetsRectangle_ptr) (<a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, <a class="el" href="struct_s_f___rectangle.html">SF_Rectangle</a> *output, uint16_t spell_id, uint16_t radius, <a class="el" href="struct_s_f___coord.html">SF_Coord</a> *center_maybe)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00280">280</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a7bef966a915425cd1bc01ab0e8b30c4f" name="a7bef966a915425cd1bc01ab0e8b30c4f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7bef966a915425cd1bc01ab0e8b30c4f">&#9670;&#160;</a></span>getXData_ptr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef uint32_t(__thiscall * getXData_ptr) (<a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, uint16_t spell_id, <a class="el" href="sf__general__structures_8h.html#a59e7b4825ade86985ea9ff0cd38d4355">SpellDataKey</a> key)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00279">279</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a3c0b28ba4d80dc62ef727e06bc6d8ac1" name="a3c0b28ba4d80dc62ef727e06bc6d8ac1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c0b28ba4d80dc62ef727e06bc6d8ac1">&#9670;&#160;</a></span>hasSpellTag_ptr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef bool(__thiscall * hasSpellTag_ptr) (uint16_t spell_id, <a class="el" href="sf__general__structures_8h.html#a42506507e4f7b927f1ec61d982197ff6">SpellTag</a> tag)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00291">291</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a0abfe645271ecfc34fb39a25e42e076d" name="a0abfe645271ecfc34fb39a25e42e076d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0abfe645271ecfc34fb39a25e42e076d">&#9670;&#160;</a></span>initializeSpellData_ptr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(__thiscall * initializeSpellData_ptr) (<a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, uint16_t spell_id, <a class="el" href="sf__general__structures_8h.html#a59e7b4825ade86985ea9ff0cd38d4355">SpellDataKey</a> key)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00271">271</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a4e7aaec23f53d98f83c76590bc1cac15" name="a4e7aaec23f53d98f83c76590bc1cac15"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e7aaec23f53d98f83c76590bc1cac15">&#9670;&#160;</a></span>onSpellRemove_ptr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(__thiscall * onSpellRemove_ptr) (<a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, uint16_t spell_id)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00283">283</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a09af9d1fe4afbc2215ee58872590807e" name="a09af9d1fe4afbc2215ee58872590807e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09af9d1fe4afbc2215ee58872590807e">&#9670;&#160;</a></span>removeDLLNode_ptr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(__thiscall * removeDLLNode_ptr) (<a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, uint16_t param_1)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00281">281</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a84ad0096f2268f26e71cd63a2058e689" name="a84ad0096f2268f26e71cd63a2058e689"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84ad0096f2268f26e71cd63a2058e689">&#9670;&#160;</a></span>setEffectDone_ptr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(__thiscall * setEffectDone_ptr) (<a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, uint16_t spell_id, uint16_t param_2)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00272">272</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a701d5a3519e00570dab668db61157eb3" name="a701d5a3519e00570dab668db61157eb3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a701d5a3519e00570dab668db61157eb3">&#9670;&#160;</a></span>setXData_ptr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(__thiscall * setXData_ptr) (<a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, uint16_t spell_id, uint8_t xdatakey, uint32_t value)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00270">270</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a3b334b01b621cc7973ccddcbbd4dacb1" name="a3b334b01b621cc7973ccddcbbd4dacb1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b334b01b621cc7973ccddcbbd4dacb1">&#9670;&#160;</a></span>spellClearFigureFlag_ptr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(__thiscall * spellClearFigureFlag_ptr) (<a class="el" href="struct_s_f___c_gd_spell.html">SF_CGdSpell</a> *_this, uint16_t spell_id, <a class="el" href="#a588abbdd197bfe8e420ee8a32ee9ba5e">SpellFlagKey</a> key)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00282">282</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+
+</div>
+</div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="a97a36226c9e385e601acd55f07575393" name="a97a36226c9e385e601acd55f07575393"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a97a36226c9e385e601acd55f07575393">&#9670;&#160;</a></span>GdSpellLine</h2>
@@ -942,886 +1305,6 @@ Variables</h2></td></tr>
 </table>
 
 <p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00006">6</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="ab898071398b359603a35c202e9c65f3b" name="ab898071398b359603a35c202e9c65f3b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab898071398b359603a35c202e9c65f3b">&#9670;&#160;</a></span>__attribute__()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct __attribute__ </td>
-          <td>(</td>
-          <td class="paramtype">(packed)</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00001">1</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
-
-</div>
-</div>
-<a id="aaae3278904990a10b313a19fa7cf0a78" name="aaae3278904990a10b313a19fa7cf0a78"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaae3278904990a10b313a19fa7cf0a78">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[1/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__wrappers_8c.html#aad92c6ec5283b3732feeefd0d62ab629">hasSpellTag</a></td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>spell_id</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a42506507e4f7b927f1ec61d982197ff6">SpellTag</a></td>          <td class="paramname"><span class="paramname"><em>tag</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a3d01781c7b0b78749eee3cdfdad71ea2" name="a3d01781c7b0b78749eee3cdfdad71ea2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3d01781c7b0b78749eee3cdfdad71ea2">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[2/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">checkCanApply</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *</td>          <td class="paramname"><span class="paramname"><em>_this</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>index</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="afd7616fc8ac718bf9199cc9c6a00c852" name="afd7616fc8ac718bf9199cc9c6a00c852"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afd7616fc8ac718bf9199cc9c6a00c852">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[3/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="#a89b47ba315c541ed76ff336111d27c5d">SF_CGdResourceSpell</a> *</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">getResourceSpellData</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="#a89b47ba315c541ed76ff336111d27c5d">SF_CGdResourceSpell</a> *</td>          <td class="paramname"><span class="paramname"><em>spellData</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>index</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a8bac7e91e05a4b61eb057c792857d8b6" name="a8bac7e91e05a4b61eb057c792857d8b6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8bac7e91e05a4b61eb057c792857d8b6">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[4/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a1b8b1ec284ff51feaf2673b4aa18f4eb">SF_Rectangle</a> *</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">getTargetsRectangle</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *</td>          <td class="paramname"><span class="paramname"><em>_this</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a1b8b1ec284ff51feaf2673b4aa18f4eb">SF_Rectangle</a> *</td>          <td class="paramname"><span class="paramname"><em>output</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>spell_id</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>radius</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#aa44e45471f7b6c436abe46e7d9d728c9">SF_Coord</a> *</td>          <td class="paramname"><span class="paramname"><em>center_maybe</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ae009b67ad04468b339b6f701cae74aae" name="ae009b67ad04468b339b6f701cae74aae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae009b67ad04468b339b6f701cae74aae">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[5/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">addSpell</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *</td>          <td class="paramname"><span class="paramname"><em>_this</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>spell_id</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>param2</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#aedd8705d0983d09965ace902f37d0e0b">SF_CGdTargetData</a> *</td>          <td class="paramname"><span class="paramname"><em>source</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#aedd8705d0983d09965ace902f37d0e0b">SF_CGdTargetData</a> *</td>          <td class="paramname"><span class="paramname"><em>target</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>param5</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a0f6ab8062e2808a64fef2259c9e610a1" name="a0f6ab8062e2808a64fef2259c9e610a1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0f6ab8062e2808a64fef2259c9e610a1">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[6/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">getRandom</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>autoclass14</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>max_value</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a514048b32172352676ebfa06006f9286" name="a514048b32172352676ebfa06006f9286"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a514048b32172352676ebfa06006f9286">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[7/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">getSpellID</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *</td>          <td class="paramname"><span class="paramname"><em>_this</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>spell_index</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a0adcc92391e54eaf789eb826733f93a2" name="a0adcc92391e54eaf789eb826733f93a2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0adcc92391e54eaf789eb826733f93a2">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[8/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">getSpellLine</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *</td>          <td class="paramname"><span class="paramname"><em>_this</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>spell_id</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a3b024a66f0147b9c7245f2edfdf922e6" name="a3b024a66f0147b9c7245f2edfdf922e6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3b024a66f0147b9c7245f2edfdf922e6">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[9/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__mod__registry_8cpp.html#af3ffd25a39d8cd3e76880a062109e619">getSpellTags</a></td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>spell_index</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aa4713679a0197af8b53d09842a53cc05" name="aa4713679a0197af8b53d09842a53cc05"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa4713679a0197af8b53d09842a53cc05">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[10/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">addToXData</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *</td>          <td class="paramname"><span class="paramname"><em>_this</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>spell_id</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a59e7b4825ade86985ea9ff0cd38d4355">SpellDataKey</a></td>          <td class="paramname"><span class="paramname"><em>key</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>value</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a3666dc57e591344471012509a9602d72" name="a3666dc57e591344471012509a9602d72"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3666dc57e591344471012509a9602d72">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[11/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">getChanceToResistSpell</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>autoclass34</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>source</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>target</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a5155b93e12786efd5c2faf220aa5b928">SF_SpellEffectInfo</a></td>          <td class="paramname"><span class="paramname"><em>effect_info</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a1c8f47e46ff2ccc11d87333652490d66" name="a1c8f47e46ff2ccc11d87333652490d66"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1c8f47e46ff2ccc11d87333652490d66">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[12/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">getXData</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *</td>          <td class="paramname"><span class="paramname"><em>_this</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>spell_id</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a59e7b4825ade86985ea9ff0cd38d4355">SpellDataKey</a></td>          <td class="paramname"><span class="paramname"><em>key</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ad29f351904b80df56c9f1463ee52dbe9" name="ad29f351904b80df56c9f1463ee52dbe9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad29f351904b80df56c9f1463ee52dbe9">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[13/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">addVisualEffect</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *</td>          <td class="paramname"><span class="paramname"><em>_this</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>spell_id</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a5dd3c40db85ccf451e0ea2888e91883a">CGdEffectType</a></td>          <td class="paramname"><span class="paramname"><em>effect_id</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>unused</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#aedd8705d0983d09965ace902f37d0e0b">SF_CGdTargetData</a> *</td>          <td class="paramname"><span class="paramname"><em>target</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>tick_start</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>tick_count</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>corner_coords</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="abf21bc9f31fee188b99cad2914e4735d" name="abf21bc9f31fee188b99cad2914e4735d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abf21bc9f31fee188b99cad2914e4735d">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[14/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">figClrChkSplBfrChkBattle</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *</td>          <td class="paramname"><span class="paramname"><em>_this</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>spell_id</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>unk1</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a2dab8627e165c19ebed90faa3c3236c0" name="a2dab8627e165c19ebed90faa3c3236c0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2dab8627e165c19ebed90faa3c3236c0">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[15/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">figTryClrCHkSPlBfrJob2</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *</td>          <td class="paramname"><span class="paramname"><em>_this</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>spell_id</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a35063aede93712a881b8cad5aa38a5d7" name="a35063aede93712a881b8cad5aa38a5d7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a35063aede93712a881b8cad5aa38a5d7">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[16/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">figTryUnfreeze</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *</td>          <td class="paramname"><span class="paramname"><em>_this</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>spell_id</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>unk1</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a9fc4387da97f6a1a833556a7101791a0" name="a9fc4387da97f6a1a833556a7101791a0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9fc4387da97f6a1a833556a7101791a0">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[17/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">figureAggro</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *</td>          <td class="paramname"><span class="paramname"><em>_this</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>spell_id</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>target_index</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a8a361d5f37ad1f7c7b80615679bebda5" name="a8a361d5f37ad1f7c7b80615679bebda5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8a361d5f37ad1f7c7b80615679bebda5">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[18/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__spelltype__registry_8cpp.html#ac3e5dfa2fdcb8f683f6921e40eece8c3">initializeSpellData</a></td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *</td>          <td class="paramname"><span class="paramname"><em>_this</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>spell_id</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a59e7b4825ade86985ea9ff0cd38d4355">SpellDataKey</a></td>          <td class="paramname"><span class="paramname"><em>key</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aad0e94ecc005ef7d45e051407bdedfbb" name="aad0e94ecc005ef7d45e051407bdedfbb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aad0e94ecc005ef7d45e051407bdedfbb">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[19/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">onSpellRemove</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *</td>          <td class="paramname"><span class="paramname"><em>_this</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>spell_id</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="abeaf8b34f10e7c2de96ecbc1c0e5394f" name="abeaf8b34f10e7c2de96ecbc1c0e5394f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abeaf8b34f10e7c2de96ecbc1c0e5394f">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[20/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">removeDLLNode</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *</td>          <td class="paramname"><span class="paramname"><em>_this</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>param_1</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a3d50cdcceddcaf84b914ad6c1b6efc3c" name="a3d50cdcceddcaf84b914ad6c1b6efc3c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3d50cdcceddcaf84b914ad6c1b6efc3c">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[21/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">setEffectDone</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *</td>          <td class="paramname"><span class="paramname"><em>_this</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>spell_id</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>param_2</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a8bd50b5d8196b39629fe28810eee9db2" name="a8bd50b5d8196b39629fe28810eee9db2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8bd50b5d8196b39629fe28810eee9db2">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[22/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">setXData</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *</td>          <td class="paramname"><span class="paramname"><em>_this</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>spell_id</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t</td>          <td class="paramname"><span class="paramname"><em>xdatakey</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>value</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ad579e096acb95e4e30a3cc581a70352b" name="ad579e096acb95e4e30a3cc581a70352b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad579e096acb95e4e30a3cc581a70352b">&#9670;&#160;</a></span>DECLARE_FUNCTION() <span class="overload">[23/23]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">DECLARE_FUNCTION </td>
-          <td>(</td>
-          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__wrappers_8c.html#ab97dc11635deb183cfe8b9dc8b2fc064">spellClearFigureFlag</a></td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6">SF_CGdSpell</a> *</td>          <td class="paramname"><span class="paramname"><em>_this</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>spell_id</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="#a588abbdd197bfe8e420ee8a32ee9ba5e">SpellFlagKey</a></td>          <td class="paramname"><span class="paramname"><em>key</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Variable Documentation</h2>
-<a id="a89b47ba315c541ed76ff336111d27c5d" name="a89b47ba315c541ed76ff336111d27c5d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a89b47ba315c541ed76ff336111d27c5d">&#9670;&#160;</a></span>SF_CGdResourceSpell</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">SF_CGdResourceSpell</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00267">267</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
 
 </div>
 </div>

@@ -1,3 +1,13 @@
+/** 
+ * @defgroup AIHook AI Hooks
+ * @ingroup Hooks
+ * Hooks and Functions related to AI functionality.
+ * Note that the main hook is the 
+ * @ref rank_support_spell_hook
+ * @addtogroup AIHook
+ * @{
+ */
+
 #include "sf_ai_hook.h"
 
 #include "../sf_wrappers.h"
@@ -15,7 +25,6 @@ void clearAction(SF_SGtFigureAction *_this)
     _this->unkn4 = 0;
     _this->unkn5 = 0;
 }
-// TODO MOVE ME
 
 bool isSpellAction(SF_SGtFigureAction *_this)
 {
@@ -53,6 +62,9 @@ uint32_t signum(uint32_t param_1)
     return (param_1 ^ (int)param_1 >> 0x1f) - ((int)param_1 >> 0x1f);
 }
 
+/**
+ * @brief Injects into the ranking system for a single target AI spell.
+*/
 uint32_t rank_support_spell_hook(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
     bool isStackable = hasSpellTag(spell_line, STACKABLE_SPELL);
@@ -64,3 +76,7 @@ uint32_t rank_support_spell_hook(SF_CGdBattleDevelopment *_this, uint16_t target
     }
     return rank;
 }
+
+/**
+ * @}
+ */

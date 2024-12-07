@@ -1,8 +1,5 @@
 /**
- * @mainpage Spellforce Spell Framework API
- * \ref SpellforceSpellFramework
- * \defgroup API
- * @brief Documentation on the API 
+ * @defgroup API API Documentation
  */
 
 #pragma once

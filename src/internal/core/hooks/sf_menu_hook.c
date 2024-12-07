@@ -1,3 +1,11 @@
+/** 
+ * @defgroup MenuHook Menu Hook
+ * @ingroup Hooks
+ * Only Used internally to inject text onto the Main Menu of Spellforce
+ * @note The menu functions and general UI elements of Spellforce are poorly understood and may have unknown consequences 
+ * @addtogroup MenuHook
+ * @{
+ */
 
 #include "../sf_wrappers.h"
 #include "sf_menu_hook.h"
@@ -97,3 +105,5 @@ void __attribute__((no_caller_saved_registers, thiscall)) sf_menu_hook(uint32_t 
     // Call original menu function to show the menu
     s_menu_func(_CAppMenu);
 }
+
+/** @} */

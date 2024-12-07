@@ -111,7 +111,7 @@ Include dependency graph for sf_damage_hook.c:</div>
 <area shape="rect" title=" " alt="" coords="693,5,846,48"/>
 <area shape="rect" href="sf__damage__hook_8h.html" title=" " alt="" coords="556,112,687,139"/>
 <area shape="poly" title=" " alt="" coords="739,51,655,105,652,101,736,46"/>
-<area shape="rect" href="sf__general__structures_8h.html" title=" " alt="" coords="595,427,752,453"/>
+<area shape="rect" href="sf__general__structures_8h.html" title="Group of Structures and Enums used throught SFSF." alt="" coords="595,427,752,453"/>
 <area shape="poly" title=" " alt="" coords="801,47,824,68,841,95,862,152,870,201,863,249,841,305,816,343,784,376,748,402,716,421,713,417,745,397,780,372,812,340,836,303,858,248,864,201,857,153,836,97,820,71,798,50"/>
 <area shape="rect" title=" " alt="" coords="378,501,443,528"/>
 <area shape="poly" title=" " alt="" coords="692,33,503,46,390,58,277,76,172,100,86,130,54,148,29,169,13,191,8,215,8,366,11,379,18,392,48,416,91,437,145,456,263,485,364,504,363,509,261,491,143,461,89,442,45,420,14,395,6,381,3,367,3,214,8,188,25,165,51,144,84,125,171,94,276,71,389,53,503,40,692,28"/>
@@ -186,90 +186,17 @@ Include dependency graph for sf_damage_hook.c:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a8bb311db0410a74d435881520d7c6027" id="r_a8bb311db0410a74d435881520d7c6027"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8bb311db0410a74d435881520d7c6027">__attribute__</a> ((no_caller_saved_registers, thiscall))</td></tr>
-<tr class="separator:a8bb311db0410a74d435881520d7c6027"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a105ef3e813ed703c2f94fb6e872be5b3" id="r_a105ef3e813ed703c2f94fb6e872be5b3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a105ef3e813ed703c2f94fb6e872be5b3">__declspec</a> (naked)</td></tr>
-<tr class="separator:a105ef3e813ed703c2f94fb6e872be5b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3f161d593acce221f5c68654079da433" id="r_ga3f161d593acce221f5c68654079da433"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___damage_hook.html#ga3f161d593acce221f5c68654079da433">sf_deal_damage</a> (<a class="el" href="struct_s_f___c_gd_figure_toolbox.html">SF_CGdFigureToolbox</a> *figureToolbox, uint16_t dmg_source, uint16_t dmg_target, uint32_t damage_amount, uint32_t is_spell_damage, uint32_t is_ranged_damage, uint32_t vry_unknown_6)</td></tr>
+<tr class="separator:ga3f161d593acce221f5c68654079da433"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaac8e4527650ac455ceabb26893bc5312" id="r_gaac8e4527650ac455ceabb26893bc5312"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___damage_hook.html#gaac8e4527650ac455ceabb26893bc5312">sf_damage_hook</a> ()</td></tr>
+<tr class="memdesc:gaac8e4527650ac455ceabb26893bc5312"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hook function for damage handling in the game. This function intercepts the call to deal damage and redirects it to a custom implementation while preserving the original behavior.  <br /></td></tr>
+<tr class="separator:gaac8e4527650ac455ceabb26893bc5312"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a1758334f7ffad31194f6712425f9c413" id="r_a1758334f7ffad31194f6712425f9c413"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1758334f7ffad31194f6712425f9c413">g_damage_return_addr</a></td></tr>
-<tr class="separator:a1758334f7ffad31194f6712425f9c413"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1758334f7ffad31194f6712425f9c413" id="r_ga1758334f7ffad31194f6712425f9c413"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___damage_hook.html#ga1758334f7ffad31194f6712425f9c413">g_damage_return_addr</a></td></tr>
+<tr class="separator:ga1758334f7ffad31194f6712425f9c413"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="a8bb311db0410a74d435881520d7c6027" name="a8bb311db0410a74d435881520d7c6027"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8bb311db0410a74d435881520d7c6027">&#9670;&#160;</a></span>__attribute__()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t __attribute__ </td>
-          <td>(</td>
-          <td class="paramtype">(no_caller_saved_registers, thiscall)</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="sf__damage__hook_8c_source.html#l00016">16</a> of file <a class="el" href="sf__damage__hook_8c_source.html">sf_damage_hook.c</a>.</p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="sf__damage__hook_8c_a8bb311db0410a74d435881520d7c6027_cgraph.png" border="0" usemap="#asf__damage__hook_8c_a8bb311db0410a74d435881520d7c6027_cgraph" alt=""/></div>
-<map name="asf__damage__hook_8c_a8bb311db0410a74d435881520d7c6027_cgraph" id="asf__damage__hook_8c_a8bb311db0410a74d435881520d7c6027_cgraph">
-<area shape="rect" title=" " alt="" coords="5,31,102,57"/>
-<area shape="rect" href="sf__spelldamage__registry_8cpp.html#a39b998f9d47f3f2eed4e98c14ff5c5d2" title=" " alt="" coords="150,5,276,32"/>
-<area shape="poly" title=" " alt="" coords="102,34,134,29,135,34,103,39"/>
-<area shape="rect" href="sf__wrappers_8c.html#aad4d6cb3f073a7fff67de1c1daa2c1f7" title=" " alt="" coords="177,56,248,83"/>
-<area shape="poly" title=" " alt="" coords="103,49,162,59,162,64,102,54"/>
-<area shape="rect" href="sf__console__hook_8c.html#af6b694e632c7b92e802468161b511edf" title=" " alt="" coords="324,56,414,83"/>
-<area shape="poly" title=" " alt="" coords="249,67,309,67,309,72,249,72"/>
-<area shape="rect" href="namespace_a_s_i.html#a05ca5acefdcb7e955f472b60e5511a1a" title="returns &quot;real&quot; virtual address of given memory offset" alt="" coords="465,31,558,57"/>
-<area shape="poly" title=" " alt="" coords="414,59,450,52,451,58,415,64"/>
-<area shape="rect" href="sf__wrappers_8c.html#ac5c95c4eeefbc3d135cafe996908b639" title=" " alt="" coords="462,81,561,108"/>
-<area shape="poly" title=" " alt="" coords="415,75,447,81,446,86,414,80"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="a105ef3e813ed703c2f94fb6e872be5b3" name="a105ef3e813ed703c2f94fb6e872be5b3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a105ef3e813ed703c2f94fb6e872be5b3">&#9670;&#160;</a></span>__declspec()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void __declspec </td>
-          <td>(</td>
-          <td class="paramtype">naked</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="sf__damage__hook_8c_source.html#l00080">80</a> of file <a class="el" href="sf__damage__hook_8c_source.html">sf_damage_hook.c</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Variable Documentation</h2>
-<a id="a1758334f7ffad31194f6712425f9c413" name="a1758334f7ffad31194f6712425f9c413"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1758334f7ffad31194f6712425f9c413">&#9670;&#160;</a></span>g_damage_return_addr</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t g_damage_return_addr</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="sf__damage__hook_8c_source.html#l00014">14</a> of file <a class="el" href="sf__damage__hook_8c_source.html">sf_damage_hook.c</a>.</p>
-
-</div>
-</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

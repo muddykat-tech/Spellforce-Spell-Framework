@@ -1,5 +1,26 @@
 var searchData=
 [
-  ['vfunction12_5fptr_0',['vfunction12_ptr',['../sf__wrappers_8c.html#a7e9fc33d8673914d1b0c165c3193d1a7',1,'sf_wrappers.c']]],
-  ['vfunction_5fptr_1',['vfunction_ptr',['../sf__wrappers_8c.html#a7424493c13059f1d1b56fc2de3a60cb2',1,'sf_wrappers.c']]]
+  ['set_5flabel_5fflags_5fptr_0',['set_label_flags_ptr',['../sf__general__structures_8h.html#acc2efadfffc955b944400b3006ab7344',1,'sf_general_structures.h']]],
+  ['setaggrovalue_5fptr_1',['setAggroValue_ptr',['../sf__figure__functions_8h.html#a54fb508d40a46446a6d53dd055adf767',1,'sf_figure_functions.h']]],
+  ['setaicurrentactionranking_5fptr_2',['setAICurrentActionRanking_ptr',['../sf__ai__functions_8h.html#a2baefb0fd52cb8ecaab5c359dfc3a80d',1,'sf_ai_functions.h']]],
+  ['seteffectdone_5fptr_3',['setEffectDone_ptr',['../sf__spell__functions_8h.html#a84ad0096f2268f26e71cd63a2058e689',1,'sf_spell_functions.h']]],
+  ['seteffectxdata_5fptr_4',['setEffectXData_ptr',['../sf__effect__functions_8h.html#a23476d247491759e631b7e5890e784f7',1,'sf_effect_functions.h']]],
+  ['setjobtodocount_5fptr_5',['setJobToDoCount_ptr',['../sf__figure__functions_8h.html#aeb67afb93c3d5178170279f03c06a86a',1,'sf_figure_functions.h']]],
+  ['settask_5fptr_6',['setTask_ptr',['../sf__figure__functions_8h.html#a31447db4577e23c0e627af7c45603ac0',1,'sf_figure_functions.h']]],
+  ['setupfigureiterator_5fptr_7',['setupFigureIterator_ptr',['../sf__iterator__functions_8h.html#a8f330930d660da4da026bd74bc48bb75',1,'sf_iterator_functions.h']]],
+  ['setwalkspeed_5fptr_8',['setWalkSpeed_ptr',['../sf__figure__functions_8h.html#a7b220d060eb9728efa1f6bd2848e18ad',1,'sf_figure_functions.h']]],
+  ['setxdata_5fptr_9',['setXData_ptr',['../sf__spell__functions_8h.html#a701d5a3519e00570dab668db61157eb3',1,'sf_spell_functions.h']]],
+  ['sf_5fcgdbuilding_10',['SF_CGdBuilding',['../sf__general__structures_8h.html#a326f52debb4a3a05138160c72536c17e',1,'sf_general_structures.h']]],
+  ['sf_5fcgdeffect_11',['SF_CGDEffect',['../sf__general__structures_8h.html#a710c54d12a2bf3e29c87578d51d0373d',1,'sf_general_structures.h']]],
+  ['sf_5fcgdfigurejobs_12',['SF_CGdFigureJobs',['../sf__general__structures_8h.html#a2739681db2b7bff68f1229d5a5f3d5e4',1,'sf_general_structures.h']]],
+  ['sf_5fcgdfiguretoolbox_13',['SF_CGdFigureToolbox',['../sf__general__structures_8h.html#a17f35cab19a4752dcf2d3fb1ea9a9f0e',1,'sf_general_structures.h']]],
+  ['sf_5fcgdspell_14',['SF_CGdSpell',['../sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6',1,'sf_general_structures.h']]],
+  ['sf_5fcgdworld_15',['SF_CGdWorld',['../sf__general__structures_8h.html#ae200cc761d9e4257e978beaa16ca50a3',1,'sf_general_structures.h']]],
+  ['sf_5fcgdworldtoolbox_16',['SF_CGdWorldToolBox',['../sf__general__structures_8h.html#afaafd0a4f93b6d4e95de3f0e494c941b',1,'sf_general_structures.h']]],
+  ['sf_5fgdeffect_17',['SF_GdEffect',['../sf__general__structures_8h.html#a8c1eaf8a100a1e9fee8b637688b23987',1,'sf_general_structures.h']]],
+  ['sf_5fstring_5fctor_5fptr_18',['SF_String_ctor_ptr',['../sf__wrappers_8h.html#a29a27e7466c8964f8580d2530dfa83f2',1,'sf_wrappers.h']]],
+  ['sf_5fstring_5fdtor_5fptr_19',['SF_String_dtor_ptr',['../sf__wrappers_8h.html#a38d30345bd98d7e48f2a2d58a3734831',1,'sf_wrappers.h']]],
+  ['spellclearfigureflag_5fptr_20',['spellClearFigureFlag_ptr',['../sf__spell__functions_8h.html#a3b334b01b621cc7973ccddcbbd4dacb1',1,'sf_spell_functions.h']]],
+  ['sub_5feffect_5fhandler_5fptr_21',['sub_effect_handler_ptr',['../sf__effect__functions_8h.html#af76bd3c90ee01801e44eaf0fb6cbab0e',1,'sf_effect_functions.h']]],
+  ['submana_5fptr_22',['subMana_ptr',['../sf__figure__functions_8h.html#a1bfed3ebd31ef1a71ab23034561298c9',1,'sf_figure_functions.h']]]
 ];

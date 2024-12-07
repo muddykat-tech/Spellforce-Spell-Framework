@@ -85,27 +85,114 @@ $(function(){ initResizable(false); });
 <div id="doc-content">
 <div class="header">
   <div class="summary">
-<a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="struct_effect_functions-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">EffectFunctions Struct Reference</div></div>
+<a href="#pub-attribs">Data Fields</a>  </div>
+  <div class="headertitle"><div class="title">EffectFunctions Struct Reference<div class="ingroups"><a class="el" href="group___a_p_i.html">API Documentation</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
+<p>Group of functions related to Effect manipulation.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="sf__effect__functions_8h_source.html">sf_effect_functions.h</a>&gt;</code></p>
+<div class="dynheader">
+Collaboration diagram for EffectFunctions:</div>
+<div class="dyncontent">
+<div class="center"><img src="struct_effect_functions__coll__graph.png" border="0" usemap="#a_effect_functions_coll__map" alt="Collaboration graph"/></div>
+<map name="a_effect_functions_coll__map" id="a_effect_functions_coll__map">
+<area shape="rect" title="Group of functions related to Effect manipulation." alt="" coords="1629,569,1741,596"/>
+<area shape="rect" href="struct_s_f___c_g_d_effect.html" title=" " alt="" coords="1316,577,1426,604"/>
+<area shape="poly" title=" " alt="" coords="1441,589,1585,587,1628,584,1628,590,1585,592,1441,594"/>
+<area shape="rect" href="struct_s_f___c_gd_figure_toolbox.html" title=" " alt="" coords="1920,508,2073,535"/>
+<area shape="poly" title=" " alt="" coords="1408,567,1424,557,1436,547,1449,539,1488,529,1540,522,1668,515,1804,514,1920,516,1920,521,1804,519,1668,520,1541,528,1489,534,1451,544,1439,551,1427,561,1411,571"/>
+<area shape="rect" href="struct_s_f___c_gd_spell.html" title=" " alt="" coords="2259,620,2361,647"/>
+<area shape="poly" title=" " alt="" coords="1403,611,1426,624,1450,633,1494,642,1528,642,1609,637,1982,637,2259,632,2259,637,1982,642,1609,643,1528,648,1493,647,1449,639,1424,628,1401,615"/>
+<area shape="rect" href="struct_s_f___c_gd_world_tool_box.html" title=" " alt="" coords="1609,319,1761,345"/>
+<area shape="poly" title=" " alt="" coords="1415,566,1423,557,1433,538,1436,520,1432,484,1430,449,1435,431,1448,413,1464,399,1480,391,1511,388,1545,389,1584,381,1625,363,1660,344,1662,348,1627,368,1585,387,1545,394,1511,393,1481,397,1467,404,1452,416,1440,433,1435,450,1437,484,1441,520,1438,540,1428,560,1419,570"/>
+<area shape="rect" href="struct_auto_class14.html" title=" " alt="" coords="798,259,894,285"/>
+<area shape="poly" title=" " alt="" coords="885,291,934,318,990,342,1041,359,1129,384,1170,399,1210,420,1251,450,1294,493,1304,510,1307,526,1310,541,1318,557,1340,575,1337,579,1314,560,1305,543,1302,527,1299,512,1290,496,1248,454,1208,424,1168,404,1128,389,1039,364,989,347,932,322,882,296"/>
+<area shape="rect" href="struct_s_f___c_gd_building.html" title=" " alt="" coords="1059,217,1177,244"/>
+<area shape="poly" title=" " alt="" coords="910,267,971,263,1034,253,1077,242,1078,247,1036,259,971,268,910,273"/>
+<area shape="poly" title=" " alt="" coords="892,250,932,232,1029,183,1107,142,1145,127,1187,117,1235,112,1293,115,1434,134,1523,151,1616,172,1706,198,1787,229,1853,265,1879,284,1898,305,1913,336,1914,364,1914,392,1922,424,1952,471,1983,506,1979,510,1948,474,1918,426,1909,393,1909,364,1908,337,1894,308,1875,288,1850,269,1785,234,1704,203,1614,178,1522,156,1433,139,1292,120,1235,118,1188,122,1147,132,1109,147,1032,188,934,237,894,255"/>
+<area shape="poly" title=" " alt="" coords="858,243,894,181,920,144,951,107,986,73,1025,45,1069,26,1117,19,1998,19,2048,24,2092,41,2131,67,2165,100,2195,140,2220,185,2241,234,2259,285,2285,390,2300,487,2311,619,2306,620,2295,488,2279,391,2254,287,2236,236,2215,188,2190,143,2161,104,2128,71,2090,46,2047,30,1998,24,1117,24,1071,31,1028,49,989,77,954,110,924,147,899,184,863,246"/>
+<area shape="poly" title=" " alt="" coords="910,272,1256,288,1446,299,1585,311,1617,315,1616,321,1584,316,1446,304,1256,293,910,277"/>
+<area shape="poly" title=" " alt="" coords="1138,256,1166,299,1203,345,1228,366,1252,378,1274,393,1295,419,1304,439,1307,457,1306,490,1305,523,1309,539,1318,557,1339,575,1335,579,1314,560,1304,541,1299,523,1300,490,1302,457,1298,440,1290,421,1270,397,1249,383,1225,370,1199,349,1162,302,1133,259"/>
+<area shape="poly" title=" " alt="" coords="1170,210,1201,203,1309,189,1395,187,1480,199,1585,227,1680,250,1756,270,1791,283,1825,302,1860,328,1898,364,1909,379,1913,393,1916,408,1922,424,1954,470,1985,506,1981,510,1950,474,1918,427,1910,409,1908,394,1904,381,1894,367,1857,332,1822,306,1788,288,1755,275,1679,256,1584,232,1479,205,1395,193,1310,194,1202,208,1171,215"/>
+<area shape="poly" title=" " alt="" coords="1150,206,1200,179,1282,145,1320,136,1370,133,1998,133,2041,138,2079,151,2114,172,2146,198,2174,230,2198,266,2239,347,2269,430,2290,510,2310,619,2304,620,2285,511,2264,432,2234,349,2194,269,2169,234,2142,202,2111,176,2077,156,2039,143,1998,139,1370,139,1321,141,1284,150,1202,184,1153,211"/>
+<area shape="poly" title=" " alt="" coords="1193,222,1275,219,1374,222,1481,235,1534,246,1586,262,1634,287,1670,316,1667,320,1631,292,1584,266,1533,251,1480,240,1374,227,1275,224,1193,227"/>
+<area shape="rect" href="struct_gd_building.html" title=" " alt="" coords="343,271,427,297"/>
+<area shape="poly" title=" " alt="" coords="442,275,783,244,1058,230,1059,235,784,249,443,281"/>
+<area shape="rect" href="struct_s_f___coord.html" title=" " alt="" coords="5,640,86,667"/>
+<area shape="poly" title=" " alt="" coords="54,624,75,573,108,518,173,446,244,381,311,330,361,296,364,300,314,334,248,386,176,449,112,522,80,575,59,626"/>
+<area shape="rect" href="struct_gd_figure.html" title=" " alt="" coords="809,883,884,909"/>
+<area shape="poly" title=" " alt="" coords="101,651,487,657,674,663,761,670,786,692,805,719,820,749,831,780,843,839,847,882,842,883,838,840,826,782,815,751,801,722,782,696,759,674,674,668,487,663,101,657"/>
+<area shape="rect" href="struct_auto_class24.html" title=" " alt="" coords="496,1029,593,1056"/>
+<area shape="poly" title=" " alt="" coords="57,681,86,772,111,831,142,894,181,958,227,1017,281,1068,312,1089,344,1107,367,1116,386,1120,404,1117,426,1107,434,1099,437,1089,441,1077,450,1066,472,1053,495,1046,497,1051,474,1058,453,1070,445,1080,442,1090,439,1102,429,1112,406,1122,386,1125,365,1121,342,1112,309,1094,278,1072,223,1020,176,961,137,897,106,833,81,774,52,683"/>
+<area shape="rect" href="struct_s_f___c_gd_target_data.html" title=" " alt="" coords="183,860,319,887"/>
+<area shape="poly" title=" " alt="" coords="72,676,239,858,235,861,68,680"/>
+<area shape="rect" href="struct_s_f___gd_effect.html" title=" " alt="" coords="496,577,593,604"/>
+<area shape="poly" title=" " alt="" coords="87,631,152,604,236,577,331,559,380,556,428,559,500,574,499,579,427,564,380,561,331,564,237,582,154,609,89,636"/>
+<area shape="rect" href="struct_s_f___c_gd_figure.html" title="A structure for the global list of figures and related statistics for them." alt="" coords="1064,849,1172,876"/>
+<area shape="poly" title=" " alt="" coords="1140,836,1355,602,1359,606,1144,840"/>
+<area shape="poly" title=" " alt="" coords="1188,871,1301,883,1447,886,1526,881,1606,871,1685,854,1760,828,1808,802,1850,766,1887,725,1918,680,1964,595,1988,534,1993,536,1968,597,1922,683,1891,728,1854,770,1811,806,1762,833,1686,859,1607,876,1526,887,1447,891,1301,888,1188,876"/>
+<area shape="poly" title=" " alt="" coords="1173,879,1202,887,1285,907,1322,912,1370,913,1998,913,2039,911,2074,905,2103,895,2129,881,2178,841,2233,784,2260,749,2280,710,2303,646,2308,648,2285,712,2264,752,2237,787,2182,845,2132,886,2105,900,2075,910,2040,917,1998,919,1370,919,1322,917,1284,912,1201,892,1172,884"/>
+<area shape="poly" title=" " alt="" coords="1118,833,1123,777,1136,702,1160,622,1178,583,1199,546,1253,478,1279,453,1306,433,1367,400,1449,366,1488,352,1530,342,1608,332,1609,337,1531,348,1490,357,1451,370,1370,405,1308,437,1282,457,1257,481,1204,550,1183,585,1165,624,1142,704,1129,777,1123,834"/>
+<area shape="poly" title=" " alt="" coords="899,887,1063,867,1064,872,899,892"/>
+<area shape="rect" href="struct_figure_statistic.html" title=" " alt="" coords="492,883,597,909"/>
+<area shape="poly" title=" " alt="" coords="613,893,809,893,809,899,613,899"/>
+<area shape="rect" href="struct_figure_statistic_ext.html" title=" " alt="" coords="482,961,607,988"/>
+<area shape="poly" title=" " alt="" coords="622,971,690,964,759,947,796,929,826,908,829,912,799,933,761,952,691,969,623,976"/>
+<area shape="rect" href="struct_s_f___c_gd_figure_weapon_stats.html" title=" " alt="" coords="451,1080,638,1107"/>
+<area shape="poly" title=" " alt="" coords="653,1100,708,1092,734,1083,758,1070,780,1042,804,996,838,909,843,911,808,998,785,1045,761,1074,736,1088,709,1097,653,1106"/>
+<area shape="rect" href="struct_c_gd_figure_hate_entry.html" title=" " alt="" coords="473,691,616,717"/>
+<area shape="poly" title=" " alt="" coords="632,688,664,688,698,692,731,701,761,716,782,734,799,755,823,801,838,847,846,882,840,883,833,849,819,803,794,757,778,737,758,721,729,706,697,697,664,693,632,693"/>
+<area shape="poly" title=" " alt="" coords="608,1048,645,1049,684,1046,722,1037,758,1022,788,997,811,966,828,934,838,909,843,911,832,937,815,969,792,1001,761,1026,724,1043,684,1051,645,1054,608,1054"/>
+<area shape="poly" title=" " alt="" coords="286,894,361,943,453,998,512,1026,509,1031,450,1002,358,948,283,898"/>
+<area shape="rect" href="struct_s_f___gd_spell.html" title=" " alt="" coords="665,1131,756,1157"/>
+<area shape="poly" title=" " alt="" coords="266,900,292,951,332,1013,358,1043,386,1072,418,1097,452,1116,507,1134,565,1143,619,1146,665,1145,665,1150,619,1151,564,1148,506,1139,450,1121,415,1101,382,1076,354,1047,328,1016,288,953,262,902"/>
+<area shape="poly" title=" " alt="" coords="251,844,257,794,271,733,283,701,298,670,317,642,341,618,368,606,408,597,496,589,496,595,409,603,370,611,345,622,321,645,303,673,288,703,276,734,262,795,256,845"/>
+<area shape="poly" title=" " alt="" coords="1960,545,1872,589,1818,611,1762,627,1716,634,1669,637,1576,633,1492,621,1424,607,1425,602,1493,616,1577,628,1669,631,1715,628,1760,621,1816,606,1870,585,1958,540"/>
+<area shape="poly" title=" " alt="" coords="2089,534,2162,553,2236,580,2268,598,2294,617,2291,622,2265,603,2234,585,2161,558,2088,539"/>
+<area shape="poly" title=" " alt="" coords="2244,653,2098,682,2002,695,1897,704,1786,707,1671,701,1558,684,1503,670,1449,653,1411,632,1383,607,1387,603,1414,627,1451,648,1504,665,1559,679,1672,696,1786,702,1897,699,2002,690,2097,676,2243,647"/>
+<area shape="poly" title=" " alt="" coords="2243,634,2171,624,2133,614,2096,601,2070,587,2046,570,2009,537,2012,533,2049,566,2073,582,2098,596,2135,609,2172,618,2244,628"/>
+<area shape="rect" href="struct_s_f___c_gd_world.html" title=" " alt="" coords="1066,463,1171,489"/>
+<area shape="poly" title=" " alt="" coords="1164,494,1340,574,1338,579,1162,498"/>
+<area shape="poly" title=" " alt="" coords="1187,475,1761,492,1829,492,1896,496,1944,505,1943,510,1896,501,1829,497,1761,497,1187,481"/>
+<area shape="poly" title=" " alt="" coords="1126,504,1137,569,1154,649,1176,723,1189,751,1203,770,1223,786,1242,796,1278,803,1370,799,1998,799,2046,794,2092,780,2137,761,2178,737,2248,686,2293,645,2297,649,2251,690,2181,741,2139,765,2094,785,2047,799,1998,804,1370,804,1278,808,1240,801,1220,790,1199,774,1185,754,1171,725,1149,651,1132,570,1121,505"/>
+<area shape="poly" title=" " alt="" coords="1144,450,1175,415,1185,392,1190,381,1200,371,1222,360,1251,352,1322,341,1450,332,1531,328,1608,327,1608,333,1532,333,1450,337,1322,346,1252,357,1224,365,1203,376,1194,384,1190,394,1180,417,1148,454"/>
+<area shape="rect" href="struct_s_f__world__unkn__1.html" title=" " alt="" coords="784,455,909,481"/>
+<area shape="poly" title=" " alt="" coords="925,468,933,468,1065,472,1065,477,933,473,925,473"/>
+<area shape="rect" href="struct_s_f___string.html" title=" " alt="" coords="807,505,886,532"/>
+<area shape="poly" title=" " alt="" coords="901,510,1035,492,1065,486,1066,491,1035,497,902,516"/>
+<area shape="rect" href="struct_s_f__world__unkn__2.html" title=" " alt="" coords="784,556,909,583"/>
+<area shape="poly" title=" " alt="" coords="924,558,979,546,1034,528,1070,509,1099,488,1102,492,1072,513,1036,533,980,551,925,563"/>
+<area shape="rect" href="struct_s_f__world__unkn__4.html" title=" " alt="" coords="784,353,909,380"/>
+<area shape="poly" title=" " alt="" coords="925,375,981,389,1036,410,1075,434,1105,460,1101,464,1072,439,1034,414,979,394,924,380"/>
+<area shape="rect" href="struct_s_f___rectangle.html" title=" " alt="" coords="492,353,597,380"/>
+<area shape="poly" title=" " alt="" coords="612,364,783,364,783,369,612,369"/>
+<area shape="rect" href="struct_s_f__world__unkn__3.html" title=" " alt="" coords="784,404,909,431"/>
+<area shape="poly" title=" " alt="" coords="925,429,1036,452,1066,459,1064,465,1034,457,924,434"/>
+<area shape="poly" title=" " alt="" coords="1668,360,1633,400,1611,420,1586,437,1566,445,1547,448,1514,446,1482,446,1467,452,1452,463,1443,474,1439,485,1438,508,1439,533,1435,546,1428,560,1406,579,1403,575,1424,557,1430,544,1433,532,1433,508,1433,484,1438,472,1448,459,1465,447,1481,441,1514,440,1547,443,1565,440,1583,432,1607,416,1629,397,1664,356"/>
+<area shape="poly" title=" " alt="" coords="1728,351,1807,394,1897,447,1979,505,1976,510,1895,452,1805,398,1725,355"/>
+<area shape="poly" title=" " alt="" coords="1777,339,1880,358,2001,391,2064,414,2125,442,2184,476,2237,517,2261,542,2280,570,2305,618,2301,621,2276,573,2257,545,2234,521,2181,481,2123,447,2062,419,2000,396,1879,363,1776,344"/>
+<area shape="poly" title=" " alt="" coords="752,1121,798,1101,855,1081,918,1066,983,1060,1998,1060,2041,1057,2077,1050,2108,1037,2135,1020,2159,998,2183,971,2233,903,2253,869,2269,834,2291,759,2302,693,2306,647,2311,647,2307,694,2296,761,2274,835,2258,872,2238,905,2187,974,2163,1001,2138,1024,2111,1042,2079,1055,2042,1063,1998,1065,983,1065,919,1071,857,1087,800,1106,754,1126"/>
+<area shape="poly" title=" " alt="" coords="608,589,784,592,1085,592,1316,589,1316,594,1085,597,784,597,608,595"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:a267d4baec8d8efe2e8659cc28dc15fc5" id="r_a267d4baec8d8efe2e8659cc28dc15fc5"><td class="memItemLeft" align="right" valign="top">setEffectXData_ptr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a267d4baec8d8efe2e8659cc28dc15fc5">setEffectXData</a></td></tr>
+Data Fields</h2></td></tr>
+<tr class="memitem:a267d4baec8d8efe2e8659cc28dc15fc5" id="r_a267d4baec8d8efe2e8659cc28dc15fc5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="sf__effect__functions_8h.html#a23476d247491759e631b7e5890e784f7">setEffectXData_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a267d4baec8d8efe2e8659cc28dc15fc5">setEffectXData</a></td></tr>
 <tr class="separator:a267d4baec8d8efe2e8659cc28dc15fc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a17ae3648392fd5e5952a430cc2688edb" id="r_a17ae3648392fd5e5952a430cc2688edb"><td class="memItemLeft" align="right" valign="top">addEffect_ptr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a17ae3648392fd5e5952a430cc2688edb">addEffect</a></td></tr>
+<tr class="memitem:a17ae3648392fd5e5952a430cc2688edb" id="r_a17ae3648392fd5e5952a430cc2688edb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="sf__effect__functions_8h.html#a51c0319421197f4d60f9fd16fb78453a">addEffect_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a17ae3648392fd5e5952a430cc2688edb">addEffect</a></td></tr>
 <tr class="separator:a17ae3648392fd5e5952a430cc2688edb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1e09c77d6d19c95d1425cc4372046d8c" id="r_a1e09c77d6d19c95d1425cc4372046d8c"><td class="memItemLeft" align="right" valign="top">getEffectXData_ptr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1e09c77d6d19c95d1425cc4372046d8c">getEffectXData</a></td></tr>
+<tr class="memitem:a1e09c77d6d19c95d1425cc4372046d8c" id="r_a1e09c77d6d19c95d1425cc4372046d8c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="sf__effect__functions_8h.html#ad9118487ec876eee038fb7e0e8391538">getEffectXData_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1e09c77d6d19c95d1425cc4372046d8c">getEffectXData</a></td></tr>
 <tr class="separator:a1e09c77d6d19c95d1425cc4372046d8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="sf__effect__functions_8h_source.html#l00012">12</a> of file <a class="el" href="sf__effect__functions_8h_source.html">sf_effect_functions.h</a>.</p>
-</div><h2 class="groupheader">Member Data Documentation</h2>
+<div class="textblock"><p>Group of functions related to Effect manipulation. </p>
+
+<p class="definition">Definition at line <a class="el" href="sf__effect__functions_8h_source.html#l00015">15</a> of file <a class="el" href="sf__effect__functions_8h_source.html">sf_effect_functions.h</a>.</p>
+</div><h2 class="groupheader">Field Documentation</h2>
 <a id="a17ae3648392fd5e5952a430cc2688edb" name="a17ae3648392fd5e5952a430cc2688edb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a17ae3648392fd5e5952a430cc2688edb">&#9670;&#160;</a></span>addEffect</h2>
 
@@ -113,12 +200,12 @@ Public Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">addEffect_ptr EffectFunctions::addEffect</td>
+          <td class="memname"><a class="el" href="sf__effect__functions_8h.html#a51c0319421197f4d60f9fd16fb78453a">addEffect_ptr</a> EffectFunctions::addEffect</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__effect__functions_8h_source.html#l00015">15</a> of file <a class="el" href="sf__effect__functions_8h_source.html">sf_effect_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__effect__functions_8h_source.html#l00018">18</a> of file <a class="el" href="sf__effect__functions_8h_source.html">sf_effect_functions.h</a>.</p>
 
 </div>
 </div>
@@ -129,12 +216,12 @@ Public Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">getEffectXData_ptr EffectFunctions::getEffectXData</td>
+          <td class="memname"><a class="el" href="sf__effect__functions_8h.html#ad9118487ec876eee038fb7e0e8391538">getEffectXData_ptr</a> EffectFunctions::getEffectXData</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__effect__functions_8h_source.html#l00016">16</a> of file <a class="el" href="sf__effect__functions_8h_source.html">sf_effect_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__effect__functions_8h_source.html#l00019">19</a> of file <a class="el" href="sf__effect__functions_8h_source.html">sf_effect_functions.h</a>.</p>
 
 </div>
 </div>
@@ -145,12 +232,12 @@ Public Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">setEffectXData_ptr EffectFunctions::setEffectXData</td>
+          <td class="memname"><a class="el" href="sf__effect__functions_8h.html#a23476d247491759e631b7e5890e784f7">setEffectXData_ptr</a> EffectFunctions::setEffectXData</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__effect__functions_8h_source.html#l00014">14</a> of file <a class="el" href="sf__effect__functions_8h_source.html">sf_effect_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__effect__functions_8h_source.html#l00017">17</a> of file <a class="el" href="sf__effect__functions_8h_source.html">sf_effect_functions.h</a>.</p>
 
 </div>
 </div>
