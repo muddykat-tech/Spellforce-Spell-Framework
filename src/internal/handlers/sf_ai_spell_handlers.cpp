@@ -1,12 +1,6 @@
 #include "sf_ai_spell_handlers.h"
 #include "../core/sf_wrappers.h"
 
-uint32_t __thiscall target_healing_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
-{
-    // TODO: Implement Me
-    return 0;
-}
-
 uint32_t __thiscall cure_poison_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 1;
@@ -643,10 +637,14 @@ uint32_t __thiscall healing_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t 
             return rank;
         }
         if (((max_health * 9) / 10 < current_health + healing_amount) ||
-        (current_health + healing_amount < max_health / 10))
+            (current_health + healing_amount < max_health / 10))
         {
             rank = rank << 1;
         }
+    }
+    else
+    {
+        rank = 0;
     }
     return rank;
 }

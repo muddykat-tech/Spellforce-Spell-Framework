@@ -14,6 +14,7 @@ void initialize_vanilla_spells()
     SFSpell *healing = registrationAPI.registerSpell(kGdSpellLineHealing);
     registrationAPI.linkTypeHandler(healing, &healing_handler);
     registrationAPI.applySpellTag(healing, STACKABLE_SPELL);
+    registrationAPI.linkSingleTargetAIHandler(healing, &healing_ai_handler);
 
     SFSpell *death = registrationAPI.registerSpell(kGdSpellLineDeath);
     registrationAPI.linkTypeHandler(death, &death_handler);
@@ -157,6 +158,7 @@ void initialize_vanilla_spells()
     SFSpell *healing2 = registrationAPI.registerSpell(kGdSpellLineGreaterHealing);
     registrationAPI.linkTypeHandler(healing2, &healing_handler);
     registrationAPI.applySpellTag(healing2, STACKABLE_SPELL);
+    registrationAPI.linkSingleTargetAIHandler(healing2, &healing_ai_handler);
 
     SFSpell *charm_animal = registrationAPI.registerSpell(kGdSpellLineCharmAnimal);
     registrationAPI.linkTypeHandler(charm_animal, &charm_animal_handler);
@@ -266,6 +268,7 @@ void initialize_vanilla_spells()
 
     SFSpell *extinct = registrationAPI.registerSpell(kGdSpellLineExtinct);
     registrationAPI.linkTypeHandler(extinct, &extinct_handler);
+    registrationAPI.linkSingleTargetAIHandler(extinct, &extinct_ai_handler);
 
     SFSpell *detect_metal = registrationAPI.registerSpell(kGdSpellLineDetectMetal);
     registrationAPI.linkTypeHandler(detect_metal, &detect_metal_handler);
@@ -505,6 +508,7 @@ void initialize_vanilla_spells()
     SFSpell *tower_healing = registrationAPI.registerSpell(kGdSpellLineHealingTower);
     registrationAPI.linkTypeHandler(tower_healing, &tower_healing_handler);
     registrationAPI.applySpellTag(tower_healing, STACKABLE_SPELL);
+    registrationAPI.linkSingleTargetAIHandler(tower_healing, &healing_ai_handler);
 
     SFSpell *tower_icestrike = registrationAPI.registerSpell(kGdSpellLineIceburstTower);
     registrationAPI.linkTypeHandler(tower_icestrike, &tower_icestrike_handler);
