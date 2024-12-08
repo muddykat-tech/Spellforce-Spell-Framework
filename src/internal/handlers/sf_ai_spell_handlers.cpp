@@ -556,7 +556,7 @@ uint32_t __thiscall tower_extinct_ai_handler(SF_CGdBattleDevelopment *_this, uin
 {
     uint32_t rank = 1;
     ushort_list_node node = _this->battleData.another_figure_list[_this->battleData.current_figure];
-    uint16_t list_length = ((uint32_t) node.data - (uint32_t)node.first) >> 1;
+    uint16_t list_length = ((uint32_t)node.data - (uint32_t)node.first) >> 1;
     if ((_this->battleData.enemy_figures.entityCount == 0) || (list_length == 0))
     {
         rank = 0;
@@ -567,6 +567,86 @@ uint32_t __thiscall tower_extinct_ai_handler(SF_CGdBattleDevelopment *_this, uin
         _this->battleData.current_source_maybe.entity_type = 1;
         _this->battleData.current_source_maybe.position.X = _this->battleData.current_figure_pos.X;
         _this->battleData.current_source_maybe.position.Y = _this->battleData.current_figure_pos.Y;
+    }
+    return rank;
+}
+
+uint32_t __thiscall extinct_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 1;
+    if (target_index == _this->battleData.current_figure)
+    {
+        uint16_t threshold = spell_data->params[0];
+        uint16_t count = 0;
+        for (int i = 0; i < _this->battleData.enemy_figures.entityCount; i++)
+        {
+            uint16_t figure_index = _this->battleData.enemy_figures.data[i].entity_index;
+            if (figureAPI.isAlive(_this->battleData.CGdFigure, figure_index))
+            {
+                if (figureAPI.getCurrentHealth(_this->battleData.CGdFigure, figure_index) < threshold)
+                {
+                    SF_Coord position;
+                    figureAPI.getPosition(_this->battleData.CGdFigure, &position, figure_index);
+                    uint16_t distance = getDistance(&position, &(_this->battleData.current_figure_pos));
+                    if (distance < 10)
+                    {
+                        count++;
+                        break;
+                    }
+                }
+            }
+        }
+        if (!count)
+        {
+            rank = 0;
+        }
+    }
+    else
+    {
+        rank = 0;
+    }
+    return rank;
+}
+
+uint32_t __thiscall healing_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 1;
+    uint16_t current_health = figureAPI.getCurrentHealth(_this->battleData.CGdFigure, target_index);
+    uint16_t max_health = figureAPI.getCurrentMaxHealth(_this->battleData.CGdFigure, target_index);
+    uint16_t healing_amount = 0;
+    struct
+    {
+        uint32_t *first;
+        uint32_t *data;
+        uint32_t *post_last;
+    } some_list;
+    uint32_t *list_first;
+    uint32_t *list_current;
+    figureAPI.getHealersList(_this->battleData.CGdFigure, &some_list, target_index);
+    uint32_t list_length = ((uint32_t)some_list.data - (uint32_t)some_list.first) >> 2;
+    if (list_length != 0)
+    {
+        list_first = some_list.first;
+        list_current = some_list.data;
+        while (list_current != list_first)
+        {
+            healing_amount += spell_data->params[0];
+            list_first++;
+        }
+    }
+    if (current_health + healing_amount < max_health)
+    {
+        if (current_health == 0)
+        {
+            rank = 0;
+            figureAPI.disposeHealerList(&some_list);
+            return rank;
+        }
+        if (((max_health * 9) / 10 < current_health + healing_amount) ||
+        (current_health + healing_amount < max_health / 10))
+        {
+            rank = rank << 1;
+        }
     }
     return rank;
 }

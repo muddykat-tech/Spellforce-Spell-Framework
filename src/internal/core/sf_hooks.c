@@ -88,6 +88,8 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(figure, getAggroValue, 0x2b1ab0);
     DEFINE_FUNCTION(figure, setAggroValue, 0x2b6670);
     DEFINE_FUNCTION(figure, isWarrior, 0x1c1510);
+    DEFINE_FUNCTION(figure, getHealersList, 0x2b2870);
+    DEFINE_FUNCTION(figure, disposeHealerList, 0x36436D);
 
     log_info("| - AI API Hooks");
 
