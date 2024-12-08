@@ -29,6 +29,7 @@ void initialize_vanilla_spells()
 
     SFSpell *cure_poison = registrationAPI.registerSpell(kGdSpellLineCurePoison);
     registrationAPI.linkTypeHandler(cure_poison, &cure_poison_handler);
+    registrationAPI.linkSingleTargetAIHandler(cure_poison, &cure_poison_ai_handler);
 
     // Empty Spell Type here
 
@@ -43,6 +44,7 @@ void initialize_vanilla_spells()
 
     SFSpell *fireshield = registrationAPI.registerSpell(kGdSpellLineFireShield);
     registrationAPI.linkTypeHandler(fireshield, &fireshield_handler);
+    registrationAPI.linkSingleTargetAIHandler(fireshield, &shields_ai_handler);
 
     SFSpell *fireball = registrationAPI.registerSpell(kGdSpellLineFireBall);
     registrationAPI.linkTypeHandler(fireball, &fireball_handler);
@@ -52,6 +54,7 @@ void initialize_vanilla_spells()
 
     SFSpell *iceshield = registrationAPI.registerSpell(kGdSpellLineIceShield);
     registrationAPI.linkTypeHandler(iceshield, &iceshield_handler);
+    registrationAPI.linkSingleTargetAIHandler(iceshield, &shields_ai_handler);
 
     // next block
 
@@ -84,6 +87,7 @@ void initialize_vanilla_spells()
 
     SFSpell *cure_disease = registrationAPI.registerSpell(kGdSpellLineCureDisease);
     registrationAPI.linkTypeHandler(cure_disease, &cure_disease_handler);
+    registrationAPI.linkSingleTargetAIHandler(cure_disease, &cure_disease_ai_handler);
 
     SFSpell *petrify = registrationAPI.registerSpell(kGdSpellLinePetrify);
     registrationAPI.linkTypeHandler(petrify, &petrify_handler);
@@ -110,6 +114,7 @@ void initialize_vanilla_spells()
 
     SFSpell *death_grasp = registrationAPI.registerSpell(kGdSpellLineDeathGrasp);
     registrationAPI.linkTypeHandler(death_grasp, &death_grasp_handler);
+    registrationAPI.linkSingleTargetAIHandler(death_grasp, &death_grasp_ai_handler);
 
     SFSpell *summon_4 = registrationAPI.registerSpell(kGdSpellLineSummonChanneler);
     registrationAPI.linkTypeHandler(summon_4, &summons_handler);
@@ -159,6 +164,7 @@ void initialize_vanilla_spells()
 
     SFSpell *thorn_shield = registrationAPI.registerSpell(kGdSpellLineThornShield);
     registrationAPI.linkTypeHandler(thorn_shield, &thorn_shield_handler);
+    registrationAPI.linkSingleTargetAIHandler(thorn_shield, &shields_ai_handler);
 
     SFSpell *quickness = registrationAPI.registerSpell(kGdSpellLineQuickness);
     registrationAPI.linkTypeHandler(quickness, &quickness_handler);
@@ -217,6 +223,7 @@ void initialize_vanilla_spells()
 
     SFSpell *sacrifice_mana = registrationAPI.registerSpell(kGdSpellLineSacrificeMana);
     registrationAPI.linkTypeHandler(sacrifice_mana, &sacrifice_mana_handler);
+    registrationAPI.linkSingleTargetAIHandler(sacrifice_mana, &sacrifice_mana_ai_handler);
 
     SFSpell *manatap = registrationAPI.registerSpell(kGdSpellLineManaTap);
     registrationAPI.linkTypeHandler(manatap, &manatap_handler);
@@ -277,15 +284,18 @@ void initialize_vanilla_spells()
 
     SFSpell *aura1 = registrationAPI.registerSpell(kGdSpellLineAuraWeakness);
     registrationAPI.linkTypeHandler(aura1, &aura_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura1, &offensive_aura_ai_handler);
 
     SFSpell *aura2 = registrationAPI.registerSpell(kGdSpellLineAuraSuffocation);
     registrationAPI.linkTypeHandler(aura2, &aura_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura2, &offensive_aura_ai_handler);
 
     SFSpell *suicide_death = registrationAPI.registerSpell(kGdSpellLineSuicideDeath);
     registrationAPI.linkTypeHandler(suicide_death, &suicide_death_handler);
 
     SFSpell *aura3 = registrationAPI.registerSpell(kGdSpellLineAuraLifeTap);
     registrationAPI.linkTypeHandler(aura3, &aura_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura3, &offensive_aura_ai_handler);
 
     SFSpell *summon_5 = registrationAPI.registerSpell(kGdSpellLineSummonSpectre);
     registrationAPI.linkTypeHandler(summon_5, &summons_handler);
@@ -298,9 +308,11 @@ void initialize_vanilla_spells()
 
     SFSpell *aura4 = registrationAPI.registerSpell(kGdSpellLineAuraSlowFighting);
     registrationAPI.linkTypeHandler(aura4, &aura_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura4, &offensive_aura_ai_handler);
 
     SFSpell *aura5 = registrationAPI.registerSpell(kGdSpellLineAuraInflexibility);
     registrationAPI.linkTypeHandler(aura5, &aura_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura5, &offensive_aura_ai_handler);
 
     // Next Block
 
@@ -309,9 +321,11 @@ void initialize_vanilla_spells()
 
     SFSpell *aura6 = registrationAPI.registerSpell(kGdSpellLineAuraSlowWalking);
     registrationAPI.linkTypeHandler(aura6, &aura_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura6, &offensive_aura_ai_handler);
 
     SFSpell *aura7 = registrationAPI.registerSpell(kGdSpellLineAuraInability);
     registrationAPI.linkTypeHandler(aura7, &aura_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura7, &offensive_aura_ai_handler);
 
     SFSpell *suffocation = registrationAPI.registerSpell(kGdSpellLineSuffocation);
     registrationAPI.linkTypeHandler(suffocation, &suffocation_handler);
@@ -324,12 +338,15 @@ void initialize_vanilla_spells()
 
     SFSpell *aura8 = registrationAPI.registerSpell(kGdSpellLineAuraStrength);
     registrationAPI.linkTypeHandler(aura8, &aura_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura8, &defensive_aura_ai_handler);
 
     SFSpell *aura9 = registrationAPI.registerSpell(kGdSpellLineAuraHealing);
     registrationAPI.linkTypeHandler(aura9, &aura_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura9, &healing_aura_ai_handler);
 
     SFSpell *aura10 = registrationAPI.registerSpell(kGdSpellLineAuraEndurance);
     registrationAPI.linkTypeHandler(aura10, &aura_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura10, &defensive_aura_ai_handler);
 
     SFSpell *suicide_heal = registrationAPI.registerSpell(kGdSpellLineSuicideHeal);
     registrationAPI.linkTypeHandler(suicide_heal, &suicide_heal_handler);
@@ -342,6 +359,7 @@ void initialize_vanilla_spells()
 
     SFSpell *aura11 = registrationAPI.registerSpell(kGdSpellLineAuraRegeneration);
     registrationAPI.linkTypeHandler(aura11, &aura_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura11, &healing_aura_ai_handler);
 
     SFSpell *dominate_animal = registrationAPI.registerSpell(kGdSpellLineDominateAnimal);
     registrationAPI.linkTypeHandler(dominate_animal, &dominate_animal_handler);
@@ -356,24 +374,30 @@ void initialize_vanilla_spells()
 
     SFSpell *aura12 = registrationAPI.registerSpell(kGdSpellLineAuraFastFighting);
     registrationAPI.linkTypeHandler(aura12, &aura_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura12, &defensive_aura_ai_handler);
 
     SFSpell *aura13 = registrationAPI.registerSpell(kGdSpellLineAuraFlexibility);
     registrationAPI.linkTypeHandler(aura13, &aura_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura13, &defensive_aura_ai_handler);
 
     SFSpell *dispel_black_aura = registrationAPI.registerSpell(kGdSpellLineDispelBlackAura);
     registrationAPI.linkTypeHandler(dispel_black_aura, &dispel_black_aura_handler);
 
     SFSpell *aura14 = registrationAPI.registerSpell(kGdSpellLineAuraFastWalking);
     registrationAPI.linkTypeHandler(aura14, &aura_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura14, &defensive_aura_ai_handler);
 
     SFSpell *aura15 = registrationAPI.registerSpell(kGdSpellLineAuraLight);
     registrationAPI.linkTypeHandler(aura15, &aura_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura15, &aura_light_ai_handler);
 
     SFSpell *aura16 = registrationAPI.registerSpell(kGdSpellLineAuraDexterity);
     registrationAPI.linkTypeHandler(aura16, &aura_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura16, &defensive_aura_ai_handler);
 
     SFSpell *dexterity = registrationAPI.registerSpell(kGdSpellLineDexterity);
     registrationAPI.linkTypeHandler(dexterity, &dexterity_handler);
+    registrationAPI.linkSingleTargetAIHandler(dexterity, &shields_ai_handler);
 
     SFSpell *endurance = registrationAPI.registerSpell(kGdSpellLineEndurance);
     registrationAPI.linkTypeHandler(endurance, &endurance_handler);
@@ -383,6 +407,7 @@ void initialize_vanilla_spells()
 
     SFSpell *distract = registrationAPI.registerSpell(kGdSpellLineDistract);
     registrationAPI.linkTypeHandler(distract, &distract_handler);
+    registrationAPI.linkSingleTargetAIHandler(distract, &wave_ai_handler);
 
     SFSpell *dominate = registrationAPI.registerSpell(kGdSpellLineDominate);
     registrationAPI.linkTypeHandler(dominate, &dominate_handler);
@@ -404,9 +429,11 @@ void initialize_vanilla_spells()
 
     SFSpell *shockwave = registrationAPI.registerSpell(kGdSpellLineShockwave);
     registrationAPI.linkTypeHandler(shockwave, &shockwave_handler);
+    registrationAPI.linkSingleTargetAIHandler(shockwave, &wave_ai_handler);
 
     SFSpell *aura17 = registrationAPI.registerSpell(kGdSpellLineAuraHypnotization);
     registrationAPI.linkTypeHandler(aura17, &aura_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura17, &offensive_aura_ai_handler);
 
     // Next Spell Block
 
@@ -415,12 +442,14 @@ void initialize_vanilla_spells()
 
     SFSpell *aura18 = registrationAPI.registerSpell(kGdSpellLineAuraBrilliance);
     registrationAPI.linkTypeHandler(aura18, &aura_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura18, &defensive_aura_ai_handler);
 
     SFSpell *enlightenment = registrationAPI.registerSpell(kGdSpellLineEnlightenment);
     registrationAPI.linkTypeHandler(enlightenment, &enlightenment_handler);
 
     SFSpell *aura19 = registrationAPI.registerSpell(kGdSpellLineAuraManaTap);
     registrationAPI.linkTypeHandler(aura19, &aura_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura19, &offensive_aura_ai_handler);
 
     SFSpell *meditation = registrationAPI.registerSpell(kGdSpellLineMeditation);
     registrationAPI.linkTypeHandler(meditation, &meditation_handler);
@@ -433,6 +462,7 @@ void initialize_vanilla_spells()
 
     SFSpell *wave = registrationAPI.registerSpell(kGdSpellLineWaveOfFire);
     registrationAPI.linkTypeHandler(wave, &wave_handler);
+    registrationAPI.linkSingleTargetAIHandler(wave, &wave_ai_handler);
 
     SFSpell *melt_resistance = registrationAPI.registerSpell(kGdSpellLineMeltResistance);
     registrationAPI.linkTypeHandler(melt_resistance, &melt_resistance_handler);
@@ -445,6 +475,7 @@ void initialize_vanilla_spells()
 
     SFSpell *wave2 = registrationAPI.registerSpell(kGdSpellLineWaveOfIce);
     registrationAPI.linkTypeHandler(wave2, &wave_handler);
+    registrationAPI.linkSingleTargetAIHandler(wave2, &wave_ai_handler);
 
     SFSpell *chill_resistance = registrationAPI.registerSpell(kGdSpellLineChillResistance);
     registrationAPI.linkTypeHandler(chill_resistance, &chill_resistance_handler);
@@ -454,6 +485,7 @@ void initialize_vanilla_spells()
 
     SFSpell *conservation = registrationAPI.registerSpell(kGdSpellLineConservation);
     registrationAPI.linkTypeHandler(conservation, &conservation_handler);
+    registrationAPI.linkSingleTargetAIHandler(conservation, &shields_ai_handler);
 
     SFSpell *summon_10 = registrationAPI.registerSpell(kGdSpellLineEarthElemental);
     registrationAPI.linkTypeHandler(summon_10, &summons_handler);
@@ -463,6 +495,7 @@ void initialize_vanilla_spells()
 
     SFSpell *wave3 = registrationAPI.registerSpell(kGdSpellLineWaveOfRocks);
     registrationAPI.linkTypeHandler(wave3, &wave_handler);
+    registrationAPI.linkSingleTargetAIHandler(wave3, &wave_ai_handler);
 
     SFSpell *tower_arrow = registrationAPI.registerSpell(kGdSpellLineArrowTower);
     registrationAPI.linkTypeHandler(tower_arrow, &tower_arrow_handler);
@@ -486,43 +519,65 @@ void initialize_vanilla_spells()
     registrationAPI.linkOnHitHandler(ability_warcry, &warcry_onhit_handler, PHASE_0);
     registrationAPI.linkTypeHandler(ability_warcry, &ability_warcry_handler);
     registrationAPI.applySpellTag(ability_warcry, STACKABLE_SPELL);
+    registrationAPI.linkSingleTargetAIHandler(ability_warcry, &HCA_ability_ai_handler);
+    registrationAPI.applySpellTag(ability_warcry, SpellTag::COMBAT_ABILITY_SPELL);
 
     SFSpell *ability_benefactions = registrationAPI.registerSpell(kGdSpellLineAbilityBenefactions);
     registrationAPI.linkTypeHandler(ability_benefactions, &ability_benefactions_handler);
     registrationAPI.applySpellTag(ability_benefactions, STACKABLE_SPELL);
+    registrationAPI.linkSingleTargetAIHandler(ability_benefactions, &benefactions_ai_handler);
+    registrationAPI.applySpellTag(ability_benefactions, SpellTag::COMBAT_ABILITY_SPELL);
 
     SFSpell *ability_patronize = registrationAPI.registerSpell(kGdSpellLineAbilityPatronize);
     registrationAPI.linkTypeHandler(ability_patronize, &ability_patronize_handler);
     registrationAPI.applySpellTag(ability_patronize, STACKABLE_SPELL);
+    registrationAPI.linkSingleTargetAIHandler(ability_patronize, &HCA_ability_ai_handler);
+    registrationAPI.applySpellTag(ability_patronize, SpellTag::COMBAT_ABILITY_SPELL);
 
     SFSpell *ability_endurance = registrationAPI.registerSpell(kGdSpellLineAbilityEndurance);
     registrationAPI.linkTypeHandler(ability_endurance, &ability_endurance_handler);
     registrationAPI.linkOnHitHandler(ability_endurance, &endurance_onhit_handler, PHASE_0);
     registrationAPI.applySpellTag(ability_endurance, STACKABLE_SPELL);
+    registrationAPI.linkSingleTargetAIHandler(ability_endurance, &HCA_ability_ai_handler);
+    registrationAPI.applySpellTag(ability_endurance, SpellTag::COMBAT_ABILITY_SPELL);
 
     SFSpell *ability_berserk = registrationAPI.registerSpell(kGdSpellLineAbilityBerserk);
     registrationAPI.linkOnHitHandler(ability_berserk, &berserk_onhit_handler, PHASE_0);
     registrationAPI.linkTypeHandler(ability_berserk, &ability_berserk_handler);
+    registrationAPI.linkSingleTargetAIHandler(ability_berserk, &berserk_ai_handler);
+    registrationAPI.applySpellTag(ability_berserk, SpellTag::COMBAT_ABILITY_SPELL);
 
     SFSpell *ability_boons = registrationAPI.registerSpell(kGdSpellLineAbilityBlessing);
     registrationAPI.linkTypeHandler(ability_boons, &ability_boons_handler);
+    registrationAPI.linkSingleTargetAIHandler(ability_boons, &blessing_ai_handler);
+    registrationAPI.applySpellTag(ability_boons, SpellTag::COMBAT_ABILITY_SPELL);
 
     SFSpell *ability_shelter = registrationAPI.registerSpell(kGdSpellLineAbilityShelter);
     registrationAPI.linkTypeHandler(ability_shelter, &ability_shelter_handler);
+    registrationAPI.linkSingleTargetAIHandler(ability_shelter, &RCA_ability_ai_handler);
+    registrationAPI.applySpellTag(ability_shelter, SpellTag::COMBAT_ABILITY_SPELL);
 
     SFSpell *ability_durability = registrationAPI.registerSpell(kGdSpellLineAbilityDurability);
     registrationAPI.linkTypeHandler(ability_durability, &ability_durability_handler);
     registrationAPI.linkOnHitHandler(ability_durability, &durability_onhit_handler, PHASE_0);
+    registrationAPI.linkSingleTargetAIHandler(ability_durability, &riposte_ability_ai_handler);
+    registrationAPI.applySpellTag(ability_durability, SpellTag::COMBAT_ABILITY_SPELL);
 
     SFSpell *ability_trueshot = registrationAPI.registerSpell(kGdSpellLineAbilityTrueShot);
     registrationAPI.linkTypeHandler(ability_trueshot, &ability_trueshot_handler);
     registrationAPI.linkOnHitHandler(ability_trueshot, &trueshot_onhit_handler, PHASE_0);
+    registrationAPI.linkSingleTargetAIHandler(ability_trueshot, &RCA_ability_ai_handler);
+    registrationAPI.applySpellTag(ability_trueshot, SpellTag::COMBAT_ABILITY_SPELL);
 
     SFSpell *ability_steelskin = registrationAPI.registerSpell(kGdSpellLineAbilitySteelSkin);
     registrationAPI.linkTypeHandler(ability_steelskin, &ability_steelskin_handler);
+    registrationAPI.linkSingleTargetAIHandler(ability_steelskin, &RCA_ability_ai_handler);
+    registrationAPI.applySpellTag(ability_steelskin, SpellTag::COMBAT_ABILITY_SPELL);
 
     SFSpell *ability_salvo = registrationAPI.registerSpell(kGdSpellLineAbilitySalvo);
     registrationAPI.linkTypeHandler(ability_salvo, &ability_salvo_handler);
+    registrationAPI.linkSingleTargetAIHandler(ability_salvo, &RCA_ability_ai_handler);
+    registrationAPI.applySpellTag(ability_salvo, SpellTag::COMBAT_ABILITY_SPELL);
 
     SFSpell *fireburst2 = registrationAPI.registerSpell(kGdSpellLineFireBurstTower);
     registrationAPI.linkTypeHandler(fireburst2, &fireburst_handler);
@@ -543,6 +598,7 @@ void initialize_vanilla_spells()
 
     SFSpell *cloak_of_nor = registrationAPI.registerSpell(kGdSpellLineProtectionBlack);
     registrationAPI.linkTypeHandler(cloak_of_nor, &cloak_of_nor_handler);
+    registrationAPI.linkSingleTargetAIHandler(cloak_of_nor, &do_not_cast_ai_handler);
 
     SFSpell *unkn_spell2 = registrationAPI.registerSpell(kGdSpellLineDoNotTouchMe);
     registrationAPI.linkTypeHandler(unkn_spell2, &unkn_spell2_handler);
@@ -638,6 +694,7 @@ void initialize_vanilla_spells()
 
     SFSpell *aura20 = registrationAPI.registerSpell(kGdSpellLineAuraEternity);
     registrationAPI.linkTypeHandler(aura20, &aura_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura20, &defensive_aura_ai_handler);
 
     SFSpell *chain2 = registrationAPI.registerSpell(kGdSpellLineChainPain);
     registrationAPI.linkTypeHandler(chain2, &chain_handler);
@@ -736,11 +793,15 @@ void initialize_vanilla_spells()
 
     SFSpell *ability_shift_life = registrationAPI.registerSpell(kGdSpellLineAbilityShiftLife);
     registrationAPI.linkTypeHandler(ability_shift_life, &ability_shift_life_handler);
+    registrationAPI.linkSingleTargetAIHandler(ability_shift_life, &shift_life_ai_handler);
+    registrationAPI.applySpellTag(ability_shift_life, SpellTag::COMBAT_ABILITY_SPELL);
 
     SFSpell *ability_riposte = registrationAPI.registerSpell(kGdSpellLineAbilityRiposte);
     registrationAPI.applySpellTag(ability_riposte, SpellTag::TARGET_ONHIT_SPELL);
     registrationAPI.linkTypeHandler(ability_riposte, &ability_riposte_handler);
     registrationAPI.linkOnHitHandler(ability_riposte, &riposte_onhit_handler, PHASE_3);
+    registrationAPI.linkSingleTargetAIHandler(ability_riposte, &riposte_ability_ai_handler);
+    registrationAPI.applySpellTag(ability_riposte, SpellTag::COMBAT_ABILITY_SPELL);
 
     SFSpell *ability_critical_hits = registrationAPI.registerSpell(kGdSpellLineAbilityCriticalHits);
     registrationAPI.linkTypeHandler(ability_critical_hits, &ability_critical_hits_handler);
@@ -811,4 +872,5 @@ void initialize_vanilla_spells()
 
     SFSpell *belial_effect = registrationAPI.registerSpell(kGdSpellLineFakeSpellOneFigure);
     registrationAPI.linkTypeHandler(belial_effect, &belial_effect_handler);
+    registrationAPI.linkSingleTargetAIHandler(belial_effect, &do_not_cast_ai_handler);
 }
