@@ -1,6 +1,5 @@
 #include "../../src/api/sfsf.h"
 #include <windows.h>
-#include <stdio.h>
 
 // We declare macros for Spell Type and Spell Job of both spells
 // it is very unhandy to keep them in mind, so we just declare them here
@@ -585,9 +584,6 @@ uint32_t __thiscall interference_ai_handler(SF_CGdBattleDevelopment *_this, uint
         (_this->battleData.building_not_ally.entityCount == 0)))
     {
         rank = 0;
-        char message[256];
-        sprintf(message, "Enemy count: %hd Enemy buildings count: %hd", _this->battleData.enemy_figures.entityCount, _this->battleData.building_not_ally.entityCount);
-        logger->logInfo(message);
     }
     return rank;
 }

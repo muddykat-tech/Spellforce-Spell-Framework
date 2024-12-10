@@ -15,7 +15,7 @@
 #include "../../registry/ai_data_registries/sf_ai_avoidance_registry.h"
 #include "../../registry/ai_data_registries/sf_ai_single_target_registry.h"
 
-//#include <iostream>
+//#include <stdio.h>
 
 void clearAction(SF_SGtFigureAction *_this)
 {
@@ -69,8 +69,8 @@ uint32_t signum(uint32_t param_1)
 uint32_t __thiscall rank_support_spell_hook(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
     bool isStackable = hasSpellTag(spell_line, SpellTag::STACKABLE_SPELL);
-/*
-    char message[256]; 
+
+   /* char message[256]; 
     sprintf(message, "SpellLine: %hd Target: %hd isStackable: %d", spell_line, target_index, isStackable);
     log_info(message);
 */

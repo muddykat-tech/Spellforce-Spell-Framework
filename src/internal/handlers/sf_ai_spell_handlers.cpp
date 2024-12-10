@@ -1,6 +1,8 @@
 #include "sf_ai_spell_handlers.h"
 #include "../core/sf_wrappers.h"
 
+#include <stdio.h>
+
 uint32_t __thiscall cure_poison_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 1;
@@ -228,7 +230,7 @@ uint32_t __thiscall HCA_ability_ai_handler(SF_CGdBattleDevelopment *_this, uint1
             {
                 figure_count++;
             }
-            if (figure_count > 2)
+            if (figure_count > 3)
             {
                 break;
             }
