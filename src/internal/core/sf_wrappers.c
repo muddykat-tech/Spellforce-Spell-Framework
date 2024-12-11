@@ -114,11 +114,11 @@ uint32_t getDistance(SF_Coord *pointA, SF_Coord *pointB)
 }
 
 // Some funky stuff to clean up Iterator memory, not 100% sure if correct
-void __thiscall disposeFigureIterator(CGdFigureIterator iterator)
+void __thiscall disposeFigureIterator(CGdFigureIterator *iterator)
 {
     uint32_t unused;
-    FUN_0069eaf0(&iterator.data.offset_0x30, &unused, ((AutoClass69 *)iterator.data.offset_0x30.ac69_ptr1)->ac69_ptr1, iterator.data.offset_0x30.ac69_ptr1);
-    fidFree(iterator.data.offset_0x30.ac69_ptr1);
+    FUN_0069eaf0(&(iterator->data.offset_0x30), &unused, ((AutoClass69 *)iterator->data.offset_0x30.ac69_ptr1)->ac69_ptr1, iterator->data.offset_0x30.ac69_ptr1);
+    fidFree(iterator->data.offset_0x30.ac69_ptr1);
 }
 
 void __thiscall addBonusMultToStatistic(SF_CGdFigure *figure, StatisticDataKey key, uint16_t target, int8_t value)

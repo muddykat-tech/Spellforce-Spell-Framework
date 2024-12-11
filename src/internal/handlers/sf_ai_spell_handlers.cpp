@@ -503,6 +503,63 @@ uint32_t __thiscall shift_life_ai_handler(SF_CGdBattleDevelopment *_this, uint16
     return rank;
 }
 
+uint32_t __thiscall critical_hits_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 1;
+    if ((_this->battleData.current_figure != target_index) ||
+        (_this->battleData.enemy_figures.entityCount == 0))
+    {
+        rank = 0;
+    }
+    else
+    {
+        CGdFigureIterator iter;
+        SF_Coord pos;
+        iteratorAPI.figureIteratorInit(&iter, 0, 0, 0x3ff, 0x3ff);
+        iteratorAPI.figureIteratorSetPointers(&iter,
+                                              _this->battleData.CGdFigure,
+                                              _this->battleData.autoclass22,
+                                              _this->battleData.CGdWorld);
+        figureAPI.getPosition(_this->battleData.CGdFigure, &pos, target_index);
+        if (toolboxAPI.isUnitMelee(_this->battleData.CGdFigureToolBox, target_index))
+        {
+            iteratorAPI.iteratorSetArea(&iter, &pos, 2);
+        }
+        else
+        {
+            iteratorAPI.iteratorSetArea(&iter, &pos, 8);
+        }
+        bool should_use = false;
+        uint16_t figure_id = iteratorAPI.getNextFigure(&iter);
+        while (figure_id != 0)
+        {
+            if (_this->battleData.CGdFigure->figures[figure_id].owner != (uint16_t)-1)
+            {
+                if (toolboxAPI.figuresCheckHostile(_this->battleData.CGdFigureToolBox, target_index, figure_id))
+                {
+                    if (figureAPI.isAlive(_this->battleData.CGdFigure, figure_id))
+                    {
+                        uint16_t current_hp =  figureAPI.getCurrentHealth(_this->battleData.CGdFigure, figure_id);
+                        uint16_t max_hp =  figureAPI.getCurrentMaxHealth(_this->battleData.CGdFigure, figure_id);
+                        if (((current_hp * 100)/max_hp) < 50)
+                        {
+                            should_use = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            figure_id = iteratorAPI.getNextFigure(&iter);
+        }
+        if (!should_use)
+        {
+            rank = 0;
+        }
+        iteratorAPI.disposeFigureIterator(&iter);
+    }
+    return rank;
+}
+
 // kGdSpellLineProtectionBlack
 // kGdSpellLineFakeSpellOneFigure
 uint32_t __thiscall do_not_cast_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)

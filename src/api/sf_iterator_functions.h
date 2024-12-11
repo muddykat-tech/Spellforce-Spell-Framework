@@ -47,7 +47,7 @@ DECLARE_FUNCTION(void, figureIteratorSetPointers, CGdFigureIterator *iterator, S
 DECLARE_FUNCTION(void, iteratorSetArea, CGdFigureIterator *iterator, SF_Coord *position, uint16_t radius);
 DECLARE_FUNCTION(uint16_t, getNextFigure, CGdFigureIterator *iterator);
 DECLARE_FUNCTION(void, setupFigureIterator, CGdFigureIterator *iterator, SF_CGdSpell *spell);
-DECLARE_FUNCTION(void, disposeFigureIterator, CGdFigureIterator iterator);
+DECLARE_FUNCTION(void, disposeFigureIterator, CGdFigureIterator *iterator);
 
 DECLARE_FUNCTION(void, buildingIteratorInit, CGdBuildingIterator *iterator, uint16_t x_start, uint16_t y_start, uint16_t x_end, uint16_t y_end);
 DECLARE_FUNCTION(void, buildingIteratorSetPointers, CGdBuildingIterator *iterator, void *SF_CGdBuilding, void *AutoClass22, void *CGdWorld);
