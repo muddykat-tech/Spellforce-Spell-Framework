@@ -15,6 +15,7 @@ static fidfree_ptr fidFree;
 SF_String_ctor_ptr g_create_sf_string;
 SF_String_dtor_ptr g_destroy_sf_string;
 
+
 void initialize_wrapper_data_hooks()
 {
     FUN_0069eaf0 = (FUN_0069eaf0_ptr)(ASI::AddrOf(0x29EAF0));
@@ -203,18 +204,37 @@ void __thiscall spellClearFigureFlag(SF_CGdSpell *_this, uint16_t spell_id, Spel
 typedef void(__thiscall *vfunction_ptr)(void *label, char *p1);
 typedef void(__thiscall *vfunction12_ptr)(void *container, void *test, char *p1);
 
+typedef void(__thiscall *attach_string_ptr)(void *container, void *string);
+
+
+attach_string_ptr vfunction_apply_string;
 vfunction_ptr vfunction176;
 vfunction_ptr vfunction25;
 vfunction12_ptr vfunction12;
 
 void __thiscall attach_new_label(CMnuContainer *parent, char *label_chars, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height)
 {
+    char empty[1];
+    sprintf(empty, "");
+    attach_new_meshed_label(parent, empty, label_chars, font_index, x_pos, y_pos, width, height);
+}
+
+void __thiscall attach_new_button(CMnuContainer *parent, char *button_mesh_default, char *button_mesh_pressed, char *button_mesh_highlight, char *label_char, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height)
+{
+    
+}
+
+void __thiscall attach_new_meshed_label(CMnuContainer *parent, char *mesh_char, char *label_char, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height)
+{
+    SF_String m_mesh_string;
     SF_String m_label_string;
     CMnuLabel *new_label;
-    SF_FontStruct *fonts = g_get_smth_fonts();
 
-    SF_String *label_string = g_create_sf_string(&m_label_string, label_chars);
-    new_label = (CMnuLabel *)g_new_operator(0x368);
+    SF_FontStruct *fonts = g_get_smth_fonts();
+    SF_String *label_string = g_create_sf_string(&m_label_string, label_char);
+    SF_String *mesh_string = g_create_sf_string(&m_mesh_string, mesh_char);
+    // 0x3b0 seems to corralate to CUiStartMenu, but is directly cast to be a type of CUiFrameStats
+    new_label = (CMnuLabel *)g_new_operator(0x3b0); // 0x368, 0x3b0 and 0x708 are all valid. (I suspect that they're creating objects that have CMnuLabel as an Parent Class).
 
     if (font_index > 32)
     {
@@ -229,7 +249,7 @@ void __thiscall attach_new_label(CMnuContainer *parent, char *label_chars, uint8
     // Start setting flags to tell Spellforce what this label is used for.
     g_set_label_flags(new_label, 7);
 
-    g_init_menu_element(new_label, x_pos, y_pos, width, height, label_string);
+    g_init_menu_element(new_label, x_pos, y_pos, width, height, mesh_string);
 
     vfunction176 = (vfunction_ptr)(ASI::AddrOf(0x52f520));
     vfunction176(new_label, (char *)0x1);
@@ -239,13 +259,14 @@ void __thiscall attach_new_label(CMnuContainer *parent, char *label_chars, uint8
 
     g_menu_label_set_font(new_label, selected_font);
 
-    g_container_add_control(parent, new_label, (char *)0x01, (char *)0x01, 0);
+    g_container_add_control(parent, new_label, (char *)0x01, (char *)0x01, 2);
 
     vfunction12 = (vfunction12_ptr)(ASI::AddrOf(0x511ae0));
     vfunction12(parent, new_label, (char *)0x0);
     g_menu_label_set_string(new_label, label_string);
 
     g_destroy_sf_string(label_string);
+    g_destroy_sf_string(mesh_string);
 }
 
 uint16_t __thiscall sf_get_spell_id(SF_CGdSpell *_this, uint16_t spell_index)

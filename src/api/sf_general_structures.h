@@ -642,6 +642,12 @@ typedef struct __attribute__((packed))
 typedef struct __attribute__((packed))
 {
     uint32_t vftablePTR;
+    uint8_t unknown_data2[0xcc];
+} CUiOption;
+
+typedef struct __attribute__((packed))
+{
+    uint32_t vftablePTR;
     CMnuBase_data CMnuBase_data;
     uint8_t CMnuVisControl_data[0x9C];
     uint8_t CMnuLabel_data[0xc0];
@@ -773,7 +779,7 @@ typedef SF_String *(__thiscall *construct_default_sf_string_ptr)(SF_String *_thi
 
 typedef void(__thiscall *construct_start_menu_ptr)(CUiStartMenu *_this, uint32_t p1);
 
-typedef void(__thiscall *mnu_label_init_data_ptr)(CMnuLabel *_this, float xpos, float ypos, float width, float height, SF_String *string);
+typedef void(__thiscall *mnu_label_init_data_ptr)(void *_this, float xpos, float ypos, float width, float height, SF_String *string);
 typedef void(__thiscall *message_box_ptr)(uint32_t CAppMenu, uint16_t description_id, SF_String *string_ptr, uint16_t hasOffset);
 
 typedef void(__thiscall *menu_label_constructor_ptr)(CMnuLabel *_this);
@@ -788,8 +794,11 @@ typedef void(__thiscall *get_sf_color_ptr)(SF_String *_this, uint32_t color_id);
 typedef SF_FontStruct *(__thiscall *get_smth_fonts_ptr)(void);
 typedef SF_Font *(__thiscall *get_font_ptr)(SF_FontStruct *_this, uint32_t font_id);
 typedef void(__thiscall *menu_label_set_font_ptr)(void *_this, SF_Font *font);
+typedef CUiOption* (__thiscall *create_option_ptr)(CUiOption *_this);
 
+extern void __thiscall attach_new_meshed_label(CMnuContainer *parent, char *mesh_name, char *label_text, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height);
 extern void __thiscall attach_new_label(CMnuContainer *parent, char *label_text, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height);
+extern void __thiscall attach_new_button(CMnuContainer *parent, char *button_mesh_default, char *button_mesh_pressed, char *button_mesh_highlight, char *label_char, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height);
 
 /**
  * @brief Declares a function with the specified return type, name, and arguments.
