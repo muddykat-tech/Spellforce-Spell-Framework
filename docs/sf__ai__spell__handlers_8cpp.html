@@ -209,6 +209,8 @@ Functions</h2></td></tr>
 <tr class="separator:a670e49978bafcef2dbba766a87079ce5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a763a0bd54cb6874e061cd747e391ab3a" id="r_a763a0bd54cb6874e061cd747e391ab3a"><td class="memItemLeft" align="right" valign="top">uint32_t __thiscall&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a763a0bd54cb6874e061cd747e391ab3a">sacrifice_mana_ai_handler</a> (<a class="el" href="struct_s_f___c_gd_battle_development.html">SF_CGdBattleDevelopment</a> *_this, uint16_t target_index, uint16_t spell_line, <a class="el" href="struct_s_f___c_gd_resource_spell.html">SF_CGdResourceSpell</a> *spell_data)</td></tr>
 <tr class="separator:a763a0bd54cb6874e061cd747e391ab3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49b98934a8b86df04a124c5ac482ba7f" id="r_a49b98934a8b86df04a124c5ac482ba7f"><td class="memItemLeft" align="right" valign="top">uint32_t __thiscall&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a49b98934a8b86df04a124c5ac482ba7f">tower_extinct_ai_handler</a> (<a class="el" href="struct_s_f___c_gd_battle_development.html">SF_CGdBattleDevelopment</a> *_this, uint16_t target_index, uint16_t spell_line, <a class="el" href="struct_s_f___c_gd_resource_spell.html">SF_CGdResourceSpell</a> *spell_data)</td></tr>
+<tr class="separator:a49b98934a8b86df04a124c5ac482ba7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="afe934a437e40c5cccf34b333dfbe7127" name="afe934a437e40c5cccf34b333dfbe7127"></a>
@@ -480,7 +482,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" title=" " alt="" coords="413,5,540,48"/>
 <area shape="rect" href="sf__ai__single__target__registry_8cpp.html#a971d5f33ee21660e72921eacc54daa80" title=" " alt="" coords="219,13,365,40"/>
 <area shape="poly" title=" " alt="" coords="397,29,365,29,365,24,397,24"/>
-<area shape="rect" href="group___a_i_hook.html#gaf54f024fccce5a4ae77213ac9f815c2c" title="Injects into the ranking system for a single target AI spell." alt="" coords="5,13,171,40"/>
+<area shape="rect" href="group___a_i_hook.html#ga12a79eb1da4cb3358d8503101a50ba8d" title="Injects into the ranking system for a single target AI spell." alt="" coords="5,13,171,40"/>
 <area shape="poly" title=" " alt="" coords="203,29,171,29,171,24,203,24"/>
 </map>
 </div>
@@ -847,6 +849,20 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__ai__spell__handlers_8cpp_source.html#l00311">311</a> of file <a class="el" href="sf__ai__spell__handlers_8cpp_source.html">sf_ai_spell_handlers.cpp</a>.</p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="sf__ai__spell__handlers_8cpp_a5eaf3ab07445126ecf2b27ef376c76f7_icgraph.png" border="0" usemap="#asf__ai__spell__handlers_8cpp_a5eaf3ab07445126ecf2b27ef376c76f7_icgraph" alt=""/></div>
+<map name="asf__ai__spell__handlers_8cpp_a5eaf3ab07445126ecf2b27ef376c76f7_icgraph" id="asf__ai__spell__handlers_8cpp_a5eaf3ab07445126ecf2b27ef376c76f7_icgraph">
+<area shape="rect" title=" " alt="" coords="463,13,601,40"/>
+<area shape="rect" href="sf__vanilla__registry_8cpp.html#ad464df22114c57d7e41361edf691ac01" title=" " alt="" coords="303,5,415,48"/>
+<area shape="poly" title=" " alt="" coords="448,29,416,29,416,24,448,24"/>
+<area shape="rect" href="sf__registry_8cpp.html#aa653b9256d033c2d02e806489c6a4271" title="Initializes the Spellforce Spell Framework (SFSF)." alt="" coords="119,13,255,40"/>
+<area shape="poly" title=" " alt="" coords="288,29,255,29,255,24,288,24"/>
+<area shape="rect" href="sfsf_8cpp.html#a26e64fb39b69bcd9d1274d279f1561b9" title="Entry point for the DLL." alt="" coords="5,13,71,40"/>
+<area shape="poly" title=" " alt="" coords="103,29,71,29,71,24,103,24"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -880,6 +896,53 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="sf__ai__spell__handlers_8cpp_source.html#l00004">4</a> of file <a class="el" href="sf__ai__spell__handlers_8cpp_source.html">sf_ai_spell_handlers.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a49b98934a8b86df04a124c5ac482ba7f" name="a49b98934a8b86df04a124c5ac482ba7f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a49b98934a8b86df04a124c5ac482ba7f">&#9670;&#160;</a></span>tower_extinct_ai_handler()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t __thiscall tower_extinct_ai_handler </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_s_f___c_gd_battle_development.html">SF_CGdBattleDevelopment</a> *</td>          <td class="paramname"><span class="paramname"><em>_this</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>target_index</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>spell_line</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_s_f___c_gd_resource_spell.html">SF_CGdResourceSpell</a> *</td>          <td class="paramname"><span class="paramname"><em>spell_data</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__spell__handlers_8cpp_source.html#l00555">555</a> of file <a class="el" href="sf__ai__spell__handlers_8cpp_source.html">sf_ai_spell_handlers.cpp</a>.</p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="sf__ai__spell__handlers_8cpp_a49b98934a8b86df04a124c5ac482ba7f_icgraph.png" border="0" usemap="#asf__ai__spell__handlers_8cpp_a49b98934a8b86df04a124c5ac482ba7f_icgraph" alt=""/></div>
+<map name="asf__ai__spell__handlers_8cpp_a49b98934a8b86df04a124c5ac482ba7f_icgraph" id="asf__ai__spell__handlers_8cpp_a49b98934a8b86df04a124c5ac482ba7f_icgraph">
+<area shape="rect" title=" " alt="" coords="463,13,629,40"/>
+<area shape="rect" href="sf__vanilla__registry_8cpp.html#ad464df22114c57d7e41361edf691ac01" title=" " alt="" coords="303,5,415,48"/>
+<area shape="poly" title=" " alt="" coords="448,29,416,29,416,24,448,24"/>
+<area shape="rect" href="sf__registry_8cpp.html#aa653b9256d033c2d02e806489c6a4271" title="Initializes the Spellforce Spell Framework (SFSF)." alt="" coords="119,13,255,40"/>
+<area shape="poly" title=" " alt="" coords="288,29,255,29,255,24,288,24"/>
+<area shape="rect" href="sfsf_8cpp.html#a26e64fb39b69bcd9d1274d279f1561b9" title="Entry point for the DLL." alt="" coords="5,13,71,40"/>
+<area shape="poly" title=" " alt="" coords="103,29,71,29,71,24,103,24"/>
+</map>
+</div>
 
 </div>
 </div>

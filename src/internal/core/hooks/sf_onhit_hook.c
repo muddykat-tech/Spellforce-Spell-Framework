@@ -274,7 +274,7 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
             if (isFigureJobSpell(_this, target.entity_index))
             {
                 uint16_t job_id = figureAPI.getJob(_this->CGdFigure, target.entity_index);
-                if (canJobBeInterrupted(job_id))
+                if (canJobBeInterrupted((FigureJobs) job_id))
                 {
                     uint16_t chance = getAttackInterruptionChance(_this->CGdFigure, source_index, target.entity_index);
                     if (spellAPI.getRandom(_this->OpaqueClass, 100) <= chance)
