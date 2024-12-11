@@ -29,8 +29,6 @@ NC_BASH=\033[0m # No Color for Bash
 YELLOW_PS=Yellow
 NC_PS=Default
 
-POWERSHELL_PATH := "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
-
 # Function to print colored text
 define print_colored
 	$(if $(findstring bash,$(SHELL)),\
@@ -39,6 +37,7 @@ define print_colored
 			@powershell -NoProfile -Command "Write-Host -ForegroundColor $(YELLOW_PS) '$(1)'",\
 			@powershell -NoProfile -Command "Write-Host -ForegroundColor $(YELLOW_PS) '$(1)'"))
 endef
+
 # Check if running in PowerShell
 # Phony targets
 .PHONY: all clean mods
@@ -65,10 +64,10 @@ bin lib obj:
 
 # Internals build
 obj/sf_asi.o: src/asi/sf_asi.cpp src/asi/sf_asi.h | obj
-	$(call print_colored, "================== Starting Build ==================")
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 	
 obj/sfsf.o: ${INTERNALS_SRC}/sfsf.cpp src/asi/sf_asi.h | obj
+	$(call print_colored, "================== Starting Build ==================")
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_wrappers.o: ${CORE_SRC}/sf_wrappers.c | obj
