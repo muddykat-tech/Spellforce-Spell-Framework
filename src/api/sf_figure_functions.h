@@ -194,7 +194,7 @@ DECLARE_FUNCTION(void, decreaseHealth, SF_CGdFigure *figure, uint16_t figure_id,
 DECLARE_FUNCTION(uint16_t, getCurrentMaxMana, SF_CGdFigure *figure, uint16_t figure_id);
 DECLARE_FUNCTION(uint16_t, getCurrentMaxHealth, SF_CGdFigure *figure, uint16_t figure_id);
 DECLARE_FUNCTION(void, setJobToDoCount, SF_CGdFigure *figure, uint16_t target_index, uint16_t value);
-
+DECLARE_FUNCTION(uint16_t, getCurrentHealthPercent, SF_CGdFigure *figure, uint16_t figure_id);
 DECLARE_FUNCTION(void, rescaleMana, SF_CGdFigure *figure, uint16_t figure_id, uint16_t max_mana);
 DECLARE_FUNCTION(void, rescaleHealth, SF_CGdFigure *figure, uint16_t figure_id, uint16_t max_health);
 DECLARE_FUNCTION(uint16_t, getJob, SF_CGdFigure *figure, uint16_t figure_id);
@@ -226,6 +226,7 @@ typedef struct
     decreaseHealth_ptr decreaseHealth;
     getCurrentHealth_ptr getCurrentHealth;
     getCurrentMaxHealth_ptr getCurrentMaxHealth;
+    getCurrentHealthPercent_ptr getCurrentHealthPercent;
     getCurrentMaxMana_ptr getCurrentMaxMana;
     rescaleMana_ptr rescaleMana;
     rescaleHealth_ptr rescaleHealth;

@@ -53,24 +53,15 @@ uint32_t __thiscall cure_disease_ai_handler(SF_CGdBattleDevelopment *_this, uint
 uint32_t __thiscall death_grasp_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 1;
-    uint16_t current_health = figureAPI.getCurrentHealth(_this->battleData.CGdFigure, target_index);
-    uint32_t max_health = figureAPI.getCurrentMaxHealth(_this->battleData.CGdFigure, target_index);
-    if (max_health != 0)
+    if (figureAPI.getCurrentHealthPercent(_this->battleData.CGdFigure, target_index) < 50)
     {
-        uint16_t percent = (current_health / max_health) * 100;
-        if (percent < 50)
-        {
-            rank = rank * 10;
-        }
-        else
-        {
-            rank = 0;
-        }
+        rank = rank * 10;
     }
     else
     {
         rank = 0;
     }
+
     return rank;
 }
 
@@ -270,17 +261,7 @@ uint32_t __thiscall riposte_ability_ai_handler(SF_CGdBattleDevelopment *_this, u
     }
     else
     {
-        uint16_t current_health = figureAPI.getCurrentHealth(_this->battleData.CGdFigure, target_index);
-        uint32_t max_health = figureAPI.getCurrentMaxHealth(_this->battleData.CGdFigure, target_index);
-        if (max_health != 0)
-        {
-            uint16_t percent = (current_health / max_health) * 100;
-            if (percent > 80)
-            {
-                rank = 0;
-            }
-        }
-        else
+        if (figureAPI.getCurrentHealthPercent(_this->battleData.CGdFigure, target_index) > 80)
         {
             rank = 0;
         }
@@ -377,17 +358,7 @@ uint32_t __thiscall berserk_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t 
         // Berserk level 101 is special case for trolls
         if (spell_data->skill_requirements[2] > 100)
         {
-            uint16_t current_health = figureAPI.getCurrentHealth(_this->battleData.CGdFigure, target_index);
-            uint32_t max_health = figureAPI.getCurrentMaxHealth(_this->battleData.CGdFigure, target_index);
-            if (max_health != 0)
-            {
-                uint16_t percent = (current_health / max_health) * 100;
-                if (percent > 25)
-                {
-                    rank = 0;
-                }
-            }
-            else
+            if (figureAPI.getCurrentHealthPercent(_this->battleData.CGdFigure, target_index) > 25)
             {
                 rank = 0;
             }
@@ -406,17 +377,7 @@ uint32_t __thiscall blessing_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t
     }
     else
     {
-        uint16_t current_health = figureAPI.getCurrentHealth(_this->battleData.CGdFigure, target_index);
-        uint32_t max_health = figureAPI.getCurrentMaxHealth(_this->battleData.CGdFigure, target_index);
-        if (max_health != 0)
-        {
-            uint16_t percent = (current_health / max_health) * 100;
-            if (percent > (100 - spell_data->params[0]))
-            {
-                rank = 0;
-            }
-        }
-        else
+        if (figureAPI.getCurrentHealthPercent(_this->battleData.CGdFigure, target_index) > (100 - spell_data->params[0]))
         {
             rank = 0;
         }
@@ -446,15 +407,9 @@ uint32_t __thiscall benefactions_ai_handler(SF_CGdBattleDevelopment *_this, uint
                 {
                     if (figureAPI.isWarrior(_this->battleData.CGdFigure, ally_index))
                     {
-                        uint16_t current_health = figureAPI.getCurrentHealth(_this->battleData.CGdFigure, ally_index);
-                        uint32_t max_health = figureAPI.getCurrentMaxHealth(_this->battleData.CGdFigure, ally_index);
-                        if (max_health != 0)
+                        if (figureAPI.getCurrentHealthPercent(_this->battleData.CGdFigure, ally_index) < (100 - spell_data->params[0]))
                         {
-                            uint16_t percent = (current_health / max_health) * 100;
-                            if (percent < (100 - spell_data->params[0]))
-                            {
-                                figures_count++;
-                            }
+                            figures_count++;
                         }
                     }
                 }
@@ -484,18 +439,9 @@ uint32_t __thiscall shift_life_ai_handler(SF_CGdBattleDevelopment *_this, uint16
     }
     else
     {
-        uint16_t current_health = figureAPI.getCurrentHealth(_this->battleData.CGdFigure, target_index);
-        uint32_t max_health = figureAPI.getCurrentMaxHealth(_this->battleData.CGdFigure, target_index);
-        if (max_health != 0)
-        {
-            uint16_t percent = (current_health / max_health) * 100;
-            // hardcode value is 75% gamedata value is 50%, i go with gamedata value
-            if (percent > (100 - spell_data->params[1]))
-            {
-                rank = 0;
-            }
-        }
-        else
+        uint16_t percent = figureAPI.getCurrentHealthPercent(_this->battleData.CGdFigure, target_index);
+        // hardcode value is 75% gamedata value is 50%, i go with gamedata value
+        if (percent > (100 - spell_data->params[1]))
         {
             rank = 0;
         }
@@ -539,9 +485,7 @@ uint32_t __thiscall critical_hits_ai_handler(SF_CGdBattleDevelopment *_this, uin
                 {
                     if (figureAPI.isAlive(_this->battleData.CGdFigure, figure_id))
                     {
-                        uint16_t current_hp =  figureAPI.getCurrentHealth(_this->battleData.CGdFigure, figure_id);
-                        uint16_t max_hp =  figureAPI.getCurrentMaxHealth(_this->battleData.CGdFigure, figure_id);
-                        if (((current_hp * 100)/max_hp) < 50)
+                        if (figureAPI.getCurrentHealthPercent(_this->battleData.CGdFigure, figure_id) < 50)
                         {
                             should_use = true;
                             break;
