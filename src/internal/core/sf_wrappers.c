@@ -201,16 +201,34 @@ void __thiscall spellClearFigureFlag(SF_CGdSpell *_this, uint16_t spell_id, Spel
 }
 
 // Temp
+typedef void(__thiscall *vfunction_2_ptr)(void *_this, void *input);
 typedef void(__thiscall *vfunction_ptr)(void *label, char *p1);
 typedef void(__thiscall *vfunction12_ptr)(void *container, void *test, char *p1);
 
 typedef void(__thiscall *attach_string_ptr)(void *container, void *string);
+typedef void(__thiscall *set_button_flag_ptr)(void *container, char flag);
+
+typedef void(__thiscall *set_btn_index_ptr)(void *container, int index);
+
+typedef void(__thiscall *create_button_ptr)(CMnuSmpButton *smpButton, float x_pos, float y_pos, float width,
+          float height,SF_String *default_mesh,SF_String *unkn_mesh_string,SF_String *pressed_mesh,SF_String *disable_mesh);
 
 
+typedef void (__thiscall *set_btn_name_ptr)(void *button, SF_String* string);
+
+typedef CMnuSmpButton*(__thiscall *initialize_smp_button_ptr)(CMnuSmpButton *btn);
+
+
+typedef void(__thiscall *vfunction2_callback_attach_ptr)(void *, void *,void *,void *);
+
+create_button_ptr create_button_func; 
 attach_string_ptr vfunction_apply_string;
 vfunction_ptr vfunction176;
 vfunction_ptr vfunction25;
 vfunction12_ptr vfunction12;
+initialize_smp_button_ptr initialize_smp_button;
+set_btn_name_ptr set_button_name;
+
 
 void __thiscall attach_new_label(CMnuContainer *parent, char *label_chars, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height)
 {
@@ -219,9 +237,125 @@ void __thiscall attach_new_label(CMnuContainer *parent, char *label_chars, uint8
     attach_new_meshed_label(parent, empty, label_chars, font_index, x_pos, y_pos, width, height);
 }
 
-void __thiscall attach_new_button(CMnuContainer *parent, char *button_mesh_default, char *button_mesh_pressed, char *button_mesh_highlight, char *label_char, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height)
+void __fastcall callback_test(CMnuSmpButton *button, int32_t* cui_menu_ptr_maybe)
 {
+    log_info("Callback Start");
+    CMnuContainer *parent = button->CMnuBase_data.param_2_callback;
+    char test_label[128];
+    sprintf(test_label, "Test Label: %x", parent);
+    log_info(test_label);
+    attach_new_label(parent, test_label, 6, 10,10, 100, 100);
+    log_info("Callback End");
+}
+
+void __thiscall attach_new_button(CMnuContainer *parent, char *button_mesh_default, char *button_mesh_pressed, char *button_initial_load_mesh, char *button_mesh_disabled, char *label_char, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height, int button_index)
+{
+    SF_String m_mesh_string_default;
+    SF_String m_mesh_string_pressed;
+    SF_String m_button_initial_load_mesh;
+    SF_String m_mesh_string_disabled;
+
+    SF_String m_label_string;
+    CMnuSmpButton *new_button;
+    void * new_btn_operation;
+
+    SF_FontStruct *fonts = g_get_smth_fonts();
+    SF_String *label_string = g_create_sf_string(&m_label_string, label_char);
+
+    // Default
+    SF_String *mesh_string_default = g_create_sf_string(&m_mesh_string_default, button_mesh_default);
+
+    // Pressed
+    SF_String *mesh_string_pressed = g_create_sf_string(&m_mesh_string_pressed, button_mesh_pressed);
+
+    // Highlight
+    SF_String *init_load_mesh = g_create_sf_string(&m_button_initial_load_mesh, button_initial_load_mesh);
+
+    // Disabled
+    SF_String *mesh_string_disabled = g_create_sf_string(&m_mesh_string_disabled, button_mesh_disabled);
     
+    // 0x3b0 seems to corralate to CUiStartMenu, but is directly cast to be a type of CUiFrameStats
+    new_button = (CMnuSmpButton *)g_new_operator(0x428); // 0x368, 0x3b0 and 0x708 are all valid. (I suspect that they're creating objects that have CMnuLabel as an Parent Class).
+
+    if (font_index > 32)
+    {
+        log_error("Invalid font index 0~32, defaulting to font 6");
+        font_index = 6;
+    }
+
+    // Put breakpoint here gives pointer back get address of invalid structure spot.
+    log_info("init button");
+    initialize_smp_button = (initialize_smp_button_ptr) (ASI::AddrOf(0x51a9d0));
+    new_button = initialize_smp_button(new_button);
+    SF_Font *selected_font = g_get_font(fonts, font_index);
+
+    log_info("Setup Button Meta Name");
+    set_btn_name_ptr set_button_name = (set_btn_name_ptr) (ASI::AddrOf(0x512E30));
+    set_button_name(new_button, label_string);
+
+    log_info("setup button data");
+    // This seems to fill out the actual button data itself.
+    create_button_func = (create_button_ptr) (ASI::AddrOf(0x52E1E0));
+    create_button_func(new_button,x_pos,y_pos,width,height,mesh_string_default,init_load_mesh,mesh_string_pressed,mesh_string_disabled);
+
+
+    log_info("set button font");
+    vfunction_2_ptr set_font = (vfunction_2_ptr)(ASI::AddrOf(0x530C20)); // Original 0x530c50
+    set_font(new_button, selected_font);
+
+
+    log_info("set button index");
+    set_btn_index_ptr set_button_index = (set_btn_index_ptr)(ASI::AddrOf(0x5136a0));
+    set_button_index(new_button, button_index);
+
+    log_info("set button flag");
+    set_button_flag_ptr set_menu_button_flag = (set_button_flag_ptr)(ASI::AddrOf(0x5308A0));
+    set_menu_button_flag(new_button, (char)0x1);
+    
+    log_info("set button name again");
+    set_button_name = (set_btn_name_ptr) (ASI::AddrOf(0x52f8a0));
+    set_button_name(new_button, label_string);
+
+    log_info("Setup Button Callback p1");
+    CUtlCallback2 callback;
+    callback.vtable_ptr = *(uint32_t *)(ASI::AddrOf(0x7F9C64));
+    callback.param_ptr = parent;
+    callback.callback_ptr = &callback_test;
+
+    
+    log_info("Setup Button Callback p2");
+    vfunction2_callback_attach_ptr attach_callback = (vfunction2_callback_attach_ptr)(ASI::AddrOf(0x6188B0));
+    uint32_t param1, param2, param3;
+
+    attach_callback(&callback, &param1, &param2, &param3);
+
+    new_button->CMnuBase_data.param_1_callback = param1;
+    new_button->CMnuBase_data.param_2_callback = param2;
+    new_button->CMnuBase_data.param_3_callback = param3;
+
+    
+    log_info("Setup Button Callback p3");
+    vfunction_2_ptr vfunction16_attach_callback = (vfunction_2_ptr) (ASI::AddrOf(0x532B90));
+    vfunction16_attach_callback(new_button, '\x01');
+
+    int32_t pointer_to_callback = &callback;
+    int32_t pointer_to_container = parent;
+    char info[256];
+    sprintf(info, "Callback Struct Pointer: %x | container_ptr: %x", pointer_to_callback, pointer_to_container); 
+    log_info(info);
+
+    log_info("add to container");
+    g_container_add_control(parent, new_button, (char *)0x01, (char *)0x01, 0);
+
+
+    log_info("cleanup strings");
+    g_destroy_sf_string(mesh_string_default);
+    g_destroy_sf_string(mesh_string_pressed);
+    g_destroy_sf_string(init_load_mesh);
+    g_destroy_sf_string(mesh_string_disabled);
+    g_destroy_sf_string(label_string);
+    
+    log_info("finished");
 }
 
 void __thiscall attach_new_meshed_label(CMnuContainer *parent, char *mesh_char, char *label_char, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height)
