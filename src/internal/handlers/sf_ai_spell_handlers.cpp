@@ -728,6 +728,11 @@ uint16_t __thiscall lifetap_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t 
     {
         rank = 0;
     }
+    percent = figureAPI.getCurrentHealthPercent(_this->battleData.CGdFigure, target_index);
+    if (percent > 10)
+    {
+        rank = 0;
+    }
     return rank;
 }
 
@@ -742,11 +747,76 @@ uint16_t __thiscall petrify_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t 
     return rank;
 }
 
-uint16_t __thiscall charm_animal_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+//charm
+//charm animal
+uint16_t __thiscall charm_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 2;
     if ((figureAPI.isFlagSet(_this->battleData.CGdFigure, target_index, UNKILLABLE)) ||
         (spell_data->params[6] < _this->battleData.current_target_level_possibly))
+    {
+        rank = 0;
+    }
+    return rank;
+}
+
+uint16_t __thiscall hallow_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 2;
+    if ((_this->battleData.CGdFigure->figures[target_index].flags & GdFigureFlags::UNDEAD) == 0)
+    {
+        rank = 0;
+    }
+    return rank;
+}
+
+uint16_t __thiscall manatap_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 2;
+    uint16_t current_mana = figureAPI.getCurrentMana(_this->battleData.CGdFigure, _this->battleData.current_figure);
+    uint16_t max_mana = figureAPI.getCurrentMaxMana(_this->battleData.CGdFigure, _this->battleData.current_figure);
+    if (current_mana <= (uint16_t)((max_mana * 95) / 100))
+    {
+        uint16_t target_mana = figureAPI.getCurrentMana(_this->battleData.CGdFigure, target_index);
+        uint16_t target_max_mana = figureAPI.getCurrentMaxMana(_this->battleData.CGdFigure, target_index);
+        if ((target_max_mana / 10) > target_mana)
+        {
+            rank = 0;
+        }
+    }
+    else
+    {
+        rank = 0;
+    }
+    return rank;
+}
+
+uint16_t __thiscall confuse_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 2;
+    if (!toolboxAPI.isUnitMelee(_this->battleData.CGdFigureToolBox, target_index))
+    {
+        rank = 0;
+    }
+    return rank;
+}
+
+uint16_t __thiscall demoralization_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 2;
+    if (spell_data->params[1] < _this->battleData.current_target_level_possibly)
+    {
+        rank = 0;
+    }
+    return rank;
+}
+
+//befriend 
+//disenchant
+uint16_t __thiscall befriend_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 2;
+    if (spell_data->params[0] < _this->battleData.current_target_level_possibly)
     {
         rank = 0;
     }
