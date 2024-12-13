@@ -246,6 +246,6 @@ uint16_t __thiscall assistance_onhit_handler(SF_CGdFigureJobs *_this, uint16_t s
         }
         damage = shared_damage + remainder;
     }
-    iteratorAPI.disposeFigureIterator(iter);
+    iteratorAPI.disposeFigureIterator(&iter);
     return damage;
 }

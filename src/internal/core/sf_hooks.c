@@ -90,7 +90,7 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(figure, isWarrior, 0x1c1510);
     DEFINE_FUNCTION(figure, getHealersList, 0x2b2870);
     DEFINE_FUNCTION(figure, disposeHealerList, 0x36436D);
-
+    DEFINE_FUNCTION(figure, getCurrentHealthPercent, 0x2fdeb0);
     log_info("| - AI API Hooks");
 
     DEFINE_FUNCTION(ai, getTargetAction, 0x2b2f50);
