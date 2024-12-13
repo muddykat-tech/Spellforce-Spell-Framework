@@ -655,6 +655,23 @@ typedef struct __attribute__((packed))
 
 typedef struct __attribute__((packed))
 {
+    uint8_t padding_start[0x13];
+    uint32_t button_ptr;
+    uint8_t padding_end[0x119];
+} CMnuButton_data;
+
+typedef struct __attribute__((packed))
+{
+    uint32_t vftablePTR;                    // 4
+    CMnuBase_data CMnuBase_data;            
+    uint8_t CMnuVisControl_data[0x9c];
+    CMnuButton_data CMnuButton_data;
+    uint8_t CMnuSmpButton_data[0x50];
+} CMnuSmpButton;
+
+
+typedef struct __attribute__((packed))
+{
     uint32_t vftablePTR;
     CMnuBase_data CMnuBase_data;
     uint8_t CMnuVisControl_data[0x9C];
@@ -798,7 +815,7 @@ typedef CUiOption* (__thiscall *create_option_ptr)(CUiOption *_this);
 
 extern void __thiscall attach_new_meshed_label(CMnuContainer *parent, char *mesh_name, char *label_text, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height);
 extern void __thiscall attach_new_label(CMnuContainer *parent, char *label_text, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height);
-extern void __thiscall attach_new_button(CMnuContainer *parent, char *button_mesh_default, char *button_mesh_pressed, char *button_mesh_highlight, char *label_char, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height);
+extern void __thiscall attach_new_button(CMnuContainer *parent, char *button_mesh_default, char *button_mesh_pressed, char *button_mesh_highlight, char *button_mesh_disabled,  char *label_char, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height, int button_index);
 
 /**
  * @brief Declares a function with the specified return type, name, and arguments.

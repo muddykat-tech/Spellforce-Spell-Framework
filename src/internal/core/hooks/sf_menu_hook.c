@@ -80,10 +80,22 @@ void __attribute__((no_caller_saved_registers, thiscall)) sf_menu_hook(uint32_t 
     uint32_t screen_vftable_ptr = CMnuScreen_ptr;
 
     attach_new_label(container_hack, sfsf_info, 6, 10, 729, strlen(sfsf_info) * 4, 100);
+    char sfsf_test_button_default[256];
+    char sfsf_test_button_pressed[256];
+    char sfsf_test_button_disabled[256];
+    char sfsf_test_button_highlight[256];
+    char sfsf_test_button_label[256];
+
+    sprintf(sfsf_test_button_default, "ui_mainmenu_button_default.msh");
+    sprintf(sfsf_test_button_pressed, "ui_mainmenu_button_pressed.msh");
+    sprintf(sfsf_test_button_highlight, "");
+    sprintf(sfsf_test_button_disabled, "ui_mainmenu_button_disabled.msh");
+    sprintf(sfsf_test_button_label, "Testing This button");
+
+    int button_index = 15;
+    attach_new_button(container_hack, sfsf_test_button_default, sfsf_test_button_pressed, sfsf_test_button_highlight, sfsf_test_button_disabled, sfsf_test_button_label, 7, 10,10,109,50, button_index);
 
     // Attach new Menu Button for Mod Info.
-
-
     if (hasLoadedOnce)
     {
         s_menu_func(_CAppMenu);
