@@ -90,10 +90,10 @@ void __attribute__((no_caller_saved_registers, thiscall)) sf_menu_hook(uint32_t 
     sprintf(sfsf_test_button_pressed, "ui_mainmenu_button_pressed.msh");
     sprintf(sfsf_test_button_highlight, "");
     sprintf(sfsf_test_button_disabled, "ui_mainmenu_button_disabled.msh");
-    sprintf(sfsf_test_button_label, "Testing This button");
+    sprintf(sfsf_test_button_label, "SHOW MOD LIST");
 
     int button_index = 15;
-    attach_new_button(container_hack, sfsf_test_button_default, sfsf_test_button_pressed, sfsf_test_button_highlight, sfsf_test_button_disabled, sfsf_test_button_label, 7, 10,10,109,50, button_index);
+    attach_new_button(container_hack, sfsf_test_button_default, sfsf_test_button_pressed, sfsf_test_button_highlight, sfsf_test_button_disabled, sfsf_test_button_label, 7, 822,705,192,36, button_index);
 
     // Attach new Menu Button for Mod Info.
     if (hasLoadedOnce)

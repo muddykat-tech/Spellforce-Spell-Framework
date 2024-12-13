@@ -633,8 +633,12 @@ typedef struct __attribute__((packed))
 } SF_Color;
 
 typedef struct __attribute__((packed))
-{
-    uint8_t data[0x128];
+{  
+    uint32_t unk1;
+    uint32_t param_1_callback;
+    uint32_t param_2_callback;
+    uint32_t param_3_callback;
+    uint8_t data[0x118];
     uint32_t parent_ptr;
     uint8_t data2[0xdc];
 } CMnuBase_data;
@@ -655,6 +659,13 @@ typedef struct __attribute__((packed))
 
 typedef struct __attribute__((packed))
 {
+    uint32_t vtable_ptr;
+    uint32_t param_ptr;
+    uint32_t callback_ptr;
+} CUtlCallback2;
+
+typedef struct __attribute__((packed))
+{
     uint8_t padding_start[0x13];
     uint32_t button_ptr;
     uint8_t padding_end[0x119];
@@ -662,7 +673,7 @@ typedef struct __attribute__((packed))
 
 typedef struct __attribute__((packed))
 {
-    uint32_t vftablePTR;                    // 4
+    uint32_t vftablePTR;                    
     CMnuBase_data CMnuBase_data;            
     uint8_t CMnuVisControl_data[0x9c];
     CMnuButton_data CMnuButton_data;

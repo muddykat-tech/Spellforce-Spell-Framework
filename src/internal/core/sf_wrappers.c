@@ -218,6 +218,9 @@ typedef void (__thiscall *set_btn_name_ptr)(void *button, SF_String* string);
 
 typedef CMnuSmpButton*(__thiscall *initialize_smp_button_ptr)(CMnuSmpButton *btn);
 
+
+typedef void(__thiscall *vfunction2_callback_attach_ptr)(void *, void *,void *,void *);
+
 create_button_ptr create_button_func; 
 attach_string_ptr vfunction_apply_string;
 vfunction_ptr vfunction176;
@@ -232,6 +235,17 @@ void __thiscall attach_new_label(CMnuContainer *parent, char *label_chars, uint8
     char empty[1];
     sprintf(empty, "");
     attach_new_meshed_label(parent, empty, label_chars, font_index, x_pos, y_pos, width, height);
+}
+
+void __fastcall callback_test(CMnuSmpButton *button, int32_t* cui_menu_ptr_maybe)
+{
+    log_info("Callback Start");
+    CMnuContainer *parent = button->CMnuBase_data.param_2_callback;
+    char test_label[128];
+    sprintf(test_label, "Test Label: %x", parent);
+    log_info(test_label);
+    attach_new_label(parent, test_label, 6, 10,10, 100, 100);
+    log_info("Callback End");
 }
 
 void __thiscall attach_new_button(CMnuContainer *parent, char *button_mesh_default, char *button_mesh_pressed, char *button_initial_load_mesh, char *button_mesh_disabled, char *label_char, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height, int button_index)
@@ -301,6 +315,34 @@ void __thiscall attach_new_button(CMnuContainer *parent, char *button_mesh_defau
     log_info("set button name again");
     set_button_name = (set_btn_name_ptr) (ASI::AddrOf(0x52f8a0));
     set_button_name(new_button, label_string);
+
+    log_info("Setup Button Callback p1");
+    CUtlCallback2 callback;
+    callback.vtable_ptr = *(uint32_t *)(ASI::AddrOf(0x7F9C64));
+    callback.param_ptr = parent;
+    callback.callback_ptr = &callback_test;
+
+    
+    log_info("Setup Button Callback p2");
+    vfunction2_callback_attach_ptr attach_callback = (vfunction2_callback_attach_ptr)(ASI::AddrOf(0x6188B0));
+    uint32_t param1, param2, param3;
+
+    attach_callback(&callback, &param1, &param2, &param3);
+
+    new_button->CMnuBase_data.param_1_callback = param1;
+    new_button->CMnuBase_data.param_2_callback = param2;
+    new_button->CMnuBase_data.param_3_callback = param3;
+
+    
+    log_info("Setup Button Callback p3");
+    vfunction_2_ptr vfunction16_attach_callback = (vfunction_2_ptr) (ASI::AddrOf(0x532B90));
+    vfunction16_attach_callback(new_button, '\x01');
+
+    int32_t pointer_to_callback = &callback;
+    int32_t pointer_to_container = parent;
+    char info[256];
+    sprintf(info, "Callback Struct Pointer: %x | container_ptr: %x", pointer_to_callback, pointer_to_container); 
+    log_info(info);
 
     log_info("add to container");
     g_container_add_control(parent, new_button, (char *)0x01, (char *)0x01, 0);
