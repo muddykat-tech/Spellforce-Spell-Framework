@@ -651,3 +651,104 @@ uint32_t __thiscall healing_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t 
     }
     return rank;
 }
+
+uint32_t __thiscall amok_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 2;
+    if ((_this->battleData.enemy_figures.entityCount < 2) ||
+        (spell_data->params[2] < _this->battleData.current_target_level_possibly))
+    {
+        rank = 0;
+    }
+    return rank;
+}
+
+uint16_t __thiscall hypnotize_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 2;
+
+    if (spell_data->params[2] < _this->battleData.current_target_level_possibly)
+    {
+        rank = 0;
+    }
+    else
+    {
+        if (toolboxAPI.isUnitMelee(_this->battleData.CGdFigureToolBox, target_index))
+        {
+            rank = 4;
+        }
+    }
+    return rank;
+}
+
+uint16_t __thiscall freeze_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 2;
+    uint16_t max_health = figureAPI.getCurrentMaxHealth(_this->battleData.CGdFigure, target_index);
+    uint16_t current_health = figureAPI.getCurrentHealth(_this->battleData.CGdFigure, target_index);
+    if (current_health < max_health)
+    {
+        rank = 4;
+    }
+    return rank;
+}
+
+// Stackable:
+//  kGdSpellLineFireBurst
+//  Icestrike
+// Non-stackable:
+//  kGdSpellLinePoison
+//  kGdSpellLinePestilence
+uint16_t __thiscall fireburst_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 2;
+    if (_this->battleData.current_target_level_possibly < 3)
+    {
+        rank = 4;
+    }
+    return rank;
+}
+
+// Death and Pain
+uint16_t __thiscall death_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 2;
+    if (_this->battleData.current_target_level_possibly != 0)
+    {
+        rank = ((uint16_t)_this->battleData.current_target_level_possibly / 5 + 1) * 2;
+    }
+    return rank;
+}
+
+uint16_t __thiscall lifetap_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 2;
+    uint16_t percent = figureAPI.getCurrentHealthPercent(_this->battleData.CGdFigure, _this->battleData.current_figure);
+    if (percent > 95)
+    {
+        rank = 0;
+    }
+    return rank;
+}
+
+uint16_t __thiscall petrify_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 2;
+
+    if (spell_data->params[2] < _this->battleData.current_target_level_possibly)
+    {
+        rank = 0;
+    }
+    return rank;
+}
+
+uint16_t __thiscall charm_animal_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 2;
+    if ((figureAPI.isFlagSet(_this->battleData.CGdFigure, target_index, UNKILLABLE)) ||
+        (spell_data->params[6] < _this->battleData.current_target_level_possibly))
+    {
+        rank = 0;
+    }
+    return rank;
+}
