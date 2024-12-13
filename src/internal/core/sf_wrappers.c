@@ -298,10 +298,9 @@ void __thiscall attach_new_button(CMnuContainer *parent, char *button_mesh_defau
     set_button_flag_ptr set_menu_button_flag = (set_button_flag_ptr)(ASI::AddrOf(0x5308A0));
     set_menu_button_flag(new_button, (char)0x1);
     
-    // log_info("set button name again");
-    // set_button_name = (set_btn_name_ptr) (ASI::AddrOf(0x52f8a0));
-    // set_button_name(new_button->CMnuButton_data.button_ptr, label_string);
-
+    log_info("set button name again");
+    set_button_name = (set_btn_name_ptr) (ASI::AddrOf(0x52f8a0));
+    set_button_name(new_button, label_string);
 
     log_info("add to container");
     g_container_add_control(parent, new_button, (char *)0x01, (char *)0x01, 0);
