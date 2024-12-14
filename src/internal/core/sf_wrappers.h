@@ -6,10 +6,12 @@
 
 typedef SF_String *(__thiscall *SF_String_ctor_ptr)(SF_String *, const char *);
 typedef void(__thiscall *SF_String_dtor_ptr)(SF_String *);
+typedef bool(__thiscall *has_spell_effect_ptr)(SF_CGdFigureToolbox *_this, uint16_t param_1, uint16_t param_2);
 void log_message(const char *filename, const char *message);
 
 void initialize_wrapper_data_hooks();
 
+extern bool __thiscall hasAuraActive(SF_CGdFigureToolbox *_this, uint16_t figure_id);
 extern bool __thiscall isActionMelee(SF_SGtFigureAction *_this);
 extern bool __thiscall hasSpellTag(uint16_t spell_id, SpellTag tag);
 extern void __thiscall setupFigureIterator(CGdFigureIterator *iterator, SF_CGdSpell *spell);
