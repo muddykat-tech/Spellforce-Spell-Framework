@@ -664,7 +664,8 @@ typedef struct __attribute__((packed))
     uint32_t index;  // Used to hold the index of loaded mods for the showmod page
     CMnuLabel *title_label; // Title Label 
     CMnuLabel *desc_label; // Description Label 
-    CMnuLabel *page_label; // Description Label 
+    CMnuLabel *page_label; // Page Index Label 
+    CMnuLabel *error_label; // Error Info Label 
 } SFSF_ModlistStruct;
 
 typedef struct __attribute__((packed))

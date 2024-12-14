@@ -6,5 +6,5 @@ var searchData=
   ['menu_5flabel_5fset_5ffont_5fptr_3',['menu_label_set_font_ptr',['../sf__general__structures_8h.html#a7818ce44011f5f2d723bfa87aa127fcf',1,'sf_general_structures.h']]],
   ['menu_5flabel_5fset_5fstring_5fptr_4',['menu_label_set_string_ptr',['../sf__general__structures_8h.html#a3a212a2bab16f5e6c3c81b564d609ae9',1,'sf_general_structures.h']]],
   ['message_5fbox_5fptr_5',['message_box_ptr',['../sf__general__structures_8h.html#a959316cdd55be021bfd0c8079cac8f4f',1,'sf_general_structures.h']]],
-  ['mnu_5flabel_5finit_5fdata_5fptr_6',['mnu_label_init_data_ptr',['../sf__general__structures_8h.html#a9017afd3d59671398dcba18538b8b8fc',1,'sf_general_structures.h']]]
+  ['mnu_5flabel_5finit_5fdata_5fptr_6',['mnu_label_init_data_ptr',['../sf__general__structures_8h.html#a3d53d3dc3181a80f52f9ae90ee46b7d0',1,'sf_general_structures.h']]]
 ];

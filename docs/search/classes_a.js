@@ -29,7 +29,8 @@ var searchData=
   ['sf_5fworld_5funkn_5f4_26',['SF_world_unkn_4',['../struct_s_f__world__unkn__4.html',1,'']]],
   ['sflog_27',['SFLog',['../struct_s_f_log.html',1,'']]],
   ['sfmod_28',['SFMod',['../struct_s_f_mod.html',1,'']]],
-  ['sfspell_29',['SFSpell',['../struct_s_f_spell.html',1,'']]],
-  ['spellforcespellframework_30',['SpellforceSpellFramework',['../struct_spellforce_spell_framework.html',1,'']]],
-  ['spellfunctions_31',['SpellFunctions',['../struct_spell_functions.html',1,'']]]
+  ['sfsf_5fmodliststruct_29',['SFSF_ModlistStruct',['../struct_s_f_s_f___modlist_struct.html',1,'']]],
+  ['sfspell_30',['SFSpell',['../struct_s_f_spell.html',1,'']]],
+  ['spellforcespellframework_31',['SpellforceSpellFramework',['../struct_spellforce_spell_framework.html',1,'']]],
+  ['spellfunctions_32',['SpellFunctions',['../struct_spell_functions.html',1,'']]]
 ];

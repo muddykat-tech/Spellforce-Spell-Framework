@@ -16,5 +16,6 @@ var searchData=
   ['buildingdealdamage_13',['buildingDealDamage',['../struct_toolbox_functions.html#a966a2dbb2d911dbe8ae16db4b825722e',1,'ToolboxFunctions']]],
   ['buildingiteratorinit_14',['buildingIteratorInit',['../struct_iterator_functions.html#af6027e683c72be4dd07f6f2b5d7bc2cd',1,'IteratorFunctions']]],
   ['buildingiteratorsetpointers_15',['buildingIteratorSetPointers',['../struct_iterator_functions.html#a148690c09172b5579ebdea65ddd83a82',1,'IteratorFunctions']]],
-  ['buildings_16',['buildings',['../struct_s_f___c_gd_building.html#a90777909b3f208638bcd083e27c8cf73',1,'SF_CGdBuilding']]]
+  ['buildings_16',['buildings',['../struct_s_f___c_gd_building.html#a90777909b3f208638bcd083e27c8cf73',1,'SF_CGdBuilding']]],
+  ['button_5fptr_17',['button_ptr',['../struct_c_mnu_button__data.html#ab32a384a2049151c952d20e1435ccc37',1,'CMnuButton_data']]]
 ];
