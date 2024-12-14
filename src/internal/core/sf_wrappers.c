@@ -250,6 +250,40 @@ CMnuLabel * __thiscall attach_new_label(CMnuLabel *label_ptr, CMnuContainer *par
     sprintf(empty, "");
     return attach_new_meshed_label(label_ptr, parent, empty, label_chars, font_index, x_pos, y_pos, width, height);
 }
+
+void wrap_text(const char *input, char *output, size_t max_width) {
+    size_t input_len = strlen(input);
+    size_t current_line_width = 0;
+    size_t output_index = 0;
+
+    for (size_t i = 0; i < input_len; ++i) {
+        output[output_index++] = input[i];
+        current_line_width++;
+
+        // Check if we reached the line width limit
+        if (current_line_width >= max_width) {
+            // Attempt to break at a space or punctuation mark
+            size_t break_point = output_index;
+            while (break_point > 0 && !isspace(output[break_point - 1])) {
+                break_point--;
+            }
+
+            if (break_point > 0) {
+                // Insert a newline at the break point
+                output[break_point - 1] = '\n';
+                current_line_width = output_index - break_point; // Reset the line width
+            } else {
+                // Force a line break if no space found
+                output[output_index++] = '\n';
+                current_line_width = 0;
+            }
+        }
+    }
+
+    // Null-terminate the output string
+    output[output_index] = '\0';
+}
+
 static bool is_init_finished = false;
 void attach_mod_labels(CMnuContainer *_container, int mods_per_page, int page)
 {
@@ -273,18 +307,26 @@ void attach_mod_labels(CMnuContainer *_container, int mods_per_page, int page)
             {
                 CMnuLabel *mod_title_label = mod_struct.title_label;
                 CMnuLabel *mod_description_label = mod_struct.desc_label;
+                CMnuLabel *mod_page_label = mod_struct.page_label;
 
-                // Format title and version with author in bold font
                 char mod_title[512];
-                snprintf(mod_title, sizeof(mod_title), "%s %s by %s", 
+                snprintf(mod_title, sizeof(mod_title), "%s %s\nby %s", 
                          parent_mod->mod_id, 
                          parent_mod->mod_version, 
                          parent_mod->mod_author);
                 
-                // Format description (regular font)
                 char mod_description[512];
                 snprintf(mod_description, sizeof(mod_description), "%s", 
                          parent_mod->mod_description);
+
+                char wrapped_description[1024];  // We need a larger buffer for the wrapped text
+                wrap_text(mod_description, wrapped_description, 60);
+
+                //mod_page_info
+                char mod_page_info[48];
+                snprintf(mod_page_info, sizeof(mod_page_info), "(%u / %u)", 
+                         (index + 1), (g_mod_count + 1));
+
                 if(is_init_finished)
                 {
                     SF_String title_string;
@@ -293,16 +335,23 @@ void attach_mod_labels(CMnuContainer *_container, int mods_per_page, int page)
                     g_destroy_sf_string(sf_string_mod_title);
 
                     SF_String desc_string;
-                    SF_String *sf_string_mod_desc = g_create_sf_string(&desc_string, mod_description);
+                    SF_String *sf_string_mod_desc = g_create_sf_string(&desc_string, wrapped_description);
                     g_menu_label_set_string(mod_description_label, sf_string_mod_desc);
                     g_destroy_sf_string(sf_string_mod_desc);
+
+                    SF_String page_string;
+                    SF_String *sf_string_mod_page = g_create_sf_string(&page_string, mod_page_info);
+                    g_menu_label_set_string(mod_page_label, sf_string_mod_page);
+                    g_destroy_sf_string(sf_string_mod_page);
                 }
                 else 
                 {
-                    mod_title_label = attach_new_label(mod_title_label, _container, mod_title, 6, 48, y_offset + (index % mods_per_page) * 36, 227, 36);
-                    mod_description_label = attach_new_label(mod_description_label, _container, mod_description, 11, 48, y_offset + (index % mods_per_page) * 36 + 20, 227, 36);
+                    mod_title_label = attach_new_label(mod_title_label, _container, mod_title, 6, 100, (y_offset - 32) + (index % mods_per_page) * 36, 50, 36);
+                    mod_description_label = attach_new_label(mod_description_label, _container, wrapped_description, 11, 48, y_offset + (index % mods_per_page) * 36 + 24, 227, 36);
+                    mod_page_label = attach_new_label(mod_page_label, _container, mod_page_info, 6, 92, 382, 50, 36);
                     mod_struct.title_label = mod_title_label;
                     mod_struct.desc_label = mod_description_label;
+                    mod_struct.page_label = mod_page_label;
                     
                     is_init_finished = true;
                 }
@@ -362,7 +411,7 @@ void __thiscall show_mod_list(CMnuSmpButton *button)
         p_menu_background = g_create_sf_string(&s_menu_background, menu_background_fade);
 
         setup_menu_container_data_ptr setup_menu_container_data = (setup_menu_container_data_ptr)(ASI::AddrOf(0x50FD30));
-        setup_menu_container_data(mod_list, 500, 224, 432, 307, p_menu_background, p_menu_border);
+        setup_menu_container_data(mod_list, 500, 124, 432, 432, p_menu_background, p_menu_border);
 
         set_container_alpha(mod_list, 0.99);
 
@@ -378,13 +427,13 @@ void __thiscall show_mod_list(CMnuSmpButton *button)
         char btn_default[128]  = "ui_btn_togglearrow_right_default.msh";
         char btn_label[1] = "";
 
-        attach_new_button(mod_list, btn_default, btn_pressed, btn_load, btn_disabled, btn_label, 7, (432 - (48 + 32)), 232, 32, 32, 0, &navigate_callback);
+        attach_new_button(mod_list, btn_default, btn_pressed, btn_load, btn_disabled, btn_label, 7, (432 - (48 + 32)), 332, 48, 48, 0, &navigate_callback);
 
         char btn_disabled_left[128] = "ui_btn_togglearrow_left_disabled.msh";
         char btn_pressed_left[128] = "ui_btn_togglearrow_left_pressed.msh";
         char btn_default_left[128] = "ui_btn_togglearrow_left_default.msh";
 
-        attach_new_button(mod_list, btn_default_left, btn_pressed_left, btn_load, btn_disabled_left, btn_label, 7, 48, 232, 32, 32, 1, &navigate_callback);
+        attach_new_button(mod_list, btn_default_left, btn_pressed_left, btn_load, btn_disabled_left, btn_label, 7, 28, 332, 48, 48, 1, &navigate_callback);
 
         attach_mod_labels(mod_list, 1, 0);
         does_mod_list_exist = true;
@@ -408,7 +457,7 @@ void __thiscall show_mod_list(CMnuSmpButton *button)
         }
         else 
         {
-            log_info("Show Mod List");
+            log_info("Show Mod List");  
             char alt_name[32] = "HIDE MOD LIST";
             SF_String s_alt_btn_name;
             SF_String * p_alt_btn_name;

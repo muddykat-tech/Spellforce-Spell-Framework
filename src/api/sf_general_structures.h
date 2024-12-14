@@ -16,6 +16,7 @@ typedef struct __attribute__((packed))
     char mod_version[24];
     char mod_description[128];
     char mod_author[128];
+    char mod_errors[256]; //Large Buffer for all error reporting needs.
 } SFMod;
 
 typedef void (*log_function_ptr)(const char *);
@@ -663,6 +664,7 @@ typedef struct __attribute__((packed))
     uint32_t index;  // Used to hold the index of loaded mods for the showmod page
     CMnuLabel *title_label; // Title Label 
     CMnuLabel *desc_label; // Description Label 
+    CMnuLabel *page_label; // Description Label 
 } SFSF_ModlistStruct;
 
 typedef struct __attribute__((packed))
