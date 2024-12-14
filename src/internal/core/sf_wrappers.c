@@ -253,15 +253,10 @@ CMnuLabel * __thiscall attach_new_label(CMnuLabel *label_ptr, CMnuContainer *par
 static bool is_init_finished = false;
 void attach_mod_labels(CMnuContainer *_container, int mods_per_page, int page)
 {
-    
-    log_info("Mod Label Callback");
     SFMod *old_parent = NULL;  // Initialize to NULL
     int index = 0;
     int use_index = (mods_per_page * page);  // Start index for current page
     int max_index = use_index + mods_per_page; // Max index to process for the current page
-    char struct_info[64];
-    sprintf(struct_info, "Mod Struct: %x", &mod_struct);
-    log_info(struct_info);
     // Calculate the Y offset based on the page number (page * height of one label, which is 24)
     int y_offset = 48 + (page * mods_per_page * 24);  // Start at 48 for the first label
 
@@ -276,11 +271,9 @@ void attach_mod_labels(CMnuContainer *_container, int mods_per_page, int page)
             // Only process mods within the current page range
             if (index >= use_index && index < max_index)
             {
-                log_info("Use them pointers");
                 CMnuLabel *mod_title_label = mod_struct.title_label;
                 CMnuLabel *mod_description_label = mod_struct.desc_label;
 
-                log_info("Get Mod Info");
                 // Format title and version with author in bold font
                 char mod_title[512];
                 snprintf(mod_title, sizeof(mod_title), "%s %s by %s", 
@@ -292,22 +285,13 @@ void attach_mod_labels(CMnuContainer *_container, int mods_per_page, int page)
                 char mod_description[512];
                 snprintf(mod_description, sizeof(mod_description), "%s", 
                          parent_mod->mod_description);
-
-
-                log_info("Check init logic");
                 if(is_init_finished)
                 {
-                    log_info("Title Exists, Let's Change the Text instead");
                     SF_String title_string;
                     SF_String *sf_string_mod_title = g_create_sf_string(&title_string, mod_title);
-
-                    char info_test[128];
-                    sprintf(info_test, "Testing PTR in mod label existing: %x", mod_title_label);
-                    log_info(info_test);
                     g_menu_label_set_string(mod_title_label, sf_string_mod_title);
                     g_destroy_sf_string(sf_string_mod_title);
 
-                    log_info("Desc Exists, Let's Change the Text instead");
                     SF_String desc_string;
                     SF_String *sf_string_mod_desc = g_create_sf_string(&desc_string, mod_description);
                     g_menu_label_set_string(mod_description_label, sf_string_mod_desc);
@@ -315,148 +299,137 @@ void attach_mod_labels(CMnuContainer *_container, int mods_per_page, int page)
                 }
                 else 
                 {
-                    log_info("Attach Label Title");
-                    
                     mod_title_label = attach_new_label(mod_title_label, _container, mod_title, 6, 48, y_offset + (index % mods_per_page) * 36, 227, 36);
-                    
-                    char info_test[128];
-                    sprintf(info_test, "Testing PTR in mod label: %x", mod_title_label);
-                    log_info(info_test);
-
-                    log_info("Attach Label Desc");
                     mod_description_label = attach_new_label(mod_description_label, _container, mod_description, 11, 48, y_offset + (index % mods_per_page) * 36 + 20, 227, 36);
                     mod_struct.title_label = mod_title_label;
                     mod_struct.desc_label = mod_description_label;
                     
                     is_init_finished = true;
                 }
-                log_info("Finished Mod Info");
             }
-            log_info("Go to Next Mod");
             old_parent = parent_mod;
             index++;
         }
     }
-    log_info("Mod Info Attached and Setup");
 }
 
 
 void __fastcall navigate_callback(CMnuSmpButton *button, int32_t* cui_menu_ptr_maybe)
 {
-    log_info("Nav Start");
-    
     CMnuContainer *parent = button->CMnuBase_data.param_2_callback;
-    log_info("Get Mod Struct");
-
-    char struct_info[64];
-    sprintf(struct_info, "Mod Struct: %x", &mod_struct);
-    log_info(struct_info);
-
-    log_info("Get Index");
     uint8_t index = mod_struct.index;
 
-    log_info("Check Mod Count");
     if(index > g_mod_count) 
     {
-        log_info("Set Index Again");
         mod_struct.index = 0;
         index = 0;
     }
-    log_info("Attach Mod Label");
     attach_mod_labels(parent, 1, index);
-    log_info("Increase Index");
     mod_struct.index = index + 1;
-    log_info("Nav End");
 }
 
 SFSF_ModlistStruct modinformation;
 CMnuContainer *mod_list;
+static bool is_mod_list_shown = false;
+static bool does_mod_list_exist = false;
+
 void __thiscall show_mod_list(CMnuSmpButton *button)
 {
-    log_info("Mod List Callback");
     CMnuContainer *parent = button->CMnuBase_data.param_2_callback;
-    SF_String s_menu_border, s_menu_background, s_alt_btn_name;
-    SF_String * p_menu_border, * p_menu_background, * p_alt_btn_name;
-
-    char alt_name[32] = "HIDE MOD LIST";
-    p_alt_btn_name = g_create_sf_string(&s_alt_btn_name, alt_name);
-
-    set_button_name = (set_btn_name_ptr) (ASI::AddrOf(0x52f8a0));
-    set_button_name(button, p_alt_btn_name);
-
-    g_destroy_sf_string(p_alt_btn_name);
-    mod_list = (CMnuContainer *) g_new_operator(0x340);
-    initialize_menu_container = (initialize_menu_container_ptr)(ASI::AddrOf(0x505780));
-    initialize_menu_container(mod_list);
-
-    // Setup mesh loading for background of the container.
-    char menu_border[128] = "ui_bgr_options_select_border.msb";
-    char menu_background_fade[128] = "ui_bgr_options_select_border_transparency.msb";
-    p_menu_border = g_create_sf_string(&s_menu_border, menu_border);
-    p_menu_background = g_create_sf_string(&s_menu_background, menu_background_fade);
     
-    setup_menu_container_data_ptr setup_menu_container_data = (setup_menu_container_data_ptr)(ASI::AddrOf(0x50FD30));
-    setup_menu_container_data(mod_list, 500, 224, 432, 307, p_menu_background, p_menu_border);
-
     container_alpha_ptr set_container_alpha = (container_alpha_ptr)(ASI::AddrOf(0x512EB0));
-    set_container_alpha(mod_list, 0.99);
-
-    g_destroy_sf_string(p_menu_background);
-    g_destroy_sf_string(p_menu_border);
-
-    log_info("Attach ModList Container Callback");
-    // Add new container to this container.
-    g_container_add_control(parent, mod_list, (char *)0x01, (char *)0x01, 0);
-
-    log_info("Add Nav Buttons");
-    char btn_disabled[128]= "ui_btn_togglearrow_right_disabled.msh";
-    char btn_pressed[128]  = "ui_btn_togglearrow_right_pressed.msh";
-    char btn_load[1] = "";
-    char btn_default[128]  = "ui_btn_togglearrow_right_default.msh";
-    char btn_label[1] = "";
-     
-    attach_new_button(mod_list, btn_default, btn_pressed, btn_load, btn_disabled, btn_label, 7, (432 - (48 + 32)), 232, 32, 32, 0, &navigate_callback);
-
-    char btn_disabled_left[128] = "ui_btn_togglearrow_left_disabled.msh";
-    char btn_pressed_left[128] = "ui_btn_togglearrow_left_pressed.msh";
-    char btn_default_left[128] = "ui_btn_togglearrow_left_default.msh";
-     
-    attach_new_button(mod_list, btn_default_left, btn_pressed_left, btn_load, btn_disabled_left, btn_label, 7, 48, 232, 32, 32, 1, &navigate_callback);
-
-    log_info("Add Mod Labels");
-    attach_mod_labels(mod_list, 1, 0);
-}
-
-void __fastcall show_mod_list_callback(CMnuSmpButton *button, int32_t* cui_menu_ptr_maybe)
-{
-    log_info("Callback for Main Mod List Button");
-    CMnuContainer *parent = button->CMnuBase_data.param_2_callback;
-
-    char btn_info[64];
-    sprintf(btn_info, "Button Info Struct PTR: %x", mod_struct);
-    log_info(btn_info);
     
-    uint8_t toggle = mod_struct.toggle;
+    if(!does_mod_list_exist)
+    {
+        SF_String s_menu_border, s_menu_background, s_alt_btn_name;
+        SF_String * p_menu_border, * p_menu_background, * p_alt_btn_name;
 
-    if(toggle == 0)
-    {
-        log_info("Show Mod List");
-        show_mod_list(button);
-        mod_struct.toggle = 1;
-    }
-    if(toggle == 1)
-    {
-        log_info("Hide Mod List");
-        char alt_name[32] = "SHOW MOD LIST";
-        SF_String s_alt_btn_name;
-        SF_String * p_alt_btn_name;
+        char alt_name[32] = "HIDE MOD LIST";
         p_alt_btn_name = g_create_sf_string(&s_alt_btn_name, alt_name);
 
         set_button_name = (set_btn_name_ptr) (ASI::AddrOf(0x52f8a0));
         set_button_name(button, p_alt_btn_name);
+
         g_destroy_sf_string(p_alt_btn_name);
-        mod_struct.toggle = 0;
+        mod_list = (CMnuContainer *) g_new_operator(0x340);
+        initialize_menu_container = (initialize_menu_container_ptr)(ASI::AddrOf(0x505780));
+        initialize_menu_container(mod_list);
+
+        // Setup mesh loading for background of the container.
+        char menu_border[128] = "ui_bgr_options_select_border.msb";
+        char menu_background_fade[128] = "ui_bgr_options_select_border_transparency.msb";
+        p_menu_border = g_create_sf_string(&s_menu_border, menu_border);
+        p_menu_background = g_create_sf_string(&s_menu_background, menu_background_fade);
+
+        setup_menu_container_data_ptr setup_menu_container_data = (setup_menu_container_data_ptr)(ASI::AddrOf(0x50FD30));
+        setup_menu_container_data(mod_list, 500, 224, 432, 307, p_menu_background, p_menu_border);
+
+        set_container_alpha(mod_list, 0.99);
+
+        g_destroy_sf_string(p_menu_background);
+        g_destroy_sf_string(p_menu_border);
+
+        // Add new container to this container.
+        g_container_add_control(parent, mod_list, (char *)0x01, (char *)0x01, 0);
+
+        char btn_disabled[128]= "ui_btn_togglearrow_right_disabled.msh";
+        char btn_pressed[128]  = "ui_btn_togglearrow_right_pressed.msh";
+        char btn_load[1] = "";
+        char btn_default[128]  = "ui_btn_togglearrow_right_default.msh";
+        char btn_label[1] = "";
+
+        attach_new_button(mod_list, btn_default, btn_pressed, btn_load, btn_disabled, btn_label, 7, (432 - (48 + 32)), 232, 32, 32, 0, &navigate_callback);
+
+        char btn_disabled_left[128] = "ui_btn_togglearrow_left_disabled.msh";
+        char btn_pressed_left[128] = "ui_btn_togglearrow_left_pressed.msh";
+        char btn_default_left[128] = "ui_btn_togglearrow_left_default.msh";
+
+        attach_new_button(mod_list, btn_default_left, btn_pressed_left, btn_load, btn_disabled_left, btn_label, 7, 48, 232, 32, 32, 1, &navigate_callback);
+
+        attach_mod_labels(mod_list, 1, 0);
+        does_mod_list_exist = true;
     }
+    else 
+    {
+        if(is_mod_list_shown)
+        {
+            log_info("Hide Mod List");
+            char alt_name[32] = "SHOW MOD LIST";
+            SF_String s_alt_btn_name;
+            SF_String * p_alt_btn_name;
+            p_alt_btn_name = g_create_sf_string(&s_alt_btn_name, alt_name);
+
+            set_button_name = (set_btn_name_ptr) (ASI::AddrOf(0x52f8a0));
+            set_button_name(button, p_alt_btn_name);
+            g_destroy_sf_string(p_alt_btn_name);
+
+            set_container_alpha(mod_list, 0.0);
+            is_mod_list_shown = false;
+        }
+        else 
+        {
+            log_info("Show Mod List");
+            char alt_name[32] = "HIDE MOD LIST";
+            SF_String s_alt_btn_name;
+            SF_String * p_alt_btn_name;
+            p_alt_btn_name = g_create_sf_string(&s_alt_btn_name, alt_name);
+
+            set_button_name = (set_btn_name_ptr) (ASI::AddrOf(0x52f8a0));
+            set_button_name(button, p_alt_btn_name);
+            g_destroy_sf_string(p_alt_btn_name);
+
+            set_container_alpha(mod_list, 0.99);
+            is_mod_list_shown = true;
+        }
+    }
+}
+
+void __fastcall show_mod_list_callback(CMnuSmpButton *button, int32_t* cui_menu_ptr_maybe)
+{
+    CMnuContainer *parent = button->CMnuBase_data.param_2_callback;
+    uint8_t toggle = mod_struct.toggle;
+
+    show_mod_list(button);
 }
 
 
