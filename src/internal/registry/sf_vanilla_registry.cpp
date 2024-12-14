@@ -10,6 +10,8 @@ void initialize_vanilla_spells()
 
     SFSpell *fireburst = registrationAPI.registerSpell(kGdSpellLineFireBurst);
     registrationAPI.linkTypeHandler(fireburst, &fireburst_handler);
+    registrationAPI.linkSingleTargetAIHandler(fireburst, &fireburst_ai_handler);
+    registrationAPI.applySpellTag(fireburst, SpellTag::STACKABLE_SPELL);
 
     SFSpell *healing = registrationAPI.registerSpell(kGdSpellLineHealing);
     registrationAPI.linkTypeHandler(healing, &healing_handler);
@@ -18,12 +20,14 @@ void initialize_vanilla_spells()
 
     SFSpell *death = registrationAPI.registerSpell(kGdSpellLineDeath);
     registrationAPI.linkTypeHandler(death, &death_handler);
+    registrationAPI.linkSingleTargetAIHandler(death, &death_ai_handler);
 
     SFSpell *slowness = registrationAPI.registerSpell(kGdSpellLineSlowness);
     registrationAPI.linkTypeHandler(slowness, &slowness_handler);
 
     SFSpell *poison = registrationAPI.registerSpell(kGdSpellLinePoison);
     registrationAPI.linkTypeHandler(poison, &poison_handler);
+    registrationAPI.linkSingleTargetAIHandler(poison, &fireburst_ai_handler);
 
     SFSpell *invulnerability = registrationAPI.registerSpell(kGdSpellLineInvulnerability);
     registrationAPI.linkTypeHandler(invulnerability, &invulnerability_handler);
@@ -36,6 +40,7 @@ void initialize_vanilla_spells()
 
     SFSpell *freeze = registrationAPI.registerSpell(kGdSpellLineFreeze);
     registrationAPI.linkTypeHandler(freeze, &freeze_handler);
+    registrationAPI.linkSingleTargetAIHandler(freeze, &freeze_ai_handler);
 
     SFSpell *fog = registrationAPI.registerSpell(kGdSpellLineFog);
     registrationAPI.linkTypeHandler(fog, &fog_handler);
@@ -52,6 +57,8 @@ void initialize_vanilla_spells()
 
     SFSpell *icestrike = registrationAPI.registerSpell(kGdSpellLineIceBurst);
     registrationAPI.linkTypeHandler(icestrike, &icestrike_handler);
+    registrationAPI.linkSingleTargetAIHandler(icestrike, &fireburst_ai_handler);
+    registrationAPI.applySpellTag(icestrike, SpellTag::STACKABLE_SPELL);
 
     SFSpell *iceshield = registrationAPI.registerSpell(kGdSpellLineIceShield);
     registrationAPI.linkTypeHandler(iceshield, &iceshield_handler);
@@ -67,9 +74,11 @@ void initialize_vanilla_spells()
 
     SFSpell *pain = registrationAPI.registerSpell(kGdSpellLinePain);
     registrationAPI.linkTypeHandler(pain, &pain_handler);
+    registrationAPI.linkSingleTargetAIHandler(pain, &death_ai_handler);
 
     SFSpell *lifetap = registrationAPI.registerSpell(kGdSpellLineLifeTap);
     registrationAPI.linkTypeHandler(lifetap, &lifetap_handler);
+    registrationAPI.linkSingleTargetAIHandler(lifetap, &lifetap_ai_handler);
 
     SFSpell *summon_1 = registrationAPI.registerSpell(kGdSpellLineSummonGoblin);
     registrationAPI.linkTypeHandler(summon_1, &summons_handler);
@@ -79,12 +88,14 @@ void initialize_vanilla_spells()
 
     SFSpell *hypnotize = registrationAPI.registerSpell(kGdSpellLineHypnotize);
     registrationAPI.linkTypeHandler(hypnotize, &hypnotize_handler);
+    registrationAPI.linkSingleTargetAIHandler(hypnotize, &hypnotize_ai_handler);
 
     SFSpell *iceshield2 = registrationAPI.registerSpell(kGdSpellLineIceShieldStun);
     registrationAPI.linkTypeHandler(iceshield2, &iceshield2_handler);
 
     SFSpell *pestilence = registrationAPI.registerSpell(kGdSpellLinePestilence);
     registrationAPI.linkTypeHandler(pestilence, &pestilence_handler);
+    registrationAPI.linkSingleTargetAIHandler(pestilence, &fireburst_ai_handler);
 
     SFSpell *cure_disease = registrationAPI.registerSpell(kGdSpellLineCureDisease);
     registrationAPI.linkTypeHandler(cure_disease, &cure_disease_handler);
@@ -92,6 +103,7 @@ void initialize_vanilla_spells()
 
     SFSpell *petrify = registrationAPI.registerSpell(kGdSpellLinePetrify);
     registrationAPI.linkTypeHandler(petrify, &petrify_handler);
+    registrationAPI.linkSingleTargetAIHandler(petrify, &petrify_ai_handler);
 
     // Two unused spells here
 
@@ -163,6 +175,7 @@ void initialize_vanilla_spells()
     SFSpell *charm_animal = registrationAPI.registerSpell(kGdSpellLineCharmAnimal);
     registrationAPI.linkTypeHandler(charm_animal, &charm_animal_handler);
     registrationAPI.applySpellTag(charm_animal, SpellTag::DOMINATION_SPELL);
+    registrationAPI.linkSingleTargetAIHandler(charm_animal, &charm_ai_handler);
 
     SFSpell *thorn_shield = registrationAPI.registerSpell(kGdSpellLineThornShield);
     registrationAPI.linkTypeHandler(thorn_shield, &thorn_shield_handler);
@@ -200,6 +213,8 @@ void initialize_vanilla_spells()
 
     SFSpell *hallow = registrationAPI.registerSpell(kGdSpellLineHallow);
     registrationAPI.linkTypeHandler(hallow, &hallow_handler);
+    registrationAPI.linkSingleTargetAIHandler(hallow, &hallow_ai_handler);
+    registrationAPI.applySpellTag(hallow, SpellTag::STACKABLE_SPELL);
 
     // Unused spell here
 
@@ -229,6 +244,7 @@ void initialize_vanilla_spells()
 
     SFSpell *manatap = registrationAPI.registerSpell(kGdSpellLineManaTap);
     registrationAPI.linkTypeHandler(manatap, &manatap_handler);
+    registrationAPI.linkSingleTargetAIHandler(manatap, &manatap_ai_handler);
 
     SFSpell *mana_drain = registrationAPI.registerSpell(kGdSpellLineManaDrain);
     registrationAPI.linkTypeHandler(mana_drain, &manadrain_handler);
@@ -243,6 +259,7 @@ void initialize_vanilla_spells()
 
     SFSpell *confuse = registrationAPI.registerSpell(kGdSpellLineConfuse);
     registrationAPI.linkTypeHandler(confuse, &confuse_handler);
+    registrationAPI.linkSingleTargetAIHandler(confuse, &confuse_ai_handler);
 
     SFSpell *rain_of_fire = registrationAPI.registerSpell(kGdSpellLineRainOfFire);
     registrationAPI.linkTypeHandler(rain_of_fire, &rain_of_fire_handler);
@@ -261,6 +278,7 @@ void initialize_vanilla_spells()
 
     SFSpell *amok = registrationAPI.registerSpell(kGdSpellLineAmok);
     registrationAPI.linkTypeHandler(amok, &amok_handler);
+    registrationAPI.linkSingleTargetAIHandler(amok, &amok_ai_handler);
 
     // Next Block
 
@@ -367,6 +385,7 @@ void initialize_vanilla_spells()
     SFSpell *dominate_animal = registrationAPI.registerSpell(kGdSpellLineDominateAnimal);
     registrationAPI.linkTypeHandler(dominate_animal, &dominate_animal_handler);
     registrationAPI.applySpellTag(dominate_animal, SpellTag::DOMINATION_SPELL);
+    registrationAPI.linkSingleTargetAIHandler(dominate_animal, &dominate_ai_handler);
 
     // Would this defeat Jack Slash?
     SFSpell *summon_7 = registrationAPI.registerSpell(kGdSpellLineSummonBear);
@@ -415,17 +434,23 @@ void initialize_vanilla_spells()
     SFSpell *dominate = registrationAPI.registerSpell(kGdSpellLineDominate);
     registrationAPI.linkTypeHandler(dominate, &dominate_handler);
     registrationAPI.applySpellTag(dominate, SpellTag::DOMINATION_SPELL);
+    registrationAPI.linkSingleTargetAIHandler(dominate, &dominate_ai_handler);
+
     // Unused Spell Here
 
     SFSpell *charm = registrationAPI.registerSpell(kGdSpellLineCharm);
     registrationAPI.linkTypeHandler(charm, &charm_handler);
     registrationAPI.applySpellTag(charm, SpellTag::DOMINATION_SPELL);
+    registrationAPI.linkSingleTargetAIHandler(charm, &charm_ai_handler);
 
     SFSpell *befriend = registrationAPI.registerSpell(kGdSpellLineBefriend);
     registrationAPI.linkTypeHandler(befriend, &befriend_handler);
+    registrationAPI.applySpellTag(befriend, SpellTag::DOMINATION_SPELL);
+    registrationAPI.linkSingleTargetAIHandler(befriend, &befriend_ai_handler);
 
     SFSpell *disenchant = registrationAPI.registerSpell(kGdSpellLineDisenchant);
     registrationAPI.linkTypeHandler(disenchant, &disenchant_handler);
+    registrationAPI.linkSingleTargetAIHandler(disenchant, &befriend_ai_handler);
 
     SFSpell *charisma = registrationAPI.registerSpell(kGdSpellLineCharisma);
     registrationAPI.linkTypeHandler(charisma, &charisma_handler);
@@ -442,6 +467,7 @@ void initialize_vanilla_spells()
 
     SFSpell *demoralization = registrationAPI.registerSpell(kGdSpellLineDemoralization);
     registrationAPI.linkTypeHandler(demoralization, &demoralization_handler);
+    registrationAPI.linkSingleTargetAIHandler(demoralization, &demoralization_ai_handler);
 
     SFSpell *aura18 = registrationAPI.registerSpell(kGdSpellLineAuraBrilliance);
     registrationAPI.linkTypeHandler(aura18, &aura_handler);
@@ -512,6 +538,8 @@ void initialize_vanilla_spells()
 
     SFSpell *tower_icestrike = registrationAPI.registerSpell(kGdSpellLineIceburstTower);
     registrationAPI.linkTypeHandler(tower_icestrike, &tower_icestrike_handler);
+    registrationAPI.applySpellTag(tower_icestrike, SpellTag::STACKABLE_SPELL);
+    registrationAPI.linkSingleTargetAIHandler(tower_icestrike, &fireburst_ai_handler);
 
     SFSpell *lifetap_aura = registrationAPI.registerSpell(kGdSpellLineLifeTapAura);
     registrationAPI.linkTypeHandler(lifetap_aura, &lifetap_aura_handler);
@@ -585,6 +613,8 @@ void initialize_vanilla_spells()
 
     SFSpell *fireburst2 = registrationAPI.registerSpell(kGdSpellLineFireBurstTower);
     registrationAPI.linkTypeHandler(fireburst2, &fireburst_handler);
+    registrationAPI.applySpellTag(fireburst2, SpellTag::STACKABLE_SPELL);
+    registrationAPI.linkSingleTargetAIHandler(fireburst2, &fireburst_ai_handler);
 
     // Next Spell Block
 
@@ -593,6 +623,7 @@ void initialize_vanilla_spells()
 
     SFSpell *tower_hypnotize = registrationAPI.registerSpell(kGdSpellLineHypnotizeTower);
     registrationAPI.linkTypeHandler(tower_hypnotize, &tower_hypnotize_handler);
+    registrationAPI.linkSingleTargetAIHandler(tower_hypnotize, &hypnotize_ai_handler);
 
     SFSpell *tower_pain = registrationAPI.registerSpell(kGdSpellLinePainTower);
     registrationAPI.linkTypeHandler(tower_pain, &tower_pain_handler);
@@ -612,6 +643,7 @@ void initialize_vanilla_spells()
 
     SFSpell *hypnotize2 = registrationAPI.registerSpell(kGdSpellLineHypnotizeTwo);
     registrationAPI.linkTypeHandler(hypnotize2, &hypnotize_handler);
+    registrationAPI.linkSingleTargetAIHandler(hypnotize2, &hypnotize_ai_handler);
     registrationAPI.applySpellTag(hypnotize2, SpellTag::DOMINATION_SPELL);
 
     SFSpell *freeze2 = registrationAPI.registerSpell(kGdSpellLineIceArrowEffect);
@@ -782,6 +814,7 @@ void initialize_vanilla_spells()
 
     SFSpell *area_hypnotize = registrationAPI.registerSpell(kGdSpellLineHypnotizeArea);
     registrationAPI.linkTypeHandler(area_hypnotize, &area_hypnotize_handler);
+    registrationAPI.linkSingleTargetAIHandler(area_hypnotize, &hypnotize_ai_handler);
 
     SFSpell *area_confuse = registrationAPI.registerSpell(kGdSpellLineConfuseArea);
     registrationAPI.linkTypeHandler(area_confuse, &area_confuse_handler);

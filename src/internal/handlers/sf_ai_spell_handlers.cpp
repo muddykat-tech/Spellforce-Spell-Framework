@@ -827,7 +827,7 @@ uint16_t __thiscall befriend_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t
     return rank;
 }
 
-uint16_t dispel_white_aura_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+uint16_t __thiscall dispel_white_aura_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 2;
     bool hasAura = false;
@@ -852,7 +852,7 @@ uint16_t dispel_white_aura_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t t
     return rank;
 }
 
-uint16_t dispel_black_aura_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+uint16_t __thiscall dispel_black_aura_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 2;
     bool hasAura = false;
@@ -877,7 +877,18 @@ uint16_t dispel_black_aura_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t t
     return rank;
 }
 
-uint16_t default_offensive_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+uint16_t __thiscall default_offensive_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
     return 4;
+}
+
+uint16_t __thiscall dominate_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 2;
+    if ((spell_data->params[2] < _this->battleData.current_target_level_possibly) ||
+        (figureAPI.isFlagSet(_this->battleData.CGdFigure, target_index, UNKILLABLE)))
+    {
+        rank = 0;
+    }
+    return rank;
 }
