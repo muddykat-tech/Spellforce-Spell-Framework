@@ -196,6 +196,7 @@ void register_mod_spells()
             {
                 snprintf(error_msg, sizeof(error_msg), "| - Mod Conflict Detected [%s]: Spell ID [%d] is already registered by [%s]", parent_mod->mod_id, spell_id, conflict_mod->mod_id);
                 log_error(error_msg);
+                snprintf(conflict_mod->mod_errors, sizeof(parent_mod->mod_errors), "%sSpell ID [%d] was overwritten by %s\n", conflict_mod->mod_errors, spell_id, parent_mod->mod_id);
                 g_error_count = g_error_count + 1;
             }
         }
@@ -213,6 +214,9 @@ void register_mod_spells()
             {
                 snprintf(error_msg, sizeof(error_msg), "| - Mod Conflict Detected [%s]: Spell Effect ID [%d] is already registered by [%s]", parent_mod->mod_id, spell_effect_id, conflict_mod->mod_id);
                 log_error(error_msg);
+                
+                snprintf(conflict_mod->mod_errors, sizeof(parent_mod->mod_errors), "%sSpell Effect ID [%d] was overwritten by %s\n",conflict_mod->mod_errors, spell_effect_id, parent_mod->mod_id);
+
                 g_error_count = g_error_count + 1;
             }
         }
