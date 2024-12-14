@@ -747,8 +747,8 @@ uint16_t __thiscall petrify_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t 
     return rank;
 }
 
-//charm
-//charm animal
+// charm
+// charm animal
 uint16_t __thiscall charm_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 2;
@@ -811,12 +811,62 @@ uint16_t __thiscall demoralization_ai_handler(SF_CGdBattleDevelopment *_this, ui
     return rank;
 }
 
-//befriend 
-//disenchant
+// befriend
+// disenchant
 uint16_t __thiscall befriend_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 2;
     if (spell_data->params[0] < _this->battleData.current_target_level_possibly)
+    {
+        rank = 0;
+    }
+    return rank;
+}
+
+uint16_t dispel_white_aura_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 2;
+    bool hasAura = false;
+    if (toolboxAPI.hasAuraActive(_this->battleData.CGdFigureToolBox, target_index))
+    {
+        for (uint16_t node_id = figureAPI.getSpellJobStartNode(_this->battleData.CGdFigure, target_index);
+             node_id != 0; node_id = toolboxAPI.getNextNode(_this->battleData.CGdDoubleLinkList, node_id))
+        {
+            uint16_t spell_index = toolboxAPI.getSpellIndexFromDLL(_this->battleData.CGdDoubleLinkList, node_id);
+            uint16_t spell_line = spellAPI.getSpellLine(_this->battleData.CGdSpell, spell_index);
+            if (spellAPI.hasSpellTag(spell_line, SpellTag::WHITE_AURA_SPELL))
+            {
+                hasAura = true;
+                break;
+            }
+        }
+    }
+    if (!hasAura)
+    {
+        rank = 0;
+    }
+    return rank;
+}
+
+uint16_t dispel_black_aura_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 2;
+    bool hasAura = false;
+    if (toolboxAPI.hasAuraActive(_this->battleData.CGdFigureToolBox, target_index))
+    {
+        for (uint16_t node_id = figureAPI.getSpellJobStartNode(_this->battleData.CGdFigure, target_index);
+             node_id != 0; node_id = toolboxAPI.getNextNode(_this->battleData.CGdDoubleLinkList, node_id))
+        {
+            uint16_t spell_index = toolboxAPI.getSpellIndexFromDLL(_this->battleData.CGdDoubleLinkList, node_id);
+            uint16_t spell_line = spellAPI.getSpellLine(_this->battleData.CGdSpell, spell_index);
+            if (spellAPI.hasSpellTag(spell_line, SpellTag::BLACK_AURA_SPELL))
+            {
+                hasAura = true;
+                break;
+            }
+        }
+    }
+    if (!hasAura)
     {
         rank = 0;
     }

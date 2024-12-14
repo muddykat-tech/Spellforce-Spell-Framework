@@ -14,12 +14,13 @@ static fidfree_ptr fidFree;
 
 SF_String_ctor_ptr g_create_sf_string;
 SF_String_dtor_ptr g_destroy_sf_string;
-
+has_spell_effect_ptr has_spell_effect;
 
 void initialize_wrapper_data_hooks()
 {
     FUN_0069eaf0 = (FUN_0069eaf0_ptr)(ASI::AddrOf(0x29EAF0));
     fidFree = (fidfree_ptr)(ASI::AddrOf(0x6B6E25));
+    has_spell_effect = (has_spell_effect_ptr)(ASI::AddrOf(0x2fe46f));
 }
 
 void log_message(const char *filename, const char *message)
@@ -200,6 +201,10 @@ void __thiscall spellClearFigureFlag(SF_CGdSpell *_this, uint16_t spell_id, Spel
     }
 }
 
+bool __thiscall hasAuraActive(SF_CGdFigureToolbox *_this, uint16_t figure_id)
+{
+    return has_spell_effect(_this, figure_id, 0x49);
+}
 // Temp
 typedef void(__thiscall *vfunction_2_ptr)(void *_this, void *input);
 typedef void(__thiscall *vfunction_ptr)(void *label, char *p1);

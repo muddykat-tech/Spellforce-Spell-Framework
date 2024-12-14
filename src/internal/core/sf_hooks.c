@@ -1,7 +1,7 @@
-/** 
+/**
  * @defgroup Hooks Assembly Hooks
  * @ingroup Internal
- * @details This group contains all the hooks used in SFSF. 
+ * @details This group contains all the hooks used in SFSF.
  * @see initialize_data_hooks()
  */
 
@@ -45,7 +45,7 @@ RegistrationFunctions registrationAPI;
  * @details This function is also used to initalize indiviual function hooks.
  * Individual Function hooks are simply storing a pointer to a function that's within Spellforce.
  * Wrapper Functions grab a pointer from our own codebase.
- * @see sf_wrappers.c 
+ * @see sf_wrappers.c
  */
 void initialize_data_hooks()
 {
@@ -174,6 +174,9 @@ void initialize_data_hooks()
 
     log_info("| - FigureAPI Wrappers");
     INCLUDE_FUNCTION(figure, addBonusMultToStatistic, &addBonusMultToStatistic);
+
+    log_info("| - ToolboxAPI Wrappers");
+    INCLUDE_FUNCTION(toolbox, hasAuraActive, &hasAuraActive);
 
     log_info("| - IteratorAPI Wrappers");
     INCLUDE_FUNCTION(iterator, setupFigureIterator, &setupFigureIterator);
@@ -314,7 +317,7 @@ void initialize_beta_hooks()
     log_info("Hooking On Hit Trigger");
     initialize_onhit_hook();
 
-    log_info ("Hooking AI Support Spell Handling");
+    log_info("Hooking AI Support Spell Handling");
     initialize_ai_support_spell_hook();
 }
 
