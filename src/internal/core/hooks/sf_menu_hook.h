@@ -16,7 +16,9 @@ extern get_font_ptr g_get_font;
 extern container_add_control_ptr g_container_add_control;
 extern create_option_ptr f_create_menu_option;
 
+extern CMnuLabel *sfsf_version_label;
 void __thiscall sf_menu_hook(uint32_t _CAppMenu);
 void initialize_menu_data_hooks();
+
 
 #endif

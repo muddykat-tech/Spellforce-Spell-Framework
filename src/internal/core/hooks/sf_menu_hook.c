@@ -37,7 +37,6 @@ menu_label_set_font_ptr g_menu_label_set_font;
 get_font_ptr g_get_font;
 menu_label_set_string_ptr g_menu_label_set_string;
 
-
 void initialize_menu_data_hooks()
 {
     // Retrieve function pointers using the Memory Address of Intercepted Function
@@ -64,11 +63,10 @@ void initialize_menu_data_hooks()
     f_create_menu_option = (create_option_ptr)(ASI::AddrOf(0x61CF80));
 }
 
-static bool hasLoadedOnce = false;
-
+SFSF_ModlistStruct mod_struct;
 void __attribute__((no_caller_saved_registers, thiscall)) sf_menu_hook(uint32_t _CAppMenu)
 {
-
+    log_info("Starting Menu Hook");
     // String to display in the new label we're attaching to the menu
     char sfsf_info[256];
     sprintf(sfsf_info, "Spell Framework %s\n%d Mod(s) Loaded with %d Error(s)", g_framework_mod->mod_version, g_mod_count, g_error_count);
@@ -78,10 +76,11 @@ void __attribute__((no_caller_saved_registers, thiscall)) sf_menu_hook(uint32_t 
     uint32_t container_hack_ptr = *(uint32_t *)(_CAppMenu + 0x58);
     CMnuContainer *container_hack = (CMnuContainer *)container_hack_ptr;
     uint32_t screen_vftable_ptr = CMnuScreen_ptr;
-
-    attach_new_label(container_hack, sfsf_info, 6, 10, 729, strlen(sfsf_info) * 4, 100);
+    
+    CMnuLabel *sfsf_version_label;
+    attach_new_label(sfsf_version_label, container_hack, sfsf_info, 6, 10, 729, strlen(sfsf_info) * 4, 100);
     char sfsf_test_button_default[256];
-    char sfsf_test_button_pressed[256];
+    char sfsf_test_button_pressed[256]; 
     char sfsf_test_button_disabled[256];
     char sfsf_test_button_highlight[256];
     char sfsf_test_button_label[256];
@@ -92,34 +91,15 @@ void __attribute__((no_caller_saved_registers, thiscall)) sf_menu_hook(uint32_t 
     sprintf(sfsf_test_button_disabled, "ui_mainmenu_button_disabled.msh");
     sprintf(sfsf_test_button_label, "SHOW MOD LIST");
 
+    // Initialize struct members
+    mod_struct.toggle = 0;
+    mod_struct.index = 0;
+    
+
+    log_info("Adding Mod List Button");
     int button_index = 15;
-    attach_new_button(container_hack, sfsf_test_button_default, sfsf_test_button_pressed, sfsf_test_button_highlight, sfsf_test_button_disabled, sfsf_test_button_label, 7, 822,705,192,36, button_index);
-
-    // Attach new Menu Button for Mod Info.
-    if (hasLoadedOnce)
-    {
-        s_menu_func(_CAppMenu);
-        return;
-    }
-
-    hasLoadedOnce = true;
-    log_info("-==== Mod Information Start ====-");
-    SFMod *old_parent;
-    for (SFSpell *spell_data : g_internal_spell_list)
-    {
-        // Let's add mod information into the console
-        SFMod *parent_mod = spell_data->parent_mod;
-        if (old_parent != parent_mod)
-        {
-            log_info(parent_mod->mod_id);
-            log_info(parent_mod->mod_version);
-            log_info(parent_mod->mod_author);
-            log_info(parent_mod->mod_description);
-            log_info("-========-");
-            old_parent = parent_mod;
-        }
-    }
-    log_info("-==== Mod Information End ====-");
+    attach_new_button(container_hack, sfsf_test_button_default, sfsf_test_button_pressed, sfsf_test_button_highlight, sfsf_test_button_disabled, sfsf_test_button_label, 7, 822,705,192,36, button_index, &show_mod_list_callback);
+    
     // Call original menu function to show the menu
     s_menu_func(_CAppMenu);
 }
