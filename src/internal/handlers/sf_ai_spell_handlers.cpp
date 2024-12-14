@@ -663,6 +663,10 @@ uint32_t __thiscall amok_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t tar
     return rank;
 }
 
+// kGdSpellLineHypnotizeTower
+// kGdSpellLineHypnotizeTwo
+// kGdSpellLineHypnotizeArea
+// kGdSpellLineHypnotize
 uint16_t __thiscall hypnotize_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 2;
@@ -871,4 +875,9 @@ uint16_t dispel_black_aura_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t t
         rank = 0;
     }
     return rank;
+}
+
+uint16_t default_offensive_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    return 4;
 }
