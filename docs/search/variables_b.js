@@ -21,6 +21,10 @@ var searchData=
   ['missing_5fval_18',['missing_val',['../struct_figure_statistic_ext.html#ae1f6b4439db46979205fdf07ad1b4e5c',1,'FigureStatisticExt']]],
   ['mod_5fauthor_19',['mod_author',['../struct_s_f_mod.html#afb68db7dba8f8f8ba83e002ef6f08798',1,'SFMod']]],
   ['mod_5fdescription_20',['mod_description',['../struct_s_f_mod.html#a8f896547fbc749b9733aba0ddbd683cd',1,'SFMod']]],
-  ['mod_5fid_21',['mod_id',['../struct_s_f_mod.html#a45a0016a0b40578f64784d87ba36ecfa',1,'SFMod']]],
-  ['mod_5fversion_22',['mod_version',['../struct_s_f_mod.html#abad5eb60a69c3058eae89231e3b7c41c',1,'SFMod']]]
+  ['mod_5ferrors_21',['mod_errors',['../struct_s_f_mod.html#ad6dbc6048c1384c3111b2fbb13351977',1,'SFMod']]],
+  ['mod_5fid_22',['mod_id',['../struct_s_f_mod.html#a45a0016a0b40578f64784d87ba36ecfa',1,'SFMod']]],
+  ['mod_5flist_23',['mod_list',['../sf__wrappers_8c.html#af8156fc84def214fb289ef5067d04518',1,'sf_wrappers.c']]],
+  ['mod_5fstruct_24',['mod_struct',['../group___menu_hook.html#ga203f11764a3be2159da536bae6912124',1,'mod_struct:&#160;sf_menu_hook.c'],['../group___menu_hook.html#ga203f11764a3be2159da536bae6912124',1,'mod_struct:&#160;sf_menu_hook.c']]],
+  ['mod_5fversion_25',['mod_version',['../struct_s_f_mod.html#abad5eb60a69c3058eae89231e3b7c41c',1,'SFMod']]],
+  ['modinformation_26',['modinformation',['../sf__wrappers_8c.html#a53592b3907302ed9e7a63ff2e7c65fec',1,'sf_wrappers.c']]]
 ];
