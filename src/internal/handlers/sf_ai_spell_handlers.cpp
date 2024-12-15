@@ -912,7 +912,7 @@ uint32_t __thiscall raise_dead_ai_handler(SF_CGdBattleDevelopment *_this, SF_Coo
     {
         if (sf_figures->figures[figure_index].owner != (uint16_t)(-1))
         {
-            if (sf_figures->figures[figure_index].owner == f_figures->figures[_this->battleData.current_figure].owner)
+            if (sf_figures->figures[figure_index].owner == sf_figures->figures[_this->battleData.current_figure].owner)
             {
                 if ((sf_figures->figures[figure_index].flags & GdFigureFlags::IS_DEAD) != 0)
                 {
@@ -973,7 +973,7 @@ uint32_t __thiscall revenge_ai_handler(SF_CGdBattleDevelopment *_this, SF_Coord 
     {
         if (sf_figures->figures[figure_index].owner != (uint16_t)(-1))
         {
-            if (sf_figures->figures[figure_index].owner == f_figures->figures[_this->battleData.current_figure].owner)
+            if (sf_figures->figures[figure_index].owner == sf_figures->figures[_this->battleData.current_figure].owner)
             {
                 if ((sf_figures->figures[figure_index].flags & GdFigureFlags::IS_DEAD) != 0)
                 {
@@ -1015,7 +1015,7 @@ uint32_t __thiscall torture_ai_handler(SF_CGdBattleDevelopment *_this, SF_Coord 
     {
         if (sf_figures->figures[figure_index].owner != (uint16_t)(-1))
         {
-            if (sf_figures->figures[figure_index].owner != f_figures->figures[_this->battleData.current_figure].owner)
+            if (sf_figures->figures[figure_index].owner != sf_figures->figures[_this->battleData.current_figure].owner)
             {
                 if ((sf_figures->figures[figure_index].flags & GdFigureFlags::IS_DEAD) != 0)
                 {
