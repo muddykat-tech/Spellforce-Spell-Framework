@@ -132,6 +132,7 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(effect, addEffect, 0x2dc880);
     DEFINE_FUNCTION(effect, setEffectXData, 0x2ddb30);
     DEFINE_FUNCTION(effect, getEffectXData, 0x2dd730);
+    DEFINE_FUNCTION(effect, tryEndEffect, 0x2dcaa0);
 
     log_info("| - ToolboxAPI Hooks");
 
@@ -291,6 +292,20 @@ static void initialize_ai_support_spell_hook()
     ASI::EndRewrite(ai_support_mreg);
 }
 
+static void initialize_ai_offensive_hook()
+{
+    ASI::MemoryRegion ai_offensive_mreg(ASI::AddrOf(0x35d2f8), 5);
+    ASI::BeginRewrite(ai_offensive_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x35d2f8)) = 0xE8; // CALL instruction
+    *(int *)(ASI::AddrOf(0x35d2f9)) = (int)(&rank_offensive_spell_hook) - ASI::AddrOf(0x35d2fd);
+    ASI::EndRewrite(ai_offensive_mreg);
+
+    ASI::MemoryRegion ai_offensive_mreg2(ASI::AddrOf(0x360fa6), 5);
+    ASI::BeginRewrite(ai_offensive_mreg2);
+    *(unsigned char *)(ASI::AddrOf(0x360fa6)) = 0xE8; // CALL instruction
+    *(int *)(ASI::AddrOf(0x360fa7)) = (int)(&rank_offensive_spell_hook) - ASI::AddrOf(0x360fab);
+    ASI::EndRewrite(ai_offensive_mreg2);
+}
 void initialize_beta_hooks()
 {
     log_info("Hooking Spell Types");
@@ -319,6 +334,8 @@ void initialize_beta_hooks()
 
     log_info("Hooking AI Support Spell Handling");
     initialize_ai_support_spell_hook();
+    log_info("Hooking AI Offensive Spell Handling");
+    initialize_ai_offensive_hook();
 }
 
 /**

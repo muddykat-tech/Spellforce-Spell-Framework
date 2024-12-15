@@ -83,6 +83,26 @@ uint32_t __thiscall rank_support_spell_hook(SF_CGdBattleDevelopment *_this, uint
     return rank;
 }
 
+uint32_t __thiscall rank_offensive_spell_hook(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    bool isStackable = hasSpellTag(spell_line, SpellTag::STACKABLE_SPELL);
+
+   /* char message[256]; 
+    sprintf(message, "SpellLine: %hd Target: %hd isStackable: %d", spell_line, target_index, isStackable);
+    log_info(message);
+*/
+    ai_single_handler_ptr handler = get_single_ai_handler(spell_line);
+    if (handler == &default_support_ai_handler)
+    {
+        handler = &default_offensive_ai_handler;
+    }
+    uint32_t rank = handler(_this, target_index, spell_line, spell_data);
+    if ((toolboxAPI.hasSpellOnIt(_this->battleData.CGdFigureToolBox, target_index, spell_line)) && (!isStackable))
+    {
+        rank = 0;
+    }
+    return rank;
+}
 /**
  * @}
  */
