@@ -114,7 +114,8 @@ typedef enum
     FOREST_SPIRIT = 0x8000000,
     VIP = 0x10000000,
     ILLUSION = 0x20000000,
-    SPAWN = 0x40000000
+    SPAWN = 0x40000000,
+    USED_FOR_REVENGE = 0x80000000
 } GdFigureFlags;
 
 typedef enum : uint16_t
