@@ -667,7 +667,7 @@ uint32_t __thiscall amok_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t tar
 // kGdSpellLineHypnotizeTwo
 // kGdSpellLineHypnotizeArea
 // kGdSpellLineHypnotize
-uint16_t __thiscall hypnotize_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+uint32_t __thiscall hypnotize_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 2;
 
@@ -685,7 +685,7 @@ uint16_t __thiscall hypnotize_ai_handler(SF_CGdBattleDevelopment *_this, uint16_
     return rank;
 }
 
-uint16_t __thiscall freeze_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+uint32_t __thiscall freeze_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 2;
     uint16_t max_health = figureAPI.getCurrentMaxHealth(_this->battleData.CGdFigure, target_index);
@@ -703,7 +703,7 @@ uint16_t __thiscall freeze_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t t
 // Non-stackable:
 //  kGdSpellLinePoison
 //  kGdSpellLinePestilence
-uint16_t __thiscall fireburst_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+uint32_t __thiscall fireburst_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 2;
     if (_this->battleData.current_target_level_possibly < 3)
@@ -714,7 +714,7 @@ uint16_t __thiscall fireburst_ai_handler(SF_CGdBattleDevelopment *_this, uint16_
 }
 
 // Death and Pain
-uint16_t __thiscall death_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+uint32_t __thiscall death_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 2;
     if (_this->battleData.current_target_level_possibly != 0)
@@ -724,7 +724,7 @@ uint16_t __thiscall death_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t ta
     return rank;
 }
 
-uint16_t __thiscall lifetap_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+uint32_t __thiscall lifetap_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 2;
     uint16_t percent = figureAPI.getCurrentHealthPercent(_this->battleData.CGdFigure, _this->battleData.current_figure);
@@ -740,7 +740,7 @@ uint16_t __thiscall lifetap_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t 
     return rank;
 }
 
-uint16_t __thiscall petrify_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+uint32_t __thiscall petrify_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 2;
 
@@ -753,7 +753,7 @@ uint16_t __thiscall petrify_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t 
 
 // charm
 // charm animal
-uint16_t __thiscall charm_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+uint32_t __thiscall charm_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 2;
     if ((figureAPI.isFlagSet(_this->battleData.CGdFigure, target_index, UNKILLABLE)) ||
@@ -764,7 +764,7 @@ uint16_t __thiscall charm_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t ta
     return rank;
 }
 
-uint16_t __thiscall hallow_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+uint32_t __thiscall hallow_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 2;
     if ((_this->battleData.CGdFigure->figures[target_index].flags & GdFigureFlags::UNDEAD) == 0)
@@ -774,7 +774,7 @@ uint16_t __thiscall hallow_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t t
     return rank;
 }
 
-uint16_t __thiscall manatap_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+uint32_t __thiscall manatap_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 2;
     uint16_t current_mana = figureAPI.getCurrentMana(_this->battleData.CGdFigure, _this->battleData.current_figure);
@@ -795,7 +795,7 @@ uint16_t __thiscall manatap_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t 
     return rank;
 }
 
-uint16_t __thiscall confuse_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+uint32_t __thiscall confuse_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 2;
     if (!toolboxAPI.isUnitMelee(_this->battleData.CGdFigureToolBox, target_index))
@@ -805,7 +805,7 @@ uint16_t __thiscall confuse_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t 
     return rank;
 }
 
-uint16_t __thiscall demoralization_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+uint32_t __thiscall demoralization_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 2;
     if (spell_data->params[1] < _this->battleData.current_target_level_possibly)
@@ -817,7 +817,7 @@ uint16_t __thiscall demoralization_ai_handler(SF_CGdBattleDevelopment *_this, ui
 
 // befriend
 // disenchant
-uint16_t __thiscall befriend_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+uint32_t __thiscall befriend_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 2;
     if (spell_data->params[0] < _this->battleData.current_target_level_possibly)
@@ -827,7 +827,7 @@ uint16_t __thiscall befriend_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t
     return rank;
 }
 
-uint16_t __thiscall dispel_white_aura_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+uint32_t __thiscall dispel_white_aura_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 2;
     bool hasAura = false;
@@ -852,7 +852,7 @@ uint16_t __thiscall dispel_white_aura_ai_handler(SF_CGdBattleDevelopment *_this,
     return rank;
 }
 
-uint16_t __thiscall dispel_black_aura_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+uint32_t __thiscall dispel_black_aura_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 2;
     bool hasAura = false;
@@ -877,12 +877,12 @@ uint16_t __thiscall dispel_black_aura_ai_handler(SF_CGdBattleDevelopment *_this,
     return rank;
 }
 
-uint16_t __thiscall default_offensive_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+uint32_t __thiscall default_offensive_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
     return 4;
 }
 
-uint16_t __thiscall dominate_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+uint32_t __thiscall dominate_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 2;
     if ((spell_data->params[2] < _this->battleData.current_target_level_possibly) ||
