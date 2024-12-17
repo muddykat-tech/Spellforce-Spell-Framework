@@ -46,3 +46,5 @@ uint32_t __thiscall dispel_white_aura_ai_handler(SF_CGdBattleDevelopment *_this,
 uint32_t __thiscall dispel_black_aura_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data);
 uint32_t __thiscall default_offensive_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data);
 uint32_t __thiscall dominate_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data);
+
+uint32_t __thiscall torture_ai_handler(SF_CGdBattleDevelopment *_this, SF_Coord *cast_position, uint16_t spell_line, SF_CGdResourceSpell *spell_data);
