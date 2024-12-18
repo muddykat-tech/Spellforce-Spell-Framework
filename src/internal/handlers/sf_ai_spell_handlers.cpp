@@ -1120,3 +1120,138 @@ uint32_t __thiscall rain_ai_handler(SF_CGdBattleDevelopment *_this, SF_Coord *ca
     }
     return rank;
 }
+
+uint32_t __thiscall freeze_ai_handler(SF_CGdBattleDevelopment *_this, SF_Coord *cast_position, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 1;
+    uint16_t count = 0;
+    ushort_list_node *enemy_list = &(_this->battleData.another_figure_list[_this->battleData.current_figure]);
+    uint16_t length = ((uint32_t)enemy_list->data - (uint32_t)(enemy_list->first)) >> 1;
+
+    for (uint16_t i = 0; i < length; i++)
+    {
+        uint16_t target_index = enemy_list->first[i];
+        SF_Coord target_pos;
+        target_pos.X = _this->battleData.CGdFigure->figures[target_index].position.X;
+        target_pos.Y = _this->battleData.CGdFigure->figures[target_index].position.Y;
+        uint16_t distance = getDistance(cast_position, &target_pos);
+        if (figureAPI.getSpellJobStartNode(_this->battleData.CGdFigure, target_index))
+        {
+            if (spell_data->params[1] >= distance)
+            {
+                count++;
+            }
+        }
+        else
+        {
+            if (!toolboxAPI.hasSpellOnIt(_this->battleData.CGdFigureToolBox, target_index, spell_line))
+            {
+                if (spell_data->params[1] >= distance)
+                {
+                    count++;
+                }
+            }
+        }
+        if (count > 2)
+        {
+            break;
+        }
+    }
+
+    if (count < 3)
+    {
+        rank = 0;
+    }
+
+    return rank;
+}
+
+uint32_t __thiscall hypnotize_area_ai_handler(SF_CGdBattleDevelopment *_this, SF_Coord *cast_position, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 1;
+    uint16_t count = 0;
+    ushort_list_node *enemy_list = &(_this->battleData.another_figure_list[_this->battleData.current_figure]);
+    uint16_t length = ((uint32_t)enemy_list->data - (uint32_t)(enemy_list->first)) >> 1;
+
+    for (uint16_t i = 0; i < length; i++)
+    {
+        uint16_t target_index = enemy_list->first[i];
+        SF_Coord target_pos;
+        target_pos.X = _this->battleData.CGdFigure->figures[target_index].position.X;
+        target_pos.Y = _this->battleData.CGdFigure->figures[target_index].position.Y;
+        uint16_t distance = getDistance(cast_position, &target_pos);
+        if (figureAPI.getSpellJobStartNode(_this->battleData.CGdFigure, target_index))
+        {
+            if (spell_data->params[3] >= distance)
+            {
+                count++;
+            }
+        }
+        else
+        {
+            if (!toolboxAPI.hasSpellOnIt(_this->battleData.CGdFigureToolBox, target_index, spell_line))
+            {
+                if (spell_data->params[3] >= distance)
+                {
+                    count++;
+                }
+            }
+        }
+        if (count > 2)
+        {
+            break;
+        }
+    }
+
+    if (count < 3)
+    {
+        rank = 0;
+    }
+
+    return rank;
+}
+
+uint32_t __thiscall default_aoe_offensive_ai_handler(SF_CGdBattleDevelopment *_this, SF_Coord *cast_position, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 1;
+    uint16_t count = 0;
+    ushort_list_node *enemy_list = &(_this->battleData.another_figure_list[_this->battleData.current_figure]);
+    uint16_t length = ((uint32_t)enemy_list->data - (uint32_t)(enemy_list->first)) >> 1;
+
+    for (uint16_t i = 0; i < length; i++)
+    {
+        uint16_t target_index = enemy_list->first[i];
+        SF_Coord target_pos;
+        target_pos.X = _this->battleData.CGdFigure->figures[target_index].position.X;
+        target_pos.Y = _this->battleData.CGdFigure->figures[target_index].position.Y;
+        uint16_t distance = getDistance(cast_position, &target_pos);
+        if (figureAPI.getSpellJobStartNode(_this->battleData.CGdFigure, target_index))
+        {
+            if (spell_data->params[2] >= distance)
+            {
+                count++;
+            }
+        }
+        else
+        {
+            if (!toolboxAPI.hasSpellOnIt(_this->battleData.CGdFigureToolBox, target_index, spell_line))
+            {
+                if (spell_data->params[2] >= distance)
+                {
+                    count++;
+                }
+            }
+        }
+        if (count > 2)
+        {
+            break;
+        }
+    }
+
+    if (count < 3)
+    {
+        rank = 0;
+    }
+
+    return rank;
+}
