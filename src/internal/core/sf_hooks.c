@@ -22,6 +22,7 @@
 #include "hooks/sf_console_hook.h"
 #include "hooks/sf_onhit_hook.h"
 #include "hooks/sf_ai_hook.h"
+#include "hooks/sf_utility_hooks.h"
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -306,6 +307,16 @@ static void initialize_ai_offensive_hook()
     *(int *)(ASI::AddrOf(0x360fa7)) = (int)(&rank_offensive_spell_hook) - ASI::AddrOf(0x360fab);
     ASI::EndRewrite(ai_offensive_mreg2);
 }
+
+static void initialize_utility_hooks()
+{
+    ASI::MemoryRegion is_ability_line_mreg(ASI::AddrOf(0x32afb0), 5);
+    ASI::BeginRewrite(is_ability_line_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x32afb0)) = 0xE9; // CALL instruction
+    *(int *)(ASI::AddrOf(0x32afb1)) = (int)(&is_combat_ability) - ASI::AddrOf(0x32afb5);
+    ASI::EndRewrite(is_ability_line_mreg);
+}
+
 void initialize_beta_hooks()
 {
     log_info("Hooking Spell Types");
@@ -334,8 +345,12 @@ void initialize_beta_hooks()
 
     log_info("Hooking AI Support Spell Handling");
     initialize_ai_support_spell_hook();
+
     log_info("Hooking AI Offensive Spell Handling");
     initialize_ai_offensive_hook();
+
+    log_info("Hooking Utility Functions");
+    initialize_utility_hooks();
 }
 
 /**

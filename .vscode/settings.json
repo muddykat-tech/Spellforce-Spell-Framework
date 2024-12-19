@@ -104,7 +104,8 @@
         "sf_ai_hook.h": "c",
         "sf_ai_functions.h": "c",
         "sf_ai_single_target_registry.h": "c",
-        "sf_ai_avoidance_registry.h": "c"
+        "sf_ai_avoidance_registry.h": "c",
+        "sf_utility_hooks.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled",
     "makefile.makePath": "mingw32-make",

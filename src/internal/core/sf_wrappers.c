@@ -17,6 +17,19 @@ SF_String_ctor_ptr g_create_sf_string;
 SF_String_dtor_ptr g_destroy_sf_string;
 has_spell_effect_ptr has_spell_effect;
 
+/**
+* +============================================+
+* |                                            |
+* |   _____ _                   ___  ___       |
+* |  /  __ \ |                  |  \/  |       |
+* |  | /  \/ | ___  __ _ _ __   | .  . | ___   |
+* |  | |   | |/ _ \/ _` | '_ \  | |\/| |/ _ \  |
+* |  | \__/\ |  __/ (_| | | | | | |  | |  __/  |
+* |   \____/_|\___|\__,_|_| |_| \_|  |_/\___|  |
+* |                                            |
+* +============================================+
+**/
+
 void initialize_wrapper_data_hooks()
 {
     FUN_0069eaf0 = (FUN_0069eaf0_ptr)(ASI::AddrOf(0x29EAF0));

@@ -7,7 +7,13 @@ def translate(fname):
 
     b = []
     for c in s:
-        b.append("\\{:03n}".format(c))
+        if c < 32 or c > 126:
+            b.append("\\{:03n}".format(c))
+        else:
+            if chr(c).isalnum():
+                b.append(chr(c))
+            else:
+                b.append("\\{:03n}".format(c))
 
     s2 = ''.join(b)
 
