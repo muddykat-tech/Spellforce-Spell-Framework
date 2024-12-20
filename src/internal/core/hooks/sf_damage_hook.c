@@ -54,9 +54,9 @@ uint32_t __attribute__((no_caller_saved_registers, thiscall)) sf_deal_damage(SF_
                 damage_handler_ptr exists = get_spell_damage(spell_line_id, phase);
                 if (exists != NULL)
                 {
-                    char message[256];
+                    /*char message[256];
                     sprintf(message, "Found Spell Line ID: %d", spell_line_id);
-                    log_error(message);
+                    log_error(message);*/
                     ids_by_phase[phase][sizes_by_phase[phase]++] = (spell_index << 0x10) | spell_line_id;
                     current_list_size++;
                 }

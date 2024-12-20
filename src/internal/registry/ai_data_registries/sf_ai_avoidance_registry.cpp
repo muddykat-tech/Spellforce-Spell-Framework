@@ -21,7 +21,9 @@ ai_avoidance_handler_ptr get_ai_avoidance_handler(uint16_t spell_line)
     if (it == s_ai_avoidance_handler_map.end())
     {
         // Element doesn't exist, insert the default value
-        log_warning("Unknown spell ID for avoidance ai handler, Assigning a default handler.");
+       /* char message[256];
+        sprintf(message, "Unknown spell ID : %d for avoidance ai handler, Assigning a default handler", spell_line);
+        log_warning(message);*/
         it = s_ai_avoidance_handler_map.emplace(spell_line, &sf_ai_avoidance_default_handler).first;
     }
     return it->second;

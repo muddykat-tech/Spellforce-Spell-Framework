@@ -25,8 +25,7 @@ undefined4 __thiscall CGdSpell::IsWhiteAuraSpellLine(CGdSpell *this,GdSpellLine 
 //IsAbilitySpellLine
 bool __thiscall is_combat_ability(SF_CGdSpell *_this, GdSpellLine spell_line)
 {
-    uint16_t spell_id = spellAPI.getSpellID(_this, (uint16_t) spell_line);
-    return hasSpellTag(spell_id, SpellTag::COMBAT_ABILITY_SPELL);
+    return hasSpellTag(spell_line, SpellTag::COMBAT_ABILITY_SPELL);
 }
 
 

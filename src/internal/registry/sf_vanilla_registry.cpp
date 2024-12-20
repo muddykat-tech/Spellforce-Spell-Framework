@@ -3,6 +3,7 @@
 #include "../handlers/sf_spelleffect_handlers.h"
 #include "../handlers/sf_onhit_handlers.h"
 #include "../handlers/sf_ai_spell_handlers.h"
+#include "../handlers/sf_ai_avoidance_handlers.h"
 
 void initialize_vanilla_spells()
 {
@@ -31,6 +32,7 @@ void initialize_vanilla_spells()
 
     SFSpell *invulnerability = registrationAPI.registerSpell(kGdSpellLineInvulnerability);
     registrationAPI.linkTypeHandler(invulnerability, &invulnerability_handler);
+    registrationAPI.linkAvoidanceAIHandler(invulnerability, &sf_ai_avoidance_invulnerability_handler);
 
     SFSpell *cure_poison = registrationAPI.registerSpell(kGdSpellLineCurePoison);
     registrationAPI.linkTypeHandler(cure_poison, &cure_poison_handler);
@@ -41,6 +43,7 @@ void initialize_vanilla_spells()
     SFSpell *freeze = registrationAPI.registerSpell(kGdSpellLineFreeze);
     registrationAPI.linkTypeHandler(freeze, &freeze_handler);
     registrationAPI.linkSingleTargetAIHandler(freeze, &freeze_ai_handler);
+    registrationAPI.linkAvoidanceAIHandler(freeze, &sf_ai_avoidance_freeze_handler);
 
     SFSpell *fog = registrationAPI.registerSpell(kGdSpellLineFog);
     registrationAPI.linkTypeHandler(fog, &fog_handler);
@@ -53,6 +56,7 @@ void initialize_vanilla_spells()
     SFSpell *fireshield = registrationAPI.registerSpell(kGdSpellLineFireShield);
     registrationAPI.linkTypeHandler(fireshield, &fireshield_handler);
     registrationAPI.linkSingleTargetAIHandler(fireshield, &shields_ai_handler);
+    registrationAPI.linkAvoidanceAIHandler(fireshield, &sf_ai_avoidance_shield_handler);
 
     SFSpell *fireball = registrationAPI.registerSpell(kGdSpellLineFireBall);
     registrationAPI.linkTypeHandler(fireball, &fireball_handler);
@@ -67,6 +71,7 @@ void initialize_vanilla_spells()
     SFSpell *iceshield = registrationAPI.registerSpell(kGdSpellLineIceShield);
     registrationAPI.linkTypeHandler(iceshield, &iceshield_handler);
     registrationAPI.linkSingleTargetAIHandler(iceshield, &shields_ai_handler);
+    registrationAPI.linkAvoidanceAIHandler(iceshield, &sf_ai_avoidance_shield_handler);
 
     // next block
 
@@ -93,6 +98,7 @@ void initialize_vanilla_spells()
     SFSpell *hypnotize = registrationAPI.registerSpell(kGdSpellLineHypnotize);
     registrationAPI.linkTypeHandler(hypnotize, &hypnotize_handler);
     registrationAPI.linkSingleTargetAIHandler(hypnotize, &hypnotize_ai_handler);
+    registrationAPI.linkAvoidanceAIHandler(hypnotize, &sf_ai_avoidance_hypnotize_handler);
 
     SFSpell *iceshield2 = registrationAPI.registerSpell(kGdSpellLineIceShieldStun);
     registrationAPI.linkTypeHandler(iceshield2, &iceshield2_handler);
@@ -108,6 +114,7 @@ void initialize_vanilla_spells()
     SFSpell *petrify = registrationAPI.registerSpell(kGdSpellLinePetrify);
     registrationAPI.linkTypeHandler(petrify, &petrify_handler);
     registrationAPI.linkSingleTargetAIHandler(petrify, &petrify_ai_handler);
+    registrationAPI.linkAvoidanceAIHandler(petrify, &sf_ai_avoidance_freeze_handler);
 
     // Two unused spells here
 
@@ -187,6 +194,8 @@ void initialize_vanilla_spells()
 
     SFSpell *thorn_shield = registrationAPI.registerSpell(kGdSpellLineThornShield);
     registrationAPI.linkTypeHandler(thorn_shield, &thorn_shield_handler);
+    registrationAPI.linkAvoidanceAIHandler(thorn_shield, &sf_ai_avoidance_shield_handler);
+
     registrationAPI.linkSingleTargetAIHandler(thorn_shield, &shields_ai_handler);
 
     SFSpell *quickness = registrationAPI.registerSpell(kGdSpellLineQuickness);
@@ -580,6 +589,7 @@ void initialize_vanilla_spells()
     SFSpell *conservation = registrationAPI.registerSpell(kGdSpellLineConservation);
     registrationAPI.linkTypeHandler(conservation, &conservation_handler);
     registrationAPI.linkSingleTargetAIHandler(conservation, &shields_ai_handler);
+    registrationAPI.linkAvoidanceAIHandler(conservation, &sf_ai_avoidance_shield_handler);
 
     SFSpell *summon_10 = registrationAPI.registerSpell(kGdSpellLineEarthElemental);
     registrationAPI.linkTypeHandler(summon_10, &summons_handler);
@@ -693,6 +703,7 @@ void initialize_vanilla_spells()
     SFSpell *tower_hypnotize = registrationAPI.registerSpell(kGdSpellLineHypnotizeTower);
     registrationAPI.linkTypeHandler(tower_hypnotize, &tower_hypnotize_handler);
     registrationAPI.linkSingleTargetAIHandler(tower_hypnotize, &hypnotize_ai_handler);
+    registrationAPI.linkAvoidanceAIHandler(tower_hypnotize, &sf_ai_avoidance_hypnotize_handler);
 
     SFSpell *tower_pain = registrationAPI.registerSpell(kGdSpellLinePainTower);
     registrationAPI.linkTypeHandler(tower_pain, &tower_pain_handler);
@@ -713,6 +724,7 @@ void initialize_vanilla_spells()
     SFSpell *hypnotize2 = registrationAPI.registerSpell(kGdSpellLineHypnotizeTwo);
     registrationAPI.linkTypeHandler(hypnotize2, &hypnotize_handler);
     registrationAPI.linkSingleTargetAIHandler(hypnotize2, &hypnotize_ai_handler);
+    registrationAPI.linkAvoidanceAIHandler(hypnotize2, &sf_ai_avoidance_hypnotize_handler);
 
     SFSpell *freeze2 = registrationAPI.registerSpell(kGdSpellLineIceArrowEffect);
     registrationAPI.linkTypeHandler(freeze2, &freeze2_handler);
@@ -894,6 +906,8 @@ void initialize_vanilla_spells()
     SFSpell *area_hypnotize = registrationAPI.registerSpell(kGdSpellLineHypnotizeArea);
     registrationAPI.linkTypeHandler(area_hypnotize, &area_hypnotize_handler);
     registrationAPI.linkSingleTargetAIHandler(area_hypnotize, &hypnotize_ai_handler);
+    registrationAPI.linkAvoidanceAIHandler(area_hypnotize, &sf_ai_avoidance_hypnotize_handler);
+
     registrationAPI.applySpellTag(area_hypnotize, SpellTag::AOE_SPELL);
 
     SFSpell *area_confuse = registrationAPI.registerSpell(kGdSpellLineConfuseArea);

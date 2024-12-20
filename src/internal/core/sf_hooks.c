@@ -308,6 +308,14 @@ static void initialize_ai_offensive_hook()
     ASI::EndRewrite(ai_offensive_mreg2);
 }
 
+static void initialize_avoidance_hook()
+{
+    ASI::MemoryRegion ai_avoidance_mreg(ASI::AddrOf(0x35d39e), 5);
+    ASI::BeginRewrite(ai_avoidance_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x35d39e)) = 0xE8; // CALL instruction
+    *(int *)(ASI::AddrOf(0x35d39f)) = (int)(&avoidance_penalty_hook) - ASI::AddrOf(0x35d3a3);
+    ASI::EndRewrite(ai_avoidance_mreg);
+}
 static void initialize_utility_hooks()
 {
     ASI::MemoryRegion is_ability_line_mreg(ASI::AddrOf(0x32afb0), 5);
@@ -348,6 +356,9 @@ void initialize_beta_hooks()
 
     log_info("Hooking AI Offensive Spell Handling");
     initialize_ai_offensive_hook();
+
+    log_info("Hooking AI Spell Avoidance Handling");
+    initialize_avoidance_hook();
 
     log_info("Hooking Utility Functions");
     initialize_utility_hooks();
