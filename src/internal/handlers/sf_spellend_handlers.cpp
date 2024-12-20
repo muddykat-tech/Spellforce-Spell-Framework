@@ -439,3 +439,20 @@ void __thiscall clay_feet_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
     spellClearFigureFlag(_this, spell_index, CHECK_SPELLS_BEFORE_CHECK_BATTLE);
     spellAPI.setEffectDone(_this, spell_index, 0);
 }
+
+void __thiscall aura_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    SF_CGdFigure *sf_figures = _this->SF_CGdFigure;
+    uint16_t source_index = _this->active_spell_list[spell_index].source.entity_index;
+    if ((sf_figures->figures[source_index].owner != (uint16_t)(-1)) &&
+        ((sf_figures->figures[source_index].flags & GdFigureFlags::REDO) == 0))
+    {
+        sf_figures->figures[source_index].flags = static_cast<GdFigureFlags>(sf_figures->figures[source_index].flags & (~static_cast<unsigned int>(GdFigureFlags::AURA_RUNNING)));
+    }
+    uint16_t effect_index = spellAPI.getXData(_this, spell_index, EFFECT_EFFECT_INDEX);
+    if (effect_index != 0)
+    {
+        effectAPI.tryEndEffect(_this->SF_CGdEffect, effect_index);
+    }
+    default_end_handler(_this, spell_index);
+}

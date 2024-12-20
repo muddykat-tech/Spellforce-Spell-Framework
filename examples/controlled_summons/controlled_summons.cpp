@@ -103,7 +103,7 @@ void __thiscall summon_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
     }
     else
     {
-        uint16_t current_mana = figureAPI->getManaCurrent(_this->SF_CGdFigure, spell->source.entity_index);
+        uint16_t current_mana = figureAPI->getCurrentMana(_this->SF_CGdFigure, spell->source.entity_index);
         if (current_mana >= spell_data.params[1])
         {
             _this->active_spell_list[spell_index].to_do_count = (spell_data.params[0] * 10) / 1000;

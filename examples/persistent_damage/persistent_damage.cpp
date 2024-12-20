@@ -1,6 +1,6 @@
 #include <windows.h>
 #include <stdio.h>
-#include "../api/sfsf.h"
+#include "../../src/api/sfsf.h"
 // NOTE sfsf.h includes the OTHER api files, but the other files are still required
 
 SpellforceSpellFramework *sfsf;
