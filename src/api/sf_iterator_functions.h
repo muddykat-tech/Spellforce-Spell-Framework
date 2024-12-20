@@ -47,22 +47,27 @@ DECLARE_FUNCTION(void, figureIteratorSetPointers, CGdFigureIterator *iterator, S
 DECLARE_FUNCTION(void, iteratorSetArea, CGdFigureIterator *iterator, SF_Coord *position, uint16_t radius);
 DECLARE_FUNCTION(uint16_t, getNextFigure, CGdFigureIterator *iterator);
 DECLARE_FUNCTION(void, setupFigureIterator, CGdFigureIterator *iterator, SF_CGdSpell *spell);
-DECLARE_FUNCTION(void, disposeFigureIterator, CGdFigureIterator iterator);
+DECLARE_FUNCTION(void, disposeFigureIterator, CGdFigureIterator *iterator);
 
 DECLARE_FUNCTION(void, buildingIteratorInit, CGdBuildingIterator *iterator, uint16_t x_start, uint16_t y_start, uint16_t x_end, uint16_t y_end);
 DECLARE_FUNCTION(void, buildingIteratorSetPointers, CGdBuildingIterator *iterator, void *SF_CGdBuilding, void *AutoClass22, void *CGdWorld);
 
 DECLARE_FUNCTION(uint16_t, getNextBuilding, CGdBuildingIterator *_this);
 
-// Functions in this group may be renamed soon
-DECLARE_FUNCTION_GROUP(Iterator,
-					   figureIteratorInit_ptr figureIteratorInit;
-					   figureIteratorSetPointers_ptr figureIteratorSetPointers;
-					   iteratorSetArea_ptr iteratorSetArea;
-					   getNextFigure_ptr getNextFigure;
-					   setupFigureIterator_ptr setupFigureIterator;
-					   disposeFigureIterator_ptr disposeFigureIterator;
-
-					   getNextBuilding_ptr getNextBuilding;
-					   buildingIteratorInit_ptr buildingIteratorInit;
-					   buildingIteratorSetPointers_ptr buildingIteratorSetPointers;);
+/**
+ * 
+ * @ingroup API
+ * @brief Group of functions related to Iteration, Often used for AOE or Chain Like Spells.
+ */
+typedef struct
+{
+	figureIteratorInit_ptr figureIteratorInit;
+	figureIteratorSetPointers_ptr figureIteratorSetPointers;
+	iteratorSetArea_ptr iteratorSetArea;
+	getNextFigure_ptr getNextFigure;
+	setupFigureIterator_ptr setupFigureIterator;
+	disposeFigureIterator_ptr disposeFigureIterator;
+	getNextBuilding_ptr getNextBuilding;
+	buildingIteratorInit_ptr buildingIteratorInit;
+	buildingIteratorSetPointers_ptr buildingIteratorSetPointers;
+} IteratorFunctions;

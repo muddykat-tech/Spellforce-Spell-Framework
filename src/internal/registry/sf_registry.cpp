@@ -35,7 +35,7 @@
 #include <windows.h>
 #include <iostream>
 
-// Exposed in sfsf.
+// Exposed in sfsf.h
 SpellforceSpellFramework frameworkAPI;
 SFMod *g_current_mod;
 SFMod *g_framework_mod;
@@ -63,7 +63,7 @@ void registerFrameworkAPI()
     frameworkAPI.effectAPI = &effectAPI;
 
     log_info("| - Loading Default Mod Information");
-    g_framework_mod = createModInfo("SFSF", "v1.0.2-beta", "Muddykat, UnSchtalch and shovel_knight", "The Spellforce Spell Framework");
+    g_framework_mod = createModInfo("Spellforce Spell Framework", "2.0.0-beta", "Muddykat, UnSchtalch and shovel_knight", "A Modding Framework to ease the creation of new Spells in the game Spellforce Platinum Edition.");
     g_current_mod = g_framework_mod;
 }
 

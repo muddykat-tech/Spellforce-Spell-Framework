@@ -1,3 +1,10 @@
+/**
+ * @defgroup Hooks Assembly Hooks
+ * @ingroup Internal
+ * @details This group contains all the hooks used in SFSF.
+ * @see initialize_data_hooks()
+ */
+
 #include "sf_wrappers.h"
 #include "sf_modloader.h"
 #include "sf_hooks.h"
@@ -14,19 +21,33 @@
 #include "hooks/sf_spelltype_hook.h"
 #include "hooks/sf_console_hook.h"
 #include "hooks/sf_onhit_hook.h"
+#include "hooks/sf_ai_hook.h"
+#include "hooks/sf_utility_hooks.h"
 
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
+/** @addtogroup Hooks
+ * @{
+ */
+
 SpellFunctions spellAPI;
 EffectFunctions effectAPI;
 ToolboxFunctions toolboxAPI;
 FigureFunctions figureAPI;
 IteratorFunctions iteratorAPI;
+AiFunctions aiAPI;
 RegistrationFunctions registrationAPI;
 
+/**
+ * @brief Used to initialize all disparate hooks in one place.
+ * @details This function is also used to initalize indiviual function hooks.
+ * Individual Function hooks are simply storing a pointer to a function that's within Spellforce.
+ * Wrapper Functions grab a pointer from our own codebase.
+ * @see sf_wrappers.c
+ */
 void initialize_data_hooks()
 {
     log_info("| - Internal Use Hooks");
@@ -61,13 +82,34 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(figure, isFlagSet, 0x279d20);
     DEFINE_FUNCTION(figure, getSpellJobStartNode, 0x2b2de0);
     DEFINE_FUNCTION(figure, subMana, 0x2b5b60);
-    DEFINE_FUNCTION(figure, getManaCurrent, 0x2b29c0);
+    DEFINE_FUNCTION(figure, getCurrentMana, 0x2b29c0);
     DEFINE_FUNCTION(figure, getPosition, 0x2caaf0);
     DEFINE_FUNCTION(figure, setTask, 0x2b7110);
     DEFINE_FUNCTION(figure, getWeaponStats, 0x2b30a0);
-    DEFINE_FUNCTION(figure, getTargetAction, 0x2b2f50);
     DEFINE_FUNCTION(figure, getAggroValue, 0x2b1ab0);
     DEFINE_FUNCTION(figure, setAggroValue, 0x2b6670);
+    DEFINE_FUNCTION(figure, isWarrior, 0x1c1510);
+    DEFINE_FUNCTION(figure, getHealersList, 0x2b2870);
+    DEFINE_FUNCTION(figure, disposeHealerList, 0x36436D);
+    DEFINE_FUNCTION(figure, getCurrentHealthPercent, 0x2fdeb0);
+    log_info("| - AI API Hooks");
+
+    DEFINE_FUNCTION(ai, getTargetAction, 0x2b2f50);
+    DEFINE_FUNCTION(ai, getFigureAction, 0x2b19c0);
+    DEFINE_FUNCTION(ai, isAIVectorEmpty, 0x3645c7);
+    DEFINE_FUNCTION(ai, getAIVectorFirstElement, 0x3644dd);
+    DEFINE_FUNCTION(ai, getAIVectorGetCurrent, 0x364617);
+    DEFINE_FUNCTION(ai, getAIVectorLength, 0x2cc10a);
+    DEFINE_FUNCTION(ai, AC60AddOrGetEntity, 0x35dcc0);
+
+    DEFINE_FUNCTION(ai, canFigureDoAction, 0x35ace7);
+    DEFINE_FUNCTION(ai, setAICurrentActionRanking, 0x35e340);
+    DEFINE_FUNCTION(ai, getAICurrentActionRanking, 0x362ed0);
+    DEFINE_FUNCTION(ai, getActionStats, 0x35e0d4);
+    DEFINE_FUNCTION(ai, getCastType, 0x26dcf0);
+    DEFINE_FUNCTION(ai, getPositionToCastAlly, 0x35f197);
+    DEFINE_FUNCTION(ai, getPositionToCastEnemy, 0x35b5e2);
+    DEFINE_FUNCTION(ai, isUnknownWorldFeature, 0x34eae0);
 
     log_info("| - SpellAPI Hooks");
     // Define the function pointers for SpellFunctions group
@@ -91,6 +133,7 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(effect, addEffect, 0x2dc880);
     DEFINE_FUNCTION(effect, setEffectXData, 0x2ddb30);
     DEFINE_FUNCTION(effect, getEffectXData, 0x2dd730);
+    DEFINE_FUNCTION(effect, tryEndEffect, 0x2dcaa0);
 
     log_info("| - ToolboxAPI Hooks");
 
@@ -111,6 +154,7 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(toolbox, removeSpellFromList, 0x2fad57);
     DEFINE_FUNCTION(toolbox, addUnit, 0x2f749a);
     DEFINE_FUNCTION(toolbox, findClosestFreePosition, 0x34e9a0);
+    DEFINE_FUNCTION(toolbox, isUnitMelee, 0x2feb2b);
 
     log_info("| - IteratorAPI Hooks");
     DEFINE_FUNCTION(iterator, figureIteratorInit, 0x3183f0);
@@ -127,10 +171,14 @@ void initialize_data_hooks()
     INCLUDE_FUNCTION(spell, addSpell, &sf_spelltype_hook);
     INCLUDE_FUNCTION(spell, getSpellID, &sf_get_spell_id);
     INCLUDE_FUNCTION(spell, checkCanApply, &sf_refresh_hook)
-    INCLUDE_FUNCTION(spell, getSpellTag, &getSpellTag);
+    INCLUDE_FUNCTION(spell, getSpellTags, &getSpellTags);
+    INCLUDE_FUNCTION(spell, hasSpellTag, &hasSpellTag);
 
     log_info("| - FigureAPI Wrappers");
     INCLUDE_FUNCTION(figure, addBonusMultToStatistic, &addBonusMultToStatistic);
+
+    log_info("| - ToolboxAPI Wrappers");
+    INCLUDE_FUNCTION(toolbox, hasAuraActive, &hasAuraActive);
 
     log_info("| - IteratorAPI Wrappers");
     INCLUDE_FUNCTION(iterator, setupFigureIterator, &setupFigureIterator);
@@ -146,6 +194,9 @@ void initialize_data_hooks()
     INCLUDE_FUNCTION(registration, linkSubEffectHandler, &linkSubEffectHandler);
     INCLUDE_FUNCTION(registration, linkRefreshHandler, &linkRefreshHandler);
     INCLUDE_FUNCTION(registration, linkDealDamageHandler, &linkDealDamageHandler);
+    INCLUDE_FUNCTION(registration, linkAOEAIHandler, &linkAOEAIHandler);
+    INCLUDE_FUNCTION(registration, linkAvoidanceAIHandler, &linkAvoidanceAIHandler);
+    INCLUDE_FUNCTION(registration, linkSingleTargetAIHandler, &linkSingleTargetAIHandler);
 }
 
 static void initialize_spelltype_hook()
@@ -233,6 +284,111 @@ static void initialize_onhit_hook()
     *(int *)(ASI::AddrOf(0x2e0b01)) = (int)(&sf_onhit_hook) - ASI::AddrOf(0x2e0b05);
     ASI::EndRewrite(onhit_mreg);
 }
+static void initialize_ai_support_spell_hook()
+{
+    ASI::MemoryRegion ai_support_mreg(ASI::AddrOf(0x35d353), 5);
+    ASI::BeginRewrite(ai_support_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x35d353)) = 0xE8; // CALL instruction
+    *(int *)(ASI::AddrOf(0x35d354)) = (int)(&rank_support_spell_hook) - ASI::AddrOf(0x35d358);
+    ASI::EndRewrite(ai_support_mreg);
+}
+
+static void initialize_ai_offensive_hook()
+{
+    ASI::MemoryRegion ai_offensive_mreg(ASI::AddrOf(0x35d2f8), 5);
+    ASI::BeginRewrite(ai_offensive_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x35d2f8)) = 0xE8; // CALL instruction
+    *(int *)(ASI::AddrOf(0x35d2f9)) = (int)(&rank_offensive_spell_hook) - ASI::AddrOf(0x35d2fd);
+    ASI::EndRewrite(ai_offensive_mreg);
+
+    ASI::MemoryRegion ai_offensive_mreg2(ASI::AddrOf(0x360fa6), 5);
+    ASI::BeginRewrite(ai_offensive_mreg2);
+    *(unsigned char *)(ASI::AddrOf(0x360fa6)) = 0xE8; // CALL instruction
+    *(int *)(ASI::AddrOf(0x360fa7)) = (int)(&rank_offensive_spell_hook) - ASI::AddrOf(0x360fab);
+    ASI::EndRewrite(ai_offensive_mreg2);
+}
+
+static void initialize_ai_aoe_hook()
+{
+     ASI::MemoryRegion ai_offensive_mreg(ASI::AddrOf(0x35cb4f), 5);
+    ASI::BeginRewrite(ai_offensive_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x35cb4f)) = 0xE8; // CALL instruction
+    *(int *)(ASI::AddrOf(0x35cb50)) = (int)(&ai_AOE_hook) - ASI::AddrOf(0x35cb54);
+    ASI::EndRewrite(ai_offensive_mreg);
+
+    ASI::MemoryRegion ai_offensive_mreg2(ASI::AddrOf(0x35cadc), 5);
+    ASI::BeginRewrite(ai_offensive_mreg2);
+    *(unsigned char *)(ASI::AddrOf(0x35cadc)) = 0xE8; // CALL instruction
+    *(int *)(ASI::AddrOf(0x35cadd)) = (int)(&ai_AOE_hook) - ASI::AddrOf(0x35cae1);
+    ASI::EndRewrite(ai_offensive_mreg2);
+}
+
+static void initialize_avoidance_hook()
+{
+    ASI::MemoryRegion ai_avoidance_mreg(ASI::AddrOf(0x35d39e), 5);
+    ASI::BeginRewrite(ai_avoidance_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x35d39e)) = 0xE8; // CALL instruction
+    *(int *)(ASI::AddrOf(0x35d39f)) = (int)(&avoidance_penalty_hook) - ASI::AddrOf(0x35d3a3);
+    ASI::EndRewrite(ai_avoidance_mreg);
+}
+static void initialize_utility_hooks()
+{
+    log_info("Hooking Combat Ability Detection");
+    ASI::MemoryRegion is_ability_line_mreg(ASI::AddrOf(0x32afb0), 5);
+    ASI::BeginRewrite(is_ability_line_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x32afb0)) = 0xE9; // JUMP instruction
+    *(int *)(ASI::AddrOf(0x32afb1)) = (int)(&is_combat_ability) - ASI::AddrOf(0x32afb5);
+    ASI::EndRewrite(is_ability_line_mreg);
+
+    log_info("Hooking AOE Spell Detection");
+    ASI::MemoryRegion is_aoe_line_mreg(ASI::AddrOf(0x32ac90), 5);
+    ASI::BeginRewrite(is_aoe_line_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x32ac90)) = 0xE9; // JUMP instruction
+    *(int *)(ASI::AddrOf(0x32ac91)) = (int)(&is_aoe_spell) - ASI::AddrOf(0x32ac95);
+    ASI::EndRewrite(is_aoe_line_mreg);
+
+    log_info("Hooking Aura Detection");
+    ASI::MemoryRegion is_aura_mreg(ASI::AddrOf(0x32ae20), 5);
+    ASI::BeginRewrite(is_aura_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x32ae20)) = 0xE9; // JUMP instruction
+    *(int *)(ASI::AddrOf(0x32ae21)) = (int)(&is_aura_spell) - ASI::AddrOf(0x32ae25);
+    ASI::EndRewrite(is_aura_mreg);
+
+    log_info("Hooking Black Aura Detection");
+    ASI::MemoryRegion is_black_aura_mreg(ASI::AddrOf(0x32aec0), 5);
+    ASI::BeginRewrite(is_black_aura_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x32aec0)) = 0xE9; // JUMP instruction
+    *(int *)(ASI::AddrOf(0x32aec1)) = (int)(&is_black_aura_spell) - ASI::AddrOf(0x32aec5);
+    ASI::EndRewrite(is_black_aura_mreg);
+
+    log_info("Hooking White Aura Detection");
+    ASI::MemoryRegion is_white_aura_mreg(ASI::AddrOf(0x32af00), 5);
+    ASI::BeginRewrite(is_white_aura_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x32af00)) = 0xE9; // JUMP instruction
+    *(int *)(ASI::AddrOf(0x32af01)) = (int)(&is_white_aura_spell) - ASI::AddrOf(0x32af05);
+    ASI::EndRewrite(is_white_aura_mreg);
+
+    log_info("Hooking Summon Spell Detection");
+    ASI::MemoryRegion is_summon_spell_mreg(ASI::AddrOf(0x32b060), 5);
+    ASI::BeginRewrite(is_summon_spell_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x32b060)) = 0xE9; // JUMP instruction
+    *(int *)(ASI::AddrOf(0x32b061)) = (int)(&is_summon_spell) - ASI::AddrOf(0x32b065);
+    ASI::EndRewrite(is_summon_spell_mreg);
+
+    log_info("Hooking Domination Spell Detection");
+    ASI::MemoryRegion is_domination_spell_mreg(ASI::AddrOf(0x32ac20), 5);
+    ASI::BeginRewrite(is_domination_spell_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x32ac20)) = 0xE9; // JUMP instruction
+    *(int *)(ASI::AddrOf(0x32ac21)) = (int)(&is_domination_spell) - ASI::AddrOf(0x32ac25);
+    ASI::EndRewrite(is_domination_spell_mreg);
+
+    log_info("Hooking Domination Spell Line Detection");
+    ASI::MemoryRegion is_domination_spellline_mreg(ASI::AddrOf(0x32af60), 5);
+    ASI::BeginRewrite(is_domination_spellline_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x32af60)) = 0xE9; // JUMP instruction
+    *(int *)(ASI::AddrOf(0x32af61)) = (int)(&is_domination_spellline) - ASI::AddrOf(0x32af65);
+    ASI::EndRewrite(is_domination_spellline_mreg);
+}
 
 void initialize_beta_hooks()
 {
@@ -259,4 +415,22 @@ void initialize_beta_hooks()
 
     log_info("Hooking On Hit Trigger");
     initialize_onhit_hook();
+
+    log_info("Hooking AI Support Spell Handling");
+    initialize_ai_support_spell_hook();
+
+    log_info("Hooking AI Offensive Spell Handling");
+    initialize_ai_offensive_hook();
+
+    log_info("Hooking AI Spell Avoidance Handling");
+    initialize_avoidance_hook();
+
+    initialize_ai_aoe_hook();
+    
+    log_info("Hooking Utility Functions");
+    initialize_utility_hooks();
 }
+
+/**
+ * @}
+ */

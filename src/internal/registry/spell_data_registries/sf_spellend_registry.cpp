@@ -29,7 +29,9 @@ handler_ptr get_spell_end(uint16_t spell_line)
     if (it == s_spellend_handler_map.end())
     {
         // Element doesn't exist, insert the default value
-        log_warning("Unknown Job ID for Spell End Effect, Assigning a default handler.");
+       /* char message[256];
+        sprintf(message, "Unknown Spell Line [%d] for Spell End Effect, Assigning a default handler.", spell_line);
+        log_warning(message);*/
         it = s_spellend_handler_map.emplace(spell_line, &default_end_handler).first;
     }
     return it->second;
