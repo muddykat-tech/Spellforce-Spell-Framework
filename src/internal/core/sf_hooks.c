@@ -388,6 +388,12 @@ static void initialize_utility_hooks()
     *(unsigned char *)(ASI::AddrOf(0x32af60)) = 0xE9; // JUMP instruction
     *(int *)(ASI::AddrOf(0x32af61)) = (int)(&is_domination_spellline) - ASI::AddrOf(0x32af65);
     ASI::EndRewrite(is_domination_spellline_mreg);
+
+    log_info("Temp Storm School Hook");
+    ASI::MemoryRegion storm_test_mreg(ASI::AddrOf(0x7FFD38), 1);
+    ASI::BeginRewrite(storm_test_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x7FFD38)) = 0x04;
+    ASI::EndRewrite(storm_test_mreg);
 }
 
 void initialize_beta_hooks()
