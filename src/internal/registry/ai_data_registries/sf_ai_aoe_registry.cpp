@@ -22,7 +22,7 @@ ai_aoe_handler_ptr get_ai_aoe_handler(uint16_t spell_line)
     {
         // Element doesn't exist, insert the default value
         log_warning("Unknown spell ID for AOE ai handler, Assigning a default handler.");
-        it = s_ai_aoe_handler_map.emplace(spell_line, &sf_ai_aoe_default_handler).first;
+        it = s_ai_aoe_handler_map.emplace(spell_line, &area_pain_ai_handler).first;
     }
     return it->second;
 }

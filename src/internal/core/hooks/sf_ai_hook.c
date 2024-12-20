@@ -14,6 +14,7 @@
 
 #include "../../registry/ai_data_registries/sf_ai_avoidance_registry.h"
 #include "../../registry/ai_data_registries/sf_ai_single_target_registry.h"
+#include "../../registry/ai_data_registries/sf_ai_aoe_registry.h"
 
 // #include <stdio.h>
 
@@ -121,6 +122,13 @@ uint32_t __thiscall avoidance_penalty_hook(SF_CGdBattleDevelopment *_this, uint1
         spell_node = toolboxAPI.getNextNode((uint32_t*)_this->battleData.CGdDoubleLinkList, spell_node);
     }
     return result;
+}
+
+
+uint32_t __thiscall ai_AOE_hook(SF_CGdBattleDevelopment *_this, SF_Coord cast_pos, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+{
+    ai_aoe_handler_ptr handler = get_ai_aoe_handler(spell_line);
+    return handler(_this, &cast_pos, spell_line, spell_data);
 }
 /**
  * @}
