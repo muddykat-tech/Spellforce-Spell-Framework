@@ -98,7 +98,7 @@ void __attribute__((no_caller_saved_registers, thiscall)) sf_menu_hook(uint32_t 
 
     log_info("Adding Mod List Button");
     int button_index = 15;
-    attach_new_button(container_hack, sfsf_test_button_default, sfsf_test_button_pressed, sfsf_test_button_highlight, sfsf_test_button_disabled, sfsf_test_button_label, 7, 822,705,192,36, button_index, &show_mod_list_callback);
+    attach_new_button(container_hack, sfsf_test_button_default, sfsf_test_button_pressed, sfsf_test_button_highlight, sfsf_test_button_disabled, sfsf_test_button_label, 7, 822,705,192,36, button_index, (uint32_t) &show_mod_list_callback);
     
     // Call original menu function to show the menu
     s_menu_func(_CAppMenu);

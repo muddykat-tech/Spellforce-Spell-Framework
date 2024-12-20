@@ -447,7 +447,7 @@ void __thiscall aura_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
     if ((sf_figures->figures[source_index].owner != (uint16_t)(-1)) &&
         ((sf_figures->figures[source_index].flags & GdFigureFlags::REDO) == 0))
     {
-        sf_figures->figures[source_index].flags = sf_figures->figures[source_index].flags & (~GdFigureFlags::AURA_RUNNING);
+        sf_figures->figures[source_index].flags = static_cast<GdFigureFlags>(sf_figures->figures[source_index].flags & (~static_cast<unsigned int>(GdFigureFlags::AURA_RUNNING)));
     }
     uint16_t effect_index = spellAPI.getXData(_this, spell_index, EFFECT_EFFECT_INDEX);
     if (effect_index != 0)

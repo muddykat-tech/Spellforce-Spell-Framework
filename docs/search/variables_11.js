@@ -8,5 +8,6 @@ var searchData=
   ['to_5fdo_5fcount_5fremainder_5',['to_do_count_remainder',['../struct_gd_figure.html#a144281835064b0a53781692eb37bbf3a',1,'GdFigure']]],
   ['toggle_6',['toggle',['../struct_s_f_s_f___modlist_struct.html#a8582f91675a5d9524cb8f43e668ee464',1,'SFSF_ModlistStruct']]],
   ['toolboxapi_7',['toolboxAPI',['../struct_spellforce_spell_framework.html#a03fa16f9089c633813cdf6e573f21b5a',1,'SpellforceSpellFramework::toolboxAPI'],['../_test_mod_8cpp.html#af5cc9e62d950cef0fc6386b8162d5cf0',1,'toolboxAPI:&#160;TestMod.cpp'],['../group___hooks.html#ga8033183c435322904cc190565a1e03ff',1,'toolboxAPI:&#160;sf_hooks.c'],['../group___hooks.html#ga8033183c435322904cc190565a1e03ff',1,'toolboxAPI:&#160;TestMod.cpp']]],
-  ['type_8',['type',['../struct_s_f___s_gt_figure_action.html#a9b4d7f3a9248cba548c0c9bdb0a88df3',1,'SF_SGtFigureAction::type'],['../struct_gd_building.html#a8acee28e53cb37cee5a694903d8018ed',1,'GdBuilding::type']]]
+  ['tryendeffect_8',['tryEndEffect',['../struct_effect_functions.html#ae8b8cb4ff9c18758099abe10cca7fdf5',1,'EffectFunctions']]],
+  ['type_9',['type',['../struct_s_f___s_gt_figure_action.html#a9b4d7f3a9248cba548c0c9bdb0a88df3',1,'SF_SGtFigureAction::type'],['../struct_gd_building.html#a8acee28e53cb37cee5a694903d8018ed',1,'GdBuilding::type']]]
 ];

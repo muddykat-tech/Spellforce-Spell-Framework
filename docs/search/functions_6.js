@@ -15,7 +15,7 @@ var searchData=
   ['getattackinterruptionchance_12',['getAttackInterruptionChance',['../group___onhit_hook.html#gaaa8d2409151f4ca3bc8504769afc4b93',1,'sf_onhit_hook.c']]],
   ['getcurrentdex_13',['getCurrentDex',['../group___onhit_hook.html#ga69d941158155931cc3f4f0289372b2c3',1,'sf_onhit_hook.c']]],
   ['getcurrentint_14',['getCurrentInt',['../group___onhit_hook.html#gadbcaaa404231f4f989ce388bb454a830',1,'sf_onhit_hook.c']]],
-  ['getdistance_15',['getDistance',['../sf__wrappers_8c.html#a3c287532656896e928bad09d4e9565e4',1,'getDistance(SF_Coord *pointA, SF_Coord *pointB):&#160;sf_wrappers.c'],['../sf__wrappers_8h.html#a3c287532656896e928bad09d4e9565e4',1,'getDistance(SF_Coord *pointA, SF_Coord *pointB):&#160;sf_wrappers.c']]],
+  ['getdistance_15',['getDistance',['../group__wrappers.html#ga3c287532656896e928bad09d4e9565e4',1,'getDistance(SF_Coord *pointA, SF_Coord *pointB):&#160;sf_wrappers.c'],['../group__wrappers.html#ga3c287532656896e928bad09d4e9565e4',1,'getDistance(SF_Coord *pointA, SF_Coord *pointB):&#160;sf_wrappers.c']]],
   ['geteuclideandistancefromring_16',['GetEuclideanDistanceFromRing',['../group___a_i_hook.html#ga8b05ede347b93b11df8a6d828d3f1776',1,'sf_ai_hook.c']]],
   ['getsector_17',['getSector',['../group___a_i_hook.html#gae8785a71043ac84c08d23c97623a4bdc',1,'sf_ai_hook.c']]],
   ['getspelltags_18',['getSpellTags',['../sf__mod__registry_8cpp.html#af3ffd25a39d8cd3e76880a062109e619',1,'getSpellTags(uint16_t spell_line_id):&#160;sf_mod_registry.cpp'],['../sf__mod__registry_8h.html#af3ffd25a39d8cd3e76880a062109e619',1,'getSpellTags(uint16_t spell_line_id):&#160;sf_mod_registry.cpp']]],

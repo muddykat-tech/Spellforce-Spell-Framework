@@ -13,5 +13,5 @@ var searchData=
   ['white_5falmightness_5frefresh_5fhandler_10',['white_almightness_refresh_handler',['../sf__spellrefresh__handlers_8cpp.html#a9fc30a5d1455423526030260e548c254',1,'white_almightness_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index):&#160;sf_spellrefresh_handlers.cpp'],['../sf__spellrefresh__handlers_8h.html#a9fc30a5d1455423526030260e548c254',1,'white_almightness_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index):&#160;sf_spellrefresh_handlers.cpp']]],
   ['white_5fessence_5fend_5fhandler_11',['white_essence_end_handler',['../sf__spellend__handlers_8h.html#a3c92041915d993f81bd8ffb172fad710',1,'sf_spellend_handlers.h']]],
   ['white_5fessence_5fhandler_12',['white_essence_handler',['../sf__spelltype__handlers_8cpp.html#a454682734cdb97ec8619f6f1bf8f5d1d',1,'white_essence_handler(SF_CGdSpell *_this, uint16_t spell_index):&#160;sf_spelltype_handlers.cpp'],['../sf__spelltype__handlers_8h.html#a454682734cdb97ec8619f6f1bf8f5d1d',1,'white_essence_handler(SF_CGdSpell *_this, uint16_t spell_index):&#160;sf_spelltype_handlers.cpp']]],
-  ['wrap_5ftext_13',['wrap_text',['../sf__wrappers_8c.html#a57dfc0e76aa89ad714df40368770a2a0',1,'sf_wrappers.c']]]
+  ['wrap_5ftext_13',['wrap_text',['../group__wrappers.html#ga57dfc0e76aa89ad714df40368770a2a0',1,'sf_wrappers.c']]]
 ];

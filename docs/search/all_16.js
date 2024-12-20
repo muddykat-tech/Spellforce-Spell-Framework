@@ -33,5 +33,6 @@ var searchData=
   ['wpn_5fmat_30',['wpn_mat',['../struct_s_f___c_gd_figure_weapon_stats.html#af890b0eb15d19aee47b6717877a8c8ed',1,'SF_CGdFigureWeaponStats']]],
   ['wpn_5fspd_31',['wpn_spd',['../struct_s_f___c_gd_figure_weapon_stats.html#a2da174fc40603cf2da1d4bff13aa0d95',1,'SF_CGdFigureWeaponStats']]],
   ['wpn_5ftype_32',['wpn_type',['../struct_s_f___c_gd_figure_weapon_stats.html#a1de92d56bc15f207bf4597283b22728c',1,'SF_CGdFigureWeaponStats']]],
-  ['wrap_5ftext_33',['wrap_text',['../sf__wrappers_8c.html#a57dfc0e76aa89ad714df40368770a2a0',1,'sf_wrappers.c']]]
+  ['wrap_5ftext_33',['wrap_text',['../group__wrappers.html#ga57dfc0e76aa89ad714df40368770a2a0',1,'sf_wrappers.c']]],
+  ['wrappers_34',['Framework Wrappers',['../group__wrappers.html',1,'']]]
 ];

@@ -110,7 +110,7 @@ uint32_t __thiscall avoidance_penalty_hook(SF_CGdBattleDevelopment *_this, uint1
     uint32_t result = 100;
     while (spell_node != 0)
     {
-        uint16_t spell_index = toolboxAPI.getSpellIndexFromDLL(_this->battleData.CGdDoubleLinkList, spell_node);
+        uint16_t spell_index = toolboxAPI.getSpellIndexFromDLL((uint32_t*) _this->battleData.CGdDoubleLinkList, spell_node);
         uint16_t spell_line = spellAPI.getSpellLine(_this->battleData.CGdSpell, spell_index);
         ai_avoidance_handler_ptr handler = get_ai_avoidance_handler(spell_line);
         uint32_t current_result = handler(&_this->battleData , figure_index, spell_line);
@@ -118,7 +118,7 @@ uint32_t __thiscall avoidance_penalty_hook(SF_CGdBattleDevelopment *_this, uint1
         {
             result = current_result;
         }
-        spell_node = toolboxAPI.getNextNode(_this->battleData.CGdDoubleLinkList, spell_node);
+        spell_node = toolboxAPI.getNextNode((uint32_t*)_this->battleData.CGdDoubleLinkList, spell_node);
     }
     return result;
 }

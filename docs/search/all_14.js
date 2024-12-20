@@ -64,5 +64,7 @@ var searchData=
   ['unknown_5flength_5fvar_61',['unknown_length_var',['../struct_s_f___string.html#ac56795d37d70260829464ba0b54b8aea',1,'SF_String']]],
   ['unknown_5fstring_62',['unknown_string',['../structdata___c_ui_start_menu.html#adfca73f9e33e8c96f37564bde09bbb61',1,'data_CUiStartMenu']]],
   ['unknown_5ftarget_63',['unknown_target',['../struct_c_gd_a_i_battle_data.html#a33aebccff274798a1627799ffed703a0',1,'CGdAIBattleData']]],
-  ['ushort_5flist_5fnode_64',['ushort_list_node',['../structushort__list__node.html',1,'']]]
+  ['used_5ffor_5frevenge_64',['USED_FOR_REVENGE',['../sf__general__structures_8h.html#ac82390a633ae8fc23e2141e25507f732a6b81a7b43d8ebf3c8a7abd817d68b6d7',1,'sf_general_structures.h']]],
+  ['ushort_5flist_5fnode_65',['ushort_list_node',['../structushort__list__node.html',1,'']]],
+  ['utility_20hooks_66',['Utility Hooks',['../group___util_hooks.html',1,'']]]
 ];

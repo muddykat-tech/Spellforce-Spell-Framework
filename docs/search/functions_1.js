@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['befriend_5fai_5fhandler_0',['befriend_ai_handler',['../sf__ai__spell__handlers_8cpp.html#a2b095da4cb88d546d9a4341dbe86f5e6',1,'sf_ai_spell_handlers.cpp']]],
+  ['befriend_5fai_5fhandler_0',['befriend_ai_handler',['../sf__ai__spell__handlers_8cpp.html#a3f45cb6b268813d2296ba688d639ab96',1,'befriend_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data):&#160;sf_ai_spell_handlers.cpp'],['../sf__ai__spell__handlers_8h.html#a3f45cb6b268813d2296ba688d639ab96',1,'befriend_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data):&#160;sf_ai_spell_handlers.cpp']]],
   ['befriend_5fend_5fhandler_1',['befriend_end_handler',['../sf__spellend__handlers_8h.html#adda12c5c14284d06b5e45778dd34ffef',1,'sf_spellend_handlers.h']]],
   ['befriend_5fhandler_2',['befriend_handler',['../sf__spelltype__handlers_8cpp.html#a44774815dbb9ce2a97867849a8e60084',1,'befriend_handler(SF_CGdSpell *_this, uint16_t spell_index):&#160;sf_spelltype_handlers.cpp'],['../sf__spelltype__handlers_8h.html#a44774815dbb9ce2a97867849a8e60084',1,'befriend_handler(SF_CGdSpell *_this, uint16_t spell_index):&#160;sf_spelltype_handlers.cpp']]],
   ['beginrewrite_3',['BeginRewrite',['../namespace_a_s_i.html#a4761cc7671cb5ca025364456b8363f48',1,'ASI']]],

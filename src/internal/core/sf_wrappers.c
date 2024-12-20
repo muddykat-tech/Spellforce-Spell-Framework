@@ -10,31 +10,59 @@
 #include "hooks/sf_console_hook.h"
 #include "../registry/sf_mod_registry.h"
 
-static FUN_0069eaf0_ptr FUN_0069eaf0;
-static fidfree_ptr fidFree;
+/**
+ * @defgroup wrappers Framework Wrappers
+ * @ingroup Internal
+ * @brief Contains wrapper functions that streamline complex setups.
+ * @details This file consolidates multiple setup steps into single functions for ease of use, 
+ * handling the initialization of variables, flags, and resources required for specific tasks.
+ * @addtogroup wrappers
+ * @{
+ */
 
+FUN_0069eaf0_ptr FUN_0069eaf0;
+fidfree_ptr fidFree;
 SF_String_ctor_ptr g_create_sf_string;
 SF_String_dtor_ptr g_destroy_sf_string;
 has_spell_effect_ptr has_spell_effect;
-
-/**
-* +============================================+
-* |                                            |
-* |   _____ _                   ___  ___       |
-* |  /  __ \ |                  |  \/  |       |
-* |  | /  \/ | ___  __ _ _ __   | .  . | ___   |
-* |  | |   | |/ _ \/ _` | '_ \  | |\/| |/ _ \  |
-* |  | \__/\ |  __/ (_| | | | | | |  | |  __/  |
-* |   \____/_|\___|\__,_|_| |_| \_|  |_/\___|  |
-* |                                            |
-* +============================================+
-**/
+create_button_ptr create_button_func; 
+attach_string_ptr vfunction_apply_string;
+vfunction_ptr vfunction176;
+vfunction_ptr vfunction25;
+vfunction12_ptr vfunction12;
+initialize_smp_button_ptr initialize_smp_button;
+set_btn_name_ptr set_button_name;
+set_btn_name_ptr set_button_name_2;
+initialize_menu_container_ptr initialize_menu_container;
+set_label_color_ptr set_label_color;
+container_alpha_ptr set_container_alpha;
+setup_menu_container_data_ptr setup_menu_container_data;
+vfunction_2_ptr set_font;
+set_btn_index_ptr set_button_index;
+set_button_flag_ptr set_menu_button_flag;
+vfunction2_callback_attach_ptr attach_callback;
+vfunction_ptr vfunction16_attach_callback;
 
 void initialize_wrapper_data_hooks()
 {
     FUN_0069eaf0 = (FUN_0069eaf0_ptr)(ASI::AddrOf(0x29EAF0));
     fidFree = (fidfree_ptr)(ASI::AddrOf(0x6B6E25));
     has_spell_effect = (has_spell_effect_ptr)(ASI::AddrOf(0x2fe46f));
+    set_label_color = (set_label_color_ptr)(ASI::AddrOf(0x530330));
+    set_container_alpha = (container_alpha_ptr)(ASI::AddrOf(0x512EB0));
+    set_button_name = (set_btn_name_ptr) (ASI::AddrOf(0x52f8a0));
+    initialize_menu_container = (initialize_menu_container_ptr)(ASI::AddrOf(0x505780));
+    setup_menu_container_data = (setup_menu_container_data_ptr)(ASI::AddrOf(0x50FD30));
+    initialize_smp_button = (initialize_smp_button_ptr) (ASI::AddrOf(0x51a9d0));
+    set_button_name_2 = (set_btn_name_ptr) (ASI::AddrOf(0x512E30));
+    create_button_func = (create_button_ptr) (ASI::AddrOf(0x52E1E0));
+    set_font = (vfunction_2_ptr)(ASI::AddrOf(0x530C20));
+    set_button_index = (set_btn_index_ptr)(ASI::AddrOf(0x5136a0));
+    set_menu_button_flag = (set_button_flag_ptr)(ASI::AddrOf(0x5308A0));
+    attach_callback = (vfunction2_callback_attach_ptr)(ASI::AddrOf(0x6188B0));
+    vfunction16_attach_callback = (vfunction_ptr) (ASI::AddrOf(0x532B90));
+    vfunction176 = (vfunction_ptr)(ASI::AddrOf(0x52f520));
+    vfunction25 = (vfunction_ptr)(ASI::AddrOf(0x511ae0));
 }
 
 void log_message(const char *filename, const char *message)
@@ -219,44 +247,6 @@ bool __thiscall hasAuraActive(SF_CGdFigureToolbox *_this, uint16_t figure_id)
 {
     return has_spell_effect(_this, figure_id, 0x49);
 }
-// Temp
-typedef void(__thiscall *vfunction_2_ptr)(void *_this, void *input);
-typedef void(__thiscall *vfunction_ptr)(void *label, char *p1);
-typedef void(__thiscall *vfunction12_ptr)(void *container, void *test, char *p1);
-
-typedef void(__thiscall *attach_string_ptr)(void *container, void *string);
-typedef void(__thiscall *set_button_flag_ptr)(void *container, char flag);
-
-typedef void(__thiscall *set_btn_index_ptr)(void *container, int index);
-
-typedef void(__thiscall *create_button_ptr)(CMnuSmpButton *smpButton, float x_pos, float y_pos, float width,
-          float height,SF_String *default_mesh,SF_String *unkn_mesh_string,SF_String *pressed_mesh,SF_String *disable_mesh);
-
-typedef void(__thiscall *set_label_color_ptr)(CMnuLabel *_this, float r, float g, float b, char flag);
-
-typedef void (__thiscall *set_btn_name_ptr)(void *button, SF_String* string);
-
-typedef CMnuSmpButton*(__thiscall *initialize_smp_button_ptr)(CMnuSmpButton *btn);
-
-
-typedef void(__thiscall *vfunction2_callback_attach_ptr)(void *, void *,void *,void *);
-
-typedef void(__thiscall *initialize_menu_container_ptr)(CMnuContainer *_this);
-
-typedef void(__thiscall *setup_menu_container_data_ptr)(CMnuContainer *_this, float x, float y, float width, float height, SF_String * background, SF_String * border);
-
-typedef void(__thiscall *container_alpha_ptr)(CMnuContainer *_this, float alpha);
-
-create_button_ptr create_button_func; 
-attach_string_ptr vfunction_apply_string;
-vfunction_ptr vfunction176;
-vfunction_ptr vfunction25;
-vfunction12_ptr vfunction12;
-initialize_smp_button_ptr initialize_smp_button;
-set_btn_name_ptr set_button_name;
-initialize_menu_container_ptr initialize_menu_container;
-set_label_color_ptr set_label_color;
-
 
 CMnuLabel * __thiscall attach_new_label(CMnuLabel *label_ptr, CMnuContainer *parent, char *label_chars, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height)
 {
@@ -377,9 +367,10 @@ void attach_mod_labels(CMnuContainer *_container, int mods_per_page, int page)
                     mod_description_label = attach_new_label(mod_description_label, _container, wrapped_description, 11, 48, y_offset + (index % mods_per_page) * 36 + 24, 227, 36);
                     mod_page_label = attach_new_label(mod_page_label, _container, mod_page_info, 6, 92, 382, 50, 36);
                     mod_error_label = attach_new_label(mod_error_label, _container, wrapped_error_info, 11, 48, y_offset + (index % mods_per_page) * 36 + 224, 227, 36);
-                    set_label_color = (set_label_color_ptr)(ASI::AddrOf(0x530330));
                     set_label_color(mod_error_label, 1, 0, 0, '\0');
+
                     set_label_color(mod_title_label, 0.85, 0.64, 0.12, '\0');
+                    set_label_color(mod_title_label, 0.85, 0.64, 0.12, '\x01');
                     mod_struct.title_label = mod_title_label;
                     mod_struct.desc_label = mod_description_label;
                     mod_struct.page_label = mod_page_label;
@@ -397,7 +388,7 @@ void attach_mod_labels(CMnuContainer *_container, int mods_per_page, int page)
 
 void __fastcall navigate_callback_left(CMnuSmpButton *button, int32_t* cui_menu_ptr_maybe)
 {
-    CMnuContainer *parent = button->CMnuBase_data.param_2_callback;
+    CMnuContainer *parent = (CMnuContainer *) button->CMnuBase_data.param_2_callback;
     uint8_t index = mod_struct.index;
 
     if((index - 1) < 0) 
@@ -414,7 +405,7 @@ void __fastcall navigate_callback_left(CMnuSmpButton *button, int32_t* cui_menu_
 
 void __fastcall navigate_callback_right(CMnuSmpButton *button, int32_t* cui_menu_ptr_maybe)
 {
-    CMnuContainer *parent = button->CMnuBase_data.param_2_callback;
+    CMnuContainer *parent = (CMnuContainer *) button->CMnuBase_data.param_2_callback;
     uint8_t index = mod_struct.index;
     
     index = index + 1;
@@ -434,24 +425,22 @@ static bool does_mod_list_exist = false;
 
 void __thiscall show_mod_list(CMnuSmpButton *button)
 {
-    CMnuContainer *parent = button->CMnuBase_data.param_2_callback;
+    CMnuContainer *parent = (CMnuContainer *) button->CMnuBase_data.param_2_callback;
     
-    container_alpha_ptr set_container_alpha = (container_alpha_ptr)(ASI::AddrOf(0x512EB0));
     
     if(!does_mod_list_exist)
     {
+        is_mod_list_shown = true;
         SF_String s_menu_border, s_menu_background, s_alt_btn_name;
         SF_String * p_menu_border, * p_menu_background, * p_alt_btn_name;
 
         char alt_name[32] = "HIDE MOD LIST";
         p_alt_btn_name = g_create_sf_string(&s_alt_btn_name, alt_name);
 
-        set_button_name = (set_btn_name_ptr) (ASI::AddrOf(0x52f8a0));
         set_button_name(button, p_alt_btn_name);
 
         g_destroy_sf_string(p_alt_btn_name);
         mod_list = (CMnuContainer *) g_new_operator(0x340);
-        initialize_menu_container = (initialize_menu_container_ptr)(ASI::AddrOf(0x505780));
         initialize_menu_container(mod_list);
 
         // Setup mesh loading for background of the container.
@@ -460,7 +449,6 @@ void __thiscall show_mod_list(CMnuSmpButton *button)
         p_menu_border = g_create_sf_string(&s_menu_border, menu_border);
         p_menu_background = g_create_sf_string(&s_menu_background, menu_background_fade);
 
-        setup_menu_container_data_ptr setup_menu_container_data = (setup_menu_container_data_ptr)(ASI::AddrOf(0x50FD30));
         setup_menu_container_data(mod_list, 500, 124, 432, 432, p_menu_background, p_menu_border);
 
         set_container_alpha(mod_list, 0.99);
@@ -469,7 +457,7 @@ void __thiscall show_mod_list(CMnuSmpButton *button)
         g_destroy_sf_string(p_menu_border);
 
         // Add new container to this container.
-        g_container_add_control(parent, mod_list, (char *)0x01, (char *)0x01, 0);
+        g_container_add_control(parent, mod_list, '\x01', '\x01', 0);
 
         char btn_disabled[128]= "ui_btn_togglearrow_right_disabled.msh";
         char btn_pressed[128]  = "ui_btn_togglearrow_right_pressed.msh";
@@ -477,13 +465,13 @@ void __thiscall show_mod_list(CMnuSmpButton *button)
         char btn_default[128]  = "ui_btn_togglearrow_right_default.msh";
         char btn_label[1] = "";
 
-        attach_new_button(mod_list, btn_default, btn_pressed, btn_load, btn_disabled, btn_label, 7, (432 - (48 + 32)), 332, 48, 48, 0, &navigate_callback_right);
+        attach_new_button(mod_list, btn_default, btn_pressed, btn_load, btn_disabled, btn_label, 7, (432 - (48 + 32)), 332, 48, 48, 0, (uint32_t) &navigate_callback_right);
 
         char btn_disabled_left[128] = "ui_btn_togglearrow_left_disabled.msh";
         char btn_pressed_left[128] = "ui_btn_togglearrow_left_pressed.msh";
         char btn_default_left[128] = "ui_btn_togglearrow_left_default.msh";
 
-        attach_new_button(mod_list, btn_default_left, btn_pressed_left, btn_load, btn_disabled_left, btn_label, 7, 28, 332, 48, 48, 1, &navigate_callback_left);
+        attach_new_button(mod_list, btn_default_left, btn_pressed_left, btn_load, btn_disabled_left, btn_label, 7, 28, 332, 48, 48, 1, (uint32_t) &navigate_callback_left);
 
         attach_mod_labels(mod_list, 1, 0);
         does_mod_list_exist = true;
@@ -498,7 +486,6 @@ void __thiscall show_mod_list(CMnuSmpButton *button)
             SF_String * p_alt_btn_name;
             p_alt_btn_name = g_create_sf_string(&s_alt_btn_name, alt_name);
 
-            set_button_name = (set_btn_name_ptr) (ASI::AddrOf(0x52f8a0));
             set_button_name(button, p_alt_btn_name);
             g_destroy_sf_string(p_alt_btn_name);
 
@@ -513,7 +500,6 @@ void __thiscall show_mod_list(CMnuSmpButton *button)
             SF_String * p_alt_btn_name;
             p_alt_btn_name = g_create_sf_string(&s_alt_btn_name, alt_name);
 
-            set_button_name = (set_btn_name_ptr) (ASI::AddrOf(0x52f8a0));
             set_button_name(button, p_alt_btn_name);
             g_destroy_sf_string(p_alt_btn_name);
 
@@ -525,7 +511,7 @@ void __thiscall show_mod_list(CMnuSmpButton *button)
 
 void __fastcall show_mod_list_callback(CMnuSmpButton *button, int32_t* cui_menu_ptr_maybe)
 {
-    CMnuContainer *parent = button->CMnuBase_data.param_2_callback;
+    CMnuContainer *parent = (CMnuContainer*) button->CMnuBase_data.param_2_callback;
     uint8_t toggle = mod_struct.toggle;
 
     show_mod_list(button);
@@ -567,35 +553,27 @@ void __thiscall attach_new_button(CMnuContainer *parent, char *button_mesh_defau
         font_index = 6;
     }
 
-    initialize_smp_button = (initialize_smp_button_ptr) (ASI::AddrOf(0x51a9d0));
     new_button = initialize_smp_button(new_button);
     SF_Font *selected_font = g_get_font(fonts, font_index);
 
-    set_btn_name_ptr set_button_name = (set_btn_name_ptr) (ASI::AddrOf(0x512E30));
-    set_button_name(new_button, label_string);
+    set_button_name_2(new_button, label_string);
 
     // This seems to fill out the actual button data itself.
-    create_button_func = (create_button_ptr) (ASI::AddrOf(0x52E1E0));
     create_button_func(new_button,x_pos,y_pos,width,height,mesh_string_default,init_load_mesh,mesh_string_pressed,mesh_string_disabled);
 
-    vfunction_2_ptr set_font = (vfunction_2_ptr)(ASI::AddrOf(0x530C20)); // Original 0x530c50
     set_font(new_button, selected_font);
 
-    set_btn_index_ptr set_button_index = (set_btn_index_ptr)(ASI::AddrOf(0x5136a0));
     set_button_index(new_button, button_index);
 
-    set_button_flag_ptr set_menu_button_flag = (set_button_flag_ptr)(ASI::AddrOf(0x5308A0));
-    set_menu_button_flag(new_button, (char)0x1);
+    set_menu_button_flag(new_button, '\x01');
     
-    set_button_name = (set_btn_name_ptr) (ASI::AddrOf(0x52f8a0));
     set_button_name(new_button, label_string);
 
     CUtlCallback2 callback;
     callback.vtable_ptr = *(uint32_t *)(ASI::AddrOf(0x7F9C64));
-    callback.param_ptr = parent;
+    callback.param_ptr = (uint32_t) parent;
     callback.callback_func = callback_func_ptr;
     
-    vfunction2_callback_attach_ptr attach_callback = (vfunction2_callback_attach_ptr)(ASI::AddrOf(0x6188B0));
     uint32_t param1, param2, param3;
 
     attach_callback(&callback, &param1, &param2, &param3);
@@ -604,10 +582,9 @@ void __thiscall attach_new_button(CMnuContainer *parent, char *button_mesh_defau
     new_button->CMnuBase_data.param_2_callback = param2;
     new_button->CMnuBase_data.param_3_callback = param3;
 
-    vfunction_2_ptr vfunction16_attach_callback = (vfunction_2_ptr) (ASI::AddrOf(0x532B90));
     vfunction16_attach_callback(new_button, '\x01');
 
-    g_container_add_control(parent, new_button, (char *)0x01, (char *)0x01, 0);
+    g_container_add_control(parent, new_button, '\x01', '\x01', 0);
 
     g_destroy_sf_string(mesh_string_default);
     g_destroy_sf_string(mesh_string_pressed);
@@ -642,18 +619,21 @@ CMnuLabel * __thiscall attach_new_meshed_label(CMnuLabel *new_label, CMnuContain
 
     g_init_menu_element(new_label, x_pos, y_pos, width, height, mesh_string);
 
-    vfunction176 = (vfunction_ptr)(ASI::AddrOf(0x52f520));
-    vfunction176(new_label, (char *)0x1);
+    // function to set an unknown byte / flag, used in CMnuLabels
+    // check_flag_active_exec_somthin_if_not (Checks against 2nd Bit of the 0x3c field of the Label Data)
+    vfunction176(new_label, '\x01');
 
-    vfunction25 = (vfunction_ptr)(ASI::AddrOf(0x511ae0));
-    vfunction25(new_label, (char *)0x1);
+    // function to set an unknown byte / flag, used in CMnuLabels
+    // toggle_9th_bit_flag_maybe
+    vfunction25(new_label, '\x01');
 
     g_menu_label_set_font(new_label, selected_font);
 
-    g_container_add_control(parent, new_label, (char *)0x01, (char *)0x01, 0);
+    g_container_add_control(parent, new_label, '\x01', '\x01', 0);
 
-    vfunction12 = (vfunction12_ptr)(ASI::AddrOf(0x511ae0));
-    vfunction12(parent, new_label, (char *)0x1);
+    // // Was Wrong before, fixed the address; Very close to what v25 is...
+    // vfunction12 = (vfunction12_ptr)(ASI::AddrOf(0x511a00));
+    // vfunction12(parent, new_label, '\x01');
     g_menu_label_set_string(new_label, label_string);
 
     g_destroy_sf_string(label_string);
@@ -667,12 +647,6 @@ uint16_t __thiscall sf_get_spell_id(SF_CGdSpell *_this, uint16_t spell_index)
     return _this->active_spell_list[spell_index].spell_id;
 }
 
-/*
-    char mod_id[64];
-    char mod_version[24];
-    char mod_description[128];
-    char mod_author[128];
-*/
 SFMod *createModInfo(const char *mod_id, const char *mod_version, const char *mod_author, const char *mod_description)
 {
     // Sanitize the mod info, no buffer overflows for us!
@@ -692,3 +666,7 @@ SFMod *createModInfo(const char *mod_id, const char *mod_version, const char *mo
 
     return mod;
 }
+
+/**
+ * @}
+ */

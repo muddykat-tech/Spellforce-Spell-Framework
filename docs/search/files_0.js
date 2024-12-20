@@ -78,10 +78,12 @@ var searchData=
   ['sf_5fsubeffect_5fregistry_2ecpp_75',['sf_subeffect_registry.cpp',['../sf__subeffect__registry_8cpp.html',1,'']]],
   ['sf_5fsubeffect_5fregistry_2eh_76',['sf_subeffect_registry.h',['../sf__subeffect__registry_8h.html',1,'']]],
   ['sf_5ftoolbox_5ffunctions_2eh_77',['sf_toolbox_functions.h',['../sf__toolbox__functions_8h.html',1,'']]],
-  ['sf_5fvanilla_5fregistry_2ecpp_78',['sf_vanilla_registry.cpp',['../sf__vanilla__registry_8cpp.html',1,'']]],
-  ['sf_5fvanilla_5fregistry_2eh_79',['sf_vanilla_registry.h',['../sf__vanilla__registry_8h.html',1,'']]],
-  ['sf_5fwrappers_2ec_80',['sf_wrappers.c',['../sf__wrappers_8c.html',1,'']]],
-  ['sf_5fwrappers_2eh_81',['sf_wrappers.h',['../sf__wrappers_8h.html',1,'']]],
-  ['sfsf_2ecpp_82',['sfsf.cpp',['../sfsf_8cpp.html',1,'']]],
-  ['sfsf_2eh_83',['sfsf.h',['../sfsf_8h.html',1,'']]]
+  ['sf_5futility_5fhooks_2ec_78',['sf_utility_hooks.c',['../sf__utility__hooks_8c.html',1,'']]],
+  ['sf_5futility_5fhooks_2eh_79',['sf_utility_hooks.h',['../sf__utility__hooks_8h.html',1,'']]],
+  ['sf_5fvanilla_5fregistry_2ecpp_80',['sf_vanilla_registry.cpp',['../sf__vanilla__registry_8cpp.html',1,'']]],
+  ['sf_5fvanilla_5fregistry_2eh_81',['sf_vanilla_registry.h',['../sf__vanilla__registry_8h.html',1,'']]],
+  ['sf_5fwrappers_2ec_82',['sf_wrappers.c',['../sf__wrappers_8c.html',1,'']]],
+  ['sf_5fwrappers_2eh_83',['sf_wrappers.h',['../sf__wrappers_8h.html',1,'']]],
+  ['sfsf_2ecpp_84',['sfsf.cpp',['../sfsf_8cpp.html',1,'']]],
+  ['sfsf_2eh_85',['sfsf.h',['../sfsf_8h.html',1,'']]]
 ];

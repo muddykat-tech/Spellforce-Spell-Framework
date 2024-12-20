@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['has_5fspell_5feffect_0',['has_spell_effect',['../sf__wrappers_8c.html#a838b126e69424452c6827777c6139856',1,'sf_wrappers.c']]],
+  ['has_5fspell_5feffect_0',['has_spell_effect',['../group__wrappers.html#ga838b126e69424452c6827777c6139856',1,'has_spell_effect:&#160;sf_wrappers.c'],['../group__wrappers.html#ga838b126e69424452c6827777c6139856',1,'has_spell_effect:&#160;sf_wrappers.c']]],
   ['hasauraactive_1',['hasAuraActive',['../struct_toolbox_functions.html#a9f62925a946ee7b974de44c06b7d7712',1,'ToolboxFunctions']]],
   ['hasspellonit_2',['hasSpellOnIt',['../struct_toolbox_functions.html#a4252a801c57cf3f1c933c14a5c33cb49',1,'ToolboxFunctions']]],
   ['hasspelltag_3',['hasSpellTag',['../struct_spell_functions.html#ac436a0f2ad21ce5c66af94c9a001018a',1,'SpellFunctions']]],

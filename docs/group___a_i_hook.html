@@ -117,11 +117,50 @@ Functions</h2></td></tr>
 <tr class="memitem:ga12a79eb1da4cb3358d8503101a50ba8d" id="r_ga12a79eb1da4cb3358d8503101a50ba8d"><td class="memItemLeft" align="right" valign="top">uint32_t __thiscall&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga12a79eb1da4cb3358d8503101a50ba8d">rank_support_spell_hook</a> (<a class="el" href="struct_s_f___c_gd_battle_development.html">SF_CGdBattleDevelopment</a> *_this, uint16_t target_index, uint16_t spell_line, <a class="el" href="struct_s_f___c_gd_resource_spell.html">SF_CGdResourceSpell</a> *spell_data)</td></tr>
 <tr class="memdesc:ga12a79eb1da4cb3358d8503101a50ba8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Injects into the ranking system for a single target AI spell.  <br /></td></tr>
 <tr class="separator:ga12a79eb1da4cb3358d8503101a50ba8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga52875b40ed2ac3ca999ff631221f6c03" id="r_ga52875b40ed2ac3ca999ff631221f6c03"><td class="memItemLeft" align="right" valign="top">uint32_t __thiscall&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga52875b40ed2ac3ca999ff631221f6c03">rank_offensive_spell_hook</a> (<a class="el" href="struct_s_f___c_gd_battle_development.html">SF_CGdBattleDevelopment</a> *_this, uint16_t target_index, uint16_t spell_line, <a class="el" href="struct_s_f___c_gd_resource_spell.html">SF_CGdResourceSpell</a> *spell_data)</td></tr>
+<tr class="separator:ga52875b40ed2ac3ca999ff631221f6c03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga131f7d20303fa470af98f4b36b8b6263" id="r_ga131f7d20303fa470af98f4b36b8b6263"><td class="memItemLeft" align="right" valign="top">uint32_t __thiscall&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga131f7d20303fa470af98f4b36b8b6263">avoidance_penalty_hook</a> (<a class="el" href="struct_s_f___c_gd_battle_development.html">SF_CGdBattleDevelopment</a> *_this, uint16_t figure_index)</td></tr>
+<tr class="separator:ga131f7d20303fa470af98f4b36b8b6263"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Hooks and Functions related to AI functionality. </p>
 <p>The main function that hooks into spellforce is <a class="el" href="#ga12a79eb1da4cb3358d8503101a50ba8d">rank_support_spell_hook</a>.</p>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="ga131f7d20303fa470af98f4b36b8b6263" name="ga131f7d20303fa470af98f4b36b8b6263"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga131f7d20303fa470af98f4b36b8b6263">&#9670;&#160;</a></span>avoidance_penalty_hook()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t __thiscall avoidance_penalty_hook </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_s_f___c_gd_battle_development.html">SF_CGdBattleDevelopment</a> *</td>          <td class="paramname"><span class="paramname"><em>_this</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>figure_index</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__hook_8c_source.html#l00107">107</a> of file <a class="el" href="sf__ai__hook_8c_source.html">sf_ai_hook.c</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="group___a_i_hook_ga131f7d20303fa470af98f4b36b8b6263_cgraph.png" border="0" usemap="#agroup___a_i_hook_ga131f7d20303fa470af98f4b36b8b6263_cgraph" alt=""/></div>
+<map name="agroup___a_i_hook_ga131f7d20303fa470af98f4b36b8b6263_cgraph" id="agroup___a_i_hook_ga131f7d20303fa470af98f4b36b8b6263_cgraph">
+<area shape="rect" title=" " alt="" coords="5,13,170,40"/>
+<area shape="rect" href="sf__ai__avoidance__registry_8cpp.html#ad0c884f35bcf2b0b303134bdad866376" title=" " alt="" coords="218,13,389,40"/>
+<area shape="poly" title=" " alt="" coords="170,24,202,24,202,29,170,29"/>
+<area shape="rect" href="sf__ai__avoidance__handlers_8cpp.html#aedeea493267b978b6ebfd8757a1c9d5c" title=" " alt="" coords="437,5,598,48"/>
+<area shape="poly" title=" " alt="" coords="390,24,421,24,421,29,390,29"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="ga30823a9211a51bf169522f4aa64f18cb" name="ga30823a9211a51bf169522f4aa64f18cb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga30823a9211a51bf169522f4aa64f18cb">&#9670;&#160;</a></span>clearAction()</h2>
 
@@ -226,6 +265,64 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ga52875b40ed2ac3ca999ff631221f6c03" name="ga52875b40ed2ac3ca999ff631221f6c03"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga52875b40ed2ac3ca999ff631221f6c03">&#9670;&#160;</a></span>rank_offensive_spell_hook()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t __thiscall rank_offensive_spell_hook </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_s_f___c_gd_battle_development.html">SF_CGdBattleDevelopment</a> *</td>          <td class="paramname"><span class="paramname"><em>_this</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>target_index</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>spell_line</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_s_f___c_gd_resource_spell.html">SF_CGdResourceSpell</a> *</td>          <td class="paramname"><span class="paramname"><em>spell_data</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__hook_8c_source.html#l00086">86</a> of file <a class="el" href="sf__ai__hook_8c_source.html">sf_ai_hook.c</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="group___a_i_hook_ga52875b40ed2ac3ca999ff631221f6c03_cgraph.png" border="0" usemap="#agroup___a_i_hook_ga52875b40ed2ac3ca999ff631221f6c03_cgraph" alt=""/></div>
+<map name="agroup___a_i_hook_ga52875b40ed2ac3ca999ff631221f6c03_cgraph" id="agroup___a_i_hook_ga52875b40ed2ac3ca999ff631221f6c03_cgraph">
+<area shape="rect" title=" " alt="" coords="5,97,180,124"/>
+<area shape="rect" href="sf__ai__spell__handlers_8cpp.html#af4e061577c1be8a041c1a19dec7d138a" title=" " alt="" coords="233,5,369,48"/>
+<area shape="poly" title=" " alt="" coords="127,94,231,52,233,57,129,99"/>
+<area shape="rect" href="sf__ai__spell__handlers_8cpp.html#a670e49978bafcef2dbba766a87079ce5" title=" " alt="" coords="422,64,549,107"/>
+<area shape="poly" title=" " alt="" coords="180,102,406,88,406,93,180,108"/>
+<area shape="rect" href="sf__ai__single__target__registry_8cpp.html#a971d5f33ee21660e72921eacc54daa80" title=" " alt="" coords="228,123,374,149"/>
+<area shape="poly" title=" " alt="" coords="180,119,213,123,212,128,180,124"/>
+<area shape="rect" href="group__wrappers.html#gaad92c6ec5283b3732feeefd0d62ab629" title=" " alt="" coords="255,173,347,200"/>
+<area shape="poly" title=" " alt="" coords="131,122,229,159,246,165,244,170,227,164,129,127"/>
+<area shape="poly" title=" " alt="" coords="352,119,406,104,408,109,353,125"/>
+<area shape="rect" href="group__wrappers.html#ga825433b084e07dce191049d45ecdde2a" title=" " alt="" coords="440,131,531,157"/>
+<area shape="poly" title=" " alt="" coords="374,136,425,139,425,144,374,142"/>
+<area shape="rect" href="group___console_hook.html#gaf6b694e632c7b92e802468161b511edf" title=" " alt="" coords="597,131,688,157"/>
+<area shape="poly" title=" " alt="" coords="531,141,582,141,582,147,531,147"/>
+<area shape="rect" href="namespace_a_s_i.html#a05ca5acefdcb7e955f472b60e5511a1a" title="returns &quot;real&quot; virtual address of given memory offset" alt="" coords="739,105,831,132"/>
+<area shape="poly" title=" " alt="" coords="688,133,723,127,724,132,689,139"/>
+<area shape="rect" href="group__wrappers.html#gac5c95c4eeefbc3d135cafe996908b639" title=" " alt="" coords="736,156,834,183"/>
+<area shape="poly" title=" " alt="" coords="689,149,721,155,720,160,688,155"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="ga12a79eb1da4cb3358d8503101a50ba8d" name="ga12a79eb1da4cb3358d8503101a50ba8d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga12a79eb1da4cb3358d8503101a50ba8d">&#9670;&#160;</a></span>rank_support_spell_hook()</h2>
 
@@ -266,17 +363,17 @@ Here is the call graph for this function:</div>
 <area shape="rect" title="Injects into the ranking system for a single target AI spell." alt="" coords="5,68,171,95"/>
 <area shape="rect" href="sf__ai__single__target__registry_8cpp.html#a971d5f33ee21660e72921eacc54daa80" title=" " alt="" coords="219,43,365,69"/>
 <area shape="poly" title=" " alt="" coords="171,68,203,64,204,70,171,74"/>
-<area shape="rect" href="sf__wrappers_8c.html#aad92c6ec5283b3732feeefd0d62ab629" title=" " alt="" coords="246,93,338,120"/>
+<area shape="rect" href="group__wrappers.html#gaad92c6ec5283b3732feeefd0d62ab629" title=" " alt="" coords="246,93,338,120"/>
 <area shape="poly" title=" " alt="" coords="171,89,230,96,230,102,171,94"/>
 <area shape="rect" href="sf__ai__spell__handlers_8cpp.html#a670e49978bafcef2dbba766a87079ce5" title=" " alt="" coords="413,5,540,48"/>
 <area shape="poly" title=" " alt="" coords="365,42,397,37,398,42,366,47"/>
-<area shape="rect" href="sf__wrappers_8c.html#a825433b084e07dce191049d45ecdde2a" title=" " alt="" coords="432,72,522,99"/>
+<area shape="rect" href="group__wrappers.html#ga825433b084e07dce191049d45ecdde2a" title=" " alt="" coords="432,72,522,99"/>
 <area shape="poly" title=" " alt="" coords="366,65,417,73,416,78,365,70"/>
 <area shape="rect" href="group___console_hook.html#gaf6b694e632c7b92e802468161b511edf" title=" " alt="" coords="588,72,679,99"/>
 <area shape="poly" title=" " alt="" coords="522,83,573,83,573,88,522,88"/>
 <area shape="rect" href="namespace_a_s_i.html#a05ca5acefdcb7e955f472b60e5511a1a" title="returns &quot;real&quot; virtual address of given memory offset" alt="" coords="730,47,822,73"/>
 <area shape="poly" title=" " alt="" coords="679,75,714,68,715,74,680,80"/>
-<area shape="rect" href="sf__wrappers_8c.html#ac5c95c4eeefbc3d135cafe996908b639" title=" " alt="" coords="727,97,825,124"/>
+<area shape="rect" href="group__wrappers.html#gac5c95c4eeefbc3d135cafe996908b639" title=" " alt="" coords="727,97,825,124"/>
 <area shape="poly" title=" " alt="" coords="680,91,712,97,711,102,679,96"/>
 </map>
 </div>
