@@ -614,26 +614,14 @@ CMnuLabel * __thiscall attach_new_meshed_label(CMnuLabel *new_label, CMnuContain
 
     g_menu_label_constructor(new_label);
 
-    // Start setting flags to tell Spellforce what this label is used for.
     g_set_label_flags(new_label, 7);
 
     g_init_menu_element(new_label, x_pos, y_pos, width, height, mesh_string);
-
-    // function to set an unknown byte / flag, used in CMnuLabels
-    // check_flag_active_exec_somthin_if_not (Checks against 2nd Bit of the 0x3c field of the Label Data)
-    vfunction176(new_label, '\x01');
-
-    // function to set an unknown byte / flag, used in CMnuLabels
-    // toggle_9th_bit_flag_maybe
-    vfunction25(new_label, '\x01');
 
     g_menu_label_set_font(new_label, selected_font);
 
     g_container_add_control(parent, new_label, '\x01', '\x01', 0);
 
-    // // Was Wrong before, fixed the address; Very close to what v25 is...
-    // vfunction12 = (vfunction12_ptr)(ASI::AddrOf(0x511a00));
-    // vfunction12(parent, new_label, '\x01');
     g_menu_label_set_string(new_label, label_string);
 
     g_destroy_sf_string(label_string);
