@@ -318,11 +318,61 @@ static void initialize_avoidance_hook()
 }
 static void initialize_utility_hooks()
 {
+    log_info("Hooking Combat Ability Detection");
     ASI::MemoryRegion is_ability_line_mreg(ASI::AddrOf(0x32afb0), 5);
     ASI::BeginRewrite(is_ability_line_mreg);
     *(unsigned char *)(ASI::AddrOf(0x32afb0)) = 0xE9; // CALL instruction
     *(int *)(ASI::AddrOf(0x32afb1)) = (int)(&is_combat_ability) - ASI::AddrOf(0x32afb5);
     ASI::EndRewrite(is_ability_line_mreg);
+
+    log_info("Hooking AOE Spell Detection");
+    ASI::MemoryRegion is_aoe_line_mreg(ASI::AddrOf(0x32ac90), 5);
+    ASI::BeginRewrite(is_aoe_line_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x32ac90)) = 0xE9; // CALL instruction
+    *(int *)(ASI::AddrOf(0x32ac91)) = (int)(&is_aoe_spell) - ASI::AddrOf(0x32ac95);
+    ASI::EndRewrite(is_aoe_line_mreg);
+
+    log_info("Hooking Aura Detection");
+    ASI::MemoryRegion is_aura_mreg(ASI::AddrOf(0x32ae20), 5);
+    ASI::BeginRewrite(is_aura_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x32ae20)) = 0xE9; // CALL instruction
+    *(int *)(ASI::AddrOf(0x32ae21)) = (int)(&is_aura_spell) - ASI::AddrOf(0x32ae25);
+    ASI::EndRewrite(is_aura_mreg);
+
+    log_info("Hooking Black Aura Detection");
+    ASI::MemoryRegion is_black_aura_mreg(ASI::AddrOf(0x32aec0), 5);
+    ASI::BeginRewrite(is_black_aura_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x32aec0)) = 0xE9; // CALL instruction
+    *(int *)(ASI::AddrOf(0x32aec1)) = (int)(&is_black_aura_spell) - ASI::AddrOf(0x32aec5);
+    ASI::EndRewrite(is_black_aura_mreg);
+
+    log_info("Hooking White Aura Detection");
+    ASI::MemoryRegion is_white_aura_mreg(ASI::AddrOf(0x32af00), 5);
+    ASI::BeginRewrite(is_white_aura_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x32af00)) = 0xE9; // CALL instruction
+    *(int *)(ASI::AddrOf(0x32af01)) = (int)(&is_white_aura_spell) - ASI::AddrOf(0x32af05);
+    ASI::EndRewrite(is_white_aura_mreg);
+
+    log_info("Hooking Summon Spell Detection");
+    ASI::MemoryRegion is_summon_spell_mreg(ASI::AddrOf(0x32b060), 5);
+    ASI::BeginRewrite(is_summon_spell_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x32b060)) = 0xE9; // CALL instruction
+    *(int *)(ASI::AddrOf(0x32b061)) = (int)(&is_summon_spell) - ASI::AddrOf(0x32b065);
+    ASI::EndRewrite(is_summon_spell_mreg);
+
+    log_info("Hooking Domination Spell Detection");
+    ASI::MemoryRegion is_domination_spell_mreg(ASI::AddrOf(0x32ac20), 5);
+    ASI::BeginRewrite(is_domination_spell_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x32ac20)) = 0xE9; // CALL instruction
+    *(int *)(ASI::AddrOf(0x32ac21)) = (int)(&is_domination_spell) - ASI::AddrOf(0x32ac25);
+    ASI::EndRewrite(is_domination_spell_mreg);
+
+    log_info("Hooking Domination Spell Line Detection");
+    ASI::MemoryRegion is_domination_spellline_mreg(ASI::AddrOf(0x32af60), 5);
+    ASI::BeginRewrite(is_domination_spellline_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x32af60)) = 0xE9; // CALL instruction
+    *(int *)(ASI::AddrOf(0x32af61)) = (int)(&is_domination_spellline) - ASI::AddrOf(0x32af65);
+    ASI::EndRewrite(is_domination_spellline_mreg);
 }
 
 void initialize_beta_hooks()
