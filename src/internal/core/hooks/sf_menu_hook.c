@@ -75,6 +75,7 @@ void __attribute__((no_caller_saved_registers, thiscall)) sf_menu_hook(uint32_t 
     uint32_t CMnuScreen_ptr = *(uint32_t *)(CAppMenu_data + 0x68);
     uint32_t container_hack_ptr = *(uint32_t *)(_CAppMenu + 0x58);
     CMnuContainer *container_hack = (CMnuContainer *)container_hack_ptr;
+    
     uint32_t screen_vftable_ptr = CMnuScreen_ptr;
     
     CMnuLabel *sfsf_version_label;
