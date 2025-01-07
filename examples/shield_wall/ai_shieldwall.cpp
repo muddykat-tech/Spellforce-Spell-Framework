@@ -53,7 +53,7 @@ void __thiscall shield_wall_universal_end_handler(SF_CGdSpell *_this, uint16_t s
     // because this value is the same for every target affected, we should do it here instead of doing it within the loop below
     uint16_t recalc_value = spellAPI->getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER);
 
-    for (uint16_t target_index = 0; target_index < _this->SF_CGdFigure->max_used; target_index++)
+    for (uint16_t target_index = 0; target_index <= _this->SF_CGdFigure->max_used; target_index++)
         {
             // this code reiterates what we're doing at the tick 1 when the spell duration ends
             // we scan for all figures present, and check whether they're affected with Shieldwall spell
@@ -85,10 +85,21 @@ uint32_t __thiscall shield_wall_universal_ai_handler(SF_CGdBattleDevelopment *_t
 
     if ((_this->battleData.ally_figures.entityCount < 2) ||
         ((_this->battleData.enemy_figures.entityCount == 0) &&
-        (_this->battleData.building_not_ally.entityCount == 0)))
+        (_this->battleData.building_not_ally.entityCount == 0))
+        )
     {
+        logger->logInfo("NOT ENOUGH ALLIES OR NOT ENOUGH ENEMIES");
         rank = 0;
     }
+
+    uint16_t source_index = _this->battleData.ally_figures.data[_this->battleData.current_figure].entity_index;
+
+    if (toolboxAPI->hasSpellOnIt(_this->battleData.CGdFigureToolBox,source_index, SHIELD_WALL_UNIVERSAL_LINE))
+    {
+        logger->logInfo("ALREADY HAS SHIELDWALL");
+        rank = 0;
+    }
+
     return rank;
 }
 
@@ -156,11 +167,11 @@ void __thiscall shield_wall_universal_effect_handler(SF_CGdSpell *_this, uint16_
             // we're allowed to apply the spell logic to spellcaster
             {
                 figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, source_index, recalc_value);
-                char aliveInfo[256];
+                /*char aliveInfo[256];
                 sprintf(aliveInfo, "SPELL INDEX IS %hd \n", spell_index);
                 logger->logInfo(aliveInfo);
                 sprintf(aliveInfo, "current spell index is %hd \n", spell_index_current);
-                logger->logInfo(aliveInfo);
+                logger->logInfo(aliveInfo);*/
             }
         else
             // in case spell_index_current returns other value than 0, it means we're working with the additional instance of Shieldwall
@@ -182,17 +193,42 @@ void __thiscall shield_wall_universal_effect_handler(SF_CGdSpell *_this, uint16_
         // basically, we just center the spell around its spellcaster (source)
         figureAPI->getPosition(_this->SF_CGdFigure, &cast_center, source_index);
 
+        cast_center.X = _this->SF_CGdFigure->figures[source_index].position.X;
+        cast_center.Y = _this->SF_CGdFigure->figures[source_index].position.Y;
+
         // we declare structure for relative position of visual effect
         SF_CGdTargetData relative_data;
         figureAPI->getPosition(_this->SF_CGdFigure, &relative_data.position, source_index);
+        relative_data.position.X = _this->SF_CGdFigure->figures[source_index].position.X;
+        relative_data.position.Y = _this->SF_CGdFigure->figures[source_index].position.Y;
         relative_data.entity_type = 4;
         relative_data.entity_index = 0;
+
         uint32_t unused;
 
         // we get coordinates of area affected and record them as a squared circle
         // spell_data.params[0] stands for a spell radius
         // the radius is measured in game units, 10-15 is enough for quite big area
         spellAPI->getTargetsRectangle(_this, &hit_area, spell_index, spell_data.params[0], &cast_center);
+
+        char aliveInfo[256];
+        sprintf(aliveInfo, "RELATIVE X IS %hd \n", relative_data.position.X);
+        logger->logInfo(aliveInfo);
+
+        sprintf(aliveInfo, "RELATIVE Y IS %hd \n", relative_data.position.Y);
+        logger->logInfo(aliveInfo);
+
+        sprintf(aliveInfo, "CAST CENTER X IS %hd \n", cast_center.X);
+        logger->logInfo(aliveInfo);
+
+        sprintf(aliveInfo, "CAST CENTER Y IS %hd \n", cast_center.Y);
+        logger->logInfo(aliveInfo);
+
+        sprintf(aliveInfo, "HIT AREA VERTEX 1 IS %hd \n", hit_area.partA);
+        logger->logInfo(aliveInfo);
+
+        sprintf(aliveInfo, "HIT AREA VERTEX 2 IS %hd \n", hit_area.partB);
+        logger->logInfo(aliveInfo);
 
         // we apply the visual effect filling the area which we specified above
         spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitWorld, &unused, &relative_data, _this->OpaqueClass->current_step+1, 0x19, &hit_area);
@@ -209,6 +245,9 @@ void __thiscall shield_wall_universal_effect_handler(SF_CGdSpell *_this, uint16_
 
         uint16_t target_index = iteratorAPI->getNextFigure(&figure_iterator);
 
+                        //char aliveInfo[256];
+                sprintf(aliveInfo, "STARTING TARGET INDEX IS %hd \n", target_index);
+                logger->logInfo(aliveInfo);
 
         // we make sure the iterator doesn't return us the spellcaster, because the spellcaster was already buffed at the start of the tick
         if (target_index == source_index)
@@ -216,6 +255,9 @@ void __thiscall shield_wall_universal_effect_handler(SF_CGdSpell *_this, uint16_
                 target_index = iteratorAPI->getNextFigure(&figure_iterator);
             }
 
+                        //char aliveInfo[256];
+                sprintf(aliveInfo, "NEW TARGET INDEX IS %hd \n", target_index);
+                logger->logInfo(aliveInfo);
         // the spell can affect only certain amount of figures
         // we load this amount from spell parameters in GameData.cff
         uint16_t figure_count = spell_data.params[1];
@@ -226,6 +268,9 @@ void __thiscall shield_wall_universal_effect_handler(SF_CGdSpell *_this, uint16_
         while (target_index != 0 && figure_count != 0)
         // we apply the spell as long as there are viable targets around and as long as we didn't exceed figures limit
             {
+                char aliveInfo[256];
+                sprintf(aliveInfo, "POSSIBLE TARGET INDEX IS %hd \n", target_index);
+                logger->logInfo(aliveInfo);
             // we apply the spell only to living figures belonging to our own faction, as long as those figures are targetable
             // notice that we affect those flags directly via respective structures rather than with API functions as in previous example
             // both options are allowable
@@ -250,7 +295,7 @@ void __thiscall shield_wall_universal_effect_handler(SF_CGdSpell *_this, uint16_
 
                             figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, target_index, recalc_value);
 
-                            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 0x19, &hit_area);
+                            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 0, &hit_area);
                             // we spent one usage of the spell, hence we decrease the possible limit by one
                             figure_count--;
                         }
@@ -276,7 +321,7 @@ void __thiscall shield_wall_universal_effect_handler(SF_CGdSpell *_this, uint16_
 
             // we check through all figures for the Shieldwall effect
             // we can't use the iterator to determine search area, because targets might move too far away from the source which provided them with the Shieldwall
-            for (uint16_t target_index = 0; target_index < _this->SF_CGdFigure->max_used; target_index++)
+            for (uint16_t target_index = 0; target_index <= _this->SF_CGdFigure->max_used; target_index++)
                 {
                     // we launch the same check as we did in the tick 0
                     // we want to be sure that the Shieldwall over the target is the same Shieldwall as we're planning to remove
@@ -287,12 +332,8 @@ void __thiscall shield_wall_universal_effect_handler(SF_CGdSpell *_this, uint16_
                             // if the target is affected with the Shieldwall and 'getSpellIndexOfType' returned 0, it means the target is affected with the spell we're looking for
                             if (spell_index_current == 0)
                                 {
-                                    uint16_t source_index = _this->active_spell_list[spell_index].source.entity_index;
-                                    if (source_index != target_index)
-                                    {
                                     // we remove the spell from the target
                                     toolboxAPI->removeSpellFromList(_this->SF_CGdFigureToolBox, target_index, spell_index);
-                                    }
                                     // we substract bonus modifier from the target's armor rating
                                     figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, target_index, -recalc_value);
                                 }
