@@ -11,6 +11,7 @@ ToolboxFunctions *toolboxAPI;
 FigureFunctions *figureAPI;
 IteratorFunctions *iteratorAPI;
 RegistrationFunctions *registrationAPI;
+AiFunctions *aiAPI;
 
 void __thiscall aoe_lifetap_type_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {

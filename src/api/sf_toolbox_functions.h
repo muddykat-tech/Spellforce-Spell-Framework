@@ -20,26 +20,35 @@ DECLARE_FUNCTION(uint16_t, getNextNode, uint32_t *CGdDoubleLinkedList, uint16_t 
 DECLARE_FUNCTION(void, figureSetNewJob, void *CGdFigureJobs, uint32_t figure_id, uint32_t new_job, uint32_t param_3, uint32_t param_4, uint32_t param_5);
 DECLARE_FUNCTION(uint32_t, removeSpellFromList, SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t param_1, uint16_t param_2);
 DECLARE_FUNCTION(uint16_t, addUnit, SF_CGdFigureToolbox *_this, uint16_t posX, uint16_t posY, uint16_t owner, uint16_t figure_type,
-                    uint16_t spawn_effect, int npc_id, int faction, int disable_ai);
-DECLARE_FUNCTION(bool, findClosestFreePosition, SF_CGdWorldToolBox* _this, SF_Coord *param_1,SF_Coord *param_2,
-                    uint16_t sector, SF_Coord *return_value)
+                 uint16_t spawn_effect, int npc_id, int faction, int disable_ai);
+DECLARE_FUNCTION(bool, findClosestFreePosition, SF_CGdWorldToolBox *_this, SF_Coord *param_1, SF_Coord *param_2,
+                 uint16_t sector, SF_Coord *return_value)
+DECLARE_FUNCTION(bool, isUnitMelee, SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t figure_id);
 
-DECLARE_FUNCTION_GROUP(Toolbox,
-                       dealDamage_ptr dealDamage;
-                       isTargetable_ptr isTargetable;
-                       figuresCheckHostile_ptr figuresCheckHostile;
-                       figuresCheckNeutral_ptr figuresCheckNeutral;
-                       figuresCheckFriendly_ptr figuresCheckFriendly;
-                       hasSpellOnIt_ptr hasSpellOnIt;
-                       buildingDealDamage_ptr buildingDealDamage;
-                       rescaleLevelStats_ptr rescaleLevelStats;
-                       addSpellToFigure_ptr addSpellToFigure;
-                       getFigureFromWorld_ptr getFigureFromWorld;
-                       getSpellIndexOfType_ptr getSpellIndexOfType;
-                       getSpellIndexFromDLL_ptr getSpellIndexFromDLL;
-                       getNextNode_ptr getNextNode;
-                       figureSetNewJob_ptr figureSetNewJob;
-                       removeSpellFromList_ptr removeSpellFromList;
-                       addUnit_ptr addUnit;
-                       findClosestFreePosition_ptr findClosestFreePosition;
-                       );
+DECLARE_FUNCTION(bool, hasAuraActive, SF_CGdFigureToolbox *_this, uint16_t figure_id);
+/**
+ * @ingroup API
+ * @brief Holds most of the Toolbox Functions relevent for custom spells. Includes functions for the manipulation of Figures.
+ */
+typedef struct
+{
+    dealDamage_ptr dealDamage;
+    isTargetable_ptr isTargetable;
+    figuresCheckHostile_ptr figuresCheckHostile;
+    figuresCheckNeutral_ptr figuresCheckNeutral;
+    figuresCheckFriendly_ptr figuresCheckFriendly;
+    hasSpellOnIt_ptr hasSpellOnIt;
+    hasAuraActive_ptr hasAuraActive;
+    buildingDealDamage_ptr buildingDealDamage;
+    rescaleLevelStats_ptr rescaleLevelStats;
+    addSpellToFigure_ptr addSpellToFigure;
+    getFigureFromWorld_ptr getFigureFromWorld;
+    getSpellIndexOfType_ptr getSpellIndexOfType;
+    getSpellIndexFromDLL_ptr getSpellIndexFromDLL;
+    getNextNode_ptr getNextNode;
+    figureSetNewJob_ptr figureSetNewJob;
+    removeSpellFromList_ptr removeSpellFromList;
+    addUnit_ptr addUnit;
+    findClosestFreePosition_ptr findClosestFreePosition;
+    isUnitMelee_ptr isUnitMelee;
+} ToolboxFunctions;

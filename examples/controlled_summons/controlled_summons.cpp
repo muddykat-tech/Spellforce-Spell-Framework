@@ -74,6 +74,7 @@ uint16_t summonCreature(SF_CGdFigureToolbox *_this, uint16_t master_index, uint1
         uint16_t owner = _this->CGdFigure->figures[master_index].owner;
         summon_index = toolboxAPI->addUnit(_this, real_pos.X, real_pos.Y, owner, creature_type, 0x13, 0,  _this->CGdFigure->figures[master_index].faction, 0);
         //figureAPI->setTask
+        _this->CGdFigure->figures[summon_index].race = _this->CGdFigure->figures[master_index].race;
     }
     return summon_index;
 }
@@ -102,7 +103,7 @@ void __thiscall summon_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
     }
     else
     {
-        uint16_t current_mana = figureAPI->getManaCurrent(_this->SF_CGdFigure, spell->source.entity_index);
+        uint16_t current_mana = figureAPI->getCurrentMana(_this->SF_CGdFigure, spell->source.entity_index);
         if (current_mana >= spell_data.params[1])
         {
             _this->active_spell_list[spell_index].to_do_count = (spell_data.params[0] * 10) / 1000;

@@ -1,3 +1,9 @@
+/**
+ * @file sf_general_structures.h
+ * @brief Group of Structures and Enums used throught SFSF
+ * @ingroup API
+ */
+
 #pragma once
 #include <stdint.h>
 #include <stdbool.h>
@@ -10,6 +16,7 @@ typedef struct __attribute__((packed))
     char mod_version[24];
     char mod_description[128];
     char mod_author[128];
+    char mod_errors[256]; //Large Buffer for all error reporting needs.
 } SFMod;
 
 typedef void (*log_function_ptr)(const char *);
@@ -19,6 +26,23 @@ typedef struct __attribute__((packed))
     log_function_ptr logWarning;
     log_function_ptr logInfo;
 } SFLog;
+
+typedef enum : uint16_t
+{
+    NONE = 0x0,
+    SUMMON_SPELL = 0x1,
+    DOMINATION_SPELL = 0x2,
+    CHAIN_SPELL = 0x4,
+    WHITE_AURA_SPELL = 0x8,
+    BLACK_AURA_SPELL = 0x10,
+    TARGET_ONHIT_SPELL = 0x20,
+    COMBAT_ABILITY_SPELL = 0x40,
+    AOE_SPELL = 0x80,
+    SEIGE_AURA_SPELL = 0x100,
+    AURA_SPELL = 0x200,
+    STACKABLE_SPELL = 0x400,
+    SPELL_TAG_COUNT = 12
+} SpellTag;
 
 /* |-========== General Structures ==========-| */
 
@@ -90,7 +114,8 @@ typedef enum
     FOREST_SPIRIT = 0x8000000,
     VIP = 0x10000000,
     ILLUSION = 0x20000000,
-    SPAWN = 0x40000000
+    SPAWN = 0x40000000,
+    USED_FOR_REVENGE = 0x80000000
 } GdFigureFlags;
 
 typedef enum : uint16_t
@@ -190,7 +215,7 @@ typedef struct __attribute__((packed))
 typedef struct __attribute__((packed))
 {
     uint16_t type;
-    uint16_t unkn1;
+    uint16_t subtype;
     uint16_t unkn2;
     uint16_t unkn3;
     uint16_t unkn4;
@@ -290,6 +315,9 @@ typedef struct __attribute__((packed))
     uint8_t set_type;
 } GdFigure;
 
+/**
+ * @brief A structure for the global list of figures and related statistics for them
+ */
 typedef struct __attribute__((packed))
 {
     uint16_t max_used;
@@ -547,7 +575,7 @@ struct __attribute__((packed)) SF_CGDEffect
 };
 /* |-============= Buildings Structures ==========- |*/
 
-typedef struct __attribute__ ((packed))
+typedef struct __attribute__((packed))
 {
     SF_Coord position;
     uint16_t owner;
@@ -607,11 +635,21 @@ typedef struct __attribute__((packed))
 } SF_Color;
 
 typedef struct __attribute__((packed))
-{
-    uint8_t data[0x128];
+{  
+    uint32_t unkn;
+    uint32_t param_1_callback;
+    uint32_t param_2_callback;
+    uint32_t param_3_callback;
+    uint8_t data[0x118];
     uint32_t parent_ptr;
     uint8_t data2[0xdc];
 } CMnuBase_data;
+
+typedef struct __attribute__((packed))
+{
+    uint32_t vftablePTR;
+    uint8_t unknown_data2[0xcc];
+} CUiOption;
 
 typedef struct __attribute__((packed))
 {
@@ -620,6 +658,39 @@ typedef struct __attribute__((packed))
     uint8_t CMnuVisControl_data[0x9C];
     uint8_t CMnuLabel_data[0xc0];
 } CMnuLabel;
+
+typedef struct __attribute__((packed))
+{
+    uint8_t toggle; // toggle used to track if a button is enabled or not.
+    uint32_t index;  // Used to hold the index of loaded mods for the showmod page
+    CMnuLabel *title_label; // Title Label 
+    CMnuLabel *desc_label; // Description Label 
+    CMnuLabel *page_label; // Page Index Label 
+    CMnuLabel *error_label; // Error Info Label 
+} SFSF_ModlistStruct;
+
+typedef struct __attribute__((packed))
+{
+    uint32_t vtable_ptr;
+    uint32_t param_ptr;
+    uint32_t callback_func;
+} CUtlCallback2;
+
+typedef struct __attribute__((packed))
+{
+    uint8_t padding_start[0x13];
+    uint32_t button_ptr;
+    uint8_t padding_end[0x119];
+} CMnuButton_data;
+
+typedef struct __attribute__((packed))
+{
+    uint32_t vftablePTR;                    
+    CMnuBase_data CMnuBase_data;            
+    uint8_t CMnuVisControl_data[0x9c];
+    CMnuButton_data CMnuButton_data;
+    uint8_t CMnuSmpButton_data[0x50];
+} CMnuSmpButton;
 
 typedef struct __attribute__((packed))
 {
@@ -747,7 +818,7 @@ typedef SF_String *(__thiscall *construct_default_sf_string_ptr)(SF_String *_thi
 
 typedef void(__thiscall *construct_start_menu_ptr)(CUiStartMenu *_this, uint32_t p1);
 
-typedef void(__thiscall *mnu_label_init_data_ptr)(CMnuLabel *_this, float xpos, float ypos, float width, float height, SF_String *string);
+typedef void(__thiscall *mnu_label_init_data_ptr)(void *_this, float xpos, float ypos, float width, float height, SF_String *string);
 typedef void(__thiscall *message_box_ptr)(uint32_t CAppMenu, uint16_t description_id, SF_String *string_ptr, uint16_t hasOffset);
 
 typedef void(__thiscall *menu_label_constructor_ptr)(CMnuLabel *_this);
@@ -756,22 +827,31 @@ typedef void(__thiscall *set_label_flags_ptr)(CMnuLabel *_this, uint32_t flags);
 typedef void(__fastcall *original_menu_func_ptr)(uint32_t param1);
 
 typedef void *(__cdecl *new_operator_ptr)(uint32_t param_1);
-typedef void(__thiscall *container_add_control_ptr)(CMnuContainer *_this, void *CMnuBase, char *c1, char *c2, uint32_t p4);
+typedef void(__thiscall *container_add_control_ptr)(CMnuContainer *_this, void *CMnuBase, char c1, char c2, uint32_t p4);
 typedef void(__thiscall *menu_label_set_data_ptr)(CMnuLabel *_this, uint32_t color_red, uint32_t color_green, uint32_t color_blue, uint8_t unknchar);
 typedef void(__thiscall *get_sf_color_ptr)(SF_String *_this, uint32_t color_id);
 typedef SF_FontStruct *(__thiscall *get_smth_fonts_ptr)(void);
 typedef SF_Font *(__thiscall *get_font_ptr)(SF_FontStruct *_this, uint32_t font_id);
 typedef void(__thiscall *menu_label_set_font_ptr)(void *_this, SF_Font *font);
+typedef CUiOption* (__thiscall *create_option_ptr)(CUiOption *_this);
 
-extern void __thiscall attach_new_label(CMnuContainer *parent, char *label_text, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height);
+extern CMnuLabel * __thiscall attach_new_meshed_label(CMnuLabel *label_ptr,CMnuContainer *parent, char *mesh_name, char *label_text, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height);
+extern CMnuLabel * __thiscall attach_new_label(CMnuLabel *label_ptr,CMnuContainer *parent, char *label_text, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height);
+extern void __thiscall attach_new_button(CMnuContainer *parent, char *button_mesh_default, char *button_mesh_pressed, char *button_mesh_highlight, char *button_mesh_disabled,  char *label_char, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height, int button_index, uint32_t callback_function_pointer);
 
-/* |-========== Macros ==========-| */
-// Here comes a better method for setting up our exposed functions, to define functions also check sf_hooks.h
+extern void __fastcall show_mod_list_callback(CMnuSmpButton *button, int32_t* cui_menu_ptr_maybe);
+
+extern SFSF_ModlistStruct mod_struct;
+
+/**
+ * @brief Declares a function with the specified return type, name, and arguments.
+ * 
+ * This macro is used to define functions that we use for hooking into the game and to expose these to the API.
+ * we use it to cut down on boilerplate code typedefs and structures.
+ * 
+ * @param return_type The return type of the function.
+ * @param function_name The name of the function.
+ * @param ... The function parameters and types.
+ */
 #define DECLARE_FUNCTION(type, name, ...) \
     typedef type(__thiscall *name##_ptr)(__VA_ARGS__);
-
-#define DECLARE_FUNCTION_GROUP(group, ...) \
-    typedef struct                         \
-    {                                      \
-        __VA_ARGS__                        \
-    } group##Functions;

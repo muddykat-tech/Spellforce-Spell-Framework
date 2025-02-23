@@ -1,6 +1,12 @@
+/** 
+ * @defgroup EndSpellHook End Spell Hook
+ * @ingroup Hooks
+ * @brief Used to inject 'endspell' handlers registered by mods and sfsf into spellforce
+ */
+
 #include "../sf_wrappers.h"
 #include "../sf_hooks.h"
-#include "../../registry/sf_spellend_registry.h"
+#include "../../registry/spell_data_registries/sf_spellend_registry.h"
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -9,6 +15,10 @@
 
 #include "sf_endspell_hook.h"
 
+
+/**
+ * @ingroup EndSpellHook
+ */
 void __thiscall sf_endspell_hook(SF_CGdSpell *_this, uint16_t spell_index)
 {
     // We need a map of end spell handlers?

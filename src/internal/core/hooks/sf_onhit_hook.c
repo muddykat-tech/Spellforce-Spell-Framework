@@ -1,8 +1,16 @@
+/** 
+ * @defgroup OnhitHook On Hit Hook
+ * @ingroup Hooks
+ * @brief Used to inject Onhit Handlers into Spellforce.
+ * @addtogroup OnhitHook
+ * @{
+ */
+
 #include "sf_onhit_hook.h"
 #include "../sf_wrappers.h"
 #include "../sf_hooks.h"
 #include "../sf_modloader.h"
-#include "../../registry/sf_onhit_registry.h"
+#include "../../registry/spell_data_registries/sf_onhit_registry.h"
 #include "../../registry/sf_mod_registry.h"
 
 #include <stdint.h>
@@ -107,7 +115,7 @@ bool __thiscall isFigureJobSpell(SF_CGdFigureJobs *_this, uint16_t figure_id)
     if (job_id == kGdJobWalkToTarget)
     {
         SF_SGtFigureAction action;
-        figureAPI.getTargetAction(_this->CGdFigure, &action, figure_id);
+        aiAPI.getTargetAction(_this->CGdFigure, &action, figure_id);
         if ((action.type != 0) && (action.type < 10000))
         {
             return 1;
@@ -219,11 +227,11 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
     uint16_t weapon_damage = spellAPI.getRandom(_this->OpaqueClass, weapon_stats.max_dmg - weapon_stats.min_rng);
     weapon_damage += weapon_stats.min_dmg;
     getTargetData(&_this->CGdFigure->figures[source_index].ac_1, &target);
-    figureAPI.getTargetAction(_this->CGdFigure, &action, source_index);
+    aiAPI.getTargetAction(_this->CGdFigure, &action, source_index);
 
     if (target.entity_type == 1)
     {
-        //NB Parenthis matters in flags check. I mean it
+        // NB Parenthis matters in flags check. I mean it
         if ((_this->CGdFigure->figures[target.entity_index].owner == -1) ||
             ((_this->CGdFigure->figures[target.entity_index].flags & (REDO | IS_DEAD)) != 0) ||
             (!toolboxAPI.isTargetable(_this->CGdFigureToolBox, target.entity_index)))
@@ -266,7 +274,7 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
             if (isFigureJobSpell(_this, target.entity_index))
             {
                 uint16_t job_id = figureAPI.getJob(_this->CGdFigure, target.entity_index);
-                if (canJobBeInterrupted(job_id))
+                if (canJobBeInterrupted((FigureJobs) job_id))
                 {
                     uint16_t chance = getAttackInterruptionChance(_this->CGdFigure, source_index, target.entity_index);
                     if (spellAPI.getRandom(_this->OpaqueClass, 100) <= chance)
@@ -300,9 +308,8 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
                     std::pair<uint16_t, onhit_handler_ptr> entry = *it;
 
                     uint16_t spell_line_id = entry.first;
-                    SpellTag spell_tag = static_cast<SpellTag>(getSpellTag(spell_line_id));
 
-                    if (spell_tag == TARGET_ONHIT_SPELL)
+                    if (hasSpellTag(spell_line_id, TARGET_ONHIT_SPELL))
                     {
                         if ((_this->CGdFigure->figures[target.entity_index].flags & F_CHECK_SPELLS_BEFORE_JOB) != 0)
                         {
@@ -492,3 +499,5 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
         }
     }
 }
+
+/**@} */
