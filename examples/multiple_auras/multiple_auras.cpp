@@ -112,10 +112,51 @@ void __thiscall aura_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 
 void registerSpells()
 {
-    SFSpell *aura_1 = registrationAPI->registerSpell(kGdSpellLineAuraFlexibility);
-    SFSpell *aura_2 = registrationAPI->registerSpell(kGdSpellLineAuraWeakness);
-    registrationAPI->linkEndHandler(aura_1, &aura_end_handler);
-    registrationAPI->linkEndHandler(aura_2, &aura_end_handler);
+    SFSpell *aura1 = registrationAPI->registerSpell(kGdSpellLineAuraWeakness);
+    SFSpell *aura2 = registrationAPI->registerSpell(kGdSpellLineAuraSuffocation);
+    SFSpell *aura3 = registrationAPI->registerSpell(kGdSpellLineAuraLifeTap);
+    SFSpell *aura4 = registrationAPI->registerSpell(kGdSpellLineAuraSlowFighting);
+    SFSpell *aura5 = registrationAPI->registerSpell(kGdSpellLineAuraInflexibility);
+    SFSpell *aura6 = registrationAPI->registerSpell(kGdSpellLineAuraSlowWalking);
+    SFSpell *aura7 = registrationAPI->registerSpell(kGdSpellLineAuraInability);
+
+    SFSpell *aura8 = registrationAPI->registerSpell(kGdSpellLineAuraStrength);
+    SFSpell *aura9 = registrationAPI->registerSpell(kGdSpellLineAuraHealing);
+    SFSpell *aura10 = registrationAPI->registerSpell(kGdSpellLineAuraEndurance);
+    SFSpell *aura11 = registrationAPI->registerSpell(kGdSpellLineAuraRegeneration);
+    SFSpell *aura12 = registrationAPI->registerSpell(kGdSpellLineAuraFastFighting);
+    SFSpell *aura13 = registrationAPI->registerSpell(kGdSpellLineAuraFlexibility);
+    SFSpell *aura14 = registrationAPI->registerSpell(kGdSpellLineAuraFastWalking);
+    SFSpell *aura15 = registrationAPI->registerSpell(kGdSpellLineAuraLight);
+    SFSpell *aura16 = registrationAPI->registerSpell(kGdSpellLineAuraDexterity);
+
+    SFSpell *aura17 = registrationAPI->registerSpell(kGdSpellLineAuraHypnotization);
+    SFSpell *aura18 = registrationAPI->registerSpell(kGdSpellLineAuraBrilliance);
+    SFSpell *aura19 = registrationAPI->registerSpell(kGdSpellLineAuraManaTap);
+
+    SFSpell *aura20 = registrationAPI->registerSpell(kGdSpellLineAuraEternity);
+
+    registrationAPI->linkEndHandler(aura1, &aura_end_handler);
+    registrationAPI->linkEndHandler(aura2, &aura_end_handler);
+    registrationAPI->linkEndHandler(aura3, &aura_end_handler);
+    registrationAPI->linkEndHandler(aura4, &aura_end_handler);
+    registrationAPI->linkEndHandler(aura5, &aura_end_handler);
+    registrationAPI->linkEndHandler(aura6, &aura_end_handler);
+    registrationAPI->linkEndHandler(aura7, &aura_end_handler);
+    registrationAPI->linkEndHandler(aura8, &aura_end_handler);
+    registrationAPI->linkEndHandler(aura9, &aura_end_handler);
+    registrationAPI->linkEndHandler(aura10, &aura_end_handler);
+
+    registrationAPI->linkEndHandler(aura11, &aura_end_handler);
+    registrationAPI->linkEndHandler(aura12, &aura_end_handler);
+    registrationAPI->linkEndHandler(aura13, &aura_end_handler);
+    registrationAPI->linkEndHandler(aura14, &aura_end_handler);
+    registrationAPI->linkEndHandler(aura15, &aura_end_handler);
+    registrationAPI->linkEndHandler(aura16, &aura_end_handler);
+    registrationAPI->linkEndHandler(aura17, &aura_end_handler);
+    registrationAPI->linkEndHandler(aura18, &aura_end_handler);
+    registrationAPI->linkEndHandler(aura19, &aura_end_handler);
+    registrationAPI->linkEndHandler(aura20, &aura_end_handler);
 
 }
 
@@ -126,6 +167,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     toolboxAPI = sfsf->toolboxAPI;
     figureAPI = sfsf->figureAPI;
     registrationAPI = sfsf->registrationAPI;
+    effectAPI = sfsf->effectAPI;
 
     getAutoClass24 = (getAutoClass24_ptr)ASI::AddrOf(0x2b5cb0);
     FUN_006f8c06 = (FUN_006f8c06_ptr)ASI::AddrOf(0x2f8c06);
