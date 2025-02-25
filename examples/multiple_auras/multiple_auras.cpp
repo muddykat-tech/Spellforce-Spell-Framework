@@ -62,7 +62,23 @@ void __thiscall aura_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
     uint16_t source_index = _this->active_spell_list[spell_index].source.entity_index;
     if ((sf_figures->figures[source_index].owner != (uint16_t)(-1)) &&
         ((sf_figures->figures[source_index].flags & GdFigureFlags::REDO) == 0))
-    {
+    {     
+
+        /*
+        This should do the same thing as the code below, but as a callback.
+        */
+        // spellAPI->spellEffectCallback(_this, source_index, spell_index, 
+        //     [](SF_CGdSpell* spell, uint16_t spell_index, uint16_t walked_index) -> bool {
+        //         uint16_t spell_line = spellAPI->getSpellLine(spell, walked_index);
+        //         return spellAPI->hasSpellTag(spell_line, AURA_SPELL);
+        //     },
+        //     [](SF_CGdSpell* spell, uint16_t src_idx, uint16_t walked_index, uint16_t spell_index) -> void {
+        //         if( walked_index != spell_index ) {
+        //             SF_CGdFigure *sf_figures = spell->SF_CGdFigure;
+        //             sf_figures->figures[src_idx].flags = static_cast<GdFigureFlags>(sf_figures->figures[src_idx].flags & 
+        //                 (~static_cast<unsigned int>(GdFigureFlags::AURA_RUNNING)));
+        //         }
+        //     });
 
         uint16_t node_id = figureAPI->getSpellJobStartNode(_this->SF_CGdFigure, source_index);
         bool should_stop = true;
@@ -85,6 +101,7 @@ void __thiscall aura_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
             sf_figures->figures[source_index].flags = static_cast<GdFigureFlags>(sf_figures->figures[source_index].flags & (~static_cast<unsigned int>(GdFigureFlags::AURA_RUNNING)));
         }
     }
+    
     uint16_t effect_index = spellAPI->getXData(_this, spell_index, EFFECT_EFFECT_INDEX);
     if (effect_index != 0)
     {
@@ -120,6 +137,8 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     *(unsigned char *)(ASI::AddrOf(0x356247)) = 0xE8;
     *(int *)(ASI::AddrOf(0x356248)) = (int)(&onSpellCastHook) - ASI::AddrOf(0x35624c);
     ASI::EndRewrite(mreg_1);
+
+    registerSpells();
 }
 
 extern "C" __declspec(dllexport) SFMod *RegisterMod(SpellforceSpellFramework *framework)

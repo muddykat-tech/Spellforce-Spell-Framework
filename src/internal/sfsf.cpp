@@ -43,7 +43,6 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
     {
         if (!ASI::Init(hModule))
             return FALSE;
-        //! ASI::CheckSFVersion(ASI::SF_154) &&
         if (!ASI::CheckSFVersion(ASI::SF_BETA))
         {
             return FALSE;
@@ -54,13 +53,8 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
             fclose(file);
 
             log_info("Spellforce Version Accepted; Starting SFSF");
-            // Initialize Framework -> see sf_registry.h
             initialize_framework();
-
-            // Initialize Spellforce Hooks -> see sf_hooks.h
             initialize_beta_hooks();
-
-            // Just wanted to align the debug log
             OutputDebugStringA("[SFSF] |======================| Injection Complete |======================|");
             break;
         }

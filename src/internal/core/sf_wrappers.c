@@ -164,6 +164,23 @@ void __thiscall disposeFigureIterator(CGdFigureIterator *iterator)
     fidFree(iterator->data.offset_0x30.ac69_ptr1);
 }
 
+void __thiscall spellEffectCallback(SF_CGdSpell* _this, uint16_t source_index, uint16_t spell_index, 
+    bool (*condition)(SF_CGdSpell* _this, uint16_t source_index, uint16_t spell_index), 
+    void (*callback)(SF_CGdSpell* _this, uint16_t source_index, uint16_t spell_index))
+{
+    if (!condition || !callback) return;
+    
+    uint16_t node_id = figureAPI.getSpellJobStartNode(_this->SF_CGdFigure, source_index);
+    while (node_id != 0) {
+        uint16_t current_index = toolboxAPI.getSpellIndexFromDLL(_this->SF_CGdDoubleLinkedList, node_id);
+        if ((*condition)(_this, current_index, spell_index)) {
+            (*callback)(_this, source_index, current_index);
+            break;
+        }
+        node_id = toolboxAPI.getNextNode(_this->SF_CGdDoubleLinkedList, node_id);
+    }
+}
+
 void __thiscall addBonusMultToStatistic(SF_CGdFigure *figure, StatisticDataKey key, uint16_t target, int8_t value)
 {
     bool invalid = FALSE;
