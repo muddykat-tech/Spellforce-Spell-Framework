@@ -75,12 +75,17 @@ uint32_t __attribute__((no_caller_saved_registers, thiscall)) sf_deal_damage(SF_
                 uint16_t spell_index = (packed_id >> 0x10);
                 uint16_t spell_id = spellAPI.getSpellID(figureToolbox->CGdSpell, spell_index);
                 damage_handler_ptr spell_damage_func = get_spell_damage(spell_line_id, phase);
-
-                damage_amount = spell_damage_func(figureToolbox, dmg_source, dmg_target, damage_amount,
-                                                  is_spell_damage, is_ranged_damage, spell_id);
+                if(spell_damage_func != NULL)
+                {
+                    damage_amount = spell_damage_func(figureToolbox, dmg_source, dmg_target, damage_amount,
+                        is_spell_damage, is_ranged_damage, spell_id);
+                }
             }
         }
     }
+    char message[256];
+    sprintf(message, "Dealing Damage: %d", damage_amount);
+    log_error(message);
     return damage_amount;
 }
 

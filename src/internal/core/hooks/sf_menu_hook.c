@@ -72,10 +72,8 @@ void __attribute__((no_caller_saved_registers, thiscall)) sf_menu_hook(uint32_t 
     sprintf(sfsf_info, "Spell Framework %s\n%d Mod(s) Loaded with %d Error(s)", g_framework_mod->mod_version, g_mod_count, g_error_count);
     // Manually move the pointer in order to access the CMNuContainer
     uint32_t CAppMenu_data = *(uint32_t *)(_CAppMenu + 0x4);
-    uint32_t CMnuScreen_ptr = *(uint32_t *)(CAppMenu_data + 0x68);
     uint32_t container_hack_ptr = *(uint32_t *)(_CAppMenu + 0x58);
     CMnuContainer *container_hack = (CMnuContainer *)container_hack_ptr;
-    uint32_t screen_vftable_ptr = CMnuScreen_ptr;
     
     CMnuLabel *sfsf_version_label;
     attach_new_label(sfsf_version_label, container_hack, sfsf_info, 6, 10, 729, strlen(sfsf_info) * 4, 100);
@@ -95,7 +93,6 @@ void __attribute__((no_caller_saved_registers, thiscall)) sf_menu_hook(uint32_t 
     mod_struct.toggle = 0;
     mod_struct.index = 0;
     
-
     log_info("Adding Mod List Button");
     int button_index = 15;
     attach_new_button(container_hack, sfsf_test_button_default, sfsf_test_button_pressed, sfsf_test_button_highlight, sfsf_test_button_disabled, sfsf_test_button_label, 7, 822,705,192,36, button_index, (uint32_t) &show_mod_list_callback);

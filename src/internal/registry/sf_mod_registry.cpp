@@ -159,7 +159,6 @@ void register_mod_spells()
         SpellDamagePhase damage_phase = spell_data->damage_phase;
         OnHitPhase onhit_phase = spell_data->hit_phase;
         SFMod *parent_mod = spell_data->parent_mod;
-
         g_current_mod = spell_data->parent_mod;
 
         if (temp != g_current_mod)
@@ -174,6 +173,7 @@ void register_mod_spells()
 
             char info[256];
             snprintf(info, sizeof(info), "| - Starting Registration for [%s by %s]", parent_mod->mod_id, parent_mod->mod_author);
+            parent_mod->mod_errors[0] = '\0';
             log_info(info);
             temp = g_current_mod;
         }

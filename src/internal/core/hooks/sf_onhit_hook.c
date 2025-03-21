@@ -433,7 +433,7 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
                         spellAPI.addSpell(_this->CGdSpell, spell_id, _this->OpaqueClass->current_step, &target, &t_data, 0);
                     }
                 }
-                toolboxAPI.dealDamage(_this->CGdFigureToolBox, source_index, target.entity_index, damage, 0, 0, 0);
+                if(damage != 0) toolboxAPI.dealDamage(_this->CGdFigureToolBox, source_index, target.entity_index, damage, 0, 0, 0);
             }
             if (figureAPI.isAlive(_this->CGdFigure, target.entity_index))
             {
