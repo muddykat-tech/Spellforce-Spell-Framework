@@ -96,7 +96,7 @@ void log_error(const char *message)
     // Logs an error message to the console and the debug output, including the last error code
     int lastError = GetLastError();
     static char modifiedMessage[256];
-    snprintf(modifiedMessage, sizeof(modifiedMessage), "[ERROR] %s [Last Error: %d]", message, lastError);
+    snprintf(modifiedMessage, sizeof(modifiedMessage), "[ERROR] %s [(Win32 SysErr) Last Error: %d]", message, lastError);
     console_log(modifiedMessage);
 }
 
@@ -162,6 +162,23 @@ void __thiscall disposeFigureIterator(CGdFigureIterator *iterator)
     uint32_t unused;
     FUN_0069eaf0(&(iterator->data.offset_0x30), &unused, ((AutoClass69 *)iterator->data.offset_0x30.ac69_ptr1)->ac69_ptr1, iterator->data.offset_0x30.ac69_ptr1);
     fidFree(iterator->data.offset_0x30.ac69_ptr1);
+}
+
+void __thiscall spellEffectCallback(SF_CGdSpell* _this, uint16_t source_index, uint16_t spell_index, 
+    bool (*condition)(SF_CGdSpell* _this, uint16_t source_index, uint16_t spell_index), 
+    void (*callback)(SF_CGdSpell* _this, uint16_t source_index, uint16_t spell_index))
+{
+    if (!condition || !callback) return;
+    
+    uint16_t node_id = figureAPI.getSpellJobStartNode(_this->SF_CGdFigure, source_index);
+    while (node_id != 0) {
+        uint16_t current_index = toolboxAPI.getSpellIndexFromDLL((uint32_t*)_this->SF_CGdDoubleLinkedList, node_id);
+        if ((*condition)(_this, current_index, spell_index)) {
+            (*callback)(_this, source_index, current_index);
+            break;
+        }
+        node_id = toolboxAPI.getNextNode((uint32_t*)_this->SF_CGdDoubleLinkedList, node_id);
+    }
 }
 
 void __thiscall addBonusMultToStatistic(SF_CGdFigure *figure, StatisticDataKey key, uint16_t target, int8_t value)
@@ -314,29 +331,33 @@ void attach_mod_labels(CMnuContainer *_container, int mods_per_page, int page)
                 CMnuLabel *mod_page_label = mod_struct.page_label;
                 CMnuLabel *mod_error_label = mod_struct.error_label;
 
-                char mod_title[512];
+                char mod_title[512] = {0};
                 snprintf(mod_title, sizeof(mod_title), "%s %s\nby %s", 
                          parent_mod->mod_id, 
                          parent_mod->mod_version, 
                          parent_mod->mod_author);
                 
-                char mod_description[512];
+                char mod_description[512] = {0};
                 snprintf(mod_description, sizeof(mod_description), "%s", 
                          parent_mod->mod_description);
 
-                char wrapped_description[1024];  // We need a larger buffer for the wrapped text
+                char wrapped_description[1024] = {0};  // We need a larger buffer for the wrapped text
                 wrap_text(mod_description, wrapped_description, 64);
 
                 bool has_errors = g_error_count > 0;
                 //mod_page_info
-                char mod_page_info[48];
+                char mod_page_info[48] = {0};
                 snprintf(mod_page_info, sizeof(mod_page_info), "(%u / %u)", 
                          (index + 1), (g_mod_count + 1));
 
-                char mod_error_info[512];
-                snprintf(mod_error_info, sizeof(mod_error_info), parent_mod->mod_errors);
+                char mod_error_info[512] = {0};
+                if (parent_mod->mod_errors && parent_mod->mod_errors[0] != '\0') {
+                    snprintf(mod_error_info, sizeof(mod_error_info), "%s", parent_mod->mod_errors);
+                } else {
+                    snprintf(mod_error_info, sizeof(mod_error_info), "No errors found");
+                }
 
-                char wrapped_error_info[1024];  // We need a larger buffer for the wrapped text
+                char wrapped_error_info[1024] = {0};  // We need a larger buffer for the wrapped text
                 wrap_text(mod_error_info, wrapped_error_info, 64);
 
                 if(is_init_finished)

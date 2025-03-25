@@ -1,4 +1,4 @@
-#include "../.../src/api/sfsf.h"
+#include "../../src/api/sfsf.h"
 
 // NOTE sfsf.h includes the OTHER api files, but other libraries are still required
 #include <windows.h>

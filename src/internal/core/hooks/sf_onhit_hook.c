@@ -224,8 +224,8 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
     SF_CGdTargetData target;
     SF_SGtFigureAction action;
     figureAPI.getWeaponStats(_this->CGdFigure, &weapon_stats, source_index);
-    uint16_t weapon_damage = spellAPI.getRandom(_this->OpaqueClass, weapon_stats.max_dmg - weapon_stats.min_rng);
-    weapon_damage += weapon_stats.min_dmg;
+    uint16_t weapon_damage_rng = spellAPI.getRandom(_this->OpaqueClass, weapon_stats.max_dmg - weapon_stats.min_dmg);
+    uint16_t weapon_damage = weapon_damage_rng + weapon_stats.min_dmg;
     getTargetData(&_this->CGdFigure->figures[source_index].ac_1, &target);
     aiAPI.getTargetAction(_this->CGdFigure, &action, source_index);
 
@@ -258,11 +258,21 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
                 return;
             }
         }
+            /*
+            target_index = get_reduced_hit_damage
+                            (this->field11_0x2c,uVar3,(ushort)local_12c._1_4_,(ushort)local_160);
+            target_index = ((target_index & 0xffff) * (uint)param_3 + 0x32) / 100;
+            damage = target_index & 0xffff;
+            */
+
+
         uint16_t damage = g_get_reduced_damage(_this->AutoClass34, source_index, target.entity_index, weapon_damage);
-        damage = ((damage * param_3 + 0x32) / 100) & 0xffff;
+        damage = ((damage & 0xffff) * ((uint8_t) param_3) + 0x32) / 100;
+        damage = damage & 0xffff;
         // glanced hit
         if (damage == 0)
         {
+            log_info("Damage IS 0");
             uint16_t aggro = figureAPI.getAggroValue(_this->CGdFigure, target.entity_index, source_index);
             if (aggro < 10000)
             {
@@ -433,13 +443,13 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index, ui
                         spellAPI.addSpell(_this->CGdSpell, spell_id, _this->OpaqueClass->current_step, &target, &t_data, 0);
                     }
                 }
-                toolboxAPI.dealDamage(_this->CGdFigureToolBox, source_index, target.entity_index, damage, 0, 0, 0);
+                if(damage != 0) toolboxAPI.dealDamage(_this->CGdFigureToolBox, source_index, target.entity_index, damage, 0, 0, 0);
             }
+
             if (figureAPI.isAlive(_this->CGdFigure, target.entity_index))
             {
                 uint16_t weapon_id = _this->CGdFigure->figures[source_index].equipment[(action.type != 10000) * 2 + 1];
                 // can't make heads or tails here
-
                 uint32_t puVar15[2];
                 g_getWeaponEffects(_this->CGdResource, puVar15, weapon_id);
                 if (puVar15[0] != 0)

@@ -45,7 +45,7 @@ Interested in creating mods with SFSF? Here are some helpful resources and tips:
 - **Curated Tutorials:** Follow Teekius' tutorial on setting up your environment and using the framework: [Chapter 0: Build Environment](https://github.com/muddykat-tech/Spellforce-Spell-Framework/wiki/Chapter-0:-Build-environment).
 - **Technical Documentation:** Find in-depth documentation for the framework and API at the [Official SFSF Documentation Site](https://muddykat-tech.github.io/Spellforce-Spell-Framework/).
 - **API Documentation (SRD):** Refer to the Wiki pages labeled "SRD" for API details: [SFSF Wiki](https://github.com/muddykat-tech/Spellforce-Spell-Framework/wiki).
-
+- **Ghidra Project Access:** For Access to the ghidra project that contains the partially annotated codebase of Spellforce; You can request Read-Only Access from jarrod.muddyman@muddykat.tech 
 ---
 
 ## Contributing

@@ -290,6 +290,7 @@ DECLARE_FUNCTION(uint16_t, getSpellID, SF_CGdSpell *_this, uint16_t spell_index)
 DECLARE_FUNCTION(uint16_t, getSpellTags, uint16_t spell_index);
 DECLARE_FUNCTION(bool, hasSpellTag, uint16_t spell_id, SpellTag tag);
 DECLARE_FUNCTION(int, checkCanApply, SF_CGdSpell *_this, uint16_t index);
+DECLARE_FUNCTION(void, spellEffectCallback, SF_CGdSpell *_this, uint16_t source_index, uint16_t spell_index, bool (*conditionPtr)(SF_CGdSpell*, uint16_t, uint16_t),void (*callbackPtr)(SF_CGdSpell*, uint16_t, uint16_t,uint16_t));
 
 /**
  * @brief Represents a collection of function pointers for managing spell-related operations
@@ -514,4 +515,9 @@ typedef struct
      * @brief clears the UNFREEZE flag
      */
     figTryUnfreeze_ptr figTryUnfreeze;
+
+    /**
+     * @brief callback that iterates through spells on a target, checks a condition then executes the callback.
+     */
+    spellEffectCallback_ptr spellEffectCallback;
 } SpellFunctions;
