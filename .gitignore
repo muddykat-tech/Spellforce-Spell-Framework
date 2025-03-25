@@ -47,6 +47,8 @@
 *.cmd
 .vscode/*
 .vscode
+.vs/*
+.vs
 .tmp_versions/
 examples-bin/
 modules.order
