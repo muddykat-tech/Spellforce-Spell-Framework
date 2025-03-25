@@ -32,7 +32,6 @@ uint32_t __attribute__((no_caller_saved_registers, thiscall)) sf_deal_damage(SF_
     */
 
     bool check_spells_before_job = figureAPI.isFlagSet(figureToolbox->CGdFigure, dmg_target, F_CHECK_SPELLS_BEFORE_JOB);
-
     bool figure_set_new_job = false;
     if (check_spells_before_job)
     {
