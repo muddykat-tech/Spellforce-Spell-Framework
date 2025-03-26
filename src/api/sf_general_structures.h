@@ -855,6 +855,20 @@ typedef SF_Font *(__thiscall *get_font_ptr)(SF_FontStruct *_this, uint32_t font_
 typedef void(__thiscall *menu_label_set_font_ptr)(void *_this, SF_Font *font);
 typedef CUiOption* (__thiscall *create_option_ptr)(CUiOption *_this);
 
+// SF Menu / GUI Hooks for Auras
+typedef void(__thiscall *autoclass113_fun_00a27530_ptr)(void *_this_autoclass113);
+typedef void(__thiscall *fun_0086dd60_ptr)(void *_this,uint8_t p1, uint32_t p2);
+typedef void(__thiscall *autoclass113_fun_00a278c0_ptr)(void *_this_autoclass113, uint32_t p1);
+
+// Weird __cdecl class here, blind passthrough and hope it works.
+typedef uint16_t(__cdecl *fun_00a2ald0_ptr)(uint32_t *some_ptr, void *some_ptr_2);
+
+typedef uint32_t(__thiscall *fun_006a0140_ptr)(void *_this, uint16_t p1, uint32_t p2_ptr, uint8_t p3, uint8_t p4);
+typedef void(__thiscall *fun_009a2790_ptr)(void* _p1, uint32_t p2);
+typedef uint32_t(__thiscall *fun_0069f8d0_ptr)(void* _this, uint32_t p1);
+typedef uint32_t(__thiscall *fun_0069fb90_ptr)(void* _this, uint16_t figure_id, uint8_t po2, uint16_t unkn_p3, SF_CGdTargetData *data, uint32_t p5, uint32_t p6);
+
+
 extern CMnuLabel * __thiscall attach_new_meshed_label(CMnuLabel *label_ptr,CMnuContainer *parent, char *mesh_name, char *label_text, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height);
 extern CMnuLabel * __thiscall attach_new_label(CMnuLabel *label_ptr,CMnuContainer *parent, char *label_text, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height);
 extern void __thiscall attach_new_button(CMnuContainer *parent, char *button_mesh_default, char *button_mesh_pressed, char *button_mesh_highlight, char *button_mesh_disabled,  char *label_char, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height, int button_index, uint32_t callback_function_pointer);

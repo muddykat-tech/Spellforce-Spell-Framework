@@ -37,6 +37,15 @@ menu_label_set_font_ptr g_menu_label_set_font;
 get_font_ptr g_get_font;
 menu_label_set_string_ptr g_menu_label_set_string;
 
+autoclass113_fun_00a27530_ptr fun_00a27530; 
+fun_0086dd60_ptr fun_0086dd60;
+autoclass113_fun_00a278c0_ptr fun_00a278c0;
+fun_00a2ald0_ptr fun_00a2ald0;
+fun_006a0140_ptr fun_006a0140;
+fun_009a2790_ptr fun_009a2790;
+fun_0069f8d0_ptr fun_0069f8d0;
+fun_0069fb90_ptr fun_0069fb90;
+
 void initialize_menu_data_hooks()
 {
     // Retrieve function pointers using the Memory Address of Intercepted Function
@@ -61,6 +70,15 @@ void initialize_menu_data_hooks()
     g_container_add_control = (container_add_control_ptr)(ASI::AddrOf(0x506f30));
 
     f_create_menu_option = (create_option_ptr)(ASI::AddrOf(0x61CF80));
+
+    fun_00a27530 = (autoclass113_fun_00a27530_ptr)(ASI::AddrOf(0x9E7530));
+    fun_0086dd60 = (fun_0086dd60_ptr)(ASI::AddrOf(0x82DD60));
+    fun_00a278c0 = (autoclass113_fun_00a278c0_ptr)(ASI::AddrOf(0x9E78C0));
+    fun_00a2ald0 = (fun_00a2ald0_ptr)(ASI::AddrOf(0x9EA1D0));
+    fun_006a0140 = (fun_006a0140_ptr)(ASI::AddrOf(0x660140));
+    fun_009a2790 = (fun_009a2790_ptr)(ASI::AddrOf(0x962790));
+    fun_0069f8d0 = (fun_0069f8d0_ptr)(ASI::AddrOf(0x65F8D0));
+    fun_0069fb90 = (fun_0069fb90_ptr)(ASI::AddrOf(0x65FB90));
 }
 
 SFSF_ModlistStruct mod_struct;
