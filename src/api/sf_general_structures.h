@@ -608,6 +608,7 @@ struct __attribute__((packed)) SF_CGdBuilding
     uint32_t unknown2;
 };
 
+
 /* |-========== Internal Structures ==========-| */
 
 typedef struct __attribute__((packed))
@@ -723,6 +724,25 @@ typedef struct __attribute__((packed))
     uint8_t CMnuContainer_data[0x98];
     data_CUiStartMenu CUiStartMenu_data;
 } CUiStartMenu;
+
+typedef struct __attribute__((packed))
+{
+    uint16_t actionType_id;
+    uint16_t actionSubtype_id;
+    uint8_t unknown_data[12];
+    uint8_t unknown_flag;
+    uint8_t padding_maybe;
+    uint8_t unknown_config_param;
+} SF_UIElement;
+
+typedef struct __attribute__((packed))
+{
+    uint32_t CUiMain_cftable_ptr;
+    CMnuBase_data CMnuBaseData;
+    uint8_t CMnuVisControl_data[0x9C];
+    uint8_t CMnuContainer_data[0x98];
+    uint8_t CUiMain_data[0x8658];
+} SF_CUiMain;
 
 typedef enum
 {

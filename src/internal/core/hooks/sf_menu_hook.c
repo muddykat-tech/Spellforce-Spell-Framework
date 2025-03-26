@@ -78,7 +78,7 @@ void __attribute__((no_caller_saved_registers, thiscall)) sf_menu_hook(uint32_t 
     CMnuLabel *sfsf_version_label;
     attach_new_label(sfsf_version_label, container_hack, sfsf_info, 6, 10, 729, strlen(sfsf_info) * 4, 100);
     char sfsf_test_button_default[256];
-    char sfsf_test_button_pressed[256]; 
+    char sfsf_test_button_pressed[256];
     char sfsf_test_button_disabled[256];
     char sfsf_test_button_highlight[256];
     char sfsf_test_button_label[256];
@@ -101,4 +101,10 @@ void __attribute__((no_caller_saved_registers, thiscall)) sf_menu_hook(uint32_t 
     s_menu_func(_CAppMenu);
 }
 
+
+//CUiMain::FUN_009e6840
+void __attribute__((thiscall)) sf_click_vertical_button(SF_CUiMain *_this, uint16_t figure_id, uint8_t entity_type, uint16_t target_id, SF_UIElement *element)
+{
+    log_info("Called SF_CLICK_VERTICAL_BUTTON");
+}
 /** @} */
