@@ -131,13 +131,34 @@ void __attribute__((no_caller_saved_registers, thiscall)) sf_menu_hook(uint32_t 
     s_menu_func(_CAppMenu);
 }
 
-
+bool hasThisAuraRunning(SF_CGdFigureToolbox *_this, uint16_t aura_spell_id, uint16_t figure_id)
+{
+    if (figureAPI.isAlive(_this->CGdFigure, figure_id))
+    {
+        if (figureAPI.isFlagSet(_this->CGdFigure, figure_id, AURA_RUNNING))
+        {
+            uint16_t node_id = figureAPI.getSpellJobStartNode(_this->CGdFigure, figure_id);
+            while (node_id != 0)
+            {
+                uint16_t spell_index = toolboxAPI.getSpellIndexFromDLL(_this->CGdDoubleLinkedList, node_id);
+                uint16_t spell_id = spellAPI.getSpellID(_this->CGdSpell, spell_index);
+                if (spell_id == aura_spell_id)
+                {
+                    return 1;
+                }
+                node_id = toolboxAPI.getNextNode(_this->CGdDoubleLinkedList, node_id);
+            }
+        }
+    }
+    return false;
+}
 
 //CUiMain::FUN_009e6840
 void __attribute__((thiscall)) sf_click_vertical_button(SF_CUiMain *_this, uint16_t figure_id, uint8_t entity_type, uint16_t target_id, SF_UIElement *element)
 {
     log_info("Called SF_CLICK_VERTICAL_BUTTON");
     uint16_t actionID = element->actionType_id;
+    uint16_t subActionID = element->actionSubtype_id;
     uint32_t _figure_id = figure_id;
     if ((actionID == 10000) || (actionID == 10001) || (actionID == 10002))
     {
@@ -150,12 +171,22 @@ void __attribute__((thiscall)) sf_click_vertical_button(SF_CUiMain *_this, uint1
         data.entity_type = entity_type;
         data.position.X = 0;
         data.position.Y = 0;
-        uint32_t uVar3  = fun_00a2ald0((uint32_t*)&ac113, *(void **)&(_this->CUiMain_data[0x70fc]));
-        fun_006a0140(*(void **)&(_this->CUiMain_data[0x70fc]), uVar3, &data, 0,0);
+        uint32_t uVar3  = fun_00a2ald0((uint32_t*)&ac113, *(void **)&(_this->CUiMain_data.unkn3[0xc]));
+        fun_006a0140(*(void **)&(_this->CUiMain_data.unkn3[0xc]), uVar3, &data, 0,0);
         if (ac113.first != 0)
         {
            fun_009a2790(&ac113,ac113.first, (uint32_t)ac113.post_last - (uint32_t)ac113.first >> 2);
            return;
+        }
+    }
+    if ((actionID != 0) && (actionID < 10000))
+    {
+        if (spellAPI.hasSpellTag(actionID,SpellTag::AURA_SPELL))
+        {
+            if (hasThisAuraRunning(_this->CUiMain_data.CGdFigureToolBox, subActionID, figure_id))
+            {
+                fun_0069f8d0(*(void **)&(_this->CUiMain_data.unkn3[0xc]), figure_id);
+            }
         }
     }
 }
