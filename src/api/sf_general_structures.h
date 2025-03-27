@@ -613,12 +613,6 @@ struct __attribute__((packed)) SF_CGdBuilding
 
 typedef struct __attribute__((packed))
 {
-    uint32_t vftable_ptr;
-    uint8_t CAppMenu_data[0x688];
-} CAppMenu;
-
-typedef struct __attribute__((packed))
-{
     uint8_t font_data[0x1fa0];
 } SF_Font;
 
@@ -648,6 +642,12 @@ typedef struct __attribute__((packed))
 
 typedef struct __attribute__((packed))
 {
+    uint32_t vftable_ptr;
+    CMnuBase_data data;
+} CMnuBase;
+
+typedef struct __attribute__((packed))
+{
     uint32_t vftablePTR;
     uint8_t unknown_data2[0xcc];
 } CUiOption;
@@ -659,6 +659,7 @@ typedef struct __attribute__((packed))
     uint8_t CMnuVisControl_data[0x9C];
     uint8_t CMnuLabel_data[0xc0];
 } CMnuLabel;
+
 
 typedef struct __attribute__((packed))
 {
@@ -743,6 +744,48 @@ typedef struct __attribute__((packed))
     uint8_t CMnuContainer_data[0x98];
     uint8_t CUiMain_data[0x8658];
 } SF_CUiMain;
+
+typedef struct __attribute__((packed))
+{
+    uint8_t unkn[4];
+    uint32_t offset_0x4;
+    uint32_t offset_0x8;
+    SF_String string1;
+    SF_String string2;
+    uint32_t offset_0x2c;
+} SF_CUiVideoSequence_data;
+
+typedef struct __attribute__((packed))
+{
+    uint32_t vtable_ptr;
+    CMnuBase_data baseData;
+    uint8_t CMnuVisControl_data[0x9C];
+    uint8_t CMnuContainer_data[0x98];
+    SF_CUiVideoSequence_data videoData;
+} SF_CUiVideoSequence;
+
+typedef struct __attribute__((packed))
+{
+    uint32_t vtable_ptr;
+    CMnuBase_data baseData;
+    uint8_t CMnuVisControl_data[0x9C];
+    uint8_t CMnuContainer_data[0x98];
+    uint8_t videoData[0xc];
+} SF_CUiVideo;
+
+typedef struct __attribute__((packed))
+{
+    uint8_t data[0x28];
+    SF_CUiVideoSequence* CUiVideoSequence_ptr;
+    CMnuBase* CMnuBase_ptr;
+    uint8_t more_data[0x658];
+} CAppMenu_data;
+
+typedef struct __attribute__((packed))
+{
+    uint32_t vftable_ptr;
+    CAppMenu_data CAppMenu_data;
+} CAppMenu;
 
 typedef enum
 {
@@ -847,7 +890,7 @@ typedef void(__thiscall *set_label_flags_ptr)(CMnuLabel *_this, uint32_t flags);
 typedef void(__fastcall *original_menu_func_ptr)(uint32_t param1);
 
 typedef void *(__cdecl *new_operator_ptr)(uint32_t param_1);
-typedef void(__thiscall *container_add_control_ptr)(CMnuContainer *_this, void *CMnuBase, char c1, char c2, uint32_t p4);
+typedef void(__thiscall *container_add_control_ptr)(CMnuContainer *_this, CMnuBase *CMnubase, char c1, char c2, uint32_t p4);
 typedef void(__thiscall *menu_label_set_data_ptr)(CMnuLabel *_this, uint32_t color_red, uint32_t color_green, uint32_t color_blue, uint8_t unknchar);
 typedef void(__thiscall *get_sf_color_ptr)(SF_String *_this, uint32_t color_id);
 typedef SF_FontStruct *(__thiscall *get_smth_fonts_ptr)(void);
@@ -868,7 +911,10 @@ typedef void(__thiscall *fun_009a2790_ptr)(void* _p1, uint32_t p2);
 typedef uint32_t(__thiscall *fun_0069f8d0_ptr)(void* _this, uint32_t p1);
 typedef uint32_t(__thiscall *fun_0069fb90_ptr)(void* _this, uint16_t figure_id, uint8_t po2, uint16_t unkn_p3, SF_CGdTargetData *data, uint32_t p5, uint32_t p6);
 
+typedef uint32_t(__thiscall *cuiVideoSequence_constructor_ptr)(SF_CUiVideo* _this, SF_String *p1);
+typedef void(__thiscall *CMnuScreen_attach_control_ptr)(void *_CMnuScreen_ptr, CMnuBase* base, char flag);
 
+extern void attachVideo(CAppMenu * CAppMenu_ptr,  CMnuContainer *parent, char *video_loc_and_name_charsC);
 extern CMnuLabel * __thiscall attach_new_meshed_label(CMnuLabel *label_ptr,CMnuContainer *parent, char *mesh_name, char *label_text, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height);
 extern CMnuLabel * __thiscall attach_new_label(CMnuLabel *label_ptr,CMnuContainer *parent, char *label_text, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height);
 extern void __thiscall attach_new_button(CMnuContainer *parent, char *button_mesh_default, char *button_mesh_pressed, char *button_mesh_highlight, char *button_mesh_disabled,  char *label_char, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height, int button_index, uint32_t callback_function_pointer);

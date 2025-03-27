@@ -42,6 +42,7 @@ typedef void(__thiscall *vfunction2_callback_attach_ptr)(void *, void *,void *,v
 typedef void(__thiscall *initialize_menu_container_ptr)(CMnuContainer *_this);
 typedef void(__thiscall *setup_menu_container_data_ptr)(CMnuContainer *_this, float x, float y, float width, float height, SF_String * background, SF_String * border);
 typedef void(__thiscall *container_alpha_ptr)(CMnuContainer *_this, float alpha);
+typedef void(__thiscall *CMnuBase_setname_ptr)(CMnuBase *_this, SF_String *name); 
 
 extern FUN_0069eaf0_ptr FUN_0069eaf0;
 extern fidfree_ptr fidFree;
@@ -55,7 +56,6 @@ extern vfunction_ptr vfunction25;
 extern vfunction12_ptr vfunction12;
 extern initialize_smp_button_ptr initialize_smp_button;
 extern set_btn_name_ptr set_button_name;
-extern set_btn_name_ptr set_button_name_2;
 extern initialize_menu_container_ptr initialize_menu_container;
 extern set_label_color_ptr set_label_color;
 extern container_alpha_ptr set_container_alpha;

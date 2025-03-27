@@ -32,7 +32,6 @@ vfunction_ptr vfunction25;
 vfunction12_ptr vfunction12;
 initialize_smp_button_ptr initialize_smp_button;
 set_btn_name_ptr set_button_name;
-set_btn_name_ptr set_button_name_2;
 initialize_menu_container_ptr initialize_menu_container;
 set_label_color_ptr set_label_color;
 container_alpha_ptr set_container_alpha;
@@ -42,6 +41,7 @@ set_btn_index_ptr set_button_index;
 set_button_flag_ptr set_menu_button_flag;
 vfunction2_callback_attach_ptr attach_callback;
 vfunction_ptr vfunction16_attach_callback;
+CMnuBase_setname_ptr CMnuBase_setname;
 
 void initialize_wrapper_data_hooks()
 {
@@ -54,7 +54,6 @@ void initialize_wrapper_data_hooks()
     initialize_menu_container = (initialize_menu_container_ptr)(ASI::AddrOf(0x505780));
     setup_menu_container_data = (setup_menu_container_data_ptr)(ASI::AddrOf(0x50FD30));
     initialize_smp_button = (initialize_smp_button_ptr) (ASI::AddrOf(0x51a9d0));
-    set_button_name_2 = (set_btn_name_ptr) (ASI::AddrOf(0x512E30));
     create_button_func = (create_button_ptr) (ASI::AddrOf(0x52E1E0));
     set_font = (vfunction_2_ptr)(ASI::AddrOf(0x530C20));
     set_button_index = (set_btn_index_ptr)(ASI::AddrOf(0x5136a0));
@@ -63,6 +62,8 @@ void initialize_wrapper_data_hooks()
     vfunction16_attach_callback = (vfunction_ptr) (ASI::AddrOf(0x532B90));
     vfunction176 = (vfunction_ptr)(ASI::AddrOf(0x52f520));
     vfunction25 = (vfunction_ptr)(ASI::AddrOf(0x511ae0));
+    CMnuBase_setname = (CMnuBase_setname_ptr)(ASI::AddrOf(0x512E30));
+
 }
 
 void log_message(const char *filename, const char *message)
@@ -478,7 +479,7 @@ void __thiscall show_mod_list(CMnuSmpButton *button)
         g_destroy_sf_string(p_menu_border);
 
         // Add new container to this container.
-        g_container_add_control(parent, mod_list, '\x01', '\x01', 0);
+        g_container_add_control(parent, (CMnuBase*)mod_list, '\x01', '\x01', 0);
 
         char btn_disabled[128]= "ui_btn_togglearrow_right_disabled.msh";
         char btn_pressed[128]  = "ui_btn_togglearrow_right_pressed.msh";
@@ -577,7 +578,7 @@ void __thiscall attach_new_button(CMnuContainer *parent, char *button_mesh_defau
     new_button = initialize_smp_button(new_button);
     SF_Font *selected_font = g_get_font(fonts, font_index);
 
-    set_button_name_2(new_button, label_string);
+    CMnuBase_setname((CMnuBase*)new_button, label_string);
 
     // This seems to fill out the actual button data itself.
     create_button_func(new_button,x_pos,y_pos,width,height,mesh_string_default,init_load_mesh,mesh_string_pressed,mesh_string_disabled);
@@ -605,7 +606,7 @@ void __thiscall attach_new_button(CMnuContainer *parent, char *button_mesh_defau
 
     vfunction16_attach_callback(new_button, '\x01');
 
-    g_container_add_control(parent, new_button, '\x01', '\x01', 0);
+    g_container_add_control(parent,  (CMnuBase*)new_button, '\x01', '\x01', 0);
 
     g_destroy_sf_string(mesh_string_default);
     g_destroy_sf_string(mesh_string_pressed);
@@ -641,7 +642,7 @@ CMnuLabel * __thiscall attach_new_meshed_label(CMnuLabel *new_label, CMnuContain
 
     g_menu_label_set_font(new_label, selected_font);
 
-    g_container_add_control(parent, new_label, '\x01', '\x01', 0);
+    g_container_add_control(parent, (CMnuBase*) new_label, '\x01', '\x01', 0);
 
     g_menu_label_set_string(new_label, label_string);
 
@@ -674,6 +675,26 @@ SFMod *createModInfo(const char *mod_id, const char *mod_version, const char *mo
     mod->mod_author[127] = '\0';
 
     return mod;
+}
+
+// WARNING: Function not fully implemented. 
+// This function successfully loads a video, but the video container is attached to a layer above the default container. 
+// As a result, the video container intercepts click events and prevents proper interaction with the underlying elements.
+void attachVideo(CAppMenu * CAppMenu_ptr, CMnuContainer *parent, char *video_loc_and_name_chars)
+{
+    SF_CUiVideo* video_ptr = (SF_CUiVideo*) g_new_operator(0x348);
+    SF_String m_video_name_string;
+    SF_String *video_name_string = g_create_sf_string(&m_video_name_string, video_loc_and_name_chars);
+    video_ptr = (SF_CUiVideo*) cuiVideoSequence_constructor(video_ptr, video_name_string); //Not Sequence, just normal Video, haven't renamed it from previous investigations.
+
+    char controller_mark_chars[64];
+    sprintf(controller_mark_chars, "<Cont>CreditsVideoController");
+    SF_String m_controller_mark_string;
+    SF_String *controller_mark_string = g_create_sf_string(&m_controller_mark_string, controller_mark_chars);
+    CMnuBase_setname((CMnuBase*)video_ptr, controller_mark_string);
+    
+    //void *_CMnuScreen_ptr, CMnuBase* base, char flag
+    //CMnuScreen_attach_control(parent, CAppMenu_ptr->CAppMenu_data.CMnuBase_ptr, '\x01');
 }
 
 /**

@@ -15,9 +15,12 @@ extern menu_label_set_font_ptr g_menu_label_set_font;
 extern get_font_ptr g_get_font;
 extern container_add_control_ptr g_container_add_control;
 extern create_option_ptr f_create_menu_option;
+extern cuiVideoSequence_constructor_ptr cuiVideoSequence_constructor;
+extern CMnuScreen_attach_control_ptr CMnuScreen_attach_control;
 
 extern CMnuLabel *sfsf_version_label;
 void __thiscall sf_menu_hook(uint32_t _CAppMenu);
 void initialize_menu_data_hooks();
 void __thiscall sf_click_vertical_button(SF_CUiMain *_this, uint16_t figure_id, uint8_t entity_type, uint16_t target_id, SF_UIElement *element);
+void __thiscall sf_handle_button_flashing_maybe(SF_CUiMain *_this);
 #endif
