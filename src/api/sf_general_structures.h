@@ -738,11 +738,16 @@ typedef struct __attribute__((packed))
 
 typedef struct __attribute__((packed))
 {
+    uint8_t CUiMain_data[0x8658];
+} CUiMain_data;
+
+typedef struct __attribute__((packed))
+{
     uint32_t CUiMain_cftable_ptr;
     CMnuBase_data CMnuBaseData;
     uint8_t CMnuVisControl_data[0x9C];
     uint8_t CMnuContainer_data[0x98];
-    uint8_t CUiMain_data[0x8658];
+    CUiMain_data CUiMain_data;
 } SF_CUiMain;
 
 typedef struct __attribute__((packed))
