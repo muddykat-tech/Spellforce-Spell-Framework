@@ -907,7 +907,7 @@ typedef void(__thiscall *autoclass113_fun_00a278c0_ptr)(void *_this_autoclass113
 typedef uint16_t(__cdecl *fun_00a2a1d0_ptr)(uint32_t *some_ptr, void *some_ptr_2);
 
 typedef uint32_t(__thiscall *fun_006a0140_ptr)(void *_this, uint16_t p1, uint32_t p2_ptr, uint8_t p3, uint8_t p4);
-typedef void(__thiscall *fun_009a2790_ptr)(void* _p1, uint32_t p2);
+typedef void(__thiscall *fun_009a2790_ptr)(void *_this, void* _p1, uint32_t p2);
 typedef uint32_t(__thiscall *fun_0069f8d0_ptr)(void* _this, uint32_t p1);
 typedef uint32_t(__thiscall *fun_0069fb90_ptr)(void* _this, uint16_t figure_id, uint8_t po2, uint16_t unkn_p3, SF_CGdTargetData *data, uint32_t p5, uint32_t p6);
 

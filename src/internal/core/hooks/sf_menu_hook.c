@@ -141,7 +141,7 @@ void __attribute__((thiscall)) sf_click_vertical_button(SF_CUiMain *_this, uint1
     uint32_t _figure_id = figure_id;
     if ((actionID == 10000) || (actionID == 10001) || (actionID == 10002))
     {
-        ushort_list_node ac113;
+        uint_list_node ac113;
         fun_00a27530(&ac113);
         uint32_t *puvar5 = fun_0086dd60(&_figure_id, 1, _figure_id & 0xffff);
         fun_00a278c0(&ac113, *puvar5);
@@ -154,7 +154,7 @@ void __attribute__((thiscall)) sf_click_vertical_button(SF_CUiMain *_this, uint1
         fun_006a0140(*(void **)&(_this->CUiMain_data[0x70fc]), uVar3, &data, 0,0);
         if (ac113.first != 0)
         {
-           fun_009a2790(ac113.first, (ac113.post_last - ac113.first) >> 2);
+           fun_009a2790(&ac113,ac113.first, (uint32_t)ac113.post_last - (uint32_t)ac113.first >> 2);
            return;
         }
     }

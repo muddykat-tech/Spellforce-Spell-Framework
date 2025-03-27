@@ -27,6 +27,13 @@ typedef struct __attribute__((packed))
     uint16_t *post_last;    /**< Pointer to the element following the last in the list. */
 } ushort_list_node;
 
+typedef struct __attribute__((packed))
+{
+    uint32_t *first;        /**< Pointer to the first element in the list. */
+    uint32_t *data;         /**< Pointer to the data element within the list. */
+    uint32_t *post_last;    /**< Pointer to the element following the last in the list. */
+} uint_list_node;
+
 /**
  * @struct AutoClass60_data
  * @brief Stores data related to a specific entity in the AI system.
