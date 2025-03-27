@@ -900,7 +900,7 @@ typedef CUiOption* (__thiscall *create_option_ptr)(CUiOption *_this);
 
 // SF Menu / GUI Hooks for Auras
 typedef void(__thiscall *autoclass113_fun_00a27530_ptr)(void *_this_autoclass113);
-typedef void(__thiscall *fun_0086dd60_ptr)(void *_this,uint8_t p1, uint32_t p2);
+typedef uint32_t *(__thiscall *fun_0086dd60_ptr)(void *_this,uint8_t p1, uint32_t p2);
 typedef void(__thiscall *autoclass113_fun_00a278c0_ptr)(void *_this_autoclass113, uint32_t p1);
 
 // Weird __cdecl class here, blind passthrough and hope it works.
