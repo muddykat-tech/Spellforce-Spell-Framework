@@ -738,7 +738,24 @@ typedef struct __attribute__((packed))
 
 typedef struct __attribute__((packed))
 {
-    uint8_t CUiMain_data[0x8658];
+    uint8_t unkn[0xb8]
+    uint32_t offset_b8;
+    uint8_t unkn2[0x7028]
+    SF_CGdFigureToolbox *CGdFigureToolBox_ptr;
+    uint32_t CGdResource_ptr;
+    SF_CGdFigure *CGdFigure;
+    uint8_t unkn3[0x10];
+    uint32_t UiDbProxy_ptr;
+    uint8_t unkn4[0x10];
+    uint32_t CUiGame_ptr;
+    uint32_t CDrwGameView_ptr;
+    uint8_t unkn5[0x2EC];
+    uint32_t CUiBuilding_ptr;
+    uint32_t CUiBottom_ptr;
+    uint8_t unkn6[0x14];
+    uint32_t AutoClass112_ptr;
+    uint32_t AutoClass113_ptr;
+    uint8_t unkn7[0x122C];
 } CUiMain_data;
 
 typedef struct __attribute__((packed))
