@@ -904,7 +904,7 @@ typedef uint32_t *(__thiscall *fun_0086dd60_ptr)(void *_this,uint8_t p1, uint32_
 typedef void(__thiscall *autoclass113_fun_00a278c0_ptr)(void *_this_autoclass113, uint32_t p1);
 
 // Weird __cdecl class here, blind passthrough and hope it works.
-typedef uint16_t(__cdecl *fun_00a2ald0_ptr)(uint32_t *some_ptr, void *some_ptr_2);
+typedef uint16_t(__cdecl *fun_00a2a1d0_ptr)(uint32_t *some_ptr, void *some_ptr_2);
 
 typedef uint32_t(__thiscall *fun_006a0140_ptr)(void *_this, uint16_t p1, uint32_t p2_ptr, uint8_t p3, uint8_t p4);
 typedef void(__thiscall *fun_009a2790_ptr)(void* _p1, uint32_t p2);
