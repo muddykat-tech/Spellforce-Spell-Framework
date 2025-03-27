@@ -55,6 +55,7 @@ typedef struct SF_CGdWorld SF_CGdWorld;
 typedef struct SF_CGdWorldToolBox SF_CGdWorldToolBox;
 typedef struct SF_CGdFigureJobs SF_CGdFigureJobs;
 typedef struct SF_CGdBuilding SF_CGdBuilding;
+
 typedef enum : uint8_t
 {
     TASK_WORKER = 2,

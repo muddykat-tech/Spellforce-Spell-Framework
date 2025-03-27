@@ -1,8 +1,8 @@
-/** 
+/**
  * @defgroup MenuHook Menu Hook
  * @ingroup Hooks
  * @brief Only Used internally to inject text onto the Main Menu of Spellforce
- * @note The menu functions and general UI elements of Spellforce are poorly understood and may have unknown consequences 
+ * @note The menu functions and general UI elements of Spellforce are poorly understood and may have unknown consequences
  * @addtogroup MenuHook
  * @{
  */
@@ -39,7 +39,7 @@ menu_label_set_font_ptr g_menu_label_set_font;
 get_font_ptr g_get_font;
 menu_label_set_string_ptr g_menu_label_set_string;
 
-autoclass113_fun_00a27530_ptr fun_00a27530; 
+autoclass113_fun_00a27530_ptr fun_00a27530;
 fun_0086dd60_ptr fun_0086dd60;
 autoclass113_fun_00a278c0_ptr fun_00a278c0;
 fun_00a2a1d0_ptr fun_00a2ald0;
@@ -85,7 +85,6 @@ void initialize_menu_data_hooks()
     cuiVideoSequence_constructor = (cuiVideoSequence_constructor_ptr)(ASI::AddrOf(0x618980));
 
     CMnuScreen_attach_control = (CMnuScreen_attach_control_ptr)(ASI::AddrOf(0x507240));
-
 }
 
 SFSF_ModlistStruct mod_struct;
@@ -95,12 +94,12 @@ void __attribute__((no_caller_saved_registers, thiscall)) sf_menu_hook(uint32_t 
     // String to display in the new label we're attaching to the menu
     char sfsf_info[256];
     sprintf(sfsf_info, "Spell Framework %s\n%d Mod(s) Loaded with %d Error(s)", g_framework_mod->mod_version, g_mod_count, g_error_count);
-    // Manually move the pointer in order to access the CMNuContainer, We'll need to annotate the CAppMenu Structure more to 
+    // Manually move the pointer in order to access the CMNuContainer, We'll need to annotate the CAppMenu Structure more to
     // Switch to a more convential method.
     uint32_t CAppMenu_data = *(uint32_t *)(_CAppMenu + 0x4);
     uint32_t container_hack_ptr = *(uint32_t *)(_CAppMenu + 0x58);
     CMnuContainer *container_hack = (CMnuContainer *)container_hack_ptr;
-    
+
     CMnuLabel *sfsf_version_label;
     attach_new_label(sfsf_version_label, container_hack, sfsf_info, 6, 10, 729, strlen(sfsf_info) * 4, 100);
     char sfsf_test_button_default[256];
@@ -118,11 +117,11 @@ void __attribute__((no_caller_saved_registers, thiscall)) sf_menu_hook(uint32_t 
     // Initialize struct members
     mod_struct.toggle = 0;
     mod_struct.index = 0;
-    
+
     log_info("Adding Mod List Button");
     int button_index = 15;
-    attach_new_button(container_hack, sfsf_test_button_default, sfsf_test_button_pressed, sfsf_test_button_highlight, sfsf_test_button_disabled, sfsf_test_button_label, 7, 822,705,192,36, button_index, (uint32_t) &show_mod_list_callback);
-    
+    attach_new_button(container_hack, sfsf_test_button_default, sfsf_test_button_pressed, sfsf_test_button_highlight, sfsf_test_button_disabled, sfsf_test_button_label, 7, 822, 705, 192, 36, button_index, (uint32_t)&show_mod_list_callback);
+
     // Call original menu function to show the menu
     // char vid_loc[256];
     // sprintf(vid_loc, "videos\\sfsf");
@@ -153,7 +152,7 @@ bool hasThisAuraRunning(SF_CGdFigureToolbox *_this, uint16_t aura_spell_id, uint
     return false;
 }
 
-//CUiMain::FUN_009e6840
+// CUiMain::FUN_009e6840
 void __attribute__((thiscall)) sf_click_vertical_button(SF_CUiMain *_this, uint16_t figure_id, uint8_t entity_type, uint16_t target_id, SF_UIElement *element)
 {
     log_info("Called SF_CLICK_VERTICAL_BUTTON");
@@ -171,27 +170,40 @@ void __attribute__((thiscall)) sf_click_vertical_button(SF_CUiMain *_this, uint1
         data.entity_type = entity_type;
         data.position.X = 0;
         data.position.Y = 0;
-        uint32_t uVar3  = fun_00a2ald0((uint32_t*)&ac113, *(void **)&(_this->CUiMain_data.unkn3[0xc]));
-        fun_006a0140(*(void **)&(_this->CUiMain_data.unkn3[0xc]), uVar3, &data, 0,0);
+        uint32_t uVar3 = fun_00a2ald0((uint32_t *)&ac113, *(void **)&(_this->CUiMain_data.unkn3[0xc]));
+        fun_006a0140(*(void **)&(_this->CUiMain_data.unkn3[0xc]), uVar3, &data, 0, 0);
         if (ac113.first != 0)
         {
-           fun_009a2790(&ac113,ac113.first, (uint32_t)ac113.post_last - (uint32_t)ac113.first >> 2);
-           return;
+            fun_009a2790(&ac113, ac113.first, (uint32_t)ac113.post_last - (uint32_t)ac113.first >> 2);
+            return;
         }
     }
     if ((actionID != 0) && (actionID < 10000))
     {
-        if (spellAPI.hasSpellTag(actionID,SpellTag::AURA_SPELL))
+        if (spellAPI.hasSpellTag(actionID, SpellTag::AURA_SPELL))
         {
             if (hasThisAuraRunning(_this->CUiMain_data.CGdFigureToolBox, subActionID, figure_id))
             {
                 fun_0069f8d0(*(void **)&(_this->CUiMain_data.unkn3[0xc]), figure_id);
+                return;
             }
         }
+        CGdFigureTask task = _this->CUiMain_data.CGdFigure->figures[figure_id].ac_1.task;
+        SF_CGdTargetData data;
+        data.entity_index = target_id;
+        data.entity_type = entity_type;
+        data.position.X = 0;
+        data.position.Y = 0;
+        uint32_t some_flag = 0;
+        if (task == TASK_MAINCHAR)
+        {
+            some_flag = (uint32_t)(*(uint32_t *)&(_this->CUiMain_data.unkn5[0x2A0]) == 2);
+        }
+        fun_0069fb90(*(void **)&(_this->CUiMain_data.unkn3[0xc]), figure_id, element->unknown_flag, element->unknown_config_param, &data, some_flag, 0);
     }
 }
 
-//CUiMain::FUN_009e5940
+// CUiMain::FUN_009e5940
 void __attribute((thiscall)) sf_handle_button_flashing_maybe(SF_CUiMain *_this)
 {
     log_info("Button Render for Flashing?");
