@@ -410,13 +410,14 @@ void initialize_spell_buttons_hooks()
     *(int *)(ASI::AddrOf(0x5ebb7c)) = (int)(&sf_click_vertical_button) - ASI::AddrOf(0x5bb80);
     ASI::EndRewrite(vfunction208_mreg_2);
     
-
+    /*
     log_info("Hooking CUiMain::FUN_009e5940 (Some kind of Render SubFunction that handles GUI Button Flashing)");
     ASI::MemoryRegion fun9e5940_mreg(ASI::AddrOf(0x5DEA96), 5);
     ASI::BeginRewrite(fun9e5940_mreg);
     *(unsigned char *)(ASI::AddrOf(0x5DEA96)) = 0xE8; // CALL instruction
     *(int *)(ASI::AddrOf(0x5DEA97)) = (int)(&sf_handle_button_flashing_maybe) - ASI::AddrOf(0x5DEA9B);
     ASI::EndRewrite(fun9e5940_mreg);
+    */
 }
 
 void initialize_beta_hooks()
