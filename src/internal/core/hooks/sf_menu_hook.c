@@ -47,6 +47,12 @@ fun_006a0140_ptr fun_006a0140;
 fun_009a2790_ptr fun_009a2790;
 fun_0069f8d0_ptr fun_0069f8d0;
 fun_0069fb90_ptr fun_0069fb90;
+fun_00a49b10_ptr fun_00a49b10;
+fun_00a28d60_ptr fun_00a28d60;
+fun_009a4020_ptr fun_009a4020;
+vfun164_ptr vfun164;
+vfun163_ptr vfun163;
+
 
 void initialize_menu_data_hooks()
 {
@@ -81,6 +87,14 @@ void initialize_menu_data_hooks()
     fun_009a2790 = (fun_009a2790_ptr)(ASI::AddrOf(0x5A2790));
     fun_0069f8d0 = (fun_0069f8d0_ptr)(ASI::AddrOf(0x29F8D0));
     fun_0069fb90 = (fun_0069fb90_ptr)(ASI::AddrOf(0x29FB90));
+    fun_00a49b10 = (fun_00a49b10_ptr)(ASI::AddrOf(0x649b10));
+
+    fun_00a28d60 = (fun_00a28d60_ptr)(ASI::AddrOf(0x628d60));
+    fun_009a4020 = (fun_009a4020_ptr)(ASI::AddrOf(0x5a4020));
+
+    vfun163 = (vfun163_ptr)(ASI::AddrOf(0x513C80));
+    vfun164 = (vfun164_ptr)(ASI::AddrOf(0x50F8B0));
+
 
     cuiVideoSequence_constructor = (cuiVideoSequence_constructor_ptr)(ASI::AddrOf(0x618980));
 
@@ -170,8 +184,8 @@ void __attribute__((thiscall)) sf_click_vertical_button(SF_CUiMain *_this, uint1
         data.entity_type = entity_type;
         data.position.X = 0;
         data.position.Y = 0;
-        uint32_t uVar3 = fun_00a2ald0((uint32_t *)&ac113, *(void **)&(_this->CUiMain_data.unkn3[0xc]));
-        fun_006a0140(*(void **)&(_this->CUiMain_data.unkn3[0xc]), uVar3, &data, 0, 0);
+        uint32_t uVar3 = fun_00a2ald0(&ac113, _this->CUiMain_data.CGdControllerClient);
+        fun_006a0140(_this->CUiMain_data.CGdControllerClient, uVar3, &data, 0, 0);
         if (ac113.first != 0)
         {
             fun_009a2790(&ac113, ac113.first, (uint32_t)ac113.post_last - (uint32_t)ac113.first >> 2);
@@ -184,7 +198,7 @@ void __attribute__((thiscall)) sf_click_vertical_button(SF_CUiMain *_this, uint1
         {
             if (hasThisAuraRunning(_this->CUiMain_data.CGdFigureToolBox, subActionID, figure_id))
             {
-                fun_0069f8d0(*(void **)&(_this->CUiMain_data.unkn3[0xc]), figure_id);
+                fun_0069f8d0((_this->CUiMain_data.CGdControllerClient), figure_id);
                 return;
             }
         }
@@ -199,14 +213,65 @@ void __attribute__((thiscall)) sf_click_vertical_button(SF_CUiMain *_this, uint1
         {
             some_flag = (uint32_t)(*(uint32_t *)&(_this->CUiMain_data.unkn5[0x2A0]) == 2);
         }
-        fun_0069fb90(*(void **)&(_this->CUiMain_data.unkn3[0xc]), figure_id, element->unknown_flag, element->unknown_config_param, &data, some_flag, 0);
+        fun_0069fb90(_this->CUiMain_data.CGdControllerClient, figure_id, element->unknown_flag, element->unknown_config_param, &data, some_flag, 0);
     }
+}
+
+void __attribute((thiscall)) sf_click_horizontal_button(SF_CUiMain *_this, uint_list_node *param1, uint32_t param2)
+{
+    uint16_t uVar1 = *(uint16_t *)&param2;
+    if (uVar1 == 0)
+    {
+        uVar1 = *(uint16_t *)((uint32_t)&param2 + 2);
+        if (uVar1 < 9)
+        {
+            return;
+        }
+        if (uVar1 > 0xe)
+        {
+            return;
+        }
+        fun_00a28d60(param1, &param2, 0);
+        fun_009a4020(_this->CUiMain_data.CUiBuilding, (*(uint32_t *)(ASI::AddrOf(0x806a86)) + (_this->CUiMain_data.CGdFigure->figures[param2 >> 8].race * 4) + 2));
+        if (_this->CUiMain_data.unknown_action_type == 2)
+        {
+            return;
+        }
+        _this->CUiMain_data.unknown_action_type = 2;
+        vfun163(_this->CUiMain_data.CUiMainDetailView, 0);
+        vfun164(_this->CUiMain_data.CUiBottom);
+        vfun164(_this->CUiMain_data.CUiMonument);
+        vfun163(_this->CUiMain_data.CUiBuilding, 0);
+        return;
+    }
+    if (uVar1 > 9999)
+    {
+        return;
+    }
+
 }
 
 // CUiMain::FUN_009e5940
 void __attribute((thiscall)) sf_handle_button_flashing_maybe(SF_CUiMain *_this)
 {
-    log_info("Button Render for Flashing?");
+    uint32_t uVar1 = 0;
+    uint32_t uVar4 = 0;
+    for (int i = 6; i > 0; i--)
+    {
+        uVar1 = _this->CUiMain_data.CGdControllerClient->data.unkn_value;
+        if (uVar1 != 0)
+        {
+            if (uVar4 == 0)
+            {
+                uVar1 = *(uint16_t *)(*(uint32_t *)&(_this->CUiMain_data.unkn3[4]) + uVar1 * 0x188 + 0xb3);
+            }
+            else
+            {
+                uVar1 = *(uint16_t *)(*(uint32_t *)&(_this->CUiMain_data.unkn3[4]) + 0xc5 + ((uVar1 * 0xc4 + (uVar4 - 1)) & 0xffff) * 2);
+            }
+        }
+    }
+    fun_00a49b10((CGdControllerClient *)&(_this->CUiMain_data.unkn7[0x2E0]), 0);
 }
 
 /** @} */

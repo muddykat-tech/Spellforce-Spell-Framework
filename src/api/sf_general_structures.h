@@ -737,28 +737,56 @@ typedef struct __attribute__((packed))
     uint8_t unknown_config_param;
 } SF_UIElement;
 
+
+typedef struct __attribute__((packed))
+{
+    void * unkn_ptr1;
+    uint32_t AutoClass72[5];
+    uint32_t CGdEventIterator[5];
+    void * unkn_ptr2;
+    uint16_t unkn_value;
+    uint8_t padding[0x19a];
+} CGdControllerClientData;
+
+typedef struct __attribute__((packed))
+{
+    void * vftable;
+    uint32_t CGdControllerBaseData[0x220];
+    CGdControllerClientData data;
+} CGdControllerClient;
+
+
 typedef struct __attribute__((packed))
 {
     uint8_t unkn[0xb8];
     uint32_t offset_b8;
     uint8_t unkn2[0x7028];
     SF_CGdFigureToolbox *CGdFigureToolBox;
-    uint32_t CGdResource_ptr;
+    void * CGdResource;
     SF_CGdFigure *CGdFigure;
-    uint8_t unkn3[0x10];
+    uint8_t unkn3[0xc];
+    CGdControllerClient * CGdControllerClient;
     uint32_t UiDbProxy;
     uint8_t unkn4[0x10];
     uint32_t CUiGame_ptr;
     uint32_t CDrwGameView;
-    uint8_t unkn5[0x2EC];
+    uint8_t unkn5[0x2A4];
+    uint32_t unknown_action_type;
+    uint8_t unkn9[0x38];
+    void * CUiMainDetailView;
+    void *unkn_ptr1;
+    void *unkn_ptr2;
     uint32_t CUiBuilding;
     uint32_t CUiBottom;
-    uint8_t unkn6[0x14];
+    void * CUiMonument;
+    uint8_t unkn6[0x10];
     uint32_t AutoClass112;
     uint32_t AutoClass113;
-    uint8_t unkn7[0x122C];
+    uint8_t unkn7[0x1152];
+    uint16_t offset_857e;
+    uint8_t uknn8[0xda];
 } CUiMain_data;
-
+//field 0x857e - ushort
 typedef struct __attribute__((packed))
 {
     uint32_t CUiMain_cftable_ptr;
@@ -767,6 +795,7 @@ typedef struct __attribute__((packed))
     uint8_t CMnuContainer_data[0x98];
     CUiMain_data CUiMain_data;
 } SF_CUiMain;
+
 
 typedef struct __attribute__((packed))
 {
@@ -927,9 +956,17 @@ typedef uint32_t *(__thiscall *fun_0086dd60_ptr)(void *_this,uint8_t p1, uint32_
 typedef void(__thiscall *autoclass113_fun_00a278c0_ptr)(void *_this_autoclass113, uint32_t p1);
 
 // Weird __cdecl class here, blind passthrough and hope it works.
-typedef uint16_t(__cdecl *fun_00a2a1d0_ptr)(uint32_t *some_ptr, void *some_ptr_2);
+typedef uint16_t(__cdecl *fun_00a2a1d0_ptr)(void *some_ptr, void *some_ptr_2);
 
-typedef uint32_t(__thiscall *fun_006a0140_ptr)(void *_this, uint16_t p1, uint32_t p2_ptr, uint8_t p3, uint8_t p4);
+typedef void (__thiscall *fun_00a49b10_ptr)(CGdControllerClient * _this, uint8_t param1);
+
+typedef void (__thiscall *fun_00a28d60_ptr)(void *_this, void* param1, uint32_t param2);
+typedef void (__thiscall *fun_009a4020_ptr)(void *_this, uint32_t param1);
+
+typedef void (__thiscall *vfun164_ptr)(CMnuContainer *_this);
+typedef void (__thiscall *vfun163_ptr)(CMnuContainer *_this, uint8_t param1);
+
+typedef uint32_t(__thiscall *fun_006a0140_ptr)(void *_this, uint16_t p1, SF_CGdTargetData* p2_ptr, uint8_t p3, uint8_t p4);
 typedef void(__thiscall *fun_009a2790_ptr)(void *_this, void* _p1, uint32_t p2);
 typedef uint32_t(__thiscall *fun_0069f8d0_ptr)(void* _this, uint32_t p1);
 typedef uint32_t(__thiscall *fun_0069fb90_ptr)(void* _this, uint16_t figure_id, uint8_t po2, uint16_t unkn_p3, SF_CGdTargetData *data, uint32_t p5, uint32_t p6);
