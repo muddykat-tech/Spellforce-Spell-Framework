@@ -52,7 +52,16 @@ fun_00a28d60_ptr fun_00a28d60;
 fun_009a4020_ptr fun_009a4020;
 vfun164_ptr vfun164;
 vfun163_ptr vfun163;
+vfun41_ptr vfun41;
+getSpellLineIsTargetSelf_ptr getSpellLineIsTargetSelf;
+fun_009a0750_ptr fun_009a0750;
+fun_009de190_ptr fun_009de190;
+fun_0099f610_ptr fun_0099f610;
 
+fun_009cd1f0_ptr fun_009cd1f0;
+fun_009a1fd0_ptr fun_009a1fd0;
+fun_006f8c06_ptr fun_006f8c06;
+fun_00910de0_ptr fun_00910de0;
 
 void initialize_menu_data_hooks()
 {
@@ -91,10 +100,19 @@ void initialize_menu_data_hooks()
 
     fun_00a28d60 = (fun_00a28d60_ptr)(ASI::AddrOf(0x628d60));
     fun_009a4020 = (fun_009a4020_ptr)(ASI::AddrOf(0x5a4020));
+    fun_009a0750 = (fun_009a0750_ptr)(ASI::AddrOf(0x5a0750));
+    fun_009de190 = (fun_009de190_ptr)(ASI::AddrOf(0x5de190));
+    fun_0099f610 = (fun_0099f610_ptr)(ASI::AddrOf(0x59f610));
+    fun_009cd1f0 = (fun_009cd1f0_ptr)(ASI::AddrOf(0x5cd1f0));
+    fun_009a1fd0 = (fun_009a1fd0_ptr)(ASI::AddrOf(0x5a1fd0));
+    fun_006f8c06 = (fun_006f8c06_ptr)(ASI::AddrOf(0x2f8c06));
+    fun_00910de0 = (fun_00910de0_ptr)(ASI::AddrOf(0x510de0));
 
     vfun163 = (vfun163_ptr)(ASI::AddrOf(0x513C80));
     vfun164 = (vfun164_ptr)(ASI::AddrOf(0x50F8B0));
+    vfun41 = (vfun41_ptr)(ASI::AddrOf(0x510d70));
 
+    getSpellLineIsTargetSelf = (getSpellLineIsTargetSelf_ptr)(ASI::AddrOf(0x26e410));
 
     cuiVideoSequence_constructor = (cuiVideoSequence_constructor_ptr)(ASI::AddrOf(0x618980));
 
@@ -217,12 +235,12 @@ void __attribute__((thiscall)) sf_click_vertical_button(SF_CUiMain *_this, uint1
     }
 }
 
-void __attribute((thiscall)) sf_click_horizontal_button(SF_CUiMain *_this, uint_list_node *param1, uint32_t param2)
+void __attribute((thiscall)) sf_click_horizontal_button(SF_CUiMain *_this, uint_list_node *param1, SF_UIElement *param2)
 {
-    uint16_t uVar1 = *(uint16_t *)&param2;
+    uint16_t uVar1 = param2->actionType_id;
     if (uVar1 == 0)
     {
-        uVar1 = *(uint16_t *)((uint32_t)&param2 + 2);
+        uVar1 = param2->actionSubtype_id;
         if (uVar1 < 9)
         {
             return;
@@ -231,8 +249,8 @@ void __attribute((thiscall)) sf_click_horizontal_button(SF_CUiMain *_this, uint_
         {
             return;
         }
-        fun_00a28d60(param1, &param2, 0);
-        fun_009a4020(_this->CUiMain_data.CUiBuilding, (*(uint32_t *)(ASI::AddrOf(0x806a86)) + (_this->CUiMain_data.CGdFigure->figures[param2 >> 8].race * 4) + 2));
+        uint16_t figure_id = fun_00a28d60(param1, &param2, 0) >> 8;
+        fun_009a4020(_this->CUiMain_data.CUiBuilding, (*(uint32_t *)(ASI::AddrOf(0x806a86)) + (_this->CUiMain_data.CGdFigure->figures[figure_id].race * 4) + 2));
         if (_this->CUiMain_data.unknown_action_type == 2)
         {
             return;
@@ -248,30 +266,64 @@ void __attribute((thiscall)) sf_click_horizontal_button(SF_CUiMain *_this, uint_
     {
         return;
     }
+    SF_CGdResourceSpell spell_data;
+    spellAPI.getResourceSpellData(_this->CUiMain_data.CGdResource, &spell_data, uVar1);
+    uint16_t figure_id = fun_00a28d60(param1, &param2, 0) >> 8;
+    SF_CGdTargetData data;
+    data.entity_index = 0;
+    data.entity_type = 0;
+    data.position.X = 0;
+    data.position.Y = 0;
 
-}
-
-// CUiMain::FUN_009e5940
-void __attribute((thiscall)) sf_handle_button_flashing_maybe(SF_CUiMain *_this)
-{
-    uint32_t uVar1 = 0;
-    uint32_t uVar4 = 0;
-    for (int i = 6; i > 0; i--)
+    if (!spellAPI.hasSpellTag(spell_data.spell_line_id, SpellTag::AURA_SPELL))
     {
-        uVar1 = _this->CUiMain_data.CGdControllerClient->data.unkn_value;
-        if (uVar1 != 0)
+        if (!getSpellLineIsTargetSelf(_this->CUiMain_data.CGdResource, spell_data.spell_line_id))
         {
-            if (uVar4 == 0)
-            {
-                uVar1 = *(uint16_t *)(*(uint32_t *)&(_this->CUiMain_data.unkn3[4]) + uVar1 * 0x188 + 0xb3);
-            }
-            else
-            {
-                uVar1 = *(uint16_t *)(*(uint32_t *)&(_this->CUiMain_data.unkn3[4]) + 0xc5 + ((uVar1 * 0xc4 + (uVar4 - 1)) & 0xffff) * 2);
-            }
+            uint_list_node *node = fun_009a0750(_this->CUiMain_data.CUiGame);
+            fun_009de190(node, param1);
+            fun_0099f610(_this->CUiMain_data.CUiGame, param2->actionType_id, param2->actionSubtype_id, param2->unknown_flag, param2->unknown_config_param);
+            return;
         }
+
+        if (spell_data.cast_type2 == 5)
+        {
+            data.position.X = _this->CUiMain_data.CGdFigure->figures[figure_id].position.X;
+            data.position.Y = _this->CUiMain_data.CGdFigure->figures[figure_id].position.Y;
+            data.entity_type = 5;
+        }
+        else
+        {
+            data.entity_type = 1;
+            data.entity_index = figure_id;
+        }
+        uint_list_node *node = fun_009a0750(_this->CUiMain_data.CUiGame);
+        fun_009de190(node, param1);
     }
-    fun_00a49b10((CGdControllerClient *)&(_this->CUiMain_data.unkn7[0x2E0]), 0);
+    else
+    {
+        if (hasThisAuraRunning(_this->CUiMain_data.CGdFigureToolBox, param2->actionSubtype_id, figure_id))
+        {
+            fun_0069f8d0((_this->CUiMain_data.CGdControllerClient), figure_id);
+            fun_009cd1f0(_this->CUiMain_data.CUiBottom, 1);
+            fun_009a1fd0(_this->CUiMain_data.CUiGame, 0);
+            return;
+        }
+        if (!fun_006f8c06(_this->CUiMain_data.CGdFigureToolBox, figure_id, param2->actionSubtype_id, figure_id, 1, 0, 1, 1, 1))
+        {
+            uint32_t *unknown_field = vfun41(_this);
+            fun_00910de0(unknown_field, _this, 0x140);
+            fun_009cd1f0(_this->CUiMain_data.CUiBottom, 1);
+            fun_009a1fd0(_this->CUiMain_data.CUiGame, 0);
+            return;
+        }
+        data.entity_type = 1;
+        data.entity_index = figure_id;
+    }
+    fun_0069fb90(_this->CUiMain_data.CGdControllerClient, figure_id, param2->unknown_flag, param2->unknown_config_param, &data, 1, 1);
+    fun_009cd1f0(_this->CUiMain_data.CUiBottom, 1);
+    fun_009a1fd0(_this->CUiMain_data.CUiGame, 0);
+    return;
 }
+
 
 /** @} */

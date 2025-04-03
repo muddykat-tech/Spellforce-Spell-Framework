@@ -766,22 +766,22 @@ typedef struct __attribute__((packed))
     SF_CGdFigure *CGdFigure;
     uint8_t unkn3[0xc];
     CGdControllerClient * CGdControllerClient;
-    uint32_t UiDbProxy;
+    void* UiDbProxy;
     uint8_t unkn4[0x10];
-    uint32_t CUiGame_ptr;
-    uint32_t CDrwGameView;
+    void* CUiGame;
+    void* CDrwGameView;
     uint8_t unkn5[0x2A4];
     uint32_t unknown_action_type;
     uint8_t unkn9[0x38];
     void * CUiMainDetailView;
     void *unkn_ptr1;
     void *unkn_ptr2;
-    uint32_t CUiBuilding;
-    uint32_t CUiBottom;
+    void* CUiBuilding;
+    void* CUiBottom;
     void * CUiMonument;
     uint8_t unkn6[0x10];
-    uint32_t AutoClass112;
-    uint32_t AutoClass113;
+    void* AutoClass112;
+    void* AutoClass113;
     uint8_t unkn7[0x1152];
     uint16_t offset_857e;
     uint8_t uknn8[0xda];
@@ -960,16 +960,25 @@ typedef uint16_t(__cdecl *fun_00a2a1d0_ptr)(void *some_ptr, void *some_ptr_2);
 
 typedef void (__thiscall *fun_00a49b10_ptr)(CGdControllerClient * _this, uint8_t param1);
 
-typedef void (__thiscall *fun_00a28d60_ptr)(void *_this, void* param1, uint32_t param2);
+typedef uint32_t (__thiscall *fun_00a28d60_ptr)(void *_this, void* param1, uint32_t param2);
 typedef void (__thiscall *fun_009a4020_ptr)(void *_this, uint32_t param1);
 
-typedef void (__thiscall *vfun164_ptr)(CMnuContainer *_this);
-typedef void (__thiscall *vfun163_ptr)(CMnuContainer *_this, uint8_t param1);
+typedef void (__thiscall *vfun164_ptr)(void *CMnuContainer);
+typedef void (__thiscall *vfun163_ptr)(void *CMnuContainer, uint8_t param1);
+typedef void* (__thiscall *vfun41_ptr)(void *CMnuContainer);
 
 typedef uint32_t(__thiscall *fun_006a0140_ptr)(void *_this, uint16_t p1, SF_CGdTargetData* p2_ptr, uint8_t p3, uint8_t p4);
 typedef void(__thiscall *fun_009a2790_ptr)(void *_this, void* _p1, uint32_t p2);
 typedef uint32_t(__thiscall *fun_0069f8d0_ptr)(void* _this, uint32_t p1);
 typedef uint32_t(__thiscall *fun_0069fb90_ptr)(void* _this, uint16_t figure_id, uint8_t po2, uint16_t unkn_p3, SF_CGdTargetData *data, uint32_t p5, uint32_t p6);
+typedef bool (__thiscall *getSpellLineIsTargetSelf_ptr)(void * _this, uint16_t spell_line_id);
+typedef void* (__thiscall *fun_009a0750_ptr)(void *_this);
+typedef void* (__thiscall *fun_009de190_ptr)(void *_this, void* param_1);
+typedef void (__thiscall *fun_0099f610_ptr)(void *_this, uint16_t param1, uint16_t param2, uint8_t param3, uint16_t param4);
+typedef void (__thiscall *fun_009cd1f0_ptr)(void * SF_CUiBottom, uint8_t param1);
+typedef void (__thiscall *fun_009a1fd0_ptr)(void * SF_CUiGame, uint32_t param1);
+typedef uint32_t(__thiscall *fun_006f8c06_ptr)(SF_CGdFigureToolbox *_this, uint16_t figure_id, uint16_t spell_id, uint32_t target_id, uint8_t param4, uint32_t param5, uint32_t param6, uint32_t param7, uint32_t param8);
+typedef void (__thiscall *fun_00910de0_ptr)(void *_this, void *param1, uint32_t param2);
 
 typedef uint32_t(__thiscall *cuiVideoSequence_constructor_ptr)(SF_CUiVideo* _this, SF_String *p1);
 typedef void(__thiscall *CMnuScreen_attach_control_ptr)(void *_CMnuScreen_ptr, CMnuBase* base, char flag);
