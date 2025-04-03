@@ -237,19 +237,21 @@ void __attribute__((thiscall)) sf_click_vertical_button(SF_CUiMain *_this, uint1
 
 void __attribute((thiscall)) sf_click_horizontal_button(SF_CUiMain *_this, uint_list_node *param1, SF_UIElement *param2)
 {
-    uint16_t uVar1 = param2->actionType_id;
-    if (uVar1 == 0)
+    uint16_t action_id = param2->actionType_id;
+    uint16_t subAction_id =  param2->actionSubtype_id;
+    uint32_t unused;
+    uint16_t figure_id = ((*fun_00a28d60(param1, &unused, 0)) >> 8) & 0xffff;
+    if (action_id == 0)
     {
-        uVar1 = param2->actionSubtype_id;
-        if (uVar1 < 9)
+        action_id = param2->actionSubtype_id;
+        if (action_id < 9)
         {
             return;
         }
-        if (uVar1 > 0xe)
+        if (action_id > 0xe)
         {
             return;
         }
-        uint16_t figure_id = ((*fun_00a28d60(param1, &param2, 0)) >> 8) & 0xffff;
         uint32_t general_address = (ASI::AddrOf(0x806a86));
         fun_009a4020(_this->CUiMain_data.CUiBuilding, *(uint32_t *)(general_address + ((uint8_t)_this->CUiMain_data.CGdFigure->figures[figure_id].race * 4) + 2));
         if (_this->CUiMain_data.unknown_action_type == 2)
@@ -263,13 +265,12 @@ void __attribute((thiscall)) sf_click_horizontal_button(SF_CUiMain *_this, uint_
         vfun163(_this->CUiMain_data.CUiBuilding, 0);
         return;
     }
-    if (uVar1 > 9999)
+    if (action_id > 9999)
     {
         return;
     }
     SF_CGdResourceSpell spell_data;
-    spellAPI.getResourceSpellData(_this->CUiMain_data.CGdResource, &spell_data, uVar1);
-    uint16_t figure_id = (*fun_00a28d60(param1, &param2, 0)) >> 8;
+    spellAPI.getResourceSpellData(_this->CUiMain_data.CGdResource, &spell_data, subAction_id);
     SF_CGdTargetData data;
     data.entity_index = 0;
     data.entity_type = 0;
@@ -285,7 +286,6 @@ void __attribute((thiscall)) sf_click_horizontal_button(SF_CUiMain *_this, uint_
             fun_0099f610(_this->CUiMain_data.CUiGame, param2->actionType_id, param2->actionSubtype_id, param2->unknown_flag, param2->unknown_config_param);
             return;
         }
-
         if (spell_data.cast_type2 == 5)
         {
             data.position.X = _this->CUiMain_data.CGdFigure->figures[figure_id].position.X;
