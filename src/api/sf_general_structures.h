@@ -960,7 +960,7 @@ typedef uint16_t(__cdecl *fun_00a2a1d0_ptr)(void *some_ptr, void *some_ptr_2);
 
 typedef void (__thiscall *fun_00a49b10_ptr)(CGdControllerClient * _this, uint8_t param1);
 
-typedef uint32_t (__thiscall *fun_00a28d60_ptr)(void *_this, void* param1, uint32_t param2);
+typedef uint32_t *(__thiscall *fun_00a28d60_ptr)(void *_this, void* param1, uint32_t param2);
 typedef void (__thiscall *fun_009a4020_ptr)(void *_this, uint32_t param1);
 
 typedef void (__thiscall *vfun164_ptr)(void *CMnuContainer);

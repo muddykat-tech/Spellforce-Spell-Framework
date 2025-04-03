@@ -249,8 +249,9 @@ void __attribute((thiscall)) sf_click_horizontal_button(SF_CUiMain *_this, uint_
         {
             return;
         }
-        uint16_t figure_id = fun_00a28d60(param1, &param2, 0) >> 8;
-        fun_009a4020(_this->CUiMain_data.CUiBuilding, (*(uint32_t *)(ASI::AddrOf(0x806a86)) + (_this->CUiMain_data.CGdFigure->figures[figure_id].race * 4) + 2));
+        uint16_t figure_id = ((*fun_00a28d60(param1, &param2, 0)) >> 8) & 0xffff;
+        uint32_t general_address = (ASI::AddrOf(0x806a86));
+        fun_009a4020(_this->CUiMain_data.CUiBuilding, *(uint32_t *)(general_address + ((uint8_t)_this->CUiMain_data.CGdFigure->figures[figure_id].race * 4) + 2));
         if (_this->CUiMain_data.unknown_action_type == 2)
         {
             return;
@@ -268,7 +269,7 @@ void __attribute((thiscall)) sf_click_horizontal_button(SF_CUiMain *_this, uint_
     }
     SF_CGdResourceSpell spell_data;
     spellAPI.getResourceSpellData(_this->CUiMain_data.CGdResource, &spell_data, uVar1);
-    uint16_t figure_id = fun_00a28d60(param1, &param2, 0) >> 8;
+    uint16_t figure_id = (*fun_00a28d60(param1, &param2, 0)) >> 8;
     SF_CGdTargetData data;
     data.entity_index = 0;
     data.entity_type = 0;
@@ -324,6 +325,5 @@ void __attribute((thiscall)) sf_click_horizontal_button(SF_CUiMain *_this, uint_
     fun_009a1fd0(_this->CUiMain_data.CUiGame, 0);
     return;
 }
-
 
 /** @} */
