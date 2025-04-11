@@ -56,15 +56,17 @@ void __thiscall applySpellTag(SFSpell *spell, SpellTag tag)
 
 void __thiscall linkTypeHandler(SFSpell *spell, handler_ptr typeHandler)
 {
-      spell->spell_type_handler = typeHandler;
+    spell->spell_type_handler = typeHandler;
 }
 
-void __thiscall linkSingleTargetAIHandler(SFSpell *spell, ai_single_handler_ptr handler)
+void __thiscall linkSingleTargetAIHandler(SFSpell *spell,
+                                          ai_single_handler_ptr handler)
 {
     spell->ai_single_handler = handler;
 }
 
-void __thiscall linkAvoidanceAIHandler(SFSpell *spell, ai_avoidance_handler_ptr handler)
+void __thiscall linkAvoidanceAIHandler(SFSpell *spell,
+                                       ai_avoidance_handler_ptr handler)
 {
     spell->ai_avoidance_handler = handler;
 }
@@ -74,13 +76,15 @@ void __thiscall linkAOEAIHandler(SFSpell *spell, ai_aoe_handler_ptr handler)
     spell->ai_aoe_handler = handler;
 }
 
-void __thiscall linkOnHitHandler(SFSpell *spell, onhit_handler_ptr onhitHandler, OnHitPhase phase)
+void __thiscall linkOnHitHandler(SFSpell *spell, onhit_handler_ptr onhitHandler,
+                                 OnHitPhase phase)
 {
     spell->spell_onhit_handler = onhitHandler;
     spell->hit_phase = phase;
 }
 
-void __thiscall linkEffectHandler(SFSpell *spell, uint16_t spell_effect_id, handler_ptr effectHandler)
+void __thiscall linkEffectHandler(SFSpell *spell, uint16_t spell_effect_id,
+                                  handler_ptr effectHandler)
 {
     spell->spell_effect_id = spell_effect_id;
     spell->spell_effect_handler = effectHandler;
@@ -91,7 +95,8 @@ void __thiscall linkEndHandler(SFSpell *spell, handler_ptr endHandler)
     spell->spell_end_handler = endHandler;
 }
 
-void __thiscall linkSubEffectHandler(SFSpell *spell, sub_effect_handler_ptr handler)
+void __thiscall linkSubEffectHandler(SFSpell *spell,
+                                     sub_effect_handler_ptr handler)
 {
     spell->sub_effect_handler = handler;
 }
@@ -101,7 +106,9 @@ void __thiscall linkRefreshHandler(SFSpell *spell, refresh_handler_ptr handler)
     spell->spell_refresh_handler = handler;
 }
 
-void __thiscall linkDealDamageHandler(SFSpell *spell, damage_handler_ptr handler, SpellDamagePhase phase)
+void __thiscall linkDealDamageHandler(SFSpell *spell,
+                                      damage_handler_ptr handler,
+                                      SpellDamagePhase phase)
 {
     spell->deal_damage_handler = handler;
     spell->damage_phase = phase;
@@ -109,13 +116,13 @@ void __thiscall linkDealDamageHandler(SFSpell *spell, damage_handler_ptr handler
 
 uint16_t __thiscall getSpellTags(uint16_t spell_line_id)
 {
-    for (auto &entry : g_internal_spell_list) 
+    for (auto &entry : g_internal_spell_list)
     {
         if (entry->spell_id == spell_line_id)
         {
             return entry->spell_tags;
         }
-    } 
+    }
     return 0x0;
 }
 
@@ -148,14 +155,18 @@ void register_mod_spells()
         handler_ptr spell_type_handler = spell_data->spell_type_handler;
         handler_ptr spell_effect_handler = spell_data->spell_effect_handler;
         handler_ptr spell_end_handler = spell_data->spell_end_handler;
-        refresh_handler_ptr spell_refresh_handler = spell_data->spell_refresh_handler;
-        sub_effect_handler_ptr sub_effect_handler = spell_data->sub_effect_handler;
+        refresh_handler_ptr spell_refresh_handler =
+            spell_data->spell_refresh_handler;
+        sub_effect_handler_ptr sub_effect_handler =
+            spell_data->sub_effect_handler;
         onhit_handler_ptr onhit_handler = spell_data->spell_onhit_handler;
-        damage_handler_ptr deal_damage_handler = spell_data->deal_damage_handler;
+        damage_handler_ptr deal_damage_handler =
+            spell_data->deal_damage_handler;
         ai_aoe_handler_ptr ai_aoe_handler = spell_data->ai_aoe_handler;
-        ai_avoidance_handler_ptr ai_avoidance_handler = spell_data->ai_avoidance_handler;
+        ai_avoidance_handler_ptr ai_avoidance_handler =
+            spell_data->ai_avoidance_handler;
         ai_single_handler_ptr ai_single_handler = spell_data->ai_single_handler;
-        
+
         SpellDamagePhase damage_phase = spell_data->damage_phase;
         OnHitPhase onhit_phase = spell_data->hit_phase;
         SFMod *parent_mod = spell_data->parent_mod;
@@ -166,13 +177,17 @@ void register_mod_spells()
             if (spell_count_for_mod != 0)
             {
                 char spell_count_info[256];
-                snprintf(spell_count_info, sizeof(spell_count_info), "| - Finished Registration of %d spells for %s", spell_count_for_mod, temp->mod_id);
+                snprintf(spell_count_info, sizeof(spell_count_info),
+                         "| - Finished Registration of %d spells for %s",
+                         spell_count_for_mod, temp->mod_id);
                 log_info(spell_count_info);
                 spell_count_for_mod = 0;
             }
 
             char info[256];
-            snprintf(info, sizeof(info), "| - Starting Registration for [%s by %s]", parent_mod->mod_id, parent_mod->mod_author);
+            snprintf(info, sizeof(info),
+                     "| - Starting Registration for [%s by %s]",
+                     parent_mod->mod_id, parent_mod->mod_author);
             parent_mod->mod_errors[0] = '\0';
             log_info(info);
             temp = g_current_mod;
@@ -189,33 +204,52 @@ void register_mod_spells()
             SFMod *conflict_mod = spell_id_map[spell_id];
             if (spell_id < 242)
             {
-                snprintf(error_msg, sizeof(error_msg), "| - %s has Overwritten a vanilla spell ID [%d], this was previously registered by [%s]", parent_mod->mod_id, spell_id, conflict_mod->mod_id);
+                snprintf(error_msg, sizeof(error_msg),
+                         "| - %s has Overwritten a vanilla spell ID [%d], this was previously registered by [%s]",
+                         parent_mod->mod_id, spell_id, conflict_mod->mod_id);
                 log_warning(error_msg);
             }
             else
             {
-                snprintf(error_msg, sizeof(error_msg), "| - Mod Conflict Detected [%s]: Spell ID [%d] is already registered by [%s]", parent_mod->mod_id, spell_id, conflict_mod->mod_id);
+                snprintf(error_msg, sizeof(error_msg),
+                         "| - Mod Conflict Detected [%s]: Spell ID [%d] is already registered by [%s]",
+                         parent_mod->mod_id, spell_id, conflict_mod->mod_id);
                 log_error(error_msg);
-                snprintf(conflict_mod->mod_errors, sizeof(parent_mod->mod_errors), "%sSpell ID [%d] was overwritten by %s\n", conflict_mod->mod_errors, spell_id, parent_mod->mod_id);
+                snprintf(conflict_mod->mod_errors,
+                         sizeof(parent_mod->mod_errors),
+                         "%sSpell ID [%d] was overwritten by %s\n",
+                         conflict_mod->mod_errors, spell_id,
+                         parent_mod->mod_id);
                 g_error_count = g_error_count + 1;
             }
         }
 
-        if (spell_effect_id_map.find(spell_effect_id) != spell_effect_id_map.end())
+        if (spell_effect_id_map.find(spell_effect_id) !=
+            spell_effect_id_map.end())
         {
             char error_msg[256];
             SFMod *conflict_mod = spell_effect_id_map[spell_effect_id];
             if (spell_effect_id < 0xa6)
             {
-                snprintf(error_msg, sizeof(error_msg), "| - %s has Overwritten a vanilla spell effect ID [%d] this was previously registered by [%s]", parent_mod->mod_id, spell_effect_id, conflict_mod->mod_id);
+                snprintf(error_msg, sizeof(error_msg),
+                         "| - %s has Overwritten a vanilla spell effect ID [%d] this was previously registered by [%s]",
+                         parent_mod->mod_id, spell_effect_id,
+                         conflict_mod->mod_id);
                 log_warning(error_msg);
             }
             else
             {
-                snprintf(error_msg, sizeof(error_msg), "| - Mod Conflict Detected [%s]: Spell Effect ID [%d] is already registered by [%s]", parent_mod->mod_id, spell_effect_id, conflict_mod->mod_id);
+                snprintf(error_msg, sizeof(error_msg),
+                         "| - Mod Conflict Detected [%s]: Spell Effect ID [%d] is already registered by [%s]",
+                         parent_mod->mod_id, spell_effect_id,
+                         conflict_mod->mod_id);
                 log_error(error_msg);
-                
-                snprintf(conflict_mod->mod_errors, sizeof(parent_mod->mod_errors), "%sSpell Effect ID [%d] was overwritten by %s\n",conflict_mod->mod_errors, spell_effect_id, parent_mod->mod_id);
+
+                snprintf(conflict_mod->mod_errors,
+                         sizeof(parent_mod->mod_errors),
+                         "%sSpell Effect ID [%d] was overwritten by %s\n",
+                         conflict_mod->mod_errors, spell_effect_id,
+                         parent_mod->mod_id);
 
                 g_error_count = g_error_count + 1;
             }
@@ -262,7 +296,8 @@ void register_mod_spells()
 
         if (deal_damage_handler != nullptr)
         {
-            registerSpellDamageHandler(spell_id, deal_damage_handler, damage_phase);
+            registerSpellDamageHandler(spell_id, deal_damage_handler,
+                                       damage_phase);
         }
 
         if(ai_single_handler != nullptr)
@@ -284,7 +319,9 @@ void register_mod_spells()
     if (spell_count_for_mod != 0)
     {
         char spell_count_info[256];
-        snprintf(spell_count_info, sizeof(spell_count_info), "| - Finished Registration of %d spells for %s", spell_count_for_mod, temp->mod_id);
+        snprintf(spell_count_info, sizeof(spell_count_info),
+                 "| - Finished Registration of %d spells for %s",
+                 spell_count_for_mod, temp->mod_id);
         log_info(spell_count_info);
         spell_count_for_mod = 0;
     }

@@ -1,4 +1,4 @@
-/** 
+/**
  * @defgroup EndSpellHook End Spell Hook
  * @ingroup Hooks
  * @brief Used to inject 'endspell' handlers registered by mods and sfsf into spellforce

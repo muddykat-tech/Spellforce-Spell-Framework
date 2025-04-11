@@ -16,18 +16,20 @@
 
 typedef void (*initializeModule_ptr)(void *);
 typedef SFMod *(*registerMod_ptr)(void *);
-typedef SFMod *(*createModInfo_ptr)(const char *mod_id, const char *mod_version, const char *mod_author, const char *mod_description);
+typedef SFMod *(*createModInfo_ptr)(const char *mod_id, const char *mod_version,
+                                    const char *mod_author,
+                                    const char *mod_description);
 
 typedef void (*logInfoFunc)(const char *);
-typedef void(__thiscall *handler_ptr)(SF_CGdSpell *, uint16_t);
-typedef int(__thiscall *refresh_handler_ptr)(SF_CGdSpell *, uint16_t);
+typedef void (__thiscall *handler_ptr)(SF_CGdSpell *, uint16_t);
+typedef int (__thiscall *refresh_handler_ptr)(SF_CGdSpell *, uint16_t);
 
 /**
  * @brief Represents the Spellforce Spell Framework API.
  * @ingroup API
- * This structure serves as the central interface for interacting with 
- * various subsystems of the Spellforce Spell Framework. Each member 
- * corresponds to a specific API or function group, providing access 
+ * This structure serves as the central interface for interacting with
+ * various subsystems of the Spellforce Spell Framework. Each member
+ * corresponds to a specific API or function group, providing access
  * to the relevant functionality.
  */
 struct SpellforceSpellFramework

@@ -368,6 +368,7 @@ void __attribute((thiscall)) sf_click_horizontal_button(SF_CUiMain *_this,
             fun_009a1fd0(_this->CUiMain_data.CUiGame, 0);
             return;
         }
+
         data.entity_type = 1;
         data.entity_index = figure_id;
     }

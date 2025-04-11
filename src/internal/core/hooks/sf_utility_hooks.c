@@ -2,7 +2,7 @@
 #include "../sf_wrappers.h"
 #include "../sf_hooks.h"
 
-/** 
+/**
  * @defgroup UtilHooks Utility Hooks
  * @ingroup Hooks
  * @brief Hooks for Utility functions not directly related to each other; but not large enough to support their own hook type.
@@ -26,7 +26,8 @@ bool __thiscall is_domination_spell(SF_CGdSpell *_this, uint16_t spell_index)
     return hasSpellTag(spell_line, SpellTag::DOMINATION_SPELL);
 }
 
-bool __thiscall is_domination_spellline(SF_CGdSpell *_this, GdSpellLine spell_line)
+bool __thiscall is_domination_spellline(SF_CGdSpell *_this,
+                                        GdSpellLine spell_line)
 {
     return hasSpellTag(spell_line, SpellTag::DOMINATION_SPELL);
 }

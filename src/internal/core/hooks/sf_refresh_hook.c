@@ -1,4 +1,4 @@
-/** 
+/**
  * @defgroup RefreshHook Refresh Hook
  * @ingroup Hooks
  * @brief Used to inject Spell Refresh Handlers into Spellforce.
@@ -21,10 +21,10 @@ int __thiscall sf_refresh_hook(SF_CGdSpell *_this, uint16_t spell_index)
     // We need a map of refresh handlers?
     uint16_t spell_line = _this->active_spell_list[spell_index].spell_line;
     refresh_handler_ptr spellrefresh_handler = get_spell_refresh(spell_line);
-  /*  char message[256];
-    sprintf(message, "Spell Refresh Hook: [%d]", spell_index);
-    log_info(message);
-*/
+    /*  char message[256];
+       sprintf(message, "Spell Refresh Hook: [%d]", spell_index);
+       log_info(message);
+     */
     if (spellrefresh_handler != NULL)
     {
         return spellrefresh_handler(_this, spell_index);

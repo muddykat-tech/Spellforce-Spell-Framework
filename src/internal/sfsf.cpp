@@ -35,33 +35,35 @@
  * the DLL will not be loaded.
  * @see ASI::Init(), ASI::CheckSFVersion(), initialize_framework(), initialize_beta_hooks()
  **/
-BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)
+BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call,
+                      LPVOID lpReserved)
 {
     switch (ul_reason_for_call)
     {
-    case DLL_PROCESS_ATTACH:
-    {
-        if (!ASI::Init(hModule))
-            return FALSE;
-        if (!ASI::CheckSFVersion(ASI::SF_BETA))
+        case DLL_PROCESS_ATTACH:
         {
-            return FALSE;
-        }
-        else
-        {
-            FILE *file = fopen("sfsf.log", "w");
-            fclose(file);
+            if (!ASI::Init(hModule))
+                return FALSE;
+            if (!ASI::CheckSFVersion(ASI::SF_BETA))
+            {
+                return FALSE;
+            }
+            else
+            {
+                FILE *file = fopen("sfsf.log", "w");
+                fclose(file);
 
-            log_info("Spellforce Version Accepted; Starting SFSF");
-            initialize_framework();
-            initialize_beta_hooks();
-            OutputDebugStringA("[SFSF] |======================| Injection Complete |======================|");
+                log_info("Spellforce Version Accepted; Starting SFSF");
+                initialize_framework();
+                initialize_beta_hooks();
+                OutputDebugStringA(
+                    "[SFSF] |======================| Injection Complete |======================|");
+                break;
+            }
             break;
         }
-        break;
-    }
-    case DLL_PROCESS_DETACH:
-        break;
+        case DLL_PROCESS_DETACH:
+            break;
     }
     return TRUE;
 }

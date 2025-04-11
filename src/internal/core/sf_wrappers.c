@@ -172,12 +172,12 @@ void __thiscall disposeFigureIterator(CGdFigureIterator *iterator)
     fidFree(iterator->data.offset_0x30.ac69_ptr1);
 }
 
-void __thiscall spellEffectCallback(SF_CGdSpell* _this, uint16_t source_index,
+void __thiscall spellEffectCallback(SF_CGdSpell *_this, uint16_t source_index,
                                     uint16_t spell_index,
-                                    bool (*condition)(SF_CGdSpell* _this,
+                                    bool (*condition)(SF_CGdSpell *_this,
                                                       uint16_t source_index,
                                                       uint16_t spell_index),
-                                    void (*callback)(SF_CGdSpell* _this,
+                                    void (*callback)(SF_CGdSpell *_this,
                                                      uint16_t source_index,
                                                      uint16_t spell_index))
 {
@@ -190,14 +190,14 @@ void __thiscall spellEffectCallback(SF_CGdSpell* _this, uint16_t source_index,
     {
         uint16_t current_index =
             toolboxAPI.getSpellIndexFromDLL(
-                (uint32_t*)_this->SF_CGdDoubleLinkedList, node_id);
+                (uint32_t *)_this->SF_CGdDoubleLinkedList, node_id);
         if ((*condition)(_this, current_index, spell_index))
         {
             (*callback)(_this, source_index, current_index);
             break;
         }
         node_id =
-            toolboxAPI.getNextNode((uint32_t*)_this->SF_CGdDoubleLinkedList,
+            toolboxAPI.getNextNode((uint32_t *)_this->SF_CGdDoubleLinkedList,
                                    node_id);
     }
 }
@@ -379,7 +379,7 @@ static bool is_init_finished = false;
  * @param label The label to update
  * @param text New text to set
  */
-static void update_label_text(CMnuLabel* label, const char* text)
+static void update_label_text(CMnuLabel *label, const char *text)
 {
     if (!label || !text)
     {
@@ -387,7 +387,7 @@ static void update_label_text(CMnuLabel* label, const char* text)
     }
 
     SF_String string_obj;
-    SF_String* sf_string = g_create_sf_string(&string_obj, text);
+    SF_String *sf_string = g_create_sf_string(&string_obj, text);
     g_menu_label_set_string(label, sf_string);
     g_destroy_sf_string(sf_string);
 }
@@ -399,7 +399,7 @@ static void update_label_text(CMnuLabel* label, const char* text)
  * @param mods_per_page Number of mods to display per page
  * @param page Current page number (0-based)
  */
-void attach_mod_labels(CMnuContainer* container, int mods_per_page, int page)
+void attach_mod_labels(CMnuContainer *container, int mods_per_page, int page)
 {
     if (g_internal_spell_list.empty())
     {
@@ -412,13 +412,13 @@ void attach_mod_labels(CMnuContainer* container, int mods_per_page, int page)
     const int y_base_offset = 48;
     const int y_item_spacing = 36;
 
-    SFMod* current_parent = nullptr;
+    SFMod *current_parent = nullptr;
     int mod_index = 0;
 
     // Iterate through spell list to find unique parent mods
-    for (const SFSpell* spell_data : g_internal_spell_list)
+    for (const SFSpell *spell_data : g_internal_spell_list)
     {
-        SFMod* parent_mod = spell_data->parent_mod;
+        SFMod *parent_mod = spell_data->parent_mod;
 
         // Only process each mod once
         if (current_parent != parent_mod)
@@ -516,7 +516,7 @@ void attach_mod_labels(CMnuContainer* container, int mods_per_page, int page)
 }
 
 void __fastcall navigate_callback_left(CMnuSmpButton *button,
-                                       int32_t* cui_menu_ptr_maybe)
+                                       int32_t *cui_menu_ptr_maybe)
 {
     CMnuContainer *parent =
         (CMnuContainer *) button->CMnuBase_data.param_2_callback;
@@ -536,7 +536,7 @@ void __fastcall navigate_callback_left(CMnuSmpButton *button,
 }
 
 void __fastcall navigate_callback_right(CMnuSmpButton *button,
-                                        int32_t* cui_menu_ptr_maybe)
+                                        int32_t *cui_menu_ptr_maybe)
 {
     CMnuContainer *parent =
         (CMnuContainer *) button->CMnuBase_data.param_2_callback;
@@ -567,7 +567,7 @@ void __thiscall show_mod_list(CMnuSmpButton *button)
     {
         is_mod_list_shown = true;
         SF_String s_menu_border, s_menu_background, s_alt_btn_name;
-        SF_String * p_menu_border, * p_menu_background, * p_alt_btn_name;
+        SF_String *p_menu_border, *p_menu_background, *p_alt_btn_name;
 
         char alt_name[32] = "HIDE MOD LIST";
         p_alt_btn_name = g_create_sf_string(&s_alt_btn_name, alt_name);
@@ -595,7 +595,8 @@ void __thiscall show_mod_list(CMnuSmpButton *button)
         g_destroy_sf_string(p_menu_border);
 
         // Add new container to this container.
-        g_container_add_control(parent, (CMnuBase*)mod_list, '\x01', '\x01', 0);
+        g_container_add_control(parent, (CMnuBase *)mod_list, '\x01', '\x01',
+                                0);
 
         char btn_disabled[128]= "ui_btn_togglearrow_right_disabled.msh";
         char btn_pressed[128]  = "ui_btn_togglearrow_right_pressed.msh";
@@ -625,7 +626,7 @@ void __thiscall show_mod_list(CMnuSmpButton *button)
             log_info("Hide Mod List");
             char alt_name[32] = "SHOW MOD LIST";
             SF_String s_alt_btn_name;
-            SF_String * p_alt_btn_name;
+            SF_String *p_alt_btn_name;
             p_alt_btn_name = g_create_sf_string(&s_alt_btn_name, alt_name);
 
             set_button_name(button, p_alt_btn_name);
@@ -639,7 +640,7 @@ void __thiscall show_mod_list(CMnuSmpButton *button)
             log_info("Show Mod List");
             char alt_name[32] = "HIDE MOD LIST";
             SF_String s_alt_btn_name;
-            SF_String * p_alt_btn_name;
+            SF_String *p_alt_btn_name;
             p_alt_btn_name = g_create_sf_string(&s_alt_btn_name, alt_name);
 
             set_button_name(button, p_alt_btn_name);
@@ -652,10 +653,10 @@ void __thiscall show_mod_list(CMnuSmpButton *button)
 }
 
 void __fastcall show_mod_list_callback(CMnuSmpButton *button,
-                                       int32_t* cui_menu_ptr_maybe)
+                                       int32_t *cui_menu_ptr_maybe)
 {
     CMnuContainer *parent =
-        (CMnuContainer*) button->CMnuBase_data.param_2_callback;
+        (CMnuContainer *) button->CMnuBase_data.param_2_callback;
     uint8_t toggle = mod_struct.toggle;
 
     show_mod_list(button);
@@ -679,7 +680,7 @@ void __thiscall attach_new_button(CMnuContainer *parent,
 
     SF_String m_label_string;
     CMnuSmpButton *new_button;
-    void * new_btn_operation;
+    void *new_btn_operation;
 
     SF_FontStruct *fonts = g_get_smth_fonts();
     SF_String *label_string = g_create_sf_string(&m_label_string, label_char);
@@ -712,7 +713,7 @@ void __thiscall attach_new_button(CMnuContainer *parent,
     new_button = initialize_smp_button(new_button);
     SF_Font *selected_font = g_get_font(fonts, font_index);
 
-    CMnuBase_setname((CMnuBase*)new_button, label_string);
+    CMnuBase_setname((CMnuBase *)new_button, label_string);
 
     // This seems to fill out the actual button data itself.
     create_button_func(new_button,x_pos,y_pos,width,height,mesh_string_default,
@@ -741,7 +742,7 @@ void __thiscall attach_new_button(CMnuContainer *parent,
 
     vfunction16_attach_callback(new_button, '\x01');
 
-    g_container_add_control(parent,  (CMnuBase*)new_button, '\x01', '\x01', 0);
+    g_container_add_control(parent,  (CMnuBase *)new_button, '\x01', '\x01', 0);
 
     g_destroy_sf_string(mesh_string_default);
     g_destroy_sf_string(mesh_string_pressed);
@@ -783,7 +784,7 @@ CMnuLabel * __thiscall attach_new_meshed_label(CMnuLabel *new_label,
 
     g_menu_label_set_font(new_label, selected_font);
 
-    g_container_add_control(parent, (CMnuBase*) new_label, '\x01', '\x01', 0);
+    g_container_add_control(parent, (CMnuBase *) new_label, '\x01', '\x01', 0);
 
     g_menu_label_set_string(new_label, label_string);
 
@@ -821,23 +822,23 @@ SFMod *createModInfo(const char *mod_id, const char *mod_version,
 // WARNING: Function not fully implemented.
 // This function successfully loads a video, but the video container is attached to a layer above the default container.
 // As a result, the video container intercepts click events and prevents proper interaction with the underlying elements.
-void attachVideo(CAppMenu * CAppMenu_ptr, CMnuContainer *parent,
+void attachVideo(CAppMenu *CAppMenu_ptr, CMnuContainer *parent,
                  char *video_loc_and_name_chars)
 {
-    SF_CUiVideo* video_ptr = (SF_CUiVideo*) g_new_operator(0x348);
+    SF_CUiVideo *video_ptr = (SF_CUiVideo *) g_new_operator(0x348);
     SF_String m_video_name_string;
     SF_String *video_name_string = g_create_sf_string(&m_video_name_string,
                                                       video_loc_and_name_chars);
     // TODO Cleanup: Not Sequence, just normal Video, haven't renamed it from previous investigations.
-    video_ptr =(SF_CUiVideo*) cuiVideoSequence_constructor(video_ptr,
-                                                           video_name_string);
+    video_ptr =(SF_CUiVideo *) cuiVideoSequence_constructor(video_ptr,
+                                                            video_name_string);
 
     char controller_mark_chars[64];
     sprintf(controller_mark_chars, "<Cont>CreditsVideoController");
     SF_String m_controller_mark_string;
     SF_String *controller_mark_string =
         g_create_sf_string(&m_controller_mark_string, controller_mark_chars);
-    CMnuBase_setname((CMnuBase*)video_ptr, controller_mark_string);
+    CMnuBase_setname((CMnuBase *)video_ptr, controller_mark_string);
 
     //void *_CMnuScreen_ptr, CMnuBase* base, char flag
     //CMnuScreen_attach_control(parent, CAppMenu_ptr->CAppMenu_data.CMnuBase_ptr, '\x01');

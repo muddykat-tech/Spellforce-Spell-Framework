@@ -3,7 +3,10 @@
 #include "../core/sf_hooks.h"
 #include <list>
 
-uint16_t __thiscall trueshot_onhit_handler(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t damage)
+uint16_t __thiscall trueshot_onhit_handler(SF_CGdFigureJobs *_this,
+                                           uint16_t source_index,
+                                           uint16_t target_index,
+                                           uint16_t damage)
 {
     SF_SGtFigureAction action;
     aiAPI.getTargetAction(_this->CGdFigure, &action, source_index);
@@ -13,15 +16,21 @@ uint16_t __thiscall trueshot_onhit_handler(SF_CGdFigureJobs *_this, uint16_t sou
         return damage;
     }
 
-    uint16_t spell_index_of_type = toolboxAPI.getSpellIndexOfType(_this->CGdFigureToolBox, source_index, kGdSpellLineAbilityTrueShot, 0);
+    uint16_t spell_index_of_type =
+        toolboxAPI.getSpellIndexOfType(_this->CGdFigureToolBox, source_index,
+                                       kGdSpellLineAbilityTrueShot, 0);
     SF_CGdResourceSpell spell_data;
-    uint16_t spell_id = spellAPI.getSpellID(_this->CGdSpell, spell_index_of_type);
+    uint16_t spell_id = spellAPI.getSpellID(_this->CGdSpell,
+                                            spell_index_of_type);
     spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
     uint16_t current_damage = (spell_data.params[1] * damage) / 100;
     return current_damage;
 }
 
-uint16_t __thiscall riposte_onhit_handler(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t damage)
+uint16_t __thiscall riposte_onhit_handler(SF_CGdFigureJobs *_this,
+                                          uint16_t source_index,
+                                          uint16_t target_index,
+                                          uint16_t damage)
 {
     SF_SGtFigureAction action;
     aiAPI.getTargetAction(_this->CGdFigure, &action, source_index);
@@ -33,7 +42,9 @@ uint16_t __thiscall riposte_onhit_handler(SF_CGdFigureJobs *_this, uint16_t sour
     }
 
     SF_CGdResourceSpell spell_data;
-    uint16_t spell_index = toolboxAPI.getSpellIndexOfType(_this->CGdFigureToolBox, target_index, kGdSpellLineAbilityRiposte, 0);
+    uint16_t spell_index =
+        toolboxAPI.getSpellIndexOfType(_this->CGdFigureToolBox, target_index,
+                                       kGdSpellLineAbilityRiposte, 0);
     uint16_t spell_id = spellAPI.getSpellID(_this->CGdSpell, spell_index);
     spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
 
@@ -43,13 +54,17 @@ uint16_t __thiscall riposte_onhit_handler(SF_CGdFigureJobs *_this, uint16_t sour
     uint16_t final_damage = (damage - return_damage);
     if (final_damage != 0)
     {
-        toolboxAPI.dealDamage(_this->CGdFigureToolBox, target_index, source_index, return_damage, 0, 0, 0);
+        toolboxAPI.dealDamage(_this->CGdFigureToolBox, target_index,
+                              source_index, return_damage, 0, 0, 0);
     }
 
     return final_damage;
 }
 
-uint16_t __thiscall durability_onhit_handler(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t damage)
+uint16_t __thiscall durability_onhit_handler(SF_CGdFigureJobs *_this,
+                                             uint16_t source_index,
+                                             uint16_t target_index,
+                                             uint16_t damage)
 {
     SF_SGtFigureAction action;
     aiAPI.getTargetAction(_this->CGdFigure, &action, source_index);
@@ -61,13 +76,18 @@ uint16_t __thiscall durability_onhit_handler(SF_CGdFigureJobs *_this, uint16_t s
     }
 
     SF_CGdResourceSpell spell_data;
-    uint16_t spell_index = toolboxAPI.getSpellIndexOfType(_this->CGdFigureToolBox, source_index, kGdSpellLineAbilityDurability, 0);
+    uint16_t spell_index =
+        toolboxAPI.getSpellIndexOfType(_this->CGdFigureToolBox, source_index,
+                                       kGdSpellLineAbilityDurability, 0);
     uint16_t spell_id = spellAPI.getSpellID(_this->CGdSpell, spell_index);
     spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
     return (damage * spell_data.params[1]) / 100;
 }
 
-uint16_t __thiscall critical_hits_onhit_handler(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t damage)
+uint16_t __thiscall critical_hits_onhit_handler(SF_CGdFigureJobs *_this,
+                                                uint16_t source_index,
+                                                uint16_t target_index,
+                                                uint16_t damage)
 {
     // no need to calculate damage in this cases
     if (damage == 0)
@@ -87,19 +107,23 @@ uint16_t __thiscall critical_hits_onhit_handler(SF_CGdFigureJobs *_this, uint16_
         return 0x7fff;
     }
     SF_CGdResourceSpell spell_data;
-    uint16_t spell_index = toolboxAPI.getSpellIndexOfType(_this->CGdFigureToolBox, spell_index, kGdSpellLineAbilityCriticalHits, 0);
+    uint16_t spell_index =
+        toolboxAPI.getSpellIndexOfType(_this->CGdFigureToolBox, spell_index,
+                                       kGdSpellLineAbilityCriticalHits, 0);
     uint16_t spell_id = spellAPI.getSpellID(_this->CGdSpell, spell_index);
     spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
 
     uint16_t tmp_damage = damage * spell_data.params[1];
-    uint16_t hp_left = figureAPI.getCurrentHealth(_this->CGdFigure, target_index);
+    uint16_t hp_left = figureAPI.getCurrentHealth(_this->CGdFigure,
+                                                  target_index);
     if (tmp_damage < hp_left)
     {
         return damage;
     }
 
     tmp_damage = ((tmp_damage - hp_left) * 100) / tmp_damage;
-    uint16_t chance = 5 * tmp_damage * (5 + (int16_t)(source_level - target_level));
+    uint16_t chance = 5 * tmp_damage *
+                      (5 + (int16_t)(source_level - target_level));
     if (spellAPI.getRandom(_this->OpaqueClass, 10000) > chance)
     {
         return damage;
@@ -107,7 +131,10 @@ uint16_t __thiscall critical_hits_onhit_handler(SF_CGdFigureJobs *_this, uint16_
     return 0x7fff;
 }
 
-uint16_t __thiscall endurance_onhit_handler(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t damage)
+uint16_t __thiscall endurance_onhit_handler(SF_CGdFigureJobs *_this,
+                                            uint16_t source_index,
+                                            uint16_t target_index,
+                                            uint16_t damage)
 {
     SF_SGtFigureAction action;
     aiAPI.getTargetAction(_this->CGdFigure, &action, source_index);
@@ -117,19 +144,25 @@ uint16_t __thiscall endurance_onhit_handler(SF_CGdFigureJobs *_this, uint16_t so
     {
         return damage;
     }
-    if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, source_index, kGdSpellLineAbilityDurability))
+    if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, source_index,
+                                kGdSpellLineAbilityDurability))
     {
         return damage;
     }
 
     SF_CGdResourceSpell spell_data;
-    uint16_t spell_index = toolboxAPI.getSpellIndexOfType(_this->CGdFigureToolBox, source_index, kGdSpellLineAbilityEndurance, 0);
+    uint16_t spell_index =
+        toolboxAPI.getSpellIndexOfType(_this->CGdFigureToolBox, source_index,
+                                       kGdSpellLineAbilityEndurance, 0);
     uint16_t spell_id = spellAPI.getSpellID(_this->CGdSpell, spell_index);
     spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
     return (damage * spell_data.params[1]) / 100;
 }
 
-uint16_t __thiscall berserk_onhit_handler(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t damage)
+uint16_t __thiscall berserk_onhit_handler(SF_CGdFigureJobs *_this,
+                                          uint16_t source_index,
+                                          uint16_t target_index,
+                                          uint16_t damage)
 {
     SF_SGtFigureAction action;
     aiAPI.getTargetAction(_this->CGdFigure, &action, source_index);
@@ -139,22 +172,28 @@ uint16_t __thiscall berserk_onhit_handler(SF_CGdFigureJobs *_this, uint16_t sour
     {
         return damage;
     }
-    if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, source_index, kGdSpellLineAbilityEndurance))
+    if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, source_index,
+                                kGdSpellLineAbilityEndurance))
     {
         return damage;
     }
-    if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, source_index, kGdSpellLineAbilityDurability))
+    if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, source_index,
+                                kGdSpellLineAbilityDurability))
     {
         return damage;
     }
     SF_CGdResourceSpell spell_data;
-    uint16_t spell_index = toolboxAPI.getSpellIndexOfType(_this->CGdFigureToolBox, source_index, kGdSpellLineAbilityBerserk, 0);
+    uint16_t spell_index =
+        toolboxAPI.getSpellIndexOfType(_this->CGdFigureToolBox, source_index,
+                                       kGdSpellLineAbilityBerserk, 0);
     uint16_t spell_id = spellAPI.getSpellID(_this->CGdSpell, spell_index);
     spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
     return (damage * spell_data.params[1]) / 100;
 }
 
-uint16_t __thiscall warcry_onhit_handler(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t damage)
+uint16_t __thiscall warcry_onhit_handler(SF_CGdFigureJobs *_this,
+                                         uint16_t source_index,
+                                         uint16_t target_index, uint16_t damage)
 {
     SF_SGtFigureAction action;
     aiAPI.getTargetAction(_this->CGdFigure, &action, source_index);
@@ -164,26 +203,34 @@ uint16_t __thiscall warcry_onhit_handler(SF_CGdFigureJobs *_this, uint16_t sourc
     {
         return damage;
     }
-    if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, source_index, kGdSpellLineAbilityEndurance))
+    if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, source_index,
+                                kGdSpellLineAbilityEndurance))
     {
         return damage;
     }
-    if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, source_index, kGdSpellLineAbilityDurability))
+    if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, source_index,
+                                kGdSpellLineAbilityDurability))
     {
         return damage;
     }
-    if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, source_index, kGdSpellLineAbilityBerserk))
+    if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, source_index,
+                                kGdSpellLineAbilityBerserk))
     {
         return damage;
     }
     SF_CGdResourceSpell spell_data;
-    uint16_t spell_index = toolboxAPI.getSpellIndexOfType(_this->CGdFigureToolBox, source_index, kGdSpellLineAbilityWarCry, 0);
+    uint16_t spell_index =
+        toolboxAPI.getSpellIndexOfType(_this->CGdFigureToolBox, source_index,
+                                       kGdSpellLineAbilityWarCry, 0);
     uint16_t spell_id = spellAPI.getSpellID(_this->CGdSpell, spell_index);
     spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
     return (damage * spell_data.params[1]) / 100;
 }
 
-uint16_t __thiscall assistance_onhit_handler(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t damage)
+uint16_t __thiscall assistance_onhit_handler(SF_CGdFigureJobs *_this,
+                                             uint16_t source_index,
+                                             uint16_t target_index,
+                                             uint16_t damage)
 {
     // oneshot or zero damage
     if (damage == 0x7fff || damage == 0)
@@ -191,19 +238,24 @@ uint16_t __thiscall assistance_onhit_handler(SF_CGdFigureJobs *_this, uint16_t s
         return damage;
     }
     SF_CGdResourceSpell spell_data;
-    uint16_t spell_index = toolboxAPI.getSpellIndexOfType(_this->CGdFigureToolBox, target_index, kGdSpellLineAssistance, 0);
+    uint16_t spell_index =
+        toolboxAPI.getSpellIndexOfType(_this->CGdFigureToolBox, target_index,
+                                       kGdSpellLineAssistance, 0);
     uint16_t spell_id = spellAPI.getSpellID(_this->CGdSpell, spell_index);
     spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
     CGdFigureIterator iter;
     iteratorAPI.figureIteratorInit(&iter, 0, 0, 0x3ff, 0x3ff);
-    iteratorAPI.figureIteratorSetPointers(&iter, _this->CGdFigure, _this->AutoClass22, _this->CGdWorld);
-    iteratorAPI.iteratorSetArea(&iter, &_this->CGdFigure->figures->position, spell_data.params[0]);
+    iteratorAPI.figureIteratorSetPointers(&iter, _this->CGdFigure,
+                                          _this->AutoClass22, _this->CGdWorld);
+    iteratorAPI.iteratorSetArea(&iter, &_this->CGdFigure->figures->position,
+                                spell_data.params[0]);
     std::list<uint16_t> affected_figures;
     uint16_t figure_id = iteratorAPI.getNextFigure(&iter);
     uint16_t element_count = 0;
     while (figure_id != 0)
     {
-        if (toolboxAPI.figuresCheckFriendly(_this->CGdFigureToolBox, target_index, figure_id))
+        if (toolboxAPI.figuresCheckFriendly(_this->CGdFigureToolBox,
+                                            target_index, figure_id))
         {
             if (figure_id != target_index)
             {
@@ -240,9 +292,13 @@ uint16_t __thiscall assistance_onhit_handler(SF_CGdFigureJobs *_this, uint16_t s
             friend_data.entity_index = t;
             friend_pos = friend_pos;
             SF_Rectangle unused = {0, 0};
-            effectAPI.addEffect(_this->CGdEffect, kGdEffectSpellAssistanceHitFigure, &source_data, &friend_data,
-                                _this->OpaqueClass->current_step, distance, &unused);
-            toolboxAPI.dealDamage(_this->CGdFigureToolBox, source_index, t, shared_damage, 0, 0, 0);
+            effectAPI.addEffect(_this->CGdEffect,
+                                kGdEffectSpellAssistanceHitFigure, &source_data,
+                                &friend_data,
+                                _this->OpaqueClass->current_step, distance,
+                                &unused);
+            toolboxAPI.dealDamage(_this->CGdFigureToolBox, source_index, t,
+                                  shared_damage, 0, 0, 0);
         }
         damage = shared_damage + remainder;
     }
