@@ -1,0 +1,706 @@
+[
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/sfsf.cpp",
+   "-o",
+   "obj/sfsf.o"
+  ],
+  "file": "src/internal/sfsf.cpp"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/core/sf_modloader.c",
+   "-o",
+   "obj/sf_modloader.o"
+  ],
+  "file": "src/internal/core/sf_modloader.c"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/asi/sf_asi.cpp",
+   "-o",
+   "obj/sf_asi.o"
+  ],
+  "file": "src/asi/sf_asi.cpp"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/core/sf_wrappers.c",
+   "-o",
+   "obj/sf_wrappers.o"
+  ],
+  "file": "src/internal/core/sf_wrappers.c"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/registry/sf_registry.cpp",
+   "-o",
+   "obj/sf_registry.o"
+  ],
+  "file": "src/internal/registry/sf_registry.cpp"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/registry/sf_mod_registry.cpp",
+   "-o",
+   "obj/sf_mod_registry.o"
+  ],
+  "file": "src/internal/registry/sf_mod_registry.cpp"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/registry/spell_data_registries/sf_spelltype_registry.cpp",
+   "-o",
+   "obj/sf_spelltype_registry.o"
+  ],
+  "file": "src/internal/registry/spell_data_registries/sf_spelltype_registry.cpp"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/registry/spell_data_registries/sf_spelleffect_registry.cpp",
+   "-o",
+   "obj/sf_spelleffect_registry.o"
+  ],
+  "file": "src/internal/registry/spell_data_registries/sf_spelleffect_registry.cpp"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/registry/spell_data_registries/sf_spellend_registry.cpp",
+   "-o",
+   "obj/sf_spellend_registry.o"
+  ],
+  "file": "src/internal/registry/spell_data_registries/sf_spellend_registry.cpp"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/registry/spell_data_registries/sf_subeffect_registry.cpp",
+   "-o",
+   "obj/sf_subeffect_registry.o"
+  ],
+  "file": "src/internal/registry/spell_data_registries/sf_subeffect_registry.cpp"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/registry/spell_data_registries/sf_spellrefresh_registry.cpp",
+   "-o",
+   "obj/sf_spellrefresh_registry.o"
+  ],
+  "file": "src/internal/registry/spell_data_registries/sf_spellrefresh_registry.cpp"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/registry/sf_vanilla_registry.cpp",
+   "-o",
+   "obj/sf_vanilla_registry.o"
+  ],
+  "file": "src/internal/registry/sf_vanilla_registry.cpp"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/registry/spell_data_registries/sf_spelldamage_registry.cpp",
+   "-o",
+   "obj/sf_spelldamage_registry.o"
+  ],
+  "file": "src/internal/registry/spell_data_registries/sf_spelldamage_registry.cpp"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/registry/spell_data_registries/sf_onhit_registry.cpp",
+   "-o",
+   "obj/sf_onhit_registry.o"
+  ],
+  "file": "src/internal/registry/spell_data_registries/sf_onhit_registry.cpp"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/registry/ai_data_registries/sf_ai_avoidance_registry.cpp",
+   "-o",
+   "obj/sf_ai_avoidance_registry.o"
+  ],
+  "file": "src/internal/registry/ai_data_registries/sf_ai_avoidance_registry.cpp"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/registry/ai_data_registries/sf_ai_single_target_registry.cpp",
+   "-o",
+   "obj/sf_ai_single_target_registry.o"
+  ],
+  "file": "src/internal/registry/ai_data_registries/sf_ai_single_target_registry.cpp"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/registry/ai_data_registries/sf_ai_aoe_registry.cpp",
+   "-o",
+   "obj/sf_ai_aoe_registry.o"
+  ],
+  "file": "src/internal/registry/ai_data_registries/sf_ai_aoe_registry.cpp"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/handlers/sf_spelltype_handlers.cpp",
+   "-o",
+   "obj/sf_spelltype_handlers.o"
+  ],
+  "file": "src/internal/handlers/sf_spelltype_handlers.cpp"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/handlers/sf_spelleffect_handlers.cpp",
+   "-o",
+   "obj/sf_spelleffect_handlers.o"
+  ],
+  "file": "src/internal/handlers/sf_spelleffect_handlers.cpp"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/handlers/sf_spellend_handlers.cpp",
+   "-o",
+   "obj/sf_spellend_handlers.o"
+  ],
+  "file": "src/internal/handlers/sf_spellend_handlers.cpp"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/handlers/sf_sub_effect_handlers.cpp",
+   "-o",
+   "obj/sf_sub_effect_handlers.o"
+  ],
+  "file": "src/internal/handlers/sf_sub_effect_handlers.cpp"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/handlers/sf_spellrefresh_handlers.cpp",
+   "-o",
+   "obj/sf_spellrefresh_handlers.o"
+  ],
+  "file": "src/internal/handlers/sf_spellrefresh_handlers.cpp"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/handlers/sf_spelldamage_handlers.cpp",
+   "-o",
+   "obj/sf_spelldamage_handlers.o"
+  ],
+  "file": "src/internal/handlers/sf_spelldamage_handlers.cpp"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/handlers/sf_onhit_handlers.cpp",
+   "-o",
+   "obj/sf_onhit_handlers.o"
+  ],
+  "file": "src/internal/handlers/sf_onhit_handlers.cpp"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/handlers/sf_ai_avoidance_handlers.cpp",
+   "-o",
+   "obj/sf_ai_avoidance_handlers.o"
+  ],
+  "file": "src/internal/handlers/sf_ai_avoidance_handlers.cpp"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/handlers/sf_ai_spell_handlers.cpp",
+   "-o",
+   "obj/sf_ai_spell_handlers.o"
+  ],
+  "file": "src/internal/handlers/sf_ai_spell_handlers.cpp"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/handlers/sf_ai_aoe_handlers.cpp",
+   "-o",
+   "obj/sf_ai_aoe_handlers.o"
+  ],
+  "file": "src/internal/handlers/sf_ai_aoe_handlers.cpp"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/core/sf_hooks.c",
+   "-o",
+   "obj/sf_hooks.o"
+  ],
+  "file": "src/internal/core/sf_hooks.c"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/core/hooks/sf_onhit_hook.c",
+   "-o",
+   "obj/sf_onhit_hook.o"
+  ],
+  "file": "src/internal/core/hooks/sf_onhit_hook.c"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/core/hooks/sf_refresh_hook.c",
+   "-o",
+   "obj/sf_refresh_hook.o"
+  ],
+  "file": "src/internal/core/hooks/sf_refresh_hook.c"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/core/hooks/sf_endspell_hook.c",
+   "-o",
+   "obj/sf_endspell_hook.o"
+  ],
+  "file": "src/internal/core/hooks/sf_endspell_hook.c"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-mgeneral-regs-only",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/core/hooks/sf_menu_hook.c",
+   "-o",
+   "obj/sf_menu_hook.o"
+  ],
+  "file": "src/internal/core/hooks/sf_menu_hook.c"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/core/hooks/sf_spelleffect_hook.c",
+   "-o",
+   "obj/sf_spelleffect_hook.o"
+  ],
+  "file": "src/internal/core/hooks/sf_spelleffect_hook.c"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/core/hooks/sf_subeffect_hook.c",
+   "-o",
+   "obj/sf_subeffect_hook.o"
+  ],
+  "file": "src/internal/core/hooks/sf_subeffect_hook.c"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/core/hooks/sf_spelltype_hook.c",
+   "-o",
+   "obj/sf_spelltype_hook.o"
+  ],
+  "file": "src/internal/core/hooks/sf_spelltype_hook.c"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-mgeneral-regs-only",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/core/hooks/sf_damage_hook.c",
+   "-o",
+   "obj/sf_damage_hook.o"
+  ],
+  "file": "src/internal/core/hooks/sf_damage_hook.c"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/core/hooks/sf_console_hook.c",
+   "-o",
+   "obj/sf_console_hook.o"
+  ],
+  "file": "src/internal/core/hooks/sf_console_hook.c"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/core/hooks/sf_ai_hook.c",
+   "-o",
+   "obj/sf_ai_hook.o"
+  ],
+  "file": "src/internal/core/hooks/sf_ai_hook.c"
+ },
+ {
+  "directory": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework",
+  "arguments": [
+   "g++",
+   "-O0",
+   "-g",
+   "-std=c++11",
+   "-Iinclude",
+   "-DADD_EXPORTS",
+   "-fpermissive",
+   "-m32",
+   "-c",
+   "src/internal/core/hooks/sf_utility_hooks.c",
+   "-o",
+   "obj/sf_utility_hooks.o"
+  ],
+  "file": "src/internal/core/hooks/sf_utility_hooks.c"
+ }
+]

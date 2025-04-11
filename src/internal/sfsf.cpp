@@ -1,8 +1,8 @@
 /**
  * @mainpage Spellforce Spell Framework
- * - @ref API "SFSF Api" 
+ * - @ref API "SFSF Api"
  * - @ref Internal "SFSF Internals"
-*/
+ */
 
 /**
  * @defgroup Internal

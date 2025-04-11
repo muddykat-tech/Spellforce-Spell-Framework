@@ -56,7 +56,7 @@ void __thiscall applySpellTag(SFSpell *spell, SpellTag tag)
 
 void __thiscall linkTypeHandler(SFSpell *spell, handler_ptr typeHandler)
 {
-    spell->spell_type_handler = typeHandler;
+      spell->spell_type_handler = typeHandler;
 }
 
 void __thiscall linkSingleTargetAIHandler(SFSpell *spell, ai_single_handler_ptr handler)
@@ -109,13 +109,13 @@ void __thiscall linkDealDamageHandler(SFSpell *spell, damage_handler_ptr handler
 
 uint16_t __thiscall getSpellTags(uint16_t spell_line_id)
 {
-    for (auto &entry : g_internal_spell_list)
+    for (auto &entry : g_internal_spell_list) 
     {
         if (entry->spell_id == spell_line_id)
         {
             return entry->spell_tags;
         }
-    }
+    } 
     return 0x0;
 }
 

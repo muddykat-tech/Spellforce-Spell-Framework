@@ -631,7 +631,7 @@ typedef struct __attribute__((packed))
 } SF_Color;
 
 typedef struct __attribute__((packed))
-{  
+{
     uint32_t unkn;
     uint32_t param_1_callback;
     uint32_t param_2_callback;
@@ -666,10 +666,10 @@ typedef struct __attribute__((packed))
 {
     uint8_t toggle; // toggle used to track if a button is enabled or not.
     uint32_t index;  // Used to hold the index of loaded mods for the showmod page
-    CMnuLabel *title_label; // Title Label 
-    CMnuLabel *desc_label; // Description Label 
-    CMnuLabel *page_label; // Page Index Label 
-    CMnuLabel *error_label; // Error Info Label 
+    CMnuLabel *title_label; // Title Label
+    CMnuLabel *desc_label; // Description Label
+    CMnuLabel *page_label; // Page Index Label
+    CMnuLabel *error_label; // Error Info Label
 } SFSF_ModlistStruct;
 
 typedef struct __attribute__((packed))
@@ -688,8 +688,8 @@ typedef struct __attribute__((packed))
 
 typedef struct __attribute__((packed))
 {
-    uint32_t vftablePTR;                    
-    CMnuBase_data CMnuBase_data;            
+    uint32_t vftablePTR;
+    CMnuBase_data CMnuBase_data;
     uint8_t CMnuVisControl_data[0x9c];
     CMnuButton_data CMnuButton_data;
     uint8_t CMnuSmpButton_data[0x50];
@@ -766,26 +766,27 @@ typedef struct __attribute__((packed))
     SF_CGdFigure *CGdFigure;
     uint8_t unkn3[0xc];
     CGdControllerClient * CGdControllerClient;
-    uint32_t UiDbProxy;
+    void* UiDbProxy;
     uint8_t unkn4[0x10];
-    uint32_t CUiGame_ptr;
-    uint32_t CDrwGameView;
+    void* CUiGame;
+    void* CDrwGameView;
     uint8_t unkn5[0x2A4];
     uint32_t unknown_action_type;
     uint8_t unkn9[0x38];
     void * CUiMainDetailView;
     void *unkn_ptr1;
     void *unkn_ptr2;
-    uint32_t CUiBuilding;
-    uint32_t CUiBottom;
+    void * CUiBuilding;
+    void * CUiBottom;
     void * CUiMonument;
     uint8_t unkn6[0x10];
     uint32_t AutoClass112;
     uint32_t AutoClass113;
     uint8_t unkn7[0x1152];
-    uint16_t offset_857e;
+    uint16_t active_aura_maybe;
     uint8_t uknn8[0xda];
 } CUiMain_data;
+
 //field 0x857e - ushort
 typedef struct __attribute__((packed))
 {
@@ -919,79 +920,139 @@ typedef enum
 /* |-========== Internal Functions ==========-| */
 // These functions are used in SFSF internally, and may be moved.
 
-typedef void(__thiscall *console_print_ptr)(uint32_t, const char *);
-typedef uint16_t(__thiscall *get_spell_spell_line_ptr)(void *, uint16_t);
-typedef uint32_t(__thiscall *figure_toolbox_get_unkn_ptr)(void *, uint16_t);
-typedef void(__thiscall *figure_toolbox_add_spell_ptr)(void *, uint16_t, uint16_t);
-typedef bool(__thiscall *figure_toolbox_is_targetable_ptr)(void *CGdFigureToolbox, uint16_t figure_index);
-typedef uint32_t(__thiscall *FUN_0069eaf0_ptr)(void *ac69, void *ac69_2, void *ac69_3, void *ac69_4);
+typedef void (__thiscall *console_print_ptr)(uint32_t, const char *);
+typedef uint16_t (__thiscall *get_spell_spell_line_ptr)(void *, uint16_t);
+typedef uint32_t (__thiscall *figure_toolbox_get_unkn_ptr)(void *, uint16_t);
+typedef void (__thiscall *figure_toolbox_add_spell_ptr)(void *, uint16_t,
+                                                        uint16_t);
+typedef bool (__thiscall *figure_toolbox_is_targetable_ptr)(
+    void *CGdFigureToolbox, uint16_t figure_index);
+typedef uint32_t (__thiscall *FUN_0069eaf0_ptr)(void *ac69, void *ac69_2,
+                                                void *ac69_3, void *ac69_4);
 typedef void (*fidfree_ptr)(uint32_t *memory_ptr);
-typedef void(__thiscall *menu_label_ptr)(CMnuLabel *_this);
-typedef void(__thiscall *menu_label_set_string_ptr)(CMnuLabel *_this, SF_String *string);
-typedef void(__thiscall *initialize_menu_container_ptr)(CMnuContainer *_this);
-typedef SF_String *(__thiscall *construct_default_sf_string_ptr)(SF_String *_this);
+typedef void (__thiscall *menu_label_ptr)(CMnuLabel *_this);
+typedef void (__thiscall *menu_label_set_string_ptr)(CMnuLabel *_this,
+                                                     SF_String *string);
+typedef void (__thiscall *initialize_menu_container_ptr)(CMnuContainer *_this);
+typedef SF_String *(__thiscall *construct_default_sf_string_ptr)(
+    SF_String *_this);
 
-typedef void(__thiscall *construct_start_menu_ptr)(CUiStartMenu *_this, uint32_t p1);
+typedef void (__thiscall *construct_start_menu_ptr)(CUiStartMenu *_this,
+                                                    uint32_t p1);
 
-typedef void(__thiscall *mnu_label_init_data_ptr)(void *_this, float xpos, float ypos, float width, float height, SF_String *string);
-typedef void(__thiscall *message_box_ptr)(uint32_t CAppMenu, uint16_t description_id, SF_String *string_ptr, uint16_t hasOffset);
+typedef void (__thiscall *mnu_label_init_data_ptr)(void *_this, float xpos,
+                                                   float ypos, float width,
+                                                   float height,
+                                                   SF_String *string);
+typedef void (__thiscall *message_box_ptr)(uint32_t CAppMenu,
+                                           uint16_t description_id,
+                                           SF_String *string_ptr,
+                                           uint16_t hasOffset);
 
-typedef void(__thiscall *menu_label_constructor_ptr)(CMnuLabel *_this);
-typedef void(__thiscall *set_label_flags_ptr)(CMnuLabel *_this, uint32_t flags);
+typedef void (__thiscall *menu_label_constructor_ptr)(CMnuLabel *_this);
+typedef void (__thiscall *set_label_flags_ptr)(CMnuLabel *_this,
+                                               uint32_t flags);
 
-typedef void(__fastcall *original_menu_func_ptr)(uint32_t param1);
+typedef void (__fastcall *original_menu_func_ptr)(uint32_t param1);
 
 typedef void *(__cdecl *new_operator_ptr)(uint32_t param_1);
-typedef void(__thiscall *container_add_control_ptr)(CMnuContainer *_this, CMnuBase *CMnubase, char c1, char c2, uint32_t p4);
-typedef void(__thiscall *menu_label_set_data_ptr)(CMnuLabel *_this, uint32_t color_red, uint32_t color_green, uint32_t color_blue, uint8_t unknchar);
-typedef void(__thiscall *get_sf_color_ptr)(SF_String *_this, uint32_t color_id);
+typedef void (__thiscall *container_add_control_ptr)(CMnuContainer *_this,
+                                                     CMnuBase *CMnubase,
+                                                     char c1, char c2,
+                                                     uint32_t p4);
+typedef void (__thiscall *menu_label_set_data_ptr)(CMnuLabel *_this,
+                                                   uint32_t color_red,
+                                                   uint32_t color_green,
+                                                   uint32_t color_blue,
+                                                   uint8_t unknchar);
+typedef void (__thiscall *get_sf_color_ptr)(SF_String *_this,
+                                            uint32_t color_id);
 typedef SF_FontStruct *(__thiscall *get_smth_fonts_ptr)(void);
-typedef SF_Font *(__thiscall *get_font_ptr)(SF_FontStruct *_this, uint32_t font_id);
-typedef void(__thiscall *menu_label_set_font_ptr)(void *_this, SF_Font *font);
+typedef SF_Font *(__thiscall *get_font_ptr)(SF_FontStruct *_this,
+                                            uint32_t font_id);
+typedef void (__thiscall *menu_label_set_font_ptr)(void *_this, SF_Font *font);
 typedef CUiOption* (__thiscall *create_option_ptr)(CUiOption *_this);
 
 // SF Menu / GUI Hooks for Auras
-typedef void(__thiscall *autoclass113_fun_00a27530_ptr)(void *_this_autoclass113);
-typedef uint32_t *(__thiscall *fun_0086dd60_ptr)(void *_this,uint8_t p1, uint32_t p2);
-typedef void(__thiscall *autoclass113_fun_00a278c0_ptr)(void *_this_autoclass113, uint32_t p1);
+typedef void (__thiscall *autoclass113_fun_00a27530_ptr)(
+    void *_this_autoclass113);
+typedef uint32_t *(__thiscall *fun_0086dd60_ptr)(void *_this,uint8_t p1,
+                                                 uint32_t p2);
+typedef void (__thiscall *autoclass113_fun_00a278c0_ptr)(
+    void *_this_autoclass113, uint32_t p1);
 
 // Weird __cdecl class here, blind passthrough and hope it works.
-typedef uint16_t(__cdecl *fun_00a2a1d0_ptr)(void *some_ptr, void *some_ptr_2);
+typedef uint16_t (__cdecl *fun_00a2a1d0_ptr)(void *some_ptr, void *some_ptr_2);
 
-typedef void (__thiscall *fun_00a49b10_ptr)(CGdControllerClient * _this, uint8_t param1);
+typedef void (__thiscall *fun_00a49b10_ptr)(CGdControllerClient * _this,
+                                            uint8_t param1);
 
-typedef void (__thiscall *fun_00a28d60_ptr)(void *_this, void* param1, uint32_t param2);
+typedef void (__thiscall *fun_00a28d60_ptr)(void *_this, void* param1,
+                                            uint32_t param2);
 typedef void (__thiscall *fun_009a4020_ptr)(void *_this, uint32_t param1);
 
 typedef void (__thiscall *vfun164_ptr)(CMnuContainer *_this);
 typedef void (__thiscall *vfun163_ptr)(CMnuContainer *_this, uint8_t param1);
 
-typedef uint32_t(__thiscall *fun_006a0140_ptr)(void *_this, uint16_t p1, SF_CGdTargetData* p2_ptr, uint8_t p3, uint8_t p4);
-typedef void(__thiscall *fun_009a2790_ptr)(void *_this, void* _p1, uint32_t p2);
-typedef uint32_t(__thiscall *fun_0069f8d0_ptr)(void* _this, uint32_t p1);
-typedef uint32_t(__thiscall *fun_0069fb90_ptr)(void* _this, uint16_t figure_id, uint8_t po2, uint16_t unkn_p3, SF_CGdTargetData *data, uint32_t p5, uint32_t p6);
+typedef uint32_t (__thiscall *fun_006a0140_ptr)(void *_this, uint16_t p1,
+                                                SF_CGdTargetData* p2_ptr,
+                                                uint8_t p3, uint8_t p4);
+typedef void (__thiscall *fun_009a2790_ptr)(void *_this, void* _p1,
+                                            uint32_t p2);
+typedef uint32_t (__thiscall *fun_0069f8d0_ptr)(void* _this, uint32_t p1);
+typedef uint32_t (__thiscall *fun_0069fb90_ptr)(void* _this, uint16_t figure_id,
+                                                uint8_t po2, uint16_t unkn_p3,
+                                                SF_CGdTargetData *data,
+                                                uint32_t p5, uint32_t p6);
 
-typedef uint32_t(__thiscall *cuiVideoSequence_constructor_ptr)(SF_CUiVideo* _this, SF_String *p1);
-typedef void(__thiscall *CMnuScreen_attach_control_ptr)(void *_CMnuScreen_ptr, CMnuBase* base, char flag);
+typedef uint32_t (__thiscall *cuiVideoSequence_constructor_ptr)(
+    SF_CUiVideo* _this, SF_String *p1);
+typedef void (__thiscall *CMnuScreen_attach_control_ptr)(void *_CMnuScreen_ptr,
+                                                         CMnuBase* base,
+                                                         char flag);
 
-extern void attachVideo(CAppMenu * CAppMenu_ptr,  CMnuContainer *parent, char *video_loc_and_name_charsC);
-extern CMnuLabel * __thiscall attach_new_meshed_label(CMnuLabel *label_ptr,CMnuContainer *parent, char *mesh_name, char *label_text, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height);
-extern CMnuLabel * __thiscall attach_new_label(CMnuLabel *label_ptr,CMnuContainer *parent, char *label_text, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height);
-extern void __thiscall attach_new_button(CMnuContainer *parent, char *button_mesh_default, char *button_mesh_pressed, char *button_mesh_highlight, char *button_mesh_disabled,  char *label_char, uint8_t font_index, uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height, int button_index, uint32_t callback_function_pointer);
+extern void attachVideo(CAppMenu * CAppMenu_ptr,  CMnuContainer *parent,
+                        char *video_loc_and_name_charsC);
+extern CMnuLabel * __thiscall attach_new_meshed_label(CMnuLabel *label_ptr,
+                                                      CMnuContainer *parent,
+                                                      char *mesh_name,
+                                                      char *label_text,
+                                                      uint8_t font_index,
+                                                      uint16_t x_pos,
+                                                      uint16_t y_pos,
+                                                      uint16_t width,
+                                                      uint16_t height);
+extern CMnuLabel * __thiscall attach_new_label(CMnuLabel *label_ptr,
+                                               CMnuContainer *parent,
+                                               char *label_text,
+                                               uint8_t font_index,
+                                               uint16_t x_pos, uint16_t y_pos,
+                                               uint16_t width, uint16_t height);
+extern void __thiscall attach_new_button(CMnuContainer *parent,
+                                         char *button_mesh_default,
+                                         char *button_mesh_pressed,
+                                         char *button_mesh_highlight,
+                                         char *button_mesh_disabled,
+                                         char *label_char, uint8_t font_index,
+                                         uint16_t x_pos, uint16_t y_pos,
+                                         uint16_t width, uint16_t height,
+                                         int button_index,
+                                         uint32_t callback_function_pointer);
 
-extern void __fastcall show_mod_list_callback(CMnuSmpButton *button, int32_t* cui_menu_ptr_maybe);
+extern void __fastcall show_mod_list_callback(CMnuSmpButton *button,
+                                              int32_t* cui_menu_ptr_maybe);
 
 extern SFSF_ModlistStruct mod_struct;
 
 /**
  * @brief Declares a function with the specified return type, name, and arguments.
- * 
+ *
  * This macro is used to define functions that we use for hooking into the game and to expose these to the API.
  * we use it to cut down on boilerplate code typedefs and structures.
- * 
+ *
  * @param return_type The return type of the function.
  * @param function_name The name of the function.
  * @param ... The function parameters and types.
  */
 #define DECLARE_FUNCTION(type, name, ...) \
-    typedef type(__thiscall *name##_ptr)(__VA_ARGS__);
+        typedef type (__thiscall *name ## _ptr)(__VA_ARGS__);
