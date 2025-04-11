@@ -133,7 +133,7 @@
         "editor.defaultFormatter": "vscode.json-language-features"
     },
     "[c]": {
-        "editor.defaultFormatter": "zachflower.uncrustify" // or the appropriate identifier for your Uncrustify extension
+        "editor.defaultFormatter": "zachflower.uncrustify"
     },
     "[cpp]": {
         "editor.defaultFormatter": "zachflower.uncrustify"

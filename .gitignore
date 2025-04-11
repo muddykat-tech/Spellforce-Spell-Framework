@@ -45,8 +45,6 @@
 # Kernel Module Compile Results
 *.mod*
 *.cmd
-.vscode/*
-.vscode
 .vs/*
 .vs
 .tmp_versions/
