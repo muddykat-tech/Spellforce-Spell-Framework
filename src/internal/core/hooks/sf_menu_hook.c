@@ -31,6 +31,7 @@ create_option_ptr f_create_menu_option;
 container_add_control_ptr g_container_add_control;
 uint32_t g_menu_return_addr;
 uint32_t g_ui_hook_fix_addr;
+uint32_t g_ui_hook_fix_addr2;
 new_operator_ptr g_new_operator;
 menu_label_constructor_ptr g_menu_label_constructor;
 set_label_flags_ptr g_set_label_flags;
@@ -83,6 +84,7 @@ void initialize_menu_data_hooks()
         (menu_label_set_string_ptr)(ASI::AddrOf(0x52fab0));
     g_menu_return_addr = (ASI::AddrOf(0x182799));
     g_ui_hook_fix_addr = (ASI::AddrOf(0x5D119E));
+    g_ui_hook_fix_addr2 = (ASI::AddrOf(0x5d0a7e));
     g_new_operator = (new_operator_ptr)(ASI::AddrOf(0x675A9D));
     g_menu_label_constructor =
         (menu_label_constructor_ptr)(ASI::AddrOf(0x51a180));

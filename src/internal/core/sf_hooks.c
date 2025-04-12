@@ -282,6 +282,22 @@ static void __declspec(naked) ui_overlay_hook()
          "o" (g_ui_hook_fix_addr));
 }
 
+static void __declspec(naked) ui_overlay_hook2()
+{
+    asm ("pop %%eax                 \n\t"       // Pop EAX to clean it for our use case
+         "push %%ebx                \n\t"       // Push Figure ID into our hook
+         "push %%eax                \n\t"       // Push Spell ID into our hook
+         "push %%ecx                \n\t"       // Push CGDResource into our hook
+         "mov %%esi, %%ecx          \n\t"       // CGDFigure is moved into our hook
+         "call %P0                  \n\t"       // Call our Hook
+         "push %%eax                \n\t"       // Put Correct Spell ID from out Hook to the stack
+         "lea -0x120(%%ebp),%%eax   \n\t"       // Assign the EAX to original stack variable.
+         "mov 0x10(%%edi),%%ecx     \n\t"       // Restore ECX to CGDResource
+         "jmp *%1                   \n\t" : :   // Jump back to control flow
+         "i" (sf_ui_overlay_fix),
+         "o" (g_ui_hook_fix_addr2));
+}
+
 static void initialize_ui_overlay_fix_hook()
 {
     ASI::MemoryRegion ui_load_mreg (ASI::AddrOf(0x5D1198), 6);
@@ -290,6 +306,15 @@ static void initialize_ui_overlay_fix_hook()
     *(uint8_t *)(ASI::AddrOf(0x5D1199)) = 0xE9; // jmp instruction
     *(int *)(ASI::AddrOf(0x5D119a)) = (int)(&ui_overlay_hook) - ASI::AddrOf(0x5D119e);
     ASI::EndRewrite(ui_load_mreg);
+
+    ASI::MemoryRegion ui_load_mreg2 (ASI::AddrOf(0x5d0a78), 6);
+
+    ASI::BeginRewrite(ui_load_mreg2);
+    *(uint8_t *)(ASI::AddrOf(0x5d0a78)) = 0x90; //Nop Trail
+    *(uint8_t *)(ASI::AddrOf(0x5d0a79)) = 0xE9; // jmp instruction
+    *(int *)(ASI::AddrOf(0x5d0a7a)) = (int)(&ui_overlay_hook2) - ASI::AddrOf(0x5d0a7e);
+    ASI::EndRewrite(ui_load_mreg2);
+
 }
 
 static void initialize_menuload_hook()

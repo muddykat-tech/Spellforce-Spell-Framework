@@ -6,6 +6,8 @@
 
 extern uint32_t g_menu_return_addr;
 extern uint32_t g_ui_hook_fix_addr;
+extern uint32_t g_ui_hook_fix_addr2;
+
 extern menu_label_set_string_ptr g_menu_label_set_string;
 extern new_operator_ptr g_new_operator;
 extern menu_label_constructor_ptr g_menu_label_constructor;
