@@ -292,8 +292,7 @@ void __attribute((thiscall)) sf_click_horizontal_button(SF_CUiMain *_this,
         uint32_t general_address = (ASI::AddrOf(0x806a86));
         fun_009a4020(_this->CUiMain_data.CUiBuilding,
                      *(uint32_t *)(general_address +
-                                   ((uint8_t)_this->CUiMain_data.CGdFigure->
-                                    figures[figure_id].race * 4) + 2));
+                                   ((uint8_t)_this->CUiMain_data.CGdFigure->figures[figure_id].race * 4) + 2));
         if (_this->CUiMain_data.unknown_action_type == 2)
         {
             return;
@@ -310,8 +309,7 @@ void __attribute((thiscall)) sf_click_horizontal_button(SF_CUiMain *_this,
         return;
     }
     SF_CGdResourceSpell spell_data;
-    spellAPI.getResourceSpellData(_this->CUiMain_data.CGdResource, &spell_data,
-                                  subAction_id);
+    spellAPI.getResourceSpellData(_this->CUiMain_data.CGdResource, &spell_data, subAction_id);
     SF_CGdTargetData data;
     data.entity_index = 0;
     data.entity_type = 0;
