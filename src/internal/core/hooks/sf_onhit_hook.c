@@ -30,9 +30,6 @@ typedef uint16_t (__thiscall *get_reduced_building_damage_ptr)(
 typedef uint16_t (__thiscall *get_hit_chance_ptr)(void *AutoClass34,
                                                   uint16_t source_index,
                                                   uint16_t target_index);
-typedef uint16_t (__thiscall *get_leveled_spell_ptr)(void *CGdResource,
-                                                     uint16_t source_spell_id,
-                                                     uint16_t spell_level);
 typedef void (__thiscall *FUN_006c3a60_ptr)(void *AutoClass30,
                                             uint16_t source_index,
                                             uint16_t target_index, uint8_t unkn,
@@ -51,7 +48,6 @@ typedef uint32_t (__thiscall *getWeaponEffects_ptr)(void *CGdResource,
 
 get_reduced_damage_ptr g_get_reduced_damage;
 get_hit_chance_ptr g_get_hit_chance;
-get_leveled_spell_ptr g_get_leveled_spell;
 FUN_006c3a60_ptr g_FUN_006c3a60;
 get_reduced_building_damage_ptr g_get_reduced_building_damage;
 FUN_0071d7b0_ptr g_FUN_0071d7b0;
@@ -101,7 +97,6 @@ void initialize_onhit_data_hooks()
 {
     g_get_reduced_damage = (get_reduced_damage_ptr)(ASI::AddrOf(0x3177d0));
     g_get_hit_chance = (get_hit_chance_ptr)(ASI::AddrOf(0x317860));
-    g_get_leveled_spell = (get_leveled_spell_ptr)(ASI::AddrOf(0x26de20));
     g_FUN_006c3a60 = (FUN_006c3a60_ptr)(ASI::AddrOf(0x2c3a60));
     g_get_reduced_building_damage =
         (get_reduced_building_damage_ptr)(ASI::AddrOf(0x317740));
@@ -540,9 +535,7 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
                 {
                     uint16_t spell_lvl =
                         _this->CGdFigure->figures[source_index].level;
-                    uint16_t spell_id = g_get_leveled_spell(_this->CGdResource,
-                                                            subspell_id,
-                                                            spell_lvl);
+                    uint16_t spell_id =spellAPI.getLeveledSpellID(_this->CGdResource, subspell_id, spell_lvl);
                     if (spell_id != 0)
                     {
                         effectAPI.setEffectXData(_this->CGdEffect, effect_id,
@@ -560,11 +553,8 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
                      == 0x513))
                 {
                     // NOT a bug, but feature. The higher the level of enemy, the stronger curse gets.
-                    uint16_t spell_id = g_get_leveled_spell(_this->CGdResource,
-                                                            0x167,
-                                                            _this->CGdFigure->
-                                                            figures[source_index]
-                                                            .level);
+                    uint16_t spell_id = spellAPI.getLeveledSpellID(_this->CGdResource, 0x167,
+                                                                   _this->CGdFigure->figures[source_index].level);
                     if (spell_id != 0)
                     {
                         SF_CGdTargetData t_data;
@@ -613,20 +603,15 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
                         if (spellAPI.getRandom(_this->OpaqueClass,
                                                10000) < chance)
                         {
-                            if ((_this->CGdFigure->figures[source_index].race !=
-                                 0) &&
-                                (_this->CGdFigure->figures[source_index].race <
-                                 7))
+                            if ((_this->CGdFigure->figures[source_index].race != 0) &&
+                                (_this->CGdFigure->figures[source_index].race < 7))
                             {
                                 if (_this->CGdFigure->figures[source_index].
                                     owner != 0)
                                 {
-                                    enchant_id =
-                                        g_get_leveled_spell(_this->CGdResource,
-                                                            enchant_id,
-                                                            _this->CGdFigure->
-                                                            figures[source_index]
-                                                            .level);
+                                    enchant_id = spellAPI.getLeveledSpellID(_this->CGdResource, enchant_id,
+                                                                            _this->CGdFigure->figures[source_index].
+                                                                            level);
                                 }
                             }
                             if (enchant_id != 0)

@@ -129,6 +129,7 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(spell, figTryUnfreeze, 0x32a5a0);
     DEFINE_FUNCTION(spell, onSpellRemove, 0x32b310);
     DEFINE_FUNCTION(spell, getSpellLine, 0x32a980);
+    DEFINE_FUNCTION(spell, getLeveledSpellID, 0x26de20);
 
     DEFINE_FUNCTION(effect, addEffect, 0x2dc880);
     DEFINE_FUNCTION(effect, setEffectXData, 0x2ddb30);
@@ -259,10 +260,36 @@ static void initialize_spellrefresh_hook()
 static void __declspec(naked) menuload_hook_beta()
 {
     asm ("push %%edi         \n\t"  // Storing a pointed to CAppMenu
-         "call %P0           \n\t" // Calling the Hook Function (this also calls the function we replace)
-         "pop %%edi          \n\t" // Restoring EDI, then we jump back to the address of the original function that we interrupted.
+         "call %P0           \n\t"  // Calling the Hook Function (this also calls the function we replace)
+         "pop %%edi          \n\t"  // Restoring EDI, then we jump back to the address of the original function that we interrupted.
          "jmp *%1            \n\t" : : "i" (sf_menu_hook),
          "o" (g_menu_return_addr));
+}
+
+static void __declspec(naked) ui_overlay_hook()
+{
+    asm ("pop %%eax                 \n\t"       // Pop EAX to clean it for our use case
+         "push %%ebx                \n\t"       // Push Figure ID into our hook
+         "push %%eax                \n\t"       // Push Spell ID into our hook
+         "push %%ecx                \n\t"       // Push CGDResource into our hook
+         "mov %%esi, %%ecx          \n\t"       // CGDFigure is moved into our hook
+         "call %P0                  \n\t"       // Call our Hook
+         "push %%eax                \n\t"       // Put Correct Spell ID from out Hook to the stack
+         "lea -0x120(%%ebp),%%eax   \n\t"       // Assign the EAX to original stack variable.
+         "mov 0x10(%%edi),%%ecx     \n\t"       // Restore ECX to CGDResource
+         "jmp *%1                   \n\t" : :   // Jump back to control flow
+         "i" (sf_ui_overlay_fix),
+         "o" (g_ui_hook_fix_addr));
+}
+
+static void initialize_ui_overlay_fix_hook()
+{
+    ASI::MemoryRegion ui_load_mreg (ASI::AddrOf(0x5D1198), 6);
+    ASI::BeginRewrite(ui_load_mreg);
+    *(uint8_t *)(ASI::AddrOf(0x5D1198)) = 0x90; //Nop Trail
+    *(uint8_t *)(ASI::AddrOf(0x5D1199)) = 0xE9; // jmp instruction
+    *(int *)(ASI::AddrOf(0x5D119a)) = (int)(&ui_overlay_hook) - ASI::AddrOf(0x5D119e);
+    ASI::EndRewrite(ui_load_mreg);
 }
 
 static void initialize_menuload_hook()
@@ -482,6 +509,10 @@ void initialize_beta_hooks()
     log_info("Hooking AI Spell Avoidance Handling");
     initialize_avoidance_hook();
 
+    log_info("Hook UI Overlay to Fix Descriptions");
+    initialize_ui_overlay_fix_hook();
+
+    log_info("Hook AI AOE Handling");
     initialize_ai_aoe_hook();
 
     log_info("Hooking Utility Functions");

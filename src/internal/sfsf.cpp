@@ -56,8 +56,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call,
                 log_info("Spellforce Version Accepted; Starting SFSF");
                 initialize_framework();
                 initialize_beta_hooks();
-                OutputDebugStringA(
-                    "[SFSF] |======================| Injection Complete |======================|");
+                OutputDebugStringA("[SFSF] |======================| Injection Complete |======================|");
                 break;
             }
             break;

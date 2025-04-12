@@ -30,6 +30,7 @@ CMnuScreen_attach_control_ptr CMnuScreen_attach_control;
 create_option_ptr f_create_menu_option;
 container_add_control_ptr g_container_add_control;
 uint32_t g_menu_return_addr;
+uint32_t g_ui_hook_fix_addr;
 new_operator_ptr g_new_operator;
 menu_label_constructor_ptr g_menu_label_constructor;
 set_label_flags_ptr g_set_label_flags;
@@ -81,6 +82,7 @@ void initialize_menu_data_hooks()
     g_menu_label_set_string =
         (menu_label_set_string_ptr)(ASI::AddrOf(0x52fab0));
     g_menu_return_addr = (ASI::AddrOf(0x182799));
+    g_ui_hook_fix_addr = (ASI::AddrOf(0x5D119E));
     g_new_operator = (new_operator_ptr)(ASI::AddrOf(0x675A9D));
     g_menu_label_constructor =
         (menu_label_constructor_ptr)(ASI::AddrOf(0x51a180));
@@ -270,9 +272,23 @@ void __attribute__((thiscall)) sf_click_vertical_button(SF_CUiMain *_this,
                      &data, some_flag, 0);
     }
 }
-void __attribute((thiscall)) sf_click_horizontal_button(SF_CUiMain *_this,
-                                                        uint_list_node *param1,
-                                                        SF_UIElement *param2)
+
+uint16_t __attribute__((thiscall)) sf_ui_overlay_fix(SF_CGdFigure *_this, void *CGdResource, uint16_t spell_id,
+                                                     uint16_t figure_id)
+{
+    if ((_this->figures[figure_id].race != 0) && (_this->figures[figure_id].race < 7))
+    {
+        if (_this->figures[figure_id].owner != 0)
+        {
+            spell_id = spellAPI.getLeveledSpellID(CGdResource, spell_id, _this->figures[figure_id].level);
+        }
+    }
+    return spell_id;
+}
+
+void __attribute__((thiscall)) sf_click_horizontal_button(SF_CUiMain *_this,
+                                                          uint_list_node *param1,
+                                                          SF_UIElement *param2)
 {
     uint16_t action_id = param2->actionType_id;
     uint16_t subAction_id =  param2->actionSubtype_id;
@@ -377,5 +393,7 @@ void __attribute((thiscall)) sf_click_horizontal_button(SF_CUiMain *_this,
     fun_009a1fd0(_this->CUiMain_data.CUiGame, 0);
     return;
 }
+
+
 
 /** @} */

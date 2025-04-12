@@ -317,6 +317,9 @@ DECLARE_FUNCTION(void, spellEffectCallback, SF_CGdSpell *_this,
                  void (*callbackPtr)(SF_CGdSpell *, uint16_t, uint16_t,
                                      uint16_t));
 
+//typedef uint16_t (__thiscall *get_leveled_spell_ptr)(void *CGdResource, uint16_t source_spell_id, uint16_t spell_level);
+DECLARE_FUNCTION(uint16_t, getLeveledSpellID, void *CGdResource, uint16_t source_spell_id, uint16_t spell_level);
+
 /**
  * @brief Represents a collection of function pointers for managing spell-related operations
  * @ingroup API
@@ -545,4 +548,11 @@ typedef struct
      * @brief callback that iterates through spells on a target, checks a condition then executes the callback.
      */
     spellEffectCallback_ptr spellEffectCallback;
+
+    /**
+     * @brief Used to get the Spell ID for units that can be leveled.
+     * @example Rune Army Units
+     */
+    getLeveledSpellID_ptr getLeveledSpellID;
+
 } SpellFunctions;
