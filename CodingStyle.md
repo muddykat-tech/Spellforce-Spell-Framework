@@ -3,13 +3,13 @@
 This style is based on the Linux kernel coding style.
 
 ## 1) Indentation and Switch Statements
-  
+
 Indentations should be 4 spaces.
 
 As we are a heretic movement when creating a Switch statement, they should follow a clear and consistent indentation style where subordinate `case` blocks are **indented** and wrapped in **braces** to clearly delineate their scope.
 Each `case` should be followed by a block wrapped in `{}`. Fallthroughs are **only acceptable** if clearly grouped and scoped together using braces:
 ```c
-switch (suffix) 
+switch (suffix)
 {
     case 'G':
     case 'g':
@@ -50,7 +50,7 @@ if (condition) do_this;
   do_something_everytime;
 ```
 
-Don't put multiple assignments on a single line either. 
+Don't put multiple assignments on a single line either.
 Avoid tricky expressions.
 Don't leave whitespace at the end of lines.
 
@@ -58,9 +58,9 @@ Don't leave whitespace at the end of lines.
 
 Coding style is all about readability and maintainability using commonly available tools.
 
-The limit on the length of lines is **80 columns** and this is strongly preferred.
+The limit on the length of lines is **120 columns** and this is strongly preferred.
 
-Statements longer than 80 columns will be broken into sensible chunks unless exceeding 80 columns significantly increases readability and does not hide information. Descendants are always shorter than the parent and placed substantially to the right.
+Statements longer than 120 columns will be broken into sensible chunks unless exceeding 120 columns significantly increases readability and does not hide information. Descendants are always shorter than the parent and placed substantially to the right.
 
 Acceptable
 ```c
@@ -131,7 +131,7 @@ EXPORT_SYMBOL(system_is_up);
 
 ### 6) Commenting
 
-Comments should **explain what** the code does **not how** it works. If your code is hard to understand, improve the code itself rather than relying on comments to explain it. 
+Comments should **explain what** the code does **not how** it works. If your code is hard to understand, improve the code itself rather than relying on comments to explain it.
 However, when writing **example mods**, comments should be used to explain how the code works, as these serve as educational material for others.
 
 - Avoid over-commenting and inline comments inside functions unless absolutely necessary.
@@ -237,15 +237,15 @@ inline int square(int x) {
 
 ### 8) Memory Allocation
 
-Memory management is crucial in ensuring that the game runs efficiently and avoids unnecessary overhead. 
+Memory management is crucial in ensuring that the game runs efficiently and avoids unnecessary overhead.
 When writing code, it's important to **avoid direct memory allocation** as much as possible because it can negatively affect the game's memory state, potentially leading to crashes or instability.
 
 #### General Guidelines
 
-1. **Avoid Direct Memory Allocation**  
+1. **Avoid Direct Memory Allocation**
    Direct memory allocation (e.g., using `malloc`, `calloc`, or `realloc`) should be avoided unless absolutely necessary. Constantly allocating and deallocating memory at runtime can be inefficient and lead to fragmented memory, which can make the game more prone to errors or slowdowns.
 
-2. **Prefer Stack Allocation**  
+2. **Prefer Stack Allocation**
    Whenever possible, use **stack memory** instead of heap memory. The stack is managed automatically, and objects are cleaned up when they go out of scope. This avoids the risk of memory leaks and unnecessary allocation overhead.
 
    Example:
@@ -259,7 +259,7 @@ When writing code, it's important to **avoid direct memory allocation** as much 
 
    Stack memory is **fast** and is generally used for short-lived variables. It should be your preferred method for memory allocation whenever possible.
 
-3. **Pre-Allocate Memory at Compile Time**  
+3. **Pre-Allocate Memory at Compile Time**
    If dynamic memory allocation is required, try to **pre-allocate memory at compile time** rather than allocating it during runtime. This ensures that memory is reserved ahead of time, minimizing performance hits from dynamic allocation.
 
    Example (using `static` allocation):
@@ -271,8 +271,8 @@ When writing code, it's important to **avoid direct memory allocation** as much 
 
    In this example, the array is allocated at compile time, ensuring it is available when the game runs without the need for runtime allocation.
    If data must persist for the lifetime of the program, consider using **static** or **global variables**. These variables are automatically allocated at compile time and persist for the entire execution of the program.
-   
-6. **When Heap Allocation is Absolutely Necessary**  
+
+6. **When Heap Allocation is Absolutely Necessary**
    If dynamic memory allocation (heap allocation) is **required** for complex data structures or objects that cannot be pre-allocated, it is crucial to manage the allocated memory carefully. Ensure that every allocation has a corresponding deallocation and that there are no memory leaks.
 
    Example of proper heap allocation:
@@ -332,7 +332,7 @@ static void __declspec(naked) menuload_hook_beta()
 
 ### Alternative to Inline Assembly: Full Function Rewrite
 
-Before opting to use inline assembly, **always evaluate whether the original function's behavior can be replicated in pure C or C++**. 
+Before opting to use inline assembly, **always evaluate whether the original function's behavior can be replicated in pure C or C++**.
 In many cases, you can avoid the complexity and risks of inline assembly by simply rewriting the function and redirecting execution to your version using a jump or call hook.
 
 This method improves code maintainability but also avoids undefined behavior caused by low-level manipulation of registers or the stack.
@@ -355,7 +355,7 @@ static void initialize_spellrefresh_hook()
     *(unsigned char *)(ASI::AddrOf(0x329f92)) = 0x90; // NOP
     *(unsigned char *)(ASI::AddrOf(0x329f93)) = 0x90; // NOP
     *(unsigned char *)(ASI::AddrOf(0x329f94)) = 0xE9; // JMP opcode
-    *(int *)(ASI::AddrOf(0x329f95)) = (int)(&sf_refresh_hook) - ASI::AddrOf(0x329f99); // Offset to Jump. 
+    *(int *)(ASI::AddrOf(0x329f95)) = (int)(&sf_refresh_hook) - ASI::AddrOf(0x329f99); // Offset to Jump.
 
     // Restore Memory Write Protection
     ASI::EndRewrite(refresh_spell_mreg);
