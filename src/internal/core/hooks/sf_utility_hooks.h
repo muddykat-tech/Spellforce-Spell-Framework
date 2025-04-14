@@ -9,7 +9,10 @@
 
 
 void __thiscall is_combat_ability(SF_CGdSpell *_this, GdSpellLine spell_line);
-void __thiscall is_domination_spellline(SF_CGdSpell *_this, GdSpellLine spell_line);
+
+void __thiscall is_domination_spellline(SF_CGdSpell *_this,
+                                        GdSpellLine spell_line);
+
 void __thiscall is_domination_spell(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall is_summon_spell(SF_CGdSpell *_this, GdSpellLine spell_line);
 void __thiscall is_white_aura_spell(SF_CGdSpell *_this, GdSpellLine spell_line);

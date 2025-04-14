@@ -43,7 +43,8 @@ uint16_t __thiscall getSector(SF_CGdWorld *_this, SF_Coord *position)
     return _this->cells[index].sector;
 }
 
-uint32_t GetEuclideanDistanceFromRing(int x1, int y1, int x2, int y2, int inner_radius, int outer_radius)
+uint32_t GetEuclideanDistanceFromRing(int x1, int y1, int x2, int y2,
+                                      int inner_radius, int outer_radius)
 {
     int iVar1;
 
@@ -67,65 +68,84 @@ uint32_t signum(uint32_t param_1)
 /**
  * @brief Injects into the ranking system for a single target AI spell.
  */
-uint32_t __thiscall rank_support_spell_hook(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+uint32_t __thiscall rank_support_spell_hook(SF_CGdBattleDevelopment *_this,
+                                            uint16_t target_index,
+                                            uint16_t spell_line,
+                                            SF_CGdResourceSpell *spell_data)
 {
     bool isStackable = hasSpellTag(spell_line, SpellTag::STACKABLE_SPELL);
 
     /* char message[256];
-     sprintf(message, "SpellLine: %hd Target: %hd isStackable: %d", spell_line, target_index, isStackable);
-     log_info(message);
- */
+       sprintf(message, "SpellLine: %hd Target: %hd isStackable: %d", spell_line, target_index, isStackable);
+       log_info(message);
+     */
     ai_single_handler_ptr handler = get_single_ai_handler(spell_line);
     uint32_t rank = handler(_this, target_index, spell_line, spell_data);
-    if ((toolboxAPI.hasSpellOnIt(_this->battleData.CGdFigureToolBox, target_index, spell_line)) && (!isStackable))
+    if ((toolboxAPI.hasSpellOnIt(_this->battleData.CGdFigureToolBox,
+                                 target_index, spell_line)) && (!isStackable))
     {
         rank = 0;
     }
     return rank;
 }
 
-uint32_t __thiscall rank_offensive_spell_hook(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+uint32_t __thiscall rank_offensive_spell_hook(SF_CGdBattleDevelopment *_this,
+                                              uint16_t target_index,
+                                              uint16_t spell_line,
+                                              SF_CGdResourceSpell *spell_data)
 {
     bool isStackable = hasSpellTag(spell_line, SpellTag::STACKABLE_SPELL);
 
     /* char message[256];
-     sprintf(message, "SpellLine: %hd Target: %hd isStackable: %d", spell_line, target_index, isStackable);
-     log_info(message);
- */
+       sprintf(message, "SpellLine: %hd Target: %hd isStackable: %d", spell_line, target_index, isStackable);
+       log_info(message);
+     */
     ai_single_handler_ptr handler = get_single_ai_handler(spell_line);
     if (handler == &default_support_ai_handler)
     {
         handler = &default_offensive_ai_handler;
     }
     uint32_t rank = handler(_this, target_index, spell_line, spell_data);
-    if ((toolboxAPI.hasSpellOnIt(_this->battleData.CGdFigureToolBox, target_index, spell_line)) && (!isStackable))
+    if ((toolboxAPI.hasSpellOnIt(_this->battleData.CGdFigureToolBox,
+                                 target_index, spell_line)) && (!isStackable))
     {
         rank = 0;
     }
     return rank;
 }
 
-uint32_t __thiscall avoidance_penalty_hook(SF_CGdBattleDevelopment *_this, uint16_t figure_index)
+uint32_t __thiscall avoidance_penalty_hook(SF_CGdBattleDevelopment *_this,
+                                           uint16_t figure_index)
 {
-    uint16_t spell_node = figureAPI.getSpellJobStartNode(_this->battleData.CGdFigure, figure_index);
+    uint16_t spell_node =
+        figureAPI.getSpellJobStartNode(_this->battleData.CGdFigure,
+                                       figure_index);
     uint32_t result = 100;
     while (spell_node != 0)
     {
-        uint16_t spell_index = toolboxAPI.getSpellIndexFromDLL((uint32_t*) _this->battleData.CGdDoubleLinkList, spell_node);
-        uint16_t spell_line = spellAPI.getSpellLine(_this->battleData.CGdSpell, spell_index);
+        uint16_t spell_index =
+            toolboxAPI.getSpellIndexFromDLL(
+                (uint32_t *) _this->battleData.CGdDoubleLinkList, spell_node);
+        uint16_t spell_line = spellAPI.getSpellLine(_this->battleData.CGdSpell,
+                                                    spell_index);
         ai_avoidance_handler_ptr handler = get_ai_avoidance_handler(spell_line);
-        uint32_t current_result = handler(&_this->battleData , figure_index, spell_line);
+        uint32_t current_result = handler(&_this->battleData, figure_index,
+                                          spell_line);
         if (current_result >= result)
         {
             result = current_result;
         }
-        spell_node = toolboxAPI.getNextNode((uint32_t*)_this->battleData.CGdDoubleLinkList, spell_node);
+        spell_node =
+            toolboxAPI.getNextNode(
+                (uint32_t *)_this->battleData.CGdDoubleLinkList, spell_node);
     }
     return result;
 }
 
 
-uint32_t __thiscall ai_AOE_hook(SF_CGdBattleDevelopment *_this, SF_Coord cast_pos, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+uint32_t __thiscall ai_AOE_hook(SF_CGdBattleDevelopment *_this,
+                                SF_Coord cast_pos, uint16_t spell_line,
+                                SF_CGdResourceSpell *spell_data)
 {
     ai_aoe_handler_ptr handler = get_ai_aoe_handler(spell_line);
     return handler(_this, &cast_pos, spell_line, spell_data);

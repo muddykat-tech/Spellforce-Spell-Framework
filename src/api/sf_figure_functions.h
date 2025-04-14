@@ -185,33 +185,57 @@ typedef enum
 
 // Declare the function pointers for the FigureFunctions group
 DECLARE_FUNCTION(bool, isAlive, SF_CGdFigure *figure, uint16_t target);
-DECLARE_FUNCTION(bool, setWalkSpeed, SF_CGdFigure *figure, uint16_t target, uint16_t value);
-DECLARE_FUNCTION(bool, addAction, SF_CGdFigure *figure, uint16_t target, void *maybe_action);
-DECLARE_FUNCTION(void, addBonusMultToStatistic, SF_CGdFigure *figure, StatisticDataKey key, uint16_t target, int8_t value);
-DECLARE_FUNCTION(uint8_t, addBonusMult, FigureStatistic *statistic, uint8_t value);
-DECLARE_FUNCTION(uint16_t, getCurrentHealth, SF_CGdFigure *figure, uint16_t figure_id);
-DECLARE_FUNCTION(void, decreaseHealth, SF_CGdFigure *figure, uint16_t figure_id, uint16_t amount);
-DECLARE_FUNCTION(uint16_t, getCurrentMaxMana, SF_CGdFigure *figure, uint16_t figure_id);
-DECLARE_FUNCTION(uint16_t, getCurrentMaxHealth, SF_CGdFigure *figure, uint16_t figure_id);
-DECLARE_FUNCTION(void, setJobToDoCount, SF_CGdFigure *figure, uint16_t target_index, uint16_t value);
-DECLARE_FUNCTION(uint16_t, getCurrentHealthPercent, SF_CGdFigure *figure, uint16_t figure_id);
-DECLARE_FUNCTION(void, rescaleMana, SF_CGdFigure *figure, uint16_t figure_id, uint16_t max_mana);
-DECLARE_FUNCTION(void, rescaleHealth, SF_CGdFigure *figure, uint16_t figure_id, uint16_t max_health);
+DECLARE_FUNCTION(bool, setWalkSpeed, SF_CGdFigure *figure, uint16_t target,
+                 uint16_t value);
+DECLARE_FUNCTION(bool, addAction, SF_CGdFigure *figure, uint16_t target,
+                 void *maybe_action);
+DECLARE_FUNCTION(void, addBonusMultToStatistic, SF_CGdFigure *figure,
+                 StatisticDataKey key, uint16_t target, int8_t value);
+DECLARE_FUNCTION(uint8_t, addBonusMult, FigureStatistic *statistic,
+                 uint8_t value);
+DECLARE_FUNCTION(uint16_t, getCurrentHealth, SF_CGdFigure *figure,
+                 uint16_t figure_id);
+DECLARE_FUNCTION(void, decreaseHealth, SF_CGdFigure *figure, uint16_t figure_id,
+                 uint16_t amount);
+DECLARE_FUNCTION(uint16_t, getCurrentMaxMana, SF_CGdFigure *figure,
+                 uint16_t figure_id);
+DECLARE_FUNCTION(uint16_t, getCurrentMaxHealth, SF_CGdFigure *figure,
+                 uint16_t figure_id);
+DECLARE_FUNCTION(void, setJobToDoCount, SF_CGdFigure *figure,
+                 uint16_t target_index, uint16_t value);
+DECLARE_FUNCTION(uint16_t, getCurrentHealthPercent, SF_CGdFigure *figure,
+                 uint16_t figure_id);
+DECLARE_FUNCTION(void, rescaleMana, SF_CGdFigure *figure, uint16_t figure_id,
+                 uint16_t max_mana);
+DECLARE_FUNCTION(void, rescaleHealth, SF_CGdFigure *figure, uint16_t figure_id,
+                 uint16_t max_health);
 DECLARE_FUNCTION(uint16_t, getJob, SF_CGdFigure *figure, uint16_t figure_id);
-DECLARE_FUNCTION(uint16_t, getAggroValue, SF_CGdFigure * _this, uint16_t figure_id, uint16_t target_index);
-DECLARE_FUNCTION(void, setAggroValue, SF_CGdFigure * _this, uint16_t figure_id, uint16_t target_index, uint16_t aggroValue, uint32_t unkn);
-DECLARE_FUNCTION(void *, getHealersList, SF_CGdFigure * _this, void *autoclass9, uint16_t figure_id);
-DECLARE_FUNCTION(bool, isFlagSet, SF_CGdFigure *figure, uint16_t figure_index, GdFigureFlags flag);
-DECLARE_FUNCTION(uint16_t, getSpellJobStartNode, SF_CGdFigure *figure, uint16_t figure_index);
-DECLARE_FUNCTION(void, subMana, SF_CGdFigure *_this, uint16_t param_1, uint32_t param_2);
-DECLARE_FUNCTION(uint16_t, getCurrentMana, SF_CGdFigure *figure, uint16_t figure_id);
-DECLARE_FUNCTION(SF_Coord, getPosition, SF_CGdFigure *figure, SF_Coord *position, uint16_t figure_id);
-DECLARE_FUNCTION(SF_CGdFigureWeaponStats *, getWeaponStats, SF_CGdFigure *figure, SF_CGdFigureWeaponStats *stats_in, uint16_t figure_id);
+DECLARE_FUNCTION(uint16_t, getAggroValue, SF_CGdFigure * _this,
+                 uint16_t figure_id, uint16_t target_index);
+DECLARE_FUNCTION(void, setAggroValue, SF_CGdFigure * _this, uint16_t figure_id,
+                 uint16_t target_index, uint16_t aggroValue, uint32_t unkn);
+DECLARE_FUNCTION(void *, getHealersList, SF_CGdFigure * _this, void *autoclass9,
+                 uint16_t figure_id);
+DECLARE_FUNCTION(bool, isFlagSet, SF_CGdFigure *figure, uint16_t figure_index,
+                 GdFigureFlags flag);
+DECLARE_FUNCTION(uint16_t, getSpellJobStartNode, SF_CGdFigure *figure,
+                 uint16_t figure_index);
+DECLARE_FUNCTION(void, subMana, SF_CGdFigure *_this, uint16_t param_1,
+                 uint32_t param_2);
+DECLARE_FUNCTION(uint16_t, getCurrentMana, SF_CGdFigure *figure,
+                 uint16_t figure_id);
+DECLARE_FUNCTION(SF_Coord, getPosition, SF_CGdFigure *figure,
+                 SF_Coord *position, uint16_t figure_id);
+DECLARE_FUNCTION(SF_CGdFigureWeaponStats *, getWeaponStats,
+                 SF_CGdFigure *figure, SF_CGdFigureWeaponStats *stats_in,
+                 uint16_t figure_id);
 DECLARE_FUNCTION(bool, isWarrior, SF_CGdFigure *figure, uint16_t figure_id);
-DECLARE_FUNCTION(void, setTask, SF_CGdFigure *_figure, uint16_t figure_index, CGdFigureTask figureTask);
+DECLARE_FUNCTION(void, setTask, SF_CGdFigure *_figure, uint16_t figure_index,
+                 CGdFigureTask figureTask);
 // Unknown Functons
-DECLARE_FUNCTION(bool, FUN_006e3a90, uint32_t *CGdFigureJobs, uint16_t figure_id);
-DECLARE_FUNCTION(void, disposeHealerList, void* healer_list);
+DECLARE_FUNCTION(bool, FUN_006e3a90, uint32_t *CGdFigureJobs,
+                 uint16_t figure_id);
+DECLARE_FUNCTION(void, disposeHealerList, void *healer_list);
 /**
  * @ingroup API
  * @brief Group of functions to manipulate the behavior and statistics of the game figures (units)

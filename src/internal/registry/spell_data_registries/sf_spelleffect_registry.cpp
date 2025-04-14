@@ -15,7 +15,9 @@ void registerEffectHandler(uint16_t spell_job, handler_ptr handler)
     if (check != s_effect_handler_map.end())
     {
         char message[256];
-        sprintf(message, "%s (v%s) has replaced an Effect Handler [%d] (Was this on purpose?)", g_current_mod->mod_id, g_current_mod->mod_version, spell_job);
+        sprintf(message,
+                "%s (v%s) has replaced an Effect Handler [%d] (Was this on purpose?)",
+                g_current_mod->mod_id, g_current_mod->mod_version, spell_job);
         log_warning(message);
     }
     s_effect_handler_map[spell_job] = handler;
@@ -27,7 +29,9 @@ handler_ptr get_spell_effect(uint16_t spell_job)
     if (it == s_effect_handler_map.end())
     {
         char message[256];
-        sprintf(message, "%s Unknown Job ID [%d], No effect handler registered.", g_current_mod->mod_id, spell_job);
+        sprintf(message,
+                "%s Unknown Job ID [%d], No effect handler registered.",
+                g_current_mod->mod_id, spell_job);
         log_warning(message);
         return NULL;
     }

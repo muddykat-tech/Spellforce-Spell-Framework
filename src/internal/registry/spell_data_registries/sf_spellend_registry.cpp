@@ -16,7 +16,9 @@ void registerSpellEndHandler(uint16_t spell_line, handler_ptr handler)
     if (check != s_spellend_handler_map.end())
     {
         char message[256];
-        sprintf(message, "%s (v%s) has replaced an End Handler [%d] (Was this on purpose?)", g_current_mod->mod_id, g_current_mod->mod_version, spell_line);
+        sprintf(message,
+                "%s (v%s) has replaced an End Handler [%d] (Was this on purpose?)",
+                g_current_mod->mod_id, g_current_mod->mod_version, spell_line);
         log_warning(message);
     }
 
@@ -29,10 +31,11 @@ handler_ptr get_spell_end(uint16_t spell_line)
     if (it == s_spellend_handler_map.end())
     {
         // Element doesn't exist, insert the default value
-       /* char message[256];
-        sprintf(message, "Unknown Spell Line [%d] for Spell End Effect, Assigning a default handler.", spell_line);
-        log_warning(message);*/
-        it = s_spellend_handler_map.emplace(spell_line, &default_end_handler).first;
+        /* char message[256];
+           sprintf(message, "Unknown Spell Line [%d] for Spell End Effect, Assigning a default handler.", spell_line);
+           log_warning(message);*/
+        it = s_spellend_handler_map.emplace(spell_line,
+                                            &default_end_handler).first;
     }
     return it->second;
 }

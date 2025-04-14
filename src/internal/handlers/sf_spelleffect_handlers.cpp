@@ -191,8 +191,10 @@ void initialize_vanilla_effect_handler_hooks()
     effect_ability_warcy_handler = (handler_ptr)(ASI::AddrOf(0x32df90));
     effect_acid_cloud_handler = (handler_ptr)(ASI::AddrOf(0x32e370));
     effect_almightiness_black_handler = (handler_ptr)(ASI::AddrOf(0x32e730));
-    effect_almightiness_elemental_handler = (handler_ptr)(ASI::AddrOf(0x32e9d0));
-    effect_almightiness_elemental2_handler = (handler_ptr)(ASI::AddrOf(0x32eca0));
+    effect_almightiness_elemental_handler =
+        (handler_ptr)(ASI::AddrOf(0x32e9d0));
+    effect_almightiness_elemental2_handler =
+        (handler_ptr)(ASI::AddrOf(0x32eca0));
     effect_almightiness_mental_handler = (handler_ptr)(ASI::AddrOf(0x32f050));
     effect_almightiness_white_handler = (handler_ptr)(ASI::AddrOf(0x32f330));
     effect_amok_handler = (handler_ptr)(ASI::AddrOf(0x32f590));

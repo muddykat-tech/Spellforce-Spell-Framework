@@ -129,6 +129,7 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(spell, figTryUnfreeze, 0x32a5a0);
     DEFINE_FUNCTION(spell, onSpellRemove, 0x32b310);
     DEFINE_FUNCTION(spell, getSpellLine, 0x32a980);
+    DEFINE_FUNCTION(spell, getLeveledSpellID, 0x26de20);
 
     DEFINE_FUNCTION(effect, addEffect, 0x2dc880);
     DEFINE_FUNCTION(effect, setEffectXData, 0x2ddb30);
@@ -193,75 +194,136 @@ void initialize_data_hooks()
     INCLUDE_FUNCTION(registration, applySpellTag, &applySpellTag);
     INCLUDE_FUNCTION(registration, linkSubEffectHandler, &linkSubEffectHandler);
     INCLUDE_FUNCTION(registration, linkRefreshHandler, &linkRefreshHandler);
-    INCLUDE_FUNCTION(registration, linkDealDamageHandler, &linkDealDamageHandler);
+    INCLUDE_FUNCTION(registration, linkDealDamageHandler,
+                     &linkDealDamageHandler);
     INCLUDE_FUNCTION(registration, linkAOEAIHandler, &linkAOEAIHandler);
-    INCLUDE_FUNCTION(registration, linkAvoidanceAIHandler, &linkAvoidanceAIHandler);
-    INCLUDE_FUNCTION(registration, linkSingleTargetAIHandler, &linkSingleTargetAIHandler);
+    INCLUDE_FUNCTION(registration, linkAvoidanceAIHandler,
+                     &linkAvoidanceAIHandler);
+    INCLUDE_FUNCTION(registration, linkSingleTargetAIHandler,
+                     &linkSingleTargetAIHandler);
 }
 
 static void initialize_spelltype_hook()
 {
-    ASI::MemoryRegion add_spell_mreg(ASI::AddrOf(0x328d60), 5);
+    ASI::MemoryRegion add_spell_mreg (ASI::AddrOf(0x328d60), 5);
     ASI::BeginRewrite(add_spell_mreg);
     *(unsigned char *)(ASI::AddrOf(0x328d60)) = 0xE9; // jmp instruction
-    *(int *)(ASI::AddrOf(0x328d61)) = (int)(&sf_spelltype_hook) - ASI::AddrOf(0x328d65);
+    *(int *)(ASI::AddrOf(0x328d61)) = (int)(&sf_spelltype_hook) -
+                                      ASI::AddrOf(0x328d65);
     ASI::EndRewrite(add_spell_mreg);
 }
 
 static void initialize_spell_trigger_hook()
 {
-    ASI::MemoryRegion add_spell_mreg(ASI::AddrOf(0x278773), 5);
+    ASI::MemoryRegion add_spell_mreg (ASI::AddrOf(0x278773), 5);
     ASI::BeginRewrite(add_spell_mreg);
     *(unsigned char *)(ASI::AddrOf(0x278773)) = 0xE8; // CALL instruction
-    *(int *)(ASI::AddrOf(0x278774)) = (int)(&sf_spelleffect_hook) - ASI::AddrOf(0x278778);
+    *(int *)(ASI::AddrOf(0x278774)) = (int)(&sf_spelleffect_hook) -
+                                      ASI::AddrOf(0x278778);
     ASI::EndRewrite(add_spell_mreg);
 }
 
 static void initialize_subeffect_add_hook()
 {
-    ASI::MemoryRegion add_spell_mreg(ASI::AddrOf(0x2de3b7), 5);
+    ASI::MemoryRegion add_spell_mreg (ASI::AddrOf(0x2de3b7), 5);
     ASI::BeginRewrite(add_spell_mreg);
     *(unsigned char *)(ASI::AddrOf(0x2de3b7)) = 0xE8; // CALL instruction
-    *(int *)(ASI::AddrOf(0x2de3b8)) = (int)(&sf_subeffect_hook) - ASI::AddrOf(0x2de3bc);
+    *(int *)(ASI::AddrOf(0x2de3b8)) = (int)(&sf_subeffect_hook) -
+                                      ASI::AddrOf(0x2de3bc);
     ASI::EndRewrite(add_spell_mreg);
 }
 
 static void initialize_spellend_hook()
 {
-    ASI::MemoryRegion end_spell_mreg(ASI::AddrOf(0x34b0a0), 5);
+    ASI::MemoryRegion end_spell_mreg (ASI::AddrOf(0x34b0a0), 5);
     ASI::BeginRewrite(end_spell_mreg);
     *(unsigned char *)(ASI::AddrOf(0x34b0a0)) = 0xE9; // jmp instruction
-    *(int *)(ASI::AddrOf(0x34b0a1)) = (int)(&sf_endspell_hook) - ASI::AddrOf(0x34b0a5);
+    *(int *)(ASI::AddrOf(0x34b0a1)) = (int)(&sf_endspell_hook) -
+                                      ASI::AddrOf(0x34b0a5);
     ASI::EndRewrite(end_spell_mreg);
 }
 
 static void initialize_spellrefresh_hook()
 {
-    ASI::MemoryRegion refresh_spell_mreg(ASI::AddrOf(0x329f90), 9);
+    ASI::MemoryRegion refresh_spell_mreg (ASI::AddrOf(0x329f90), 9);
     ASI::BeginRewrite(refresh_spell_mreg);
     *(unsigned char *)(ASI::AddrOf(0x329f90)) = 0x90; // nop trail
     *(unsigned char *)(ASI::AddrOf(0x329f91)) = 0x90; // nop trail
     *(unsigned char *)(ASI::AddrOf(0x329f92)) = 0x90; // nop trail
     *(unsigned char *)(ASI::AddrOf(0x329f93)) = 0x90; // nop trail
     *(unsigned char *)(ASI::AddrOf(0x329f94)) = 0xE9; // jmp instruction
-    *(int *)(ASI::AddrOf(0x329f95)) = (int)(&sf_refresh_hook) - ASI::AddrOf(0x329f99);
+    *(int *)(ASI::AddrOf(0x329f95)) = (int)(&sf_refresh_hook) -
+                                      ASI::AddrOf(0x329f99);
     ASI::EndRewrite(refresh_spell_mreg);
 }
 
 static void __declspec(naked) menuload_hook_beta()
 {
-    asm("push %%edi         \n\t"
-        "call %P0           \n\t"
-        "pop %%edi          \n\t"
-        "jmp *%1            \n\t" : : "i"(sf_menu_hook), "o"(g_menu_return_addr));
+    asm ("push %%edi         \n\t"  // Storing a pointed to CAppMenu
+         "call %P0           \n\t"  // Calling the Hook Function (this also calls the function we replace)
+         "pop %%edi          \n\t"  // Restoring EDI, then we jump back to the address of the original function that we interrupted.
+         "jmp *%1            \n\t" : : "i" (sf_menu_hook),
+         "o" (g_menu_return_addr));
+}
+
+static void __declspec(naked) ui_overlay_hook()
+{
+    asm ("pop %%eax                 \n\t"       // Pop EAX to clean it for our use case
+         "push %%ebx                \n\t"       // Push Figure ID into our hook
+         "push %%eax                \n\t"       // Push Spell ID into our hook
+         "push %%ecx                \n\t"       // Push CGDResource into our hook
+         "mov %%esi, %%ecx          \n\t"       // CGDFigure is moved into our hook
+         "call %P0                  \n\t"       // Call our Hook
+         "push %%eax                \n\t"       // Put Correct Spell ID from out Hook to the stack
+         "lea -0x120(%%ebp),%%eax   \n\t"       // Assign the EAX to original stack variable.
+         "mov 0x10(%%edi),%%ecx     \n\t"       // Restore ECX to CGDResource
+         "jmp *%1                   \n\t" : :   // Jump back to control flow
+         "i" (sf_ui_overlay_fix),
+         "o" (g_ui_hook_fix_addr));
+}
+
+static void __declspec(naked) ui_overlay_hook2()
+{
+    asm ("pop %%eax                 \n\t"       // Pop EAX to clean it for our use case
+         "push %%ebx                \n\t"       // Push Figure ID into our hook
+         "push %%eax                \n\t"       // Push Spell ID into our hook
+         "push %%ecx                \n\t"       // Push CGDResource into our hook
+         "mov %%esi, %%ecx          \n\t"       // CGDFigure is moved into our hook
+         "call %P0                  \n\t"       // Call our Hook
+         "push %%eax                \n\t"       // Put Correct Spell ID from out Hook to the stack
+         "lea -0x120(%%ebp),%%eax   \n\t"       // Assign the EAX to original stack variable.
+         "mov 0x10(%%edi),%%ecx     \n\t"       // Restore ECX to CGDResource
+         "jmp *%1                   \n\t" : :   // Jump back to control flow
+         "i" (sf_ui_overlay_fix),
+         "o" (g_ui_hook_fix_addr2));
+}
+
+static void initialize_ui_overlay_fix_hook()
+{
+    ASI::MemoryRegion ui_load_mreg (ASI::AddrOf(0x5D1198), 6);
+    ASI::BeginRewrite(ui_load_mreg);
+    *(uint8_t *)(ASI::AddrOf(0x5D1198)) = 0x90; //Nop Trail
+    *(uint8_t *)(ASI::AddrOf(0x5D1199)) = 0xE9; // jmp instruction
+    *(int *)(ASI::AddrOf(0x5D119a)) = (int)(&ui_overlay_hook) - ASI::AddrOf(0x5D119e);
+    ASI::EndRewrite(ui_load_mreg);
+
+    ASI::MemoryRegion ui_load_mreg2 (ASI::AddrOf(0x5d0a78), 6);
+
+    ASI::BeginRewrite(ui_load_mreg2);
+    *(uint8_t *)(ASI::AddrOf(0x5d0a78)) = 0x90; //Nop Trail
+    *(uint8_t *)(ASI::AddrOf(0x5d0a79)) = 0xE9; // jmp instruction
+    *(int *)(ASI::AddrOf(0x5d0a7a)) = (int)(&ui_overlay_hook2) - ASI::AddrOf(0x5d0a7e);
+    ASI::EndRewrite(ui_load_mreg2);
+
 }
 
 static void initialize_menuload_hook()
 {
-    ASI::MemoryRegion menu_load_mreg(ASI::AddrOf(0x182794), 5);
+    ASI::MemoryRegion menu_load_mreg (ASI::AddrOf(0x182794), 5);
     ASI::BeginRewrite(menu_load_mreg);
     *(unsigned char *)(ASI::AddrOf(0x182794)) = 0xE9; // jmp instruction
-    *(int *)(ASI::AddrOf(0x182795)) = (int)(&menuload_hook_beta) - ASI::AddrOf(0x182799);
+    *(int *)(ASI::AddrOf(0x182795)) = (int)(&menuload_hook_beta) -
+                                      ASI::AddrOf(0x182799);
     ASI::EndRewrite(menu_load_mreg);
 }
 
@@ -269,125 +331,172 @@ static void initialize_deal_damage_hook()
 {
     // uint32_t flag_pointer = *(uint32_t *)(ASI::AddrOf());
     g_damage_return_addr = ASI::AddrOf(0x2f5465);
-    ASI::MemoryRegion deal_damage_mreg(ASI::AddrOf(0x2f4af3), 6);
+    ASI::MemoryRegion deal_damage_mreg (ASI::AddrOf(0x2f4af3), 6);
     ASI::BeginRewrite(deal_damage_mreg);
     *(unsigned char *)(ASI::AddrOf(0x2f4af3)) = 0x90; // nop trail
     *(unsigned char *)(ASI::AddrOf(0x2f4af4)) = 0xE9; // JMP
-    *(int *)(ASI::AddrOf(0x2f4af5)) = (int)(&sf_damage_hook) - ASI::AddrOf(0x2f4af9);
+    *(int *)(ASI::AddrOf(0x2f4af5)) = (int)(&sf_damage_hook) -
+                                      ASI::AddrOf(0x2f4af9);
 }
 
 static void initialize_onhit_hook()
 {
-    ASI::MemoryRegion onhit_mreg(ASI::AddrOf(0x2e0b00), 5);
+    ASI::MemoryRegion onhit_mreg (ASI::AddrOf(0x2e0b00), 5);
     ASI::BeginRewrite(onhit_mreg);
     *(unsigned char *)(ASI::AddrOf(0x2e0b00)) = 0xE9; // jmp instruction
-    *(int *)(ASI::AddrOf(0x2e0b01)) = (int)(&sf_onhit_hook) - ASI::AddrOf(0x2e0b05);
+    *(int *)(ASI::AddrOf(0x2e0b01)) = (int)(&sf_onhit_hook) -
+                                      ASI::AddrOf(0x2e0b05);
     ASI::EndRewrite(onhit_mreg);
 }
 static void initialize_ai_support_spell_hook()
 {
-    ASI::MemoryRegion ai_support_mreg(ASI::AddrOf(0x35d353), 5);
+    ASI::MemoryRegion ai_support_mreg (ASI::AddrOf(0x35d353), 5);
     ASI::BeginRewrite(ai_support_mreg);
     *(unsigned char *)(ASI::AddrOf(0x35d353)) = 0xE8; // CALL instruction
-    *(int *)(ASI::AddrOf(0x35d354)) = (int)(&rank_support_spell_hook) - ASI::AddrOf(0x35d358);
+    *(int *)(ASI::AddrOf(0x35d354)) = (int)(&rank_support_spell_hook) -
+                                      ASI::AddrOf(0x35d358);
     ASI::EndRewrite(ai_support_mreg);
 }
 
 static void initialize_ai_offensive_hook()
 {
-    ASI::MemoryRegion ai_offensive_mreg(ASI::AddrOf(0x35d2f8), 5);
+    ASI::MemoryRegion ai_offensive_mreg (ASI::AddrOf(0x35d2f8), 5);
     ASI::BeginRewrite(ai_offensive_mreg);
     *(unsigned char *)(ASI::AddrOf(0x35d2f8)) = 0xE8; // CALL instruction
-    *(int *)(ASI::AddrOf(0x35d2f9)) = (int)(&rank_offensive_spell_hook) - ASI::AddrOf(0x35d2fd);
+    *(int *)(ASI::AddrOf(0x35d2f9)) = (int)(&rank_offensive_spell_hook) -
+                                      ASI::AddrOf(0x35d2fd);
     ASI::EndRewrite(ai_offensive_mreg);
 
-    ASI::MemoryRegion ai_offensive_mreg2(ASI::AddrOf(0x360fa6), 5);
+    ASI::MemoryRegion ai_offensive_mreg2 (ASI::AddrOf(0x360fa6), 5);
     ASI::BeginRewrite(ai_offensive_mreg2);
     *(unsigned char *)(ASI::AddrOf(0x360fa6)) = 0xE8; // CALL instruction
-    *(int *)(ASI::AddrOf(0x360fa7)) = (int)(&rank_offensive_spell_hook) - ASI::AddrOf(0x360fab);
+    *(int *)(ASI::AddrOf(0x360fa7)) = (int)(&rank_offensive_spell_hook) -
+                                      ASI::AddrOf(0x360fab);
     ASI::EndRewrite(ai_offensive_mreg2);
 }
 
 static void initialize_ai_aoe_hook()
 {
-     ASI::MemoryRegion ai_offensive_mreg(ASI::AddrOf(0x35cb4f), 5);
+    ASI::MemoryRegion ai_offensive_mreg (ASI::AddrOf(0x35cb4f), 5);
     ASI::BeginRewrite(ai_offensive_mreg);
     *(unsigned char *)(ASI::AddrOf(0x35cb4f)) = 0xE8; // CALL instruction
-    *(int *)(ASI::AddrOf(0x35cb50)) = (int)(&ai_AOE_hook) - ASI::AddrOf(0x35cb54);
+    *(int *)(ASI::AddrOf(0x35cb50)) = (int)(&ai_AOE_hook) -
+                                      ASI::AddrOf(0x35cb54);
     ASI::EndRewrite(ai_offensive_mreg);
 
-    ASI::MemoryRegion ai_offensive_mreg2(ASI::AddrOf(0x35cadc), 5);
+    ASI::MemoryRegion ai_offensive_mreg2 (ASI::AddrOf(0x35cadc), 5);
     ASI::BeginRewrite(ai_offensive_mreg2);
     *(unsigned char *)(ASI::AddrOf(0x35cadc)) = 0xE8; // CALL instruction
-    *(int *)(ASI::AddrOf(0x35cadd)) = (int)(&ai_AOE_hook) - ASI::AddrOf(0x35cae1);
+    *(int *)(ASI::AddrOf(0x35cadd)) = (int)(&ai_AOE_hook) -
+                                      ASI::AddrOf(0x35cae1);
     ASI::EndRewrite(ai_offensive_mreg2);
 }
 
 static void initialize_avoidance_hook()
 {
-    ASI::MemoryRegion ai_avoidance_mreg(ASI::AddrOf(0x35d39e), 5);
+    ASI::MemoryRegion ai_avoidance_mreg (ASI::AddrOf(0x35d39e), 5);
     ASI::BeginRewrite(ai_avoidance_mreg);
     *(unsigned char *)(ASI::AddrOf(0x35d39e)) = 0xE8; // CALL instruction
-    *(int *)(ASI::AddrOf(0x35d39f)) = (int)(&avoidance_penalty_hook) - ASI::AddrOf(0x35d3a3);
+    *(int *)(ASI::AddrOf(0x35d39f)) = (int)(&avoidance_penalty_hook) -
+                                      ASI::AddrOf(0x35d3a3);
     ASI::EndRewrite(ai_avoidance_mreg);
 }
 static void initialize_utility_hooks()
 {
     log_info("Hooking Combat Ability Detection");
-    ASI::MemoryRegion is_ability_line_mreg(ASI::AddrOf(0x32afb0), 5);
+    ASI::MemoryRegion is_ability_line_mreg (ASI::AddrOf(0x32afb0), 5);
     ASI::BeginRewrite(is_ability_line_mreg);
     *(unsigned char *)(ASI::AddrOf(0x32afb0)) = 0xE9; // JUMP instruction
-    *(int *)(ASI::AddrOf(0x32afb1)) = (int)(&is_combat_ability) - ASI::AddrOf(0x32afb5);
+    *(int *)(ASI::AddrOf(0x32afb1)) = (int)(&is_combat_ability) -
+                                      ASI::AddrOf(0x32afb5);
     ASI::EndRewrite(is_ability_line_mreg);
 
     log_info("Hooking AOE Spell Detection");
-    ASI::MemoryRegion is_aoe_line_mreg(ASI::AddrOf(0x32ac90), 5);
+    ASI::MemoryRegion is_aoe_line_mreg (ASI::AddrOf(0x32ac90), 5);
     ASI::BeginRewrite(is_aoe_line_mreg);
     *(unsigned char *)(ASI::AddrOf(0x32ac90)) = 0xE9; // JUMP instruction
-    *(int *)(ASI::AddrOf(0x32ac91)) = (int)(&is_aoe_spell) - ASI::AddrOf(0x32ac95);
+    *(int *)(ASI::AddrOf(0x32ac91)) = (int)(&is_aoe_spell) -
+                                      ASI::AddrOf(0x32ac95);
     ASI::EndRewrite(is_aoe_line_mreg);
 
     log_info("Hooking Aura Detection");
-    ASI::MemoryRegion is_aura_mreg(ASI::AddrOf(0x32ae20), 5);
+    ASI::MemoryRegion is_aura_mreg (ASI::AddrOf(0x32ae20), 5);
     ASI::BeginRewrite(is_aura_mreg);
     *(unsigned char *)(ASI::AddrOf(0x32ae20)) = 0xE9; // JUMP instruction
-    *(int *)(ASI::AddrOf(0x32ae21)) = (int)(&is_aura_spell) - ASI::AddrOf(0x32ae25);
+    *(int *)(ASI::AddrOf(0x32ae21)) = (int)(&is_aura_spell) -
+                                      ASI::AddrOf(0x32ae25);
     ASI::EndRewrite(is_aura_mreg);
 
     log_info("Hooking Black Aura Detection");
-    ASI::MemoryRegion is_black_aura_mreg(ASI::AddrOf(0x32aec0), 5);
+    ASI::MemoryRegion is_black_aura_mreg (ASI::AddrOf(0x32aec0), 5);
     ASI::BeginRewrite(is_black_aura_mreg);
     *(unsigned char *)(ASI::AddrOf(0x32aec0)) = 0xE9; // JUMP instruction
-    *(int *)(ASI::AddrOf(0x32aec1)) = (int)(&is_black_aura_spell) - ASI::AddrOf(0x32aec5);
+    *(int *)(ASI::AddrOf(0x32aec1)) = (int)(&is_black_aura_spell) -
+                                      ASI::AddrOf(0x32aec5);
     ASI::EndRewrite(is_black_aura_mreg);
 
     log_info("Hooking White Aura Detection");
-    ASI::MemoryRegion is_white_aura_mreg(ASI::AddrOf(0x32af00), 5);
+    ASI::MemoryRegion is_white_aura_mreg (ASI::AddrOf(0x32af00), 5);
     ASI::BeginRewrite(is_white_aura_mreg);
     *(unsigned char *)(ASI::AddrOf(0x32af00)) = 0xE9; // JUMP instruction
-    *(int *)(ASI::AddrOf(0x32af01)) = (int)(&is_white_aura_spell) - ASI::AddrOf(0x32af05);
+    *(int *)(ASI::AddrOf(0x32af01)) = (int)(&is_white_aura_spell) -
+                                      ASI::AddrOf(0x32af05);
     ASI::EndRewrite(is_white_aura_mreg);
 
     log_info("Hooking Summon Spell Detection");
-    ASI::MemoryRegion is_summon_spell_mreg(ASI::AddrOf(0x32b060), 5);
+    ASI::MemoryRegion is_summon_spell_mreg (ASI::AddrOf(0x32b060), 5);
     ASI::BeginRewrite(is_summon_spell_mreg);
     *(unsigned char *)(ASI::AddrOf(0x32b060)) = 0xE9; // JUMP instruction
-    *(int *)(ASI::AddrOf(0x32b061)) = (int)(&is_summon_spell) - ASI::AddrOf(0x32b065);
+    *(int *)(ASI::AddrOf(0x32b061)) = (int)(&is_summon_spell) -
+                                      ASI::AddrOf(0x32b065);
     ASI::EndRewrite(is_summon_spell_mreg);
 
     log_info("Hooking Domination Spell Detection");
-    ASI::MemoryRegion is_domination_spell_mreg(ASI::AddrOf(0x32ac20), 5);
+    ASI::MemoryRegion is_domination_spell_mreg (ASI::AddrOf(0x32ac20), 5);
     ASI::BeginRewrite(is_domination_spell_mreg);
     *(unsigned char *)(ASI::AddrOf(0x32ac20)) = 0xE9; // JUMP instruction
-    *(int *)(ASI::AddrOf(0x32ac21)) = (int)(&is_domination_spell) - ASI::AddrOf(0x32ac25);
+    *(int *)(ASI::AddrOf(0x32ac21)) = (int)(&is_domination_spell) -
+                                      ASI::AddrOf(0x32ac25);
     ASI::EndRewrite(is_domination_spell_mreg);
 
     log_info("Hooking Domination Spell Line Detection");
-    ASI::MemoryRegion is_domination_spellline_mreg(ASI::AddrOf(0x32af60), 5);
+    ASI::MemoryRegion is_domination_spellline_mreg (ASI::AddrOf(0x32af60), 5);
     ASI::BeginRewrite(is_domination_spellline_mreg);
     *(unsigned char *)(ASI::AddrOf(0x32af60)) = 0xE9; // JUMP instruction
-    *(int *)(ASI::AddrOf(0x32af61)) = (int)(&is_domination_spellline) - ASI::AddrOf(0x32af65);
+    *(int *)(ASI::AddrOf(0x32af61)) = (int)(&is_domination_spellline) -
+                                      ASI::AddrOf(0x32af65);
     ASI::EndRewrite(is_domination_spellline_mreg);
+
+    log_info("Temp Storm School Hook");
+    ASI::MemoryRegion storm_test_mreg (ASI::AddrOf(0x7FFD38), 1);
+    ASI::BeginRewrite(storm_test_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x7FFD38)) = 0x04;
+    ASI::EndRewrite(storm_test_mreg);
+}
+
+void initialize_spell_buttons_hooks()
+{
+    ASI::MemoryRegion vfunction208_mreg_1 (ASI::AddrOf(0x5ebb23), 5);
+    ASI::BeginRewrite(vfunction208_mreg_1);
+    *(unsigned char *)(ASI::AddrOf(0x5ebb23)) = 0xE8; // CALL instruction
+    *(int *)(ASI::AddrOf(0x5ebb24)) = (int)(&sf_click_vertical_button) -
+                                      ASI::AddrOf(0x5ebb28);
+    ASI::EndRewrite(vfunction208_mreg_1);
+
+    ASI::MemoryRegion vfunction208_mreg_2 (ASI::AddrOf(0x5ebb7b), 5);
+    ASI::BeginRewrite(vfunction208_mreg_2);
+    *(unsigned char *)(ASI::AddrOf(0x5ebb7b)) = 0xE8; // CALL instruction
+    *(int *)(ASI::AddrOf(0x5ebb7c)) = (int)(&sf_click_vertical_button) -
+                                      ASI::AddrOf(0x5bb80);
+    ASI::EndRewrite(vfunction208_mreg_2);
+
+    ASI::MemoryRegion  vfunction210_mreg(ASI::AddrOf(0x5ed94a), 5);
+    ASI::BeginRewrite(vfunction210_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x5ed94a)) = 0xE8; // JUMP instruction
+    *(int *)(ASI::AddrOf(0x5ed94b)) = (int)(&sf_click_horizontal_button) -
+                                      ASI::AddrOf(0x5ed94f);
+    ASI::EndRewrite(vfunction210_mreg);
+
 }
 
 void initialize_beta_hooks()
@@ -425,10 +534,17 @@ void initialize_beta_hooks()
     log_info("Hooking AI Spell Avoidance Handling");
     initialize_avoidance_hook();
 
+    log_info("Hook UI Overlay to Fix Descriptions");
+    initialize_ui_overlay_fix_hook();
+
+    log_info("Hook AI AOE Handling");
     initialize_ai_aoe_hook();
-    
+
     log_info("Hooking Utility Functions");
     initialize_utility_hooks();
+
+    log_info("Hooking spell buttons");
+    initialize_spell_buttons_hooks();
 }
 
 /**

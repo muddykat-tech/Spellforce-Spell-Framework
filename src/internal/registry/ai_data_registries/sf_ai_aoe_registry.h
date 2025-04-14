@@ -11,5 +11,6 @@
 #include <list>
 #include <utility>
 
-extern void registerAiAOEHandler(uint16_t spell_line, ai_aoe_handler_ptr handler);
+extern void registerAiAOEHandler(uint16_t spell_line,
+                                 ai_aoe_handler_ptr handler);
 extern ai_aoe_handler_ptr get_ai_aoe_handler(uint16_t spell_line);

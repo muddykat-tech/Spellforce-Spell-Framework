@@ -1,19 +1,19 @@
 /**
  * @file sf_registry.cpp
  * @brief Initializes and configures the Spellforce Spell Framework (SFSF).
- * 
+ *
  * This file handles the initialization of various systems required by the
- * Spellforce Spell Framework (SFSF), including setting up low-level hooks, 
- * linking APIs, and loading and registering mods. It serves as the core point 
- * for the framework to interact with the game, ensuring compatibility and 
+ * Spellforce Spell Framework (SFSF), including setting up low-level hooks,
+ * linking APIs, and loading and registering mods. It serves as the core point
+ * for the framework to interact with the game, ensuring compatibility and
  * enabling various mod functionalities.
- * 
+ *
  * @details
  * The initialization process includes several phases:
  * - **Framework Configuration**: Includes setting up API structures and initializing vanilla spells and handlers.
  * - **Mod Loading**: Loads all compatible mods into the framework.
  * - **Mod Registration**: Registers spells and functions from the loaded mods.
- * 
+ *
  * @note Ensure that mods are compliant with the framework's API for compatibility.
  */
 
@@ -42,11 +42,11 @@ SFMod *g_framework_mod;
 
 /**
  * @brief Registers the framework API addresses.
- * 
+ *
  * This function loads the framework's API structure and assigns function pointers
- * for various subsystems, including the figure, spell, toolbox, iterator, registration, 
+ * for various subsystems, including the figure, spell, toolbox, iterator, registration,
  * and effect APIs. It also sets up logging functionality.
- * 
+ *
  * @see figureAPI, spellAPI, toolboxAPI, iteratorAPI, registrationAPI, effectAPI
  */
 void registerFrameworkAPI()
@@ -63,14 +63,16 @@ void registerFrameworkAPI()
     frameworkAPI.effectAPI = &effectAPI;
 
     log_info("| - Loading Default Mod Information");
-    g_framework_mod = createModInfo("Spellforce Spell Framework", "2.0.0-beta", "Muddykat, UnSchtalch and shovel_knight", "A Modding Framework to ease the creation of new Spells in the game Spellforce Platinum Edition.");
+    g_framework_mod = createModInfo("Spellforce Spell Framework", "2.0.0-beta",
+                                    "Muddykat, UnSchtalch and shovel_knight",
+                                    "A Modding Framework to ease the creation of new Spells in the game Spellforce Platinum Edition.");
     g_current_mod = g_framework_mod;
 }
 
 /**
  * @brief Initializes the Spellforce Spell Framework (SFSF).
  *
- * This function initializes the Spellforce Spell Framework (SFSF), setting up hooks, APIs, 
+ * This function initializes the Spellforce Spell Framework (SFSF), setting up hooks, APIs,
  * vanilla spells, and loading/registering mods.
  *
  * @details
@@ -97,7 +99,8 @@ void registerFrameworkAPI()
 void initialize_framework()
 {
 
-    log_info("|=====| Spellforce Spell Framework Configuration Phase Start |=====|");
+    log_info(
+        "|=====| Spellforce Spell Framework Configuration Phase Start |=====|");
 
     log_info("| - Initializing Data Hooks");
 
@@ -132,22 +135,32 @@ void initialize_framework()
 
     register_vanilla_spell_damage_handlers();
 
-    log_info("|======| Spellforce Spell Framework Configuration Phase End |======|");
-    log_info("|+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.|");
-    log_info("|====== ====== ======| Mod Loading Phase Start |====== ====== =====|");
+    log_info(
+        "|======| Spellforce Spell Framework Configuration Phase End |======|");
+    log_info(
+        "|+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.|");
+    log_info(
+        "|====== ====== ======| Mod Loading Phase Start |====== ====== =====|");
 
     // Attempt to load all mods -> see sf_modloader.h
     initialize_mods();
 
-    log_info("|====== ====== ======| Mod Loading Phase End |====== ====== ======-|");
-    log_info("|+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.|");
-    log_info("|====== === ======| Mod Registration Phase Start |====== === ======|");
+    log_info(
+        "|====== ====== ======| Mod Loading Phase End |====== ====== ======-|");
+    log_info(
+        "|+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.|");
+    log_info(
+        "|====== === ======| Mod Registration Phase Start |====== === ======|");
 
     // Now try and register these spells
     register_mod_spells();
 
-    log_info("|====== ==== ======| Mod Registration Phase End |====== ==== ======|");
-    log_info("|+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.|");
-    log_info("|=== === ===| Spellforce Spell Framework Working (^_^) |=== === ===|");
-    log_info("|======================| Injecting Assembly |======================|");
+    log_info(
+        "|====== ==== ======| Mod Registration Phase End |====== ==== ======|");
+    log_info(
+        "|+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.|");
+    log_info(
+        "|=== === ===| Spellforce Spell Framework Working (^_^) |=== === ===|");
+    log_info(
+        "|======================| Injecting Assembly |======================|");
 }

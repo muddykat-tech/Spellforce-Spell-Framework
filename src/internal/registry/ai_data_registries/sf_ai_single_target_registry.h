@@ -11,5 +11,6 @@
 #include <list>
 #include <utility>
 
-extern void registerAiSingleTargetHandler(uint16_t spell_line, ai_single_handler_ptr handler);
+extern void registerAiSingleTargetHandler(uint16_t spell_line,
+                                          ai_single_handler_ptr handler);
 extern ai_single_handler_ptr get_single_ai_handler(uint16_t spell_line);

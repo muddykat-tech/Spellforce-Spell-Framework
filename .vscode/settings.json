@@ -1,4 +1,7 @@
 {
+    "workbench.sideBar.location": "right",
+    "chat.commandCenter.enabled": false,
+    "C_Cpp.default.intelliSenseMode": "windows-gcc-x86",
     "files.associations": {
         "functional": "cpp",
         "array": "c",
@@ -105,9 +108,33 @@
         "sf_ai_functions.h": "c",
         "sf_ai_single_target_registry.h": "c",
         "sf_ai_avoidance_registry.h": "c",
-        "sf_utility_hooks.h": "c"
+        "sf_utility_hooks.h": "c",
+        "sf_onhit_registry.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled",
     "makefile.makePath": "mingw32-make",
-    "makefile.configureOnOpen": false
+    "makefile.configureOnOpen": false,
+    "makefile.makefilePath": "C:\\Users\\Developer\\Documents\\Github\\Spellforce-Spell-Framework\\Makefile",
+    "C_Cpp.codeAnalysis.clangTidy.checks.disabled": [
+        "clang-diagnostic-error"
+    ],
+    "C_Cpp.clang_format_fallbackStyle": "WebKit",
+    "editor.defaultFormatter": "zachflower.uncrustify",
+    "editor.formatOnSave": true,
+    "editor.rulers": [
+        120
+    ],
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "C_Cpp.vcFormat.newLine.beforeOpenBrace.block": "newLine",
+    "C_Cpp.vcFormat.newLine.beforeOpenBrace.function": "newLine",
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[c]": {
+        "editor.defaultFormatter": "zachflower.uncrustify"
+    },
+    "[cpp]": {
+        "editor.defaultFormatter": "zachflower.uncrustify"
+    },
 }

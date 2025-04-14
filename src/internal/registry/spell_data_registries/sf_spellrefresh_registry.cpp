@@ -11,13 +11,17 @@
 
 static std::map<uint16_t, refresh_handler_ptr> s_spellrefresh_handler_map;
 
-void registerSpellRefreshHandler(uint16_t spell_line_id, refresh_handler_ptr handler)
+void registerSpellRefreshHandler(uint16_t spell_line_id,
+                                 refresh_handler_ptr handler)
 {
     auto check = s_spellrefresh_handler_map.find(spell_line_id);
     if (check != s_spellrefresh_handler_map.end())
     {
         char message[256];
-        sprintf(message, "%s (v%s) has replaced an Spell Refresh Handler [%d] (Was this on purpose?)", g_current_mod->mod_id, g_current_mod->mod_version, spell_line_id);
+        sprintf(message,
+                "%s (v%s) has replaced an Spell Refresh Handler [%d] (Was this on purpose?)",
+                g_current_mod->mod_id, g_current_mod->mod_version,
+                spell_line_id);
         log_warning(message);
     }
 
@@ -30,9 +34,12 @@ refresh_handler_ptr get_spell_refresh(uint16_t spell_line_id)
     if (it == s_spellrefresh_handler_map.end())
     {
         char message[256];
-        sprintf(message, "Unknown Spell Line ID [%d] for Spell Refresh Handler", spell_line_id);
+        sprintf(message, "Unknown Spell Line ID [%d] for Spell Refresh Handler",
+                spell_line_id);
         log_warning(message);
-        it = s_spellrefresh_handler_map.emplace(spell_line_id, &first_block_refresh_handler).first;
+        it = s_spellrefresh_handler_map.emplace(spell_line_id,
+                                                &first_block_refresh_handler).
+             first;
     }
     return it->second;
 }
@@ -70,9 +77,11 @@ void register_vanilla_spell_refresh_handlers()
 
     int vanilla_domination_cases[] = {0x2e, 0x6c, 0x78, 0x7a, 0xc5, 0xed};
 
-    for (int i = 0; i < sizeof(firstblock_cases) / sizeof(firstblock_cases[0]); i++)
+    for (int i = 0; i < sizeof(firstblock_cases) / sizeof(firstblock_cases[0]);
+         i++)
     {
-        registerSpellRefreshHandler(firstblock_cases[i], &first_block_refresh_handler);
+        registerSpellRefreshHandler(firstblock_cases[i],
+                                    &first_block_refresh_handler);
     }
 
     registerSpellRefreshHandler(0x04, &slowness_refresh_handler);
@@ -113,9 +122,13 @@ void register_vanilla_spell_refresh_handlers()
 
     registerSpellRefreshHandler(0x17, &pestilence_refresh_handler);
 
-    for (int i = 0; i < sizeof(vanilla_domination_cases) / sizeof(vanilla_domination_cases[0]); i++)
+    for (int i = 0;
+         i <
+         sizeof(vanilla_domination_cases) / sizeof(vanilla_domination_cases[0]);
+         i++)
     {
-        registerSpellRefreshHandler(vanilla_domination_cases[i], &domination_spell_refresh_handler);
+        registerSpellRefreshHandler(vanilla_domination_cases[i],
+                                    &domination_spell_refresh_handler);
     }
 
     registerSpellRefreshHandler(0xda, &case_da_refresh_handler);

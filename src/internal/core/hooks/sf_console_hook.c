@@ -1,4 +1,4 @@
-/** 
+/**
  * @defgroup ConsoleHook Console Hook
  * @ingroup Hooks
  * @brief Used for hooking into the Ingame Console

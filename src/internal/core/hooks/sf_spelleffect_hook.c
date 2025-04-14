@@ -1,4 +1,4 @@
-/** 
+/**
  * @defgroup EffectHook Effect Hook
  * @ingroup Hooks
  * @brief Used to inject Spell Effect Handlers into Spellforce.
@@ -18,7 +18,8 @@ void __thiscall sf_spelleffect_hook(SF_CGdSpell *_this)
     {
         if (_this->active_spell_list[spell_index].spell_id != 0)
         {
-            short to_do_count = _this->active_spell_list[spell_index].to_do_count;
+            short to_do_count =
+                _this->active_spell_list[spell_index].to_do_count;
             if (to_do_count <= 0)
             {
                 to_do_count = 0;
@@ -30,7 +31,8 @@ void __thiscall sf_spelleffect_hook(SF_CGdSpell *_this)
             _this->active_spell_list[spell_index].to_do_count = to_do_count;
             if (to_do_count == 0)
             {
-                uint16_t spell_job = _this->active_spell_list[spell_index].spell_job;
+                uint16_t spell_job =
+                    _this->active_spell_list[spell_index].spell_job;
                 handler_ptr func = get_spell_effect(spell_job);
                 if (func != NULL)
                 {

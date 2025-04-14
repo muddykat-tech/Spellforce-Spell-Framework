@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\api",
+    "\\src\\internal",
+    "\\src\\internal\\handlers",
+    "\\src\\internal\\registry"
+  ],
+  "SelectedNode": "\\src\\internal\\registry\\sf_registry.cpp",
+  "PreviewInSolutionExplorer": false
+}
