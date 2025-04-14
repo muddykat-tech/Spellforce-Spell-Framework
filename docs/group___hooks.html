@@ -152,6 +152,8 @@ Functions</h2></td></tr>
 <tr class="memitem:ga053468e9037e13eede0757a9c0dc4f90" id="r_ga053468e9037e13eede0757a9c0dc4f90"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga053468e9037e13eede0757a9c0dc4f90">initialize_data_hooks</a> ()</td></tr>
 <tr class="memdesc:ga053468e9037e13eede0757a9c0dc4f90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to initialize all disparate hooks in one place.  <br /></td></tr>
 <tr class="separator:ga053468e9037e13eede0757a9c0dc4f90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga093379d6fc9c47be7f0b91ed6ac4903a" id="r_ga093379d6fc9c47be7f0b91ed6ac4903a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga093379d6fc9c47be7f0b91ed6ac4903a">initialize_spell_buttons_hooks</a> ()</td></tr>
+<tr class="separator:ga093379d6fc9c47be7f0b91ed6ac4903a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga68518887ac30bef0798064a5ea87b1f5" id="r_ga68518887ac30bef0798064a5ea87b1f5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga68518887ac30bef0798064a5ea87b1f5">initialize_beta_hooks</a> ()</td></tr>
 <tr class="separator:ga68518887ac30bef0798064a5ea87b1f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -190,21 +192,37 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__hooks_8c_source.html#l00378">378</a> of file <a class="el" href="sf__hooks_8c_source.html">sf_hooks.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__hooks_8c_source.html#l00502">502</a> of file <a class="el" href="sf__hooks_8c_source.html">sf_hooks.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="group___hooks_ga68518887ac30bef0798064a5ea87b1f5_cgraph.png" border="0" usemap="#agroup___hooks_ga68518887ac30bef0798064a5ea87b1f5_cgraph" alt=""/></div>
 <map name="agroup___hooks_ga68518887ac30bef0798064a5ea87b1f5_cgraph" id="agroup___hooks_ga68518887ac30bef0798064a5ea87b1f5_cgraph">
-<area shape="rect" title=" " alt="" coords="5,31,148,57"/>
-<area shape="rect" href="group__wrappers.html#ga4fd90de0913ed15b0812918255559a55" title=" " alt="" coords="196,31,262,57"/>
-<area shape="poly" title=" " alt="" coords="148,41,180,41,180,47,148,47"/>
-<area shape="rect" href="group___console_hook.html#gaf6b694e632c7b92e802468161b511edf" title=" " alt="" coords="310,31,400,57"/>
-<area shape="poly" title=" " alt="" coords="263,41,294,41,294,47,263,47"/>
-<area shape="rect" href="namespace_a_s_i.html#a05ca5acefdcb7e955f472b60e5511a1a" title="returns &quot;real&quot; virtual address of given memory offset" alt="" coords="451,5,544,32"/>
-<area shape="poly" title=" " alt="" coords="400,33,436,27,437,32,401,39"/>
-<area shape="rect" href="group__wrappers.html#gac5c95c4eeefbc3d135cafe996908b639" title=" " alt="" coords="448,56,547,83"/>
-<area shape="poly" title=" " alt="" coords="401,49,433,55,432,60,400,55"/>
+<area shape="rect" title=" " alt="" coords="5,205,148,232"/>
+<area shape="rect" href="group___hooks.html#ga093379d6fc9c47be7f0b91ed6ac4903a" title=" " alt="" coords="196,113,348,156"/>
+<area shape="poly" title=" " alt="" coords="109,202,205,160,207,165,111,207"/>
+<area shape="rect" href="group__wrappers.html#ga4fd90de0913ed15b0812918255559a55" title=" " alt="" coords="640,231,707,257"/>
+<area shape="poly" title=" " alt="" coords="148,224,264,236,396,245,475,247,554,245,625,243,625,249,554,251,475,252,396,251,264,241,148,230"/>
+<area shape="rect" href="namespace_a_s_i.html#a05ca5acefdcb7e955f472b60e5511a1a" title="returns &quot;real&quot; virtual address of given memory offset" alt="" coords="934,129,1026,156"/>
+<area shape="poly" title=" " alt="" coords="288,111,332,66,362,44,395,27,433,15,472,8,551,3,631,11,708,27,781,49,845,74,943,120,940,124,843,79,779,54,707,32,630,16,551,9,473,13,434,20,397,32,365,48,336,70,292,115"/>
+<area shape="rect" href="namespace_a_s_i.html#a4761cc7671cb5ca025364456b8363f48" title="allows rewriting code in a given memory region by overwriting permissions for that memory region" alt="" coords="410,41,540,68"/>
+<area shape="poly" title=" " alt="" coords="318,110,395,78,413,71,415,76,397,83,320,115"/>
+<area shape="rect" href="namespace_a_s_i.html#a9531e2306bef93541e7b64dd9dda8716" title="ends rewriting by restoring old permissions in a given memory region" alt="" coords="416,92,535,119"/>
+<area shape="poly" title=" " alt="" coords="348,121,400,114,400,119,349,126"/>
+<area shape="rect" href="group___menu_hook.html#ga6bd2c6a76d238c55053afbf16ebf7b1f" title=" " alt="" coords="410,143,540,185"/>
+<area shape="poly" title=" " alt="" coords="349,143,395,150,395,155,348,148"/>
+<area shape="rect" href="group___menu_hook.html#gaee4fa6cc6d804c0c576c3c6814964887" title=" " alt="" coords="396,209,554,236"/>
+<area shape="poly" title=" " alt="" coords="313,154,397,195,414,201,412,206,395,200,311,159"/>
+<area shape="poly" title=" " alt="" coords="540,159,918,143,919,148,540,164"/>
+<area shape="rect" href="group___menu_hook.html#gab0604fa58e636cd43fa3bf98ffaa8acd" title=" " alt="" coords="602,180,745,207"/>
+<area shape="poly" title=" " alt="" coords="540,171,587,178,587,183,540,176"/>
+<area shape="poly" title=" " alt="" coords="555,208,587,204,587,209,555,214"/>
+<area shape="poly" title=" " alt="" coords="555,229,625,236,625,242,555,234"/>
+<area shape="rect" href="group___console_hook.html#gaf6b694e632c7b92e802468161b511edf" title=" " alt="" coords="793,205,883,232"/>
+<area shape="poly" title=" " alt="" coords="707,236,777,225,778,231,708,242"/>
+<area shape="poly" title=" " alt="" coords="864,202,939,161,941,166,866,207"/>
+<area shape="rect" href="group__wrappers.html#gac5c95c4eeefbc3d135cafe996908b639" title=" " alt="" coords="931,205,1029,232"/>
+<area shape="poly" title=" " alt="" coords="883,216,915,216,915,221,883,221"/>
 </map>
 </div>
 <div class="dynheader">
@@ -340,6 +358,66 @@ Here is the caller graph for this function:</div>
 <area shape="poly" title=" " alt="" coords="287,21,255,21,255,16,287,16"/>
 <area shape="rect" href="sfsf_8cpp.html#a26e64fb39b69bcd9d1274d279f1561b9" title="Entry point for the DLL." alt="" coords="5,5,71,32"/>
 <area shape="poly" title=" " alt="" coords="103,21,71,21,71,16,103,16"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ga093379d6fc9c47be7f0b91ed6ac4903a" name="ga093379d6fc9c47be7f0b91ed6ac4903a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga093379d6fc9c47be7f0b91ed6ac4903a">&#9670;&#160;</a></span>initialize_spell_buttons_hooks()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void initialize_spell_buttons_hooks </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__hooks_8c_source.html#l00477">477</a> of file <a class="el" href="sf__hooks_8c_source.html">sf_hooks.c</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="group___hooks_ga093379d6fc9c47be7f0b91ed6ac4903a_cgraph.png" border="0" usemap="#agroup___hooks_ga093379d6fc9c47be7f0b91ed6ac4903a_cgraph" alt=""/></div>
+<map name="agroup___hooks_ga093379d6fc9c47be7f0b91ed6ac4903a_cgraph" id="agroup___hooks_ga093379d6fc9c47be7f0b91ed6ac4903a_cgraph">
+<area shape="rect" title=" " alt="" coords="5,79,158,121"/>
+<area shape="rect" href="namespace_a_s_i.html#a05ca5acefdcb7e955f472b60e5511a1a" title="returns &quot;real&quot; virtual address of given memory offset" alt="" coords="744,103,836,129"/>
+<area shape="poly" title=" " alt="" coords="107,76,151,46,177,32,205,21,281,7,359,3,437,9,512,21,583,38,647,57,745,94,743,99,645,62,582,43,511,26,436,14,359,8,281,12,206,26,179,37,153,50,110,80"/>
+<area shape="rect" href="namespace_a_s_i.html#a4761cc7671cb5ca025364456b8363f48" title="allows rewriting code in a given memory region by overwriting permissions for that memory region" alt="" coords="220,36,350,63"/>
+<area shape="poly" title=" " alt="" coords="157,78,213,64,214,69,159,83"/>
+<area shape="rect" href="namespace_a_s_i.html#a9531e2306bef93541e7b64dd9dda8716" title="ends rewriting by restoring old permissions in a given memory region" alt="" coords="225,87,344,113"/>
+<area shape="poly" title=" " alt="" coords="158,97,210,97,210,103,158,103"/>
+<area shape="rect" href="group___menu_hook.html#ga6bd2c6a76d238c55053afbf16ebf7b1f" title=" " alt="" coords="220,137,350,180"/>
+<area shape="poly" title=" " alt="" coords="158,119,206,133,204,138,157,124"/>
+<area shape="rect" href="group___menu_hook.html#gaee4fa6cc6d804c0c576c3c6814964887" title=" " alt="" coords="206,204,364,231"/>
+<area shape="poly" title=" " alt="" coords="109,120,153,155,207,190,220,195,217,200,204,194,150,159,105,124"/>
+<area shape="poly" title=" " alt="" coords="350,146,412,139,584,124,728,116,728,121,584,130,412,144,350,151"/>
+<area shape="rect" href="group___menu_hook.html#gab0604fa58e636cd43fa3bf98ffaa8acd" title=" " alt="" coords="412,153,554,180"/>
+<area shape="poly" title=" " alt="" coords="350,158,397,160,396,166,350,164"/>
+<area shape="poly" title=" " alt="" coords="339,201,413,182,414,187,341,206"/>
+<area shape="rect" href="group__wrappers.html#ga4fd90de0913ed15b0812918255559a55" title=" " alt="" coords="450,204,516,231"/>
+<area shape="poly" title=" " alt="" coords="365,215,435,215,435,220,365,220"/>
+<area shape="rect" href="group___console_hook.html#gaf6b694e632c7b92e802468161b511edf" title=" " alt="" coords="602,179,693,205"/>
+<area shape="poly" title=" " alt="" coords="516,209,587,198,588,204,517,215"/>
+<area shape="poly" title=" " alt="" coords="673,176,748,135,751,139,676,180"/>
+<area shape="rect" href="group__wrappers.html#gac5c95c4eeefbc3d135cafe996908b639" title=" " alt="" coords="741,179,839,205"/>
+<area shape="poly" title=" " alt="" coords="693,189,725,189,725,195,693,195"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="group___hooks_ga093379d6fc9c47be7f0b91ed6ac4903a_icgraph.png" border="0" usemap="#agroup___hooks_ga093379d6fc9c47be7f0b91ed6ac4903a_icgraph" alt=""/></div>
+<map name="agroup___hooks_ga093379d6fc9c47be7f0b91ed6ac4903a_icgraph" id="agroup___hooks_ga093379d6fc9c47be7f0b91ed6ac4903a_icgraph">
+<area shape="rect" title=" " alt="" coords="309,5,461,48"/>
+<area shape="rect" href="group___hooks.html#ga68518887ac30bef0798064a5ea87b1f5" title=" " alt="" coords="119,13,261,40"/>
+<area shape="poly" title=" " alt="" coords="294,29,261,29,261,24,294,24"/>
+<area shape="rect" href="sfsf_8cpp.html#a26e64fb39b69bcd9d1274d279f1561b9" title="Entry point for the DLL." alt="" coords="5,13,71,40"/>
+<area shape="poly" title=" " alt="" coords="103,29,71,29,71,24,103,24"/>
 </map>
 </div>
 

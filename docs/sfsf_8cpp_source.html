@@ -100,50 +100,46 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
 <div class="foldopen" id="foldopen00038" data-start="{" data-end="}">
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="sfsf_8cpp.html#a26e64fb39b69bcd9d1274d279f1561b9">   38</a></span>BOOL APIENTRY <a class="code hl_function" href="sfsf_8cpp.html#a26e64fb39b69bcd9d1274d279f1561b9">DllMain</a>(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>{</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="keywordflow">switch</span> (ul_reason_for_call)</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    {</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="keywordflow">case</span> DLL_PROCESS_ATTACH:</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    {</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        <span class="keywordflow">if</span> (!<a class="code hl_function" href="namespace_a_s_i.html#ab869e8184e5ce56887fa91a8a4b2e059">ASI::Init</a>(hModule))</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>            <span class="keywordflow">return</span> FALSE;</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        <span class="keywordflow">if</span> (!<a class="code hl_function" href="namespace_a_s_i.html#a34bd6eea545e02b6e66bf62616769440">ASI::CheckSFVersion</a>(<a class="code hl_enumvalue" href="namespace_a_s_i.html#a0d3678d7eaf95729a8566ad9bff50546abefce345291d262e260541ddcf2f1bcd">ASI::SF_BETA</a>))</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        {</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>            <span class="keywordflow">return</span> FALSE;</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        }</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        <span class="keywordflow">else</span></div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        {</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            FILE *file = fopen(<span class="stringliteral">&quot;sfsf.log&quot;</span>, <span class="stringliteral">&quot;w&quot;</span>);</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>            fclose(file);</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="sfsf_8cpp.html#a26e64fb39b69bcd9d1274d279f1561b9">   38</a></span>BOOL APIENTRY <a class="code hl_function" href="sfsf_8cpp.html#a26e64fb39b69bcd9d1274d279f1561b9">DllMain</a>(HMODULE hModule, DWORD ul_reason_for_call,</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>                      LPVOID lpReserved)</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>{</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="keywordflow">switch</span> (ul_reason_for_call)</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    {</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <span class="keywordflow">case</span> DLL_PROCESS_ATTACH:</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        {</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>            <span class="keywordflow">if</span> (!<a class="code hl_function" href="namespace_a_s_i.html#ab869e8184e5ce56887fa91a8a4b2e059">ASI::Init</a>(hModule))</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>                <span class="keywordflow">return</span> FALSE;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>            <span class="keywordflow">if</span> (!<a class="code hl_function" href="namespace_a_s_i.html#a34bd6eea545e02b6e66bf62616769440">ASI::CheckSFVersion</a>(<a class="code hl_enumvalue" href="namespace_a_s_i.html#a0d3678d7eaf95729a8566ad9bff50546abefce345291d262e260541ddcf2f1bcd">ASI::SF_BETA</a>))</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>            {</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>                <span class="keywordflow">return</span> FALSE;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>            }</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>            <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            {</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>                FILE *file = fopen(<span class="stringliteral">&quot;sfsf.log&quot;</span>, <span class="stringliteral">&quot;w&quot;</span>);</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>                fclose(file);</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>            <a class="code hl_function" href="group__wrappers.html#ga4fd90de0913ed15b0812918255559a55">log_info</a>(<span class="stringliteral">&quot;Spellforce Version Accepted; Starting SFSF&quot;</span>);</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>            <span class="comment">// Initialize Framework -&gt; see sf_registry.h</span></div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>            <a class="code hl_function" href="sf__registry_8cpp.html#aa653b9256d033c2d02e806489c6a4271">initialize_framework</a>();</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>            <span class="comment">// Initialize Spellforce Hooks -&gt; see sf_hooks.h</span></div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>            <a class="code hl_function" href="group___hooks.html#ga68518887ac30bef0798064a5ea87b1f5">initialize_beta_hooks</a>();</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>            <span class="comment">// Just wanted to align the debug log</span></div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>            OutputDebugStringA(<span class="stringliteral">&quot;[SFSF] |======================| Injection Complete |======================|&quot;</span>);</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>                <a class="code hl_function" href="group__wrappers.html#ga4fd90de0913ed15b0812918255559a55">log_info</a>(<span class="stringliteral">&quot;Spellforce Version Accepted; Starting SFSF&quot;</span>);</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>                <a class="code hl_function" href="sf__registry_8cpp.html#aa653b9256d033c2d02e806489c6a4271">initialize_framework</a>();</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>                <a class="code hl_function" href="group___hooks.html#ga68518887ac30bef0798064a5ea87b1f5">initialize_beta_hooks</a>();</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>                OutputDebugStringA(<span class="stringliteral">&quot;[SFSF] |======================| Injection Complete |======================|&quot;</span>);</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>            }</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>            <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        }</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        <span class="keywordflow">case</span> DLL_PROCESS_DETACH:</div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>            <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        }</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    }</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <span class="keywordflow">case</span> DLL_PROCESS_DETACH:</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    }</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    <span class="keywordflow">return</span> TRUE;</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>}</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    }</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <span class="keywordflow">return</span> TRUE;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>}</div>
 </div>
-<div class="ttc" id="agroup___hooks_html_ga68518887ac30bef0798064a5ea87b1f5"><div class="ttname"><a href="group___hooks.html#ga68518887ac30bef0798064a5ea87b1f5">initialize_beta_hooks</a></div><div class="ttdeci">void initialize_beta_hooks()</div><div class="ttdef"><b>Definition</b> <a href="sf__hooks_8c_source.html#l00378">sf_hooks.c:378</a></div></div>
-<div class="ttc" id="agroup__wrappers_html_ga4fd90de0913ed15b0812918255559a55"><div class="ttname"><a href="group__wrappers.html#ga4fd90de0913ed15b0812918255559a55">log_info</a></div><div class="ttdeci">void log_info(const char *message)</div><div class="ttdef"><b>Definition</b> <a href="sf__wrappers_8c_source.html#l00086">sf_wrappers.c:86</a></div></div>
+<div class="ttc" id="agroup___hooks_html_ga68518887ac30bef0798064a5ea87b1f5"><div class="ttname"><a href="group___hooks.html#ga68518887ac30bef0798064a5ea87b1f5">initialize_beta_hooks</a></div><div class="ttdeci">void initialize_beta_hooks()</div><div class="ttdef"><b>Definition</b> <a href="sf__hooks_8c_source.html#l00502">sf_hooks.c:502</a></div></div>
+<div class="ttc" id="agroup__wrappers_html_ga4fd90de0913ed15b0812918255559a55"><div class="ttname"><a href="group__wrappers.html#ga4fd90de0913ed15b0812918255559a55">log_info</a></div><div class="ttdeci">void log_info(const char *message)</div><div class="ttdef"><b>Definition</b> <a href="sf__wrappers_8c_source.html#l00089">sf_wrappers.c:89</a></div></div>
 <div class="ttc" id="anamespace_a_s_i_html_a0d3678d7eaf95729a8566ad9bff50546abefce345291d262e260541ddcf2f1bcd"><div class="ttname"><a href="namespace_a_s_i.html#a0d3678d7eaf95729a8566ad9bff50546abefce345291d262e260541ddcf2f1bcd">ASI::SF_BETA</a></div><div class="ttdeci">@ SF_BETA</div><div class="ttdef"><b>Definition</b> <a href="sf__asi_8h_source.html#l00013">sf_asi.h:12</a></div></div>
-<div class="ttc" id="anamespace_a_s_i_html_a34bd6eea545e02b6e66bf62616769440"><div class="ttname"><a href="namespace_a_s_i.html#a34bd6eea545e02b6e66bf62616769440">ASI::CheckSFVersion</a></div><div class="ttdeci">bool __stdcall CheckSFVersion(SF_Version sf_version)</div><div class="ttdoc">check version of the game that was hooked into</div><div class="ttdef"><b>Definition</b> <a href="sf__asi_8cpp_source.html#l00049">sf_asi.cpp:49</a></div></div>
-<div class="ttc" id="anamespace_a_s_i_html_ab869e8184e5ce56887fa91a8a4b2e059"><div class="ttname"><a href="namespace_a_s_i.html#ab869e8184e5ce56887fa91a8a4b2e059">ASI::Init</a></div><div class="ttdeci">bool Init(HMODULE lib_module)</div><div class="ttdoc">required for everything to work... why?</div><div class="ttdef"><b>Definition</b> <a href="sf__asi_8cpp_source.html#l00030">sf_asi.cpp:30</a></div></div>
+<div class="ttc" id="anamespace_a_s_i_html_a34bd6eea545e02b6e66bf62616769440"><div class="ttname"><a href="namespace_a_s_i.html#a34bd6eea545e02b6e66bf62616769440">ASI::CheckSFVersion</a></div><div class="ttdeci">bool __stdcall CheckSFVersion(SF_Version sf_version)</div><div class="ttdoc">check version of the game that was hooked into</div><div class="ttdef"><b>Definition</b> <a href="sf__asi_8cpp_source.html#l00054">sf_asi.cpp:54</a></div></div>
+<div class="ttc" id="anamespace_a_s_i_html_ab869e8184e5ce56887fa91a8a4b2e059"><div class="ttname"><a href="namespace_a_s_i.html#ab869e8184e5ce56887fa91a8a4b2e059">ASI::Init</a></div><div class="ttdeci">bool Init(HMODULE lib_module)</div><div class="ttdoc">required for everything to work... why?</div><div class="ttdef"><b>Definition</b> <a href="sf__asi_8cpp_source.html#l00035">sf_asi.cpp:35</a></div></div>
 <div class="ttc" id="asf__asi_8h_html"><div class="ttname"><a href="sf__asi_8h.html">sf_asi.h</a></div></div>
 <div class="ttc" id="asf__hooks_8h_html"><div class="ttname"><a href="sf__hooks_8h.html">sf_hooks.h</a></div></div>
-<div class="ttc" id="asf__registry_8cpp_html_aa653b9256d033c2d02e806489c6a4271"><div class="ttname"><a href="sf__registry_8cpp.html#aa653b9256d033c2d02e806489c6a4271">initialize_framework</a></div><div class="ttdeci">void initialize_framework()</div><div class="ttdoc">Initializes the Spellforce Spell Framework (SFSF).</div><div class="ttdef"><b>Definition</b> <a href="sf__registry_8cpp_source.html#l00097">sf_registry.cpp:97</a></div></div>
+<div class="ttc" id="asf__registry_8cpp_html_aa653b9256d033c2d02e806489c6a4271"><div class="ttname"><a href="sf__registry_8cpp.html#aa653b9256d033c2d02e806489c6a4271">initialize_framework</a></div><div class="ttdeci">void initialize_framework()</div><div class="ttdoc">Initializes the Spellforce Spell Framework (SFSF).</div><div class="ttdef"><b>Definition</b> <a href="sf__registry_8cpp_source.html#l00099">sf_registry.cpp:99</a></div></div>
 <div class="ttc" id="asf__registry_8h_html"><div class="ttname"><a href="sf__registry_8h.html">sf_registry.h</a></div></div>
 <div class="ttc" id="asf__wrappers_8h_html"><div class="ttname"><a href="sf__wrappers_8h.html">sf_wrappers.h</a></div></div>
 <div class="ttc" id="asfsf_8cpp_html_a26e64fb39b69bcd9d1274d279f1561b9"><div class="ttname"><a href="sfsf_8cpp.html#a26e64fb39b69bcd9d1274d279f1561b9">DllMain</a></div><div class="ttdeci">BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)</div><div class="ttdoc">Entry point for the DLL.</div><div class="ttdef"><b>Definition</b> <a href="#l00038">sfsf.cpp:38</a></div></div>

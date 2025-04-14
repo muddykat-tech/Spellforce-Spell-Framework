@@ -26,5 +26,6 @@ var searchData=
   ['mod_5flist_23',['mod_list',['../group__wrappers.html#gaf8156fc84def214fb289ef5067d04518',1,'sf_wrappers.c']]],
   ['mod_5fstruct_24',['mod_struct',['../group___menu_hook.html#ga203f11764a3be2159da536bae6912124',1,'mod_struct:&#160;sf_menu_hook.c'],['../group___menu_hook.html#ga203f11764a3be2159da536bae6912124',1,'mod_struct:&#160;sf_menu_hook.c']]],
   ['mod_5fversion_25',['mod_version',['../struct_s_f_mod.html#abad5eb60a69c3058eae89231e3b7c41c',1,'SFMod']]],
-  ['modinformation_26',['modinformation',['../group__wrappers.html#ga53592b3907302ed9e7a63ff2e7c65fec',1,'sf_wrappers.c']]]
+  ['modinformation_26',['modinformation',['../group__wrappers.html#ga53592b3907302ed9e7a63ff2e7c65fec',1,'sf_wrappers.c']]],
+  ['more_5fdata_27',['more_data',['../struct_c_app_menu__data.html#a6e1ce89e24ceb519a98f2ca807048480',1,'CAppMenu_data']]]
 ];

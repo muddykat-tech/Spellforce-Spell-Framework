@@ -99,7 +99,6 @@ $(function(){ initResizable(false); });
 <li>g_FUN_00755180&#160;:&#160;<a class="el" href="group___onhit_hook.html#ga53d9ef014be8a874aaa53079d0f05007">sf_onhit_hook.c</a></li>
 <li>g_get_font&#160;:&#160;<a class="el" href="group___menu_hook.html#ga563f2b17fd7d8d2c92b68e722ebb931f">sf_menu_hook.c</a>, <a class="el" href="group___menu_hook.html#ga563f2b17fd7d8d2c92b68e722ebb931f">sf_menu_hook.h</a></li>
 <li>g_get_hit_chance&#160;:&#160;<a class="el" href="group___onhit_hook.html#ga233281d42171a39e8b5d4e4aac6afdce">sf_onhit_hook.c</a></li>
-<li>g_get_leveled_spell&#160;:&#160;<a class="el" href="group___onhit_hook.html#gaec8f28f75614b928aa82417eb08b3d14">sf_onhit_hook.c</a></li>
 <li>g_get_reduced_building_damage&#160;:&#160;<a class="el" href="group___onhit_hook.html#ga65cc4274ae980aa7e6384ee17b5b6db2">sf_onhit_hook.c</a></li>
 <li>g_get_reduced_damage&#160;:&#160;<a class="el" href="group___onhit_hook.html#gab95b55be8193c497bf4194cbc03283dc">sf_onhit_hook.c</a></li>
 <li>g_get_smth_fonts&#160;:&#160;<a class="el" href="group___menu_hook.html#ga0ed81a038f3a8c929795974fe61fde79">sf_menu_hook.c</a>, <a class="el" href="group___menu_hook.html#ga0ed81a038f3a8c929795974fe61fde79">sf_menu_hook.h</a></li>
@@ -114,6 +113,8 @@ $(function(){ initResizable(false); });
 <li>g_new_operator&#160;:&#160;<a class="el" href="group___menu_hook.html#ga0b043e609b3677d7857e4d6880c09348">sf_menu_hook.c</a>, <a class="el" href="group___menu_hook.html#ga0b043e609b3677d7857e4d6880c09348">sf_menu_hook.h</a></li>
 <li>g_objectDealDamage&#160;:&#160;<a class="el" href="group___onhit_hook.html#ga28635fb79fee5828d7bc5d042793014e">sf_onhit_hook.c</a></li>
 <li>g_set_label_flags&#160;:&#160;<a class="el" href="group___menu_hook.html#gafa5a0b2bacbea79ede93d718f0b94931">sf_menu_hook.c</a>, <a class="el" href="group___menu_hook.html#gafa5a0b2bacbea79ede93d718f0b94931">sf_menu_hook.h</a></li>
+<li>g_ui_hook_fix_addr&#160;:&#160;<a class="el" href="group___menu_hook.html#ga2cc654c33a08e3010cb7ef239ea36631">sf_menu_hook.c</a>, <a class="el" href="group___menu_hook.html#ga2cc654c33a08e3010cb7ef239ea36631">sf_menu_hook.h</a></li>
+<li>g_ui_hook_fix_addr2&#160;:&#160;<a class="el" href="group___menu_hook.html#ga2fd6aa80325d2ac3bede0b7c8252829a">sf_menu_hook.c</a>, <a class="el" href="group___menu_hook.html#ga2fd6aa80325d2ac3bede0b7c8252829a">sf_menu_hook.h</a></li>
 <li>GdFigureFlags&#160;:&#160;<a class="el" href="sf__general__structures_8h.html#ac82390a633ae8fc23e2141e25507f732">sf_general_structures.h</a></li>
 <li>GdSpellLine&#160;:&#160;<a class="el" href="sf__spell__functions_8h.html#a97a36226c9e385e601acd55f07575393">sf_spell_functions.h</a></li>
 <li>get_ai_aoe_handler()&#160;:&#160;<a class="el" href="sf__ai__aoe__registry_8cpp.html#af884288b43d43b3a8c6f4ee98e23e9cb">sf_ai_aoe_registry.cpp</a>, <a class="el" href="sf__ai__aoe__registry_8h.html#af884288b43d43b3a8c6f4ee98e23e9cb">sf_ai_aoe_registry.h</a></li>
@@ -122,7 +123,6 @@ $(function(){ initResizable(false); });
 <li>get_filename()&#160;:&#160;<a class="el" href="sf__modloader_8c.html#a788cc97af2cc99599a46bf63e8e21f1e">sf_modloader.c</a></li>
 <li>get_font_ptr&#160;:&#160;<a class="el" href="sf__general__structures_8h.html#a777a4dfb668807471094b748e5152aba">sf_general_structures.h</a></li>
 <li>get_hit_chance_ptr&#160;:&#160;<a class="el" href="group___onhit_hook.html#ga431c968d516023fb5040d6146b599f14">sf_onhit_hook.c</a></li>
-<li>get_leveled_spell_ptr&#160;:&#160;<a class="el" href="group___onhit_hook.html#ga58e00ab7dc81fb58801626d98defaa27">sf_onhit_hook.c</a></li>
 <li>get_onhit_phase()&#160;:&#160;<a class="el" href="sf__onhit__registry_8cpp.html#a8823d3901de4ccbe4b7813b11565572c">sf_onhit_registry.cpp</a>, <a class="el" href="sf__onhit__registry_8h.html#a91bd91cca8eb368d39efad7ce7bae9a1">sf_onhit_registry.h</a></li>
 <li>get_reduced_building_damage_ptr&#160;:&#160;<a class="el" href="group___onhit_hook.html#gad8ff3ea7dd287974d75f24b9aba82c53">sf_onhit_hook.c</a></li>
 <li>get_reduced_damage_ptr&#160;:&#160;<a class="el" href="group___onhit_hook.html#ga2892feb762f3129a835efdea7240a17c">sf_onhit_hook.c</a></li>
@@ -159,6 +159,7 @@ $(function(){ initResizable(false); });
 <li>getFigureFromWorld_ptr&#160;:&#160;<a class="el" href="sf__toolbox__functions_8h.html#a0697f61034be67837615b029df2c148a">sf_toolbox_functions.h</a></li>
 <li>getHealersList_ptr&#160;:&#160;<a class="el" href="sf__figure__functions_8h.html#a56febc9cc6244997b263ce422676e28d">sf_figure_functions.h</a></li>
 <li>getJob_ptr&#160;:&#160;<a class="el" href="sf__figure__functions_8h.html#a8af92f3246c1439671e44848958b1cb4">sf_figure_functions.h</a></li>
+<li>getLeveledSpellID_ptr&#160;:&#160;<a class="el" href="sf__spell__functions_8h.html#a21f8058a5723ebb6cbe6dc8716e13009">sf_spell_functions.h</a></li>
 <li>getNextBuilding_ptr&#160;:&#160;<a class="el" href="sf__iterator__functions_8h.html#a3d86558d3d7acb0ffcfb9d69af9d9291">sf_iterator_functions.h</a></li>
 <li>getNextFigure_ptr&#160;:&#160;<a class="el" href="sf__iterator__functions_8h.html#aac007b289f9654b265b81e06a2dc132f">sf_iterator_functions.h</a></li>
 <li>getNextNode_ptr&#160;:&#160;<a class="el" href="sf__toolbox__functions_8h.html#ab2c382dadc87e7d4be7c82b845d20e1f">sf_toolbox_functions.h</a></li>
@@ -173,6 +174,8 @@ $(function(){ initResizable(false); });
 <li>getSpellIndexOfType_ptr&#160;:&#160;<a class="el" href="sf__toolbox__functions_8h.html#a8eb9b7d0acb0e04ae1e101564289ac07">sf_toolbox_functions.h</a></li>
 <li>getSpellJobStartNode_ptr&#160;:&#160;<a class="el" href="sf__figure__functions_8h.html#a5a0c3b26a0bd1d42a0667bd163dd165f">sf_figure_functions.h</a></li>
 <li>getSpellLine_ptr&#160;:&#160;<a class="el" href="sf__spell__functions_8h.html#a9f478c91767323be4c81e3e448971d90">sf_spell_functions.h</a></li>
+<li>getSpellLineIsTargetSelf&#160;:&#160;<a class="el" href="group___menu_hook.html#gad892dc6d35d95609a68e24200b6c8700">sf_menu_hook.c</a></li>
+<li>getSpellLineIsTargetSelf_ptr&#160;:&#160;<a class="el" href="sf__general__structures_8h.html#a9f9d4cd01d4d73dde5604808cd845633">sf_general_structures.h</a></li>
 <li>getSpellTags()&#160;:&#160;<a class="el" href="sf__mod__registry_8cpp.html#af3ffd25a39d8cd3e76880a062109e619">sf_mod_registry.cpp</a>, <a class="el" href="sf__mod__registry_8h.html#af3ffd25a39d8cd3e76880a062109e619">sf_mod_registry.h</a></li>
 <li>getSpellTags_ptr&#160;:&#160;<a class="el" href="sf__spell__functions_8h.html#a526a41665dd0f7cedd36eec2c96d878c">sf_spell_functions.h</a></li>
 <li>getTargetAction_ptr&#160;:&#160;<a class="el" href="sf__ai__functions_8h.html#a3db7ab30715c05da2a582aa431476243">sf_ai_functions.h</a></li>

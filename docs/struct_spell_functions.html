@@ -231,8 +231,7 @@ Data Fields</h2></td></tr>
 <tr class="memdesc:a972b7c2b468dcc7cabf5906d0ae88ec2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the spell type ID of a given spell.  <br /></td></tr>
 <tr class="separator:a972b7c2b468dcc7cabf5906d0ae88ec2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abfc56830d1de7707b3ba9d0a45cc9380" id="r_abfc56830d1de7707b3ba9d0a45cc9380"><td class="memItemLeft" align="right" valign="top"><a class="el" href="sf__spell__functions_8h.html#a4e7aaec23f53d98f83c76590bc1cac15">onSpellRemove_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abfc56830d1de7707b3ba9d0a45cc9380">onSpellRemove</a></td></tr>
-<tr class="memdesc:abfc56830d1de7707b3ba9d0a45cc9380"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is triggered when a spell stops. <br  />
-  <br /></td></tr>
+<tr class="memdesc:abfc56830d1de7707b3ba9d0a45cc9380"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is triggered when a spell stops.  <br /></td></tr>
 <tr class="separator:abfc56830d1de7707b3ba9d0a45cc9380"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aedbd0d316206bafd4f52859e5381b0cd" id="r_aedbd0d316206bafd4f52859e5381b0cd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="sf__spell__functions_8h.html#a0af6b630e1a18ea961a7ef1ec48ec4c4">getSpellID_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aedbd0d316206bafd4f52859e5381b0cd">getSpellID</a></td></tr>
 <tr class="memdesc:aedbd0d316206bafd4f52859e5381b0cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the Spell Effect ID for a given spell index. The spell effect ID can be used to obtain spell parameters (such as damage, radius, duration, etc.) from GameData.cff.  <br /></td></tr>
@@ -255,11 +254,16 @@ Data Fields</h2></td></tr>
 <tr class="memitem:ae4981f3bf36e47debb83bd92604ff36a" id="r_ae4981f3bf36e47debb83bd92604ff36a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="sf__spell__functions_8h.html#a0fbf2cba19446ce61d82d93a5645b706">figTryUnfreeze_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae4981f3bf36e47debb83bd92604ff36a">figTryUnfreeze</a></td></tr>
 <tr class="memdesc:ae4981f3bf36e47debb83bd92604ff36a"><td class="mdescLeft">&#160;</td><td class="mdescRight">clears the UNFREEZE flag  <br /></td></tr>
 <tr class="separator:ae4981f3bf36e47debb83bd92604ff36a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ed70d0dd37ff0784bd97462ecb24e3e" id="r_a3ed70d0dd37ff0784bd97462ecb24e3e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="sf__spell__functions_8h.html#a1c9b47ac92860daf21c3069031b64d54">spellEffectCallback_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3ed70d0dd37ff0784bd97462ecb24e3e">spellEffectCallback</a></td></tr>
+<tr class="memdesc:a3ed70d0dd37ff0784bd97462ecb24e3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">callback that iterates through spells on a target, checks a condition then executes the callback.  <br /></td></tr>
+<tr class="separator:a3ed70d0dd37ff0784bd97462ecb24e3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1eeca9364dd84e0f39f57c81cc7b314" id="r_ad1eeca9364dd84e0f39f57c81cc7b314"><td class="memItemLeft" align="right" valign="top"><a class="el" href="sf__spell__functions_8h.html#a21f8058a5723ebb6cbe6dc8716e13009">getLeveledSpellID_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad1eeca9364dd84e0f39f57c81cc7b314">getLeveledSpellID</a></td></tr>
+<tr class="separator:ad1eeca9364dd84e0f39f57c81cc7b314"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents a collection of function pointers for managing spell-related operations. </p>
 
-<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00298">298</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00327">327</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
 </div><h2 class="groupheader">Field Documentation</h2>
 <a id="a962e3a225218757ca3e8d707613c1314" name="a962e3a225218757ca3e8d707613c1314"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a962e3a225218757ca3e8d707613c1314">&#9670;&#160;</a></span>addSpell</h2>
@@ -287,7 +291,7 @@ Data Fields</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00445">445</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00474">474</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
 
 </div>
 </div>
@@ -315,7 +319,7 @@ Data Fields</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Summed value of the spell XData Key </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00340">340</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00369">369</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
 
 </div>
 </div>
@@ -358,7 +362,7 @@ Data Fields</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00379">379</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00408">408</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
 
 </div>
 </div>
@@ -385,7 +389,7 @@ Data Fields</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The value returned by the Refresh handler. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00482">482</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00511">511</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
 
 </div>
 </div>
@@ -403,7 +407,7 @@ Data Fields</h2></td></tr>
 
 <p>Clears the CHECK_SPELLS_BEFORE_CHECK_BATTLE flag. </p>
 
-<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00506">506</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00535">535</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
 
 </div>
 </div>
@@ -421,7 +425,7 @@ Data Fields</h2></td></tr>
 
 <p>clears the CHECK_SPELLS_BEFORE_JOB2 flag </p>
 
-<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00511">511</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00540">540</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
 
 </div>
 </div>
@@ -439,7 +443,7 @@ Data Fields</h2></td></tr>
 
 <p>clears the UNFREEZE flag </p>
 
-<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00516">516</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00545">545</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
 
 </div>
 </div>
@@ -465,7 +469,7 @@ Data Fields</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00388">388</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00417">417</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
 
 </div>
 </div>
@@ -493,7 +497,23 @@ Data Fields</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The chance that the spell will be resisted, sometimes used as a 'chance' to fully resist the spell, also used to mitigate the damage dealt with the spell. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00352">352</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00381">381</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="ad1eeca9364dd84e0f39f57c81cc7b314" name="ad1eeca9364dd84e0f39f57c81cc7b314"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1eeca9364dd84e0f39f57c81cc7b314">&#9670;&#160;</a></span>getLeveledSpellID</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="sf__spell__functions_8h.html#a21f8058a5723ebb6cbe6dc8716e13009">getLeveledSpellID_ptr</a> SpellFunctions::getLeveledSpellID</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00556">556</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
 
 </div>
 </div>
@@ -519,7 +539,7 @@ Data Fields</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A random value between 0 and the specified maximum. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00362">362</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00391">391</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
 
 </div>
 </div>
@@ -535,7 +555,7 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00364">364</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00393">393</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
 
 </div>
 </div>
@@ -561,7 +581,7 @@ Data Fields</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The Spell Effect ID. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00470">470</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00499">499</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
 
 </div>
 </div>
@@ -588,7 +608,7 @@ Data Fields</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The Spell Type ID associated with the given spell. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00456">456</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00485">485</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
 
 </div>
 </div>
@@ -613,7 +633,7 @@ Data Fields</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A set of tags related to the spell. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00491">491</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00520">520</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
 
 </div>
 </div>
@@ -642,7 +662,7 @@ Data Fields</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A pointer to the rectangle representing the affected area that contains all possible targets of the spell. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00412">412</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00441">441</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
 
 </div>
 </div>
@@ -669,7 +689,7 @@ Data Fields</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The value associated with the XData key. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00399">399</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00428">428</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
 
 </div>
 </div>
@@ -696,7 +716,7 @@ Data Fields</h2></td></tr>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="sf__general__structures_8h.html#a42506507e4f7b927f1ec61d982197ff6">SpellTag</a> </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the spell has the specified tag, false otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00501">501</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00530">530</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
 
 </div>
 </div>
@@ -722,7 +742,7 @@ Data Fields</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00317">317</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00346">346</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
 
 </div>
 </div>
@@ -738,10 +758,9 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>This function is triggered when a spell stops. <br  />
- </p>
+<p>This function is triggered when a spell stops. </p>
 
-<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00461">461</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00490">490</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
 
 </div>
 </div>
@@ -767,7 +786,7 @@ Data Fields</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00420">420</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00449">449</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
 
 </div>
 </div>
@@ -793,7 +812,7 @@ Data Fields</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00328">328</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00357">357</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
 
 </div>
 </div>
@@ -820,7 +839,7 @@ Data Fields</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00307">307</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00336">336</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
 
 </div>
 </div>
@@ -848,7 +867,25 @@ Data Fields</h2></td></tr>
 </dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="sf__spell__functions_8h.html#a588abbdd197bfe8e420ee8a32ee9ba5e">SpellFlagKey</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00430">430</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00459">459</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
+
+</div>
+</div>
+<a id="a3ed70d0dd37ff0784bd97462ecb24e3e" name="a3ed70d0dd37ff0784bd97462ecb24e3e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ed70d0dd37ff0784bd97462ecb24e3e">&#9670;&#160;</a></span>spellEffectCallback</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="sf__spell__functions_8h.html#a1c9b47ac92860daf21c3069031b64d54">spellEffectCallback_ptr</a> SpellFunctions::spellEffectCallback</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>callback that iterates through spells on a target, checks a condition then executes the callback. </p>
+
+<p class="definition">Definition at line <a class="el" href="sf__spell__functions_8h_source.html#l00550">550</a> of file <a class="el" href="sf__spell__functions_8h_source.html">sf_spell_functions.h</a>.</p>
 
 </div>
 </div>

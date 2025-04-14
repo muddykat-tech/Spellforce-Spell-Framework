@@ -121,11 +121,66 @@ Functions</h2></td></tr>
 <tr class="separator:ga52875b40ed2ac3ca999ff631221f6c03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga131f7d20303fa470af98f4b36b8b6263" id="r_ga131f7d20303fa470af98f4b36b8b6263"><td class="memItemLeft" align="right" valign="top">uint32_t __thiscall&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga131f7d20303fa470af98f4b36b8b6263">avoidance_penalty_hook</a> (<a class="el" href="struct_s_f___c_gd_battle_development.html">SF_CGdBattleDevelopment</a> *_this, uint16_t figure_index)</td></tr>
 <tr class="separator:ga131f7d20303fa470af98f4b36b8b6263"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabf465d5be9a0db980661018df30722ac" id="r_gabf465d5be9a0db980661018df30722ac"><td class="memItemLeft" align="right" valign="top">uint32_t __thiscall&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gabf465d5be9a0db980661018df30722ac">ai_AOE_hook</a> (<a class="el" href="struct_s_f___c_gd_battle_development.html">SF_CGdBattleDevelopment</a> *_this, <a class="el" href="struct_s_f___coord.html">SF_Coord</a> cast_pos, uint16_t spell_line, <a class="el" href="struct_s_f___c_gd_resource_spell.html">SF_CGdResourceSpell</a> *spell_data)</td></tr>
+<tr class="separator:gabf465d5be9a0db980661018df30722ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Hooks and Functions related to AI functionality. </p>
 <p>The main function that hooks into spellforce is <a class="el" href="#ga12a79eb1da4cb3358d8503101a50ba8d">rank_support_spell_hook</a>.</p>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="gabf465d5be9a0db980661018df30722ac" name="gabf465d5be9a0db980661018df30722ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabf465d5be9a0db980661018df30722ac">&#9670;&#160;</a></span>ai_AOE_hook()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t __thiscall ai_AOE_hook </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_s_f___c_gd_battle_development.html">SF_CGdBattleDevelopment</a> *</td>          <td class="paramname"><span class="paramname"><em>_this</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_s_f___coord.html">SF_Coord</a></td>          <td class="paramname"><span class="paramname"><em>cast_pos</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>spell_line</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_s_f___c_gd_resource_spell.html">SF_CGdResourceSpell</a> *</td>          <td class="paramname"><span class="paramname"><em>spell_data</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="sf__ai__hook_8c_source.html#l00146">146</a> of file <a class="el" href="sf__ai__hook_8c_source.html">sf_ai_hook.c</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="group___a_i_hook_gabf465d5be9a0db980661018df30722ac_cgraph.png" border="0" usemap="#agroup___a_i_hook_gabf465d5be9a0db980661018df30722ac_cgraph" alt=""/></div>
+<map name="agroup___a_i_hook_gabf465d5be9a0db980661018df30722ac_cgraph" id="agroup___a_i_hook_gabf465d5be9a0db980661018df30722ac_cgraph">
+<area shape="rect" title=" " alt="" coords="5,31,107,57"/>
+<area shape="rect" href="sf__ai__aoe__registry_8cpp.html#af884288b43d43b3a8c6f4ee98e23e9cb" title=" " alt="" coords="155,31,288,57"/>
+<area shape="poly" title=" " alt="" coords="107,41,139,41,139,47,107,47"/>
+<area shape="rect" href="sf__ai__aoe__handlers_8cpp.html#a80e73659c5b96bbc74130815e80a2c26" title=" " alt="" coords="336,5,479,32"/>
+<area shape="poly" title=" " alt="" coords="288,32,320,28,321,33,289,38"/>
+<area shape="rect" href="group__wrappers.html#ga825433b084e07dce191049d45ecdde2a" title=" " alt="" coords="362,56,453,83"/>
+<area shape="poly" title=" " alt="" coords="289,50,347,59,347,64,288,56"/>
+<area shape="rect" href="group___console_hook.html#gaf6b694e632c7b92e802468161b511edf" title=" " alt="" coords="527,56,618,83"/>
+<area shape="poly" title=" " alt="" coords="453,67,512,67,512,72,453,72"/>
+<area shape="rect" href="namespace_a_s_i.html#a05ca5acefdcb7e955f472b60e5511a1a" title="returns &quot;real&quot; virtual address of given memory offset" alt="" coords="669,31,761,57"/>
+<area shape="poly" title=" " alt="" coords="618,59,653,52,654,58,619,64"/>
+<area shape="rect" href="group__wrappers.html#gac5c95c4eeefbc3d135cafe996908b639" title=" " alt="" coords="666,81,764,108"/>
+<area shape="poly" title=" " alt="" coords="619,75,651,81,650,86,618,80"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="ga131f7d20303fa470af98f4b36b8b6263" name="ga131f7d20303fa470af98f4b36b8b6263"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga131f7d20303fa470af98f4b36b8b6263">&#9670;&#160;</a></span>avoidance_penalty_hook()</h2>
 
@@ -145,7 +200,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__ai__hook_8c_source.html#l00107">107</a> of file <a class="el" href="sf__ai__hook_8c_source.html">sf_ai_hook.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__ai__hook_8c_source.html#l00117">117</a> of file <a class="el" href="sf__ai__hook_8c_source.html">sf_ai_hook.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -176,7 +231,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__ai__hook_8c_source.html#l00020">20</a> of file <a class="el" href="sf__ai__hook_8c_source.html">sf_ai_hook.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__ai__hook_8c_source.html#l00021">21</a> of file <a class="el" href="sf__ai__hook_8c_source.html">sf_ai_hook.c</a>.</p>
 
 </div>
 </div>
@@ -219,7 +274,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__ai__hook_8c_source.html#l00045">45</a> of file <a class="el" href="sf__ai__hook_8c_source.html">sf_ai_hook.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__ai__hook_8c_source.html#l00046">46</a> of file <a class="el" href="sf__ai__hook_8c_source.html">sf_ai_hook.c</a>.</p>
 
 </div>
 </div>
@@ -242,7 +297,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__ai__hook_8c_source.html#l00039">39</a> of file <a class="el" href="sf__ai__hook_8c_source.html">sf_ai_hook.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__ai__hook_8c_source.html#l00040">40</a> of file <a class="el" href="sf__ai__hook_8c_source.html">sf_ai_hook.c</a>.</p>
 
 </div>
 </div>
@@ -261,7 +316,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__ai__hook_8c_source.html#l00030">30</a> of file <a class="el" href="sf__ai__hook_8c_source.html">sf_ai_hook.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__ai__hook_8c_source.html#l00031">31</a> of file <a class="el" href="sf__ai__hook_8c_source.html">sf_ai_hook.c</a>.</p>
 
 </div>
 </div>
@@ -294,7 +349,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__ai__hook_8c_source.html#l00086">86</a> of file <a class="el" href="sf__ai__hook_8c_source.html">sf_ai_hook.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__ai__hook_8c_source.html#l00092">92</a> of file <a class="el" href="sf__ai__hook_8c_source.html">sf_ai_hook.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -354,7 +409,7 @@ Here is the call graph for this function:</div>
 
 <p>Injects into the ranking system for a single target AI spell. </p>
 
-<p class="definition">Definition at line <a class="el" href="sf__ai__hook_8c_source.html#l00069">69</a> of file <a class="el" href="sf__ai__hook_8c_source.html">sf_ai_hook.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__ai__hook_8c_source.html#l00071">71</a> of file <a class="el" href="sf__ai__hook_8c_source.html">sf_ai_hook.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -395,7 +450,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sf__ai__hook_8c_source.html#l00061">61</a> of file <a class="el" href="sf__ai__hook_8c_source.html">sf_ai_hook.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="sf__ai__hook_8c_source.html#l00063">63</a> of file <a class="el" href="sf__ai__hook_8c_source.html">sf_ai_hook.c</a>.</p>
 
 </div>
 </div>
