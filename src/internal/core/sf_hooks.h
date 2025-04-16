@@ -54,11 +54,10 @@ extern void __thiscall linkAOEAIHandler(SFSpell *spell,
 extern void __thiscall linkAvoidanceAIHandler(SFSpell *spell,
                                               ai_avoidance_handler_ptr handler);
 
-extern SFMod *createModInfo(const char *mod_id, const char *mod_version,
+extern SFMod *createModInfo(const char *mod_id, char *mod_version,
                             const char *mod_author,
                             const char *mod_description);
 
 void initialize_beta_hooks();
 void initialize_data_hooks();
-
 #endif

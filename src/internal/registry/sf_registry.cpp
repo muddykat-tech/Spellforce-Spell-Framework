@@ -63,7 +63,11 @@ void registerFrameworkAPI()
     frameworkAPI.effectAPI = &effectAPI;
 
     log_info("| - Loading Default Mod Information");
-    g_framework_mod = createModInfo("Spellforce Spell Framework", "2.1.0-beta",
+    char version_tag_buffer[128];
+    sprintf_s(version_tag_buffer, sizeof(version_tag_buffer), "%d.%d.%d-%s", SPELLFRAMEWORK_VERSION_MAJOR,
+              SPELLFRAMEWORK_VERSION_MINOR, SPELLFRAMEWORK_VERSION_PATCH, SPELLFRAMEWORK_TAG);
+
+    g_framework_mod = createModInfo("Spellforce Spell Framework", version_tag_buffer,
                                     "Muddykat, UnSchtalch and shovel_knight",
                                     "A Modding Framework to ease the creation of new Spells in the game Spellforce Platinum Edition.");
     g_current_mod = g_framework_mod;

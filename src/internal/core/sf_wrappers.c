@@ -799,7 +799,7 @@ uint16_t __thiscall sf_get_spell_id(SF_CGdSpell *_this, uint16_t spell_index)
     return _this->active_spell_list[spell_index].spell_id;
 }
 
-SFMod *createModInfo(const char *mod_id, const char *mod_version,
+SFMod *createModInfo(const char *mod_id, char *mod_version,
                      const char *mod_author, const char *mod_description)
 {
     SFMod *mod = (SFMod *)malloc(sizeof(SFMod));

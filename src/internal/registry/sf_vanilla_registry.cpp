@@ -1245,9 +1245,7 @@ void initialize_vanilla_spells()
     SFSpell *pain2 = registrationAPI.registerSpell(kGdSpellLinePainChained);
     registrationAPI.linkTypeHandler(pain2, &pain_handler);
 
-    SFSpell *belial_effect =
-        registrationAPI.registerSpell(kGdSpellLineFakeSpellOneFigure);
+    SFSpell *belial_effect = registrationAPI.registerSpell(kGdSpellLineFakeSpellOneFigure);
     registrationAPI.linkTypeHandler(belial_effect, &belial_effect_handler);
-    registrationAPI.linkSingleTargetAIHandler(belial_effect,
-                                              &do_not_cast_ai_handler);
+    registrationAPI.linkSingleTargetAIHandler(belial_effect, &do_not_cast_ai_handler);
 }
