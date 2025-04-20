@@ -202,6 +202,27 @@ void __thiscall spellEffectCallback(SF_CGdSpell *_this, uint16_t source_index,
     }
 }
 
+
+int8_t __thiscall addBonusMultExt (FigureStatisticExt *_this, int8_t value)
+{
+    if (value < 0)
+    {
+        if ((int)(_this->bonus_multiplier) + (int)value < -127)
+        {
+            _this->bonus_multiplier = 128;
+            return _this->bonus_multiplier;
+        }
+        _this->bonus_multiplier += value;
+        return _this->bonus_multiplier;
+    }
+    if ((int)_this->bonus_multiplier + (int)value > 126)
+    {
+        _this->bonus_multiplier = 127;
+        return _this->bonus_multiplier;
+    }
+    _this->bonus_multiplier += value;
+    return _this->bonus_multiplier;
+}
 void __thiscall addBonusMultToStatistic(SF_CGdFigure *figure,
                                         StatisticDataKey key, uint16_t target,
                                         int8_t value)
@@ -239,6 +260,14 @@ void __thiscall addBonusMultToStatistic(SF_CGdFigure *figure,
         {
             statistic = &(figure->figures[target].strength);
             break;
+        }
+        /***
+         * Stamina is EXT multiplier and requires specific handling
+         */
+        case STAMINA:
+        {
+            addBonusMultExt(&(figure->figures[target].stamina), value);
+            return;
         }
         case WISDOM:
         {
@@ -289,10 +318,11 @@ void __thiscall addBonusMultToStatistic(SF_CGdFigure *figure,
 
     if (invalid)
     {
-        log_warning("INVALID STATISTIC KEY");
+        char message[256];
+        sprintf(message, "INVALID STATISTIC KEY: %d", key);
+        log_warning(message);
         return;
     }
-
     figureAPI.addBonusMult(statistic, value);
 }
 

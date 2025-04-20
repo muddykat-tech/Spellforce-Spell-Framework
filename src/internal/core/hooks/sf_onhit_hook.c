@@ -320,7 +320,9 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
         // glanced hit
         if (damage == 0)
         {
+#if _DEBUG_
             log_info("Damage IS 0");
+#endif
             uint16_t aggro = figureAPI.getAggroValue(_this->CGdFigure,
                                                      target.entity_index,
                                                      source_index);

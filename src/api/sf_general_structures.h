@@ -199,16 +199,16 @@ typedef struct __attribute__((packed))
 typedef struct __attribute__((packed))
 {
     uint16_t base_val;
-    uint16_t bonus_val;
-    uint8_t bonus_multiplier;
+    int16_t bonus_val;
+    int8_t bonus_multiplier;
     uint8_t statistic_type;  // NOT CONFIRMED
 } FigureStatistic;
 
 typedef struct __attribute__((packed))
 {
     uint16_t base_val;
-    uint16_t bonus_val;
-    uint8_t bonus_multiplier;
+    int16_t bonus_val;
+    int8_t bonus_multiplier;
     uint8_t statistic_type;  // NOT CONFIRMED?
     uint16_t missing_val;    // No idea what this is
 } FigureStatisticExt;
