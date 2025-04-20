@@ -216,7 +216,6 @@ void __attribute__((thiscall)) sf_click_vertical_button(SF_CUiMain *_this,
                                                         uint16_t target_id,
                                                         SF_UIElement *element)
 {
-    log_info("Called SF_CLICK_VERTICAL_BUTTON");
     uint16_t actionID = element->actionType_id;
     uint16_t subActionID = element->actionSubtype_id;
     uint32_t _figure_id = figure_id;
