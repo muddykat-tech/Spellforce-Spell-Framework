@@ -175,11 +175,13 @@ void initialize_data_hooks()
     INCLUDE_FUNCTION(spell, getSpellTags, &getSpellTags);
     INCLUDE_FUNCTION(spell, hasSpellTag, &hasSpellTag);
 
+
     log_info("| - FigureAPI Wrappers");
     INCLUDE_FUNCTION(figure, addBonusMultToStatistic, &addBonusMultToStatistic);
 
     log_info("| - ToolboxAPI Wrappers");
     INCLUDE_FUNCTION(toolbox, hasAuraActive, &hasAuraActive);
+    INCLUDE_FUNCTION(toolbox, getPhysDamageReduction, &getPhysDamageReduction);
 
     log_info("| - IteratorAPI Wrappers");
     INCLUDE_FUNCTION(iterator, setupFigureIterator, &setupFigureIterator);

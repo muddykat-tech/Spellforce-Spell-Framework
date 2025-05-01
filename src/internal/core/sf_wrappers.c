@@ -42,6 +42,8 @@ set_button_flag_ptr set_menu_button_flag;
 vfunction2_callback_attach_ptr attach_callback;
 vfunction_ptr vfunction16_attach_callback;
 CMnuBase_setname_ptr CMnuBase_setname;
+get_phys_damage_reduction_ptr g_get_damage_reduction;
+
 
 void initialize_wrapper_data_hooks()
 {
@@ -65,6 +67,7 @@ void initialize_wrapper_data_hooks()
     vfunction176 = (vfunction_ptr)(ASI::AddrOf(0x52f520));
     vfunction25 = (vfunction_ptr)(ASI::AddrOf(0x511ae0));
     CMnuBase_setname = (CMnuBase_setname_ptr)(ASI::AddrOf(0x512E30));
+    g_get_reduced_damage = (get_phys_damage_reduction_ptr)(ASI::AddrOf(0x317070));
 
 }
 
@@ -352,6 +355,12 @@ void __thiscall spellClearFigureFlag(SF_CGdSpell *_this, uint16_t spell_id,
 bool __thiscall hasAuraActive(SF_CGdFigureToolbox *_this, uint16_t figure_id)
 {
     return has_spell_effect(_this, figure_id, 0x49);
+}
+
+uint16_t __thiscall getPhysDamageReduction(SF_CGdFigureToolbox *_this, uint16_t source_index, uint16_t target_index,
+                                           uint16_t action_id)
+{
+    return g_get_reduced_damage(_this->autoclass34, source_index, target_index, action_id);
 }
 
 CMnuLabel * __thiscall attach_new_label(CMnuLabel *label_ptr,

@@ -54,6 +54,11 @@ DECLARE_FUNCTION(bool, isUnitMelee, SF_CGdFigureToolbox *CGdFigureToolbox,
 
 DECLARE_FUNCTION(bool, hasAuraActive, SF_CGdFigureToolbox *_this,
                  uint16_t figure_id);
+
+DECLARE_FUNCTION(bool, getPhysDamageReduction, SF_CGdFigureToolbox *_this, uint16_t source_index,
+                 uint16_t target_index,  uint16_t action_id)
+
+
 /**
  * @ingroup API
  * @brief Holds most of the Toolbox Functions relevent for custom spells. Includes functions for the manipulation of Figures.
@@ -79,4 +84,5 @@ typedef struct
     addUnit_ptr addUnit;
     findClosestFreePosition_ptr findClosestFreePosition;
     isUnitMelee_ptr isUnitMelee;
+    getPhysDamageReduction_ptr getPhysDamageReduction;
 } ToolboxFunctions;
