@@ -511,7 +511,7 @@ struct __attribute__((packed)) SF_CGdWorldToolBox
 struct __attribute__((packed)) SF_CGdSpell
 {
     void *SF_CGdAiMain;
-    AutoClass14 *OpaqueClass;  // For Random
+    AutoClass14 *OpaqueClass;  // TODO: provide proper wrapper
     SF_CGdBuilding *CGdBuilding;
     void *SF_CGdBuildingToolbox;
     void *SF_CGdDoubleLinkedList;
@@ -521,7 +521,7 @@ struct __attribute__((packed)) SF_CGdSpell
     void *SF_CGdFigureJobs;
     SF_CGdFigureToolbox *SF_CGdFigureToolBox;
     void *SF_CGdFormation;
-    void *unkn2;  // Seems to be used as first param for GetChanceToResistSpell
+    void *AutoClass34;  // TODO: provide wrapper without this bullshit
     void *SF_CGdObject;
     void *SF_CGdObjectToolBox;
     void *SF_CGdPlayer;

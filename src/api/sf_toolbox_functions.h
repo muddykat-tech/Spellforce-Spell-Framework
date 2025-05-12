@@ -55,7 +55,7 @@ DECLARE_FUNCTION(bool, isUnitMelee, SF_CGdFigureToolbox *CGdFigureToolbox,
 DECLARE_FUNCTION(bool, hasAuraActive, SF_CGdFigureToolbox *_this,
                  uint16_t figure_id);
 
-DECLARE_FUNCTION(bool, getPhysDamageReduction, SF_CGdFigureToolbox *_this, uint16_t source_index,
+DECLARE_FUNCTION(uint16_t, getPhysDamageReduction, SF_CGdFigureToolbox *_this, uint16_t source_index,
                  uint16_t target_index,  uint16_t action_id)
 
 
