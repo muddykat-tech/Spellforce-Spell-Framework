@@ -24,10 +24,12 @@ void __thiscall default_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 }
 
 
-uint32_t __thiscall onSpellCastHook(SF_CGdFigureToolbox *_this, uint16_t figure_id, uint16_t spell_id, uint32_t param3, uint8_t target_type, SF_Coord position, uint32_t param6, uint32_t param7)
+uint32_t __thiscall onSpellCastHook(SF_CGdFigureToolbox *_this, uint16_t figure_id, uint16_t spell_id,
+                                    uint16_t target_id, uint8_t target_type, SF_Coord position, uint32_t param6,
+                                    uint32_t param7)
 {
     AutoClass24 *ac24 = getAutoClass24(_this->CGdFigure, figure_id);
-    if (!FUN_006f8c06(_this, figure_id, spell_id, param3, target_type, position, param6, param7, 0))
+    if (!FUN_006f8c06(_this, figure_id, spell_id, target_id, target_type, position, param6, param7, 0))
     {
         return 0;
     }
@@ -36,7 +38,7 @@ uint32_t __thiscall onSpellCastHook(SF_CGdFigureToolbox *_this, uint16_t figure_
         FUN_006fa3ce(_this, figure_id, 0);
         ac24->flags |= MANUAL_JOB_CHANGE;
         ac24->GdJobId = kGdJobManualWalkToTarget;
-        ac24->target.entity_index = figure_id;
+        ac24->target.entity_index = target_id;
         ac24->target.entity_type = target_type;
         ac24->target.position.X = position.X;
         ac24->target.position.Y = position.Y;
@@ -62,12 +64,12 @@ void __thiscall aura_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
     uint16_t source_index = _this->active_spell_list[spell_index].source.entity_index;
     if ((sf_figures->figures[source_index].owner != (uint16_t)(-1)) &&
         ((sf_figures->figures[source_index].flags & GdFigureFlags::REDO) == 0))
-    {     
+    {
 
         /*
-        This should do the same thing as the code below, but as a callback.
-        */
-        // spellAPI->spellEffectCallback(_this, source_index, spell_index, 
+           This should do the same thing as the code below, but as a callback.
+         */
+        // spellAPI->spellEffectCallback(_this, source_index, spell_index,
         //     [](SF_CGdSpell* spell, uint16_t spell_index, uint16_t walked_index) -> bool {
         //         uint16_t spell_line = spellAPI->getSpellLine(spell, walked_index);
         //         return spellAPI->hasSpellTag(spell_line, AURA_SPELL);
@@ -75,7 +77,7 @@ void __thiscall aura_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
         //     [](SF_CGdSpell* spell, uint16_t src_idx, uint16_t walked_index, uint16_t spell_index) -> void {
         //         if( walked_index != spell_index ) {
         //             SF_CGdFigure *sf_figures = spell->SF_CGdFigure;
-        //             sf_figures->figures[src_idx].flags = static_cast<GdFigureFlags>(sf_figures->figures[src_idx].flags & 
+        //             sf_figures->figures[src_idx].flags = static_cast<GdFigureFlags>(sf_figures->figures[src_idx].flags &
         //                 (~static_cast<unsigned int>(GdFigureFlags::AURA_RUNNING)));
         //         }
         //     });
@@ -98,10 +100,12 @@ void __thiscall aura_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
         }
         if (should_stop)
         {
-            sf_figures->figures[source_index].flags = static_cast<GdFigureFlags>(sf_figures->figures[source_index].flags & (~static_cast<unsigned int>(GdFigureFlags::AURA_RUNNING)));
+            sf_figures->figures[source_index].flags =
+                static_cast<GdFigureFlags>(sf_figures->figures[source_index].flags &
+                                           (~static_cast<unsigned int>(GdFigureFlags::AURA_RUNNING)));
         }
     }
-    
+
     uint16_t effect_index = spellAPI->getXData(_this, spell_index, EFFECT_EFFECT_INDEX);
     if (effect_index != 0)
     {
@@ -185,29 +189,30 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
 
 extern "C" __declspec(dllexport) SFMod *RegisterMod(SpellforceSpellFramework *framework)
 {
-    return framework->createModInfo("Multiple Auras Mod", "1.0.0", "UnSchtalch", "This mod is and experiment to make multiple auras possible using SFSF");
+    return framework->createModInfo("Multiple Auras Mod", "1.0.0", "UnSchtalch",
+                                    "This mod is and experiment to make multiple auras possible using SFSF");
 }
 
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 {
     switch (fdwReason)
     {
-    case DLL_PROCESS_ATTACH:
-        ASI::Init(hinstDLL);
-        /* Code path executed when DLL is loaded into a process's address space. */
-        break;
+        case DLL_PROCESS_ATTACH:
+            ASI::Init(hinstDLL);
+            /* Code path executed when DLL is loaded into a process's address space. */
+            break;
 
-    case DLL_THREAD_ATTACH:
-        /* Code path executed when a new thread is created within the process. */
-        break;
+        case DLL_THREAD_ATTACH:
+            /* Code path executed when a new thread is created within the process. */
+            break;
 
-    case DLL_THREAD_DETACH:
-        /* Code path executed when a thread within the process has exited *cleanly*. */
-        break;
+        case DLL_THREAD_DETACH:
+            /* Code path executed when a thread within the process has exited *cleanly*. */
+            break;
 
-    case DLL_PROCESS_DETACH:
-        /* Code path executed when DLL is unloaded from a process's address space. */
-        break;
+        case DLL_PROCESS_DETACH:
+            /* Code path executed when DLL is unloaded from a process's address space. */
+            break;
     }
 
     return TRUE;
