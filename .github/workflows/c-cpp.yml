@@ -42,6 +42,20 @@ jobs:
         name: api-artifact
         path: src/api/
 
+    - name: Zip API files
+      run: |
+        powershell -Command "Compress-Archive -Path src/api/* -DestinationPath api-files.zip"
+
+    - name: Upload API Zip to Release
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: api-files.zip
+        asset_name: api-files.zip
+        asset_content_type: application/zip
+
     - name: Create Release
       uses: actions/create-release@v1
       id: create_release
