@@ -13,12 +13,12 @@ jobs:
     steps:
     - name: checkout code
       uses: actions/checkout@v4
-      
+
     - name: Set up MinGW
       uses: egor-tensin/setup-mingw@v2
       with:
         platform: x86
-        version: 12.2.0 
+        version: 12.2.0
 
     - name: "Setup"
       run: |
@@ -35,7 +35,13 @@ jobs:
       with:
         name: sfsf-artifact
         path: bin/sfsf.asi
-        
+
+    - name: Upload API artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: api-artifact
+        path: src/api/
+
     - name: Create Release
       uses: actions/create-release@v1
       id: create_release
