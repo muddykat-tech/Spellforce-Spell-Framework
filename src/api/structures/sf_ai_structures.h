@@ -3,7 +3,6 @@
 #include <stdbool.h>
 #include "../sf_general_structures.h"
 
-
 /**
  * @struct SF_SGtFigureAction
  */
