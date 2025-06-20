@@ -56,6 +56,27 @@ typedef struct SF_CGdWorldToolBox SF_CGdWorldToolBox;
 typedef struct SF_CGdFigureJobs SF_CGdFigureJobs;
 typedef struct SF_CGdBuilding SF_CGdBuilding;
 
+
+/**
+ * @struct ushort_list_node
+ * @brief Represents a node in a list of unsigned short values.
+ *
+ * Used for managing lists of short integer data related to game entities or actions.
+ */
+typedef struct __attribute__((packed))
+{
+    uint16_t *first;        /**< Pointer to the first element in the list. */
+    uint16_t *data;         /**< Pointer to the data element within the list. */
+    uint16_t *post_last;    /**< Pointer to the element following the last in the list. */
+} ushort_list_node;
+
+typedef struct __attribute__((packed))
+{
+    uint32_t *first;        /**< Pointer to the first element in the list. */
+    uint32_t *data;         /**< Pointer to the data element within the list. */
+    uint32_t *post_last;    /**< Pointer to the element following the last in the list. */
+} uint_list_node;
+
 typedef enum : uint8_t
 {
     TASK_WORKER = 2,
@@ -178,153 +199,6 @@ typedef struct __attribute__((packed))
 
 /* |-========== Figure Start ==========-| */
 
-typedef struct __attribute__((packed))
-{
-    uint16_t figure_index;
-    uint16_t agro_value;
-    uint16_t hate_value;
-} CGdFigureHateEntry;
-
-typedef struct __attribute__((packed))
-{
-    uint16_t min_dmg;
-    uint16_t max_dmg;
-    uint16_t min_rng;
-    uint16_t max_rng;
-    uint16_t wpn_spd;
-    uint16_t wpn_type;
-    uint16_t wpn_mat;
-} SF_CGdFigureWeaponStats;
-
-typedef struct __attribute__((packed))
-{
-    uint16_t base_val;
-    uint16_t bonus_val;
-    uint8_t bonus_multiplier;
-    uint8_t statistic_type;  // NOT CONFIRMED
-} FigureStatistic;
-
-typedef struct __attribute__((packed))
-{
-    uint16_t base_val;
-    uint16_t bonus_val;
-    uint8_t bonus_multiplier;
-    uint8_t statistic_type;  // NOT CONFIRMED?
-    uint16_t missing_val;    // No idea what this is
-} FigureStatisticExt;
-
-typedef struct __attribute__((packed))
-{
-    uint16_t type;
-    uint16_t subtype;
-    uint16_t unkn2;
-    uint16_t unkn3;
-    uint16_t unkn4;
-    uint16_t unkn5;
-} SF_SGtFigureAction;
-
-typedef struct __attribute__((packed))
-{
-    uint16_t GdJobId;
-    CGdFigureTask task;
-    uint8_t padding;
-    CGdFigureJobFlags flags;
-    uint8_t pathing_mode;
-    SF_CGdTargetData target;  // it is stored WEIRDLY
-    uint8_t SGtFigureAction[0xc];
-    uint16_t xdata_key;
-    uint8_t walking_mode;
-    uint8_t padding2;
-    SF_Coord walk_to_pos;
-    uint8_t unknown[14];
-    uint8_t current_waypoint;
-} AutoClass24;
-
-typedef struct __attribute__((packed))
-{
-    SF_Coord position;
-    SF_Coord destination;
-    uint16_t to_do_count;
-    uint16_t to_do_count_remainder;
-    uint16_t anim_length;
-    uint16_t anim_length_remainder;
-    uint8_t activity;
-    uint8_t unknown1;
-    uint16_t building;
-    GdFigureFlags flags;
-    uint8_t race;
-    uint8_t level;
-    uint16_t owner;
-    uint8_t min_attack_range;
-    uint8_t max_attack_range;
-    uint16_t master_figure;
-    uint16_t group_leader;
-    uint32_t npc_id;
-    uint16_t unit_data_id;
-    FigureStatistic armor;
-    FigureStatistic agility;
-    FigureStatistic charisma;
-    FigureStatistic dexterity;
-    FigureStatisticExt health;
-    FigureStatistic intelligence;
-    FigureStatisticExt mana_stuff;
-    FigureStatisticExt stamina;
-    FigureStatistic strength;
-    FigureStatistic wisdom;
-    FigureStatistic resistance_fire;
-    FigureStatistic resistance_ice;
-    FigureStatistic resistance_mental;
-    FigureStatistic resistance_black;
-    FigureStatistic walk_speed;
-    FigureStatistic fight_speed;
-    FigureStatistic cast_speed;
-    uint16_t equipment[16];  // No idea how this works, may need a class (undefined2[16] in ghidra, but is 20 bytes FigureStatistic is 6 bytes)
-    uint16_t head;           // Not sure what this does
-    uint32_t unknown2[3];    // three 4 byte data points in a row, no name known for these.
-    uint8_t unknown3[168];   // Many 1 byte sections in a row
-    uint32_t unknown4[7];    // Many 4 byte sections in a row
-    uint16_t unknown5;
-    uint8_t unknown6[2];
-    SF_CGdFigureWeaponStats weapon_stats;
-    uint8_t unknown7[13];
-    uint8_t good;  // I assume perhaps alignment?
-    uint8_t direction;
-    uint8_t unknown8;
-    uint8_t path_dir;
-    uint8_t path_wish_dir;
-    uint32_t path_bits;
-    uint8_t unknown9;
-    uint32_t unknown10[3];
-    uint16_t unknown11;
-    CGdFigureHateEntry hate_entry[10];
-    uint8_t debug_flags;
-    uint8_t unknown12;
-    uint16_t formation;
-    uint8_t faction;
-    uint8_t unknown13;
-    uint32_t clan_relations;
-    uint16_t unknown14;
-    uint32_t padding1;
-    AutoClass24 ac_1;
-    uint8_t padding2[3];
-    AutoClass24 ac_2;
-    uint8_t padding3[3];
-    AutoClass24 ac_4;
-    uint8_t padding4[3];
-    uint32_t unknown15[3];  // Skipping some variable sections, contains differences Also Check what AutoClass24 is, it's used multiple times in this section
-    uint8_t dwarf_rank;
-    uint8_t set_type;
-} GdFigure;
-
-/**
- * @brief A structure for the global list of figures and related statistics for them
- */
-typedef struct __attribute__((packed))
-{
-    uint16_t max_used;
-    GdFigure figures[2000];
-} SF_CGdFigure;
-
 /* |-========== AutoClass Start ==========-| */
 // These classes are currently only partially understood, and are not fully annotated
 
@@ -441,7 +315,7 @@ struct __attribute__((packed)) SF_CGdFigureToolbox
     uint32_t *CGdAIBattle;
     uint32_t *CGdAIMain;
     uint32_t *CGdAStar;
-    AutoClass14 *maybe_random;  // Unconfirmed
+    AutoClass14 *maybe_random;
     SF_CGdBuilding *CGdBuilding;
     uint32_t *CGdBuildingToolbox;
     uint32_t *CGdDoubleLinkedList;

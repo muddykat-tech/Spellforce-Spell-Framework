@@ -1,8 +1,8 @@
 var searchData=
 [
   ['walk_5fspeed_0',['walk_speed',['../struct_gd_figure.html#ac936df3874345a696df1044b63c9233c',1,'GdFigure']]],
-  ['walk_5fto_5fpos_1',['walk_to_pos',['../struct_auto_class24.html#a69030608f4f85a510555db52bf71d8a6',1,'AutoClass24']]],
-  ['walking_5fmode_2',['walking_mode',['../struct_auto_class24.html#a1310f24852c4baf4fb43a257656bce60',1,'AutoClass24']]],
+  ['walk_5fto_5fpos_1',['walk_to_pos',['../struct_auto_class24.html#a69030608f4f85a510555db52bf71d8a6',1,'FigureJobData']]],
+  ['walking_5fmode_2',['walking_mode',['../struct_auto_class24.html#a1310f24852c4baf4fb43a257656bce60',1,'FigureJobData']]],
   ['weapon_5fstats_3',['weapon_stats',['../struct_gd_figure.html#a5d6f1581d04db96bdea0e5673feee4e6',1,'GdFigure']]],
   ['window_5foffset_4',['WINDOW_OFFSET',['../namespace_a_s_i.html#a560306678b08a2a6d38984dd0ada8dd6',1,'ASI']]],
   ['wisdom_5',['wisdom',['../struct_gd_figure.html#a6ac96cd6869f59ef11ec7f9fee1c5cde',1,'GdFigure']]],

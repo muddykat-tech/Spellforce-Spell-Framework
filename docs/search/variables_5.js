@@ -22,7 +22,7 @@ var searchData=
   ['figuresetnewjob_19',['figureSetNewJob',['../struct_toolbox_functions.html#a72b425c5eff9e769cd1997d07adc451c',1,'ToolboxFunctions']]],
   ['findclosestfreeposition_20',['findClosestFreePosition',['../struct_toolbox_functions.html#a8f8b2524fc2012ed7f39cde731736471',1,'ToolboxFunctions']]],
   ['first_21',['first',['../structushort__list__node.html#ad67963e952dfd6ee24b5daf1ff2fbcc6',1,'ushort_list_node::first'],['../structuint__list__node.html#a49e780cd968e1aace5fb924db6242962',1,'uint_list_node::first']]],
-  ['flags_22',['flags',['../struct_auto_class24.html#a15ef91d422ce03524d766036ff79014d',1,'AutoClass24::flags'],['../struct_gd_figure.html#a7ba2531f6ad9935ba2822dcc7f04164b',1,'GdFigure::flags'],['../struct_s_f___gd_spell.html#a2b858312c3bbff24f87aa6b65188e930',1,'SF_GdSpell::flags'],['../struct_gd_building.html#abfa9fa5880b05246b468624b34f05283',1,'GdBuilding::flags']]],
+  ['flags_22',['flags',['../struct_auto_class24.html#a15ef91d422ce03524d766036ff79014d',1,'FigureJobData::flags'],['../struct_gd_figure.html#a7ba2531f6ad9935ba2822dcc7f04164b',1,'GdFigure::flags'],['../struct_s_f___gd_spell.html#a2b858312c3bbff24f87aa6b65188e930',1,'SF_GdSpell::flags'],['../struct_gd_building.html#abfa9fa5880b05246b468624b34f05283',1,'GdBuilding::flags']]],
   ['font_5fdata_23',['font_data',['../struct_s_f___font.html#abcb23ea96cb24e5ad2a5923348b57352',1,'SF_Font']]],
   ['force_5fprocess_5ffigure_5fmaybe_24',['force_process_figure_maybe',['../struct_c_gd_a_i_battle_data.html#ae7c4923c824142a800fec006d5b5b453',1,'CGdAIBattleData']]],
   ['formation_25',['formation',['../struct_gd_figure.html#a5647c5a814d382ad97bde18f27046481',1,'GdFigure']]],

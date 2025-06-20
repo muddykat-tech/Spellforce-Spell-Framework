@@ -30,7 +30,7 @@ var searchData=
   ['g_5fui_5fhook_5ffix_5faddr_27',['g_ui_hook_fix_addr',['../group___menu_hook.html#ga2cc654c33a08e3010cb7ef239ea36631',1,'g_ui_hook_fix_addr:&#160;sf_menu_hook.c'],['../group___menu_hook.html#ga2cc654c33a08e3010cb7ef239ea36631',1,'g_ui_hook_fix_addr:&#160;sf_menu_hook.c']]],
   ['g_5fui_5fhook_5ffix_5faddr2_28',['g_ui_hook_fix_addr2',['../group___menu_hook.html#ga2fd6aa80325d2ac3bede0b7c8252829a',1,'g_ui_hook_fix_addr2:&#160;sf_menu_hook.c'],['../group___menu_hook.html#ga2fd6aa80325d2ac3bede0b7c8252829a',1,'g_ui_hook_fix_addr2:&#160;sf_menu_hook.c']]],
   ['game_5fbase_29',['GAME_BASE',['../namespace_a_s_i.html#a9d8756b82c9acda6d924a0c254c54299',1,'ASI']]],
-  ['gdjobid_30',['GdJobId',['../struct_auto_class24.html#adf12ce97c5b2946eca7db3318673c49b',1,'AutoClass24']]],
+  ['gdjobid_30',['GdJobId',['../struct_auto_class24.html#adf12ce97c5b2946eca7db3318673c49b',1,'FigureJobData']]],
   ['getactionstats_31',['getActionStats',['../struct_ai_functions.html#ad8b00f96f2c9d4ebf63d3fc74c2c627e',1,'AiFunctions']]],
   ['getaggrovalue_32',['getAggroValue',['../struct_figure_functions.html#abfdb324ab863b685424bd13179f1f4c9',1,'FigureFunctions']]],
   ['getaicurrentactionranking_33',['getAICurrentActionRanking',['../struct_ai_functions.html#a6ce8e37c22ed4c288a591fb98727c3a1',1,'AiFunctions']]],

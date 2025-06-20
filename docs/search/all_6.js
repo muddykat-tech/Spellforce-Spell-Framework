@@ -33,7 +33,7 @@ var searchData=
   ['gdbuilding_30',['GdBuilding',['../struct_gd_building.html',1,'']]],
   ['gdfigure_31',['GdFigure',['../struct_gd_figure.html',1,'']]],
   ['gdfigureflags_32',['GdFigureFlags',['../sf__general__structures_8h.html#ac82390a633ae8fc23e2141e25507f732',1,'sf_general_structures.h']]],
-  ['gdjobid_33',['GdJobId',['../struct_auto_class24.html#adf12ce97c5b2946eca7db3318673c49b',1,'AutoClass24']]],
+  ['gdjobid_33',['GdJobId',['../struct_auto_class24.html#adf12ce97c5b2946eca7db3318673c49b',1,'FigureJobData']]],
   ['gdspellline_34',['GdSpellLine',['../sf__spell__functions_8h.html#a97a36226c9e385e601acd55f07575393',1,'sf_spell_functions.h']]],
   ['get_5fai_5faoe_5fhandler_35',['get_ai_aoe_handler',['../sf__ai__aoe__registry_8cpp.html#af884288b43d43b3a8c6f4ee98e23e9cb',1,'get_ai_aoe_handler(uint16_t spell_line):&#160;sf_ai_aoe_registry.cpp'],['../sf__ai__aoe__registry_8h.html#af884288b43d43b3a8c6f4ee98e23e9cb',1,'get_ai_aoe_handler(uint16_t spell_line):&#160;sf_ai_aoe_registry.cpp']]],
   ['get_5fai_5favoidance_5fhandler_36',['get_ai_avoidance_handler',['../sf__ai__avoidance__registry_8cpp.html#ad0c884f35bcf2b0b303134bdad866376',1,'get_ai_avoidance_handler(uint16_t spell_line):&#160;sf_ai_avoidance_registry.cpp'],['../sf__ai__avoidance__registry_8h.html#ad0c884f35bcf2b0b303134bdad866376',1,'get_ai_avoidance_handler(uint16_t spell_line):&#160;sf_ai_avoidance_registry.cpp']]],

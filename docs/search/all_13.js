@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['target_0',['target',['../struct_auto_class24.html#ae1db8ef2092fa1e0593e321167929e47',1,'AutoClass24::target'],['../struct_s_f___gd_spell.html#a6f606b39af217ca9d1bfe462d4d9c51f',1,'SF_GdSpell::target'],['../struct_s_f___gd_effect.html#a92dd9c8e059e222ace6b50ed98ac61fd',1,'SF_GdEffect::target']]],
+  ['target_0',['target',['../struct_auto_class24.html#ae1db8ef2092fa1e0593e321167929e47',1,'FigureJobData::target'],['../struct_s_f___gd_spell.html#a6f606b39af217ca9d1bfe462d4d9c51f',1,'SF_GdSpell::target'],['../struct_s_f___gd_effect.html#a92dd9c8e059e222ace6b50ed98ac61fd',1,'SF_GdEffect::target']]],
   ['target_5fonhit_5fspell_1',['TARGET_ONHIT_SPELL',['../sf__general__structures_8h.html#a42506507e4f7b927f1ec61d982197ff6a636237f8aba0ef100f937b6f69bd96b5',1,'sf_general_structures.h']]],
-  ['task_2',['task',['../struct_auto_class24.html#a024972801ecb5052b07bc5c2a23240a0',1,'AutoClass24']]],
+  ['task_2',['task',['../struct_auto_class24.html#a024972801ecb5052b07bc5c2a23240a0',1,'FigureJobData']]],
   ['task_5fforge_3',['TASK_FORGE',['../sf__general__structures_8h.html#a54c3638e61af929e03829f9caa622073abc75637ba7b152e97cd204300f665968',1,'sf_general_structures.h']]],
   ['task_5fhero_4',['TASK_HERO',['../sf__general__structures_8h.html#a54c3638e61af929e03829f9caa622073a48bd84e659a01c6771a4d4e07695003f',1,'sf_general_structures.h']]],
   ['task_5fhunting_5flodge_5',['TASK_HUNTING_LODGE',['../sf__general__structures_8h.html#a54c3638e61af929e03829f9caa622073a197417afd7dc7ba0509c2ee298b7d022',1,'sf_general_structures.h']]],

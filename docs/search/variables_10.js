@@ -36,7 +36,7 @@ var searchData=
   ['sf_5flogger_33',['sf_logger',['../group__wrappers.html#ga590be2559f294aeda6077b3672b39218',1,'sf_wrappers.c']]],
   ['sfsf_34',['sfsf',['../_test_mod_8cpp.html#a8df3fa8f76b5a7cba669f49b7bd52bf5',1,'TestMod.cpp']]],
   ['sfsf_5fversion_5flabel_35',['sfsf_version_label',['../sf__menu__hook_8h.html#a877628f856a04f13d875c6b254bd3b12',1,'sf_menu_hook.h']]],
-  ['sgtfigureaction_36',['SGtFigureAction',['../struct_auto_class24.html#abdfc8684189775d411164fb75827c13b',1,'AutoClass24']]],
+  ['sgtfigureaction_36',['SGtFigureAction',['../struct_auto_class24.html#abdfc8684189775d411164fb75827c13b',1,'FigureJobData']]],
   ['skill_5frequirements_37',['skill_requirements',['../struct_s_f___c_gd_resource_spell.html#a29c793c0eca762b1f666eb28d8691dd3',1,'SF_CGdResourceSpell']]],
   ['smth_5ffont_38',['smth_font',['../struct_s_f___font_struct.html#a31e35a9bf24b9dcd4ea7cc15c32e3be9',1,'SF_FontStruct']]],
   ['some_5ffigure_5flist_39',['some_figure_list',['../struct_c_gd_a_i_battle_data.html#a948394bbce932b5ccd4d894c9b56b72f',1,'CGdAIBattleData']]],

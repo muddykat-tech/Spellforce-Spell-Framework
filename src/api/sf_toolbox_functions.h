@@ -38,7 +38,7 @@ DECLARE_FUNCTION(uint16_t, getNextNode, uint32_t *CGdDoubleLinkedList,
                  uint16_t current_node);
 DECLARE_FUNCTION(void, figureSetNewJob, void *CGdFigureJobs, uint32_t figure_id,
                  uint32_t new_job, uint32_t param_3, uint32_t param_4,
-                 uint32_t param_5);
+                 uint32_t param_5); // @SHUFFLE Move to Figure Functions
 DECLARE_FUNCTION(uint32_t, removeSpellFromList,
                  SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t param_1,
                  uint16_t param_2);
@@ -67,14 +67,14 @@ typedef struct
     figuresCheckFriendly_ptr figuresCheckFriendly;
     hasSpellOnIt_ptr hasSpellOnIt;
     hasAuraActive_ptr hasAuraActive;
-    buildingDealDamage_ptr buildingDealDamage;
+    buildingDealDamage_ptr buildingDealDamage; // Send to Building Functions
     rescaleLevelStats_ptr rescaleLevelStats;
     addSpellToFigure_ptr addSpellToFigure;
     getFigureFromWorld_ptr getFigureFromWorld;
     getSpellIndexOfType_ptr getSpellIndexOfType;
-    getSpellIndexFromDLL_ptr getSpellIndexFromDLL;
-    getNextNode_ptr getNextNode;
-    figureSetNewJob_ptr figureSetNewJob;
+    getSpellIndexFromDLL_ptr getSpellIndexFromDLL; // Use Wrappers instead of direct passthrough
+    getNextNode_ptr getNextNode; // Use Wrappers instead of direct passthrough
+    figureSetNewJob_ptr figureSetNewJob; // Send to Figure Functions
     removeSpellFromList_ptr removeSpellFromList;
     addUnit_ptr addUnit;
     findClosestFreePosition_ptr findClosestFreePosition;

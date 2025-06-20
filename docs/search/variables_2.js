@@ -93,5 +93,5 @@ var searchData=
   ['current_5fstep_90',['current_step',['../struct_auto_class14.html#a50c4c437a1688b4cc5b3076768356e8d',1,'AutoClass14']]],
   ['current_5ftarget_91',['current_target',['../struct_c_gd_a_i_battle_data.html#a48bf44fab1d91122d4fd446a9e7ac2f4',1,'CGdAIBattleData']]],
   ['current_5ftarget_5flevel_5fpossibly_92',['current_target_level_possibly',['../struct_c_gd_a_i_battle_data.html#a57c450372f2c54077939e4512102afbb',1,'CGdAIBattleData']]],
-  ['current_5fwaypoint_93',['current_waypoint',['../struct_auto_class24.html#a680bf8a8c8bbaf1ad9b85232104d1555',1,'AutoClass24']]]
+  ['current_5fwaypoint_93',['current_waypoint',['../struct_auto_class24.html#a680bf8a8c8bbaf1ad9b85232104d1555',1,'FigureJobData']]]
 ];

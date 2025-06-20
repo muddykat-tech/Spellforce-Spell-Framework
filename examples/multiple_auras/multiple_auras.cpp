@@ -12,7 +12,7 @@ FigureFunctions *figureAPI;
 RegistrationFunctions *registrationAPI;
 EffectFunctions *effectAPI;
 
-getAutoClass24_ptr getAutoClass24;
+getFigureJobData_ptr getFigureJobData;
 FUN_006f8c06_ptr FUN_006f8c06;
 FUN_006fa3ce_ptr FUN_006fa3ce;
 setFigureAction_ptr setFigureAction;
@@ -26,8 +26,8 @@ void __thiscall default_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 
 uint32_t __thiscall onSpellCastHook(SF_CGdFigureToolbox *_this, uint16_t figure_id, uint16_t spell_id, uint32_t param3, uint8_t target_type, SF_Coord position, uint32_t param6, uint32_t param7)
 {
-    AutoClass24 *ac24 = getAutoClass24(_this->CGdFigure, figure_id);
-    if (!FUN_006f8c06(_this, figure_id, spell_id, param3, target_type, position, param6, param7, 0))
+    FigureJobData *ac24 = getFigureJobData(_this->CGdFigure, figure_id);
+    if (!FUN_006f8c06(_this, figure_id, spell_id, target_id, target_type, position, param6, param7, 0))
     {
         return 0;
     }
@@ -62,12 +62,12 @@ void __thiscall aura_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
     uint16_t source_index = _this->active_spell_list[spell_index].source.entity_index;
     if ((sf_figures->figures[source_index].owner != (uint16_t)(-1)) &&
         ((sf_figures->figures[source_index].flags & GdFigureFlags::REDO) == 0))
-    {     
+    {
 
         /*
-        This should do the same thing as the code below, but as a callback.
-        */
-        // spellAPI->spellEffectCallback(_this, source_index, spell_index, 
+           This should do the same thing as the code below, but as a callback.
+         */
+        // spellAPI->spellEffectCallback(_this, source_index, spell_index,
         //     [](SF_CGdSpell* spell, uint16_t spell_index, uint16_t walked_index) -> bool {
         //         uint16_t spell_line = spellAPI->getSpellLine(spell, walked_index);
         //         return spellAPI->hasSpellTag(spell_line, AURA_SPELL);
@@ -75,7 +75,7 @@ void __thiscall aura_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
         //     [](SF_CGdSpell* spell, uint16_t src_idx, uint16_t walked_index, uint16_t spell_index) -> void {
         //         if( walked_index != spell_index ) {
         //             SF_CGdFigure *sf_figures = spell->SF_CGdFigure;
-        //             sf_figures->figures[src_idx].flags = static_cast<GdFigureFlags>(sf_figures->figures[src_idx].flags & 
+        //             sf_figures->figures[src_idx].flags = static_cast<GdFigureFlags>(sf_figures->figures[src_idx].flags &
         //                 (~static_cast<unsigned int>(GdFigureFlags::AURA_RUNNING)));
         //         }
         //     });
@@ -101,7 +101,7 @@ void __thiscall aura_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
             sf_figures->figures[source_index].flags = static_cast<GdFigureFlags>(sf_figures->figures[source_index].flags & (~static_cast<unsigned int>(GdFigureFlags::AURA_RUNNING)));
         }
     }
-    
+
     uint16_t effect_index = spellAPI->getXData(_this, spell_index, EFFECT_EFFECT_INDEX);
     if (effect_index != 0)
     {
@@ -169,7 +169,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     registrationAPI = sfsf->registrationAPI;
     effectAPI = sfsf->effectAPI;
 
-    getAutoClass24 = (getAutoClass24_ptr)ASI::AddrOf(0x2b5cb0);
+    getFigureJobData = (getFigureJobData_ptr)ASI::AddrOf(0x2b5cb0);
     FUN_006f8c06 = (FUN_006f8c06_ptr)ASI::AddrOf(0x2f8c06);
     FUN_006fa3ce = (FUN_006fa3ce_ptr)ASI::AddrOf(0x2fa3ce);
     setFigureAction = (setFigureAction_ptr)ASI::AddrOf(0x2c55d0);

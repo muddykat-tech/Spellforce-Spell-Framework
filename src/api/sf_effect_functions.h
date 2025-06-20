@@ -1,5 +1,15 @@
+/**
+ * @file sf_effect_functions.h
+ * @brief Header file for defining Visual Effects
+ *
+ * This file provides the necessary data structures and function declarations
+ * used to interact with the game's visual effects.
+ * Some visual effects hold data related to spell casting
+ */
+
 #pragma once
 #include "sf_general_structures.h"
+#include "./structures/sf_effect_structures.h"
 
 typedef void (__thiscall *sub_effect_handler_ptr)(SF_CGDEffect *,
                                                   uint16_t effect_index);

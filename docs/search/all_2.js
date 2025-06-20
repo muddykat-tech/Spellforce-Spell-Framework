@@ -190,7 +190,7 @@ var searchData=
   ['current_5fstep_187',['current_step',['../struct_auto_class14.html#a50c4c437a1688b4cc5b3076768356e8d',1,'AutoClass14']]],
   ['current_5ftarget_188',['current_target',['../struct_c_gd_a_i_battle_data.html#a48bf44fab1d91122d4fd446a9e7ac2f4',1,'CGdAIBattleData']]],
   ['current_5ftarget_5flevel_5fpossibly_189',['current_target_level_possibly',['../struct_c_gd_a_i_battle_data.html#a57c450372f2c54077939e4512102afbb',1,'CGdAIBattleData']]],
-  ['current_5fwaypoint_190',['current_waypoint',['../struct_auto_class24.html#a680bf8a8c8bbaf1ad9b85232104d1555',1,'AutoClass24']]],
+  ['current_5fwaypoint_190',['current_waypoint',['../struct_auto_class24.html#a680bf8a8c8bbaf1ad9b85232104d1555',1,'FigureJobData']]],
   ['custom_5fspelleffect_5fhandler_191',['custom_spelleffect_handler',['../_test_mod_8cpp.html#acc38bfd9b0aed24def57a7178fe6026d',1,'TestMod.cpp']]],
   ['custom_5fspellend_5fhandler_192',['custom_spellend_handler',['../_test_mod_8cpp.html#ab37a1d8b7453db85f4361afd791ebefb',1,'TestMod.cpp']]],
   ['custom_5fspelltype_5fhandler_193',['custom_spelltype_handler',['../_test_mod_8cpp.html#aeed4023ed0fd8be795016d09e69bb4bd',1,'TestMod.cpp']]],

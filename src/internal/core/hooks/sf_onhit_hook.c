@@ -1,157 +1,59 @@
-/**
- * @defgroup OnhitHook On Hit Hook
- * @ingroup Hooks
- * @brief Used to inject Onhit Handlers into Spellforce.
- * @addtogroup OnhitHook
- * @{
- */
-
-#include "sf_onhit_hook.h"
-#include "../sf_wrappers.h"
-#include "../sf_hooks.h"
-#include "../sf_modloader.h"
-#include "../../registry/spell_data_registries/sf_onhit_registry.h"
-#include "../../registry/sf_mod_registry.h"
-
-#include <stdint.h>
-#include <stdlib.h>
+#include "../../src/api/sfsf.h"
+#include "../../src/asi/sf_asi.h"
+// NOTE sfsf.h includes the OTHER api files, but other libraries are still required
+#include <windows.h>
 #include <stdio.h>
-#include <string.h>
-#include <list>
-#include <utility>
+#include "multiple_auras.h"
 
-typedef uint16_t (__thiscall *get_reduced_damage_ptr)(void *AutoClass34,
-                                                      uint16_t source_index,
-                                                      uint16_t target_index,
-                                                      uint16_t unkn);
-typedef uint16_t (__thiscall *get_reduced_building_damage_ptr)(
-    void *AutoClass32, uint16_t source_index, uint16_t target_index,
-    uint16_t damage);
-typedef uint16_t (__thiscall *get_hit_chance_ptr)(void *AutoClass34,
-                                                  uint16_t source_index,
-                                                  uint16_t target_index);
-typedef void (__thiscall *FUN_006c3a60_ptr)(void *AutoClass30,
-                                            uint16_t source_index,
-                                            uint16_t target_index, uint8_t unkn,
-                                            uint32_t unkn2);
-typedef uint32_t (__thiscall *FUN_0071d7b0_ptr)(void *CGdObject,
-                                                uint16_t object_index);
-typedef uint32_t (__thiscall *FUN_00755180_ptr)(uint32_t param1);
-typedef uint32_t (__thiscall *objectDealDamage_ptr)(void *CGdObjectToolBox,
-                                                    uint16_t source_index,
-                                                    uint16_t target_index,
-                                                    uint16_t damage,
-                                                    uint32_t unknown);
-typedef uint32_t (__thiscall *getWeaponEffects_ptr)(void *CGdResource,
-                                                    uint32_t *param1,
-                                                    uint16_t weapon_id);
+SpellforceSpellFramework *sfsf;
+SpellFunctions *spellAPI;
+ToolboxFunctions *toolboxAPI;
+FigureFunctions *figureAPI;
+RegistrationFunctions *registrationAPI;
+EffectFunctions *effectAPI;
 
-get_reduced_damage_ptr g_get_reduced_damage;
-get_hit_chance_ptr g_get_hit_chance;
-FUN_006c3a60_ptr g_FUN_006c3a60;
-get_reduced_building_damage_ptr g_get_reduced_building_damage;
-FUN_0071d7b0_ptr g_FUN_0071d7b0;
-FUN_00755180_ptr g_FUN_00755180;
-objectDealDamage_ptr g_objectDealDamage;
-getWeaponEffects_ptr g_getWeaponEffects;
+getFigureJobData_ptr getFigureJobData;
+FUN_006f8c06_ptr FUN_006f8c06;
+FUN_006fa3ce_ptr FUN_006fa3ce;
+setFigureAction_ptr setFigureAction;
 
-// TODO PassThrough GET CURRENT STAT
-
-uint16_t __thiscall getCurrentDex(SF_CGdFigure *_this, uint16_t figure_index)
+void __thiscall default_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
-    uint16_t base_val = _this->figures[figure_index].dexterity.base_val;
-    uint16_t bonus_val = _this->figures[figure_index].dexterity.bonus_val;
-    uint16_t multiplier =
-        _this->figures[figure_index].dexterity.bonus_multiplier + 100;
-    if (base_val + bonus_val > 0)
+    spellAPI->removeDLLNode(_this, spell_index);
+    spellAPI->setEffectDone(_this, spell_index, 0);
+}
+
+
+uint32_t __thiscall onSpellCastHook(SF_CGdFigureToolbox *_this, uint16_t figure_id, uint16_t spell_id,
+                                    uint16_t target_id, uint8_t target_type, SF_Coord position, uint32_t param6,
+                                    uint32_t param7)
+{
+    FigureJobData *ac24 = getFigureJobData(_this->CGdFigure, figure_id);
+    if (!FUN_006f8c06(_this, figure_id, spell_id, target_id, target_type, position, param6, param7, 0))
     {
-        return ((base_val + bonus_val) * multiplier) / 100;
+        return 0;
     }
-    return 0;
-}
-
-uint16_t __thiscall getCurrentInt(SF_CGdFigure *_this, uint16_t figure_index)
-{
-    uint16_t base_val = _this->figures[figure_index].intelligence.base_val;
-    uint16_t bonus_val = _this->figures[figure_index].intelligence.bonus_val;
-    uint16_t multiplier =
-        _this->figures[figure_index].intelligence.bonus_multiplier + 100;
-    if (base_val + bonus_val > 0)
+    else
     {
-        return ((base_val + bonus_val) * multiplier) / 100;
-    }
-    return 0;
-}
-// End TODO
+        FUN_006fa3ce(_this, figure_id, 0);
+        ac24->flags |= MANUAL_JOB_CHANGE;
+        ac24->GdJobId = kGdJobManualWalkToTarget;
+        ac24->target.entity_index = target_id;
+        ac24->target.entity_type = target_type;
+        ac24->target.position.X = position.X;
+        ac24->target.position.Y = position.Y;
+        SF_CGdResourceSpell spell_data;
+        spellAPI->getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
 
-uint16_t get_effect_chance(uint16_t dex_val, uint16_t int_val,
-                           uint16_t spell_line)
-{
-    if (spell_line != kGdSpellLinePoison)
-    {
-        return (dex_val + int_val + 100) * 5;
-    }
-    return dex_val * 8 + int_val * 5 + 0x578;
-}
-void initialize_onhit_data_hooks()
-{
-    g_get_reduced_damage = (get_reduced_damage_ptr)(ASI::AddrOf(0x3177d0));
-    g_get_hit_chance = (get_hit_chance_ptr)(ASI::AddrOf(0x317860));
-    g_FUN_006c3a60 = (FUN_006c3a60_ptr)(ASI::AddrOf(0x2c3a60));
-    g_get_reduced_building_damage =
-        (get_reduced_building_damage_ptr)(ASI::AddrOf(0x317740));
-    g_FUN_0071d7b0 = (FUN_0071d7b0_ptr)(ASI::AddrOf(0x31d7b0));
-    g_FUN_00755180 = (FUN_00755180_ptr)(ASI::AddrOf(0x355180));
-    g_objectDealDamage = (objectDealDamage_ptr)(ASI::AddrOf(0x2b7d70));
-    g_getWeaponEffects = (getWeaponEffects_ptr)(ASI::AddrOf(0x2693b0));
-}
-
-void __thiscall getTargetData(AutoClass24 *_this, SF_CGdTargetData *target)
-{
-    target->entity_type = _this->target.entity_type;
-    target->entity_index = _this->target.entity_index;
-    target->position = _this->target.position;
-}
-
-bool isJobDoNothing(uint16_t job_id)
-{
-    if ((job_id == kGdJobGroupNothing) || (job_id == kGdJobWarriorNothing) ||
-        (job_id == kGdJobCheckBattleSleep) || (job_id == kGdJobPetIdle))
-    {
-        return 1;
-    }
-    return 0;
-}
-
-bool __thiscall isFigureJobSpell(SF_CGdFigureJobs *_this, uint16_t figure_id)
-{
-    uint16_t job_id = figureAPI.getJob(_this->CGdFigure, figure_id);
-    if ((job_id == kGdJobCast) || (job_id == kGdJobPreCast) ||
-        (job_id == kGdJobCastResolve) || (job_id == kGdJobCastPreResolve))
-    {
-        return 1;
-    }
-    if (job_id == kGdJobWalkToTarget)
-    {
         SF_SGtFigureAction action;
-        aiAPI.getTargetAction(_this->CGdFigure, &action, figure_id);
-        if ((action.type != 0) && (action.type < 10000))
-        {
-            return 1;
-        }
-    }
-    return 0;
-}
+        action.type = spell_data.spell_line_id;
+        action.subtype = spell_id;
+        action.unkn2 = 0;
+        action.unkn3 = 0;
+        action.unkn4 = 0;
+        action.unkn5 = 0;
 
-bool __thiscall canJobBeInterrupted(FigureJobs job_id)
-
-{
-    if ((((job_id != kGdJobCastPreResolve) && (job_id != kGdJobCastResolve)) &&
-         (job_id != kGdJobHitTargetRange2)) &&
-        (((job_id != kGdJobEnterBuilding && (job_id != kGdJobExitBuilding)) &&
-          ((job_id != kGdJobMeleeAbility &&
-            (job_id != kGdJobStartWorkAtBuilding))))))
-    {
+        setFigureAction(ac24, &action);
         return 1;
     }
     return 0;

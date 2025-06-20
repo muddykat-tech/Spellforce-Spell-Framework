@@ -256,7 +256,7 @@ void __attribute__((thiscall)) sf_click_vertical_button(SF_CUiMain *_this,
             }
         }
         CGdFigureTask task =
-            _this->CUiMain_data.CGdFigure->figures[figure_id].ac_1.task;
+            _this->CUiMain_data.CGdFigure->figures[figure_id].current_job.task;
         SF_CGdTargetData data;
         data.entity_index = target_id;
         data.entity_type = entity_type;
