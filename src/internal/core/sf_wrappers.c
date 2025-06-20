@@ -265,11 +265,21 @@ void __thiscall addBonusMultToStatistic(SF_CGdFigure *figure,
             break;
         }
         /***
-         * Stamina is EXT multiplier and requires specific handling
+         * Stamina, mana and HP are EXT multipliers and require specific handling
          */
         case STAMINA:
         {
             addBonusMultExt(&(figure->figures[target].stamina), value);
+            return;
+        }
+        case MANA:
+        {
+            addBonusMultExt(&(figure->figures[target].mana), value);
+            return;
+        }
+        case HEALTH:
+        {
+            addBonusMultExt(&(figure->figures[target].health), value);
             return;
         }
         case WISDOM:

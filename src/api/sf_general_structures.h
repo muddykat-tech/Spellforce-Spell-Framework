@@ -267,7 +267,7 @@ typedef struct __attribute__((packed))
     FigureStatistic dexterity;
     FigureStatisticExt health;
     FigureStatistic intelligence;
-    FigureStatisticExt mana_stuff;
+    FigureStatisticExt mana;
     FigureStatisticExt stamina;
     FigureStatistic strength;
     FigureStatistic wisdom;

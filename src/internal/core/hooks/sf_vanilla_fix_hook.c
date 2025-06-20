@@ -4,87 +4,263 @@
 
 uint16_t __thiscall get_figure_statistic_current_ac(SF_CGdFigure *_this, uint16_t figure_id)
 {
-    return 1;
+    int32_t base_val = _this->figures[figure_id].armor.base_val;
+    int32_t bonus_val = _this->figures[figure_id].armor.bonus_val;
+    int32_t total_flat = base_val+bonus_val;
+    uint16_t result = 0;
+    if (total_flat >= 0)
+    {
+        int16_t multiplier = _this->figures[figure_id].armor.bonus_multiplier + 100;
+        (multiplier < 0) ? (multiplier = 1) : (multiplier);
+        result = (uint16_t)((total_flat * multiplier) / 100);
+    }
+    return result;
 }
 
 uint16_t __thiscall get_figure_statistic_current_agi(SF_CGdFigure *_this, uint16_t figure_id)
 {
-    return 1;
+    int32_t base_val = _this->figures[figure_id].agility.base_val;
+    int32_t bonus_val = _this->figures[figure_id].agility.bonus_val;
+    int32_t total_flat = base_val+bonus_val;
+    uint16_t result = 0;
+    if (total_flat >= 0)
+    {
+        int16_t multiplier = _this->figures[figure_id].agility.bonus_multiplier + 100;
+        (multiplier < 0) ? (multiplier = 1) : (multiplier);
+        result = (uint16_t)((total_flat * multiplier) / 100);
+    }
+    return result;
 }
 
 uint16_t __thiscall get_figure_statistic_current_cha(SF_CGdFigure *_this, uint16_t figure_id)
 {
-    return 1;
+    int32_t base_val = _this->figures[figure_id].charisma.base_val;
+    int32_t bonus_val = _this->figures[figure_id].charisma.bonus_val;
+    int32_t total_flat = base_val+bonus_val;
+    uint16_t result = 0;
+    if (total_flat >= 0)
+    {
+        int16_t multiplier = _this->figures[figure_id].charisma.bonus_multiplier + 100;
+        (multiplier < 0) ? (multiplier = 1) : (multiplier);
+        result = (uint16_t)((total_flat * multiplier) / 100);
+    }
+    return result;
 }
 
 uint16_t __thiscall get_figure_statistic_current_dex(SF_CGdFigure *_this, uint16_t figure_id)
 {
-    return 1;
+    int32_t base_val = _this->figures[figure_id].dexterity.base_val;
+    int32_t bonus_val = _this->figures[figure_id].dexterity.bonus_val;
+    int32_t total_flat = base_val+bonus_val;
+    uint16_t result = 0;
+    if (total_flat >= 0)
+    {
+        int16_t multiplier = _this->figures[figure_id].dexterity.bonus_multiplier + 100;
+        (multiplier < 0) ? (multiplier = 1) : (multiplier);
+        result = (uint16_t)((total_flat * multiplier) / 100);
+    }
+    return result;
 }
 
 uint16_t __thiscall get_figure_statistic_current_hp(SF_CGdFigure *_this, uint16_t figure_id)
 {
-    return 1;
+    int32_t base_val = _this->figures[figure_id].health.base_val;
+    int32_t bonus_val = _this->figures[figure_id].health.bonus_val;
+    int32_t total_flat = base_val+bonus_val;
+    uint16_t result = 0;
+    if (total_flat >= 0)
+    {
+        int16_t multiplier = _this->figures[figure_id].health.bonus_multiplier + 100;
+        uint16_t missing_val = _this->figures[figure_id].health.missing_val;
+        (multiplier < 0) ? (multiplier = 1) : (multiplier);
+        result = (uint16_t)((total_flat * multiplier) / 100);
+        (result - missing_val < 0) ? (result = 0) : (result -= missing_val);
+    }
+    return result;
 }
 
 uint16_t __thiscall get_figure_statistic_current_int(SF_CGdFigure *_this, uint16_t figure_id)
 {
-    return 1;
+    int32_t base_val = _this->figures[figure_id].intelligence.base_val;
+    int32_t bonus_val = _this->figures[figure_id].intelligence.bonus_val;
+    int32_t total_flat = base_val+bonus_val;
+    uint16_t result = 0;
+    if (total_flat >= 0)
+    {
+        int16_t multiplier = _this->figures[figure_id].intelligence.bonus_multiplier + 100;
+        (multiplier < 0) ? (multiplier = 1) : (multiplier);
+        result = (uint16_t)((total_flat * multiplier) / 100);
+    }
+    return result;
 }
 
 uint16_t __thiscall get_figure_statistic_current_mp(SF_CGdFigure *_this, uint16_t figure_id)
 {
-    return 1;
+    int32_t base_val = _this->figures[figure_id].mana.base_val;
+    int32_t bonus_val = _this->figures[figure_id].mana.bonus_val;
+    int32_t total_flat = base_val+bonus_val;
+    uint16_t result = 0;
+    if (total_flat >= 0)
+    {
+        int16_t multiplier = _this->figures[figure_id].mana.bonus_multiplier + 100;
+        uint16_t missing_val = _this->figures[figure_id].mana.missing_val;
+        (multiplier < 0) ? (multiplier = 1) : (multiplier);
+        result = (uint16_t)((total_flat * multiplier) / 100);
+        (result - missing_val < 0) ? (result = 0) : (result -= missing_val);
+    }
+    return result;
 }
 
 uint16_t __thiscall get_figure_statistic_current_sta(SF_CGdFigure *_this, uint16_t figure_id)
 {
-    return 1;
+    int32_t base_val = _this->figures[figure_id].stamina.base_val;
+    int32_t bonus_val = _this->figures[figure_id].stamina.bonus_val;
+    int32_t total_flat = base_val+bonus_val;
+    uint16_t result = 0;
+    if (total_flat >= 0)
+    {
+        int16_t multiplier = _this->figures[figure_id].stamina.bonus_multiplier + 100;
+        uint16_t missing_val = _this->figures[figure_id].stamina.missing_val;
+        (multiplier < 0) ? (multiplier = 1) : (multiplier);
+        result = (uint16_t)((total_flat * multiplier) / 100);
+        (result - missing_val < 0) ? (result = 0) : (result -= missing_val);
+    }
+    return result;
 }
 
 uint16_t __thiscall get_figure_statistic_current_str(SF_CGdFigure *_this, uint16_t figure_id)
 {
-    return 1;
+    int32_t base_val = _this->figures[figure_id].strength.base_val;
+    int32_t bonus_val = _this->figures[figure_id].strength.bonus_val;
+    int32_t total_flat = base_val+bonus_val;
+    uint16_t result = 0;
+    if (total_flat >= 0)
+    {
+        int16_t multiplier = _this->figures[figure_id].strength.bonus_multiplier + 100;
+        (multiplier < 0) ? (multiplier = 1) : (multiplier);
+        result = (uint16_t)((total_flat * multiplier) / 100);
+    }
+    return result;
 }
 
 uint16_t __thiscall get_figure_statistic_current_wis(SF_CGdFigure *_this, uint16_t figure_id)
 {
-    return 1;
+    int32_t base_val = _this->figures[figure_id].wisdom.base_val;
+    int32_t bonus_val = _this->figures[figure_id].wisdom.bonus_val;
+    int32_t total_flat = base_val+bonus_val;
+    uint16_t result = 0;
+    if (total_flat >= 0)
+    {
+        int16_t multiplier = _this->figures[figure_id].wisdom.bonus_multiplier + 100;
+        (multiplier < 0) ? (multiplier = 1) : (multiplier);
+        result = (uint16_t)((total_flat * multiplier) / 100);
+    }
+    return result;
 }
 
 uint16_t __thiscall get_figure_statistic_current_fire_res(SF_CGdFigure *_this, uint16_t figure_id)
 {
-    return 1;
+    int32_t base_val = _this->figures[figure_id].resistance_fire.base_val;
+    int32_t bonus_val = _this->figures[figure_id].resistance_fire.bonus_val;
+    int32_t total_flat = base_val+bonus_val;
+    uint16_t result = 0;
+    if (total_flat >= 0)
+    {
+        int16_t multiplier = _this->figures[figure_id].resistance_fire.bonus_multiplier + 100;
+        (multiplier < 0) ? (multiplier = 1) : (multiplier);
+        result = (uint16_t)((total_flat * multiplier) / 100);
+    }
+    return result;
 }
 
 uint16_t __thiscall get_figure_statistic_current_ice_res(SF_CGdFigure *_this, uint16_t figure_id)
 {
-    return 1;
+    int32_t base_val = _this->figures[figure_id].resistance_ice.base_val;
+    int32_t bonus_val = _this->figures[figure_id].resistance_ice.bonus_val;
+    int32_t total_flat = base_val+bonus_val;
+    uint16_t result = 0;
+    if (total_flat >= 0)
+    {
+        int16_t multiplier = _this->figures[figure_id].resistance_ice.bonus_multiplier + 100;
+        (multiplier < 0) ? (multiplier = 1) : (multiplier);
+        result = (uint16_t)((total_flat * multiplier) / 100);
+    }
+    return result;
 }
 
 uint16_t __thiscall get_figure_statistic_current_mental_res(SF_CGdFigure *_this, uint16_t figure_id)
 {
-    return 1;
+    int32_t base_val = _this->figures[figure_id].resistance_mental.base_val;
+    int32_t bonus_val = _this->figures[figure_id].resistance_mental.bonus_val;
+    int32_t total_flat = base_val+bonus_val;
+    uint16_t result = 0;
+    if (total_flat >= 0)
+    {
+        int16_t multiplier = _this->figures[figure_id].resistance_mental.bonus_multiplier + 100;
+        (multiplier < 0) ? (multiplier = 1) : (multiplier);
+        result = (uint16_t)((total_flat * multiplier) / 100);
+    }
+    return result;
 }
 
 uint16_t __thiscall get_figure_statistic_current_black_res(SF_CGdFigure *_this, uint16_t figure_id)
 {
-    return 1;
+    int32_t base_val = _this->figures[figure_id].resistance_black.base_val;
+    int32_t bonus_val = _this->figures[figure_id].resistance_black.bonus_val;
+    int32_t total_flat = base_val+bonus_val;
+    uint16_t result = 0;
+    if (total_flat >= 0)
+    {
+        int16_t multiplier = _this->figures[figure_id].resistance_black.bonus_multiplier + 100;
+        (multiplier < 0) ? (multiplier = 1) : (multiplier);
+        result = (uint16_t)((total_flat * multiplier) / 100);
+    }
+    return result;
 }
 
 uint16_t __thiscall get_figure_statistic_current_walk_spd(SF_CGdFigure *_this, uint16_t figure_id)
 {
-    return 1;
+    int32_t base_val = _this->figures[figure_id].walk_speed.base_val;
+    int32_t bonus_val = _this->figures[figure_id].walk_speed.bonus_val;
+    int32_t total_flat = base_val+bonus_val;
+    uint16_t result = 0;
+    if (total_flat >= 0)
+    {
+        int16_t multiplier = _this->figures[figure_id].walk_speed.bonus_multiplier + 100;
+        (multiplier < 0) ? (multiplier = 1) : (multiplier);
+        result = (uint16_t)((total_flat * multiplier) / 100);
+    }
+    return result;
 }
 
 uint16_t __thiscall get_figure_statistic_current_fight_spd(SF_CGdFigure *_this, uint16_t figure_id)
 {
-    return 1;
+    int32_t base_val = _this->figures[figure_id].fight_speed.base_val;
+    int32_t bonus_val = _this->figures[figure_id].fight_speed.bonus_val;
+    int32_t total_flat = base_val+bonus_val;
+    uint16_t result = 0;
+    if (total_flat >= 0)
+    {
+        int16_t multiplier = _this->figures[figure_id].fight_speed.bonus_multiplier + 100;
+        (multiplier < 0) ? (multiplier = 1) : (multiplier);
+        result = (uint16_t)((total_flat * multiplier) / 100);
+    }
+    return result;
 }
 
 uint16_t __thiscall get_figure_statistic_current_cast_spd(SF_CGdFigure *_this, uint16_t figure_id)
 {
-    return 1;
+    int32_t base_val = _this->figures[figure_id].cast_speed.base_val;
+    int32_t bonus_val = _this->figures[figure_id].cast_speed.bonus_val;
+    int32_t total_flat = base_val+bonus_val;
+    uint16_t result = 0;
+    if (total_flat >= 0)
+    {
+        int16_t multiplier = _this->figures[figure_id].cast_speed.bonus_multiplier + 100;
+        (multiplier < 0) ? (multiplier = 1) : (multiplier);
+        result = (uint16_t)((total_flat * multiplier) / 100);
+    }
+    return result;
 }
 
 /* Figure Statistics */
