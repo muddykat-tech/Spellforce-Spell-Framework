@@ -1014,6 +1014,37 @@ struct __attribute__((packed)) SF_CGdBuilding
     uint32_t unknown2;
 };
 
+//TODO include this into building structures
+typedef struct astruct32 astruct32;
+typedef struct BuildingResource BuildingResource;
+struct __attribute__((packed)) BuildingResource
+{
+    uint16_t id;
+    uint8_t race;
+    uint8_t can_enter;
+    uint8_t slot_count;
+    uint16_t health;
+    uint16_t name_id;
+    uint16_t worker_cycle;
+    uint16_t building_required;
+    uint16_t initial_angle;
+    uint16_t ext_description_id;
+    uint8_t flags;
+};
+
+struct __attribute__((packed)) astruct32
+{
+    astruct32 *ref1;
+    astruct32 *ref2;
+    astruct32 *ref3;
+    uint16_t padding_1;
+    uint8_t id;
+    BuildingResource building;
+    uint8_t padding_2[3];
+};
+
+typedef void (__attribute__((__thiscall__)) *addBuilding_ptr)(void *_this,void *struct1, void *struct2);
+
 /* Menu Structures */
 
 typedef struct __attribute__((packed))

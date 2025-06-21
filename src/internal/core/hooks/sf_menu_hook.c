@@ -178,6 +178,45 @@ void __attribute__((no_caller_saved_registers,
     // sprintf(vid_loc, "videos\\sfsf");
     // attachVideo((CAppMenu*)_CAppMenu, container_hack, vid_loc);
 
+
+
+//TODO: Move it to separate function with blows and whistles
+
+/*
+    uint8_t id = 214;
+    astruct32 new_building;
+
+    log_info("Pointer walk start");
+
+    uint32_t CAppSession = *(uint32_t *)(_CAppMenu + 0x4 + 0x38);
+    log_info("Pointer walk step 2");
+    uint32_t CGdMain = *(uint32_t *)(CAppSession + 0x7c+0x4);
+    log_info("Pointer walk step 3");
+    uint32_t CGdResource = *(uint32_t *) (CGdMain + 0x4 + 0x60);
+    log_info("Pointer walk step 4");
+    addBuilding_ptr AddBuilding = (addBuilding_ptr)(ASI::AddrOf(0x2669f0));
+    for (int i = 0; i < 7; i++)
+    {
+        log_info("Adding extra building");
+        id = 214 + i;
+        AddBuilding(CGdResource, &new_building, &id);
+        (new_building.ref1->building).id = id;
+        (new_building.ref1->building).race = 3; //let's add more elven buildings
+        (new_building.ref1->building).can_enter = false;
+        (new_building.ref1->building).slot_count = 0;
+        (new_building.ref1->building).building_required = 0;
+        (new_building.ref1->building).worker_cycle = 0;
+        (new_building.ref1->building).name_id = 11873;
+        (new_building.ref1->building).health = 100;
+        (new_building.ref1->building).ext_description_id = 0;
+        (new_building.ref1->building).initial_angle = 0;
+        (new_building.ref1->building).flags = 1;
+
+
+    }
+ */
+
+
     s_menu_func(_CAppMenu);
 }
 
