@@ -1,6 +1,7 @@
 #include "sf_spelleffect_handlers.h"
 #include "../core/sf_wrappers.h"
 #include "../registry/spell_data_registries/sf_spelleffect_registry.h"
+#include <cstdio>
 
 handler_ptr effect_ability_benefactions_handler;
 handler_ptr effect_ability_berserk_handler;
@@ -167,6 +168,71 @@ handler_ptr effect_wave_handler;
 handler_ptr effect_weaken_handler;
 handler_ptr effect_weaken_area_handler;
 
+
+extern SpellFunctions spellAPI;
+extern EffectFunctions effectAPI;
+extern FigureFunctions figureAPI;
+//hotfix for firebane
+//TODO: fix some stuff about hasSpellOnIt
+void __thiscall effect_fire_resistance (SF_CGdSpell *_this, uint16_t spell_index)
+{
+    SF_GdSpell *spell = &_this->active_spell_list[spell_index];
+    SF_CGdResourceSpell spell_data;
+    SF_SpellEffectInfo effect_info;
+    effect_info.spell_id = spell->spell_id;
+    effect_info.job_id = spell->spell_job;
+    spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+    uint16_t source_index = spell->source.entity_index;
+    char message[256];
+    if (spell->target.entity_type == 5)
+    {
+        uint32_t tick = spellAPI.getXData(_this, spell_index, SPELL_TICK_COUNT_AUX);
+        sprintf(message, "tick value %d", tick);
+        log_info(message);
+        if (tick == 0)
+        {
+            _this->active_spell_list[spell_index].to_do_count = (spell_data.params[1] * 10) / 1000;
+            spellAPI.addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1);
+            int16_t multiplier = spell_data.params[0];
+            (multiplier >= 127) ? (multiplier = 127) : (multiplier);
+            for (int i = 1; i <= _this->SF_CGdFigure->max_used; i++)
+            {
+                if ((_this->SF_CGdFigure->figures[i].owner != (uint16_t)(-1)) &&
+                    (_this->SF_CGdFigure->figures[i].owner == _this->SF_CGdFigure->figures[source_index].owner) &&
+                    ((*(uint8_t *)(&_this->SF_CGdFigure->figures[i].flags) & 0xa) == 0))
+                {
+                    SF_CGdTargetData target_data;
+                    target_data.entity_index = i;
+                    target_data.entity_type = 1;
+                    target_data.position = {0,0};
+                    SF_Rectangle rect = {0,0};
+                    figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, RESISTANCE_FIRE, i, multiplier);
+                    spellAPI.addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, 0, &target_data,
+                                             _this->OpaqueClass->current_step,
+                                             0x14, &rect);
+                }
+            }
+            return;
+        }
+        else
+        {
+            int16_t multiplier = spell_data.params[0];
+            (multiplier >= 127) ? (multiplier = 127) : (multiplier);
+            for (int i = 1; i <= _this->SF_CGdFigure->max_used; i++)
+            {
+                if ((_this->SF_CGdFigure->figures[i].owner != (uint16_t)(-1)) &&
+                    (_this->SF_CGdFigure->figures[i].owner == _this->SF_CGdFigure->figures[source_index].owner) &&
+                    ((*(uint8_t *)(&_this->SF_CGdFigure->figures[i].flags) & 0xa) == 0))
+                {
+                    figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, RESISTANCE_FIRE, i, -multiplier);
+                }
+            }
+        }
+    }
+    spellAPI.setEffectDone(_this, spell_index, 0);
+    return;
+
+}
 /**
  * Initializes all the vanilla effect handlers with their respective addresses.
  *
@@ -253,7 +319,7 @@ void initialize_vanilla_effect_handler_hooks()
     effect_fireball2_handler = (handler_ptr)(ASI::AddrOf(0x339a20));
     effect_firebullet_handler = (handler_ptr)(ASI::AddrOf(0x339e00));
     effect_fireburst_handler = (handler_ptr)(ASI::AddrOf(0x339fc0));
-    effect_fire_resistance_handler = (handler_ptr)(ASI::AddrOf(0x33a3e0));
+    effect_fire_resistance_handler = &effect_fire_resistance;
     effect_fireshield1_handler = (handler_ptr)(ASI::AddrOf(0x33a610));
     effect_fireshield2_handler = (handler_ptr)(ASI::AddrOf(0x33a7b0));
     effect_flexibility_handler = (handler_ptr)(ASI::AddrOf(0x33a970));
