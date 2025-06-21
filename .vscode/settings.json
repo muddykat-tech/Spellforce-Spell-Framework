@@ -111,7 +111,8 @@
         "sf_utility_hooks.h": "c",
         "sf_onhit_registry.h": "c",
         "text_encoding": "c",
-        "sf_ai_structures.h": "c"
+        "sf_ai_structures.h": "c",
+        "sf_spell_structures.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled",
     "makefile.makePath": "mingw32-make",

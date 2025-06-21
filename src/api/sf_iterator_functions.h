@@ -1,7 +1,7 @@
 #pragma once
 #include <stdint.h>
 #include <stdbool.h>
-#include "sf_general_structures.h"
+#include "./structures/sf_iterator_structures.h"
 
 typedef struct __attribute__((packed))
 {

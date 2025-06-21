@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "sf_general_structures.h"
+#include "./structures/sf_toolbox_structures.h"
 
 // Declare the function pointers for the ToolboxFunctions group
 DECLARE_FUNCTION(void, dealDamage, SF_CGdFigureToolbox *CGdFigureToolbox,

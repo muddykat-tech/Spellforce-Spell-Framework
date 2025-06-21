@@ -8,7 +8,6 @@
  */
 
 #pragma once
-#include "sf_general_structures.h"
 #include "./structures/sf_effect_structures.h"
 
 typedef void (__thiscall *sub_effect_handler_ptr)(SF_CGDEffect *,
