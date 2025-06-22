@@ -289,8 +289,7 @@ int __thiscall brilliance_refresh_handler(SF_CGdSpell *_this,
             spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data,
                                           _this->active_spell_list[
                                               spell_index_of_type].spell_id);
-            uint16_t max_mana = figureAPI.getCurrentMaxMana(_this->SF_CGdFigure,
-                                                            target_entity_index);
+            uint16_t max_mana = figureAPI.getMaxStat(_this->SF_CGdFigure, target_entity_index, MANA);
             figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, WISDOM,
                                               target_entity_index,
                                               -spell_data.params[0]);
@@ -329,9 +328,7 @@ int __thiscall suffocation_refresh_handler(SF_CGdSpell *_this,
             spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data,
                                           _this->active_spell_list[
                                               spell_index_of_type].spell_id);
-            uint16_t max_health =
-                figureAPI.getCurrentMaxHealth(_this->SF_CGdFigure,
-                                              target_entity_index);
+            uint16_t max_health = figureAPI.getMaxStat(_this->SF_CGdFigure, target_entity_index, HEALTH);
             figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, STAMINA,
                                               target_entity_index,
                                               spell_data.params[0]);
@@ -462,9 +459,7 @@ int __thiscall endurance_refresh_handler(SF_CGdSpell *_this,
         {
             spellAPI.removeDLLNode(_this, spell_index_of_type);
 
-            uint16_t max_health =
-                figureAPI.getCurrentMaxHealth(_this->SF_CGdFigure,
-                                              target_entity_index);
+            uint16_t max_health = figureAPI.getMaxStat(_this->SF_CGdFigure, target_entity_index, HEALTH);
             int8_t bonus = (int8_t)(-spellAPI.getXData(_this, spell_index,
                                                        SPELL_STAT_MUL_MODIFIER));
             figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, STAMINA,
@@ -569,8 +564,8 @@ int __thiscall enlightenment_refresh_handler(SF_CGdSpell *_this,
             spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data,
                                           _this->active_spell_list[
                                               spell_index_of_type].spell_id);
-            uint16_t max_mana = figureAPI.getCurrentMaxMana(_this->SF_CGdFigure,
-                                                            target_entity_index);
+
+            uint16_t max_mana = figureAPI.getMaxStat(_this->SF_CGdFigure, target_entity_index, MANA);
             int8_t bonus = (int8_t)(-spellAPI.getXData(_this, spell_index,
                                                        SPELL_STAT_MUL_MODIFIER));
             figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, INTELLIGENCE,

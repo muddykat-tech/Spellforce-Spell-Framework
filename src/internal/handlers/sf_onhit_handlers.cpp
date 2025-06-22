@@ -114,8 +114,7 @@ uint16_t __thiscall critical_hits_onhit_handler(SF_CGdFigureJobs *_this,
     spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
 
     uint16_t tmp_damage = damage * spell_data.params[1];
-    uint16_t hp_left = figureAPI.getCurrentHealth(_this->CGdFigure,
-                                                  target_index);
+    uint16_t hp_left = figureAPI.getCurrentStat(_this->CGdFigure, target_index, HEALTH);
     if (tmp_damage < hp_left)
     {
         return damage;

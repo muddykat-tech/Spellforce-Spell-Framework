@@ -148,8 +148,7 @@ void __thiscall brilliance_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
     if (toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index,
                                 spell_data.spell_line_id))
     {
-        uint16_t max_mana = figureAPI.getCurrentMaxMana(_this->SF_CGdFigure,
-                                                        target_index);
+        uint16_t max_mana = figureAPI.getMaxStat(_this->SF_CGdFigure, target_index, MANA);
         figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, WISDOM,
                                           target_index, -spell_data.params[0]);
         toolboxAPI.rescaleLevelStats(_this->SF_CGdFigureToolBox, target_index);
@@ -169,8 +168,7 @@ void __thiscall suffocation_end_handler(SF_CGdSpell *_this,
     if (toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index,
                                 spell_data.spell_line_id))
     {
-        uint16_t max_health = figureAPI.getCurrentMaxHealth(_this->SF_CGdFigure,
-                                                            target_index);
+        uint16_t max_health = figureAPI.getMaxStat(_this->SF_CGdFigure, target_index, HEALTH);
         figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, STAMINA,
                                           target_index, spell_data.params[0]);
         toolboxAPI.rescaleLevelStats(_this->SF_CGdFigureToolBox, target_index);
@@ -240,8 +238,7 @@ void __thiscall edurance_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
     if (toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index,
                                 spell_data.spell_line_id))
     {
-        uint16_t max_health = figureAPI.getCurrentMaxHealth(_this->SF_CGdFigure,
-                                                            target_index);
+        uint16_t max_health = figureAPI.getMaxStat(_this->SF_CGdFigure, target_index, HEALTH);
         int8_t bonus = (int8_t)(-spellAPI.getXData(_this, spell_index,
                                                    SPELL_STAT_MUL_MODIFIER));
         figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, STAMINA,
@@ -296,8 +293,8 @@ void __thiscall enlightenment_end_handler(SF_CGdSpell *_this,
     if (toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index,
                                 spell_data.spell_line_id))
     {
-        uint16_t max_mana = figureAPI.getCurrentMaxMana(_this->SF_CGdFigure,
-                                                        target_index);
+        uint16_t max_mana = figureAPI.getMaxStat(_this->SF_CGdFigure, target_index, MANA);
+
         int8_t bonus = (int8_t)(-spellAPI.getXData(_this, spell_index,
                                                    SPELL_STAT_MUL_MODIFIER));
         figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, INTELLIGENCE,

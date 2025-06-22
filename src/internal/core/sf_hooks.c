@@ -64,7 +64,7 @@ void initialize_data_hooks()
 
     // Used to print to the game console
     initialize_console_data_hooks();
-    
+
     initialize_vanilla_fix_hooks();
 
     log_info("| - FigureAPI Hooks");
@@ -74,10 +74,7 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(figure, addAction, 0x2AE0B0);
     DEFINE_FUNCTION(figure, addBonusMult, 0x35A3E0);
     DEFINE_FUNCTION(figure, decreaseHealth, 0x2b5b40);
-    DEFINE_FUNCTION(figure, getCurrentHealth, 0x279350);
-    DEFINE_FUNCTION(figure, getCurrentMaxMana, 0x2b2a20);
     DEFINE_FUNCTION(figure, rescaleMana, 0x2b5d50);
-    DEFINE_FUNCTION(figure, getCurrentMaxHealth, 0x2b2970);
     DEFINE_FUNCTION(figure, rescaleHealth, 0x2b5cd0);
     DEFINE_FUNCTION(figure, getJob, 0x279290);
     DEFINE_FUNCTION(figure, FUN_006e3a90, 0x2e3a90);
@@ -85,7 +82,6 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(figure, isFlagSet, 0x279d20);
     DEFINE_FUNCTION(figure, getSpellJobStartNode, 0x2b2de0);
     DEFINE_FUNCTION(figure, subMana, 0x2b5b60);
-    DEFINE_FUNCTION(figure, getCurrentMana, 0x2b29c0);
     DEFINE_FUNCTION(figure, getPosition, 0x2caaf0);
     DEFINE_FUNCTION(figure, setTask, 0x2b7110);
     DEFINE_FUNCTION(figure, getWeaponStats, 0x2b30a0);
@@ -181,6 +177,9 @@ void initialize_data_hooks()
 
     log_info("| - FigureAPI Wrappers");
     INCLUDE_FUNCTION(figure, addBonusMultToStatistic, &addBonusMultToStatistic);
+
+    INCLUDE_FUNCTION(figure, getCurrentStat, &getCurrentStat);
+    INCLUDE_FUNCTION(figure, getMaxStat, &getMaxStat);
 
     log_info("| - ToolboxAPI Wrappers");
     INCLUDE_FUNCTION(toolbox, hasAuraActive, &hasAuraActive);

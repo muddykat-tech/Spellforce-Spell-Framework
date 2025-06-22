@@ -2,6 +2,52 @@
 #include "../../../asi/sf_asi.h"
 #include "sf_vanilla_fix_hook.h"
 
+
+uint16_t __thiscall get_figure_statistic_max_hp(SF_CGdFigure *_this, uint16_t figure_id)
+{
+    int32_t base_val = _this->figures[figure_id].health.base_val;
+    int32_t bonus_val = _this->figures[figure_id].health.bonus_val;
+    int32_t total_flat = base_val+bonus_val;
+    uint16_t result = 0;
+    if (total_flat >= 0)
+    {
+        int16_t multiplier = _this->figures[figure_id].health.bonus_multiplier + 100;
+        (multiplier < 0) ? (multiplier = 1) : (multiplier);
+        result = (uint16_t)((total_flat * multiplier) / 100);
+    }
+    return result;
+}
+
+uint16_t __thiscall get_figure_statistic_max_mp(SF_CGdFigure *_this, uint16_t figure_id)
+{
+    int32_t base_val = _this->figures[figure_id].mana.base_val;
+    int32_t bonus_val = _this->figures[figure_id].mana.bonus_val;
+    int32_t total_flat = base_val+bonus_val;
+    uint16_t result = 0;
+    if (total_flat >= 0)
+    {
+        int16_t multiplier = _this->figures[figure_id].mana.bonus_multiplier + 100;
+        (multiplier < 0) ? (multiplier = 1) : (multiplier);
+        result = (uint16_t)((total_flat * multiplier) / 100);
+    }
+    return result;
+}
+
+uint16_t __thiscall get_figure_statistic_max_sta(SF_CGdFigure *_this, uint16_t figure_id)
+{
+    int32_t base_val = _this->figures[figure_id].stamina.base_val;
+    int32_t bonus_val = _this->figures[figure_id].stamina.bonus_val;
+    int32_t total_flat = base_val+bonus_val;
+    uint16_t result = 0;
+    if (total_flat >= 0)
+    {
+        int16_t multiplier = _this->figures[figure_id].stamina.bonus_multiplier + 100;
+        (multiplier < 0) ? (multiplier = 1) : (multiplier);
+        result = (uint16_t)((total_flat * multiplier) / 100);
+    }
+    return result;
+}
+
 uint16_t __thiscall get_figure_statistic_current_ac(SF_CGdFigure *_this, uint16_t figure_id)
 {
     int32_t base_val = _this->figures[figure_id].armor.base_val;

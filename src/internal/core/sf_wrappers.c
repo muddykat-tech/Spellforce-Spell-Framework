@@ -8,6 +8,7 @@
 
 #include "hooks/sf_menu_hook.h"
 #include "hooks/sf_console_hook.h"
+#include "hooks/sf_vanilla_fix_hook.h"
 #include "../registry/sf_mod_registry.h"
 
 /**
@@ -226,6 +227,168 @@ int8_t __thiscall addBonusMultExt (FigureStatisticExt *_this, int8_t value)
     _this->bonus_multiplier += value;
     return _this->bonus_multiplier;
 }
+
+
+uint16_t __thiscall getCurrentStat(SF_CGdFigure *_this, uint16_t target, StatisticDataKey key)
+{
+    switch (key)
+    {
+        case ARMOR:
+        {
+            return get_figure_statistic_current_ac(_this, target);
+        }
+        case AGILITY:
+        {
+            return get_figure_statistic_current_agi(_this, target);
+        }
+        case CHARISMA:
+        {
+            return get_figure_statistic_current_cha(_this, target);
+        }
+        case DEXTERITY:
+        {
+            return get_figure_statistic_current_dex(_this, target);
+        }
+        case INTELLIGENCE:
+        {
+            return get_figure_statistic_current_int(_this, target);
+        }
+        case STRENGTH:
+        {
+            return get_figure_statistic_current_str(_this, target);
+        }
+        case STAMINA:
+        {
+            return get_figure_statistic_current_sta(_this, target);
+        }
+        case MANA:
+        {
+            return get_figure_statistic_current_mp(_this, target);
+        }
+        case HEALTH:
+        {
+            return get_figure_statistic_current_hp(_this, target);
+        }
+        case WISDOM:
+        {
+            return get_figure_statistic_current_wis(_this, target);
+        }
+        case RESISTANCE_FIRE:
+        {
+            return get_figure_statistic_current_fire_res(_this, target);
+        }
+        case RESISTANCE_ICE:
+        {
+            return get_figure_statistic_current_ice_res(_this, target);
+        }
+        case RESISTANCE_MENTAL:
+        {
+            return get_figure_statistic_current_mental_res(_this, target);
+        }
+        case RESISTANCE_BLACK:
+        {
+            return get_figure_statistic_current_black_res(_this, target);
+        }
+        case WALK_SPEED:
+        {
+            return get_figure_statistic_current_walk_spd(_this, target);
+        }
+        case FIGHT_SPEED:
+        {
+            return get_figure_statistic_current_fight_spd(_this, target);
+        }
+        case CAST_SPEED:
+        {
+            return get_figure_statistic_current_cast_spd(_this, target);
+        }
+        default:
+        {
+            return 0;
+        }
+    }
+}
+
+
+uint16_t __thiscall getMaxStat(SF_CGdFigure *_this, uint16_t target, StatisticDataKey key)
+{
+    switch (key)
+    {
+        case ARMOR:
+        {
+            return get_figure_statistic_current_ac(_this, target);
+        }
+        case AGILITY:
+        {
+            return get_figure_statistic_current_agi(_this, target);
+        }
+        case CHARISMA:
+        {
+            return get_figure_statistic_current_cha(_this, target);
+        }
+        case DEXTERITY:
+        {
+            return get_figure_statistic_current_dex(_this, target);
+        }
+        case INTELLIGENCE:
+        {
+            return get_figure_statistic_current_int(_this, target);
+        }
+        case STRENGTH:
+        {
+            return get_figure_statistic_current_str(_this, target);
+        }
+        case STAMINA:
+        {
+            return get_figure_statistic_max_sta(_this, target);
+        }
+        case MANA:
+        {
+            return get_figure_statistic_max_mp(_this, target);
+        }
+        case HEALTH:
+        {
+            return get_figure_statistic_max_hp(_this, target);
+        }
+        case WISDOM:
+        {
+            return get_figure_statistic_current_wis(_this, target);
+        }
+        case RESISTANCE_FIRE:
+        {
+            return get_figure_statistic_current_fire_res(_this, target);
+        }
+        case RESISTANCE_ICE:
+        {
+            return get_figure_statistic_current_ice_res(_this, target);
+        }
+        case RESISTANCE_MENTAL:
+        {
+            return get_figure_statistic_current_mental_res(_this, target);
+        }
+        case RESISTANCE_BLACK:
+        {
+            return get_figure_statistic_current_black_res(_this, target);
+        }
+        case WALK_SPEED:
+        {
+            return get_figure_statistic_current_walk_spd(_this, target);
+        }
+        case FIGHT_SPEED:
+        {
+            return get_figure_statistic_current_fight_spd(_this, target);
+        }
+        case CAST_SPEED:
+        {
+            return get_figure_statistic_current_cast_spd(_this, target);
+        }
+        default:
+        {
+            return 0;
+        }
+    }
+}
+
+
 void __thiscall addBonusMultToStatistic(SF_CGdFigure *figure,
                                         StatisticDataKey key, uint16_t target,
                                         int8_t value)

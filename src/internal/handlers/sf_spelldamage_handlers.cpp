@@ -163,8 +163,7 @@ uint16_t __thiscall death_grasp_dmg_handler(SF_CGdFigureToolbox *_this,
     SF_CGdResourceSpell spell_data;
     spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
     uint16_t roll_value = spellAPI.getRandom(_this->maybe_random, 100);
-    uint16_t current_health = figureAPI.getCurrentHealth(_this->CGdFigure,
-                                                         target);
+    uint16_t current_health = figureAPI.getCurrentStat(_this->CGdFigure, target, HEALTH);
     if (current_health <= current_damage)
     {
         if (roll_value <= spell_data.params[2])
@@ -209,7 +208,7 @@ uint16_t __thiscall mana_shield_dmg_handler(SF_CGdFigureToolbox *_this,
                                             uint32_t is_ranged_damage,
                                             uint16_t spell_id)
 {
-    uint16_t mana_left = figureAPI.getCurrentMana(_this->CGdFigure, target);
+    uint16_t mana_left = figureAPI.getCurrentStat(_this->CGdFigure, target, MANA);
     if (mana_left < current_damage)
     {
         current_damage = current_damage - mana_left;

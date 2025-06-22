@@ -40,10 +40,8 @@ uint32_t __thiscall shields_ai_handler(SF_CGdBattleDevelopment *_this,
             rank = rank << 1;
         }
 
-        if (figureAPI.getCurrentHealth(_this->battleData.CGdFigure,
-                                       target_index) <
-            figureAPI.getCurrentMaxHealth(_this->battleData.CGdFigure,
-                                          target_index))
+        if (figureAPI.getCurrentStat(_this->battleData.CGdFigure, target_index, HEALTH) <
+            figureAPI.getMaxStat(_this->battleData.CGdFigure, target_index, HEALTH))
         {
             rank = rank << 1;
         }
@@ -102,8 +100,7 @@ uint32_t __thiscall offensive_aura_ai_handler(SF_CGdBattleDevelopment *_this,
         else
         {
             uint16_t manacost = (spell_data->mana_cost * 3) / 2;
-            if (figureAPI.getCurrentMana(_this->battleData.CGdFigure,
-                                         target_index) < manacost)
+            if (figureAPI.getCurrentStat(_this->battleData.CGdFigure, target_index, MANA) < manacost)
             {
                 rank = 0;
             }
@@ -139,8 +136,7 @@ uint32_t __thiscall defensive_aura_ai_handler(SF_CGdBattleDevelopment *_this,
         else
         {
             uint16_t manacost = (spell_data->mana_cost * 3) / 2;
-            if (figureAPI.getCurrentMana(_this->battleData.CGdFigure,
-                                         target_index) < manacost)
+            if (figureAPI.getCurrentStat(_this->battleData.CGdFigure, target_index, MANA) < manacost)
             {
                 rank = 0;
             }
@@ -176,8 +172,7 @@ uint32_t __thiscall healing_aura_ai_handler(SF_CGdBattleDevelopment *_this,
             else
             {
                 uint16_t manacost = (spell_data->mana_cost * 3) / 2;
-                if (figureAPI.getCurrentMana(_this->battleData.CGdFigure,
-                                             target_index) < manacost)
+                if (figureAPI.getCurrentStat(_this->battleData.CGdFigure, target_index, MANA) < manacost)
                 {
                     rank = 0;
                 }
@@ -223,8 +218,7 @@ uint32_t __thiscall aura_light_ai_handler(SF_CGdBattleDevelopment *_this,
             if (rank)
             {
                 uint16_t manacost = (spell_data->mana_cost * 3) / 2;
-                if (figureAPI.getCurrentMana(_this->battleData.CGdFigure,
-                                             target_index) < manacost)
+                if (figureAPI.getCurrentStat(_this->battleData.CGdFigure, target_index, MANA) < manacost)
                 {
                     rank = 0;
                 }
@@ -354,8 +348,7 @@ uint32_t __thiscall summon_ai_handler(SF_CGdBattleDevelopment *_this,
     else
     {
         uint16_t manacost = (spell_data->mana_cost * 3) / 2;
-        if (figureAPI.getCurrentMana(_this->battleData.CGdFigure,
-                                     target_index) < manacost)
+        if (figureAPI.getCurrentStat(_this->battleData.CGdFigure, target_index, MANA) < manacost)
         {
             rank = 0;
         }
@@ -625,18 +618,11 @@ uint32_t __thiscall sacrifice_mana_ai_handler(SF_CGdBattleDevelopment *_this,
                                               SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 5;
-    uint16_t current_mana =
-        figureAPI.getCurrentMana(_this->battleData.CGdFigure,
-                                 _this->battleData.current_figure);
-    uint16_t max_mana = figureAPI.getCurrentMaxMana(_this->battleData.CGdFigure,
-                                                    _this->battleData.
-                                                    current_figure);
-    uint16_t current_health =
-        figureAPI.getCurrentHealth(_this->battleData.CGdFigure, target_index);
-    uint16_t max_health =
-        figureAPI.getCurrentMaxHealth(_this->battleData.CGdFigure,
-                                      target_index);
-    if ((max_mana / 2 < current_mana) && (current_health < max_health))
+    uint16_t current_mp = figureAPI.getCurrentStat(_this->battleData.CGdFigure, _this->battleData.current_figure, MANA);
+    uint16_t max_mana = figureAPI.getMaxStat(_this->battleData.CGdFigure, _this->battleData.current_figure, MANA);
+    uint16_t current_health = figureAPI.getCurrentStat(_this->battleData.CGdFigure, target_index, HEALTH);
+    uint16_t max_health = figureAPI.getMaxStat(_this->battleData.CGdFigure, target_index, HEALTH);
+    if ((max_mana / 2 < current_mp) && (current_health < max_health))
     {
         if (current_health == 0)
         {
@@ -705,8 +691,7 @@ uint32_t __thiscall extinct_ai_handler(SF_CGdBattleDevelopment *_this,
                 _this->battleData.enemy_figures.data[i].entity_index;
             if (figureAPI.isAlive(_this->battleData.CGdFigure, figure_index))
             {
-                if (figureAPI.getCurrentHealth(_this->battleData.CGdFigure,
-                                               figure_index) < threshold)
+                if (figureAPI.getCurrentStat(_this->battleData.CGdFigure, figure_index, HEALTH) < threshold)
                 {
                     SF_Coord position;
                     figureAPI.getPosition(_this->battleData.CGdFigure,
@@ -740,11 +725,9 @@ uint32_t __thiscall healing_ai_handler(SF_CGdBattleDevelopment *_this,
                                        SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 1;
-    uint16_t current_health =
-        figureAPI.getCurrentHealth(_this->battleData.CGdFigure, target_index);
-    uint16_t max_health =
-        figureAPI.getCurrentMaxHealth(_this->battleData.CGdFigure,
-                                      target_index);
+    uint16_t current_health = figureAPI.getCurrentStat(_this->battleData.CGdFigure, target_index, HEALTH);
+    uint16_t max_health = figureAPI.getMaxStat(_this->battleData.CGdFigure, target_index, HEALTH);
+
     uint16_t healing_amount = 0;
     struct
     {
@@ -835,11 +818,8 @@ uint32_t __thiscall freeze_ai_handler(SF_CGdBattleDevelopment *_this,
                                       SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 2;
-    uint16_t max_health =
-        figureAPI.getCurrentMaxHealth(_this->battleData.CGdFigure,
-                                      target_index);
-    uint16_t current_health =
-        figureAPI.getCurrentHealth(_this->battleData.CGdFigure, target_index);
+    uint16_t max_health = figureAPI.getMaxStat(_this->battleData.CGdFigure, target_index, HEALTH);
+    uint16_t current_health = figureAPI.getCurrentStat(_this->battleData.CGdFigure, target_index, HEALTH);
     if (current_health < max_health)
     {
         rank = 4;
@@ -953,19 +933,13 @@ uint32_t __thiscall manatap_ai_handler(SF_CGdBattleDevelopment *_this,
                                        SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 2;
-    uint16_t current_mana =
-        figureAPI.getCurrentMana(_this->battleData.CGdFigure,
-                                 _this->battleData.current_figure);
-    uint16_t max_mana = figureAPI.getCurrentMaxMana(_this->battleData.CGdFigure,
-                                                    _this->battleData.
-                                                    current_figure);
-    if (current_mana <= (uint16_t)((max_mana * 95) / 100))
+    uint16_t current_mp = figureAPI.getCurrentStat(_this->battleData.CGdFigure, _this->battleData.current_figure, MANA);
+    uint16_t max_mana = figureAPI.getMaxStat(_this->battleData.CGdFigure, _this->battleData.current_figure, MANA);
+
+    if (current_mp <= (uint16_t)((max_mana * 95) / 100))
     {
-        uint16_t target_mana =
-            figureAPI.getCurrentMana(_this->battleData.CGdFigure, target_index);
-        uint16_t target_max_mana =
-            figureAPI.getCurrentMaxMana(_this->battleData.CGdFigure,
-                                        target_index);
+        uint16_t target_mana = figureAPI.getCurrentStat(_this->battleData.CGdFigure, target_index, MANA);
+        uint16_t target_max_mana = figureAPI.getMaxStat(_this->battleData.CGdFigure, target_index, MANA);
         if ((target_max_mana / 10) > target_mana)
         {
             rank = 0;
