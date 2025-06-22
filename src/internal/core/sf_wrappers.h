@@ -13,12 +13,10 @@ void log_message(const char *filename, const char *message);
 
 void initialize_wrapper_data_hooks();
 
-extern bool __thiscall hasAuraActive(SF_CGdFigureToolbox *_this,
-                                     uint16_t figure_id);
+extern bool __thiscall hasAuraActive(SF_CGdFigureToolbox *_this, uint16_t figure_id);
 extern bool __thiscall isActionMelee(SF_SGtFigureAction *_this);
 extern bool __thiscall hasSpellTag(uint16_t spell_id, SpellTag tag);
-extern void __thiscall setupFigureIterator(CGdFigureIterator *iterator,
-                                           SF_CGdSpell *spell);
+extern void __thiscall setupFigureIterator(CGdFigureIterator *iterator, SF_CGdSpell *spell);
 extern void __thiscall disposeFigureIterator(CGdFigureIterator *iterator);
 
 extern void __thiscall spellEffectCallback(SF_CGdSpell *_this,
@@ -46,6 +44,10 @@ extern uint16_t __thiscall sf_get_spell_id(SF_CGdSpell *_this,
                                            uint16_t spell_index);
 extern uint32_t getDistance(SF_Coord *pointA, SF_Coord *pointB);
 extern SFLog *setup_logger();
+
+extern uint16_t __thiscall getPhysDamageReduction(SF_CGdFigureToolbox *_this, uint16_t source_index,
+                                                  uint16_t target_index,
+                                                  uint16_t action_id);
 
 
 typedef void (__thiscall *vfunction_2_ptr)(void *_this, void *input);
@@ -81,6 +83,9 @@ typedef void (__thiscall *container_alpha_ptr)(CMnuContainer *_this,
 typedef void (__thiscall *CMnuBase_setname_ptr)(CMnuBase *_this,
                                                 SF_String *name);
 
+typedef uint16_t (__thiscall *get_phys_damage_reduction_ptr)(void *AutoClass34, uint16_t source_index,
+                                                             uint16_t target_index,
+                                                             uint16_t unkn);
 extern FUN_0069eaf0_ptr FUN_0069eaf0;
 extern fidfree_ptr fidFree;
 extern SF_String_ctor_ptr g_create_sf_string;
@@ -102,6 +107,8 @@ extern set_btn_index_ptr set_button_index;
 extern set_button_flag_ptr set_menu_button_flag;
 extern vfunction2_callback_attach_ptr attach_callback;
 extern vfunction_ptr vfunction16_attach_callback;
+extern get_phys_damage_reduction_ptr g_get_reduced_damage;
+
 
 extern "C" void log_warning(const char *message);
 extern "C" void log_info(const char *message);

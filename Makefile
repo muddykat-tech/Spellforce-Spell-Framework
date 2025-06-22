@@ -6,7 +6,7 @@ DLL_LDFLAGS = -m32 -shared -static-libgcc -static-libstdc++ -s -Wl,-Bstatic,--wh
 FW_LDFLAGS = -m32 -shared -static-libgcc -static-libstdc++ -s -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive -Wl,--subsystem,windows,--out-implib,lib/sfsf.a
 
 # Object files for the new architecture
-HOOK_OBJ = obj/sf_hooks.o obj/sf_onhit_hook.o obj/sf_refresh_hook.o obj/sf_endspell_hook.o obj/sf_menu_hook.o obj/sf_spelleffect_hook.o obj/sf_subeffect_hook.o obj/sf_spelltype_hook.o obj/sf_damage_hook.o obj/sf_console_hook.o obj/sf_ai_hook.o obj/sf_utility_hooks.o 
+HOOK_OBJ = obj/sf_hooks.o obj/sf_onhit_hook.o obj/sf_refresh_hook.o obj/sf_endspell_hook.o obj/sf_menu_hook.o obj/sf_spelleffect_hook.o obj/sf_subeffect_hook.o obj/sf_spelltype_hook.o obj/sf_damage_hook.o obj/sf_console_hook.o obj/sf_ai_hook.o obj/sf_utility_hooks.o obj/sf_vanilla_fix_hook.o
 REGISTRY_OBJ = obj/sf_registry.o obj/sf_mod_registry.o obj/sf_spelltype_registry.o obj/sf_spelleffect_registry.o obj/sf_spellend_registry.o obj/sf_subeffect_registry.o obj/sf_spellrefresh_registry.o obj/sf_vanilla_registry.o obj/sf_spelldamage_registry.o obj/sf_onhit_registry.o obj/sf_ai_avoidance_registry.o obj/sf_ai_single_target_registry.o obj/sf_ai_aoe_registry.o
 HANDLER_OBJ = obj/sf_spelltype_handlers.o obj/sf_spelleffect_handlers.o obj/sf_spellend_handlers.o obj/sf_sub_effect_handlers.o obj/sf_spellrefresh_handlers.o obj/sf_spelldamage_handlers.o obj/sf_onhit_handlers.o obj/sf_ai_avoidance_handlers.o obj/sf_ai_spell_handlers.o obj/sf_ai_aoe_handlers.o
 
@@ -65,7 +65,7 @@ bin lib obj:
 # Internals build
 obj/sf_asi.o: src/asi/sf_asi.cpp src/asi/sf_asi.h | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
-	
+
 obj/sfsf.o: ${INTERNALS_SRC}/sfsf.cpp src/asi/sf_asi.h | obj
 	$(call print_colored, "================== Starting Build ==================")
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
@@ -74,7 +74,7 @@ obj/sf_wrappers.o: ${CORE_SRC}/sf_wrappers.c | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 # Hooks
-obj/sf_ai_hook.o: ${HOOKS_SRC}/sf_ai_hook.c | 
+obj/sf_ai_hook.o: ${HOOKS_SRC}/sf_ai_hook.c |
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_onhit_hook.o: ${HOOKS_SRC}/sf_onhit_hook.c | obj
@@ -93,6 +93,9 @@ obj/sf_spelleffect_hook.o: ${HOOKS_SRC}/sf_spelleffect_hook.c | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_subeffect_hook.o: ${HOOKS_SRC}/sf_subeffect_hook.c | obj
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
+
+obj/sf_vanilla_fix_hook.o: ${HOOKS_SRC}/sf_vanilla_fix_hook.c | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_spelltype_hook.o: ${HOOKS_SRC}/sf_spelltype_hook.c | obj
@@ -119,32 +122,32 @@ obj/sf_modloader.o: ${CORE_SRC}/sf_modloader.c | obj
 # Registry and Handlers
 obj/sf_registry.o: ${REGISTRY_SRC}/sf_registry.cpp | obj
 	$(call print_colored, "================== Building Registries ==================")
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_mod_registry.o: ${REGISTRY_SRC}/sf_mod_registry.cpp | obj
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_spelltype_handlers.o: ${HANDLERS_SRC}/sf_spelltype_handlers.cpp | obj
 	$(call print_colored, "================== Building Handlers ==================")
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_ai_avoidance_handlers.o: ${HANDLERS_SRC}/sf_ai_avoidance_handlers.cpp | obj
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_onhit_handlers.o: ${HANDLERS_SRC}/sf_onhit_handlers.cpp | obj
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_spelltype_registry.o: ${SPELL_DATA_REGISTRY_SRC}/sf_spelltype_registry.cpp | obj
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_spelleffect_handlers.o: ${HANDLERS_SRC}/sf_spelleffect_handlers.cpp | obj
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_spelleffect_registry.o: ${SPELL_DATA_REGISTRY_SRC}/sf_spelleffect_registry.cpp | obj
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_onhit_registry.o: ${SPELL_DATA_REGISTRY_SRC}/sf_onhit_registry.cpp | obj
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_spellend_handlers.o: ${HANDLERS_SRC}/sf_spellend_handlers.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
@@ -153,7 +156,7 @@ obj/sf_sub_effect_handlers.o: ${HANDLERS_SRC}/sf_sub_effect_handlers.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_spellend_registry.o: ${SPELL_DATA_REGISTRY_SRC}/sf_spellend_registry.cpp | obj
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_subeffect_registry.o: ${SPELL_DATA_REGISTRY_SRC}/sf_subeffect_registry.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
@@ -168,25 +171,25 @@ obj/sf_vanilla_registry.o: ${REGISTRY_SRC}/sf_vanilla_registry.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_spelldamage_handlers.o: ${HANDLERS_SRC}/sf_spelldamage_handlers.cpp | obj
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_spelldamage_registry.o: ${SPELL_DATA_REGISTRY_SRC}/sf_spelldamage_registry.cpp | obj
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_ai_spell_handlers.o: ${HANDLERS_SRC}/sf_ai_spell_handlers.cpp | obj
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_ai_aoe_handlers.o: ${HANDLERS_SRC}/sf_ai_aoe_handlers.cpp | obj
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_ai_avoidance_registry.o: ${AI_DATA_REGISTRY_SRC}/sf_ai_avoidance_registry.cpp | obj
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_ai_single_target_registry.o: ${AI_DATA_REGISTRY_SRC}/sf_ai_single_target_registry.cpp | obj
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_ai_aoe_registry.o: ${AI_DATA_REGISTRY_SRC}/sf_ai_aoe_registry.cpp | obj
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 # Mod build
 obj/TestMod.o: src/dev/TestMod.cpp | obj

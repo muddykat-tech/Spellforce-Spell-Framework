@@ -1,6 +1,6 @@
 # Spellforce Spell Framework (SFSF)
 
-![Maintenance](https://img.shields.io/maintenance/yes/2024)
+![Maintenance](https://img.shields.io/maintenance/yes/2025)
 ![GitHub Release](https://img.shields.io/github/v/release/muddykat-tech/Spellforce-Spell-Framework?include_prereleases&label=Latest%20Release)
 ![GitHub Downloads (all assets, latest release)](https://img.shields.io/github/downloads-pre/muddykat-tech/Spellforce-Spell-Framework/latest/total)
 ![Workflow](https://github.com/muddykat-tech/Spellforce-Spell-Framework/actions/workflows/c-cpp.yml/badge.svg)

@@ -520,7 +520,7 @@ typedef enum
     DEXTERITY,
     HEALTH,
     INTELLIGENCE,
-    MANA_STUFF,
+    MANA,
     STAMINA,
     STRENGTH,
     WISDOM,

@@ -9,7 +9,9 @@
 int __thiscall first_block_refresh_handler(SF_CGdSpell *_this,
                                            uint16_t spell_index)
 {
+#if _DEBUG_
     log_info("first block refresh handler called");
+#endif
     // This is the first block of spells in Ghidra, however we've made exceptions to this rule, by moving warcry, patronize, and endurence to a specific handler
     // moving stuff covered by "onSpellRemove" to specific handlers ~UnSchtalch
     uint16_t spell_line = _this->active_spell_list[spell_index].spell_line;
@@ -1098,7 +1100,10 @@ int __thiscall pestilence_refresh_handler(SF_CGdSpell *_this,
 int __thiscall domination_spell_refresh_handler(SF_CGdSpell *_this,
                                                 uint16_t spell_index)
 {
+#if _DEBUG_
     log_info("Domination Spell Refresh Handler Called");
+#endif
+
     uint16_t spell_line = _this->active_spell_list[spell_index].spell_line;
     uint16_t spell_id = _this->active_spell_list[spell_index].spell_id;
 
@@ -1122,8 +1127,9 @@ int __thiscall domination_spell_refresh_handler(SF_CGdSpell *_this,
             domination_spell_ids.push_back(spell->spell_id);
         }
     }
-
+#if _DEBUG_
     log_info("Check 1");
+#endif
     // Now we check if the target has any of these spells
     bool hasDominationSpell = false;
     for (uint16_t spell_id : domination_spell_ids)
@@ -1145,6 +1151,8 @@ int __thiscall domination_spell_refresh_handler(SF_CGdSpell *_this,
 
 int __thiscall case_da_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
+#if _DEBUG_
     log_info("case 0xda block refresh handler called");
+#endif
     return 1;
 }

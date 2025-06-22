@@ -104,9 +104,11 @@ uint32_t __attribute__((no_caller_saved_registers,
             }
         }
     }
+#if _DEBUG_
     char message[256];
     sprintf(message, "Dealing Damage: %d", damage_amount);
     log_error(message);
+#endif
     return damage_amount;
 }
 

@@ -10,6 +10,8 @@
  * @{
  */
 
+
+
 bool __thiscall is_combat_ability(SF_CGdSpell *_this, GdSpellLine spell_line)
 {
     return hasSpellTag(spell_line, SpellTag::COMBAT_ABILITY_SPELL);

@@ -42,6 +42,8 @@ set_button_flag_ptr set_menu_button_flag;
 vfunction2_callback_attach_ptr attach_callback;
 vfunction_ptr vfunction16_attach_callback;
 CMnuBase_setname_ptr CMnuBase_setname;
+get_phys_damage_reduction_ptr g_get_damage_reduction;
+
 
 void initialize_wrapper_data_hooks()
 {
@@ -65,6 +67,7 @@ void initialize_wrapper_data_hooks()
     vfunction176 = (vfunction_ptr)(ASI::AddrOf(0x52f520));
     vfunction25 = (vfunction_ptr)(ASI::AddrOf(0x511ae0));
     CMnuBase_setname = (CMnuBase_setname_ptr)(ASI::AddrOf(0x512E30));
+    g_get_reduced_damage = (get_phys_damage_reduction_ptr)(ASI::AddrOf(0x317070));
 
 }
 
@@ -202,6 +205,27 @@ void __thiscall spellEffectCallback(SF_CGdSpell *_this, uint16_t source_index,
     }
 }
 
+
+int8_t __thiscall addBonusMultExt (FigureStatisticExt *_this, int8_t value)
+{
+    if (value < 0)
+    {
+        if ((int)(_this->bonus_multiplier) + (int)value < -127)
+        {
+            _this->bonus_multiplier = 128;
+            return _this->bonus_multiplier;
+        }
+        _this->bonus_multiplier += value;
+        return _this->bonus_multiplier;
+    }
+    if ((int)_this->bonus_multiplier + (int)value > 126)
+    {
+        _this->bonus_multiplier = 127;
+        return _this->bonus_multiplier;
+    }
+    _this->bonus_multiplier += value;
+    return _this->bonus_multiplier;
+}
 void __thiscall addBonusMultToStatistic(SF_CGdFigure *figure,
                                         StatisticDataKey key, uint16_t target,
                                         int8_t value)
@@ -239,6 +263,24 @@ void __thiscall addBonusMultToStatistic(SF_CGdFigure *figure,
         {
             statistic = &(figure->figures[target].strength);
             break;
+        }
+        /***
+         * Stamina, mana and HP are EXT multipliers and require specific handling
+         */
+        case STAMINA:
+        {
+            addBonusMultExt(&(figure->figures[target].stamina), value);
+            return;
+        }
+        case MANA:
+        {
+            addBonusMultExt(&(figure->figures[target].mana), value);
+            return;
+        }
+        case HEALTH:
+        {
+            addBonusMultExt(&(figure->figures[target].health), value);
+            return;
         }
         case WISDOM:
         {
@@ -289,10 +331,11 @@ void __thiscall addBonusMultToStatistic(SF_CGdFigure *figure,
 
     if (invalid)
     {
-        log_warning("INVALID STATISTIC KEY");
+        char message[256];
+        sprintf(message, "INVALID STATISTIC KEY: %d", key);
+        log_warning(message);
         return;
     }
-
     figureAPI.addBonusMult(statistic, value);
 }
 
@@ -322,6 +365,12 @@ void __thiscall spellClearFigureFlag(SF_CGdSpell *_this, uint16_t spell_id,
 bool __thiscall hasAuraActive(SF_CGdFigureToolbox *_this, uint16_t figure_id)
 {
     return has_spell_effect(_this, figure_id, 0x49);
+}
+
+uint16_t __thiscall getPhysDamageReduction(SF_CGdFigureToolbox *_this, uint16_t source_index, uint16_t target_index,
+                                           uint16_t action_id)
+{
+    return g_get_reduced_damage(_this->autoclass34, source_index, target_index, action_id);
 }
 
 CMnuLabel * __thiscall attach_new_label(CMnuLabel *label_ptr,
