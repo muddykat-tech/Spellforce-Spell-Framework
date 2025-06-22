@@ -45,6 +45,45 @@ vfunction_ptr vfunction16_attach_callback;
 CMnuBase_setname_ptr CMnuBase_setname;
 get_phys_damage_reduction_ptr g_get_damage_reduction;
 
+//checky thiscall but not really. ~muddykat (fix this later add support for non thiscalls)
+uint32_t __thiscall getDistance(SF_Coord *pointA, SF_Coord *pointB)
+{
+    uint32_t delta;
+    uint32_t uVar1;
+    uint32_t uVar2;
+    uint32_t uVar3;
+    uint32_t uVar4;
+
+    delta = (uint32_t)(uint16_t)pointA->X - (uint32_t)(uint16_t)pointB->X;
+    uVar2 = (int)delta >> 0x1f;
+    uVar2 = (delta ^ uVar2) - uVar2;
+    uVar4 = uVar2 & 0xffff;
+    delta = (uint32_t)(uint16_t)pointA->Y - (uint32_t)(uint16_t)pointB->Y;
+    uVar3 = (int)delta >> 0x1f;
+    uVar3 = (delta ^ uVar3) - uVar3;
+    uVar1 = uVar3 & 0xffff;
+    delta = uVar1;
+    if ((uint16_t)uVar2 < (uint16_t)uVar3)
+    {
+        delta = uVar4;
+        uVar4 = uVar1;
+    }
+    return ((delta * 0xd) >> 5) + uVar4;
+}
+
+bool __thiscall isSiegeUnit (SF_CGdFigure *_this, uint16_t figure_index)
+{
+    if ((_this->figures[figure_index].unit_data_id == 2236) ||
+        (_this->figures[figure_index].unit_data_id == 2238) ||
+        (_this->figures[figure_index].unit_data_id == 2239) ||
+        (_this->figures[figure_index].unit_data_id == 2244) ||
+        (_this->figures[figure_index].unit_data_id == 2245) ||
+        (_this->figures[figure_index].unit_data_id == 2249) )
+    {
+        return true;
+    }
+    return false;
+}
 
 void initialize_wrapper_data_hooks()
 {
@@ -138,32 +177,6 @@ void __thiscall setupFigureIterator(CGdFigureIterator *iterator,
 bool __thiscall hasSpellTag(uint16_t spell_id, SpellTag tag)
 {
     return spellAPI.getSpellTags(spell_id) & tag;
-}
-
-uint32_t getDistance(SF_Coord *pointA, SF_Coord *pointB)
-{
-
-    uint32_t delta;
-    uint32_t uVar1;
-    uint32_t uVar2;
-    uint32_t uVar3;
-    uint32_t uVar4;
-
-    delta = (uint32_t)(uint16_t)pointA->X - (uint32_t)(uint16_t)pointB->X;
-    uVar2 = (int)delta >> 0x1f;
-    uVar2 = (delta ^ uVar2) - uVar2;
-    uVar4 = uVar2 & 0xffff;
-    delta = (uint32_t)(uint16_t)pointA->Y - (uint32_t)(uint16_t)pointB->Y;
-    uVar3 = (int)delta >> 0x1f;
-    uVar3 = (delta ^ uVar3) - uVar3;
-    uVar1 = uVar3 & 0xffff;
-    delta = uVar1;
-    if ((uint16_t)uVar2 < (uint16_t)uVar3)
-    {
-        delta = uVar4;
-        uVar4 = uVar1;
-    }
-    return ((delta * 0xd) >> 5) + uVar4;
 }
 
 // Some funky stuff to clean up Iterator memory, not 100% sure if correct

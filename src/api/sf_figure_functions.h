@@ -50,6 +50,9 @@ DECLARE_FUNCTION(SF_CGdFigureWeaponStats *, getWeaponStats,
 DECLARE_FUNCTION(bool, isWarrior, SF_CGdFigure *figure, uint16_t figure_id);
 DECLARE_FUNCTION(void, setTask, SF_CGdFigure *_figure, uint16_t figure_index,
                  CGdFigureTask figureTask);
+
+DECLARE_FUNCTION(bool, isSiegeUnit, SF_CGdFigure *figure, uint16_t figure_id);
+
 // Unknown Functons
 DECLARE_FUNCTION(bool, FUN_006e3a90, uint32_t *CGdFigureJobs,
                  uint16_t figure_id);
@@ -61,30 +64,35 @@ DECLARE_FUNCTION(void, disposeHealerList, void *healer_list);
 typedef struct
 {
     isAlive_ptr isAlive;
-    setWalkSpeed_ptr setWalkSpeed;
+    isSiegeUnit_ptr isSiegeUnit;
+    isFlagSet_ptr isFlagSet;
+    isWarrior_ptr isWarrior;
+
     addAction_ptr addAction;
     addBonusMult_ptr addBonusMult;
     addBonusMultToStatistic_ptr addBonusMultToStatistic;
-    decreaseHealth_ptr decreaseHealth;
 
     getCurrentStat_ptr getCurrentStat;
     getMaxStat_ptr getMaxStat;
-
-    getCurrentHealthPercent_ptr getCurrentHealthPercent;
-    rescaleMana_ptr rescaleMana;
-    rescaleHealth_ptr rescaleHealth;
-    getJob_ptr getJob;
-    isFlagSet_ptr isFlagSet;
-    getSpellJobStartNode_ptr getSpellJobStartNode;
-    setJobToDoCount_ptr setJobToDoCount;
-    FUN_006e3a90_ptr FUN_006e3a90;
-    subMana_ptr subMana;
-    getPosition_ptr getPosition;
-    setTask_ptr setTask;
     getWeaponStats_ptr getWeaponStats;
     getAggroValue_ptr getAggroValue;
-    setAggroValue_ptr setAggroValue;
-    isWarrior_ptr isWarrior;
     getHealersList_ptr getHealersList;
+    getJob_ptr getJob;
+    getSpellJobStartNode_ptr getSpellJobStartNode;
+    getCurrentHealthPercent_ptr getCurrentHealthPercent;
+    getPosition_ptr getPosition;
+
+    setTask_ptr setTask;
+    setAggroValue_ptr setAggroValue;
+    setWalkSpeed_ptr setWalkSpeed;
+    setJobToDoCount_ptr setJobToDoCount;
+
+    rescaleMana_ptr rescaleMana;
+    rescaleHealth_ptr rescaleHealth;
+
+    decreaseHealth_ptr decreaseHealth;
+    subMana_ptr subMana;
+
     disposeHealerList_ptr disposeHealerList;
+    FUN_006e3a90_ptr FUN_006e3a90;
 } FigureFunctions;

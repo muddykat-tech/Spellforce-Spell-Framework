@@ -59,6 +59,8 @@ DECLARE_FUNCTION(bool, hasAuraActive, SF_CGdFigureToolbox *_this,
 DECLARE_FUNCTION(uint16_t, getPhysDamageReduction, SF_CGdFigureToolbox *_this, uint16_t source_index,
                  uint16_t target_index,  uint16_t action_id)
 
+// getDistance(SF_Coord *pointA, SF_Coord *pointB)
+DECLARE_FUNCTION(uint32_t, getDistance, SF_Coord *pointA, SF_Coord *pointB);
 
 /**
  * @ingroup API
@@ -66,6 +68,7 @@ DECLARE_FUNCTION(uint16_t, getPhysDamageReduction, SF_CGdFigureToolbox *_this, u
  */
 typedef struct
 {
+    getDistance_ptr getDistance;
     dealDamage_ptr dealDamage;
     isTargetable_ptr isTargetable;
     figuresCheckHostile_ptr figuresCheckHostile;

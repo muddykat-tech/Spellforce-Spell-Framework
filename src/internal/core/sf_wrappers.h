@@ -16,6 +16,10 @@ void initialize_wrapper_data_hooks();
 uint16_t __thiscall getCurrentStat(SF_CGdFigure *_this, uint16_t target, StatisticDataKey key);
 uint16_t __thiscall getMaxStat(SF_CGdFigure *_this, uint16_t target, StatisticDataKey key);
 
+
+uint32_t __thiscall getDistance(SF_Coord *pointA, SF_Coord *pointB);
+bool __thiscall isSiegeUnit (SF_CGdFigure *_this, uint16_t figure_index);
+
 extern bool __thiscall hasAuraActive(SF_CGdFigureToolbox *_this, uint16_t figure_id);
 extern bool __thiscall isActionMelee(SF_SGtFigureAction *_this);
 extern bool __thiscall hasSpellTag(uint16_t spell_id, SpellTag tag);

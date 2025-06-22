@@ -12,46 +12,6 @@ FigureFunctions *figureAPI;
 EffectFunctions *effectAPI;
 RegistrationFunctions *registrationAPI;
 
-//TODO: export this function somewhere?
-uint32_t getDistance(SF_Coord *pointA, SF_Coord *pointB)
-{
-
-    uint32_t delta;
-    uint32_t uVar1;
-    uint32_t uVar2;
-    uint32_t uVar3;
-    uint32_t uVar4;
-
-    delta = (uint32_t)(uint16_t)pointA->X - (uint32_t)(uint16_t)pointB->X;
-    uVar2 = (int)delta >> 0x1f;
-    uVar2 = (delta ^ uVar2) - uVar2;
-    uVar4 = uVar2 & 0xffff;
-    delta = (uint32_t)(uint16_t)pointA->Y - (uint32_t)(uint16_t)pointB->Y;
-    uVar3 = (int)delta >> 0x1f;
-    uVar3 = (delta ^ uVar3) - uVar3;
-    uVar1 = uVar3 & 0xffff;
-    delta = uVar1;
-    if ((uint16_t)uVar2 < (uint16_t)uVar3)
-    {
-        delta = uVar4;
-        uVar4 = uVar1;
-    }
-    return ((delta * 0xd) >> 5) + uVar4;
-}
-
-bool isSiegeUnit (SF_CGdFigure *_this, uint16_t figure_index)
-{
-    if ((_this->figures[figure_index].unit_data_id == 2236) ||
-        (_this->figures[figure_index].unit_data_id == 2238) ||
-        (_this->figures[figure_index].unit_data_id == 2239) ||
-        (_this->figures[figure_index].unit_data_id == 2244) ||
-        (_this->figures[figure_index].unit_data_id == 2245) ||
-        (_this->figures[figure_index].unit_data_id == 2249) )
-    {
-        return true;
-    }
-    return false;
-}
 
 void __thiscall rock_bullet_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {

@@ -180,10 +180,12 @@ void initialize_data_hooks()
 
     INCLUDE_FUNCTION(figure, getCurrentStat, &getCurrentStat);
     INCLUDE_FUNCTION(figure, getMaxStat, &getMaxStat);
+    INCLUDE_FUNCTION(figure, isSiegeUnit, &isSiegeUnit);
 
     log_info("| - ToolboxAPI Wrappers");
     INCLUDE_FUNCTION(toolbox, hasAuraActive, &hasAuraActive);
     INCLUDE_FUNCTION(toolbox, getPhysDamageReduction, &getPhysDamageReduction);
+    INCLUDE_FUNCTION(toolbox, getDistance, &getDistance);
 
     log_info("| - IteratorAPI Wrappers");
     INCLUDE_FUNCTION(iterator, setupFigureIterator, &setupFigureIterator);
