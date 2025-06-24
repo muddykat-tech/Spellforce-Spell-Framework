@@ -57,10 +57,20 @@ DECLARE_FUNCTION(bool, hasAuraActive, SF_CGdFigureToolbox *_this,
                  uint16_t figure_id);
 
 DECLARE_FUNCTION(uint16_t, getPhysDamageReduction, SF_CGdFigureToolbox *_this, uint16_t source_index,
-                 uint16_t target_index,  uint16_t action_id)
+                 uint16_t target_index,  uint16_t action_id);
 
+DECLARE_FUNCTION(bool, buildingCheckAllied, SF_CGdBuildingToolbox *_this, uint16_t figure_index,
+                 uint16_t building_index);
+DECLARE_FUNCTION(bool, buildingCheckHostile, SF_CGdBuildingToolbox *_this, uint16_t figure_index,
+                 uint16_t building_index);
+DECLARE_FUNCTION(SF_Coord *, getBuildingClosestVertex, SF_CGdBuildingToolbox *_this, SF_Coord *out_position,
+                 uint16_t building_index, uint16_t figure_index, uint32_t unknown);
 // getDistance(SF_Coord *pointA, SF_Coord *pointB)
 DECLARE_FUNCTION(uint32_t, getDistance, SF_Coord *pointA, SF_Coord *pointB);
+
+//bool isBuildingAllied(SF_CGdBuildingToolbox *_this, uint16_t figure_index, uint16_t building_index)
+
+
 
 /**
  * @ingroup API
@@ -89,4 +99,7 @@ typedef struct
     findClosestFreePosition_ptr findClosestFreePosition;
     isUnitMelee_ptr isUnitMelee;
     getPhysDamageReduction_ptr getPhysDamageReduction;
+    buildingCheckAllied_ptr buildingCheckAllied;
+    buildingCheckHostile_ptr buildingCheckHostile;
+    getBuildingClosestVertex_ptr getBuildingClosestVertex;
 } ToolboxFunctions;

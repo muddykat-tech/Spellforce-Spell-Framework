@@ -27,7 +27,7 @@ struct __attribute__((packed)) SF_CGdSpell
     void *SF_CGdAiMain;
     AutoClass14 *OpaqueClass;  // For Random (Rename to Global Tick?)
     SF_CGdBuilding *CGdBuilding;
-    void *SF_CGdBuildingToolbox;
+    SF_CGdBuildingToolbox *SF_CGdBuildingToolbox;
     void *SF_CGdDoubleLinkedList;
     SF_CGDEffect *SF_CGdEffect;
     void *unkn1;

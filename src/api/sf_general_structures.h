@@ -19,6 +19,7 @@ typedef struct SF_CGdWorld SF_CGdWorld;
 typedef struct SF_CGdWorldToolBox SF_CGdWorldToolBox;
 typedef struct SF_CGdFigureJobs SF_CGdFigureJobs;
 typedef struct SF_CGdBuilding SF_CGdBuilding;
+typedef struct SF_CGdBuildingToolbox SF_CGdBuildingToolbox;
 typedef struct CMnuLabel CMnuLabel;
 typedef struct SF_CGdFigure SF_CGdFigure;
 typedef struct SF_SpellEffectInfo SF_SpellEffectInfo;
@@ -1041,6 +1042,36 @@ struct __attribute__((packed)) astruct32
     uint8_t id;
     BuildingResource building;
     uint8_t padding_2[3];
+};
+
+struct __attribute__((packed)) SF_CGdBuildingToolbox
+{
+    void *Decals;
+    void *CGdAStar;
+    AutoClass14 AutoClass14;
+    SF_CGdBuilding *CGdBuilding;
+    void *CGdDoubleLinkList;
+    SF_CGDEffect *CGdEffect;
+    void *AutoClass30;
+    SF_CGdFigure *CGdFigure;
+    SF_CGdFigureJobs *CGdFigureJobs;
+    SF_CGdFigureToolbox *CGdFigureToolbox;
+    void *AutoClass34;
+    void *CGdObject;
+    void *CGdPlayer;
+    void *AutoClass47;
+    void *CGdResource;
+    void *AutoClass22;
+    SF_CGdWorld *CGdWorld;
+    SF_CGdWorldToolBox *CGdWorldToolbox;
+    void *CGdXDataList;
+    uint32_t unknown1[3];
+    uint8_t unknown2[800];
+    uint8_t unknown3[800];
+    uint8_t unknown4[14884];
+    uint8_t unknown5[14884];
+    uint8_t unknown6[3721];
+
 };
 
 typedef void (__attribute__((__thiscall__)) *addBuilding_ptr)(void *_this,void *struct1, void *struct2);

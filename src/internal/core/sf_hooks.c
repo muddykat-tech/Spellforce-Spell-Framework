@@ -155,6 +155,9 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(toolbox, addUnit, 0x2f749a);
     DEFINE_FUNCTION(toolbox, findClosestFreePosition, 0x34e9a0);
     DEFINE_FUNCTION(toolbox, isUnitMelee, 0x2feb2b);
+    DEFINE_FUNCTION(toolbox, buildingCheckAllied, 0x2da420);
+    DEFINE_FUNCTION(toolbox, buildingCheckHostile, 0x2da2c0);
+    DEFINE_FUNCTION(toolbox, getBuildingClosestVertex, 0x2d9c40);
 
     log_info("| - IteratorAPI Hooks");
     DEFINE_FUNCTION(iterator, figureIteratorInit, 0x3183f0);
