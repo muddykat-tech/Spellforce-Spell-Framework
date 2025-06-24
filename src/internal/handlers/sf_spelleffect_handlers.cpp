@@ -172,31 +172,14 @@ handler_ptr effect_weaken_area_handler;
 extern SpellFunctions spellAPI;
 extern EffectFunctions effectAPI;
 extern FigureFunctions figureAPI;
+extern ToolboxFunctions toolboxAPI;
 extern IteratorFunctions iteratorAPI;
-
 bool isSiegeAura(uint16_t spell_line)
 {
-    if (spell_line == kGdSpellLineAuraSiegeHuman)
+    if (spellAPI.hasSpellTag(spell_line, SpellTag::SIEGE_AURA_SPELL))
     {
         return true;
     }
-    if (spell_line == kGdSpellLineAuraSiegeElf)
-    {
-        return true;
-    }
-    if (spell_line == kGdSpellLineAuraSiegeOrc)
-    {
-        return true;
-    }
-    if (spell_line == kGdSpellLineAuraSiegeTroll)
-    {
-        return true;
-    }
-    if (spell_line == kGdSpellLineAuraSiegeDarkElf)
-    {
-        return true;
-    }
-
     return false;
 }
 
@@ -234,6 +217,7 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
 
         }
     }
+    uint16_t current_mp = figureAPI.getCurrentStat(_this->SF_CGdFigure, source_index, MANA);
     //Aura target is either 1 or 2 for valid auras!
     if ((spell_data.params[5] > 0) && (spell_data.params[5] < 3))
     {
@@ -248,7 +232,12 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
             uint16_t building_index = iteratorAPI.getNextBuilding(&iter);
             while (building_index != 0)
             {
+                //Since it's siege auras, they won't have allied buildings as targets. So I DO skip section with 1
+                if (_this->CGdBuilding->buildings[building_index].owner !=
+                    _this->SF_CGdFigure->figures[source_index].owner)
+                {
 
+                }
                 building_index = iteratorAPI.getNextBuilding(&iter);
             }
         }

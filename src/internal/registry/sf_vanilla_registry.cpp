@@ -1171,7 +1171,7 @@ void initialize_vanilla_spells()
 
     SFSpell *aura21 = registrationAPI.registerSpell(kGdSpellLineAuraSiegeHuman);
     registrationAPI.linkTypeHandler(aura21, &aura_handler);
-    registrationAPI.applySpellTag(aura21, SpellTag::SEIGE_AURA_SPELL);
+    registrationAPI.applySpellTag(aura21, SpellTag::SIEGE_AURA_SPELL);
     registrationAPI.linkEndHandler(aura21, &aura_end_handler);
     // Next Spell Block
 
@@ -1179,23 +1179,23 @@ void initialize_vanilla_spells()
 
     SFSpell *aura22 = registrationAPI.registerSpell(kGdSpellLineAuraSiegeElf); // TODO Find Spell Name
     registrationAPI.linkTypeHandler(aura22, &aura_handler);
-    registrationAPI.applySpellTag(aura22, SpellTag::SEIGE_AURA_SPELL);
+    registrationAPI.applySpellTag(aura22, SpellTag::SIEGE_AURA_SPELL);
     registrationAPI.linkEndHandler(aura22, &aura_end_handler);
 
     SFSpell *aura23 = registrationAPI.registerSpell(kGdSpellLineAuraSiegeOrc); // TODO Find Spell Name
     registrationAPI.linkTypeHandler(aura23, &aura_handler);
-    registrationAPI.applySpellTag(aura23, SpellTag::SEIGE_AURA_SPELL);
+    registrationAPI.applySpellTag(aura23, SpellTag::SIEGE_AURA_SPELL);
     registrationAPI.linkEndHandler(aura23, &aura_end_handler);
 
     SFSpell *aura24 = registrationAPI.registerSpell(kGdSpellLineAuraSiegeTroll); // TODO Find Spell Name
     registrationAPI.linkTypeHandler(aura24, &aura_handler);
-    registrationAPI.applySpellTag(aura24, SpellTag::SEIGE_AURA_SPELL);
+    registrationAPI.applySpellTag(aura24, SpellTag::SIEGE_AURA_SPELL);
     registrationAPI.linkEndHandler(aura24, &aura_end_handler);
 
     SFSpell *aura25 =
         registrationAPI.registerSpell(kGdSpellLineAuraSiegeDarkElf);               // TODO Find Spell Name
     registrationAPI.linkTypeHandler(aura25, &aura_handler);
-    registrationAPI.applySpellTag(aura25, SpellTag::SEIGE_AURA_SPELL);
+    registrationAPI.applySpellTag(aura25, SpellTag::SIEGE_AURA_SPELL);
     registrationAPI.linkEndHandler(aura25, &aura_end_handler);
 
     SFSpell *eternity_aura =

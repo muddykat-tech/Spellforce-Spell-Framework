@@ -53,7 +53,7 @@ uint16_t __thiscall get_figure_statistic_current_ac(SF_CGdFigure *_this, uint16_
     int32_t base_val = _this->figures[figure_id].armor.base_val;
     int32_t bonus_val = _this->figures[figure_id].armor.bonus_val;
     int32_t total_flat = base_val+bonus_val;
-    uint16_t result = 0;
+    uint16_t result = 1;
     if (total_flat >= 0)
     {
         int16_t multiplier = _this->figures[figure_id].armor.bonus_multiplier + 100;
@@ -68,7 +68,7 @@ uint16_t __thiscall get_figure_statistic_current_agi(SF_CGdFigure *_this, uint16
     int32_t base_val = _this->figures[figure_id].agility.base_val;
     int32_t bonus_val = _this->figures[figure_id].agility.bonus_val;
     int32_t total_flat = base_val+bonus_val;
-    uint16_t result = 0;
+    uint16_t result = 1;
     if (total_flat >= 0)
     {
         int16_t multiplier = _this->figures[figure_id].agility.bonus_multiplier + 100;
@@ -83,7 +83,7 @@ uint16_t __thiscall get_figure_statistic_current_cha(SF_CGdFigure *_this, uint16
     int32_t base_val = _this->figures[figure_id].charisma.base_val;
     int32_t bonus_val = _this->figures[figure_id].charisma.bonus_val;
     int32_t total_flat = base_val+bonus_val;
-    uint16_t result = 0;
+    uint16_t result = 1;
     if (total_flat >= 0)
     {
         int16_t multiplier = _this->figures[figure_id].charisma.bonus_multiplier + 100;
@@ -98,7 +98,7 @@ uint16_t __thiscall get_figure_statistic_current_dex(SF_CGdFigure *_this, uint16
     int32_t base_val = _this->figures[figure_id].dexterity.base_val;
     int32_t bonus_val = _this->figures[figure_id].dexterity.bonus_val;
     int32_t total_flat = base_val+bonus_val;
-    uint16_t result = 0;
+    uint16_t result = 1;
     if (total_flat >= 0)
     {
         int16_t multiplier = _this->figures[figure_id].dexterity.bonus_multiplier + 100;
@@ -130,7 +130,7 @@ uint16_t __thiscall get_figure_statistic_current_int(SF_CGdFigure *_this, uint16
     int32_t base_val = _this->figures[figure_id].intelligence.base_val;
     int32_t bonus_val = _this->figures[figure_id].intelligence.bonus_val;
     int32_t total_flat = base_val+bonus_val;
-    uint16_t result = 0;
+    uint16_t result = 1;
     if (total_flat >= 0)
     {
         int16_t multiplier = _this->figures[figure_id].intelligence.bonus_multiplier + 100;
@@ -162,7 +162,7 @@ uint16_t __thiscall get_figure_statistic_current_sta(SF_CGdFigure *_this, uint16
     int32_t base_val = _this->figures[figure_id].stamina.base_val;
     int32_t bonus_val = _this->figures[figure_id].stamina.bonus_val;
     int32_t total_flat = base_val+bonus_val;
-    uint16_t result = 0;
+    uint16_t result = 1;
     if (total_flat >= 0)
     {
         int16_t multiplier = _this->figures[figure_id].stamina.bonus_multiplier + 100;
@@ -179,7 +179,7 @@ uint16_t __thiscall get_figure_statistic_current_str(SF_CGdFigure *_this, uint16
     int32_t base_val = _this->figures[figure_id].strength.base_val;
     int32_t bonus_val = _this->figures[figure_id].strength.bonus_val;
     int32_t total_flat = base_val+bonus_val;
-    uint16_t result = 0;
+    uint16_t result = 1;
     if (total_flat >= 0)
     {
         int16_t multiplier = _this->figures[figure_id].strength.bonus_multiplier + 100;
@@ -194,7 +194,7 @@ uint16_t __thiscall get_figure_statistic_current_wis(SF_CGdFigure *_this, uint16
     int32_t base_val = _this->figures[figure_id].wisdom.base_val;
     int32_t bonus_val = _this->figures[figure_id].wisdom.bonus_val;
     int32_t total_flat = base_val+bonus_val;
-    uint16_t result = 0;
+    uint16_t result = 1;
     if (total_flat >= 0)
     {
         int16_t multiplier = _this->figures[figure_id].wisdom.bonus_multiplier + 100;
@@ -269,7 +269,7 @@ uint16_t __thiscall get_figure_statistic_current_walk_spd(SF_CGdFigure *_this, u
     int32_t base_val = _this->figures[figure_id].walk_speed.base_val;
     int32_t bonus_val = _this->figures[figure_id].walk_speed.bonus_val;
     int32_t total_flat = base_val+bonus_val;
-    uint16_t result = 0;
+    uint16_t result = 1;
     if (total_flat >= 0)
     {
         int16_t multiplier = _this->figures[figure_id].walk_speed.bonus_multiplier + 100;
@@ -284,7 +284,7 @@ uint16_t __thiscall get_figure_statistic_current_fight_spd(SF_CGdFigure *_this, 
     int32_t base_val = _this->figures[figure_id].fight_speed.base_val;
     int32_t bonus_val = _this->figures[figure_id].fight_speed.bonus_val;
     int32_t total_flat = base_val+bonus_val;
-    uint16_t result = 0;
+    uint16_t result = 1;
     if (total_flat >= 0)
     {
         int16_t multiplier = _this->figures[figure_id].fight_speed.bonus_multiplier + 100;
@@ -299,7 +299,7 @@ uint16_t __thiscall get_figure_statistic_current_cast_spd(SF_CGdFigure *_this, u
     int32_t base_val = _this->figures[figure_id].cast_speed.base_val;
     int32_t bonus_val = _this->figures[figure_id].cast_speed.bonus_val;
     int32_t total_flat = base_val+bonus_val;
-    uint16_t result = 0;
+    uint16_t result = 1;
     if (total_flat >= 0)
     {
         int16_t multiplier = _this->figures[figure_id].cast_speed.bonus_multiplier + 100;
