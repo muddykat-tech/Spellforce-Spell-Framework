@@ -71,8 +71,6 @@ void __thiscall aura_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
            This should do the same thing as the code below, but as a callback.
          */
         // spellAPI->spellEffectCallback(_this, source_index, spell_index,
-           This should do the same thing as the code below, but as a callback.
-         */
         // spellAPI->spellEffectCallback(_this, source_index, spell_index,
         //     [](SF_CGdSpell* spell, uint16_t spell_index, uint16_t walked_index) -> bool {
         //         uint16_t spell_line = spellAPI->getSpellLine(spell, walked_index);

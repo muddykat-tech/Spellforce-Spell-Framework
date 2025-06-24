@@ -172,6 +172,90 @@ handler_ptr effect_weaken_area_handler;
 extern SpellFunctions spellAPI;
 extern EffectFunctions effectAPI;
 extern FigureFunctions figureAPI;
+extern IteratorFunctions iteratorAPI;
+
+bool isSiegeAura(uint16_t spell_line)
+{
+    if (spell_line == kGdSpellLineAuraSiegeHuman)
+    {
+        return true;
+    }
+    if (spell_line == kGdSpellLineAuraSiegeElf)
+    {
+        return true;
+    }
+    if (spell_line == kGdSpellLineAuraSiegeOrc)
+    {
+        return true;
+    }
+    if (spell_line == kGdSpellLineAuraSiegeTroll)
+    {
+        return true;
+    }
+    if (spell_line == kGdSpellLineAuraSiegeDarkElf)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+//fix for aura set
+void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
+{
+    SF_GdSpell *spell = &_this->active_spell_list[spell_index];
+    SF_CGdResourceSpell spell_data;
+    SF_SpellEffectInfo effect_info;
+    uint16_t source_index = spell->source.entity_index;
+    effect_info.spell_id = spell->spell_id;
+    effect_info.job_id = spell->spell_job;
+    spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+    if (spell->source.entity_type == 1)
+    {
+        if ((_this->SF_CGdFigure->figures[source_index].owner != (uint16_t)(-1)) &&
+            ((*(uint8_t *)(&_this->SF_CGdFigure->figures[source_index].flags) & 0xa) == 0))
+        {
+            uint32_t tick = spellAPI.addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1);
+            if (tick == 1)
+            {
+                _this->SF_CGdFigure->figures[source_index].flags |= AURA_RUNNING;
+                SF_CGdTargetData target_data;
+                target_data.entity_index = source_index;
+                target_data.entity_type = 1;
+                target_data.position = {0,0};
+                SF_Rectangle rect = {0, 0};
+                uint16_t effect_index = effectAPI.addEffect(_this->SF_CGdEffect, kGdEffectSpellHitTarget, &target_data,
+                                                            &target_data,
+                                                            _this->OpaqueClass->current_step, 0, &rect);
+                effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_EFFECT_INDEX, effect_index);
+                effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_SPELL_INDEX, spell_index);
+                effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_SPELL_ID, spell->spell_id);
+            }
+
+        }
+    }
+    //Aura target is either 1 or 2 for valid auras!
+    if ((spell_data.params[5] > 0) && (spell_data.params[5] < 3))
+    {
+        if (isSiegeAura(spell->spell_line))
+        {
+            SF_Coord caster_pos = spell->source.position;
+            CGdBuildingIterator iter;
+            iteratorAPI.buildingIteratorInit(&iter, 0, 0, 0x3ff, 0x3ff);
+            iteratorAPI.buildingIteratorSetPointers(&iter, _this->CGdBuilding, _this->unkn3, _this->SF_CGdWorld);
+            //Types are similar, to a point, but I do need to cast it
+            iteratorAPI.iteratorSetArea((CGdFigureIterator *)&iter, &caster_pos, spell_data.params[2]+10);
+            uint16_t building_index = iteratorAPI.getNextBuilding(&iter);
+            while (building_index != 0)
+            {
+
+                building_index = iteratorAPI.getNextBuilding(&iter);
+            }
+        }
+    }
+}
+
+
 //hotfix for firebane
 //TODO: fix some stuff about hasSpellOnIt
 void __thiscall effect_fire_resistance (SF_CGdSpell *_this, uint16_t spell_index)
@@ -183,12 +267,10 @@ void __thiscall effect_fire_resistance (SF_CGdSpell *_this, uint16_t spell_index
     effect_info.job_id = spell->spell_job;
     spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
     uint16_t source_index = spell->source.entity_index;
-    char message[256];
     if (spell->target.entity_type == 5)
     {
         uint32_t tick = spellAPI.getXData(_this, spell_index, SPELL_TICK_COUNT_AUX);
-        sprintf(message, "tick value %d", tick);
-        log_info(message);
+
         if (tick == 0)
         {
             _this->active_spell_list[spell_index].to_do_count = (spell_data.params[1] * 10) / 1000;
