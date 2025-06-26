@@ -193,9 +193,17 @@ void __thiscall apply_aura_effect(SF_CGdSpell *_this, uint16_t spell_index, uint
     source_data.entity_type = 1;
     source_data.position = {0,0};
 
+    SF_Coord caster_pos = _this->SF_CGdFigure->figures[source_index].position;
+    SF_Coord target_pos = _this->SF_CGdFigure->figures[target_index].position;
+    uint32_t distance = toolboxAPI.getDistance(&caster_pos, &target_pos);
+    distance = (distance * 1400) / 4000;
+    if (distance == 0)
+    {
+        distance = 1;
+    }
     uint16_t effect_index = effectAPI.addEffect(_this->SF_CGdEffect, kGdEffectAuraResolve,
                                                 &source_data, &target_data,
-                                                _this->OpaqueClass->current_step, 14,
+                                                _this->OpaqueClass->current_step, distance,
                                                 &rect);
     effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_SPELL_INDEX,
                              spell_index);
@@ -251,9 +259,14 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
     }
     uint16_t current_mp = figureAPI.getCurrentStat(_this->SF_CGdFigure, source_index, MANA);
     uint16_t aura_target_type = spell_data.params[5];
-    if (current_mp >= spell_data.params[8])
+    uint16_t manacost = spell_data.params[8];
+    if (_this->SF_CGdFigure->figures[source_index].set_type == 7)
     {
-        SF_Coord caster_pos = spell->source.position;
+        manacost = (manacost * 33) / 100;
+    }
+    if (current_mp >= manacost)
+    {
+        SF_Coord caster_pos = _this->SF_CGdFigure->figures[source_index].position;
         CGdFigureIterator iter;
         iteratorAPI.setupFigureIterator(&iter, _this);
         iteratorAPI.iteratorSetArea(&iter,  &caster_pos, spell_data.params[2]);
@@ -271,7 +284,27 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
                         if (_this->SF_CGdFigure->figures[target_index].owner ==
                             _this->SF_CGdFigure->figures[source_index].owner)
                         {
-                            if (!toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index, sub_effect_id))
+                            if (!toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index,
+                                                         sub_spell_data.spell_line_id))
+                            {
+
+                                apply_aura_effect(_this, spell_index, sub_effect_id, source_index, target_index);
+                                figureAPI.subMana(_this->SF_CGdFigure, source_index, manacost);
+                                iteratorAPI.disposeFigureIterator(&iter);
+                                return;
+                            }
+                        }
+                    }
+                }
+                //hostile auras
+                if (aura_target_type == 2)
+                {
+                    if (toolboxAPI.figuresCheckHostile(_this->SF_CGdFigureToolBox, source_index, target_index))
+                    {
+                        if (toolboxAPI.isTargetable(_this->SF_CGdFigureToolBox, target_index))
+                        {
+                            if (!toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index,
+                                                         sub_spell_data.spell_line_id))
                             {
 
                                 apply_aura_effect(_this, spell_index, sub_effect_id, source_index, target_index);
@@ -285,8 +318,9 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
             }
             target_index = iteratorAPI.getNextFigure(&iter);
         }
+        iteratorAPI.disposeFigureIterator(&iter);
+        return;
     }
-
     if (source_index != 0)
     {
         _this->SF_CGdFigure->figures[source_index].flags &= ~AURA_RUNNING;
@@ -508,6 +542,7 @@ void initialize_vanilla_effect_handler_hooks()
     effect_tower_arrow_handler = (handler_ptr)(ASI::AddrOf(0x32f840));
     effect_assistance_handler = (handler_ptr)(ASI::AddrOf(0x32fbc0));
     effect_aura_handler = (handler_ptr)(ASI::AddrOf(0x32fd40));
+    //effect_aura_handler = &effect_aura; // For tests only! ~UnSchtalch
     effect_befriend_handler = (handler_ptr)(ASI::AddrOf(0x3309b0));
     effect_unknown1_handler = (handler_ptr)(ASI::AddrOf(0x330bc0));
     effect_blizzard_handler = (handler_ptr)(ASI::AddrOf(0x330e00));
