@@ -231,6 +231,7 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
     uint16_t sub_effect_id = spell_data.params[6];
     SF_CGdResourceSpell sub_spell_data;
     spellAPI.getResourceSpellData(_this->SF_CGdResource, &sub_spell_data, sub_effect_id);
+    _this->active_spell_list[spell_index].to_do_count = (spell_data.params[0] * 10) / 1000;
 
     SF_CGdTargetData source_data;
     source_data.entity_index = source_index;
@@ -262,7 +263,7 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
     uint16_t manacost = spell_data.params[8];
     if (_this->SF_CGdFigure->figures[source_index].set_type == 7)
     {
-        manacost = (manacost * 33) / 100;
+        manacost -= ((manacost * 33) / 100);
     }
     if (current_mp >= manacost)
     {
@@ -357,6 +358,7 @@ void __thiscall effect_siege_aura (SF_CGdSpell *_this, uint16_t spell_index)
     source_data.entity_index = source_index;
     source_data.entity_type = 1;
     source_data.position = {0,0};
+    _this->active_spell_list[spell_index].to_do_count = (spell_data.params[0] * 10) / 1000;
     if (spell->source.entity_type == 1)
     {
         if ((_this->SF_CGdFigure->figures[source_index].owner != (uint16_t)(-1)) &&
