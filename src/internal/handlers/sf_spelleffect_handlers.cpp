@@ -213,10 +213,10 @@ void __thiscall apply_aura_effect(SF_CGdSpell *_this, uint16_t spell_index, uint
                              sub_spell_index);
     effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_ENTITY_TYPE, 1);
     effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_ENTITY_INDEX,
-                             sub_spell_index);
+                             source_index);
     effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_ENTITY_TYPE2, 1);
     effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_ENTITY_INDEX2,
-                             sub_spell_index);
+                             target_index);
 }
 
 void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
