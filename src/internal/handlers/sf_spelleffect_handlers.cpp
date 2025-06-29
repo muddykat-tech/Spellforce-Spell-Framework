@@ -2,6 +2,7 @@
 #include "../core/sf_wrappers.h"
 #include "../registry/spell_data_registries/sf_spelleffect_registry.h"
 #include <cstdio>
+#include <vector>
 
 handler_ptr effect_ability_benefactions_handler;
 handler_ptr effect_ability_berserk_handler;
@@ -271,6 +272,7 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
         CGdFigureIterator iter;
         iteratorAPI.setupFigureIterator(&iter, _this);
         iteratorAPI.iteratorSetArea(&iter,  &caster_pos, spell_data.params[2]);
+        std::vector<uint16_t> targets;
         uint16_t target_index = iteratorAPI.getNextFigure(&iter);
         while (target_index != 0)
         {
@@ -285,6 +287,17 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
                         if (_this->SF_CGdFigure->figures[target_index].owner ==
                             _this->SF_CGdFigure->figures[source_index].owner)
                         {
+                            //special logic here
+                            if (spell->spell_line == kGdSpellLineAuraHealing)
+                            {
+                                if (_this->SF_CGdFigure->figures[target_index].health.missing_val != 0)
+                                {
+                                    targets.push_back(target_index);
+                                }
+                                target_index = iteratorAPI.getNextFigure(&iter);
+                                continue;
+                            }
+
                             if (!toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index,
                                                          sub_spell_data.spell_line_id))
                             {
@@ -319,6 +332,47 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
             }
             target_index = iteratorAPI.getNextFigure(&iter);
         }
+        if (!targets.empty())
+        {
+            uint16_t healing_target = 0;
+            uint16_t prio = 0;
+            for (int j = 0; j < targets.size(); j++)
+            {
+                SF_Coord target_pos = _this->SF_CGdFigure->figures[j].position;
+                target_index = targets[j];
+                uint16_t dx = 7;
+                uint16_t sec_prio = 0;
+                for (int i = 8; i> 0; i--)
+                {
+                    //some serious bitfuckery
+                    uint16_t near_x = *(uint16_t *)((uint32_t)&_this->SF_CGdWorld->unknown1[0].uknwn1 + dx) +
+                                      target_pos.X;
+                    uint16_t near_y = *(uint16_t *)((uint32_t)&_this->SF_CGdWorld->unknown1[0].uknwn2 + dx) +
+                                      target_pos.Y;
+                    if ((*(uint8_t *)&_this->SF_CGdWorld->cells[near_y*0x400 + near_x].world_cell_flags) & 0x10 != 0)
+                    {
+                        uint16_t sec_target = toolboxAPI.getFigureFromWorld(_this->SF_CGdWorld, near_x, near_y, 0);
+
+                        if (toolboxAPI.figuresCheckHostile(_this->SF_CGdFigureToolBox, target_index, sec_target))
+                        {
+                            sec_prio++;
+                        }
+                    }
+                    dx += -7;
+                }
+                sec_prio *= (100 - figureAPI.getCurrentHealthPercent(_this->SF_CGdFigure, target_index));
+                if (sec_prio > prio)
+                {
+                    prio = sec_prio;
+                    healing_target = targets[j];
+                }
+            }
+            if (healing_target == 0)
+            {
+                healing_target = targets[spellAPI.getRandom(_this->OpaqueClass, targets.size())];
+            }
+            apply_aura_effect(_this, spell_index, sub_effect_id, source_index, healing_target);
+        }
         iteratorAPI.disposeFigureIterator(&iter);
         return;
     }
@@ -331,17 +385,6 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
     spellAPI.setXData(_this, spell_index, EFFECT_EFFECT_INDEX, 0);
     spellAPI.setEffectDone(_this, spell_index, 0);
     return;
-}
-
-
-void __thiscall effect_healing_aura (SF_CGdSpell *_this, uint16_t spell_index)
-{
-
-}
-
-void __thiscall effect_lifetap_aura (SF_CGdSpell *_this, uint16_t spell_index)
-{
-
 }
 
 //fix for aura set
@@ -543,8 +586,8 @@ void initialize_vanilla_effect_handler_hooks()
     effect_amok_handler = (handler_ptr)(ASI::AddrOf(0x32f590));
     effect_tower_arrow_handler = (handler_ptr)(ASI::AddrOf(0x32f840));
     effect_assistance_handler = (handler_ptr)(ASI::AddrOf(0x32fbc0));
-    effect_aura_handler = (handler_ptr)(ASI::AddrOf(0x32fd40));
-    //effect_aura_handler = &effect_aura; // For tests only! ~UnSchtalch
+    //effect_aura_handler = (handler_ptr)(ASI::AddrOf(0x32fd40));
+    effect_aura_handler = &effect_aura; // For tests only! ~UnSchtalch
     effect_befriend_handler = (handler_ptr)(ASI::AddrOf(0x3309b0));
     effect_unknown1_handler = (handler_ptr)(ASI::AddrOf(0x330bc0));
     effect_blizzard_handler = (handler_ptr)(ASI::AddrOf(0x330e00));
