@@ -42,8 +42,8 @@ void register_vanilla_effect_handlers()
 {
     // initialize the functions see sf_spelleffect_handlers
 
-    registerEffectHandler(1, effect_fireburst_handler);
-    registerEffectHandler(2, effect_healing_handler);
+    registerEffectHandler(kGdSpellJobFireburst, effect_fireburst_handler);
+    registerEffectHandler(kGdSpellJobHealing, effect_healing_handler);
     registerEffectHandler(3, effect_death_handler);
     registerEffectHandler(4, effect_poison_handler);
     registerEffectHandler(5, effect_cure_poison_handler);
@@ -205,5 +205,7 @@ void register_vanilla_effect_handlers()
     registerEffectHandler(0xa3, effect_roots_handler);
     registerEffectHandler(0xa4, effect_mirage_handler);
     registerEffectHandler(0xa5, effect_fake_spell_one_figure_handler);
-    registerEffectHandler(0xa6, effect_feedback_handler);
+    registerEffectHandler(kGdSpellJobFeedback, effect_feedback_handler);
+    registerEffectHandler(kGdSpellJobSiegeAura, effect_siege_aura_handler);
+
 }

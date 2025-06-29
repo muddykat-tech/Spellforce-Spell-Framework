@@ -440,7 +440,8 @@ typedef enum : uint16_t
     kGdSpellJobRoots=163,
     kGdSpellJobMirage=164,
     kGdSpellJobFakeSpellOneFigure=165,
-    kGdSpellJobFeedback=166
+    kGdSpellJobFeedback=166,
+    kGdSpellJobSiegeAura=167
 } GdSpellJob;
 
 typedef enum

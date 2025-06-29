@@ -28,6 +28,7 @@ handler_ptr effect_amok_handler;
 handler_ptr effect_tower_arrow_handler;
 handler_ptr effect_assistance_handler;
 handler_ptr effect_aura_handler;
+handler_ptr effect_siege_aura_handler;
 handler_ptr effect_befriend_handler;
 handler_ptr effect_unknown1_handler;
 handler_ptr effect_blizzard_handler;
@@ -290,7 +291,8 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
                             //special logic here
                             if (spell->spell_line == kGdSpellLineAuraHealing)
                             {
-                                if (_this->SF_CGdFigure->figures[target_index].health.missing_val != 0)
+                                if (_this->SF_CGdFigure->figures[target_index].health.missing_val >
+                                    sub_spell_data.params[0])
                                 {
                                     targets.push_back(target_index);
                                 }
@@ -301,11 +303,7 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
                             if (!toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index,
                                                          sub_spell_data.spell_line_id))
                             {
-
-                                apply_aura_effect(_this, spell_index, sub_effect_id, source_index, target_index);
-                                figureAPI.subMana(_this->SF_CGdFigure, source_index, manacost);
-                                iteratorAPI.disposeFigureIterator(&iter);
-                                return;
+                                targets.push_back(target_index);
                             }
                         }
                     }
@@ -320,10 +318,7 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
                             if (!toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index,
                                                          sub_spell_data.spell_line_id))
                             {
-
-                                apply_aura_effect(_this, spell_index, sub_effect_id, source_index, target_index);
-                                iteratorAPI.disposeFigureIterator(&iter);
-                                return;
+                                targets.push_back(target_index);
                             }
                         }
                     }
@@ -334,44 +329,49 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
         }
         if (!targets.empty())
         {
-            uint16_t healing_target = 0;
+            uint16_t aura_target = 0;
             uint16_t prio = 0;
-            for (int j = 0; j < targets.size(); j++)
+            if (spell->spell_line == kGdSpellLineAuraHealing)
             {
-                SF_Coord target_pos = _this->SF_CGdFigure->figures[j].position;
-                target_index = targets[j];
-                uint16_t dx = 7;
-                uint16_t sec_prio = 0;
-                for (int i = 8; i> 0; i--)
+                for (int j = 0; j < targets.size(); j++)
                 {
-                    //some serious bitfuckery
-                    uint16_t near_x = *(uint16_t *)((uint32_t)&_this->SF_CGdWorld->unknown1[0].uknwn1 + dx) +
-                                      target_pos.X;
-                    uint16_t near_y = *(uint16_t *)((uint32_t)&_this->SF_CGdWorld->unknown1[0].uknwn2 + dx) +
-                                      target_pos.Y;
-                    if ((*(uint8_t *)&_this->SF_CGdWorld->cells[near_y*0x400 + near_x].world_cell_flags) & 0x10 != 0)
+                    SF_Coord target_pos = _this->SF_CGdFigure->figures[j].position;
+                    target_index = targets[j];
+                    uint16_t dx = 7;
+                    uint16_t sec_prio = 0;
+                    for (int i = 8; i> 0; i--)
                     {
-                        uint16_t sec_target = toolboxAPI.getFigureFromWorld(_this->SF_CGdWorld, near_x, near_y, 0);
-
-                        if (toolboxAPI.figuresCheckHostile(_this->SF_CGdFigureToolBox, target_index, sec_target))
+                        //some serious bitfuckery
+                        uint16_t near_x = *(uint16_t *)((uint32_t)&_this->SF_CGdWorld->unknown1[0].uknwn1 + dx) +
+                                          target_pos.X;
+                        uint16_t near_y = *(uint16_t *)((uint32_t)&_this->SF_CGdWorld->unknown1[0].uknwn2 + dx) +
+                                          target_pos.Y;
+                        if ((*(uint8_t *)&_this->SF_CGdWorld->cells[near_y*0x400 + near_x].world_cell_flags) & 0x10 !=
+                            0)
                         {
-                            sec_prio++;
+                            uint16_t sec_target = toolboxAPI.getFigureFromWorld(_this->SF_CGdWorld, near_x, near_y, 0);
+
+                            if (toolboxAPI.figuresCheckHostile(_this->SF_CGdFigureToolBox, target_index, sec_target))
+                            {
+                                sec_prio++;
+                            }
                         }
+                        dx += -7;
                     }
-                    dx += -7;
-                }
-                sec_prio *= (100 - figureAPI.getCurrentHealthPercent(_this->SF_CGdFigure, target_index));
-                if (sec_prio > prio)
-                {
-                    prio = sec_prio;
-                    healing_target = targets[j];
+                    sec_prio *= (100 - figureAPI.getCurrentHealthPercent(_this->SF_CGdFigure, target_index));
+                    if (sec_prio > prio)
+                    {
+                        prio = sec_prio;
+                        aura_target = targets[j];
+                    }
                 }
             }
-            if (healing_target == 0)
+            if (aura_target == 0)
             {
-                healing_target = targets[spellAPI.getRandom(_this->OpaqueClass, targets.size())];
+                aura_target = targets[spellAPI.getRandom(_this->OpaqueClass, targets.size())];
             }
-            apply_aura_effect(_this, spell_index, sub_effect_id, source_index, healing_target);
+            apply_aura_effect(_this, spell_index, sub_effect_id, source_index, aura_target);
+            figureAPI.subMana(_this->SF_CGdFigure, source_index, manacost);
         }
         iteratorAPI.disposeFigureIterator(&iter);
         return;
@@ -577,17 +577,16 @@ void initialize_vanilla_effect_handler_hooks()
     effect_ability_warcy_handler = (handler_ptr)(ASI::AddrOf(0x32df90));
     effect_acid_cloud_handler = (handler_ptr)(ASI::AddrOf(0x32e370));
     effect_almightiness_black_handler = (handler_ptr)(ASI::AddrOf(0x32e730));
-    effect_almightiness_elemental_handler =
-        (handler_ptr)(ASI::AddrOf(0x32e9d0));
-    effect_almightiness_elemental2_handler =
-        (handler_ptr)(ASI::AddrOf(0x32eca0));
+    effect_almightiness_elemental_handler = (handler_ptr)(ASI::AddrOf(0x32e9d0));
+    effect_almightiness_elemental2_handler = (handler_ptr)(ASI::AddrOf(0x32eca0));
     effect_almightiness_mental_handler = (handler_ptr)(ASI::AddrOf(0x32f050));
     effect_almightiness_white_handler = (handler_ptr)(ASI::AddrOf(0x32f330));
     effect_amok_handler = (handler_ptr)(ASI::AddrOf(0x32f590));
     effect_tower_arrow_handler = (handler_ptr)(ASI::AddrOf(0x32f840));
     effect_assistance_handler = (handler_ptr)(ASI::AddrOf(0x32fbc0));
     //effect_aura_handler = (handler_ptr)(ASI::AddrOf(0x32fd40));
-    effect_aura_handler = &effect_aura; // For tests only! ~UnSchtalch
+    effect_aura_handler = &effect_aura; // hotfix lives here
+    effect_siege_aura_handler = &effect_siege_aura;
     effect_befriend_handler = (handler_ptr)(ASI::AddrOf(0x3309b0));
     effect_unknown1_handler = (handler_ptr)(ASI::AddrOf(0x330bc0));
     effect_blizzard_handler = (handler_ptr)(ASI::AddrOf(0x330e00));

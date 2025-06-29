@@ -440,10 +440,8 @@ void initialize_vanilla_spells()
 
     SFSpell *dispel_white_aura =
         registrationAPI.registerSpell(kGdSpellLineDispelWhiteAura);
-    registrationAPI.linkTypeHandler(dispel_white_aura,
-                                    &dispel_white_aura_handler);
-    registrationAPI.linkSingleTargetAIHandler(dispel_white_aura,
-                                              &dispel_white_aura_ai_handler);
+    registrationAPI.linkTypeHandler(dispel_white_aura, &dispel_white_aura_handler);
+    registrationAPI.linkSingleTargetAIHandler(dispel_white_aura, &dispel_white_aura_ai_handler);
 
     SFSpell *aura6 = registrationAPI.registerSpell(kGdSpellLineAuraSlowWalking);
     registrationAPI.linkTypeHandler(aura6, &aura_handler);
@@ -1170,7 +1168,7 @@ void initialize_vanilla_spells()
                                   SpellTag::COMBAT_ABILITY_SPELL);
 
     SFSpell *aura21 = registrationAPI.registerSpell(kGdSpellLineAuraSiegeHuman);
-    registrationAPI.linkTypeHandler(aura21, &aura_handler);
+    registrationAPI.linkTypeHandler(aura21, &siege_aura_handler);
     registrationAPI.applySpellTag(aura21, SpellTag::SIEGE_AURA_SPELL);
     registrationAPI.linkEndHandler(aura21, &aura_end_handler);
     // Next Spell Block
@@ -1178,23 +1176,23 @@ void initialize_vanilla_spells()
     // Unused Spell Here
 
     SFSpell *aura22 = registrationAPI.registerSpell(kGdSpellLineAuraSiegeElf); // TODO Find Spell Name
-    registrationAPI.linkTypeHandler(aura22, &aura_handler);
+    registrationAPI.linkTypeHandler(aura22, &siege_aura_handler);
     registrationAPI.applySpellTag(aura22, SpellTag::SIEGE_AURA_SPELL);
     registrationAPI.linkEndHandler(aura22, &aura_end_handler);
 
     SFSpell *aura23 = registrationAPI.registerSpell(kGdSpellLineAuraSiegeOrc); // TODO Find Spell Name
-    registrationAPI.linkTypeHandler(aura23, &aura_handler);
+    registrationAPI.linkTypeHandler(aura23, &siege_aura_handler);
     registrationAPI.applySpellTag(aura23, SpellTag::SIEGE_AURA_SPELL);
     registrationAPI.linkEndHandler(aura23, &aura_end_handler);
 
     SFSpell *aura24 = registrationAPI.registerSpell(kGdSpellLineAuraSiegeTroll); // TODO Find Spell Name
-    registrationAPI.linkTypeHandler(aura24, &aura_handler);
+    registrationAPI.linkTypeHandler(aura24, &siege_aura_handler);
     registrationAPI.applySpellTag(aura24, SpellTag::SIEGE_AURA_SPELL);
     registrationAPI.linkEndHandler(aura24, &aura_end_handler);
 
     SFSpell *aura25 =
         registrationAPI.registerSpell(kGdSpellLineAuraSiegeDarkElf);               // TODO Find Spell Name
-    registrationAPI.linkTypeHandler(aura25, &aura_handler);
+    registrationAPI.linkTypeHandler(aura25, &siege_aura_handler);
     registrationAPI.applySpellTag(aura25, SpellTag::SIEGE_AURA_SPELL);
     registrationAPI.linkEndHandler(aura25, &aura_end_handler);
 

@@ -87,18 +87,16 @@ void __thiscall unkn_spell_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall invisibility_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall stone_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall aura_handler(SF_CGdSpell *_this, uint16_t spell_index);
+void __thiscall siege_aura_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall suicide_death_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall feign_death_handler(SF_CGdSpell *_this, uint16_t spell_index);
-void __thiscall dispel_white_aura_handler(SF_CGdSpell *_this,
-                                          uint16_t spell_index);
+void __thiscall dispel_white_aura_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall suffocation_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall inablility_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall slow_fighting_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall suicide_heal_handler(SF_CGdSpell *_this, uint16_t spell_index);
-void __thiscall dominate_animal_handler(SF_CGdSpell *_this,
-                                        uint16_t spell_index);
-void __thiscall dispel_black_aura_handler(SF_CGdSpell *_this,
-                                          uint16_t spell_index);
+void __thiscall dominate_animal_handler(SF_CGdSpell *_this, uint16_t spell_index);
+void __thiscall dispel_black_aura_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall dexterity_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall endurance_handler(SF_CGdSpell *_this, uint16_t spell_index);
 void __thiscall fast_fighting_handler(SF_CGdSpell *_this, uint16_t spell_index);

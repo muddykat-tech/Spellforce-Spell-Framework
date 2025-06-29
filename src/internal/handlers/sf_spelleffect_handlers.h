@@ -30,6 +30,7 @@ extern handler_ptr effect_amok_handler;
 extern handler_ptr effect_tower_arrow_handler;
 extern handler_ptr effect_assistance_handler;
 extern handler_ptr effect_aura_handler;
+extern handler_ptr effect_siege_aura_handler;
 extern handler_ptr effect_befriend_handler;
 extern handler_ptr effect_unknown1_handler;
 extern handler_ptr effect_blizzard_handler;
