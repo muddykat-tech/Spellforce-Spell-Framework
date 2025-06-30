@@ -166,6 +166,7 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(iterator, getNextFigure, 0x318f50);
     DEFINE_FUNCTION(iterator, buildingIteratorInit, 0x318290);
     DEFINE_FUNCTION(iterator, buildingIteratorSetPointers, 0x31A640);
+    DEFINE_FUNCTION(iterator, getNextBuilding, 0x318ca0);
 
     log_info("| - SpellAPI Wrappers");
     // Method to include functions WE define in the Internal code.

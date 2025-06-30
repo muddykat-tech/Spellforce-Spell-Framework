@@ -49,7 +49,6 @@ extern void __thiscall spellClearFigureFlag(SF_CGdSpell *spell,
                                             SpellFlagKey key);
 extern uint16_t __thiscall sf_get_spell_id(SF_CGdSpell *_this,
                                            uint16_t spell_index);
-extern uint32_t getDistance(SF_Coord *pointA, SF_Coord *pointB);
 extern SFLog *setup_logger();
 
 extern uint16_t __thiscall getPhysDamageReduction(SF_CGdFigureToolbox *_this, uint16_t source_index,
