@@ -99,9 +99,8 @@ typedef struct __attribute__((packed))
     uint8_t unknown3[168];   // Many 1 byte sections in a row
     uint32_t unknown4[7];    // Many 4 byte sections in a row
     uint16_t unknown5;
-    uint8_t unknown6[2];
-    SF_CGdFigureWeaponStats weapon_stats;
-    uint8_t unknown7[13];
+    SF_CGdFigureWeaponStats weapon_stats[2];
+    uint8_t padding0;
     uint8_t good;  // I assume perhaps alignment?
     uint8_t direction;
     uint8_t unknown8;
