@@ -131,6 +131,54 @@ void initialize_menu_data_hooks()
         (CMnuScreen_attach_control_ptr)(ASI::AddrOf(0x507240));
 }
 
+void addCollisionEntry(uint_list_node *list, int32_t posX, int32_t posY, int8_t index)
+{
+    uint32_t *offset = list->first;
+    offset[index*2] = (posX * 0x10000) / 140;
+    offset[index*2+1] = (posY * 0x10000) / 140;
+}
+
+int32_t recalcCoord(int32_t value)
+{
+    return (value * 140) / 0x10000;
+}
+
+void dumpAuxEntry(BuildingAuxEntry_related *entry)
+{
+    char message[256];
+
+    sprintf(message, "ID %d", entry->data->id);
+    log_info(message);
+
+
+    sprintf(message, "Some flags %d %d", entry->data->unknown[0], entry->data->unknown[1]);
+    log_info(message);
+
+    uint32_t posX = entry->data->centerX;
+    uint32_t posY = entry->data->centerY;
+    sprintf(message, "Center point %d, %d", recalcCoord(posX), recalcCoord(posY));
+    log_info(message);
+
+    uint8_t shadows = entry->data->shadows[0];
+    sprintf(message, "Shadows %d", shadows);
+    log_info(message);
+
+    uint8_t poly_count = entry->data->poly_count;
+    sprintf(message, "Polygon count %d", poly_count);
+    log_info(message);
+
+    uint8_t list_len = ((uint32_t)entry->data->collisions[0].data - (uint32_t)entry->data->collisions[0].first) >> 3;
+    sprintf(message, "List length %d", list_len);
+    log_info(message);
+
+    for (int i = 0; i<list_len; i++)
+    {
+        int32_t *offset = (int32_t *)entry->data->collisions[0].first;
+        sprintf(message, "Collision point %d, %d", recalcCoord(offset[i*2]), recalcCoord(offset[i*2 + 1]));
+        log_info(message);
+    }
+
+}
 SFSF_ModlistStruct mod_struct;
 void __attribute__((no_caller_saved_registers,
                     thiscall)) sf_menu_hook(uint32_t _CAppMenu)
@@ -183,40 +231,44 @@ void __attribute__((no_caller_saved_registers,
 //TODO: Move it to separate function with blows and whistles
 
 /*
-    uint8_t id = 214;
     astruct32 new_building;
-
-    log_info("Pointer walk start");
-
+    BuildingAuxEntry_related new_entry;
     uint32_t CAppSession = *(uint32_t *)(_CAppMenu + 0x4 + 0x38);
-    log_info("Pointer walk step 2");
     uint32_t CGdMain = *(uint32_t *)(CAppSession + 0x7c+0x4);
-    log_info("Pointer walk step 3");
-    uint32_t CGdResource = *(uint32_t *) (CGdMain + 0x4 + 0x60);
-    log_info("Pointer walk step 4");
+    SF_CGdResource *CGdResource = (SF_CGdResource *)*(uint32_t *) (CGdMain + 0x4 + 0x60);
+    BuildingAuxEntry *core_entry = (BuildingAuxEntry *)((uint32_t)CGdResource + 0x8);
     addBuilding_ptr AddBuilding = (addBuilding_ptr)(ASI::AddrOf(0x2669f0));
-    for (int i = 0; i < 7; i++)
-    {
-        log_info("Adding extra building");
-        id = 214 + i;
-        AddBuilding(CGdResource, &new_building, &id);
-        (new_building.ref1->building).id = id;
-        (new_building.ref1->building).race = 3; //let's add more elven buildings
-        (new_building.ref1->building).can_enter = false;
-        (new_building.ref1->building).slot_count = 0;
-        (new_building.ref1->building).building_required = 0;
-        (new_building.ref1->building).worker_cycle = 0;
-        (new_building.ref1->building).name_id = 11873;
-        (new_building.ref1->building).health = 100;
-        (new_building.ref1->building).ext_description_id = 0;
-        (new_building.ref1->building).initial_angle = 0;
-        (new_building.ref1->building).flags = 1;
-
-
-    }
+    addBuildingAuxData_ptr AddAuxData = (addBuildingAuxData_ptr)(ASI::AddrOf(0x266210));
+    setCollisionListSize_ptr setListSize = (setCollisionListSize_ptr)(ASI::AddrOf(0x274b30));
+    uint8_t id = 220;
+    AddBuilding(CGdResource, &new_building, &id);
+    (new_building.ref1->building).id = id;
+    (new_building.ref1->building).race = 2;     //let's add more dwarven buildings
+    (new_building.ref1->building).can_enter = false;
+    (new_building.ref1->building).slot_count = 0;
+    (new_building.ref1->building).building_required = 0;
+    (new_building.ref1->building).worker_cycle = 0;
+    (new_building.ref1->building).name_id = 11873;
+    (new_building.ref1->building).health = 100;
+    (new_building.ref1->building).ext_description_id = 0;
+    (new_building.ref1->building).initial_angle = 0;
+    (new_building.ref1->building).flags = 1;
+    AddAuxData(core_entry, &new_entry, &id);
+    new_entry.data->centerX = (150 * 0x10000) / 140;
+    new_entry.data->centerY = (150 * 0x10000) / 140;
+    new_entry.data->shadows[0] = 1;
+    setListSize(&(new_entry.data->collisions[0]), 4);
+    addCollisionEntry(&(new_entry.data->collisions[0]), -100, -100, 0);
+    addCollisionEntry(&(new_entry.data->collisions[0]), -100, 100, 1);
+    addCollisionEntry(&(new_entry.data->collisions[0]), 100, 100, 2);
+    addCollisionEntry(&(new_entry.data->collisions[0]), 100, -100, 3);
+    new_entry.data->poly_count = 1;
+    new_entry.data->resource_req_num = 1;
+    new_entry.data->resource_req_type[0] = 2;
+    new_entry.data->resource_req_amount[0] = 100;
+    AddAuxData(core_entry, &new_entry, &id);
+    dumpAuxEntry(&new_entry);
  */
-
-
     s_menu_func(_CAppMenu);
 }
 

@@ -23,7 +23,7 @@ typedef struct SF_CGdBuildingToolbox SF_CGdBuildingToolbox;
 typedef struct CMnuLabel CMnuLabel;
 typedef struct SF_CGdFigure SF_CGdFigure;
 typedef struct SF_SpellEffectInfo SF_SpellEffectInfo;
-
+typedef struct SF_CGdResource SF_CGdResource;
 
 /* |-========== Enums ==========-| */
 
@@ -978,104 +978,6 @@ struct __attribute__((packed)) SF_CGdWorld
     SF_world_unkn_3 unknown6[255];
     uint8_t unknown7[63];
 };
-
-
-
-/* |-============= Buildings Structures ==========- |*/
-
-typedef struct __attribute__((packed))
-{
-    SF_Coord position;
-    uint16_t owner;
-    uint8_t type;
-    uint8_t race;
-    uint8_t flags;
-    uint16_t build_up;
-    uint16_t build_max;
-    uint16_t health_current;
-    uint16_t life_current_max;
-    uint16_t health_max;
-    uint16_t DLLNode;
-    uint16_t xdata_key;
-    uint16_t angle;
-    uint32_t unknown[5];
-    uint8_t worker_count;
-    uint8_t worker_count_max;
-    uint8_t level;
-    uint32_t unknown2;
-} GdBuilding;
-
-struct __attribute__((packed)) SF_CGdBuilding
-{
-    AutoClass14 *autoClass14;
-    GdBuilding buildings[1000];
-    uint16_t max_used;
-    void *astruct_31;
-    uint32_t unknown1;
-    void *astruct_39;
-    uint32_t unknown2;
-};
-
-//TODO include this into building structures
-typedef struct astruct32 astruct32;
-typedef struct BuildingResource BuildingResource;
-struct __attribute__((packed)) BuildingResource
-{
-    uint16_t id;
-    uint8_t race;
-    uint8_t can_enter;
-    uint8_t slot_count;
-    uint16_t health;
-    uint16_t name_id;
-    uint16_t worker_cycle;
-    uint16_t building_required;
-    uint16_t initial_angle;
-    uint16_t ext_description_id;
-    uint8_t flags;
-};
-
-struct __attribute__((packed)) astruct32
-{
-    astruct32 *ref1;
-    astruct32 *ref2;
-    astruct32 *ref3;
-    uint16_t padding_1;
-    uint8_t id;
-    BuildingResource building;
-    uint8_t padding_2[3];
-};
-
-struct __attribute__((packed)) SF_CGdBuildingToolbox
-{
-    void *Decals;
-    void *CGdAStar;
-    AutoClass14 AutoClass14;
-    SF_CGdBuilding *CGdBuilding;
-    void *CGdDoubleLinkList;
-    SF_CGDEffect *CGdEffect;
-    void *AutoClass30;
-    SF_CGdFigure *CGdFigure;
-    SF_CGdFigureJobs *CGdFigureJobs;
-    SF_CGdFigureToolbox *CGdFigureToolbox;
-    void *AutoClass34;
-    void *CGdObject;
-    void *CGdPlayer;
-    void *AutoClass47;
-    void *CGdResource;
-    void *AutoClass22;
-    SF_CGdWorld *CGdWorld;
-    SF_CGdWorldToolBox *CGdWorldToolbox;
-    void *CGdXDataList;
-    uint32_t unknown1[3];
-    uint8_t unknown2[800];
-    uint8_t unknown3[800];
-    uint8_t unknown4[14884];
-    uint8_t unknown5[14884];
-    uint8_t unknown6[3721];
-
-};
-
-typedef void (__attribute__((__thiscall__)) *addBuilding_ptr)(void *_this,void *struct1, void *struct2);
 
 /* Menu Structures */
 

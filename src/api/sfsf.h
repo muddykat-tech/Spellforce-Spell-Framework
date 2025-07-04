@@ -11,7 +11,7 @@
 #include "sf_toolbox_functions.h"
 #include "sf_registration_functions.h"
 #include "sf_ai_functions.h"
-
+#include "sf_building_functions.h"
 #include <stdint.h>
 
 #define SPELLFRAMEWORK_VERSION_MAJOR 4
