@@ -1,0 +1,100 @@
+{
+  "buildings": [
+    {
+      "building_required": 0,
+      "can_enter": true,
+      "center_x": 150,
+      "center_y": 150,
+      "collision_count": 1,
+      "collisions": [
+        {
+          "points": [
+            {
+              "x": 100,
+              "y": 100
+            },
+            {
+              "x": -100,
+              "y": 100
+            },
+            {
+              "x": -100,
+              "y": -100
+            },
+            {
+              "x": 100,
+              "y": -100
+            }
+          ],
+          "shadow": true
+        }
+      ],
+      "description_id": 0,
+      "flags": 1,
+      "health": 100,
+      "id": 35,
+      "name_id": 11873,
+      "race": 2,
+      "resources": {
+        "list": [
+          {
+            "amount": 100,
+            "type": "stone"
+          }
+        ],
+        "number": 1
+      },
+      "slot_count": 0
+    },
+    {
+      "building_required": 0,
+      "can_enter": true,
+      "center_x": 150,
+      "center_y": 150,
+      "collision_count": 1,
+      "collisions": [
+        {
+          "points": [
+            {
+              "x": 100,
+              "y": 100
+            },
+            {
+              "x": -100,
+              "y": 100
+            },
+            {
+              "x": -100,
+              "y": -100
+            },
+            {
+              "x": -100,
+              "y": -100
+            },
+            {
+              "x": 100,
+              "y": -100
+            }
+          ],
+          "shadow": true
+        }
+      ],
+      "description_id": 0,
+      "flags": 1,
+      "health": 100,
+      "id": 54,
+      "name_id": 11873,
+      "race": 2,
+      "resources": {
+        "list": [
+          {
+            "amount": 100,
+            "type": "stone"
+          }
+        ],
+        "number": 1
+      },
+      "slot_count": 0
+    }
+  ]
+}
