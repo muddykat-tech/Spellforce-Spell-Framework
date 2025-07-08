@@ -29,7 +29,7 @@ typedef struct SF_CGdResource SF_CGdResource;
 
 typedef enum
 {
-    DEBUG_NONE = 0,    // No debug
+    DEBUG_INFO = 0,    // No debug
     DEBUG_LOW  = 1,
     DEBUG_MED  = 2,
     DEBUG_HIGH = 3,

@@ -66,7 +66,7 @@ typedef struct __attribute__((packed))
     uint8_t activity;
     uint8_t unknown1;
     uint16_t building;
-    GdFigureFlags flags;
+    uint32_t flags; // packed with GdFigureFlags
     uint8_t race;
     uint8_t level;
     uint16_t owner;

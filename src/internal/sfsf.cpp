@@ -15,11 +15,11 @@
 #include "../asi/sf_asi.h"
 #include <stdio.h>
 
-DebugLevel global_debug_level = DEBUG_NONE;
+DebugLevel global_debug_level = DEBUG_INFO;
 DebugLevel parse_debug_level(const char *levelStr)
 {
-    if (strcasecmp(levelStr, "NONE") == 0)
-        return DEBUG_NONE;
+    if (strcasecmp(levelStr, "INFO") == 0)
+        return DEBUG_INFO;
     if (strcasecmp(levelStr, "LOW") == 0)
         return DEBUG_LOW;
     if (strcasecmp(levelStr, "MED") == 0)
@@ -28,7 +28,7 @@ DebugLevel parse_debug_level(const char *levelStr)
         return DEBUG_HIGH;
     if (strcasecmp(levelStr, "ALL") == 0)
         return DEBUG_ALL;
-    return DEBUG_NONE;
+    return DEBUG_INFO;
 }
 
 void create_default_ini_file(const char *filename)
@@ -43,8 +43,8 @@ void create_default_ini_file(const char *filename)
     fprintf(file,
             "; Default SFSF configuration\n"
             "[Logging]\n"
-            "; (NONE, LOW, MED, HIGH, ALL)\n"
-            "DebugLevel=NONE\n");
+            "; (INFO, LOW, MED, HIGH, ALL)\n"
+            "DebugLevel=INFO\n");
     fclose(file);
 
     log_info("Created default config file: %s", filename);
@@ -137,10 +137,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call,
 
                 load_debug_level_from_ini(CONFIG_FILE);
 
-                log_debug(DEBUG_NONE, "Loading Configs, Log Level is %s", debug_level_to_string(global_debug_level));
-                log_debug(DEBUG_LOW, "Testing Debug %s", "LOW");
-                log_debug(DEBUG_MED, "Testing Debug %s", "MED");
-                log_debug(DEBUG_HIGH, "Testing Debug %s", "HIGH");
+                log_debug(DEBUG_INFO, "Loading Configs, Log Level is %s", debug_level_to_string(global_debug_level));
 
                 initialize_framework();
                 initialize_beta_hooks();

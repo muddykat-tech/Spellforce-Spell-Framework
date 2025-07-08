@@ -174,7 +174,7 @@ const char * debug_level_to_string(DebugLevel level)
 {
     switch (level)
     {
-        case DEBUG_NONE: return "INFO";
+        case DEBUG_INFO: return "INFO";
         case DEBUG_LOW:  return "LOW";
         case DEBUG_MED:  return "MED";
         case DEBUG_HIGH: return "HIGH";
