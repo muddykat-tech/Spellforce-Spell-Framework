@@ -67,9 +67,6 @@ uint32_t __attribute__((no_caller_saved_registers,
                                                              phase);
                 if (exists != NULL)
                 {
-                    /*char message[256];
-                       sprintf(message, "Found Spell Line ID: %d", spell_line_id);
-                       log_error(message);*/
                     ids_by_phase[phase][sizes_by_phase[phase]++] =
                         (spell_index << 0x10) | spell_line_id;
                     current_list_size++;
@@ -105,9 +102,7 @@ uint32_t __attribute__((no_caller_saved_registers,
         }
     }
 #if _DEBUG_
-    char message[256];
-    sprintf(message, "Dealing Damage: %d", damage_amount);
-    log_error(message);
+    log_error("Dealing Damage: %d", damage_amount);
 #endif
     return damage_amount;
 }

@@ -27,6 +27,15 @@ typedef struct SF_CGdResource SF_CGdResource;
 
 /* |-========== Enums ==========-| */
 
+typedef enum
+{
+    DEBUG_NONE = 0,    // No debug
+    DEBUG_LOW  = 1,
+    DEBUG_MED  = 2,
+    DEBUG_HIGH = 3,
+    DEBUG_ALL  = 4     // Verbose
+} DebugLevel;
+
 typedef enum : uint8_t
 {
     CHECK_SPELLS_BEFORE_CHECK_BATTLE = 0x04,
@@ -776,7 +785,7 @@ typedef struct __attribute__((packed))
     char mod_errors[256];  //Large Buffer for all error reporting needs.
 } SFMod;
 
-typedef void (*log_function_ptr)(const char *);
+typedef void (*log_function_ptr)(const char *format, ...);
 typedef struct __attribute__((packed))
 {
     log_function_ptr logError;

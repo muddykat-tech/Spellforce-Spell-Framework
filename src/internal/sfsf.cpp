@@ -15,6 +15,86 @@
 #include "../asi/sf_asi.h"
 #include <stdio.h>
 
+DebugLevel global_debug_level = DEBUG_NONE;
+DebugLevel parse_debug_level(const char *levelStr)
+{
+    if (strcasecmp(levelStr, "NONE") == 0)
+        return DEBUG_NONE;
+    if (strcasecmp(levelStr, "LOW") == 0)
+        return DEBUG_LOW;
+    if (strcasecmp(levelStr, "MED") == 0)
+        return DEBUG_MED;
+    if (strcasecmp(levelStr, "HIGH") == 0)
+        return DEBUG_HIGH;
+    if (strcasecmp(levelStr, "ALL") == 0)
+        return DEBUG_ALL;
+    return DEBUG_NONE;
+}
+
+void create_default_ini_file(const char *filename)
+{
+    FILE *file = fopen(filename, "w");
+    if (!file)
+    {
+        log_error("Failed to create default config file: %s", filename);
+        return;
+    }
+
+    fprintf(file,
+            "; Default SFSF configuration\n"
+            "[Logging]\n"
+            "; (NONE, LOW, MED, HIGH, ALL)\n"
+            "DebugLevel=NONE\n");
+    fclose(file);
+
+    log_info("Created default config file: %s", filename);
+}
+
+void load_debug_level_from_ini(const char *filename)
+{
+    FILE *file = fopen(filename, "r");
+    if (!file)
+    {
+        log_warning("Config file not found: %s", filename);
+        create_default_ini_file(filename);
+        return;
+    }
+
+    char line[256];
+    int inLoggingSection = 0;
+
+    while (fgets(line, sizeof(line), file))
+    {
+        char *start = line;
+        while (isspace((unsigned char)*start))
+            ++start;
+
+        if (*start == ';' || *start == '#' || *start == '\n' || *start == '\0')
+            continue;
+
+        if (*start == '[')
+        {
+            if (strncasecmp(start, "[Logging]", 9) == 0)
+                inLoggingSection = 1;
+            else
+                inLoggingSection = 0;
+        }
+        else if (inLoggingSection)
+        {
+            char key[128], value[128];
+            if (sscanf(start, " %127[^=]= %127s", key, value) == 2)
+            {
+                if (strcasecmp(key, "DebugLevel") == 0)
+                {
+                    global_debug_level = parse_debug_level(value);
+                }
+            }
+        }
+    }
+
+    fclose(file);
+}
+
 /**
  * @brief Entry point for the DLL.
  *
@@ -54,6 +134,14 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call,
                 fclose(file);
 
                 log_info("Spellforce Version Accepted; Starting SFSF");
+
+                load_debug_level_from_ini(CONFIG_FILE);
+
+                log_debug(DEBUG_NONE, "Loading Configs, Log Level is %s", debug_level_to_string(global_debug_level));
+                log_debug(DEBUG_LOW, "Testing Debug %s", "LOW");
+                log_debug(DEBUG_MED, "Testing Debug %s", "MED");
+                log_debug(DEBUG_HIGH, "Testing Debug %s", "HIGH");
+
                 initialize_framework();
                 initialize_beta_hooks();
                 OutputDebugStringA("[SFSF] |======================| Injection Complete |======================|");

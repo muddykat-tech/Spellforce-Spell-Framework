@@ -50,8 +50,7 @@ uint16_t __thiscall sf_spelltype_hook(SF_CGdSpell *_this, uint16_t spell_id,
     }
     if (spell_index == 799)
     {
-        log_warning(
-            "Maximum spell limit (800) reached. Additional spells may not be registered.");
+        log_warning("Maximum spell limit (800) reached. Additional spells may not be registered.");
         return 0;
     }
     // max_used spells update

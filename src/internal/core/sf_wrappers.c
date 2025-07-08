@@ -11,6 +11,8 @@
 #include "hooks/sf_vanilla_fix_hook.h"
 #include "../registry/sf_mod_registry.h"
 
+#define LOG_BUFFER_SIZE 1024
+
 /**
  * @defgroup wrappers Framework Wrappers
  * @ingroup Internal
@@ -108,42 +110,92 @@ void initialize_wrapper_data_hooks()
     vfunction25 = (vfunction_ptr)(ASI::AddrOf(0x511ae0));
     CMnuBase_setname = (CMnuBase_setname_ptr)(ASI::AddrOf(0x512E30));
     g_get_reduced_damage = (get_phys_damage_reduction_ptr)(ASI::AddrOf(0x317070));
-
 }
 
-void log_message(const char *filename, const char *message)
+void log_message(const char *filename, const char *format, ...)
 {
+    char buffer[LOG_BUFFER_SIZE];
+    va_list args;
+    va_start(args, format);
+    vsnprintf(buffer, LOG_BUFFER_SIZE, format, args);
+    va_end(args);
+
     FILE *file = fopen(filename, "a");
     if (file != NULL)
     {
-        fprintf(file, "%s\n", message);
+        fprintf(file, "%s\n", buffer);
         fclose(file);
     }
 }
 
-void log_warning(const char *message)
+void log_warning(const char *format, ...)
 {
-    // Logs a warning message to the console and the debug output
-    static char modifiedMessage[256];
-    snprintf(modifiedMessage, sizeof(modifiedMessage), "[WARNING] %s", message);
+    char buffer[LOG_BUFFER_SIZE];
+    va_list args;
+    va_start(args, format);
+    vsnprintf(buffer, LOG_BUFFER_SIZE, format, args);
+    va_end(args);
+
+    char modifiedMessage[LOG_BUFFER_SIZE];
+    snprintf(modifiedMessage, LOG_BUFFER_SIZE, "[WARNING] %s", buffer);
     console_log(modifiedMessage);
 }
 
-void log_info(const char *message)
+void log_info(const char *format, ...)
 {
-    // Logs an informational message to the console and the debug output
-    static char modifiedMessage[256];
-    snprintf(modifiedMessage, sizeof(modifiedMessage), "[SFSF] %s", message);
+    char buffer[LOG_BUFFER_SIZE];
+    va_list args;
+    va_start(args, format);
+    vsnprintf(buffer, LOG_BUFFER_SIZE, format, args);
+    va_end(args);
+
+    char modifiedMessage[LOG_BUFFER_SIZE];
+    snprintf(modifiedMessage, LOG_BUFFER_SIZE, "[INFO] %s", buffer);
     console_log(modifiedMessage);
 }
 
-void log_error(const char *message)
+void log_error(const char *format, ...)
 {
-    // Logs an error message to the console and the debug output, including the last error code
+    char buffer[LOG_BUFFER_SIZE];
+    va_list args;
+    va_start(args, format);
+    vsnprintf(buffer, LOG_BUFFER_SIZE, format, args);
+    va_end(args);
+
     int lastError = GetLastError();
-    static char modifiedMessage[256];
-    snprintf(modifiedMessage, sizeof(modifiedMessage),
-             "[ERROR] %s [(Win32 SysErr) Last Error: %d]", message, lastError);
+
+    char modifiedMessage[LOG_BUFFER_SIZE];
+    snprintf(modifiedMessage, LOG_BUFFER_SIZE,
+             "[ERROR] %s [(Win32 SysErr) Last Error: %d]", buffer, lastError);
+    console_log(modifiedMessage);
+}
+
+const char * debug_level_to_string(DebugLevel level)
+{
+    switch (level)
+    {
+        case DEBUG_NONE: return "INFO";
+        case DEBUG_LOW:  return "LOW";
+        case DEBUG_MED:  return "MED";
+        case DEBUG_HIGH: return "HIGH";
+        case DEBUG_ALL:  return "ALL";
+        default:         return "ERR";
+    }
+}
+
+void log_debug(DebugLevel level, const char *format, ...)
+{
+    if (level > global_debug_level)
+        return;
+
+    char buffer[LOG_BUFFER_SIZE];
+    va_list args;
+    va_start(args, format);
+    vsnprintf(buffer, LOG_BUFFER_SIZE, format, args);
+    va_end(args);
+
+    char modifiedMessage[LOG_BUFFER_SIZE];
+    snprintf(modifiedMessage, LOG_BUFFER_SIZE, "[DEBUG %s] %s", debug_level_to_string(level), buffer);
     console_log(modifiedMessage);
 }
 
@@ -507,9 +559,7 @@ void __thiscall addBonusMultToStatistic(SF_CGdFigure *figure,
 
     if (invalid)
     {
-        char message[256];
-        sprintf(message, "INVALID STATISTIC KEY: %d", key);
-        log_warning(message);
+        log_warning("INVALID STATISTIC KEY: %d", key);
         return;
     }
     figureAPI.addBonusMult(statistic, value);

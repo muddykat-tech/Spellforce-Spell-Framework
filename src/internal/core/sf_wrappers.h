@@ -1,6 +1,12 @@
 #ifndef UTILITY_H
 #define UTILITY_H
 
+#if defined(__GNUC__) || defined(__clang__)
+#define LOG_PRINTF_FMT(fmt_idx, arg_idx) __attribute__((format(printf, fmt_idx, arg_idx)))
+#else
+#define LOG_PRINTF_FMT(fmt_idx, arg_idx)
+#endif
+
 #include "../../api/sfsf.h"
 #include "../../asi/sf_asi.h"
 
@@ -9,7 +15,8 @@ typedef void (__thiscall *SF_String_dtor_ptr)(SF_String *);
 typedef bool (__thiscall *has_spell_effect_ptr)(SF_CGdFigureToolbox *_this,
                                                 uint16_t param_1,
                                                 uint16_t param_2);
-void log_message(const char *filename, const char *message);
+
+void log_message(const char *filename, const char *message, ...);
 
 void initialize_wrapper_data_hooks();
 
@@ -115,9 +122,11 @@ extern vfunction2_callback_attach_ptr attach_callback;
 extern vfunction_ptr vfunction16_attach_callback;
 extern get_phys_damage_reduction_ptr g_get_reduced_damage;
 
-
-extern "C" void log_warning(const char *message);
-extern "C" void log_info(const char *message);
-extern "C" void log_error(const char *message);
+extern "C" void log_warning(const char *format, ...) LOG_PRINTF_FMT(1, 2);
+extern "C" void log_info(const char *format, ...) LOG_PRINTF_FMT(1, 2);
+extern "C" void log_error(const char *format, ...) LOG_PRINTF_FMT(1, 2);
+extern "C" void log_debug(DebugLevel level, const char *format, ...);
+extern const char * debug_level_to_string(DebugLevel level);
+extern DebugLevel global_debug_level;
 
 #endif
