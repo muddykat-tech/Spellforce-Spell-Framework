@@ -140,7 +140,6 @@ uint32_t __thiscall ai_AOE_hook(SF_CGdBattleDevelopment *_this,
                                 SF_CGdResourceSpell *spell_data)
 {
     ai_aoe_handler_ptr handler = get_ai_aoe_handler(spell_line);
-    log_info("AOE handler is called for %d", spell_line);
     return handler(_this, &cast_pos, spell_line, spell_data);
 }
 /**
