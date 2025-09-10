@@ -348,7 +348,8 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
                         if ((*(uint8_t *)&_this->SF_CGdWorld->cells[near_y*0x400 + near_x].world_cell_flags) & 0x10 !=
                             0)
                         {
-                            uint16_t sec_target = toolboxAPI.getFigureFromWorld(_this->SF_CGdWorld, near_x, near_y, 0);
+                            uint16_t sec_target = toolboxAPI.getFigureFromWorld(_this->SF_CGdWorldToolBox, near_x,
+                                                                                near_y, 0);
 
                             if (toolboxAPI.figuresCheckHostile(_this->SF_CGdFigureToolBox, target_index, sec_target))
                             {
