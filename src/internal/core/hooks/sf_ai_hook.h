@@ -19,6 +19,11 @@ uint32_t __thiscall rank_offensive_spell_hook(SF_CGdBattleDevelopment *_this,
                                               SF_CGdResourceSpell *spell_data);
 uint32_t __thiscall avoidance_penalty_hook(SF_CGdBattleDevelopment *_this,
                                            uint16_t figure_index);
+//AoE Offesnsive spells DO use POSITION(!) ~UnSchtalch
 uint32_t __thiscall ai_AOE_hook(SF_CGdBattleDevelopment *_this,
                                 SF_Coord cast_pos, uint16_t spell_line,
                                 SF_CGdResourceSpell *spell_data);
+//AoE support spells DO use POSITION POINTER ~UnSchtalch
+uint32_t __thiscall ai_AOE2_hook(SF_CGdBattleDevelopment *_this,
+                                 SF_Coord *cast_pos, uint16_t spell_line,
+                                 SF_CGdResourceSpell *spell_data);
