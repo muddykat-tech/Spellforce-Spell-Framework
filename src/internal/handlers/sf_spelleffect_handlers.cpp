@@ -194,7 +194,6 @@ void __thiscall apply_aura_effect(SF_CGdSpell *_this, uint16_t spell_index, uint
     source_data.entity_index = source_index;
     source_data.entity_type = 1;
     source_data.position = {0,0};
-
     SF_Coord caster_pos = _this->SF_CGdFigure->figures[source_index].position;
     SF_Coord target_pos = _this->SF_CGdFigure->figures[target_index].position;
     uint32_t distance = toolboxAPI.getDistance(&caster_pos, &target_pos);
@@ -335,8 +334,8 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
             {
                 for (int j = 0; j < targets.size(); j++)
                 {
-                    SF_Coord target_pos = _this->SF_CGdFigure->figures[j].position;
-                    target_index = targets[j];
+                    target_index = targets.at(j);
+                    SF_Coord target_pos = _this->SF_CGdFigure->figures[target_index].position;
                     uint16_t dx = 7;
                     uint16_t sec_prio = 0;
                     for (int i = 8; i> 0; i--)
@@ -349,14 +348,15 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
                         if ((*(uint8_t *)&_this->SF_CGdWorld->cells[near_y*0x400 + near_x].world_cell_flags) & 0x10 !=
                             0)
                         {
-                            uint16_t sec_target = toolboxAPI.getFigureFromWorld(_this->SF_CGdWorld, near_x, near_y, 0);
+                            uint16_t sec_target = toolboxAPI.getFigureFromWorld(_this->SF_CGdWorldToolBox, near_x,
+                                                                                near_y, 0);
 
                             if (toolboxAPI.figuresCheckHostile(_this->SF_CGdFigureToolBox, target_index, sec_target))
                             {
                                 sec_prio++;
                             }
                         }
-                        dx += -7;
+                        dx += 7;
                     }
                     sec_prio *= (100 - figureAPI.getCurrentHealthPercent(_this->SF_CGdFigure, target_index));
                     if (sec_prio > prio)
@@ -368,7 +368,8 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
             }
             if (aura_target == 0)
             {
-                aura_target = targets[spellAPI.getRandom(_this->OpaqueClass, targets.size())];
+                uint16_t value = spellAPI.getRandom(_this->OpaqueClass, targets.size()-1);
+                aura_target = targets.at(value);
             }
             apply_aura_effect(_this, spell_index, sub_effect_id, source_index, aura_target);
             figureAPI.subMana(_this->SF_CGdFigure, source_index, manacost);

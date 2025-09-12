@@ -628,7 +628,7 @@ int main(void)
         free(tokens);
         return -1;
     }
-
+    //not sure about this, it's literally whole array length, not buildings count
     int building_count = tokens[buildings_index].size;
     int current_index = buildings_index + 1;
 
@@ -637,7 +637,8 @@ int main(void)
         printf("\n--- Processing building %d at token index %d ---\n", i, current_index);
         Building building;
         parse_building(json_string, tokens, token_count, current_index, &building);
-
+        //validate check maybe?
+        //call add building and add aux data here for building.id
         print_building(&building);
 
         current_index = skip_token_tree(tokens, token_count, current_index);

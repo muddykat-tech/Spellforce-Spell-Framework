@@ -1162,9 +1162,9 @@ void initialize_vanilla_spells()
                                     &ability_critical_hits_handler);
     registrationAPI.linkOnHitHandler(ability_critical_hits,
                                      &critical_hits_onhit_handler, PHASE_1);
-    registrationAPI.linkSingleTargetAIHandler(ability_riposte,
+    registrationAPI.linkSingleTargetAIHandler(ability_critical_hits,
                                               &critical_hits_ai_handler);
-    registrationAPI.applySpellTag(ability_riposte,
+    registrationAPI.applySpellTag(ability_critical_hits,
                                   SpellTag::COMBAT_ABILITY_SPELL);
 
     SFSpell *aura21 = registrationAPI.registerSpell(kGdSpellLineAuraSiegeHuman);

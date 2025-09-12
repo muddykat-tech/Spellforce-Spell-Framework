@@ -65,12 +65,10 @@ void __thiscall aura_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
     if ((sf_figures->figures[source_index].owner != (uint16_t)(-1)) &&
         ((sf_figures->figures[source_index].flags & GdFigureFlags::REDO) == 0))
     {
-    {
 
         /*
            This should do the same thing as the code below, but as a callback.
          */
-        // spellAPI->spellEffectCallback(_this, source_index, spell_index,
         // spellAPI->spellEffectCallback(_this, source_index, spell_index,
         //     [](SF_CGdSpell* spell, uint16_t spell_index, uint16_t walked_index) -> bool {
         //         uint16_t spell_line = spellAPI->getSpellLine(spell, walked_index);
@@ -79,7 +77,6 @@ void __thiscall aura_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
         //     [](SF_CGdSpell* spell, uint16_t src_idx, uint16_t walked_index, uint16_t spell_index) -> void {
         //         if( walked_index != spell_index ) {
         //             SF_CGdFigure *sf_figures = spell->SF_CGdFigure;
-        //             sf_figures->figures[src_idx].flags = static_cast<GdFigureFlags>(sf_figures->figures[src_idx].flags &
         //             sf_figures->figures[src_idx].flags = static_cast<GdFigureFlags>(sf_figures->figures[src_idx].flags &
         //                 (~static_cast<unsigned int>(GdFigureFlags::AURA_RUNNING)));
         //         }
@@ -108,7 +105,6 @@ void __thiscall aura_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
                                            (~static_cast<unsigned int>(GdFigureFlags::AURA_RUNNING)));
         }
     }
-
 
     uint16_t effect_index = spellAPI->getXData(_this, spell_index, EFFECT_EFFECT_INDEX);
     if (effect_index != 0)

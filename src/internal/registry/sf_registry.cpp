@@ -61,6 +61,7 @@ void registerFrameworkAPI()
     log_info("| - Loading framework with create_mod_info Address");
     frameworkAPI.createModInfo = &createModInfo;
     frameworkAPI.effectAPI = &effectAPI;
+    frameworkAPI.aiAPI = &aiAPI;
 
     log_info("| - Loading Default Mod Information");
     char version_tag_buffer[128];

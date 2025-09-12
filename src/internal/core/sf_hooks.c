@@ -390,15 +390,13 @@ static void initialize_ai_aoe_hook()
     ASI::MemoryRegion ai_offensive_mreg (ASI::AddrOf(0x35cb4f), 5);
     ASI::BeginRewrite(ai_offensive_mreg);
     *(unsigned char *)(ASI::AddrOf(0x35cb4f)) = 0xE8; // CALL instruction
-    *(int *)(ASI::AddrOf(0x35cb50)) = (int)(&ai_AOE_hook) -
-                                      ASI::AddrOf(0x35cb54);
+    *(int *)(ASI::AddrOf(0x35cb50)) = (int)(&ai_AOE_hook) - ASI::AddrOf(0x35cb54);
     ASI::EndRewrite(ai_offensive_mreg);
 
     ASI::MemoryRegion ai_offensive_mreg2 (ASI::AddrOf(0x35cadc), 5);
     ASI::BeginRewrite(ai_offensive_mreg2);
     *(unsigned char *)(ASI::AddrOf(0x35cadc)) = 0xE8; // CALL instruction
-    *(int *)(ASI::AddrOf(0x35cadd)) = (int)(&ai_AOE_hook) -
-                                      ASI::AddrOf(0x35cae1);
+    *(int *)(ASI::AddrOf(0x35cadd)) = (int)(&ai_AOE2_hook) - ASI::AddrOf(0x35cae1);
     ASI::EndRewrite(ai_offensive_mreg2);
 }
 

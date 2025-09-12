@@ -138,7 +138,6 @@ uint32_t __thiscall torture_ai_handler(SF_CGdBattleDevelopment *_this,
     iteratorAPI.figureIteratorSetPointers(&iter, _this->battleData.CGdFigure,
                                           _this->battleData.autoclass22,
                                           _this->battleData.CGdWorld);
-
     iteratorAPI.iteratorSetArea(&iter, cast_position, spell_data->params[2]);
     uint16_t count = 0;
     SF_CGdFigure *sf_figures = _this->battleData.CGdFigure;
