@@ -131,12 +131,6 @@ void initialize_menu_data_hooks()
         (CMnuScreen_attach_control_ptr)(ASI::AddrOf(0x507240));
 }
 
-void addCollisionEntry(uint_list_node *list, int32_t posX, int32_t posY, int8_t index)
-{
-    uint32_t *offset = list->first;
-    offset[index*2] = (posX * 0x10000) / 140;
-    offset[index*2+1] = (posY * 0x10000) / 140;
-}
 
 int32_t recalcCoord(int32_t value)
 {

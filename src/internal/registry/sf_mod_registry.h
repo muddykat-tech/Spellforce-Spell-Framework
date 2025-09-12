@@ -7,6 +7,7 @@
 #include <list>
 
 extern std::list<SFSpell *> g_internal_spell_list;
+extern std::list<SFBuilding *> g_internal_building_list;
 extern void register_mod_spells();
 
 // TODO Clean this up, move to spell API

@@ -7,7 +7,7 @@
 #include "spell_data_registries/sf_spellrefresh_registry.h"
 #include "spell_data_registries/sf_onhit_registry.h"
 #include "spell_data_registries/sf_spelldamage_registry.h"
-
+#include "../../api/structures/sf_building_structures.h"
 #include "ai_data_registries/sf_ai_aoe_registry.h"
 #include "ai_data_registries/sf_ai_avoidance_registry.h"
 #include "ai_data_registries/sf_ai_single_target_registry.h"
@@ -21,6 +21,21 @@
 #include <stdarg.h>
 #include <stdlib.h>
 #include <string.h>
+#include "../core/sf_building_loader.h"
+
+std::list<SFBuilding *> g_internal_building_list;
+
+SFBuilding *__thiscall registerBuilding(const char *building_json_name)
+{
+    SFBuilding *building = new SFBuilding;
+    building->building_id = -1;
+    strncpy(building->building_json_name, building_json_name, sizeof(building->building_json_name) - 1);
+    building->parent_mod = g_current_mod;
+
+    g_internal_building_list.push_back(building);
+
+    return building;
+}
 
 std::list<SFSpell *> g_internal_spell_list;
 
@@ -320,5 +335,153 @@ void register_mod_spells()
                  spell_count_for_mod, temp->mod_id);
         log_info(spell_count_info);
         spell_count_for_mod = 0;
+    }
+}
+
+addBuilding_ptr AddBuilding;
+addBuildingAuxData_ptr AddAuxData;
+setCollisionListSize_ptr setListSize;
+
+void addCollisionEntry(uint_list_node *list, int32_t posX, int32_t posY, int8_t index)
+{
+    uint32_t *offset = list->first;
+    offset[index*2] = (posX * 0x10000) / 140;
+    offset[index*2+1] = (posY * 0x10000) / 140;
+}
+
+void register_building_to_game(SFBuilding *building, const Building *src, int _CAppMenu)
+{
+    uint32_t CAppSession = *(uint32_t *)(_CAppMenu + 0x4 + 0x38);
+    uint32_t CGdMain = *(uint32_t *)(CAppSession + 0x7c + 0x4);
+    SF_CGdResource *CGdResource = (SF_CGdResource *)*(uint32_t *)(CGdMain + 0x4 + 0x60);
+    BuildingAuxEntry *core_entry = (BuildingAuxEntry *)((uint32_t)CGdResource + 0x8);
+
+    addBuilding_ptr AddBuilding = (addBuilding_ptr)(ASI::AddrOf(0x2669f0));
+    addBuildingAuxData_ptr AddAuxData = (addBuildingAuxData_ptr)(ASI::AddrOf(0x266210));
+    setCollisionListSize_ptr setListSize = (setCollisionListSize_ptr)(ASI::AddrOf(0x274b30));
+
+    astruct32 new_building = {0};
+    BuildingAuxEntry_related new_entry = {0};
+
+    if(!src->found_id)
+    {
+        log_error("Missing Required 'id' field in buidling JSON: %s", building->building_json_name);
+    }
+
+    building->building_id = src->id;
+
+    AddBuilding(CGdResource, &new_building, &building->building_id);
+    auto &bd = new_building.ref1->building;
+
+    bd.id = building->building_id;
+    bd.race = building->race;
+    bd.can_enter = building->can_enter;
+    bd.slot_count = building->slot_count;
+    bd.building_required = building->building_required;
+    bd.worker_cycle = building->worker_cycle;
+    bd.name_id = building->name_id;
+    bd.health = building->health;
+    bd.ext_description_id = building->ext_description_id;
+    bd.initial_angle = building->initial_angle;
+    bd.flags = building->flags;
+
+    AddAuxData(core_entry, &new_entry, &building->building_id);
+    new_entry.data->centerX = building->centerX;
+    new_entry.data->centerY = building->centerY;
+    memcpy(new_entry.data->shadows, building->shadows, sizeof(building->shadows));
+
+    for (int i = 0; i < src->collision_count; i++)
+    {
+        int point_count = src->collisions[i].point_count;
+        setListSize(&(new_entry.data->collisions[i]), point_count);
+        for(int k = 0; k < point_count; k++)
+        {
+            WorldCoord wc = src->collisions[i].points[k];
+            addCollisionEntry(&(new_entry.data->collisions[i]),
+                          wc.X,
+                          wc.Y,
+                          i);
+        }
+    }
+
+    new_entry.data->poly_count = building->poly_count;
+    new_entry.data->resource_req_num = building->resource_req_num;
+    for (int i = 0; i < building->resource_req_num; ++i)
+    {
+        new_entry.data->resource_req_type[i] = building->resource_req_type[i];
+        new_entry.data->resource_req_amount[i] = building->resource_req_amount[i];
+    }
+
+    AddAuxData(core_entry, &new_entry, &building->building_id);
+}
+
+void register_mod_buildings(int _CAppMenu)
+{
+    std::map<int, SFMod *> building_id_map;
+
+    SFMod *temp = g_current_mod;
+    int building_count_for_mod = 0;
+
+    for (SFBuilding *building_data : g_internal_building_list)
+    {
+        SFMod *parent_mod = building_data->parent_mod;
+        g_current_mod = parent_mod;
+
+        if (temp != g_current_mod)
+        {
+            if (building_count_for_mod > 0)
+            {
+                char log_line[256];
+                snprintf(log_line, sizeof(log_line),
+                         "| - Finished Registration of %d buildings for %s",
+                         building_count_for_mod, temp->mod_id);
+                log_info(log_line);
+                building_count_for_mod = 0;
+            }
+
+            char info[256];
+            snprintf(info, sizeof(info),
+                     "| - Starting Registration for [%s by %s]",
+                     parent_mod->mod_id, parent_mod->mod_author);
+            parent_mod->mod_errors[0] = '\0';
+            log_info(info);
+            temp = g_current_mod;
+        }
+        else
+        {
+            building_count_for_mod++;
+        }
+
+        Building parsed_building;
+        if (!parse_building_json_entrypoint(building_data->building_json_name, &parsed_building))
+        {
+            log_error("Building JSON structure invalid: %s", building_data->building_json_name);
+            continue;
+        }
+
+        building_data->race = parsed_building.race;
+        building_data->can_enter = parsed_building.can_enter;
+        building_data->slot_count = parsed_building.slot_count;
+        building_data->building_required = parsed_building.building_required;
+        building_data->worker_cycle = 0;
+        building_data->name_id = parsed_building.name_id;
+        building_data->health = parsed_building.health;
+        building_data->ext_description_id = parsed_building.description_id;
+        building_data->initial_angle = 0;
+        building_data->flags = parsed_building.flags;
+        building_data->centerX = parsed_building.center_x;
+        building_data->centerY = parsed_building.center_y;
+
+        building_data->poly_count = parsed_building.collision_count;
+        building_data->resource_req_num = parsed_building.resource_count;
+        for (int i = 0; i < parsed_building.resource_count && i < MAX_RESOURCES; i++)
+        {
+            building_data->resource_req_type[i] = parsed_building.resources[i].type;
+            building_data->resource_req_amount[i] = parsed_building.resources[i].amount;
+        }
+
+        memcpy(building_data->shadows, (uint8_t[]){1, 0, 0, 0}, sizeof(building_data->shadows));
+
+        register_building_to_game(building_data, &parsed_building, _CAppMenu);
     }
 }

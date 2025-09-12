@@ -1,5 +1,5 @@
-#ifndef UTILITY_H
-#define UTILITY_H
+#ifndef WRAPPERS_H
+#define WRAPPERS_H
 
 #if defined(__GNUC__) || defined(__clang__)
 #define LOG_PRINTF_FMT(fmt_idx, arg_idx) __attribute__((format(printf, fmt_idx, arg_idx)))
