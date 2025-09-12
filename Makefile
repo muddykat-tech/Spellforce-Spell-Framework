@@ -197,8 +197,8 @@ obj/TestMod.o: src/dev/TestMod.cpp | obj
 
 # Target for building DLLs for the new architecture
 bin/testmod.sfm: ${TEST_MOD_OBJ} | bin lib
-	${CC} -o "$@" ${TEST_MOD_OBJ} ${DLL_LDFLAGS}
+	${CC} -g -o "$@" ${NTERNALS_OBJ} ${FW_LDFLAGS}
 
 # Target for building the Spellforce framework
 bin/sfsf.asi: $(NTERNALS_OBJ) | bin lib
-	${CC} -o "$@" ${NTERNALS_OBJ} ${FW_LDFLAGS}
+	${CC} -g -Wl,--export-all-symbols -o "$@" ${NTERNALS_OBJ} ${FW_LDFLAGS}
