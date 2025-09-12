@@ -269,7 +269,7 @@ static void initialize_spellrefresh_hook()
 
 static void __declspec(naked) menuload_hook_beta()
 {
-    asm ("push %%edi         \n\t"  // Storing a pointed to CAppMenu
+    asm ("push %%edi         \n\t"  // Storing a pointer to CAppMenu
          "call %P0           \n\t"  // Calling the Hook Function (this also calls the function we replace)
          "pop %%edi          \n\t"  // Restoring EDI, then we jump back to the address of the original function that we interrupted.
          "jmp *%1            \n\t" : : "i" (sf_menu_hook),

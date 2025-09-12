@@ -724,7 +724,7 @@ void attach_mod_labels(CMnuContainer *container, int mods_per_page, int page)
                          (mod_index + 1), (g_mod_count + 1));
 
                 char mod_error_info[512] = {0};
-                if (parent_mod->mod_errors && parent_mod->mod_errors[0] != '\0')
+                if (parent_mod->mod_errors && (parent_mod->mod_errors[0] != parent_mod->mod_errors[0]))
                 {
                     snprintf(mod_error_info, sizeof(mod_error_info), "%s",
                              parent_mod->mod_errors);
@@ -743,11 +743,9 @@ void attach_mod_labels(CMnuContainer *container, int mods_per_page, int page)
                 {
                     // Update existing labels
                     update_label_text(mod_struct.title_label, mod_title);
-                    update_label_text(mod_struct.desc_label,
-                                      wrapped_description);
+                    update_label_text(mod_struct.desc_label, wrapped_description);
                     update_label_text(mod_struct.page_label, mod_page_info);
-                    update_label_text(mod_struct.error_label,
-                                      wrapped_error_info);
+                    update_label_text(mod_struct.error_label, wrapped_error_info);
                 }
                 else
                 {
@@ -774,7 +772,7 @@ void attach_mod_labels(CMnuContainer *container, int mods_per_page, int page)
 
                     // Set label colors
                     set_label_color(mod_struct.error_label, 1.0, 0.0, 0.0,
-                                    '\0');
+                                    '\x01');
                     set_label_color(mod_struct.title_label, 0.85, 0.64, 0.12,
                                     '\0');
                     set_label_color(mod_struct.title_label, 0.85, 0.64, 0.12,
@@ -1121,4 +1119,53 @@ void attachVideo(CAppMenu *CAppMenu_ptr, CMnuContainer *parent,
 
 /**
  * @}
+ */
+
+ // Call original menu function to show the menu
+    // char vid_loc[256];
+    // sprintf(vid_loc, "videos\\sfsf");
+    // attachVideo((CAppMenu*)_CAppMenu, container_hack, vid_loc);
+
+
+
+//TODO: Move it to separate function with blows and whistles
+
+/*
+    astruct32 new_building;
+    BuildingAuxEntry_related new_entry;
+    uint32_t CAppSession = *(uint32_t *)(_CAppMenu + 0x4 + 0x38);
+    uint32_t CGdMain = *(uint32_t *)(CAppSession + 0x7c+0x4);
+    SF_CGdResource *CGdResource = (SF_CGdResource *)*(uint32_t *) (CGdMain + 0x4 + 0x60);
+    BuildingAuxEntry *core_entry = (BuildingAuxEntry *)((uint32_t)CGdResource + 0x8);
+    addBuilding_ptr AddBuilding = (addBuilding_ptr)(ASI::AddrOf(0x2669f0));
+    addBuildingAuxData_ptr AddAuxData = (addBuildingAuxData_ptr)(ASI::AddrOf(0x266210));
+    setCollisionListSize_ptr setListSize = (setCollisionListSize_ptr)(ASI::AddrOf(0x274b30));
+    uint8_t id = 220;
+    AddBuilding(CGdResource, &new_building, &id);
+    (new_building.ref1->building).id = id;
+    (new_building.ref1->building).race = 2;     //let's add more dwarven buildings
+    (new_building.ref1->building).can_enter = false;
+    (new_building.ref1->building).slot_count = 0;
+    (new_building.ref1->building).building_required = 0;
+    (new_building.ref1->building).worker_cycle = 0;
+    (new_building.ref1->building).name_id = 11873;
+    (new_building.ref1->building).health = 100;
+    (new_building.ref1->building).ext_description_id = 0;
+    (new_building.ref1->building).initial_angle = 0;
+    (new_building.ref1->building).flags = 1;
+    AddAuxData(core_entry, &new_entry, &id);
+    new_entry.data->centerX = (150 * 0x10000) / 140;
+    new_entry.data->centerY = (150 * 0x10000) / 140;
+    new_entry.data->shadows[0] = 1;
+    setListSize(&(new_entry.data->collisions[0]), 4);
+    addCollisionEntry(&(new_entry.data->collisions[0]), -100, -100, 0);
+    addCollisionEntry(&(new_entry.data->collisions[0]), -100, 100, 1);
+    addCollisionEntry(&(new_entry.data->collisions[0]), 100, 100, 2);
+    addCollisionEntry(&(new_entry.data->collisions[0]), 100, -100, 3);
+    new_entry.data->poly_count = 1;
+    new_entry.data->resource_req_num = 1;
+    new_entry.data->resource_req_type[0] = 2;
+    new_entry.data->resource_req_amount[0] = 100;
+    AddAuxData(core_entry, &new_entry, &id);
+    dumpAuxEntry(&new_entry);
  */

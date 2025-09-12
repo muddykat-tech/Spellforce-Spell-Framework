@@ -155,16 +155,12 @@ void register_mod_spells()
         handler_ptr spell_type_handler = spell_data->spell_type_handler;
         handler_ptr spell_effect_handler = spell_data->spell_effect_handler;
         handler_ptr spell_end_handler = spell_data->spell_end_handler;
-        refresh_handler_ptr spell_refresh_handler =
-            spell_data->spell_refresh_handler;
-        sub_effect_handler_ptr sub_effect_handler =
-            spell_data->sub_effect_handler;
+        refresh_handler_ptr spell_refresh_handler = spell_data->spell_refresh_handler;
+        sub_effect_handler_ptr sub_effect_handler = spell_data->sub_effect_handler;
         onhit_handler_ptr onhit_handler = spell_data->spell_onhit_handler;
-        damage_handler_ptr deal_damage_handler =
-            spell_data->deal_damage_handler;
+        damage_handler_ptr deal_damage_handler = spell_data->deal_damage_handler;
         ai_aoe_handler_ptr ai_aoe_handler = spell_data->ai_aoe_handler;
-        ai_avoidance_handler_ptr ai_avoidance_handler =
-            spell_data->ai_avoidance_handler;
+        ai_avoidance_handler_ptr ai_avoidance_handler = spell_data->ai_avoidance_handler;
         ai_single_handler_ptr ai_single_handler = spell_data->ai_single_handler;
 
         SpellDamagePhase damage_phase = spell_data->damage_phase;
