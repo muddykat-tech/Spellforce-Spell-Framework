@@ -46,3 +46,30 @@ typedef struct __attribute__((packed))
     OnHitPhase hit_phase;
     SFMod *parent_mod;
 } SFSpell;
+
+typedef struct __attribute__((packed))
+{
+    SFMod *parent_mod;
+    uint8_t building_id;
+    uint8_t race;
+    bool can_enter;
+    uint8_t slot_count;
+    uint8_t building_required;
+    uint8_t worker_cycle;
+    uint16_t name_id;
+    uint16_t health;
+    uint16_t ext_description_id;
+    uint16_t initial_angle;
+    uint32_t flags;
+
+    int32_t centerX;
+    int32_t centerY;
+    uint8_t shadows[4];
+
+    uint8_t poly_count;
+    uint8_t resource_req_num;
+    uint8_t resource_req_type[4];
+    uint16_t resource_req_amount[4];
+
+    char building_json_name[64];
+} SFBuilding;

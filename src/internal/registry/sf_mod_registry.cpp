@@ -349,11 +349,9 @@ void addCollisionEntry(uint_list_node *list, int32_t posX, int32_t posY, int8_t 
     offset[index*2+1] = (posY * 0x10000) / 140;
 }
 
-void register_building_to_game(SFBuilding *building, const Building *src, int _CAppMenu)
+void register_building_to_game(SFBuilding *building, const Building *src)
 {
-    uint32_t CAppSession = *(uint32_t *)(_CAppMenu + 0x4 + 0x38);
-    uint32_t CGdMain = *(uint32_t *)(CAppSession + 0x7c + 0x4);
-    SF_CGdResource *CGdResource = (SF_CGdResource *)*(uint32_t *)(CGdMain + 0x4 + 0x60);
+    SF_CGdResource *CGdResource = (SF_CGdResource*)(*(uint32_t *)ASI::AddrOf(0x94867C));
     BuildingAuxEntry *core_entry = (BuildingAuxEntry *)((uint32_t)CGdResource + 0x8);
 
     addBuilding_ptr AddBuilding = (addBuilding_ptr)(ASI::AddrOf(0x2669f0));
@@ -413,9 +411,10 @@ void register_building_to_game(SFBuilding *building, const Building *src, int _C
     }
 
     AddAuxData(core_entry, &new_entry, &building->building_id);
+    log_info("%s has successfully registered the [%s] building to the game using ID [%u]", g_current_mod->mod_id, building->building_json_name, building->building_id);
 }
 
-void register_mod_buildings(int _CAppMenu)
+void register_mod_buildings()
 {
     std::map<int, SFMod *> building_id_map;
 
@@ -453,7 +452,7 @@ void register_mod_buildings(int _CAppMenu)
         }
 
         Building parsed_building;
-        if (!parse_building_json_entrypoint(building_data->building_json_name, &parsed_building))
+        if (!parse_building_json_entrypoint(building_data->building_json_name, g_current_mod->mod_id, &parsed_building))
         {
             log_error("Building JSON structure invalid: %s", building_data->building_json_name);
             continue;
@@ -476,12 +475,14 @@ void register_mod_buildings(int _CAppMenu)
         building_data->resource_req_num = parsed_building.resource_count;
         for (int i = 0; i < parsed_building.resource_count && i < MAX_RESOURCES; i++)
         {
-            building_data->resource_req_type[i] = parsed_building.resources[i].type;
-            building_data->resource_req_amount[i] = parsed_building.resources[i].amount;
+            // TODO UnSchtalch Convert the string 'parsed_building.resources[i].type'
+            // into the ID type we need for the AUX data
+            building_data->resource_req_type[i] = 0;
+            building_data->resource_req_amount[i] = 0;//parsed_building.resources[i].amount;
         }
 
         memcpy(building_data->shadows, (uint8_t[]){1, 0, 0, 0}, sizeof(building_data->shadows));
 
-        register_building_to_game(building_data, &parsed_building, _CAppMenu);
+        register_building_to_game(building_data, &parsed_building);
     }
 }

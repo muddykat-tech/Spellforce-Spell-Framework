@@ -20,6 +20,8 @@ extern RegistrationFunctions registrationAPI;
 extern EffectFunctions effectAPI;
 extern AiFunctions aiAPI;
 
+extern SFBuilding *__thiscall registerBuilding(const char *json_name);
+
 extern SFSpell *__thiscall registerSpell(uint16_t spell_id);
 extern void __thiscall applySpellTag(SFSpell *spell, SpellTag tag);
 

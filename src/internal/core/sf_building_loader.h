@@ -71,6 +71,8 @@ typedef enum
     FIELD_CAN_ENTER,
     FIELD_CENTER_X,
     FIELD_CENTER_Y,
+    FIELD_X,
+    FIELD_Y,
     FIELD_COLLISION_COUNT,
     FIELD_DESCRIPTION_ID,
     FIELD_FLAGS,
@@ -79,10 +81,16 @@ typedef enum
     FIELD_RACE,
     FIELD_SLOT_COUNT,
     FIELD_COLLISIONS,
-    FIELD_RESOURCES
+    FIELD_RESOURCES,
+    FIELD_SHADOW,
+    FIELD_POINTS,
+    FIELD_AMOUNT,
+    FIELD_TYPE,
+    FIELD_LIST,
+    FIELD_NUMBER,
 } FieldKey;
 
-extern "C" const char *readfile(const char *path);
-bool parse_building_json_entrypoint(const char *building_json_name, Building *out_building);
+extern "C" char *readfile(const char *path);
+bool parse_building_json_entrypoint(const char *building_json_name, const char *mod_id, Building *out_building);
 
 #endif

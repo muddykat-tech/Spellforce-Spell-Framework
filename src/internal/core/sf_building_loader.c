@@ -25,471 +25,476 @@ void init_building(Building *building)
     building->resource_count = 0;
 }
 
-int jsoneq(const char *json, jsmntok_t *tok, const char *s)
+// Compares a JSON token string with a given C string.
+static bool json_token_streq(const char *json, const jsmntok_t *token, const char *s)
 {
-    if (tok->type == JSMN_STRING && (int)strlen(s) == tok->end - tok->start &&
-        strncmp(json + tok->start, s, tok->end - tok->start) == 0)
-    {
-        return 1;
+    return token->type == JSMN_STRING && (int)strlen(s) == token->end - token->start && strncmp(json + token->start, s, token->end - token->start) == 0;
+}
+
+// Converts a JSON token to an integer.
+static int jsonint(const char *json, const jsmntok_t *token)
+{
+    char temp[32];
+    int len = token->end - token->start;
+    if (len >= 32) len = 31;
+    strncpy(temp, json + token->start, len);
+    temp[len] = '\0';
+    return atoi(temp);
+}
+
+// Converts a JSON token to a boolean.
+static bool jsonbool(const char *json, const jsmntok_t *token)
+{
+    if (json_token_streq(json, token, "true")) {
+        return true;
     }
-    return 0;
+    return false;
 }
 
-int jsonint(const char *json, jsmntok_t *tok)
+// Skips a token and all of its children, returning the next index to parse.
+static int skip_token_tree(const jsmntok_t *tokens, int token_count, int index)
 {
-    char buffer[32];
-    int len = tok->end - tok->start;
-    if (len >= sizeof(buffer))
-        len = sizeof(buffer) - 1;
-    strncpy(buffer, json + tok->start, len);
-    buffer[len] = '\0';
-    return atoi(buffer);
-}
-
-void jsonstr(const char *json, jsmntok_t *tok, char *buffer, int buffer_size)
-{
-    int len = tok->end - tok->start;
-    if (len >= buffer_size)
-        len = buffer_size - 1;
-    strncpy(buffer, json + tok->start, len);
-    buffer[len] = '\0';
-}
-
-int jsonbool(const char *json, jsmntok_t *tok)
-{
-    return (tok->type == JSMN_PRIMITIVE && json[tok->start] == 't');
-}
-
-int skip_token_tree(jsmntok_t *tokens, int token_count, int index)
-{
-    if (index >= token_count)
+    if (index >= token_count) {
         return index;
-
-    jsmntok_t *token = &tokens[index];
-    int next_index = index + 1;
-
-    // For primitives and strings, just move to next token
-    if (token->type == JSMN_PRIMITIVE || token->type == JSMN_STRING)
-    {
-        return next_index;
     }
 
-    // For arrays and objects, recursively skip all children
-    if (token->type == JSMN_ARRAY)
-    {
-        for (int i = 0; i < token->size && next_index < token_count; i++)
-        {
-            next_index = skip_token_tree(tokens, token_count, next_index);
-        }
-    }
-    else if (token->type == JSMN_OBJECT)
-    {
-        for (int i = 0; i < token->size && next_index < token_count; i++)
-        {
-            // Skip key
-            next_index = skip_token_tree(tokens, token_count, next_index);
-            // Skip value
-            if (next_index < token_count)
-            {
+    if (tokens[index].type == JSMN_PRIMITIVE || tokens[index].type == JSMN_STRING) {
+        return index + 1;
+    } else if (tokens[index].type == JSMN_OBJECT || tokens[index].type == JSMN_ARRAY) {
+        int children_count = tokens[index].size;
+        int next_index = index + 1;
+        for (int i = 0; i < children_count; i++) {
+            if (next_index >= token_count) {
+                return token_count;
+            }
+            if (tokens[index].type == JSMN_OBJECT) {
+                // For objects, we have a key-value pair, so we skip two children at a time.
+                next_index = skip_token_tree(tokens, token_count, next_index); // Skip key
+                next_index = skip_token_tree(tokens, token_count, next_index); // Skip value
+            } else {
+                // For arrays, we skip one child at a time.
                 next_index = skip_token_tree(tokens, token_count, next_index);
             }
         }
+        return next_index;
     }
-
-    return next_index;
+    return index + 1;
 }
 
-
-FieldKey parse_field_key(const char *json, jsmntok_t *tok)
+// Maps a JSON key string to the FieldKey enum.
+static FieldKey parse_field_key(const char *json, const jsmntok_t *token)
 {
-    if (jsoneq(json, tok, "id"))
-        return FIELD_ID;
-    if (jsoneq(json, tok, "building_required"))
-        return FIELD_BUILDING_REQUIRED;
-    if (jsoneq(json, tok, "can_enter"))
-        return FIELD_CAN_ENTER;
-    if (jsoneq(json, tok, "center_x"))
-        return FIELD_CENTER_X;
-    if (jsoneq(json, tok, "center_y"))
-        return FIELD_CENTER_Y;
-    if (jsoneq(json, tok, "collision_count"))
-        return FIELD_COLLISION_COUNT;
-    if (jsoneq(json, tok, "description_id"))
-        return FIELD_DESCRIPTION_ID;
-    if (jsoneq(json, tok, "flags"))
-        return FIELD_FLAGS;
-    if (jsoneq(json, tok, "health"))
-        return FIELD_HEALTH;
-    if (jsoneq(json, tok, "name_id"))
-        return FIELD_NAME_ID;
-    if (jsoneq(json, tok, "race"))
-        return FIELD_RACE;
-    if (jsoneq(json, tok, "slot_count"))
-        return FIELD_SLOT_COUNT;
-    if (jsoneq(json, tok, "collisions"))
-        return FIELD_COLLISIONS;
-    if (jsoneq(json, tok, "resources"))
-        return FIELD_RESOURCES;
+    if (token->type != JSMN_STRING) {
+        return FIELD_UNKNOWN;
+    }
+    if (json_token_streq(json, token, "id")) return FIELD_ID;
+    if (json_token_streq(json, token, "building_required")) return FIELD_BUILDING_REQUIRED;
+    if (json_token_streq(json, token, "can_enter")) return FIELD_CAN_ENTER;
+    if (json_token_streq(json, token, "center_x")) return FIELD_CENTER_X;
+    if (json_token_streq(json, token, "center_y")) return FIELD_CENTER_Y;
+    if (json_token_streq(json, token, "collision_count")) return FIELD_COLLISION_COUNT;
+    if (json_token_streq(json, token, "collisions")) return FIELD_COLLISIONS;
+    if (json_token_streq(json, token, "description_id")) return FIELD_DESCRIPTION_ID;
+    if (json_token_streq(json, token, "flags")) return FIELD_FLAGS;
+    if (json_token_streq(json, token, "health")) return FIELD_HEALTH;
+    if (json_token_streq(json, token, "name_id")) return FIELD_NAME_ID;
+    if (json_token_streq(json, token, "race")) return FIELD_RACE;
+    if (json_token_streq(json, token, "resources")) return FIELD_RESOURCES;
+    if (json_token_streq(json, token, "slot_count")) return FIELD_SLOT_COUNT;
+    if (json_token_streq(json, token, "shadow")) return FIELD_SHADOW;
+    if (json_token_streq(json, token, "points")) return FIELD_POINTS;
+    if (json_token_streq(json, token, "amount")) return FIELD_AMOUNT;
+    if (json_token_streq(json, token, "type")) return FIELD_TYPE;
+    if (json_token_streq(json, token, "list")) return FIELD_LIST;
+    if (json_token_streq(json, token, "number")) return FIELD_NUMBER;
     return FIELD_UNKNOWN;
 }
 
-void parse_point(const char *json, jsmntok_t *tokens, int token_count, int point_index, WorldCoord *point)
+// Forward declarations for parsing functions
+bool parse_collision(const char *json, const jsmntok_t *tokens, int token_count, int start_index, Collision *collision);
+bool parse_resource(const char *json, const jsmntok_t *tokens, int token_count, int start_index, Resource *resource);
+bool parse_resources(const char *json, const jsmntok_t *tokens, int token_count, int start_index, Building *building);
+bool parse_world_coord(const char *json, const jsmntok_t *tokens, int token_count, int start_index, WorldCoord *coord);
+
+// Parses a single WorldCoord object.
+bool parse_world_coord(const char *json, const jsmntok_t *tokens, int token_count, int start_index, WorldCoord *coord)
 {
-    if (tokens[point_index].type != JSMN_OBJECT)
-        return;
-
-    int current_index = point_index + 1;
-    int pairs_to_process = tokens[point_index].size;
-
-    for (int i = 0; i < pairs_to_process && current_index < token_count; i++)
-    {
-        if (jsoneq(json, &tokens[current_index], "x"))
-        {
-            point->X = jsonint(json, &tokens[current_index + 1]);
-        }
-        else if (jsoneq(json, &tokens[current_index], "y"))
-        {
-            point->Y = jsonint(json, &tokens[current_index + 1]);
-        }
-
-        // Skip key and value
-        current_index = skip_token_tree(tokens, token_count, current_index);
-        current_index = skip_token_tree(tokens, token_count, current_index);
-    }
-}
-
-int find_key_in_object(const char *json, jsmntok_t *tokens, int obj_index, const char *key)
-{
-    if (tokens[obj_index].type != JSMN_OBJECT)
-    {
-        return -1;
-    }
-
-    int key_count = tokens[obj_index].size;
-    int current_index = obj_index + 1;
-
-    for (int i = 0; i < key_count; i++)
-    {
-        if (current_index >= obj_index + tokens[obj_index].size * 2 + 1)
-            break;
-
-        // Check if this is the key we're looking for
-        if (jsoneq(json, &tokens[current_index], key))
-        {
-            return current_index + 1; // Return index of the value
-        }
-
-        // Skip this key-value pair
-        current_index++; // Move past the key
-        if (current_index < obj_index + tokens[obj_index].size * 2 + 1)
-        {
-            // Skip the value and all its children
-            current_index += tokens[current_index].size + 1;
-        }
-    }
-
-    return -1; // Key not found
-}
-
-int skip_token_and_children(jsmntok_t *tokens, int token_count, int index)
-{
-    if (index >= token_count)
-        return index;
-
-    jsmntok_t *token = &tokens[index];
-    int next_index = index + 1;
-
-    // For arrays and objects, we need to skip all children
-    if (token->type == JSMN_ARRAY || token->type == JSMN_OBJECT)
-    {
-        int children_to_skip = token->size;
-
-        if (token->type == JSMN_OBJECT)
-        {
-            children_to_skip *= 2; // Objects have key-value pairs
-        }
-
-        for (int i = 0; i < children_to_skip && next_index < token_count; i++)
-        {
-            next_index = skip_token_and_children(tokens, token_count, next_index);
-        }
-    }
-
-    return next_index;
-}
-
-const char *readfile(const char *path)
-{
-    FILE *file = fopen(path, "r");
-    if (file == NULL)
-    {
-        log_debug(DEBUG_MED, "Expected file \"%s\" not found", path);
-        return NULL;
-    }
-    fseek(file, 0, SEEK_END);
-    long len = ftell(file);
-    fseek(file, 0, SEEK_SET);
-
-    char *buffer = malloc(len + 1);
-    if (buffer == NULL)
-    {
-        log_debug(DEBUG_MED, "Unable to allocate memory for file");
-        fclose(file);
-        return NULL;
-    }
-    fread(buffer, 1, len, file);
-    buffer[len] = '\0';
-
-    return (const char *)buffer;
-}
-
-const char *extractToken(const char *json_string, jsmntok_t *token)
-{
-    char *result = calloc(token->size+1, 1);
-    strncpy(result, json_string+token->start, token->size);
-    return result;
-}
-
-void parse_collision(const char *json, jsmntok_t *tokens, int token_count, int collision_index, Collision *collision)
-{
-    if (tokens[collision_index].type != JSMN_OBJECT)
-        return;
-
-    collision->point_count = 0;
-    collision->shadow = false;
-
-    int current_index = collision_index + 1;
-    int pairs_to_process = tokens[collision_index].size;
-
-    for (int i = 0; i < pairs_to_process && current_index < token_count; i++)
-    {
-        if (jsoneq(json, &tokens[current_index], "points"))
-        {
-            int points_array_index = current_index + 1;
-            if (tokens[points_array_index].type == JSMN_ARRAY)
-            {
-                int point_count = tokens[points_array_index].size;
-                if (point_count > MAX_POINTS)
-                    point_count = MAX_POINTS;
-
-                int point_index = points_array_index + 1;
-                for (int j = 0; j < point_count && point_index < token_count; j++)
-                {
-                    parse_point(json, tokens, token_count, point_index, &collision->points[j]);
-                    collision->point_count++;
-                    point_index = skip_token_tree(tokens, token_count, point_index);
-                }
-            }
-        }
-        else if (jsoneq(json, &tokens[current_index], "shadow"))
-        {
-            collision->shadow = jsonbool(json, &tokens[current_index + 1]);
-        }
-
-        // Skip key and value
-        current_index = skip_token_tree(tokens, token_count, current_index);
-        current_index = skip_token_tree(tokens, token_count, current_index);
-    }
-}
-
-void parse_resources(const char *json, jsmntok_t *tokens, int token_count, int resources_index, Building *building)
-{
-    if (tokens[resources_index].type != JSMN_OBJECT)
-        return;
-
-    int current_index = resources_index + 1;
-    int pairs_to_process = tokens[resources_index].size;
-
-    for (int i = 0; i < pairs_to_process && current_index < token_count; i++)
-    {
-        if (jsoneq(json, &tokens[current_index], "list"))
-        {
-            int list_array_index = current_index + 1;
-            if (tokens[list_array_index].type == JSMN_ARRAY)
-            {
-                int resource_count = tokens[list_array_index].size;
-                if (resource_count > MAX_RESOURCES)
-                    resource_count = MAX_RESOURCES;
-
-                int resource_index = list_array_index + 1;
-                for (int j = 0; j < resource_count && resource_index < token_count; j++)
-                {
-                    if (tokens[resource_index].type == JSMN_OBJECT)
-                    {
-                        int res_current_index = resource_index + 1;
-                        int res_pairs_to_process = tokens[resource_index].size;
-
-                        for (int k = 0; k < res_pairs_to_process && res_current_index < token_count; k++)
-                        {
-                            if (jsoneq(json, &tokens[res_current_index], "amount"))
-                            {
-                                building->resources[building->resource_count].amount = jsonint(json,
-                                                                                               &tokens[res_current_index
-                                                                                                       + 1]);
-                            }
-                            else if (jsoneq(json, &tokens[res_current_index], "type"))
-                            {
-                                jsonstr(json, &tokens[res_current_index + 1],
-                                        building->resources[building->resource_count].type,
-                                        sizeof(building->resources[building->resource_count].type));
-                            }
-
-                            res_current_index = skip_token_tree(tokens, token_count, res_current_index);
-                            res_current_index = skip_token_tree(tokens, token_count, res_current_index);
-                        }
-                        building->resource_count++;
-                    }
-                    resource_index = skip_token_tree(tokens, token_count, resource_index);
-                }
-            }
-        }
-
-        // Skip key and value
-        current_index = skip_token_tree(tokens, token_count, current_index);
-        current_index = skip_token_tree(tokens, token_count, current_index);
-    }
-}
-
-bool parse_building_json(const char *json, jsmntok_t *tokens, int token_count, int building_index, Building *building)
-{
-    if (tokens[building_index].type != JSMN_OBJECT)
+    if (start_index >= token_count || tokens[start_index].type != JSMN_OBJECT) {
         return false;
-
-    init_building(building);
-
-    int current_index = building_index + 1;
-    int pairs_to_process = tokens[building_index].size;
-
-    for (int i = 0; i < pairs_to_process && current_index < token_count; i++)
-    {
+    }
+    int pair_count = tokens[start_index].size;
+    int current_index = start_index + 1;
+    for (int i = 0; i < pair_count; i++) {
+        if (current_index >= token_count) return false;
         FieldKey key = parse_field_key(json, &tokens[current_index]);
-
-        switch (key)
-        {
-            case FIELD_ID:
-                building->id = jsonint(json, &tokens[current_index + 1]);
-                building->found_id = true;
-                break;
-            case FIELD_BUILDING_REQUIRED:
-                building->building_required = jsonint(json, &tokens[current_index + 1]);
-                building->found_building_required = true;
-                break;
-            case FIELD_CAN_ENTER:
-                building->can_enter = jsonbool(json, &tokens[current_index + 1]);
-                building->found_can_enter = true;
-                break;
-            case FIELD_CENTER_X:
-                building->center_x = jsonint(json, &tokens[current_index + 1]);
-                building->found_center_x = true;
-                break;
-            case FIELD_CENTER_Y:
-                building->center_y = jsonint(json, &tokens[current_index + 1]);
-                building->found_center_y = true;
-                break;
-            case FIELD_COLLISION_COUNT:
-                building->collision_count = jsonint(json, &tokens[current_index + 1]);
-                building->found_collision_count = true;
-                break;
-            case FIELD_DESCRIPTION_ID:
-                building->description_id = jsonint(json, &tokens[current_index + 1]);
-                building->found_description_id = true;
-                break;
-            case FIELD_FLAGS:
-                building->flags = jsonint(json, &tokens[current_index + 1]);
-                building->found_flags = true;
-                break;
-            case FIELD_HEALTH:
-                building->health = jsonint(json, &tokens[current_index + 1]);
-                building->found_health = true;
-                break;
-            case FIELD_NAME_ID:
-                building->name_id = jsonint(json, &tokens[current_index + 1]);
-                building->found_name_id = true;
-                break;
-            case FIELD_RACE:
-                building->race = jsonint(json, &tokens[current_index + 1]);
-                building->found_race = true;
-                break;
-            case FIELD_SLOT_COUNT:
-                building->slot_count = jsonint(json, &tokens[current_index + 1]);
-                building->found_slot_count = true;
-                break;
-            case FIELD_COLLISIONS:
-            {
-                int collisions_array_index = current_index + 1;
-                if (tokens[collisions_array_index].type == JSMN_ARRAY)
-                {
-                    int collision_count = tokens[collisions_array_index].size;
-                    if (collision_count > MAX_COLLISIONS)
-                        collision_count = MAX_COLLISIONS;
-
-                    int collision_index = collisions_array_index + 1;
-                    for (int j = 0; j < collision_count && collision_index < token_count; j++)
-                    {
-                        parse_collision(json, tokens, token_count, collision_index, &building->collisions[j]);
-                        collision_index = skip_token_tree(tokens, token_count, collision_index);
-                    }
-                }
-                break;
-            }
-            case FIELD_RESOURCES:
-                parse_resources(json, tokens, token_count, current_index + 1, building);
-                break;
-
-            default:
-                // Unknown key — optionally log or skip
-                break;
+        if (key == FIELD_UNKNOWN) {
+            current_index = skip_token_tree(tokens, token_count, current_index);
+            current_index = skip_token_tree(tokens, token_count, current_index);
+            continue;
         }
 
+        const jsmntok_t *value_token = &tokens[current_index + 1];
+        if (value_token->type != JSMN_PRIMITIVE) {
+            current_index = skip_token_tree(tokens, token_count, current_index);
+            current_index = skip_token_tree(tokens, token_count, current_index);
+            continue;
+        }
+
+        switch (key) {
+            case FIELD_X:
+                coord->X = jsonint(json, value_token);
+                break;
+            case FIELD_Y:
+                coord->Y = jsonint(json, value_token);
+                break;
+            default:
+                break;
+        }
         current_index = skip_token_tree(tokens, token_count, current_index);
         current_index = skip_token_tree(tokens, token_count, current_index);
     }
     return true;
 }
 
-bool parse_building_json_entrypoint(const char *building_json_name, Building *out_building)
+// Parses a single Collision object, including its nested points array.
+bool parse_collision(const char *json, const jsmntok_t *tokens, int token_count, int start_index, Collision *collision)
+{
+    if (start_index >= token_count || tokens[start_index].type != JSMN_OBJECT) {
+        return false;
+    }
+    collision->point_count = 0;
+    int pair_count = tokens[start_index].size;
+    int current_index = start_index + 1;
+    for (int i = 0; i < pair_count; i++) {
+        if (current_index >= token_count) return false;
+        FieldKey key = parse_field_key(json, &tokens[current_index]);
+
+        switch (key) {
+            case FIELD_SHADOW:
+                collision->shadow = jsonbool(json, &tokens[current_index + 1]);
+                break;
+            case FIELD_POINTS:
+            {
+                int points_array_index = current_index + 1;
+                if (points_array_index >= token_count || tokens[points_array_index].type != JSMN_ARRAY) {
+                    break;
+                }
+                int point_count = tokens[points_array_index].size;
+                if (point_count > MAX_POINTS) point_count = MAX_POINTS;
+
+                int point_index = points_array_index + 1;
+                for (int j = 0; j < point_count; j++) {
+                    if (point_index >= token_count) break;
+                    if (parse_world_coord(json, tokens, token_count, point_index, &collision->points[j])) {
+                        collision->point_count++;
+                    }
+                    point_index = skip_token_tree(tokens, token_count, point_index);
+                }
+                break;
+            }
+            default:
+                break;
+        }
+        current_index = skip_token_tree(tokens, token_count, current_index);
+        current_index = skip_token_tree(tokens, token_count, current_index);
+    }
+    return true;
+}
+
+// Parses a single Resource object.
+bool parse_resource(const char *json, const jsmntok_t *tokens, int token_count, int start_index, Resource *resource)
+{
+    if (start_index >= token_count || tokens[start_index].type != JSMN_OBJECT) {
+        return false;
+    }
+    int pair_count = tokens[start_index].size;
+    int current_index = start_index + 1;
+    for (int i = 0; i < pair_count; i++) {
+        if (current_index >= token_count) return false;
+        FieldKey key = parse_field_key(json, &tokens[current_index]);
+
+        switch (key) {
+            case FIELD_AMOUNT:
+                resource->amount = jsonint(json, &tokens[current_index + 1]);
+                break;
+            case FIELD_TYPE:
+                {
+                    const jsmntok_t *type_token = &tokens[current_index + 1];
+                    int len = type_token->end - type_token->start;
+                    if (len >= 32) len = 31;
+                    strncpy(resource->type, json + type_token->start, len);
+                    resource->type[len] = '\0';
+                }
+                break;
+            default:
+                break;
+        }
+        current_index = skip_token_tree(tokens, token_count, current_index);
+        current_index = skip_token_tree(tokens, token_count, current_index);
+    }
+    return true;
+}
+
+// Parses the resources object and its nested list.
+bool parse_resources(const char *json, const jsmntok_t *tokens, int token_count, int start_index, Building *building)
+{
+    if (start_index >= token_count || tokens[start_index].type != JSMN_OBJECT) {
+        return false;
+    }
+    building->resource_count = 0;
+    int pair_count = tokens[start_index].size;
+    int current_index = start_index + 1;
+    for (int i = 0; i < pair_count; i++) {
+        if (current_index >= token_count) return false;
+        FieldKey key = parse_field_key(json, &tokens[current_index]);
+
+        switch (key) {
+            case FIELD_NUMBER:
+                // No need to parse this, as we'll count the actual items in the list.
+                break;
+            case FIELD_LIST:
+            {
+                int list_array_index = current_index + 1;
+                if (list_array_index >= token_count || tokens[list_array_index].type != JSMN_ARRAY) {
+                    break;
+                }
+                int list_count = tokens[list_array_index].size;
+                if (list_count > MAX_RESOURCES) list_count = MAX_RESOURCES;
+
+                int list_item_index = list_array_index + 1;
+                for (int j = 0; j < list_count; j++) {
+                    if (list_item_index >= token_count) break;
+                    if (parse_resource(json, tokens, token_count, list_item_index, &building->resources[j])) {
+                        building->resource_count++;
+                    }
+                    list_item_index = skip_token_tree(tokens, token_count, list_item_index);
+                }
+                break;
+            }
+            default:
+                break;
+        }
+        current_index = skip_token_tree(tokens, token_count, current_index);
+        current_index = skip_token_tree(tokens, token_count, current_index);
+    }
+    return true;
+}
+
+bool parse_building_from_tokens(const char *json, jsmntok_t *tokens, int token_count, Building *building);
+
+bool parse_building_json(const char *json_string, Building *building)
+{
+    #define MAX_BUILDING_TOKENS 128
+
+    jsmn_parser parser;
+    jsmntok_t tokens[MAX_BUILDING_TOKENS];
+
+    jsmn_init(&parser);
+    int token_count = jsmn_parse(&parser, json_string, strlen(json_string), tokens, MAX_BUILDING_TOKENS);
+
+    // jsmn_parse returns a negative value on error
+    if (token_count < 0) {
+        log_info("Failed to parse due to Negative token count (Enable DEBUG HIGH to view raw JSON string.)");
+        log_debug(DEBUG_HIGH, json_string);
+        return false;
+    }
+
+    // A valid building object must have at least one token (the object itself)
+    if (token_count < 1) {
+        log_info("No object found in JSON file. (Enable DEBUG HIGH to view raw JSON string.)");
+        log_debug(DEBUG_HIGH, json_string);
+        return false;
+    }
+
+    // Delegate the actual struct population to the helper function
+    return parse_building_from_tokens(json_string, tokens, token_count, building);
+}
+
+bool parse_building_from_tokens(const char *json, jsmntok_t *tokens, int token_count, Building *building)
+{
+    // The root of the JSON must be an object.
+    if (tokens[0].type != JSMN_OBJECT) {
+        return false;
+    }
+
+    init_building(building);
+
+    int pairs_to_process = tokens[0].size;
+    // Start iterating from the first key, which is at index 1
+    int current_token_index = 1;
+
+    for (int i = 0; i < pairs_to_process; i++)
+    {
+        // Boundary check for the key
+        if (current_token_index >= token_count) return false;
+
+        FieldKey key = parse_field_key(json, &tokens[current_token_index]);
+        int value_index = current_token_index + 1;
+
+        // Boundary check for the value
+        if (value_index >= token_count) return false;
+
+        switch (key)
+        {
+            case FIELD_ID:
+                building->id = jsonint(json, &tokens[value_index]);
+                building->found_id = true;
+                break;
+            case FIELD_BUILDING_REQUIRED:
+                building->building_required = jsonint(json, &tokens[value_index]);
+                building->found_building_required = true;
+                break;
+            case FIELD_CAN_ENTER:
+                building->can_enter = jsonbool(json, &tokens[value_index]);
+                building->found_can_enter = true;
+                break;
+            case FIELD_CENTER_X:
+                building->center_x = jsonint(json, &tokens[value_index]);
+                building->found_center_x = true;
+                break;
+            case FIELD_CENTER_Y:
+                building->center_y = jsonint(json, &tokens[value_index]);
+                building->found_center_y = true;
+                break;
+            case FIELD_COLLISION_COUNT:
+                building->collision_count = jsonint(json, &tokens[value_index]);
+                building->found_collision_count = true;
+                break;
+            case FIELD_DESCRIPTION_ID:
+                building->description_id = jsonint(json, &tokens[value_index]);
+                building->found_description_id = true;
+                break;
+            case FIELD_FLAGS:
+                building->flags = jsonint(json, &tokens[value_index]);
+                building->found_flags = true;
+                break;
+            case FIELD_HEALTH:
+                building->health = jsonint(json, &tokens[value_index]);
+                building->found_health = true;
+                break;
+            case FIELD_NAME_ID:
+                building->name_id = jsonint(json, &tokens[value_index]);
+                building->found_name_id = true;
+                break;
+            case FIELD_RACE:
+                building->race = jsonint(json, &tokens[value_index]);
+                building->found_race = true;
+                break;
+            case FIELD_SLOT_COUNT:
+                building->slot_count = jsonint(json, &tokens[value_index]);
+                building->found_slot_count = true;
+                break;
+            case FIELD_COLLISIONS:
+            {
+                building->collision_count = 0;
+                int collisions_array_index = value_index;
+                if (tokens[collisions_array_index].type == JSMN_ARRAY) {
+                    int collisions_to_parse = tokens[collisions_array_index].size;
+                    if (collisions_to_parse > MAX_COLLISIONS) collisions_to_parse = MAX_COLLISIONS;
+
+                    int collision_token_index = collisions_array_index + 1;
+                    for (int j = 0; j < collisions_to_parse; j++) {
+                        if (parse_collision(json, tokens, token_count, collision_token_index, &building->collisions[j])) {
+                            building->collision_count++;
+                        }
+                        collision_token_index = skip_token_tree(tokens, token_count, collision_token_index);
+                    }
+                }
+                break;
+            }
+            case FIELD_RESOURCES:
+                parse_resources(json, tokens, token_count, value_index, building);
+                break;
+            default:
+                // Unknown key, just skip it
+                break;
+        }
+
+        // Advance the current index past the key and its entire value tree
+        current_token_index = skip_token_tree(tokens, token_count, current_token_index); // Skip key
+        current_token_index = skip_token_tree(tokens, token_count, current_token_index); // Skip value
+    }
+
+    return true;
+}
+
+char *readfile(const char *path)
+{
+    FILE *file = fopen(path, "rb");
+    if(file == NULL)
+    {
+        log_error("Expected file \"%s\" not found\n", path);
+        return NULL;
+    }
+
+    fseek(file,0,SEEK_END);
+    long len = ftell(file);
+    fseek(file,0,SEEK_SET);
+
+    if(len <= 0)
+    {
+        log_error("Empty or unreadable file: \"%s\"\n",path);
+        fclose(file);
+        return NULL;
+    }
+
+    // To ensure C++ doesn't warn us here
+    char *buffer = (char *) malloc(len+1);
+    if(buffer == NULL)
+    {
+        log_error("Unable to allocate memory for file: \"%s\"\n",path);
+        fclose(file);
+        return NULL;
+    }
+
+    size_t read_len = fread(buffer, 1, len, file);
+    fclose(file);
+
+    if(read_len != (size_t)len)
+    {
+        log_error("File Read Incomplete: \"%s\" (Expected %ld bytes, got %zu bytes)\n", path, len, read_len);
+    free(buffer);
+        return NULL;
+    }
+
+    buffer[read_len] = '\0';
+
+    char *last_brace = strrchr(buffer, '}');
+    if(last_brace != NULL)
+    {
+        last_brace[1] = '\0';
+    } else
+    {
+        log_error("Invalid JSON: No closing brace found in \"%s\"\n", path);
+        free(buffer);
+        return NULL;
+    }
+
+    return buffer;
+}
+
+bool parse_building_json_entrypoint(const char *building_json_name, const char *mod_id, Building *out_building)
 {
     char currentDir[MAX_PATH];
     GetCurrentDirectory(MAX_PATH, currentDir);
     char path[MAX_PATH];
-    snprintf(path, sizeof(path), "%s\\buildings\\%s.json", currentDir, building_json_name);
+    snprintf(path, sizeof(path), "%s\\sfsf\\%s\\buildings\\%s.json", currentDir, mod_id, building_json_name);
 
-    const char *json_str = readfile(path);
+    char *json_str = readfile(path);
     if (!json_str)
     {
         log_error("Failed to read: %s", path);
         return false;
     }
 
-    jsmn_parser parser;
-    jsmntok_t *tokens = (jsmntok_t *)malloc(sizeof(jsmntok_t) * 512);
-    if (!tokens)
-    {
-        log_error("Memory allocation failed for tokens");
-        free((void *)json_str);
-        return false;
-    }
-
-    jsmn_init(&parser);
-    int count = jsmn_parse(&parser, json_str, strlen(json_str), tokens, 512);
-
-    if (count < 0)
-    {
-        log_error("JSON parse failed for: %s", building_json_name);
-        free(tokens);
-        free((void *)json_str);
-        return false;
-    }
-
     memset(out_building, 0, sizeof(Building));
-    bool success = parse_building_json(json_str, tokens, count, 0, out_building);
+    bool success = parse_building_json(json_str, out_building);
     if (!success)
     {
         log_error("Building JSON structure invalid: %s", building_json_name);
     }
 
-    free(tokens);
-    free((void *)json_str);
+    free(json_str);
     return success;
 }
 

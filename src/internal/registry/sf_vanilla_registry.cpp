@@ -10,6 +10,9 @@ void initialize_vanilla_spells()
 {
     initialize_vanilla_effect_handler_hooks();
 
+    // TODO Remove me after testing is done
+    SFBuilding *test_building = registrationAPI.registerBuilding("test_building");
+
     SFSpell *fireburst = registrationAPI.registerSpell(kGdSpellLineFireBurst);
     registrationAPI.linkTypeHandler(fireburst, &fireburst_handler);
     registrationAPI.linkSingleTargetAIHandler(fireburst, &fireburst_ai_handler);

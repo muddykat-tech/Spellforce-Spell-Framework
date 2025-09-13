@@ -211,6 +211,8 @@ void initialize_data_hooks()
                      &linkAvoidanceAIHandler);
     INCLUDE_FUNCTION(registration, linkSingleTargetAIHandler,
                      &linkSingleTargetAIHandler);
+
+    INCLUDE_FUNCTION(registration, registerBuilding, &registerBuilding);
 }
 
 static void initialize_spelltype_hook()

@@ -203,6 +203,7 @@ void __attribute__((no_caller_saved_registers,
                       sfsf_test_button_disabled, sfsf_test_button_label, 7, 822,
                       705, 192, 36, button_index,
                       (uint32_t)&show_mod_list_callback);
+
     s_menu_func(_CAppMenu);
 }
 

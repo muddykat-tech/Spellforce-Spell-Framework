@@ -159,6 +159,7 @@ void initialize_framework()
 
     // Now try and register these spells
     register_mod_spells();
+    register_mod_buildings();
 
     log_info(
         "|====== ==== ======| Mod Registration Phase End |====== ==== ======|");

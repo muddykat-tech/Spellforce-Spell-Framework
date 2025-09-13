@@ -30,6 +30,9 @@ DECLARE_FUNCTION(void, linkAOEAIHandler, SFSpell *spell,
 DECLARE_FUNCTION(void, linkAvoidanceAIHandler, SFSpell *spell,
                  ai_avoidance_handler_ptr handler);
 
+
+DECLARE_FUNCTION(SFBuilding *, registerBuilding, const char* json_name);
+
 /**
  * @ingroup API
  * @brief A structure dedicated to the registration of spells
@@ -51,4 +54,6 @@ typedef struct
     linkAvoidanceAIHandler_ptr linkAvoidanceAIHandler;
     linkSingleTargetAIHandler_ptr linkSingleTargetAIHandler;
     linkAOEAIHandler_ptr linkAOEAIHandler;
+
+    registerBuilding_ptr registerBuilding;
 } RegistrationFunctions;
