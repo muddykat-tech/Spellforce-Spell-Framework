@@ -64,12 +64,12 @@ typedef struct __attribute__((packed))
 
     int32_t centerX;
     int32_t centerY;
-    uint8_t shadows[4];
+    uint8_t shadows[5];
 
     uint8_t poly_count;
     uint8_t resource_req_num;
-    uint8_t resource_req_type[4];
-    uint16_t resource_req_amount[4];
+    uint8_t resource_req_type[5];
+    uint16_t resource_req_amount[5];
 
     char building_json_name[64];
 } SFBuilding;

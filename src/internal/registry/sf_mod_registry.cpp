@@ -351,7 +351,7 @@ void addCollisionEntry(uint_list_node *list, int32_t posX, int32_t posY, int8_t 
 
 void register_building_to_game(SFBuilding *building, const Building *src)
 {
-    SF_CGdResource *CGdResource = (SF_CGdResource*)(*(uint32_t *)ASI::AddrOf(0x94867C));
+    SF_CGdResource *CGdResource = (SF_CGdResource *)(*(uint32_t *)ASI::AddrOf(0x94867C));
     BuildingAuxEntry *core_entry = (BuildingAuxEntry *)((uint32_t)CGdResource + 0x8);
 
     addBuilding_ptr AddBuilding = (addBuilding_ptr)(ASI::AddrOf(0x2669f0));
@@ -384,8 +384,8 @@ void register_building_to_game(SFBuilding *building, const Building *src)
     bd.flags = building->flags;
 
     AddAuxData(core_entry, &new_entry, &building->building_id);
-    new_entry.data->centerX = building->centerX;
-    new_entry.data->centerY = building->centerY;
+    new_entry.data->centerX = (building->centerX * 0x10000) / 140;
+    new_entry.data->centerY = (building->centerY * 0x10000) / 140;
     memcpy(new_entry.data->shadows, building->shadows, sizeof(building->shadows));
 
     for (int i = 0; i < src->collision_count; i++)
@@ -395,10 +395,7 @@ void register_building_to_game(SFBuilding *building, const Building *src)
         for(int k = 0; k < point_count; k++)
         {
             WorldCoord wc = src->collisions[i].points[k];
-            addCollisionEntry(&(new_entry.data->collisions[i]),
-                          wc.X,
-                          wc.Y,
-                          i);
+            addCollisionEntry(&(new_entry.data->collisions[i]), wc.X, wc.Y, i);
         }
     }
 
@@ -411,7 +408,41 @@ void register_building_to_game(SFBuilding *building, const Building *src)
     }
 
     AddAuxData(core_entry, &new_entry, &building->building_id);
-    log_info("%s has successfully registered the [%s] building to the game using ID [%u]", g_current_mod->mod_id, building->building_json_name, building->building_id);
+    log_info("%s has successfully registered the [%s] building to the game using ID [%u]", g_current_mod->mod_id,
+             building->building_json_name, building->building_id);
+}
+
+uint8_t get_resource_id(const char *resource_name)
+{
+    if (!strncmp("wood",resource_name, 5))
+    {
+        return 1;
+    }
+    if (!strncmp("stone",resource_name, 6))
+    {
+        return 2;
+    }
+    if (!strncmp("moonsilver",resource_name, 11))
+    {
+        return 4;
+    }
+    if (!strncmp("food",resource_name, 5))
+    {
+        return 5;
+    }
+    if (!strncmp("iron",resource_name, 5))
+    {
+        return 7;
+    }
+    if (!strncmp("aria",resource_name, 5))
+    {
+        return 18;
+    }
+    if (!strncmp("lenya",resource_name, 5))
+    {
+        return 19;
+    }
+    return 0;
 }
 
 void register_mod_buildings()
@@ -475,13 +506,20 @@ void register_mod_buildings()
         building_data->resource_req_num = parsed_building.resource_count;
         for (int i = 0; i < parsed_building.resource_count && i < MAX_RESOURCES; i++)
         {
-            // TODO UnSchtalch Convert the string 'parsed_building.resources[i].type'
-            // into the ID type we need for the AUX data
-            building_data->resource_req_type[i] = 0;
-            building_data->resource_req_amount[i] = 0;//parsed_building.resources[i].amount;
+            building_data->resource_req_type[i] = get_resource_id(parsed_building.resources[i].type);
+            if (building_data->resource_req_type[i] != 0)
+            {
+                building_data->resource_req_amount[i] = parsed_building.resources[i].amount;
+            }
+            else
+            {
+                building_data->resource_req_amount[i] = 0;
+            }
         }
-
-        memcpy(building_data->shadows, (uint8_t[]){1, 0, 0, 0}, sizeof(building_data->shadows));
+        for (int i = 0; i < parsed_building.collision_count && i < MAX_COLLISIONS; i++)
+        {
+            building_data->shadows[i] = parsed_building.collisions[i].shadow;
+        }
 
         register_building_to_game(building_data, &parsed_building);
     }
