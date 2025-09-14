@@ -1,1 +1,70 @@
-{"building_required":0,"can_enter":true,"center_x":150,"center_y":150,"collision_count":1,"collisions":[{"points":[{"x":100,"y":100},{"x":-101,"y":110},{"x":-102,"y":120},{"x":-103,"y":130},{"x":-104,"y":140},{"x":-105,"y":-150},{"x":106,"y":-160}],"shadow":true}],"description_id":0,"flags":1,"health":100,"id":35,"name_id":11873,"race":2,"resources":{"list":[{"amount":100,"type":"stone"}],"number":1},"slot_count":0}
+{
+  "building_required": 0,
+  "can_enter": true,
+  "center_x": 0,
+  "center_y": -700,
+  "collision_count": 1,
+  "collisions": [
+    {
+      "points": [
+        {
+          "x": -56,
+          "y": -482
+        },
+        {
+          "x": 41,
+          "y": -586
+        },
+        {
+          "x": 238,
+          "y": -578
+        },
+        {
+          "x": 226,
+          "y": -193
+        },
+        {
+          "x": 420,
+          "y": -199
+        },
+        {
+          "x": 617,
+          "y": -75
+        },
+        {
+          "x": 614,
+          "y": 314
+        },
+        {
+          "x": 530,
+          "y": 312
+        },
+        {
+          "x": 527,
+          "y": 191
+        },
+        {
+          "x": -25,
+          "y": 191
+        }
+      ],
+      "shadow": false
+    }
+  ],
+  "description_id": 0,
+  "flags": 1,
+  "health": 100,
+  "id": 222,
+  "name_id": 11873,
+  "race": 2,
+  "resources": {
+    "list": [
+      {
+        "amount": 100,
+        "type": "stone"
+      }
+    ],
+    "number": 1
+  },
+  "slot_count": 0
+}
