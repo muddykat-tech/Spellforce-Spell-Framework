@@ -132,36 +132,6 @@ void initialize_menu_data_hooks()
 }
 
 
-int32_t recalcCoord(int32_t value)
-{
-    return (value * 140) / 0x10000;
-}
-
-void dumpAuxEntry(BuildingAuxEntry_related *entry)
-{
-    log_info("ID %d", entry->data->id);
-    log_info("Some flags %d %d", entry->data->unknown[0], entry->data->unknown[1]);
-
-    uint32_t posX = entry->data->centerX;
-    uint32_t posY = entry->data->centerY;
-    log_info("Center point %d, %d", recalcCoord(posX), recalcCoord(posY));
-
-    uint8_t shadows = entry->data->shadows[0];
-    log_info("Shadows %d", shadows);
-
-    uint8_t poly_count = entry->data->poly_count;
-    log_info("Polygon count %d", poly_count);
-
-    uint8_t list_len = ((uint32_t)entry->data->collisions[0].data - (uint32_t)entry->data->collisions[0].first) >> 3;
-    log_info("List length %d", list_len);
-
-    for (int i = 0; i<list_len; i++)
-    {
-        int32_t *offset = (int32_t *)entry->data->collisions[0].first;
-        log_info("Collision point %d, %d", recalcCoord(offset[i*2]), recalcCoord(offset[i*2 + 1]));
-    }
-
-}
 SFSF_ModlistStruct mod_struct;
 void __attribute__((no_caller_saved_registers,
                     thiscall)) sf_menu_hook(uint32_t _CAppMenu)

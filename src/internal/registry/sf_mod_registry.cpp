@@ -342,6 +342,36 @@ addBuilding_ptr AddBuilding;
 addBuildingAuxData_ptr AddAuxData;
 setCollisionListSize_ptr setListSize;
 
+int32_t recalcCoord(int32_t value)
+{
+    return (value * 140) / 0x10000;
+}
+
+void dumpAuxEntry(BuildingAuxEntry_related *entry)
+{
+    log_debug(DEBUG_HIGH, "ID %d", entry->data->id);
+    log_debug(DEBUG_HIGH, "Some flags %d %d", entry->data->unknown[0], entry->data->unknown[1]);
+
+    uint32_t posX = entry->data->centerX;
+    uint32_t posY = entry->data->centerY;
+    log_debug(DEBUG_HIGH, "Center point %d, %d", recalcCoord(posX), recalcCoord(posY));
+
+    uint8_t shadows = entry->data->shadows[0];
+    log_debug(DEBUG_HIGH, "Shadows %d", shadows);
+
+    uint8_t poly_count = entry->data->poly_count;
+    log_debug(DEBUG_HIGH, "Polygon count %d", poly_count);
+
+    uint8_t list_len = ((uint32_t)entry->data->collisions[0].data - (uint32_t)entry->data->collisions[0].first) >> 3;
+    log_debug(DEBUG_HIGH, "List length %d", list_len);
+
+    for (int i = 0; i<list_len; i++)
+    {
+        int32_t *offset = (int32_t *)entry->data->collisions[0].first;
+        log_debug(DEBUG_HIGH, "Collision point %d, %d", recalcCoord(offset[i*2]), recalcCoord(offset[i*2 + 1]));
+    }
+}
+
 void addCollisionEntry(uint_list_node *list, int32_t posX, int32_t posY, int8_t index)
 {
     uint32_t *offset = list->first;
@@ -395,7 +425,7 @@ void register_building_to_game(SFBuilding *building, const Building *src)
         for(int k = 0; k < point_count; k++)
         {
             WorldCoord wc = src->collisions[i].points[k];
-            addCollisionEntry(&(new_entry.data->collisions[i]), wc.X, wc.Y, i);
+            addCollisionEntry(&(new_entry.data->collisions[i]), wc.X, wc.Y, k);
         }
     }
 
@@ -408,6 +438,8 @@ void register_building_to_game(SFBuilding *building, const Building *src)
     }
 
     AddAuxData(core_entry, &new_entry, &building->building_id);
+    dumpAuxEntry(&new_entry);
+
     log_info("%s has successfully registered the [%s] building to the game using ID [%u]", g_current_mod->mod_id,
              building->building_json_name, building->building_id);
 }

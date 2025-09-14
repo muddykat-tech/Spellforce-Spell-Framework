@@ -141,6 +141,10 @@ static FieldKey parse_field_key(const char *json, const jsmntok_t *token)
         return FIELD_LIST;
     if (json_token_streq(json, token, "number"))
         return FIELD_NUMBER;
+    if (json_token_streq(json, token, "x"))
+        return FIELD_X;
+    if (json_token_streq(json, token, "y"))
+        return FIELD_Y;
     return FIELD_UNKNOWN;
 }
 
