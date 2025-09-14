@@ -665,9 +665,9 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
             (_this->CGdBuilding->buildings[target.entity_index].health_current
              != 0))
         {
-            toolboxAPI.buildingDealDamage(_this->CGdBuildingToolBox,
-                                          source_index, target.entity_index,
-                                          damage, 0);
+            buildingAPI.buildingDealDamage(_this->CGdBuildingToolBox,
+                                           source_index, target.entity_index,
+                                           damage, 0);
         }
     }
     if (target.entity_type == 3)

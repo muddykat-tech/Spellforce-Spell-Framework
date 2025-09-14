@@ -97,7 +97,7 @@ struct __attribute__((packed)) SF_CGdBuildingToolbox
 {
     void *Decals;
     void *CGdAStar;
-    AutoClass14 AutoClass14;
+    AutoClass14 OpaqueClass;
     SF_CGdBuilding *CGdBuilding;
     void *CGdDoubleLinkList;
     SF_CGDEffect *CGdEffect;

@@ -95,6 +95,8 @@ struct SpellforceSpellFramework
      * Enables logging of information, warnings, and errors to assist in debugging and monitoring.
      */
     SFLog *logAPI;
+
+    BuildingFunctions *buildingAPI;
 };
 
 

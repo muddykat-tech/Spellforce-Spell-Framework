@@ -176,6 +176,7 @@ extern EffectFunctions effectAPI;
 extern FigureFunctions figureAPI;
 extern ToolboxFunctions toolboxAPI;
 extern IteratorFunctions iteratorAPI;
+extern BuildingFunctions buildingAPI;
 
 void __thiscall apply_aura_effect(SF_CGdSpell *_this, uint16_t spell_index, uint16_t sub_spell_index,
                                   uint16_t source_index,
@@ -447,14 +448,14 @@ void __thiscall effect_siege_aura (SF_CGdSpell *_this, uint16_t spell_index)
             if (_this->CGdBuilding->buildings[building_index].owner !=
                 _this->SF_CGdFigure->figures[source_index].owner)
             {
-                if (toolboxAPI.buildingCheckHostile(_this->SF_CGdBuildingToolbox, source_index, building_index))
+                if (buildingAPI.buildingCheckHostile(_this->SF_CGdBuildingToolbox, source_index, building_index))
                 {
                     if (_this->CGdBuilding->buildings[building_index].health_current != 0)
                     {
                         SF_Rectangle building_rect;
-                        toolboxAPI.getBuildingClosestVertex(_this->SF_CGdBuildingToolbox, (SF_Coord *) &building_rect,
-                                                            building_index,
-                                                            source_index, 1);
+                        buildingAPI.getBuildingClosestVertex(_this->SF_CGdBuildingToolbox, (SF_Coord *) &building_rect,
+                                                             building_index,
+                                                             source_index, 1);
                         SF_Coord building_pos = *(SF_Coord *)&building_rect.partA;
                         uint16_t current_distance = toolboxAPI.getDistance(&caster_pos,&building_pos);
                         if ((current_distance < min_distance) && (current_distance <= spell_data.params[2]))

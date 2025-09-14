@@ -13,9 +13,6 @@ DECLARE_FUNCTION(bool, isTargetable, SF_CGdFigureToolbox *CGdFigureToolbox,
 DECLARE_FUNCTION(uint16_t, figuresCheckHostile,
                  SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t source_index,
                  uint16_t target_index);
-DECLARE_FUNCTION(void, buildingDealDamage, void *CGdBuildingToolBox,
-                 uint16_t figure_id, uint16_t building_id, uint16_t damage,
-                 uint32_t is_spell_damage);
 DECLARE_FUNCTION(uint16_t, figuresCheckNeutral,
                  SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t source_index,
                  uint16_t target_index);
@@ -59,12 +56,7 @@ DECLARE_FUNCTION(bool, hasAuraActive, SF_CGdFigureToolbox *_this,
 DECLARE_FUNCTION(uint16_t, getPhysDamageReduction, SF_CGdFigureToolbox *_this, uint16_t source_index,
                  uint16_t target_index,  uint16_t action_id);
 
-DECLARE_FUNCTION(bool, buildingCheckAllied, SF_CGdBuildingToolbox *_this, uint16_t figure_index,
-                 uint16_t building_index);
-DECLARE_FUNCTION(bool, buildingCheckHostile, SF_CGdBuildingToolbox *_this, uint16_t figure_index,
-                 uint16_t building_index);
-DECLARE_FUNCTION(SF_Coord *, getBuildingClosestVertex, SF_CGdBuildingToolbox *_this, SF_Coord *out_position,
-                 uint16_t building_index, uint16_t figure_index, uint32_t unknown);
+
 // getDistance(SF_Coord *pointA, SF_Coord *pointB)
 DECLARE_FUNCTION(uint32_t, getDistance, SF_Coord *pointA, SF_Coord *pointB);
 
@@ -86,7 +78,6 @@ typedef struct
     figuresCheckFriendly_ptr figuresCheckFriendly;
     hasSpellOnIt_ptr hasSpellOnIt;
     hasAuraActive_ptr hasAuraActive;
-    buildingDealDamage_ptr buildingDealDamage; // Send to Building Functions
     rescaleLevelStats_ptr rescaleLevelStats;
     addSpellToFigure_ptr addSpellToFigure;
     getFigureFromWorld_ptr getFigureFromWorld;
@@ -99,7 +90,4 @@ typedef struct
     findClosestFreePosition_ptr findClosestFreePosition;
     isUnitMelee_ptr isUnitMelee;
     getPhysDamageReduction_ptr getPhysDamageReduction;
-    buildingCheckAllied_ptr buildingCheckAllied;
-    buildingCheckHostile_ptr buildingCheckHostile;
-    getBuildingClosestVertex_ptr getBuildingClosestVertex;
 } ToolboxFunctions;

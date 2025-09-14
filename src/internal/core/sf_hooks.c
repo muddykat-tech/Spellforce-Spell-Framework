@@ -37,6 +37,7 @@
 SpellFunctions spellAPI;
 EffectFunctions effectAPI;
 ToolboxFunctions toolboxAPI;
+BuildingFunctions buildingAPI;
 FigureFunctions figureAPI;
 IteratorFunctions iteratorAPI;
 AiFunctions aiAPI;
@@ -144,7 +145,6 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(toolbox, figuresCheckFriendly, 0x2fe953);
     DEFINE_FUNCTION(toolbox, hasSpellOnIt, 0x2fe4ea);
     DEFINE_FUNCTION(toolbox, rescaleLevelStats, 0x2fff48);
-    DEFINE_FUNCTION(toolbox, buildingDealDamage, 0x2d6d80);
     DEFINE_FUNCTION(toolbox, addSpellToFigure, 0x2f673a);
     DEFINE_FUNCTION(toolbox, getFigureFromWorld, 0x34F160);
     DEFINE_FUNCTION(toolbox, getSpellIndexOfType, 0x2fd939);
@@ -155,9 +155,14 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(toolbox, addUnit, 0x2f749a);
     DEFINE_FUNCTION(toolbox, findClosestFreePosition, 0x34e9a0);
     DEFINE_FUNCTION(toolbox, isUnitMelee, 0x2feb2b);
-    DEFINE_FUNCTION(toolbox, buildingCheckAllied, 0x2da420);
-    DEFINE_FUNCTION(toolbox, buildingCheckHostile, 0x2da2c0);
-    DEFINE_FUNCTION(toolbox, getBuildingClosestVertex, 0x2d9c40);
+
+    log_info("| - BuildingAPI Hooks");
+    DEFINE_FUNCTION(building, buildingDealDamage, 0x2d6d80);
+    DEFINE_FUNCTION(building, buildingCheckAllied, 0x2da420);
+    DEFINE_FUNCTION(building, buildingCheckHostile, 0x2da2c0);
+    DEFINE_FUNCTION(building, getBuildingClosestVertex, 0x2d9c40);
+    DEFINE_FUNCTION(building, setBuildingXData, 0x2daca0);
+    DEFINE_FUNCTION(building, attachTowerUnit, 0x2d9290);
 
     log_info("| - IteratorAPI Hooks");
     DEFINE_FUNCTION(iterator, figureIteratorInit, 0x3183f0);

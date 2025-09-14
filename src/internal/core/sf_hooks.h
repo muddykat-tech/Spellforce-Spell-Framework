@@ -14,6 +14,7 @@
 
 extern SpellFunctions spellAPI;
 extern ToolboxFunctions toolboxAPI;
+extern BuildingFunctions buildingAPI;
 extern FigureFunctions figureAPI;
 extern IteratorFunctions iteratorAPI;
 extern RegistrationFunctions registrationAPI;

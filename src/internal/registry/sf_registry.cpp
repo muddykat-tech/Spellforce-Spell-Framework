@@ -58,10 +58,12 @@ void registerFrameworkAPI()
     frameworkAPI.iteratorAPI = &iteratorAPI;
     frameworkAPI.registrationAPI = &registrationAPI;
     frameworkAPI.logAPI = setup_logger();
-    log_info("| - Loading framework with create_mod_info Address");
-    frameworkAPI.createModInfo = &createModInfo;
     frameworkAPI.effectAPI = &effectAPI;
     frameworkAPI.aiAPI = &aiAPI;
+    frameworkAPI.buildingAPI = &buildingAPI;
+    log_info("| - Loading framework with create_mod_info Address");
+    frameworkAPI.createModInfo = &createModInfo;
+
 
     log_info("| - Loading Default Mod Information");
     char version_tag_buffer[128];
