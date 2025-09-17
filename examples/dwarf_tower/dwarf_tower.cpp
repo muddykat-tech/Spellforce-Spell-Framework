@@ -1,5 +1,5 @@
-#include "api/sfsf.h"
-//#include "../../src/api/sfsf.h"
+//#include "api/sfsf.h"
+#include "../../src/api/sfsf.h"
 #include <windows.h>
 #include <stdio.h>
 
@@ -48,7 +48,8 @@ void __thiscall THROW_HAMMER_TOWER_end_handler(SF_CGdSpell *_this, uint16_t spel
 
 
 
-uint32_t __thiscall THROW_HAMMER_TOWER_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+uint32_t __thiscall THROW_HAMMER_TOWER_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index,
+                                                  uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
 
 
@@ -59,10 +60,11 @@ uint32_t __thiscall THROW_HAMMER_TOWER_ai_handler(SF_CGdBattleDevelopment *_this
     }
 
 
-    struct {
+    struct
+    {
         uint16_t figure_index = 0;
         uint16_t health = 9999;
-           } lowest_hp_figure;
+    } lowest_hp_figure;
 
 
     for (uint16_t i = 0; i < _this->battleData.enemy_figures.entityCount; i++)
@@ -76,10 +78,10 @@ uint32_t __thiscall THROW_HAMMER_TOWER_ai_handler(SF_CGdBattleDevelopment *_this
         if ((lowest_hp_figure.health < _this->battleData.CGdFigure->figures[target_index].health.base_val) && // we seek for the lower health
             (lowest_hp_figure.figure_index != _this->battleData.current_figure) && // we ignore tower's health, because we won't attack ourselves
             (distance >= min_radius) && (distance <= max_radius)) // we ignore all figures which don't fall into spell range
-            {
-                lowest_hp_figure.figure_index = i;
-                lowest_hp_figure.health = _this->battleData.CGdFigure->figures[target_index].health.base_val;
-            }
+        {
+            lowest_hp_figure.figure_index = i;
+            lowest_hp_figure.health = _this->battleData.CGdFigure->figures[target_index].health.base_val;
+        }
 
     }
 
@@ -123,46 +125,49 @@ void __thiscall THROW_HAMMER_TOWER_effect_handler(SF_CGdSpell *_this, uint16_t s
 
     // we've got a lot of technical conditions which can prevent spell cast, so if we don't meet at least one of them, spell fails
     if (isAlive != 0 || isTargetable != 0 || isHostile != 0 || isOwner != -1)
-     {
-        uint32_t resist_chance = spellAPI->getChanceToResistSpell(_this->unkn2, source_index, target_index, effect_info);
+    {
+        uint32_t resist_chance = spellAPI->getChanceToResistSpell(_this->unkn2, source_index, target_index,
+                                                                  effect_info);
         uint16_t random_roll = spellAPI->getRandom(_this->OpaqueClass, 100);
 
         if (resist_chance >= random_roll) // we compare target spell resistance to random roll, and if resistance was higher, we stop function execution
-            {
-                uint32_t unused;
-                SF_CGdTargetData relative_data;
-                relative_data.position.X = 0;
-                relative_data.position.Y = 0;
-                relative_data.entity_type = 1;
-                relative_data.entity_index = target_index;
+        {
+            uint32_t unused;
+            SF_CGdTargetData relative_data;
+            relative_data.position.X = 0;
+            relative_data.position.Y = 0;
+            relative_data.entity_type = 1;
+            relative_data.entity_index = target_index;
 
-                SF_Rectangle aux_data;
-                aux_data.partA = 0;
-                aux_data.partB = 0;
-                spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellTargetResisted, &unused, &relative_data, _this->OpaqueClass->current_step, 10, &aux_data);
-                spellAPI->setEffectDone(_this, spell_index, 0);
-                return;
-            }
+            SF_Rectangle aux_data;
+            aux_data.partA = 0;
+            aux_data.partB = 0;
+            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellTargetResisted, &unused, &relative_data,
+                                      _this->OpaqueClass->current_step, 10, &aux_data);
+            spellAPI->setEffectDone(_this, spell_index, 0);
+            return;
+        }
         else //spell resistance failed, proceed to what happens on spell hit
-            {
-                uint32_t unused;
-                SF_CGdTargetData relative_data;
-                relative_data.position.X = 0;
-                relative_data.position.Y = 0;
-                relative_data.entity_type = 1;
-                relative_data.entity_index = target_index;
+        {
+            uint32_t unused;
+            SF_CGdTargetData relative_data;
+            relative_data.position.X = 0;
+            relative_data.position.Y = 0;
+            relative_data.entity_type = 1;
+            relative_data.entity_index = target_index;
 
-                SF_Rectangle aux_data;
-                aux_data.partA = 0;
-                aux_data.partB = 0;
-                spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 10, &aux_data);
-                uint16_t damage = spell_data.params[0];
-                toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index, target_index, damage, 0, 0, 0);
-                //spellAPI->figureAggro(_this, spell_index, target_index);
-                spellAPI->setEffectDone(_this, spell_index, 0);
-                return;
-            }
-     }
+            SF_Rectangle aux_data;
+            aux_data.partA = 0;
+            aux_data.partB = 0;
+            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data,
+                                      _this->OpaqueClass->current_step, 10, &aux_data);
+            uint16_t damage = spell_data.params[0];
+            toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index, target_index, damage, 0, 0, 0);
+            //spellAPI->figureAggro(_this, spell_index, target_index);
+            spellAPI->setEffectDone(_this, spell_index, 0);
+            return;
+        }
+    }
 }
 
 
@@ -192,7 +197,8 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     SFBuilding *dwarf_tower = registrationAPI->registerBuilding("dwarf_tower_hammer");
     // we register handlers for custom spell
     registrationAPI->linkTypeHandler(THROW_HAMMER_TOWER_spell, &THROW_HAMMER_TOWER_type_handler);
-    registrationAPI->linkEffectHandler(THROW_HAMMER_TOWER_spell, THROW_HAMMER_TOWER_JOB, &THROW_HAMMER_TOWER_effect_handler);
+    registrationAPI->linkEffectHandler(THROW_HAMMER_TOWER_spell, THROW_HAMMER_TOWER_JOB,
+                                       &THROW_HAMMER_TOWER_effect_handler);
     registrationAPI->linkSingleTargetAIHandler(THROW_HAMMER_TOWER_spell, &THROW_HAMMER_TOWER_ai_handler);
     registrationAPI->linkEndHandler(THROW_HAMMER_TOWER_spell, &THROW_HAMMER_TOWER_end_handler);
     //registrationAPI->linkBuildingDoneHandler(dwarf_tower, &myDoneHandler);
@@ -205,7 +211,8 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
  ***/
 extern "C" __declspec(dllexport) SFMod *RegisterMod(SpellforceSpellFramework *framework)
 {
-    return framework->createModInfo("Dwarf Tower", "1.0.0", "S'Baad", "A mod designed to demonstrate creation of custom building - Dwarf Tower controlled by an advanced AI.");
+    return framework->createModInfo("Dwarf Tower", "1.0.0", "S'Baad",
+                                    "A mod designed to demonstrate creation of custom building - Dwarf Tower controlled by an advanced AI.");
 }
 
 // Required to be present by, not required for any functionality
@@ -213,21 +220,21 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 {
     switch (fdwReason)
     {
-    case DLL_PROCESS_ATTACH:
-        /* Code path executed when DLL is loaded into a process's address space. */
-        break;
+        case DLL_PROCESS_ATTACH:
+            /* Code path executed when DLL is loaded into a process's address space. */
+            break;
 
-    case DLL_THREAD_ATTACH:
-        /* Code path executed when a new thread is created within the process. */
-        break;
+        case DLL_THREAD_ATTACH:
+            /* Code path executed when a new thread is created within the process. */
+            break;
 
-    case DLL_THREAD_DETACH:
-        /* Code path executed when a thread within the process has exited *cleanly*. */
-        break;
+        case DLL_THREAD_DETACH:
+            /* Code path executed when a thread within the process has exited *cleanly*. */
+            break;
 
-    case DLL_PROCESS_DETACH:
-        /* Code path executed when DLL is unloaded from a process's address space. */
-        break;
+        case DLL_PROCESS_DETACH:
+            /* Code path executed when DLL is unloaded from a process's address space. */
+            break;
     }
 
     return TRUE;
