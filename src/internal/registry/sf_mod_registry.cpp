@@ -11,6 +11,7 @@
 #include "ai_data_registries/sf_ai_aoe_registry.h"
 #include "ai_data_registries/sf_ai_avoidance_registry.h"
 #include "ai_data_registries/sf_ai_single_target_registry.h"
+#include "building_registry/sf_building_done_registry.h"
 
 #include <windows.h>
 #include <iostream>
@@ -25,16 +26,24 @@
 
 std::list<SFBuilding *> g_internal_building_list;
 
-SFBuilding *__thiscall registerBuilding(const char *building_json_name)
+SFBuilding *__thiscall registerBuilding(uint8_t building_type)
 {
     SFBuilding *building = new SFBuilding;
-    building->building_id = -1;
-    strncpy(building->building_json_name, building_json_name, sizeof(building->building_json_name) - 1);
+    building->building_id = building_type;
     building->parent_mod = g_current_mod;
-
     g_internal_building_list.push_back(building);
-
+    building->done_handler = nullptr;
     return building;
+}
+
+void __thiscall linkBuildingJSON(SFBuilding *building, const char *building_json_name)
+{
+    strncpy(building->building_json_name, building_json_name, sizeof(building->building_json_name) - 1);
+}
+
+void __thiscall linkBuildingDoneHandler (SFBuilding *building, building_done_handler_ptr handler)
+{
+    building->done_handler = handler;
 }
 
 std::list<SFSpell *> g_internal_spell_list;
@@ -494,16 +503,14 @@ void register_mod_buildings()
             if (building_count_for_mod > 0)
             {
                 char log_line[256];
-                snprintf(log_line, sizeof(log_line),
-                         "| - Finished Registration of %d buildings for %s",
+                snprintf(log_line, sizeof(log_line), "| - Finished Registration of %d buildings for %s",
                          building_count_for_mod, temp->mod_id);
                 log_info(log_line);
                 building_count_for_mod = 0;
             }
 
             char info[256];
-            snprintf(info, sizeof(info),
-                     "| - Starting Registration for [%s by %s]",
+            snprintf(info, sizeof(info), "| - Starting Registration for [%s by %s]",
                      parent_mod->mod_id, parent_mod->mod_author);
             parent_mod->mod_errors[0] = '\0';
             log_info(info);
@@ -515,44 +522,52 @@ void register_mod_buildings()
         }
 
         Building parsed_building;
-        if (!parse_building_json_entrypoint(building_data->building_json_name, g_current_mod->mod_id, &parsed_building))
+        if (building_data->building_json_name != NULL)
         {
-            log_error("Building JSON structure invalid: %s", building_data->building_json_name);
-            continue;
-        }
-
-        building_data->race = parsed_building.race;
-        building_data->can_enter = parsed_building.can_enter;
-        building_data->slot_count = parsed_building.slot_count;
-        building_data->building_required = parsed_building.building_required;
-        building_data->worker_cycle = 0;
-        building_data->name_id = parsed_building.name_id;
-        building_data->health = parsed_building.health;
-        building_data->ext_description_id = parsed_building.description_id;
-        building_data->initial_angle = 0;
-        building_data->flags = parsed_building.flags;
-        building_data->centerX = parsed_building.center_x;
-        building_data->centerY = parsed_building.center_y;
-
-        building_data->poly_count = parsed_building.collision_count;
-        building_data->resource_req_num = parsed_building.resource_count;
-        for (int i = 0; i < parsed_building.resource_count && i < MAX_RESOURCES; i++)
-        {
-            building_data->resource_req_type[i] = get_resource_id(parsed_building.resources[i].type);
-            if (building_data->resource_req_type[i] != 0)
+            if (!parse_building_json_entrypoint(building_data->building_json_name, g_current_mod->mod_id,
+                                                &parsed_building))
             {
-                building_data->resource_req_amount[i] = parsed_building.resources[i].amount;
+                log_error("Building JSON structure invalid: %s", building_data->building_json_name);
+                continue;
             }
-            else
-            {
-                building_data->resource_req_amount[i] = 0;
-            }
-        }
-        for (int i = 0; i < parsed_building.collision_count && i < MAX_COLLISIONS; i++)
-        {
-            building_data->shadows[i] = parsed_building.collisions[i].shadow;
-        }
 
-        register_building_to_game(building_data, &parsed_building);
+            building_data->race = parsed_building.race;
+            building_data->can_enter = parsed_building.can_enter;
+            building_data->slot_count = parsed_building.slot_count;
+            building_data->building_required = parsed_building.building_required;
+            building_data->worker_cycle = 0;
+            building_data->name_id = parsed_building.name_id;
+            building_data->health = parsed_building.health;
+            building_data->ext_description_id = parsed_building.description_id;
+            building_data->initial_angle = 0;
+            building_data->flags = parsed_building.flags;
+            building_data->centerX = parsed_building.center_x;
+            building_data->centerY = parsed_building.center_y;
+
+            building_data->poly_count = parsed_building.collision_count;
+            building_data->resource_req_num = parsed_building.resource_count;
+            for (int i = 0; i < parsed_building.resource_count && i < MAX_RESOURCES; i++)
+            {
+                building_data->resource_req_type[i] = get_resource_id(parsed_building.resources[i].type);
+                if (building_data->resource_req_type[i] != 0)
+                {
+                    building_data->resource_req_amount[i] = parsed_building.resources[i].amount;
+                }
+                else
+                {
+                    building_data->resource_req_amount[i] = 0;
+                }
+            }
+            for (int i = 0; i < parsed_building.collision_count && i < MAX_COLLISIONS; i++)
+            {
+                building_data->shadows[i] = parsed_building.collisions[i].shadow;
+            }
+
+            register_building_to_game(building_data, &parsed_building);
+        }
+        if (building_data->done_handler != nullptr)
+        {
+            registerBuildingDoneHandler(building_data->building_id, building_data->done_handler);
+        }
     }
 }

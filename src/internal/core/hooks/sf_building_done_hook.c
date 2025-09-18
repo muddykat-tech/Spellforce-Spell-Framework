@@ -59,5 +59,8 @@ void __thiscall sf_building_done_hook(SF_CGdBuildingToolbox *_this, uint16_t bui
         }
     }
 
-    //TODO -- registry work happens here;
+    uint8_t building_type = _this->CGdBuilding->buildings[building_index].type;
+
+    building_done_handler_ptr handler = get_building_done_handler (building_type);
+    handler(_this, building_index);
 }

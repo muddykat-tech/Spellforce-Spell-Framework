@@ -5,6 +5,46 @@
 #include "../handlers/sf_ai_spell_handlers.h"
 #include "../handlers/sf_ai_avoidance_handlers.h"
 #include "../handlers/sf_ai_aoe_handlers.h"
+#include "../handlers/sf_building_done_handlers.h"
+
+void initialize_vanilla_buildings()
+{
+    SFBuilding *human_medium_hq = registrationAPI.registerBuilding(0x01);
+    registrationAPI.linkBuildingDoneHandler(human_medium_hq, &default_done_handler);
+
+    SFBuilding *human_small_hq = registrationAPI.registerBuilding(0x02);
+    registrationAPI.linkBuildingDoneHandler(human_small_hq, &default_done_handler);
+
+    SFBuilding *human_large_hq = registrationAPI.registerBuilding(0x03);
+    registrationAPI.linkBuildingDoneHandler(human_large_hq, &default_done_handler);
+
+    SFBuilding *human_woodcutter = registrationAPI.registerBuilding(0x04);
+    registrationAPI.linkBuildingDoneHandler(human_woodcutter, &multiworker_done_handler);
+
+    SFBuilding *human_sawmill = registrationAPI.registerBuilding(0x05);
+    registrationAPI.linkBuildingDoneHandler(human_sawmill, &singleworker_done_handler);
+
+    SFBuilding *human_breeder = registrationAPI.registerBuilding(0x06);
+    registrationAPI.linkBuildingDoneHandler(human_breeder, &breeder_done_handler);
+
+    SFBuilding *human_quarry = registrationAPI.registerBuilding(0x07);
+    registrationAPI.linkBuildingDoneHandler(human_quarry, &multiworker_done_handler);
+
+    SFBuilding *human_foodstore = registrationAPI.registerBuilding(0x08);
+    registrationAPI.linkBuildingDoneHandler(human_foodstore, &singleworker_done_handler);
+
+    SFBuilding *human_hunter = registrationAPI.registerBuilding(0x09);
+    registrationAPI.linkBuildingDoneHandler(human_hunter, &default_done_handler);
+
+    SFBuilding *human_fisher = registrationAPI.registerBuilding(0x0a);
+    registrationAPI.linkBuildingDoneHandler(human_fisher, &default_done_handler);
+
+    SFBuilding *human_fisher_master = registrationAPI.registerBuilding(0x0b);
+    registrationAPI.linkBuildingDoneHandler(human_fisher_master, &default_done_handler);
+
+    SFBuilding *human_farm = registrationAPI.registerBuilding(0x0c);
+    registrationAPI.linkBuildingDoneHandler(human_farm, &multiworker_done_handler);
+}
 
 void initialize_vanilla_spells()
 {

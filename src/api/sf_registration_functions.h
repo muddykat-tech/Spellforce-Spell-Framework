@@ -31,7 +31,9 @@ DECLARE_FUNCTION(void, linkAvoidanceAIHandler, SFSpell *spell,
                  ai_avoidance_handler_ptr handler);
 
 
-DECLARE_FUNCTION(SFBuilding *, registerBuilding, const char* json_name);
+DECLARE_FUNCTION(SFBuilding *, registerBuilding, uint8_t building_type);
+DECLARE_FUNCTION(void, linkBuildingDoneHandler, SFBuilding *building, building_done_handler_ptr handler);
+DECLARE_FUNCTION(void, linkBuildingJSON, SFBuilding *building, const char *building_json_name);
 
 /**
  * @ingroup API
@@ -56,4 +58,6 @@ typedef struct
     linkAOEAIHandler_ptr linkAOEAIHandler;
 
     registerBuilding_ptr registerBuilding;
+    linkBuildingDoneHandler_ptr linkBuildingDoneHandler;
+    linkBuildingJSON_ptr linkBuildingJSON;
 } RegistrationFunctions;

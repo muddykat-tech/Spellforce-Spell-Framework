@@ -24,6 +24,7 @@
 #include "hooks/sf_ai_hook.h"
 #include "hooks/sf_utility_hooks.h"
 #include "hooks/sf_vanilla_fix_hook.h"
+#include "hooks/sf_building_done_hook.h"
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -67,6 +68,8 @@ void initialize_data_hooks()
     initialize_console_data_hooks();
 
     initialize_vanilla_fix_hooks();
+
+    initialize_building_done_hooks();
 
     log_info("| - FigureAPI Hooks");
     // More defined for external use in api
@@ -218,6 +221,8 @@ void initialize_data_hooks()
                      &linkSingleTargetAIHandler);
 
     INCLUDE_FUNCTION(registration, registerBuilding, &registerBuilding);
+    INCLUDE_FUNCTION(registration, linkBuildingJSON, &linkBuildingJSON);
+    INCLUDE_FUNCTION(registration, linkBuildingDoneHandler, &linkBuildingDoneHandler);
 }
 
 static void initialize_spelltype_hook()
