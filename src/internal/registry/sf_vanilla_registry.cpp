@@ -44,6 +44,117 @@ void initialize_vanilla_buildings()
 
     SFBuilding *human_farm = registrationAPI.registerBuilding(0x0c);
     registrationAPI.linkBuildingDoneHandler(human_farm, &multiworker_done_handler);
+
+    SFBuilding *human_smelter = registrationAPI.registerBuilding(0x0f);
+    registrationAPI.linkBuildingDoneHandler(human_smelter, &singleworker_done_handler);
+
+
+    SFBuilding *elf_forester = registrationAPI.registerBuilding(0x17);
+    registrationAPI.linkBuildingDoneHandler(elf_forester, &multiworker_done_handler);
+
+    SFBuilding *elf_woodcutter_master = registrationAPI.registerBuilding(0x18);
+    registrationAPI.linkBuildingDoneHandler(elf_woodcutter_master, &multiworker_done_handler);
+
+    SFBuilding *elf_woodcutter = registrationAPI.registerBuilding(0x1c);
+    registrationAPI.linkBuildingDoneHandler(elf_woodcutter, &multiworker_done_handler);
+
+    SFBuilding *dwarf_quarry = registrationAPI.registerBuilding(0x2c);
+    registrationAPI.linkBuildingDoneHandler(dwarf_quarry, &multiworker_done_handler);
+
+    SFBuilding *orc_woodcutter = registrationAPI.registerBuilding(0x3d);
+    registrationAPI.linkBuildingDoneHandler(orc_woodcutter, &multiworker_done_handler);
+
+    SFBuilding *troll_woodcutter = registrationAPI.registerBuilding(0x4d);
+    registrationAPI.linkBuildingDoneHandler(troll_woodcutter, &multiworker_done_handler);
+
+    SFBuilding *troll_quarry = registrationAPI.registerBuilding(0x4e);
+    registrationAPI.linkBuildingDoneHandler(troll_quarry, &multiworker_done_handler);
+
+    SFBuilding *norcaine_quarry = registrationAPI.registerBuilding(0x58);
+    registrationAPI.linkBuildingDoneHandler(norcaine_quarry, &multiworker_done_handler);
+
+    SFBuilding *norcaine_farm = registrationAPI.registerBuilding(0x5c);
+    registrationAPI.linkBuildingDoneHandler(norcaine_farm, &multiworker_done_handler);
+
+
+
+    SFBuilding *elf_food_store = registrationAPI.registerBuilding(0x1a);
+    registrationAPI.linkBuildingDoneHandler(elf_food_store, &singleworker_done_handler);
+
+    SFBuilding *dwarf_stonecutter = registrationAPI.registerBuilding(0x2e);
+    registrationAPI.linkBuildingDoneHandler(dwarf_stonecutter, &singleworker_done_handler);
+
+    SFBuilding *dwarf_food_store = registrationAPI.registerBuilding(0x2f);
+    registrationAPI.linkBuildingDoneHandler(dwarf_food_store, &singleworker_done_handler);
+
+    SFBuilding *dwarf_smelter = registrationAPI.registerBuilding(0x34);
+    registrationAPI.linkBuildingDoneHandler(dwarf_smelter, &singleworker_done_handler);
+
+    SFBuilding *elf_sawmill = registrationAPI.registerBuilding(0x37);
+    registrationAPI.linkBuildingDoneHandler(elf_sawmill, &singleworker_done_handler);
+
+    SFBuilding *orc_smelter = registrationAPI.registerBuilding(0x3e);
+    registrationAPI.linkBuildingDoneHandler(orc_smelter, &singleworker_done_handler);
+
+    SFBuilding *orc_food_store = registrationAPI.registerBuilding(0x3f);
+    registrationAPI.linkBuildingDoneHandler(orc_food_store, &singleworker_done_handler);
+
+    SFBuilding *troll_food_store = registrationAPI.registerBuilding(0x4f);
+    registrationAPI.linkBuildingDoneHandler(troll_food_store, &singleworker_done_handler);
+
+    SFBuilding *norcaine_stonecutter = registrationAPI.registerBuilding(0x5a);
+    registrationAPI.linkBuildingDoneHandler(norcaine_stonecutter, &singleworker_done_handler);
+
+    SFBuilding *norcaine_food_store = registrationAPI.registerBuilding(0x5b);
+    registrationAPI.linkBuildingDoneHandler(norcaine_food_store, &singleworker_done_handler);
+
+    SFBuilding *norcaine_smelter = registrationAPI.registerBuilding(0x5e);
+    registrationAPI.linkBuildingDoneHandler(norcaine_smelter, &singleworker_done_handler);
+
+
+    SFBuilding *dwarf_breeder= registrationAPI.registerBuilding(0x30);
+    registrationAPI.linkBuildingDoneHandler(dwarf_breeder, &breeder_done_handler);
+
+    SFBuilding *orc_breeder = registrationAPI.registerBuilding(0x42);
+    registrationAPI.linkBuildingDoneHandler(orc_breeder, &breeder_done_handler);
+
+    SFBuilding *norcaine_breeder = registrationAPI.registerBuilding(0x5d);
+    registrationAPI.linkBuildingDoneHandler(norcaine_breeder, &breeder_done_handler);
+
+
+    SFBuilding *human_temple = registrationAPI.registerBuilding(0x11);
+    registrationAPI.linkBuildingDoneHandler(human_temple, &army_worker_done_handler);
+
+    SFBuilding *elf_armory = registrationAPI.registerBuilding(0x22);
+    registrationAPI.linkBuildingDoneHandler(elf_armory, &army_worker_done_handler);
+
+    SFBuilding *elf_temple = registrationAPI.registerBuilding(0x24);
+    registrationAPI.linkBuildingDoneHandler(elf_temple, &army_worker_done_handler);
+
+    SFBuilding *dwarf_forge = registrationAPI.registerBuilding(0x35);
+    registrationAPI.linkBuildingDoneHandler(dwarf_forge, &army_worker_done_handler);
+
+    SFBuilding *orc_forge = registrationAPI.registerBuilding(0x44);
+    registrationAPI.linkBuildingDoneHandler(orc_forge, &army_worker_done_handler);
+
+    SFBuilding *orc_temple = registrationAPI.registerBuilding(0x46);
+    registrationAPI.linkBuildingDoneHandler(orc_temple, &army_worker_done_handler);
+
+    SFBuilding *human_forge = registrationAPI.registerBuilding(0x4b);
+    registrationAPI.linkBuildingDoneHandler(human_forge, &army_worker_done_handler);
+
+    SFBuilding *troll_armory = registrationAPI.registerBuilding(0x53);
+    registrationAPI.linkBuildingDoneHandler(troll_armory, &army_worker_done_handler);
+
+    SFBuilding *norcaine_forge = registrationAPI.registerBuilding(0x60);
+    registrationAPI.linkBuildingDoneHandler(norcaine_forge, &army_worker_done_handler);
+
+    SFBuilding *norcaine_temple = registrationAPI.registerBuilding(0x64);
+    registrationAPI.linkBuildingDoneHandler(norcaine_temple, &army_worker_done_handler);
+
+    SFBuilding *orc_armory = registrationAPI.registerBuilding(0x89);
+    registrationAPI.linkBuildingDoneHandler(orc_armory, &army_worker_done_handler);
+
 }
 
 void initialize_vanilla_spells()
