@@ -7,16 +7,29 @@
 #include "../handlers/sf_ai_aoe_handlers.h"
 #include "../handlers/sf_building_done_handlers.h"
 
+
+
+
 void initialize_vanilla_buildings()
 {
-    SFBuilding *human_medium_hq = registrationAPI.registerBuilding(0x01);
-    registrationAPI.linkBuildingDoneHandler(human_medium_hq, &default_done_handler);
+    uint8_t default_handler_list[140] = {0x01, 0x02, 0x03, 0x09, 0x0a, 0x0b, 0x0e, 0x10, 0x12, 0x13, 0x14,
+                                         0x15, 0x16, 0x19, 0x1b, 0x1d, 0x1e, 0x1f, 0x21, 0x23, 0x25, 0x28,
+                                         0x29, 0x2a, 0x2b, 0x2d, 0x31, 0x32, 0x33, 0x36, 0x38, 0x39, 0x3a, 0x3b,
+                                         0x3c, 0x40, 0x41, 0x43, 0x45, 0x48, 0x49, 0x4a, 0x4c, 0x50, 0x51, 0x52,
+                                         0x55, 0x56, 0x57, 0x59, 0x5f, 0x61, 0x62, 0x63, 0x65, 0x68, 0x69, 0x6a,
+                                         0x6b, 0x6c, 0x6d, 0x6e, 0x6f, 0x70, 0x71, 0x72, 0x73, 0x74, 0x75, 0x76,
+                                         0x77, 0x79, 0x7a, 0x7d, 0x7e, 0x7f, 0x80, 0x81, 0x82, 0x83, 0x84, 0x85,
+                                         0x86, 0x87, 0x88, 0x8a, 0x8b, 0x8c, 0x8d, 0x8e, 0x8f, 0x90, 0x91, 0x94,
+                                         0x96, 0x98, 0x99, 0x9a, 0x9b, 0x9c, 0x9d, 0x9e, 0x9f, 0xa2, 0xab, 0xad,
+                                         0xae, 0xaf, 0xb0, 0xb1, 0xb3, 0xb4, 0xb5, 0xb6, 0xb7, 0xb8, 0xb9, 0xba,
+                                         0xbb, 0xbc, 0xbd, 0xbe, 0xbf, 0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0xc5, 0xc6,
+                                         0xc7, 0xc8, 0xc9, 0xca, 0xcb, 0xcc, 0xcd, 0xce, 0xcf, 0xd0};
 
-    SFBuilding *human_small_hq = registrationAPI.registerBuilding(0x02);
-    registrationAPI.linkBuildingDoneHandler(human_small_hq, &default_done_handler);
-
-    SFBuilding *human_large_hq = registrationAPI.registerBuilding(0x03);
-    registrationAPI.linkBuildingDoneHandler(human_large_hq, &default_done_handler);
+    for (i = 0; i < 140; i++)
+    {
+        SFBuilding *building = registrationAPI.registerBuilding(default_handler_list[i]);
+        registrationAPI.linkBuildingDoneHandler(building, &default_done_handler);
+    }
 
     SFBuilding *human_woodcutter = registrationAPI.registerBuilding(0x04);
     registrationAPI.linkBuildingDoneHandler(human_woodcutter, &multiworker_done_handler);
@@ -32,15 +45,6 @@ void initialize_vanilla_buildings()
 
     SFBuilding *human_foodstore = registrationAPI.registerBuilding(0x08);
     registrationAPI.linkBuildingDoneHandler(human_foodstore, &singleworker_done_handler);
-
-    SFBuilding *human_hunter = registrationAPI.registerBuilding(0x09);
-    registrationAPI.linkBuildingDoneHandler(human_hunter, &default_done_handler);
-
-    SFBuilding *human_fisher = registrationAPI.registerBuilding(0x0a);
-    registrationAPI.linkBuildingDoneHandler(human_fisher, &default_done_handler);
-
-    SFBuilding *human_fisher_master = registrationAPI.registerBuilding(0x0b);
-    registrationAPI.linkBuildingDoneHandler(human_fisher_master, &default_done_handler);
 
     SFBuilding *human_farm = registrationAPI.registerBuilding(0x0c);
     registrationAPI.linkBuildingDoneHandler(human_farm, &multiworker_done_handler);
