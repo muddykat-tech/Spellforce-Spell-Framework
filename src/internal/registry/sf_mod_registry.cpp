@@ -29,6 +29,7 @@ std::list<SFBuilding *> g_internal_building_list;
 SFBuilding *__thiscall registerBuilding(uint8_t building_type)
 {
     SFBuilding *building = new SFBuilding;
+    building->building_json_name[0] = '\0';
     building->building_id = building_type;
     building->parent_mod = g_current_mod;
     g_internal_building_list.push_back(building);
@@ -522,7 +523,7 @@ void register_mod_buildings()
         }
 
         Building parsed_building;
-        if (building_data->building_json_name != NULL)
+        if (strlen(building_data->building_json_name) != 0)
         {
             if (!parse_building_json_entrypoint(building_data->building_json_name, g_current_mod->mod_id,
                                                 &parsed_building))
