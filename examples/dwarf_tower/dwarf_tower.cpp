@@ -1,13 +1,17 @@
-//#include "api/sfsf.h"
 #include "../../src/api/sfsf.h"
 #include <windows.h>
 #include <stdio.h>
 
-// this example shows another way to implement the shieldwall spell
-// it implements shieldwall via single aoe spell instead of combination of two spells (AoE and individual)
-// such implementation is closer to vanilla implementation of AoE buffs
+// this example shows code necessary to create custom building
+// the building will be dwarf tower which throws hammers at enemies in range
+// the tower will also be having tweaked AI
+// it will aim at the most damaged targets
 
-// We declare macros for Shieldwall Spell Type and Spell Job
+
+// actually, from the inside of game engine tower projectiles are implemented as spells, which towers cast at enemies during a fight
+// hence we need to create unique spell type for a spell which is used to simulate projectile of our tower
+
+// We declare macros for  Spell Type and Spell Job
 // Spell Type 0xf9 = 249, Spell Job 0xb0 = 176
 
 // The custom Spell Type also must be defined within GameData.cff
@@ -27,15 +31,18 @@ AiFunctions *aiAPI;
 BuildingFunctions *buildingAPI;
 SFLog *logger;
 
-// we declare spell type handler for Shieldwall, it must initialize ticks and bonus modifier values
-
+// we declare spell type handler for hammer throw
+// the spell is instant
+// it applies damage to a target on a hit, and stops after that
 void __thiscall THROW_HAMMER_TOWER_type_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
+    // actually, from the inside of game engine tower projectiles are implemented as spells, which towers cast at enemies during a fight
+    // hence we need to create unique spell type for a spell which is used to simulate projectile of our tower
     // we need only to associate spell type with a spell job and nothing more than that
     _this->active_spell_list[spell_index].spell_job = THROW_HAMMER_TOWER_JOB;
 }
 
-// we declare spell end handler for Shieldwall
+// we declare spell end handler for hammer throw
 // this handler would work in case a spell wasn't finished correctly
 void __thiscall THROW_HAMMER_TOWER_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
@@ -47,52 +54,96 @@ void __thiscall THROW_HAMMER_TOWER_end_handler(SF_CGdSpell *_this, uint16_t spel
 }
 
 
+// we declare single target AI handler for Hammer Throw spell
+// this handler is constantly called by all objects (figures/buildings) which possess this spell
+// it is triggered separately for every target (doesn't matter hostile or friendly) which the object has in the line of sight
+// the handler will provide us with relevant data about object, targets in its LOS and some other info
 
-uint32_t __thiscall THROW_HAMMER_TOWER_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index,
-                                                  uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+// depending on circumstances we have, we must return priority for a spell
+// 0 stands for denying to cast the spell
+// 2 stands for high priority, the tower will throw projectile at the given target
+uint32_t __thiscall THROW_HAMMER_TOWER_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
 
+    // Battle development Global Object provides us with relevant data about object which makes decision
+    // and about all objects surrounding it
+    // it provides object indexes, which are grouped into ally/neutral/enemy and figures/buildings categories
+    // also it provides some convenient wrappers like entityCount
+    // which we can use to determine whether category is empty or possesses some objects in it
 
-    if ((_this->battleData.current_figure == target_index) ||
-        (_this->battleData.enemy_figures.entityCount == 0))
+
+    // first, let's cut off the most obvious dead-ends
+    // if there are no enemies around, we don't need to consider the decision
+    // let's terminate handler
+    if ((_this->battleData.enemy_figures.entityCount == 0)||
+        // as well as we don't need to cast spell
+        // if supposed target has the same index as the object casting spell
+        // since it means that the tower is trying to consider shooting itself
+        (_this->battleData.current_figure == target_index))
     {
+        // therefore we deny casting the spell
+        // and don't make further calculations, as they're irrelevant
         return 0;
     }
 
 
-    struct
-    {
-        uint16_t figure_index = 0;
-        uint16_t health = 9999;
-    } lowest_hp_figure;
+    // now we're going to search for the figure with the lost health among all targets in sight
+    // let's make a structure to store figure index and its health
+    struct {
+                uint16_t figure_index = 0; // 0 stands for unknown figure
+                uint32_t health = 0x7fff;  // we put the highest possible number here
+                                          //to make sure that real figures would always have less health than that
+           } lowest_hp_figure;
 
 
+    // we start searching through all figures in sight
+    // provided to us with battle data
     for (uint16_t i = 0; i < _this->battleData.enemy_figures.entityCount; i++)
     {
-        uint32_t min_radius = spell_data->min_range;
+        // battle data provides to us all figures in sight of the object
+        // but tower radius could be much smaller than its range of view
+        // because of that, we need to limit eligible targets with targets being in range
         uint32_t max_radius = spell_data->max_range;
+        // also the tower potentially could have minimum radius, causing it to have "blind-spot" around it
+        // hence, let's take minimum radius in consideration as well
+        uint32_t min_radius = spell_data->min_range;
+
+        // let's get tower coordinates
+        // in battle data the object which is making decision, called current_figure
         SF_Coord tower_position = _this->battleData.CGdFigure->figures[_this->battleData.current_figure].position;
+
+        // let's get target coordinates
+        // we can reach target coordinates via Figures Global Object
+        // since target index is provided to us directly within the handler
         SF_Coord target_position = _this->battleData.CGdFigure->figures[target_index].position;
+
+        // let's use function-wrapper from toolbox group to obtain distance between two points in area
         uint32_t distance = toolboxAPI->getDistance (&tower_position, &target_position);
 
-        if ((lowest_hp_figure.health < _this->battleData.CGdFigure->figures[target_index].health.base_val) && // we seek for the lower health
-            (lowest_hp_figure.figure_index != _this->battleData.current_figure) && // we ignore tower's health, because we won't attack ourselves
-            (distance >= min_radius) && (distance <= max_radius)) // we ignore all figures which don't fall into spell range
-        {
-            lowest_hp_figure.figure_index = i;
-            lowest_hp_figure.health = _this->battleData.CGdFigure->figures[target_index].health.base_val;
-        }
+        if ((lowest_hp_figure.health < _this->battleData.CGdFigure->figures[target_index].health.base_val) && // we seek for the figure with the health lower than the current one has
+            (lowest_hp_figure.figure_index != _this->battleData.current_figure) && // we ignore tower's own health, because it's forbidden from attacking itself
+            (distance >= min_radius) && (distance <= max_radius)) // we ignore all figures outside of spell range
+            {
+                // if we found figure with lower health, we remember its index
+                lowest_hp_figure.figure_index = i;
+                // as well as its hit-points
+                lowest_hp_figure.health = _this->battleData.CGdFigure->figures[target_index].health.base_val;
+                // and search for the next figure in the list, until it's out
+            }
 
     }
 
     // if selected unit has the lowest health among targets in spell radius, we throw hammer at it
     if (lowest_hp_figure.figure_index == target_index)
     {
+        // we return the highest priority to apply the spell
         return 2;
     }
     // if selected unit doesn't have the lowest health among targets in radius, we don't do anything
     else
     {
+        // we deny casting the spell
+        // and terminate the handler
         return 0;
     }
 
@@ -108,12 +159,12 @@ void __thiscall THROW_HAMMER_TOWER_effect_handler(SF_CGdSpell *_this, uint16_t s
     uint16_t target_index = spell->target.entity_index;
     uint16_t source_index = spell->source.entity_index;
 
-    //grabbing spell and spell effect (logic) id
+    // we grab spell id and its spell job (spell type) id
     SF_SpellEffectInfo effect_info;
     effect_info.spell_id = spell->spell_id;
     effect_info.job_id = spell->spell_job;
 
-    //pulling spell parameters into local structure
+    // we load spell parameters from game data and put them into structure
     SF_CGdResourceSpell spell_data;
     spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
 
@@ -125,49 +176,61 @@ void __thiscall THROW_HAMMER_TOWER_effect_handler(SF_CGdSpell *_this, uint16_t s
 
     // we've got a lot of technical conditions which can prevent spell cast, so if we don't meet at least one of them, spell fails
     if (isAlive != 0 || isTargetable != 0 || isHostile != 0 || isOwner != -1)
-    {
-        uint32_t resist_chance = spellAPI->getChanceToResistSpell(_this->unkn2, source_index, target_index,
-                                                                  effect_info);
+     {
+        uint32_t resist_chance = spellAPI->getChanceToResistSpell(_this->unkn2, source_index, target_index, effect_info);
         uint16_t random_roll = spellAPI->getRandom(_this->OpaqueClass, 100);
 
-        if (resist_chance >= random_roll) // we compare target spell resistance to random roll, and if resistance was higher, we stop function execution
-        {
-            uint32_t unused;
-            SF_CGdTargetData relative_data;
-            relative_data.position.X = 0;
-            relative_data.position.Y = 0;
-            relative_data.entity_type = 1;
-            relative_data.entity_index = target_index;
+        if (resist_chance >= random_roll) // we compare target spell resistance to random roll, and if resistance was higher, the spell does no effect to a target
+            {
+                // we declare geometry for spell visual effect
+                uint32_t unused;
+                SF_CGdTargetData relative_data;
+                relative_data.position.X = 0;
+                relative_data.position.Y = 0;
+                relative_data.entity_type = 1;
+                relative_data.entity_index = target_index;
 
-            SF_Rectangle aux_data;
-            aux_data.partA = 0;
-            aux_data.partB = 0;
-            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellTargetResisted, &unused, &relative_data,
-                                      _this->OpaqueClass->current_step, 10, &aux_data);
-            spellAPI->setEffectDone(_this, spell_index, 0);
-            return;
-        }
+                // since the spell isn't AoE, we declare its area of effect as 0
+                SF_Rectangle aux_data;
+                aux_data.partA = 0;
+                aux_data.partB = 0;
+                spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellTargetResisted, &unused, &relative_data, _this->OpaqueClass->current_step, 10, &aux_data);
+
+                // we terminate spell effect, because it's not supposed to continue
+                spellAPI->setEffectDone(_this, spell_index, 0);
+                // we break function, because we don't need to do anything more
+                return;
+            }
         else //spell resistance failed, proceed to what happens on spell hit
-        {
-            uint32_t unused;
-            SF_CGdTargetData relative_data;
-            relative_data.position.X = 0;
-            relative_data.position.Y = 0;
-            relative_data.entity_type = 1;
-            relative_data.entity_index = target_index;
+            {
+                // going to be almost the same bloc as above, except for this time we also call function to deal damage to a target
+                uint32_t unused;
 
-            SF_Rectangle aux_data;
-            aux_data.partA = 0;
-            aux_data.partB = 0;
-            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data,
-                                      _this->OpaqueClass->current_step, 10, &aux_data);
-            uint16_t damage = spell_data.params[0];
-            toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index, target_index, damage, 0, 0, 0);
-            //spellAPI->figureAggro(_this, spell_index, target_index);
-            spellAPI->setEffectDone(_this, spell_index, 0);
-            return;
-        }
-    }
+                // we declare geometry for spell visual effect
+                SF_CGdTargetData relative_data;
+                relative_data.position.X = 0;
+                relative_data.position.Y = 0;
+                relative_data.entity_type = 1;
+                relative_data.entity_index = target_index;
+
+                // since the spell isn't AoE, we declare its area of effect as 0
+                SF_Rectangle aux_data;
+                aux_data.partA = 0;
+                aux_data.partB = 0;
+
+                // we apply on hit visual effect to the target
+                spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 10, &aux_data);
+
+
+                // we obtain spell damage and deal it to the target
+                uint16_t damage = spell_data.params[0];
+                toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index, target_index, damage, 0, 0, 0);
+
+                // we terminate spell effect, because it's not supposed to continue
+                spellAPI->setEffectDone(_this, spell_index, 0);
+                return;
+            }
+     }
 }
 
 
@@ -194,13 +257,13 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     // we register custom spell
     SFSpell *THROW_HAMMER_TOWER_spell = registrationAPI->registerSpell(THROW_HAMMER_TOWER_LINE);
     // we register building and link it with its json placed into /sfsf/%modname%/building folder
-    SFBuilding *dwarf_tower = registrationAPI->registerBuilding("dwarf_tower_hammer");
+    SFBuilding *dwarf_tower = registrationAPI->registerBuilding("dwarf_tower_hammer"); // we pass filename without extension, '.json' is appended automatically
     // we register handlers for custom spell
     registrationAPI->linkTypeHandler(THROW_HAMMER_TOWER_spell, &THROW_HAMMER_TOWER_type_handler);
-    registrationAPI->linkEffectHandler(THROW_HAMMER_TOWER_spell, THROW_HAMMER_TOWER_JOB,
-                                       &THROW_HAMMER_TOWER_effect_handler);
+    registrationAPI->linkEffectHandler(THROW_HAMMER_TOWER_spell, THROW_HAMMER_TOWER_JOB, &THROW_HAMMER_TOWER_effect_handler);
     registrationAPI->linkSingleTargetAIHandler(THROW_HAMMER_TOWER_spell, &THROW_HAMMER_TOWER_ai_handler);
     registrationAPI->linkEndHandler(THROW_HAMMER_TOWER_spell, &THROW_HAMMER_TOWER_end_handler);
+    // we register new handler which is necessary for the framework to catch tower after it's built
     //registrationAPI->linkBuildingDoneHandler(dwarf_tower, &myDoneHandler);
 
 }
@@ -211,8 +274,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
  ***/
 extern "C" __declspec(dllexport) SFMod *RegisterMod(SpellforceSpellFramework *framework)
 {
-    return framework->createModInfo("Dwarf Tower", "1.0.0", "S'Baad",
-                                    "A mod designed to demonstrate creation of custom building - Dwarf Tower controlled by an advanced AI.");
+    return framework->createModInfo("Dwarf Tower", "1.0.0", "Teekius", "A mod designed to demonstrate creation of custom building - Dwarf Tower controlled by an advanced AI.");
 }
 
 // Required to be present by, not required for any functionality
@@ -220,21 +282,21 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 {
     switch (fdwReason)
     {
-        case DLL_PROCESS_ATTACH:
-            /* Code path executed when DLL is loaded into a process's address space. */
-            break;
+    case DLL_PROCESS_ATTACH:
+        /* Code path executed when DLL is loaded into a process's address space. */
+        break;
 
-        case DLL_THREAD_ATTACH:
-            /* Code path executed when a new thread is created within the process. */
-            break;
+    case DLL_THREAD_ATTACH:
+        /* Code path executed when a new thread is created within the process. */
+        break;
 
-        case DLL_THREAD_DETACH:
-            /* Code path executed when a thread within the process has exited *cleanly*. */
-            break;
+    case DLL_THREAD_DETACH:
+        /* Code path executed when a thread within the process has exited *cleanly*. */
+        break;
 
-        case DLL_PROCESS_DETACH:
-            /* Code path executed when DLL is unloaded from a process's address space. */
-            break;
+    case DLL_PROCESS_DETACH:
+        /* Code path executed when DLL is unloaded from a process's address space. */
+        break;
     }
 
     return TRUE;
