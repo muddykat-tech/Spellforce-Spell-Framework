@@ -1,4 +1,5 @@
-#include "../../src/api/sfsf.h"
+#include "api/sfsf.h"
+//#include "../../src/api/sfsf.h"
 #include <windows.h>
 #include <stdio.h>
 
@@ -17,8 +18,8 @@
 // The custom Spell Type also must be defined within GameData.cff
 // and provided with at least one spell corresponding to it
 
-#define THROW_HAMMER_TOWER_LINE 0xf9
-#define THROW_HAMMER_TOWER_JOB 0xb0
+#define DWARF_HAMMER_TOWER_LINE 0xf9
+#define DWARF_HAMMER_TOWER_JOB 0xb0
 
 
 SpellforceSpellFramework *sfsf;
@@ -34,17 +35,17 @@ SFLog *logger;
 // we declare spell type handler for hammer throw
 // the spell is instant
 // it applies damage to a target on a hit, and stops after that
-void __thiscall THROW_HAMMER_TOWER_type_handler(SF_CGdSpell *_this, uint16_t spell_index)
+void __thiscall dwarf_hammer_tower_type_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     // actually, from the inside of game engine tower projectiles are implemented as spells, which towers cast at enemies during a fight
     // hence we need to create unique spell type for a spell which is used to simulate projectile of our tower
     // we need only to associate spell type with a spell job and nothing more than that
-    _this->active_spell_list[spell_index].spell_job = THROW_HAMMER_TOWER_JOB;
+    _this->active_spell_list[spell_index].spell_job = DWARF_HAMMER_TOWER_JOB;
 }
 
 // we declare spell end handler for hammer throw
 // this handler would work in case a spell wasn't finished correctly
-void __thiscall THROW_HAMMER_TOWER_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
+void __thiscall dwarf_hammer_tower_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     // since this spell is instant, we have only to get its index
     // and erase it from the list of active spells
@@ -54,15 +55,29 @@ void __thiscall THROW_HAMMER_TOWER_end_handler(SF_CGdSpell *_this, uint16_t spel
 }
 
 
+// we declare building done handler
+// this handler gets triggered every time the construction of a building of specific type is finished
+
+void __thiscall dwarf_hammer_tower_done_handler(SF_CGdBuildingToolbox *_this,uint16_t building_index)
+{
+    // the tower doesn't have its own AI
+    // instead it gets unit attached to it
+    // which actually runs tower AI
+    // this unit exists only virtually, there is no need to create an actually existing instance of it and place that into game world
+    // it's enough to just link tower with specific unit ID taken from GameData.cff
+    buildingAPI->attachTowerUnit(_this, building_index, 0xbb5); // 0xbb5 in hex stands for 2997, the ID of unit which is going to simulate tower garrison
+}
+
+
 // we declare single target AI handler for Hammer Throw spell
-// this handler is constantly called by all objects (figures/buildings) which possess this spell
+// this handler is constantly called by all units which possess this spell
 // it is triggered separately for every target (doesn't matter hostile or friendly) which the object has in the line of sight
 // the handler will provide us with relevant data about object, targets in its LOS and some other info
 
 // depending on circumstances we have, we must return priority for a spell
 // 0 stands for denying to cast the spell
 // 2 stands for high priority, the tower will throw projectile at the given target
-uint32_t __thiscall THROW_HAMMER_TOWER_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+uint32_t __thiscall dwarf_hammer_tower_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
 {
 
     // Battle development Global Object provides us with relevant data about object which makes decision
@@ -152,7 +167,7 @@ uint32_t __thiscall THROW_HAMMER_TOWER_ai_handler(SF_CGdBattleDevelopment *_this
 
 // we declare the effect handler for tower spell
 
-void __thiscall THROW_HAMMER_TOWER_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
+void __thiscall dwarf_hammer_tower_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     // we pull the pointer for this instance of spell
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
@@ -254,17 +269,24 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     logger = sfsf->logAPI;
 
 
-    // we register custom spell
-    SFSpell *THROW_HAMMER_TOWER_spell = registrationAPI->registerSpell(THROW_HAMMER_TOWER_LINE);
-    // we register building and link it with its json placed into /sfsf/%modname%/building folder
-    SFBuilding *dwarf_tower = registrationAPI->registerBuilding("dwarf_tower_hammer"); // we pass filename without extension, '.json' is appended automatically
-    // we register handlers for custom spell
-    registrationAPI->linkTypeHandler(THROW_HAMMER_TOWER_spell, &THROW_HAMMER_TOWER_type_handler);
-    registrationAPI->linkEffectHandler(THROW_HAMMER_TOWER_spell, THROW_HAMMER_TOWER_JOB, &THROW_HAMMER_TOWER_effect_handler);
-    registrationAPI->linkSingleTargetAIHandler(THROW_HAMMER_TOWER_spell, &THROW_HAMMER_TOWER_ai_handler);
-    registrationAPI->linkEndHandler(THROW_HAMMER_TOWER_spell, &THROW_HAMMER_TOWER_end_handler);
-    // we register new handler which is necessary for the framework to catch tower after it's built
-    //registrationAPI->linkBuildingDoneHandler(dwarf_tower, &myDoneHandler);
+    // we register custom spell which is necessary to simulate tower projectiles
+    SFSpell *dwarf_hammer_tower_spell = registrationAPI->registerSpell(DWARF_HAMMER_TOWER_LINE);
+    // we register building type for game engine
+    // we have to register it via code
+    // because amount of building types which can be placed within GameData.cff is hardcoded to be 213
+    SFBuilding *dwarf_tower = registrationAPI->registerBuilding(214);
+
+    // then we link building with its json placed into /sfsf/%modname%/building folder
+    registrationAPI->linkBuildingJSON(dwarf_tower, "dwarf_tower_hammer"); // we pass filename without extension, '.json' is appended automatically
+    // then we register handlers for custom spell as usual
+    registrationAPI->linkTypeHandler(dwarf_hammer_tower_spell, &dwarf_hammer_tower_type_handler);
+    registrationAPI->linkEffectHandler(dwarf_hammer_tower_spell, DWARF_HAMMER_TOWER_JOB, &dwarf_hammer_tower_effect_handler);
+    registrationAPI->linkEndHandler(dwarf_hammer_tower_spell, &dwarf_hammer_tower_end_handler);
+    // then we link single target AI handler to custom spell
+    registrationAPI->linkSingleTargetAIHandler(dwarf_hammer_tower_spell, &dwarf_hammer_tower_ai_handler);
+    // and finally we register new handler which catches the moment when the tower building is finished
+    // and attaches unit running its AI to it
+    registrationAPI->linkBuildingDoneHandler(dwarf_tower, &dwarf_hammer_tower_done_handler);
 
 }
 
