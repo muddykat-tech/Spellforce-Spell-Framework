@@ -16,6 +16,7 @@ fun0074ca30_ptr l_fun0074ca30;
 XDataListZero_ptr XDataListZero;
 XDataListExists_ptr XDataListExists;
 
+
 void initialize_building_done_hooks()
 {
     l_fun006c3650 = (fun006c3650_ptr)ASI::AddrOf(0x2c3650);

@@ -25,7 +25,7 @@ void initialize_vanilla_buildings()
                                          0xbb, 0xbc, 0xbd, 0xbe, 0xbf, 0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0xc5, 0xc6,
                                          0xc7, 0xc8, 0xc9, 0xca, 0xcb, 0xcc, 0xcd, 0xce, 0xcf, 0xd0};
 
-    for (i = 0; i < 140; i++)
+    for (int i = 0; i < 140; i++)
     {
         SFBuilding *building = registrationAPI.registerBuilding(default_handler_list[i]);
         registrationAPI.linkBuildingDoneHandler(building, &default_done_handler);

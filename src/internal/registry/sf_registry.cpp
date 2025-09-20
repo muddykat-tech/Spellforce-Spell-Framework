@@ -139,8 +139,10 @@ void initialize_framework()
     register_vanilla_spell_refresh_handlers();
 
     log_info("| - Registration of Vanilla Spell Deal Damage Handlers");
-
     register_vanilla_spell_damage_handlers();
+
+    log_info("| - Registration of Vanilla Building Done Handlers");
+    initialize_vanilla_buildings();
 
     log_info(
         "|======| Spellforce Spell Framework Configuration Phase End |======|");

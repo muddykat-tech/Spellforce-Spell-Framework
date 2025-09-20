@@ -56,6 +56,8 @@ void initialize_data_hooks()
     log_info("| - Internal Use Hooks");
     initialize_menu_data_hooks();
 
+    //TODO RENAME TO DATA HOOKS
+    initialize_building_done_hooks();
     // Required for internal use
     initialize_spelltype_data_hooks();
 
@@ -68,8 +70,6 @@ void initialize_data_hooks()
     initialize_console_data_hooks();
 
     initialize_vanilla_fix_hooks();
-
-    initialize_building_done_hooks();
 
     log_info("| - FigureAPI Hooks");
     // More defined for external use in api
@@ -243,6 +243,27 @@ static void initialize_spell_trigger_hook()
     *(int *)(ASI::AddrOf(0x278774)) = (int)(&sf_spelleffect_hook) -
                                       ASI::AddrOf(0x278778);
     ASI::EndRewrite(add_spell_mreg);
+}
+
+static void initialize_building_done_hook()
+{
+    ASI::MemoryRegion done_mreg1 (ASI::AddrOf(0x2f05d3), 5);
+    ASI::BeginRewrite(done_mreg1);
+    *(unsigned char *)(ASI::AddrOf(0x2f05d3)) = 0xE8; // CALL instruction
+    *(int *)(ASI::AddrOf(0x2f05d4)) = (int)(&sf_building_done_hook) - ASI::AddrOf(0x2f05d8);
+    ASI::EndRewrite(done_mreg1);
+
+    ASI::MemoryRegion done_mreg2 (ASI::AddrOf(0x2d6d31), 5);
+    ASI::BeginRewrite(done_mreg2);
+    *(unsigned char *)(ASI::AddrOf(0x2d6d31)) = 0xE8; // CALL instruction
+    *(int *)(ASI::AddrOf(0x2d6d32)) = (int)(&sf_building_done_hook) - ASI::AddrOf(0x2d6d36);
+    ASI::EndRewrite(done_mreg2);
+
+    ASI::MemoryRegion done_mreg3 (ASI::AddrOf(0x27a65c), 5);
+    ASI::BeginRewrite(done_mreg3);
+    *(unsigned char *)(ASI::AddrOf(0x27a65c)) = 0xE8; // CALL instruction
+    *(int *)(ASI::AddrOf(0x27a65d)) = (int)(&sf_building_done_hook) - ASI::AddrOf(0x27a661);
+    ASI::EndRewrite(done_mreg3);
 }
 
 static void initialize_subeffect_add_hook()
@@ -560,6 +581,9 @@ void initialize_beta_hooks()
 
     log_info("Hook AI AOE Handling");
     initialize_ai_aoe_hook();
+
+    log_info ("Hooking Building Done Handleing");
+    initialize_building_done_hook();
 
     log_info("Hooking Utility Functions");
     initialize_utility_hooks();
