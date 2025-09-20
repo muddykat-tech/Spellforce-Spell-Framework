@@ -82,7 +82,7 @@ void __thiscall norcaine_mindbreaker_done_handler(SF_CGdBuildingToolbox *_this,u
     SF_Rectangle rect = {0,0};
 
     uint16_t effect_index =  effectAPI.addEffect(_this->CGdEffect, kGdEffectMentalTowerIdle,&source,&target,
-                                                 _this->OpaqueClass.current_step, 0, &rect);
+                                                 _this->OpaqueClass->current_step, 0, &rect);
     if (effect_index != 0)
     {
         buildingAPI.setBuildingXData(_this, building_index, SpellDataKey::BUILDING_EFFECT_ID, effect_index);
