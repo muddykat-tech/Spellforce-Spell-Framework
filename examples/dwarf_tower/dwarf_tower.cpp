@@ -128,21 +128,29 @@ uint32_t __thiscall dwarf_hammer_tower_ai_handler(SF_CGdBattleDevelopment *_this
         SF_Coord tower_position = _this->battleData.CGdFigure->figures[_this->battleData.current_figure].position;
 
         // let's get target coordinates
-        // we can reach target coordinates via Figures Global Object
-        // since target index is provided to us directly within the handler
-        SF_Coord target_position = _this->battleData.CGdFigure->figures[target_index].position;
+        // it's going to be a bit complicated, because i stands for figure index within enemies list provided to us with Battle Data
+        // and we need to transform it into index corresponding to figures global list
+        // we can obtain global index of figure
+        // by addressing property entity_index of the subsequent element of data array of enemy_figures list
+        uint16_t enemy_figure = _this->battleData.enemy_figures.data[i].entity_index;
+        // then we can reach target coordinates using Figures Global Object
+        SF_Coord target_position = _this->battleData.CGdFigure->figures[enemy_figure].position;
 
         // let's use function-wrapper from toolbox group to obtain distance between two points in area
         uint32_t distance = toolboxAPI->getDistance (&tower_position, &target_position);
+        // game engine doesn't allow us direct access to figure's current health
+        // we have to calculate it via applying current health percent to base value
+        uint16_t enemy_health = _this->battleData.CGdFigure->figures[enemy_figure].health.base_val * (figureAPI->getCurrentHealthPercent(_this->battleData.CGdFigure, enemy_figure)) / 100;
 
-        if ((lowest_hp_figure.health < _this->battleData.CGdFigure->figures[target_index].health.base_val) && // we seek for the figure with the health lower than the current one has
+        if ((enemy_health < lowest_hp_figure.health) && // we seek for the figure with the health lower than the health we assumed as minimal
             (lowest_hp_figure.figure_index != _this->battleData.current_figure) && // we ignore tower's own health, because it's forbidden from attacking itself
-            (distance >= min_radius) && (distance <= max_radius)) // we ignore all figures outside of spell range
+            (distance >= min_radius) && (distance <= max_radius) &&  // we ignore all figures outside of spell range
+            (figureAPI->isAlive(_this->battleData.CGdFigure, enemy_figure))) // we check for the target figure to be alive
             {
                 // if we found figure with lower health, we remember its index
-                lowest_hp_figure.figure_index = i;
+                lowest_hp_figure.figure_index = enemy_figure;
                 // as well as its hit-points
-                lowest_hp_figure.health = _this->battleData.CGdFigure->figures[target_index].health.base_val;
+                lowest_hp_figure.health = enemy_health;
                 // and search for the next figure in the list, until it's out
             }
 
@@ -296,6 +304,9 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
  ***/
 extern "C" __declspec(dllexport) SFMod *RegisterMod(SpellforceSpellFramework *framework)
 {
+    // it's critical for mod name to match with folder name where mod assets (such as building JSON data) stored
+    // in this case mod name isn't purely cosmetic
+    // game data of custom building added by this mod is going to be located in %Spellforce/sfsf/Dwarf Tower/buildings/ folder
     return framework->createModInfo("Dwarf Tower", "1.0.0", "Teekius", "A mod designed to demonstrate creation of custom building - Dwarf Tower controlled by an advanced AI.");
 }
 
