@@ -12,7 +12,7 @@
 // actually, from the inside of game engine tower projectiles are implemented as spells, which towers cast at enemies during a fight
 // hence we need to create unique spell type for a spell which is used to simulate projectile of our tower
 
-// We declare macros for  Spell Type and Spell Job
+// We declare macros for  Spell Type and Spell Job and Building Type
 // Spell Type 0xf9 = 249, Spell Job 0xb0 = 176
 
 // The custom Spell Type also must be defined within GameData.cff
@@ -199,33 +199,7 @@ void __thiscall dwarf_hammer_tower_effect_handler(SF_CGdSpell *_this, uint16_t s
     // we've got a lot of technical conditions which can prevent spell cast, so if we don't meet at least one of them, spell fails
     if (isAlive != 0 || isTargetable != 0 || isHostile != 0 || isOwner != -1)
      {
-        uint32_t resist_chance = spellAPI->getChanceToResistSpell(_this->unkn2, source_index, target_index, effect_info);
-        uint16_t random_roll = spellAPI->getRandom(_this->OpaqueClass, 100);
 
-        if (resist_chance >= random_roll) // we compare target spell resistance to random roll, and if resistance was higher, the spell does no effect to a target
-            {
-                // we declare geometry for spell visual effect
-                uint32_t unused;
-                SF_CGdTargetData relative_data;
-                relative_data.position.X = 0;
-                relative_data.position.Y = 0;
-                relative_data.entity_type = 1;
-                relative_data.entity_index = target_index;
-
-                // since the spell isn't AoE, we declare its area of effect as 0
-                SF_Rectangle aux_data;
-                aux_data.partA = 0;
-                aux_data.partB = 0;
-                spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellTargetResisted, &unused, &relative_data, _this->OpaqueClass->current_step, 10, &aux_data);
-
-                // we terminate spell effect, because it's not supposed to continue
-                spellAPI->setEffectDone(_this, spell_index, 0);
-                // we break function, because we don't need to do anything more
-                return;
-            }
-        else //spell resistance failed, proceed to what happens on spell hit
-            {
-                // going to be almost the same bloc as above, except for this time we also call function to deal damage to a target
                 uint32_t unused;
 
                 // we declare geometry for spell visual effect
@@ -244,14 +218,31 @@ void __thiscall dwarf_hammer_tower_effect_handler(SF_CGdSpell *_this, uint16_t s
                 spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 10, &aux_data);
 
 
-                // we obtain spell damage and deal it to the target
+                // we obtain spell damage
                 uint16_t damage = spell_data.params[0];
+                // because hammer throws deals physical damage, it must be reduced by target's armor
+                // let's get reduction percent with toolbox function getPhysDamageReduction
+                uint16_t reduction_percent = toolboxAPI->getPhysDamageReduction(_this->SF_CGdFigureToolBox, source_index, target_index, DWARF_HAMMER_TOWER_LINE);
+                // we adjust damage with damage reduction
+                damage = ((uint32_t)(damage * reduction_percent + 5000)) / 10000;
+                char aliveInfo[256];
+                sprintf(aliveInfo, "DAMAGE REDUCTION PERCENTAGE IS %hd \n", reduction_percent);
+                logger->logInfo(aliveInfo);
+
+                sprintf(aliveInfo, "SOURCE INDEX IS %hd \n", source_index);
+                logger->logInfo(aliveInfo);
+
+                sprintf(aliveInfo, "TARGET INDEX IS %hd \n", target_index);
+                logger->logInfo(aliveInfo);
+
+                // then we apply spell damage to the target
                 toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index, target_index, damage, 0, 0, 0);
+
+
 
                 // we terminate spell effect, because it's not supposed to continue
                 spellAPI->setEffectDone(_this, spell_index, 0);
                 return;
-            }
      }
 }
 
@@ -278,10 +269,15 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
 
     // we register custom spell which is necessary to simulate tower projectiles
     SFSpell *dwarf_hammer_tower_spell = registrationAPI->registerSpell(DWARF_HAMMER_TOWER_LINE);
-    // we register building type for game engine
+
+    // we have to register building type for game engine
     // we have to register it via code
     // because amount of building types which can be placed within GameData.cff is hardcoded to be 213
-    SFBuilding *dwarf_tower = registrationAPI->registerBuilding(214);
+
+    // to register new building, we can use any number in range 214-256
+    // of course, provided it's not already occupied by another mod
+    // let's use number 214 for this example
+    SFBuilding *dwarf_tower = registrationAPI->registerBuilding(222);
 
     // then we link building with its json placed into /sfsf/%modname%/building folder
     registrationAPI->linkBuildingJSON(dwarf_tower, "dwarf_tower_hammer"); // we pass filename without extension, '.json' is appended automatically
@@ -306,7 +302,7 @@ extern "C" __declspec(dllexport) SFMod *RegisterMod(SpellforceSpellFramework *fr
     // it's critical for mod name to match with folder name where mod assets (such as building JSON data) stored
     // in this case mod name isn't purely cosmetic
     // game data of custom building added by this mod is going to be located in %Spellforce/sfsf/Dwarf Tower/buildings/ folder
-    return framework->createModInfo("Dwarf Tower", "1.0.0", "Teekius", "A mod designed to demonstrate creation of custom building - Dwarf Tower controlled by an advanced AI.");
+    return framework->createModInfo("Dwarf Tower", "1.0.0", "Teekius", "A mod designed to demonstrate creation of custom building which is going to be Dwarf Tower controlled by an advanced AI.");
 }
 
 // Required to be present by, not required for any functionality
