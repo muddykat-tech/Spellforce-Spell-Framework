@@ -109,7 +109,7 @@ void initialize_wrapper_data_hooks()
     vfunction176 = (vfunction_ptr)(ASI::AddrOf(0x52f520));
     vfunction25 = (vfunction_ptr)(ASI::AddrOf(0x511ae0));
     CMnuBase_setname = (CMnuBase_setname_ptr)(ASI::AddrOf(0x512E30));
-    g_get_reduced_damage = (get_phys_damage_reduction_ptr)(ASI::AddrOf(0x317070));
+    g_get_damage_reduction = (get_phys_damage_reduction_ptr)(ASI::AddrOf(0x317070));
 }
 
 void log_message(const char *filename, const char *format, ...)
@@ -596,7 +596,7 @@ bool __thiscall hasAuraActive(SF_CGdFigureToolbox *_this, uint16_t figure_id)
 uint16_t __thiscall getPhysDamageReduction(SF_CGdFigureToolbox *_this, uint16_t source_index, uint16_t target_index,
                                            uint16_t action_id)
 {
-    return g_get_reduced_damage(_this->autoclass34, source_index, target_index, action_id);
+    return g_get_damage_reduction(_this->autoclass34, source_index, target_index, action_id);
 }
 
 CMnuLabel * __thiscall attach_new_label(CMnuLabel *label_ptr,
@@ -1121,10 +1121,10 @@ void attachVideo(CAppMenu *CAppMenu_ptr, CMnuContainer *parent,
  * @}
  */
 
- // Call original menu function to show the menu
-    // char vid_loc[256];
-    // sprintf(vid_loc, "videos\\sfsf");
-    // attachVideo((CAppMenu*)_CAppMenu, container_hack, vid_loc);
+// Call original menu function to show the menu
+// char vid_loc[256];
+// sprintf(vid_loc, "videos\\sfsf");
+// attachVideo((CAppMenu*)_CAppMenu, container_hack, vid_loc);
 
 
 
