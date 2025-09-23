@@ -49,7 +49,6 @@ void __thiscall dwarf_hammer_tower_end_handler(SF_CGdSpell *_this, uint16_t spel
 {
     // since this spell is instant, we have only to get its index
     // and erase it from the list of active spells
-    SF_GdSpell *spell = &_this->active_spell_list[spell_index];
     spellAPI->removeDLLNode(_this, spell_index);
     spellAPI->setEffectDone(_this, spell_index, 0);
 }
