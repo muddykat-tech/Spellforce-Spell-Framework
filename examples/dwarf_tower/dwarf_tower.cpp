@@ -191,10 +191,10 @@ void __thiscall dwarf_hammer_tower_effect_handler(SF_CGdSpell *_this, uint16_t s
     spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
 
     // we've got a lot of technical conditions which can prevent spell cast, so if we don't meet at least one of them, spell fails
-    if ((figureAPI->isAlive(_this->SF_CGdFigure, target_index))
-        || (toolboxAPI->isTargetable(_this->SF_CGdFigureToolBox, target_index))
-        || (toolboxAPI->figuresCheckHostile(_this->SF_CGdFigureToolBox, source_index, target_index))
-        || ((int16_t)(_this->SF_CGdFigure->figures[target_index].owner) != -1))
+    if ((figureAPI->isAlive(_this->SF_CGdFigure, target_index)) &&
+        (toolboxAPI->isTargetable(_this->SF_CGdFigureToolBox, target_index)) &&
+        (toolboxAPI->figuresCheckHostile(_this->SF_CGdFigureToolBox, source_index, target_index)) &&
+        ((int16_t)(_this->SF_CGdFigure->figures[target_index].owner) != -1))
      {
 
                 uint32_t unused;
