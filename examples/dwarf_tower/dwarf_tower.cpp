@@ -273,7 +273,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
 
     // to register new building, we can use any number in range 214-256
     // of course, provided it's not already occupied by another mod
-    // let's use number 214 for this example
+    // let's use number 222 for this example
     SFBuilding *dwarf_tower = registrationAPI->registerBuilding(222);
 
     // then we link building with its json placed into /sfsf/%modname%/building folder
