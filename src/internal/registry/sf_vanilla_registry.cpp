@@ -6,26 +6,36 @@
 #include "../handlers/sf_ai_avoidance_handlers.h"
 #include "../handlers/sf_ai_aoe_handlers.h"
 #include "../handlers/sf_building_done_handlers.h"
+#include "../handlers/sf_worker_building_entry_handlers.h"
 
 
 
 
 void initialize_vanilla_buildings()
 {
-    uint8_t default_handler_list[140] = {0x01, 0x02, 0x03, 0x09, 0x0a, 0x0b, 0x0e, 0x10, 0x12, 0x13, 0x14,
-                                         0x15, 0x16, 0x19, 0x1b, 0x1d, 0x1e, 0x1f, 0x21, 0x23, 0x25, 0x28,
-                                         0x29, 0x2a, 0x2b, 0x2d, 0x31, 0x32, 0x33, 0x36, 0x38, 0x39, 0x3a, 0x3b,
-                                         0x3c, 0x40, 0x41, 0x43, 0x45, 0x48, 0x49, 0x4a, 0x4c, 0x50, 0x51, 0x52,
-                                         0x55, 0x56, 0x57, 0x59, 0x5f, 0x61, 0x62, 0x63, 0x65, 0x68, 0x69, 0x6a,
-                                         0x6b, 0x6c, 0x6d, 0x6e, 0x6f, 0x70, 0x71, 0x72, 0x73, 0x74, 0x75, 0x76,
-                                         0x77, 0x79, 0x7a, 0x7d, 0x7e, 0x7f, 0x80, 0x81, 0x82, 0x83, 0x84, 0x85,
-                                         0x86, 0x87, 0x88, 0x8a, 0x8b, 0x8c, 0x8d, 0x8e, 0x8f, 0x90, 0x91, 0x94,
-                                         0x96, 0x98, 0x99, 0x9a, 0x9b, 0x9c, 0x9d, 0x9e, 0x9f, 0xa2, 0xab, 0xad,
-                                         0xae, 0xaf, 0xb0, 0xb1, 0xb3, 0xb4, 0xb5, 0xb6, 0xb7, 0xb8, 0xb9, 0xba,
-                                         0xbb, 0xbc, 0xbd, 0xbe, 0xbf, 0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0xc5, 0xc6,
-                                         0xc7, 0xc8, 0xc9, 0xca, 0xcb, 0xcc, 0xcd, 0xce, 0xcf, 0xd0};
+    uint8_t default_handler_list[122] = { 0x09, 0x0a, 0x0b, 0x0e, 0x10, 0x12, 0x13, 0x19, 0x1b, 0x1d, 0x1e, 0x1f, 0x21,
+                                          0x23, 0x25, 0x28, 0x2d, 0x31, 0x32, 0x33, 0x36, 0x38, 0x39, 0x40, 0x41, 0x43,
+                                          0x45, 0x48, 0x50, 0x51, 0x52, 0x59, 0x5f, 0x61, 0x62, 0x63, 0x65, 0x68, 0x69,
+                                          0x6a, 0x6b, 0x6c, 0x6d, 0x6e, 0x6f, 0x70, 0x71, 0x72, 0x73, 0x74, 0x75, 0x76,
+                                          0x77, 0x79, 0x7a, 0x7d, 0x7e, 0x7f, 0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86,
+                                          0x87, 0x88, 0x8a, 0x8b, 0x8c, 0x8d, 0x8e, 0x8f, 0x90, 0x91, 0x94, 0x96, 0x98,
+                                          0x99, 0x9a, 0x9b, 0x9c, 0x9d, 0x9e, 0x9f, 0xa2, 0xab, 0xad, 0xae, 0xaf, 0xb0,
+                                          0xb1, 0xb3, 0xb4, 0xb5, 0xb6, 0xb7, 0xb8, 0xb9, 0xba, 0xbb, 0xbc, 0xbd, 0xbe,
+                                          0xbf, 0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0xc5, 0xc6, 0xc7, 0xc8, 0xc9, 0xca, 0xcb,
+                                          0xcc, 0xcd, 0xce, 0xcf, 0xd0};
 
-    for (int i = 0; i < 140; i++)
+    uint8_t hq_list[18] = {0x01, 0x02, 0x03, 0x14, 0x15, 0x16, 0x29, 0x2a, 0x2b, 0x3a, 0x3b, 0x3c, 0x49, 0x4a, 0x4c,
+                           0x55, 0x56, 0x57};
+
+    for (int i = 0; i < 18; i++)
+    {
+        SFBuilding *building = registrationAPI.registerBuilding(default_handler_list[i]);
+        registrationAPI.linkBuildingDoneHandler(building, &default_done_handler);
+        registrationAPI.linkBuildingEntryHandler(building, &hq_entry_handler);
+        registrationAPI.applyBuildingTag(building, BuildingTag::HQ_BUILDING);
+    }
+
+    for (int i = 0; i < 122; i++)
     {
         SFBuilding *building = registrationAPI.registerBuilding(default_handler_list[i]);
         registrationAPI.linkBuildingDoneHandler(building, &default_done_handler);
@@ -33,226 +43,344 @@ void initialize_vanilla_buildings()
 
     SFBuilding *human_woodcutter = registrationAPI.registerBuilding(0x04);
     registrationAPI.linkBuildingDoneHandler(human_woodcutter, &multiworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(human_woodcutter, &woodcutter_entry_handler);
+    registrationAPI.applyBuildingTag(human_woodcutter, BuildingTag::WOODCUTTER_BUILDING);
 
     SFBuilding *human_quarry = registrationAPI.registerBuilding(0x07);
     registrationAPI.linkBuildingDoneHandler(human_quarry, &multiworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(human_quarry, &quarry_entry_handler);
+    registrationAPI.applyBuildingTag(human_quarry, BuildingTag::QUARRY_BUILDING);
 
     SFBuilding *human_farm = registrationAPI.registerBuilding(0x0c);
     registrationAPI.linkBuildingDoneHandler(human_farm, &multiworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(human_farm, &farmer_entry_handler);
+    registrationAPI.applyBuildingTag(human_farm, BuildingTag::FARM_BUILDING);
 
     SFBuilding *elf_forester = registrationAPI.registerBuilding(0x17);
     registrationAPI.linkBuildingDoneHandler(elf_forester, &multiworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(elf_forester, &forester_entry_handler);
+    registrationAPI.applyBuildingTag(elf_forester, BuildingTag::FORESTER_BUILDING);
 
     SFBuilding *elf_woodcutter_master = registrationAPI.registerBuilding(0x18);
     registrationAPI.linkBuildingDoneHandler(elf_woodcutter_master, &multiworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(elf_woodcutter_master, &woodcutter_entry_handler);
+    registrationAPI.applyBuildingTag(elf_woodcutter_master, BuildingTag::WOODCUTTER_BUILDING);
+    registrationAPI.applyBuildingTag(elf_woodcutter_master, BuildingTag::MASTER_BUILDING);
 
     SFBuilding *elf_woodcutter = registrationAPI.registerBuilding(0x1c);
     registrationAPI.linkBuildingDoneHandler(elf_woodcutter, &multiworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(elf_woodcutter, &woodcutter_entry_handler);
+    registrationAPI.applyBuildingTag(elf_woodcutter, BuildingTag::WOODCUTTER_BUILDING);
 
     SFBuilding *dwarf_quarry = registrationAPI.registerBuilding(0x2c);
     registrationAPI.linkBuildingDoneHandler(dwarf_quarry, &multiworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(dwarf_quarry, &quarry_entry_handler);
+    registrationAPI.applyBuildingTag(dwarf_quarry, BuildingTag::QUARRY_BUILDING);
+
 
     SFBuilding *orc_woodcutter = registrationAPI.registerBuilding(0x3d);
     registrationAPI.linkBuildingDoneHandler(orc_woodcutter, &multiworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(orc_woodcutter, &woodcutter_entry_handler);
+    registrationAPI.applyBuildingTag(orc_woodcutter, BuildingTag::WOODCUTTER_BUILDING);
 
     SFBuilding *troll_woodcutter = registrationAPI.registerBuilding(0x4d);
     registrationAPI.linkBuildingDoneHandler(troll_woodcutter, &multiworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(troll_woodcutter, &woodcutter_entry_handler);
+    registrationAPI.applyBuildingTag(troll_woodcutter, BuildingTag::WOODCUTTER_BUILDING);
 
     SFBuilding *troll_quarry = registrationAPI.registerBuilding(0x4e);
     registrationAPI.linkBuildingDoneHandler(troll_quarry, &multiworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(troll_quarry, &quarry_entry_handler);
+    registrationAPI.applyBuildingTag(troll_quarry, BuildingTag::QUARRY_BUILDING);
 
     SFBuilding *norcaine_quarry = registrationAPI.registerBuilding(0x58);
     registrationAPI.linkBuildingDoneHandler(norcaine_quarry, &multiworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(norcaine_quarry, &quarry_entry_handler);
+    registrationAPI.applyBuildingTag(norcaine_quarry, BuildingTag::QUARRY_BUILDING);
 
     SFBuilding *norcaine_farm = registrationAPI.registerBuilding(0x5c);
     registrationAPI.linkBuildingDoneHandler(norcaine_farm, &multiworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(norcaine_farm, &farmer_entry_handler);
+    registrationAPI.applyBuildingTag(norcaine_farm, BuildingTag::FARM_BUILDING);
 
 
     SFBuilding *human_sawmill = registrationAPI.registerBuilding(0x05);
     registrationAPI.linkBuildingDoneHandler(human_sawmill, &singleworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(human_sawmill, &sawmill_entry_handler);
+    registrationAPI.applyBuildingTag(human_sawmill, BuildingTag::CARPENTER_BUILDING);
 
     SFBuilding *human_foodstore = registrationAPI.registerBuilding(0x08);
     registrationAPI.linkBuildingDoneHandler(human_foodstore, &singleworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(human_foodstore, &foodstore_entry_handler);
+    registrationAPI.applyBuildingTag(human_foodstore, BuildingTag::FOODSTORE_BUILDING);
 
     SFBuilding *human_smelter = registrationAPI.registerBuilding(0x0f);
     registrationAPI.linkBuildingDoneHandler(human_smelter, &singleworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(human_smelter, &smelter_entry_handler);
+    registrationAPI.applyBuildingTag(human_smelter, BuildingTag::SMELTER_BUILDING);
 
     SFBuilding *elf_food_store = registrationAPI.registerBuilding(0x1a);
     registrationAPI.linkBuildingDoneHandler(elf_food_store, &singleworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(elf_food_store, &foodstore_entry_handler);
+    registrationAPI.applyBuildingTag(elf_food_store, BuildingTag::FOODSTORE_BUILDING);
 
     SFBuilding *dwarf_stonecutter = registrationAPI.registerBuilding(0x2e);
     registrationAPI.linkBuildingDoneHandler(dwarf_stonecutter, &singleworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(dwarf_stonecutter, &sawmill_entry_handler);
+    registrationAPI.applyBuildingTag(dwarf_stonecutter, BuildingTag::CARPENTER_BUILDING);
 
     SFBuilding *dwarf_food_store = registrationAPI.registerBuilding(0x2f);
     registrationAPI.linkBuildingDoneHandler(dwarf_food_store, &singleworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(dwarf_food_store, &foodstore_entry_handler);
+    registrationAPI.applyBuildingTag(dwarf_food_store, BuildingTag::FOODSTORE_BUILDING);
 
     SFBuilding *dwarf_smelter = registrationAPI.registerBuilding(0x34);
     registrationAPI.linkBuildingDoneHandler(dwarf_smelter, &singleworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(dwarf_smelter, &smelter_entry_handler);
+    registrationAPI.applyBuildingTag(dwarf_smelter, BuildingTag::SMELTER_BUILDING);
 
     SFBuilding *elf_sawmill = registrationAPI.registerBuilding(0x37);
     registrationAPI.linkBuildingDoneHandler(elf_sawmill, &singleworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(elf_sawmill, &sawmill_entry_handler);
+    registrationAPI.applyBuildingTag(elf_sawmill, BuildingTag::CARPENTER_BUILDING);
 
     SFBuilding *orc_smelter = registrationAPI.registerBuilding(0x3e);
     registrationAPI.linkBuildingDoneHandler(orc_smelter, &singleworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(orc_smelter, &smelter_entry_handler);
+    registrationAPI.applyBuildingTag(orc_smelter, BuildingTag::SMELTER_BUILDING);
 
     SFBuilding *orc_food_store = registrationAPI.registerBuilding(0x3f);
     registrationAPI.linkBuildingDoneHandler(orc_food_store, &singleworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(orc_food_store, &foodstore_entry_handler);
+    registrationAPI.applyBuildingTag(orc_food_store, BuildingTag::FOODSTORE_BUILDING);
 
     SFBuilding *troll_food_store = registrationAPI.registerBuilding(0x4f);
     registrationAPI.linkBuildingDoneHandler(troll_food_store, &singleworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(troll_food_store, &foodstore_entry_handler);
+    registrationAPI.applyBuildingTag(troll_food_store, BuildingTag::FOODSTORE_BUILDING);
 
     SFBuilding *norcaine_stonecutter = registrationAPI.registerBuilding(0x5a);
     registrationAPI.linkBuildingDoneHandler(norcaine_stonecutter, &singleworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(norcaine_stonecutter, &sawmill_entry_handler);
+    registrationAPI.applyBuildingTag(norcaine_stonecutter, BuildingTag::CARPENTER_BUILDING);
 
     SFBuilding *norcaine_food_store = registrationAPI.registerBuilding(0x5b);
     registrationAPI.linkBuildingDoneHandler(norcaine_food_store, &singleworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(norcaine_food_store, &foodstore_entry_handler);
+    registrationAPI.applyBuildingTag(norcaine_food_store, BuildingTag::FOODSTORE_BUILDING);
 
     SFBuilding *norcaine_smelter = registrationAPI.registerBuilding(0x5e);
     registrationAPI.linkBuildingDoneHandler(norcaine_smelter, &singleworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(norcaine_smelter, &smelter_entry_handler);
+    registrationAPI.applyBuildingTag(norcaine_smelter, BuildingTag::SMELTER_BUILDING);
 
 
     SFBuilding *human_breeder = registrationAPI.registerBuilding(0x06);
     registrationAPI.linkBuildingDoneHandler(human_breeder, &breeder_done_handler);
+    registrationAPI.linkBuildingEntryHandler(human_breeder, &cattle_breeder_entry_handler);
+    registrationAPI.applyBuildingTag(human_breeder, BuildingTag::BREEDER_BUILDING);
 
-    SFBuilding *dwarf_breeder= registrationAPI.registerBuilding(0x30);
+    SFBuilding *dwarf_breeder = registrationAPI.registerBuilding(0x30);
     registrationAPI.linkBuildingDoneHandler(dwarf_breeder, &breeder_done_handler);
+    registrationAPI.linkBuildingEntryHandler(dwarf_breeder, &cattle_breeder_entry_handler);
+    registrationAPI.applyBuildingTag(dwarf_breeder, BuildingTag::BREEDER_BUILDING);
 
     SFBuilding *orc_breeder = registrationAPI.registerBuilding(0x42);
     registrationAPI.linkBuildingDoneHandler(orc_breeder, &breeder_done_handler);
+    registrationAPI.linkBuildingEntryHandler(orc_breeder, &cattle_breeder_entry_handler);
+    registrationAPI.applyBuildingTag(orc_breeder, BuildingTag::BREEDER_BUILDING);
 
     SFBuilding *norcaine_breeder = registrationAPI.registerBuilding(0x5d);
     registrationAPI.linkBuildingDoneHandler(norcaine_breeder, &breeder_done_handler);
+    registrationAPI.linkBuildingEntryHandler(norcaine_breeder, &cattle_breeder_entry_handler);
+    registrationAPI.applyBuildingTag(norcaine_breeder, BuildingTag::BREEDER_BUILDING);
 
 
     SFBuilding *human_temple = registrationAPI.registerBuilding(0x11);
     registrationAPI.linkBuildingDoneHandler(human_temple, &army_worker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(human_temple, &temple_entry_handler);
+    registrationAPI.applyBuildingTag(human_temple, BuildingTag::TEMPLE_BUILDING);
 
     SFBuilding *elf_armory = registrationAPI.registerBuilding(0x22);
     registrationAPI.linkBuildingDoneHandler(elf_armory, &army_worker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(elf_armory, &forge_entry_handler);
+    registrationAPI.applyBuildingTag(elf_armory, BuildingTag::FORGE_BUILDING);
 
     SFBuilding *elf_temple = registrationAPI.registerBuilding(0x24);
     registrationAPI.linkBuildingDoneHandler(elf_temple, &army_worker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(elf_temple, &temple_entry_handler);
+    registrationAPI.applyBuildingTag(elf_temple, BuildingTag::TEMPLE_BUILDING);
+
 
     SFBuilding *dwarf_forge = registrationAPI.registerBuilding(0x35);
     registrationAPI.linkBuildingDoneHandler(dwarf_forge, &army_worker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(dwarf_forge, &forge_entry_handler);
+    registrationAPI.applyBuildingTag(dwarf_forge, BuildingTag::FORGE_BUILDING);
 
     SFBuilding *orc_forge = registrationAPI.registerBuilding(0x44);
     registrationAPI.linkBuildingDoneHandler(orc_forge, &army_worker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(orc_forge, &forge_entry_handler);
+    registrationAPI.applyBuildingTag(orc_forge, BuildingTag::FORGE_BUILDING);
 
     SFBuilding *orc_temple = registrationAPI.registerBuilding(0x46);
     registrationAPI.linkBuildingDoneHandler(orc_temple, &army_worker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(orc_temple, &temple_entry_handler);
+    registrationAPI.applyBuildingTag(orc_temple, BuildingTag::TEMPLE_BUILDING);
 
     SFBuilding *human_forge = registrationAPI.registerBuilding(0x4b);
     registrationAPI.linkBuildingDoneHandler(human_forge, &army_worker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(human_forge, &forge_entry_handler);
+    registrationAPI.applyBuildingTag(human_forge, BuildingTag::FORGE_BUILDING);
 
     SFBuilding *troll_armory = registrationAPI.registerBuilding(0x53);
     registrationAPI.linkBuildingDoneHandler(troll_armory, &army_worker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(troll_armory, &forge_entry_handler);
+    registrationAPI.applyBuildingTag(troll_armory, BuildingTag::FORGE_BUILDING);
 
     SFBuilding *norcaine_forge = registrationAPI.registerBuilding(0x60);
     registrationAPI.linkBuildingDoneHandler(norcaine_forge, &army_worker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(norcaine_forge, &forge_entry_handler);
+    registrationAPI.applyBuildingTag(norcaine_forge, BuildingTag::FORGE_BUILDING);
 
     SFBuilding *norcaine_temple = registrationAPI.registerBuilding(0x64);
     registrationAPI.linkBuildingDoneHandler(norcaine_temple, &army_worker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(norcaine_temple, &temple_entry_handler);
+    registrationAPI.applyBuildingTag(norcaine_temple, BuildingTag::TEMPLE_BUILDING);
 
     SFBuilding *orc_armory = registrationAPI.registerBuilding(0x89);
     registrationAPI.linkBuildingDoneHandler(orc_armory, &army_worker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(orc_armory, &mace_carver_entry_handler);
+    registrationAPI.applyBuildingTag(orc_armory, BuildingTag::MACE_CARVER_BUILDING);
 
 
     SFBuilding *human_crossbow_tower = registrationAPI.registerBuilding(0x0d);
     registrationAPI.linkBuildingDoneHandler(human_crossbow_tower, &human_crossbow_tower_done_handler);
+    registrationAPI.applyBuildingTag(human_crossbow_tower, BuildingTag::TOWER_BUILDING);
+
 
     SFBuilding *human_white_hand = registrationAPI.registerBuilding(0x20);
     registrationAPI.linkBuildingDoneHandler(human_white_hand, &human_white_hand_done_handler);
+    registrationAPI.applyBuildingTag(human_white_hand, BuildingTag::TOWER_BUILDING);
 
     SFBuilding *elf_archer_tower = registrationAPI.registerBuilding(0x26);
     registrationAPI.linkBuildingDoneHandler(elf_archer_tower, &elf_archer_tower_done_handler);
+    registrationAPI.applyBuildingTag(elf_archer_tower, BuildingTag::TOWER_BUILDING);
 
     SFBuilding *elf_frostbringer = registrationAPI.registerBuilding(0x27);
     registrationAPI.linkBuildingDoneHandler(elf_frostbringer, &elf_frostbringer_done_handler);
+    registrationAPI.applyBuildingTag(elf_frostbringer, BuildingTag::TOWER_BUILDING);
 
     SFBuilding *orc_firestarter = registrationAPI.registerBuilding(0x47);
     registrationAPI.linkBuildingDoneHandler(orc_firestarter, &orc_firestarter_done_handler);
+    registrationAPI.applyBuildingTag(orc_firestarter, BuildingTag::TOWER_BUILDING);
 
     SFBuilding *troll_stonethrower = registrationAPI.registerBuilding(0x54);
     registrationAPI.linkBuildingDoneHandler(troll_stonethrower, &troll_stonethrower_done_handler);
+    registrationAPI.applyBuildingTag(troll_stonethrower, BuildingTag::TOWER_BUILDING);
 
     SFBuilding *norcaine_sorcery_tower = registrationAPI.registerBuilding(0x66);
     registrationAPI.linkBuildingDoneHandler(norcaine_sorcery_tower, &norcaine_sorcery_tower_done_handler);
+    registrationAPI.applyBuildingTag(norcaine_sorcery_tower, BuildingTag::TOWER_BUILDING);
 
     SFBuilding *norcaine_mindbreaker = registrationAPI.registerBuilding(0x67);
     registrationAPI.linkBuildingDoneHandler(norcaine_mindbreaker, &norcaine_mindbreaker_done_handler);
+    registrationAPI.applyBuildingTag(norcaine_mindbreaker, BuildingTag::TOWER_BUILDING);
 
     SFBuilding *npc_stonethrower = registrationAPI.registerBuilding(0x78);
     registrationAPI.linkBuildingDoneHandler(npc_stonethrower, &npc_stonethrower_done_handler);
+    registrationAPI.applyBuildingTag(npc_stonethrower, BuildingTag::TOWER_BUILDING);
 
     SFBuilding *npc_crossbow_tower = registrationAPI.registerBuilding(0x7b);
     registrationAPI.linkBuildingDoneHandler(npc_crossbow_tower, &npc_crossbow_tower_done_handler);
+    registrationAPI.applyBuildingTag(npc_crossbow_tower, BuildingTag::TOWER_BUILDING);
 
     SFBuilding *wulfgar_crossbow_tower = registrationAPI.registerBuilding(0x7c);
     registrationAPI.linkBuildingDoneHandler(wulfgar_crossbow_tower, &wulfgar_crossbow_tower_done_handler);
+    registrationAPI.applyBuildingTag(wulfgar_crossbow_tower, BuildingTag::TOWER_BUILDING);
 
     SFBuilding *wulfgar_crossbow_tower2 = registrationAPI.registerBuilding(0x92);
     registrationAPI.linkBuildingDoneHandler(wulfgar_crossbow_tower2, &wulfgar_crossbow_tower_done_handler2);
+    registrationAPI.applyBuildingTag(wulfgar_crossbow_tower2, BuildingTag::TOWER_BUILDING);
 
     SFBuilding *npc_firestarter = registrationAPI.registerBuilding(0x93);
     registrationAPI.linkBuildingDoneHandler(npc_firestarter, &npc_firestarter_done_handler);
+    registrationAPI.applyBuildingTag(npc_firestarter, BuildingTag::TOWER_BUILDING);
 
     SFBuilding *undead_bone_tower = registrationAPI.registerBuilding(0x95);
     registrationAPI.linkBuildingDoneHandler(undead_bone_tower, &undead_bone_tower_done_handler);
+    registrationAPI.applyBuildingTag(undead_bone_tower, BuildingTag::TOWER_BUILDING);
 
     SFBuilding *npc_white_hand = registrationAPI.registerBuilding(0x97);
     registrationAPI.linkBuildingDoneHandler(npc_white_hand, &npc_white_hand_done_handler);
+    registrationAPI.applyBuildingTag(npc_white_hand, BuildingTag::TOWER_BUILDING);
 
     SFBuilding *blade_black_tower = registrationAPI.registerBuilding(0xa0);
     registrationAPI.linkBuildingDoneHandler(blade_black_tower, &blade_black_tower_done_handler);
+    registrationAPI.applyBuildingTag(blade_black_tower, BuildingTag::TOWER_BUILDING);
 
     SFBuilding *npc_spitflower = registrationAPI.registerBuilding(0xa1);
     registrationAPI.linkBuildingDoneHandler(npc_spitflower, &npc_spitflower_done_handler);
+    registrationAPI.applyBuildingTag(npc_spitflower, BuildingTag::TOWER_BUILDING);
 
     SFBuilding *npc_frostbringer = registrationAPI.registerBuilding(0xa3);
     registrationAPI.linkBuildingDoneHandler(npc_frostbringer, &npc_frostbringer_done_handler);
+    registrationAPI.applyBuildingTag(npc_frostbringer, BuildingTag::TOWER_BUILDING);
 
     SFBuilding *blade_black_tower2 = registrationAPI.registerBuilding(0xa4);
     registrationAPI.linkBuildingDoneHandler(blade_black_tower2, &blade_black_tower_done_handler2);
+    registrationAPI.applyBuildingTag(blade_black_tower2, BuildingTag::TOWER_BUILDING);
 
     SFBuilding *blade_dark_crystal = registrationAPI.registerBuilding(0xa5);
     registrationAPI.linkBuildingDoneHandler(blade_dark_crystal, &blade_dark_crystal_done_handler);
+    registrationAPI.applyBuildingTag(blade_dark_crystal, BuildingTag::TOWER_BUILDING);
 
     SFBuilding *blade_dark_mananode = registrationAPI.registerBuilding(0xa6);
     registrationAPI.linkBuildingDoneHandler(blade_dark_mananode, &blade_dark_mananode_done_handler);
+    registrationAPI.applyBuildingTag(blade_dark_mananode, BuildingTag::TOWER_BUILDING);
 
     SFBuilding *npc_mindbreaker = registrationAPI.registerBuilding(0xa7);
     registrationAPI.linkBuildingDoneHandler(npc_mindbreaker, &npc_mindbreaker_done_handler);
+    registrationAPI.applyBuildingTag(npc_mindbreaker, BuildingTag::TOWER_BUILDING);
 
     SFBuilding *npc_holy_statue = registrationAPI.registerBuilding(0xa8);
     registrationAPI.linkBuildingDoneHandler(npc_holy_statue, &npc_holy_statue_done_handler);
+    registrationAPI.applyBuildingTag(npc_holy_statue, BuildingTag::TOWER_BUILDING);
 
     SFBuilding *npc_sun_tower = registrationAPI.registerBuilding(0xa9);
     registrationAPI.linkBuildingDoneHandler(npc_sun_tower, &npc_sun_tower_done_handler);
+    registrationAPI.applyBuildingTag(npc_sun_tower, BuildingTag::TOWER_BUILDING);
 
     SFBuilding *npc_moon_tower = registrationAPI.registerBuilding(0xaa);
     registrationAPI.linkBuildingDoneHandler(npc_moon_tower, &npc_moon_tower_done_handler);
+    registrationAPI.applyBuildingTag(npc_moon_tower, BuildingTag::TOWER_BUILDING);
 
     SFBuilding *npc_spitflower2 = registrationAPI.registerBuilding(0xac);
     registrationAPI.linkBuildingDoneHandler(npc_spitflower2, &npc_spitflower_done_handler2);
+    registrationAPI.applyBuildingTag(npc_spitflower2, BuildingTag::TOWER_BUILDING);
 
     SFBuilding *npc_sorcery_tower = registrationAPI.registerBuilding(0xb2);
     registrationAPI.linkBuildingDoneHandler(npc_sorcery_tower, &npc_sorcery_tower_done_handler);
+    registrationAPI.applyBuildingTag(npc_sorcery_tower, BuildingTag::TOWER_BUILDING);
 
     SFBuilding *npc_sorcery_tower2 = registrationAPI.registerBuilding(0xd1);
     registrationAPI.linkBuildingDoneHandler(npc_sorcery_tower2, &npc_sorcery_tower_done_handler2);
+    registrationAPI.applyBuildingTag(npc_sorcery_tower2, BuildingTag::TOWER_BUILDING);
 
     SFBuilding *undead_bone_tower2 = registrationAPI.registerBuilding(0xd2);
     registrationAPI.linkBuildingDoneHandler(undead_bone_tower2, &undead_bone_tower_done_handler2);
+    registrationAPI.applyBuildingTag(undead_bone_tower2, BuildingTag::TOWER_BUILDING);
 
     SFBuilding *undead_bone_tower3 = registrationAPI.registerBuilding(0xd3);
     registrationAPI.linkBuildingDoneHandler(undead_bone_tower3, &undead_bone_tower_done_handler3);
+    registrationAPI.applyBuildingTag(undead_bone_tower3, BuildingTag::TOWER_BUILDING);
 
     SFBuilding *npc_firestarter2 = registrationAPI.registerBuilding(0xd4);
     registrationAPI.linkBuildingDoneHandler(npc_firestarter2, &npc_firestarter_done_handler2);
+    registrationAPI.applyBuildingTag(npc_firestarter2, BuildingTag::TOWER_BUILDING);
 
     SFBuilding *blade_black_tower3 = registrationAPI.registerBuilding(0xd5);
     registrationAPI.linkBuildingDoneHandler(blade_black_tower3, &blade_black_tower_done_handler3);
+    registrationAPI.applyBuildingTag(blade_black_tower3, BuildingTag::TOWER_BUILDING);
 
 
 }

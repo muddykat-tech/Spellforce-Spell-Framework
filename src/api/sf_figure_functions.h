@@ -54,8 +54,11 @@ DECLARE_FUNCTION(void, setTask, SF_CGdFigure *_figure, uint16_t figure_index,
 DECLARE_FUNCTION(bool, isSiegeUnit, SF_CGdFigure *figure, uint16_t figure_id);
 
 // Unknown Functons
-DECLARE_FUNCTION(bool, FUN_006e3a90, uint32_t *CGdFigureJobs,
-                 uint16_t figure_id);
+DECLARE_FUNCTION(bool, FUN_006e3a90, SF_CGdFigureJobs *_this, uint16_t figure_id);
+DECLARE_FUNCTION(void, prepareJobTransition, SF_CGdFigureJobs *_this, uint16_t figure_id, uint16_t job_from,
+                 uint16_t job_to);
+DECLARE_FUNCTION(void, setJob, SF_CGdFigureJobs *_this,uint16_t figure_id,uint16_t job_id);
+DECLARE_FUNCTION(void, onStartJob,  SF_CGdFigureJobs *_this, uint16_t figure_id, uint16_t job_id);
 DECLARE_FUNCTION(void, disposeHealerList, void *healer_list);
 /**
  * @ingroup API
@@ -95,4 +98,7 @@ typedef struct
 
     disposeHealerList_ptr disposeHealerList;
     FUN_006e3a90_ptr FUN_006e3a90;
+    prepareJobTransition_ptr prepareJobTransition;
+    onStartJob_ptr onStartJob;
+    setJob_ptr setJob;
 } FigureFunctions;

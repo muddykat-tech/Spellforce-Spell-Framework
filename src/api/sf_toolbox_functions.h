@@ -56,6 +56,13 @@ DECLARE_FUNCTION(bool, hasAuraActive, SF_CGdFigureToolbox *_this,
 DECLARE_FUNCTION(uint16_t, getPhysDamageReduction, SF_CGdFigureToolbox *_this, uint16_t source_index,
                  uint16_t target_index,  uint16_t action_id);
 
+DECLARE_FUNCTION(uint32_t, getFigureXData, SF_CGdFigureToolbox *_this, uint16_t figure_id, uint8_t xdata_type);
+DECLARE_FUNCTION(void, setFigureXData, SF_CGdFigureToolbox *_this, uint16_t figure_id, uint8_t xdata_type,
+                 uint32_t value);
+
+DECLARE_FUNCTION(void, equipArtisanArmour, SF_CGdFigureToolbox* _this, uint16_t figure_id);
+DECLARE_FUNCTION(void, equipArtisanTools, SF_CGdFigureToolbox* _this, uint16_t figure_id, uint32_t param2,
+                 uint32_t param3);
 
 // getDistance(SF_Coord *pointA, SF_Coord *pointB)
 DECLARE_FUNCTION(uint32_t, getDistance, SF_Coord *pointA, SF_Coord *pointB);
@@ -90,4 +97,8 @@ typedef struct
     findClosestFreePosition_ptr findClosestFreePosition;
     isUnitMelee_ptr isUnitMelee;
     getPhysDamageReduction_ptr getPhysDamageReduction;
+    getFigureXData_ptr getFigureXData;
+    setFigureXData_ptr setFigureXData;
+    equipArtisanArmour_ptr equipArtisanArmour;
+    equipArtisanTools_ptr equipArtisanTools;
 } ToolboxFunctions;

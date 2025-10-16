@@ -24,6 +24,9 @@ extern AiFunctions aiAPI;
 extern SFBuilding *__thiscall registerBuilding(uint8_t building_type);
 extern void __thiscall linkBuildingDoneHandler (SFBuilding *building, building_done_handler_ptr handler);
 extern void __thiscall linkBuildingJSON(SFBuilding *building, const char *building_json_name);
+extern void __thiscall linkBuildingEntryHandler (SFBuilding *building, building_entry_handler_ptr handler);
+extern void __thiscall applyBuildingTag(SFBuilding *spell, BuildingTag tag);
+
 
 extern SFSpell *__thiscall registerSpell(uint16_t spell_id);
 extern void __thiscall applySpellTag(SFSpell *spell, SpellTag tag);

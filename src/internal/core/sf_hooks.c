@@ -95,6 +95,9 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(figure, getHealersList, 0x2b2870);
     DEFINE_FUNCTION(figure, disposeHealerList, 0x36436D);
     DEFINE_FUNCTION(figure, getCurrentHealthPercent, 0x2fdeb0);
+    DEFINE_FUNCTION(figure, prepareJobTransition, 0x2df6e0);
+    DEFINE_FUNCTION(figure, onStartJob, 0x2e2180);
+    DEFINE_FUNCTION(figure, setJob, 0x2dee90);
     log_info("| - AI API Hooks");
 
     DEFINE_FUNCTION(ai, getTargetAction, 0x2b2f50);
@@ -158,6 +161,10 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(toolbox, addUnit, 0x2f749a);
     DEFINE_FUNCTION(toolbox, findClosestFreePosition, 0x34e9a0);
     DEFINE_FUNCTION(toolbox, isUnitMelee, 0x2feb2b);
+    DEFINE_FUNCTION(toolbox, setFigureXData, 0x2f7bb2);
+    DEFINE_FUNCTION(toolbox, getFigureXData, 0x2fe442);
+    DEFINE_FUNCTION(toolbox, equipArtisanArmour, 0x2f84c1);
+    DEFINE_FUNCTION(toolbox, equipArtisanTools, 0x2fd783);
 
     log_info("| - BuildingAPI Hooks");
     DEFINE_FUNCTION(building, buildingDealDamage, 0x2d6d80);
@@ -166,6 +173,9 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(building, getBuildingClosestVertex, 0x2d9c40);
     DEFINE_FUNCTION(building, setBuildingXData, 0x2daca0);
     DEFINE_FUNCTION(building, attachTowerUnit, 0x2d9290);
+    DEFINE_FUNCTION(building, releaseWorkers, 0x2c6280);
+    DEFINE_FUNCTION(building, freeAssignedWorker, 0x2d8a00);
+    DEFINE_FUNCTION(building, updateProduction, 0x2a2b80);
 
     log_info("| - IteratorAPI Hooks");
     DEFINE_FUNCTION(iterator, figureIteratorInit, 0x3183f0);
@@ -223,6 +233,9 @@ void initialize_data_hooks()
     INCLUDE_FUNCTION(registration, registerBuilding, &registerBuilding);
     INCLUDE_FUNCTION(registration, linkBuildingJSON, &linkBuildingJSON);
     INCLUDE_FUNCTION(registration, linkBuildingDoneHandler, &linkBuildingDoneHandler);
+    INCLUDE_FUNCTION(registration, linkBuildingEntryHandler, &linkBuildingEntryHandler);
+    INCLUDE_FUNCTION(registration, applyBuildingTag, &applyBuildingTag);
+
 }
 
 static void initialize_spelltype_hook()

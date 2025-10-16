@@ -12,6 +12,8 @@
 #include "ai_data_registries/sf_ai_avoidance_registry.h"
 #include "ai_data_registries/sf_ai_single_target_registry.h"
 #include "building_registry/sf_building_done_registry.h"
+#include "building_registry/sf_building_entry_registry.h"
+
 
 #include <windows.h>
 #include <iostream>
@@ -34,6 +36,8 @@ SFBuilding *__thiscall registerBuilding(uint8_t building_type)
     building->parent_mod = g_current_mod;
     g_internal_building_list.push_back(building);
     building->done_handler = nullptr;
+    building->entry_handler = nullptr;
+    building->flags = 0;
     return building;
 }
 
@@ -45,6 +49,17 @@ void __thiscall linkBuildingJSON(SFBuilding *building, const char *building_json
 void __thiscall linkBuildingDoneHandler (SFBuilding *building, building_done_handler_ptr handler)
 {
     building->done_handler = handler;
+}
+
+void __thiscall linkBuildingEntryHandler (SFBuilding *building, building_entry_handler_ptr handler)
+{
+    building->entry_handler = handler;
+}
+
+void __thiscall applyBuildingTag(SFBuilding *building, BuildingTag tag)
+{
+    uint32_t current_tags = building->building_tags;
+    building->building_tags = current_tags | tag;
 }
 
 std::list<SFSpell *> g_internal_spell_list;
@@ -404,6 +419,7 @@ void register_building_to_game(SFBuilding *building, const Building *src)
     if(!src->found_id)
     {
         log_error("Missing Required 'id' field in buidling JSON: %s", building->building_json_name);
+        return;
     }
 
     building->building_id = src->id;
@@ -569,6 +585,10 @@ void register_mod_buildings()
         if (building_data->done_handler != nullptr)
         {
             registerBuildingDoneHandler(building_data->building_id, building_data->done_handler);
+        }
+        if (building_data->entry_handler != nullptr)
+        {
+            registerBuildingEntryHandler(building_data->building_id, building_data->entry_handler);
         }
     }
 }

@@ -27,6 +27,7 @@ typedef uint16_t (__thiscall *onhit_handler_ptr)(SF_CGdFigureJobs *,
 typedef int (__thiscall *refresh_handler_ptr)(SF_CGdSpell *, uint16_t);
 
 typedef void (__thiscall *building_done_handler_ptr)(SF_CGdBuildingToolbox *_this,uint16_t building_index);
+typedef void (__thiscall *building_entry_handler_ptr)(SF_CGdFigureJobs *_this,uint16_t figure_id, uint16_t building_id);
 
 
 typedef struct __attribute__((packed))
@@ -76,5 +77,7 @@ typedef struct __attribute__((packed))
     char building_json_name[64];
 
     building_done_handler_ptr done_handler;
+    building_entry_handler_ptr entry_handler;
+    uint32_t building_tags;
 
 } SFBuilding;
