@@ -13,33 +13,107 @@
 
 void initialize_vanilla_buildings()
 {
-    uint8_t default_handler_list[122] = { 0x09, 0x0a, 0x0b, 0x0e, 0x10, 0x12, 0x13, 0x19, 0x1b, 0x1d, 0x1e, 0x1f, 0x21,
-                                          0x23, 0x25, 0x28, 0x2d, 0x31, 0x32, 0x33, 0x36, 0x38, 0x39, 0x40, 0x41, 0x43,
-                                          0x45, 0x48, 0x50, 0x51, 0x52, 0x59, 0x5f, 0x61, 0x62, 0x63, 0x65, 0x68, 0x69,
-                                          0x6a, 0x6b, 0x6c, 0x6d, 0x6e, 0x6f, 0x70, 0x71, 0x72, 0x73, 0x74, 0x75, 0x76,
-                                          0x77, 0x79, 0x7a, 0x7d, 0x7e, 0x7f, 0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86,
-                                          0x87, 0x88, 0x8a, 0x8b, 0x8c, 0x8d, 0x8e, 0x8f, 0x90, 0x91, 0x94, 0x96, 0x98,
-                                          0x99, 0x9a, 0x9b, 0x9c, 0x9d, 0x9e, 0x9f, 0xa2, 0xab, 0xad, 0xae, 0xaf, 0xb0,
-                                          0xb1, 0xb3, 0xb4, 0xb5, 0xb6, 0xb7, 0xb8, 0xb9, 0xba, 0xbb, 0xbc, 0xbd, 0xbe,
-                                          0xbf, 0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0xc5, 0xc6, 0xc7, 0xc8, 0xc9, 0xca, 0xcb,
-                                          0xcc, 0xcd, 0xce, 0xcf, 0xd0};
+    uint8_t default_handler_list[102] = { 0x12, 0x13, 0x19, 0x1e, 0x23, 0x25, 0x28, 0x2d, 0x32, 0x36, 0x38, 0x39, 0x48,
+                                          0x51, 0x61, 0x62, 0x65, 0x68, 0x69, 0x6a, 0x6b, 0x6c, 0x6d, 0x6e, 0x6f, 0x70,
+                                          0x71, 0x72, 0x73, 0x74, 0x75, 0x76, 0x77, 0x79, 0x7a, 0x7d, 0x7e, 0x7f, 0x80,
+                                          0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87, 0x88, 0x8a, 0x8b, 0x8c, 0x8d, 0x8e,
+                                          0x8f, 0x90, 0x91, 0x94, 0x96, 0x98, 0x99, 0x9a, 0x9b, 0x9c, 0x9d, 0x9e, 0x9f,
+                                          0xa2, 0xab, 0xad, 0xae, 0xaf, 0xb0, 0xb1, 0xb3, 0xb4, 0xb5, 0xb6, 0xb7, 0xb8,
+                                          0xb9, 0xba, 0xbb, 0xbc, 0xbd, 0xbe, 0xbf, 0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0xc5,
+                                          0xc6, 0xc7, 0xc8, 0xc9, 0xca, 0xcb, 0xcc, 0xcd, 0xce, 0xcf, 0xd0};
 
     uint8_t hq_list[18] = {0x01, 0x02, 0x03, 0x14, 0x15, 0x16, 0x29, 0x2a, 0x2b, 0x3a, 0x3b, 0x3c, 0x49, 0x4a, 0x4c,
                            0x55, 0x56, 0x57};
 
+    uint8_t hunter_list[5] = {0x09, 0x1d, 0x1f, 0x40, 0x50};
+
+    uint8_t miner_list[6] = {0x0e, 0x31, 0x33, 0x43, 0x59, 0x5f};
+
+    for (int i = 0; i < 5; i++)
+    {
+        SFBuilding *building = registrationAPI.registerBuilding(hunter_list[i]);
+        registrationAPI.linkBuildingDoneHandler(building, &default_done_handler);
+        registrationAPI.linkBuildingEntryHandler(building, &hunter_entry_handler);
+        registrationAPI.applyBuildingTag(building, BuildingTag::HUNTER_BUILDING);
+        if (hunter_list[i] == 0x1f)
+        {
+            registrationAPI.applyBuildingTag(building, BuildingTag::MASTER_BUILDING);
+
+        }
+    }
+
+    for (int i = 0; i < 6; i++)
+    {
+        SFBuilding *building = registrationAPI.registerBuilding(miner_list[i]);
+        registrationAPI.linkBuildingDoneHandler(building, &default_done_handler);
+        registrationAPI.linkBuildingEntryHandler(building, &miner_entry_handler);
+        registrationAPI.applyBuildingTag(building, BuildingTag::MINER_BUILDING);
+        if ((miner_list[i] == 0x33) || (miner_list[i] == 0x59))
+        {
+            registrationAPI.applyBuildingTag(building, BuildingTag::MOONSILVER_BUILDING);
+        }
+    }
+
     for (int i = 0; i < 18; i++)
     {
-        SFBuilding *building = registrationAPI.registerBuilding(default_handler_list[i]);
+        SFBuilding *building = registrationAPI.registerBuilding(hq_list[i]);
         registrationAPI.linkBuildingDoneHandler(building, &default_done_handler);
         registrationAPI.linkBuildingEntryHandler(building, &hq_entry_handler);
         registrationAPI.applyBuildingTag(building, BuildingTag::HQ_BUILDING);
     }
 
-    for (int i = 0; i < 122; i++)
+    for (int i = 0; i < 102; i++)
     {
         SFBuilding *building = registrationAPI.registerBuilding(default_handler_list[i]);
         registrationAPI.linkBuildingDoneHandler(building, &default_done_handler);
     }
+
+    SFBuilding *human_fisher = registrationAPI.registerBuilding(0x0a);
+    registrationAPI.linkBuildingDoneHandler(human_fisher, &default_done_handler);
+    registrationAPI.linkBuildingEntryHandler(human_fisher, &fisher_entry_handler);
+    registrationAPI.applyBuildingTag(human_fisher, BuildingTag::FISHER_BUILDING);
+
+    SFBuilding *human_master_fisher = registrationAPI.registerBuilding(0x0b);
+    registrationAPI.linkBuildingDoneHandler(human_master_fisher, &default_done_handler);
+    registrationAPI.linkBuildingEntryHandler(human_master_fisher, &fisher_entry_handler);
+    registrationAPI.applyBuildingTag(human_master_fisher, BuildingTag::FISHER_BUILDING);
+    registrationAPI.applyBuildingTag(human_master_fisher, BuildingTag::MASTER_BUILDING);
+
+    SFBuilding *orc_fisher = registrationAPI.registerBuilding(0x41);
+    registrationAPI.linkBuildingDoneHandler(orc_fisher, &default_done_handler);
+    registrationAPI.linkBuildingEntryHandler(orc_fisher, &fisher_entry_handler);
+    registrationAPI.applyBuildingTag(orc_fisher, BuildingTag::FISHER_BUILDING);
+
+    SFBuilding *human_shrine = registrationAPI.registerBuilding(0x10);
+    registrationAPI.linkBuildingDoneHandler(human_shrine, &default_done_handler);
+    registrationAPI.linkBuildingEntryHandler(human_shrine, &shrine_entry_handler);
+    registrationAPI.applyBuildingTag(human_shrine, BuildingTag::SHRINE_BUILDING);
+
+    SFBuilding *elf_shrine = registrationAPI.registerBuilding(0x1b);
+    registrationAPI.linkBuildingDoneHandler(elf_shrine, &default_done_handler);
+    registrationAPI.linkBuildingEntryHandler(elf_shrine, &shrine_entry_handler);
+    registrationAPI.applyBuildingTag(elf_shrine, BuildingTag::SHRINE_BUILDING);
+
+    SFBuilding *orc_shrine = registrationAPI.registerBuilding(0x45);
+    registrationAPI.linkBuildingDoneHandler(orc_shrine, &default_done_handler);
+    registrationAPI.linkBuildingEntryHandler(orc_shrine, &shrine_entry_handler);
+    registrationAPI.applyBuildingTag(orc_shrine, BuildingTag::SHRINE_BUILDING);
+
+    SFBuilding *norcaine_shrine = registrationAPI.registerBuilding(0x63);
+    registrationAPI.linkBuildingDoneHandler(norcaine_shrine, &default_done_handler);
+    registrationAPI.linkBuildingEntryHandler(norcaine_shrine, &shrine_entry_handler);
+    registrationAPI.applyBuildingTag(norcaine_shrine, BuildingTag::SHRINE_BUILDING);
+
+    SFBuilding *elf_gatherer = registrationAPI.registerBuilding(0x21);
+    registrationAPI.linkBuildingDoneHandler(elf_gatherer, &default_done_handler);
+    registrationAPI.linkBuildingEntryHandler(elf_gatherer, &gatherer_entry_handler);
+    registrationAPI.applyBuildingTag(elf_gatherer, BuildingTag::GATHERER_BUILDING);
+
+    SFBuilding *troll_scavenger = registrationAPI.registerBuilding(0x52);
+    registrationAPI.linkBuildingDoneHandler(troll_scavenger, &default_done_handler);
+    registrationAPI.linkBuildingEntryHandler(troll_scavenger, &scavenger_entry_handler);
+    registrationAPI.applyBuildingTag(troll_scavenger, BuildingTag::SCAVENGER_BUILDING);
+
 
     SFBuilding *human_woodcutter = registrationAPI.registerBuilding(0x04);
     registrationAPI.linkBuildingDoneHandler(human_woodcutter, &multiworker_done_handler);
@@ -76,7 +150,6 @@ void initialize_vanilla_buildings()
     registrationAPI.linkBuildingDoneHandler(dwarf_quarry, &multiworker_done_handler);
     registrationAPI.linkBuildingEntryHandler(dwarf_quarry, &quarry_entry_handler);
     registrationAPI.applyBuildingTag(dwarf_quarry, BuildingTag::QUARRY_BUILDING);
-
 
     SFBuilding *orc_woodcutter = registrationAPI.registerBuilding(0x3d);
     registrationAPI.linkBuildingDoneHandler(orc_woodcutter, &multiworker_done_handler);
