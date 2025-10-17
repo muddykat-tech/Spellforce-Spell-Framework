@@ -25,6 +25,7 @@
 #include "hooks/sf_utility_hooks.h"
 #include "hooks/sf_vanilla_fix_hook.h"
 #include "hooks/sf_building_done_hook.h"
+#include "hooks/sf_building_entry_hook.h"
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -278,6 +279,16 @@ static void initialize_building_done_hook()
     *(int *)(ASI::AddrOf(0x27a65d)) = (int)(&sf_building_done_hook) - ASI::AddrOf(0x27a661);
     ASI::EndRewrite(done_mreg3);
 }
+
+static void initialize_building_entry_hook()
+{
+    ASI::MemoryRegion done_mreg1 (ASI::AddrOf(0x2f16f7), 5);
+    ASI::BeginRewrite(done_mreg1);
+    *(unsigned char *)(ASI::AddrOf(0x2f16f7)) = 0xE8; // CALL instruction
+    *(int *)(ASI::AddrOf(0x2f16f8)) = (int)(&job_start_working_at_building_hook) - ASI::AddrOf(0x2f16fc);
+    ASI::EndRewrite(done_mreg1);
+}
+
 
 static void initialize_subeffect_add_hook()
 {

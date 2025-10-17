@@ -43,7 +43,7 @@ typedef struct __attribute__((packed))
     uint16_t GdJobId;
     CGdFigureTask task;
     uint8_t padding;
-    CGdFigureJobFlags flags;
+    uint16_t flags;
     uint8_t pathing_mode;
     SF_CGdTargetData target;  // it is stored WEIRDLY
     uint8_t SGtFigureAction[0xc];
