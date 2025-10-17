@@ -45,6 +45,8 @@ void __thiscall building_repair(SF_CGdFigureJobs *_this,uint16_t figure_id, uint
         }
     }
 }
+typedef void (__thiscall *jobCriticalHit_ptr)(SF_CGdFigureJobs *_this,uint16_t figure_id);
+
 
 void __thiscall default_entry_handler(SF_CGdFigureJobs *_this,uint16_t figure_id, uint16_t building_id)
 {
@@ -52,6 +54,8 @@ void __thiscall default_entry_handler(SF_CGdFigureJobs *_this,uint16_t figure_id
     {
         buildingAPI.freeAssignedWorker(_this->CGdBuildingToolBox, figure_id);
     }
+    jobCriticalHit_ptr jobCriticalHit = (jobCriticalHit_ptr)(ASI::AddrOf(0x2df980));
+    jobCriticalHit(_this, figure_id);
 }
 
 void __thiscall hq_entry_handler(SF_CGdFigureJobs *_this,uint16_t figure_id, uint16_t building_id)
@@ -67,6 +71,8 @@ void __thiscall hq_entry_handler(SF_CGdFigureJobs *_this,uint16_t figure_id, uin
     {
         buildingAPI.freeAssignedWorker(_this->CGdBuildingToolBox, figure_id);
     }
+    jobCriticalHit_ptr jobCriticalHit = (jobCriticalHit_ptr)(ASI::AddrOf(0x2df980));
+    jobCriticalHit(_this, figure_id);
     //TODO -- JobCriticalHit(_this, figure_id);
 }
 
