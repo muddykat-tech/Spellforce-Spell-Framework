@@ -23,7 +23,7 @@ struct __attribute__((packed)) SF_CGdFigureToolbox
     uint32_t *autoclass36;
     uint32_t *CGdObject;
     uint32_t *CGdObjectToolBox;
-    uint32_t *CGdPlayer;
+    SF_CGdPlayer *CGdPlayer;
     uint32_t *autoclass46;
     uint32_t *CGdResource;
     SF_CGdSpell *CGdSpell;

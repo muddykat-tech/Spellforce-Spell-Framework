@@ -107,7 +107,7 @@ struct __attribute__((packed)) SF_CGdBuildingToolbox
     SF_CGdFigureToolbox *CGdFigureToolbox;
     void *AutoClass34;
     void *CGdObject;
-    void *CGdPlayer;
+    SF_CGdPlayer *CGdPlayer;
     void *AutoClass47;
     void *CGdResource;
     void *AutoClass22;

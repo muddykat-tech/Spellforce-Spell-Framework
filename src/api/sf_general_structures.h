@@ -24,6 +24,7 @@ typedef struct CMnuLabel CMnuLabel;
 typedef struct SF_CGdFigure SF_CGdFigure;
 typedef struct SF_SpellEffectInfo SF_SpellEffectInfo;
 typedef struct SF_CGdResource SF_CGdResource;
+typedef struct SF_CGdPlayer SF_CGdPlayer;
 
 /* |-========== Enums ==========-| */
 
@@ -853,8 +854,9 @@ typedef enum :uint32_t
     TOWER_BUILDING = 0x10000,
     MASTER_BUILDING = 0x20000,
     MOONSILVER_BUILDING = 0x40000,
-    CARPENTER_BUILDING = 0x80000,
-    SCAVENGER_BUILDING = 0x100000
+    SAWMILL_BUILDING = 0x80000,
+    SCAVENGER_BUILDING = 0x100000,
+    STONEMASON_BUILDING = 0x200000
 } BuildingTag;
 
 typedef enum
@@ -989,6 +991,43 @@ typedef struct __attribute__((packed))
     uint8_t unknown_field_18;
     uint8_t unknown_field_19;
 } AutoClass14;
+
+typedef struct __attribute__((packed))
+{
+    uint32_t global_player_id;
+    uint8_t use;
+    uint32_t good_amount[20];
+    uint32_t good_remainder[20];
+    uint32_t unknown[2];
+    uint16_t avatar_figure_index;
+    SF_String avatar_name;
+    uint16_t hero_figure_index[5];
+    SF_String hero_names[5];
+    uint16_t unknown2;
+    uint16_t civilian_count[6];
+    uint16_t warrior_count[2];
+    uint8_t unknown3[29];
+    uint8_t alliance;
+    uint8_t hq_updrade_level[2];
+    void *monument_list;
+    uint32_t unknown4[2];
+    void *building_list;
+    uint32_t unknown5[7];
+    uint32_t runepower_current;
+    uint32_t runepower_max;
+    uint16_t group;
+    uint32_t unknown6;
+    uint16_t unknown7;
+    uint8_t swarm_size;
+} GdPlayer;
+
+struct __attribute__((packed)) SF_CGdPlayer
+{
+    AutoClass14 *opaqueClass;
+    uint16_t max_used;
+    GdPlayer players[200];
+    ushort_list_node nodes[2000];
+};
 
 typedef struct __attribute__((packed))
 {

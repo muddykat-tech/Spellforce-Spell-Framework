@@ -14,8 +14,8 @@ DECLARE_FUNCTION(SF_Coord *, getBuildingClosestVertex, SF_CGdBuildingToolbox *_t
                  uint16_t building_index, uint16_t figure_index, uint32_t unknown);
 DECLARE_FUNCTION(uint8_t, releaseWorkers, SF_CGdBuilding* _this, uint16_t building_id, uint8_t count);
 DECLARE_FUNCTION(void, freeAssignedWorker, SF_CGdBuildingToolbox *_this, uint16_t figure_id);
-DECLARE_FUNCTION(uint8_t, updateProduction, void *SF_CGdPlayer, uint16_t owner, uint8_t race, uint8_t production_type,
-                 uint8_t increase);
+DECLARE_FUNCTION(uint8_t, updateProduction, SF_CGdPlayer *_this, uint16_t owner, uint8_t race,
+                 uint8_t production_type, uint8_t increase);
 
 
 typedef struct

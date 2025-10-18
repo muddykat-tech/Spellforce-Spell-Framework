@@ -180,7 +180,7 @@ void initialize_vanilla_buildings()
     SFBuilding *human_sawmill = registrationAPI.registerBuilding(0x05);
     registrationAPI.linkBuildingDoneHandler(human_sawmill, &singleworker_done_handler);
     registrationAPI.linkBuildingEntryHandler(human_sawmill, &sawmill_entry_handler);
-    registrationAPI.applyBuildingTag(human_sawmill, BuildingTag::CARPENTER_BUILDING);
+    registrationAPI.applyBuildingTag(human_sawmill, BuildingTag::SAWMILL_BUILDING);
 
     SFBuilding *human_foodstore = registrationAPI.registerBuilding(0x08);
     registrationAPI.linkBuildingDoneHandler(human_foodstore, &singleworker_done_handler);
@@ -200,7 +200,7 @@ void initialize_vanilla_buildings()
     SFBuilding *dwarf_stonecutter = registrationAPI.registerBuilding(0x2e);
     registrationAPI.linkBuildingDoneHandler(dwarf_stonecutter, &singleworker_done_handler);
     registrationAPI.linkBuildingEntryHandler(dwarf_stonecutter, &sawmill_entry_handler);
-    registrationAPI.applyBuildingTag(dwarf_stonecutter, BuildingTag::CARPENTER_BUILDING);
+    registrationAPI.applyBuildingTag(dwarf_stonecutter, BuildingTag::STONEMASON_BUILDING);
 
     SFBuilding *dwarf_food_store = registrationAPI.registerBuilding(0x2f);
     registrationAPI.linkBuildingDoneHandler(dwarf_food_store, &singleworker_done_handler);
@@ -215,7 +215,7 @@ void initialize_vanilla_buildings()
     SFBuilding *elf_sawmill = registrationAPI.registerBuilding(0x37);
     registrationAPI.linkBuildingDoneHandler(elf_sawmill, &singleworker_done_handler);
     registrationAPI.linkBuildingEntryHandler(elf_sawmill, &sawmill_entry_handler);
-    registrationAPI.applyBuildingTag(elf_sawmill, BuildingTag::CARPENTER_BUILDING);
+    registrationAPI.applyBuildingTag(elf_sawmill, BuildingTag::SAWMILL_BUILDING);
 
     SFBuilding *orc_smelter = registrationAPI.registerBuilding(0x3e);
     registrationAPI.linkBuildingDoneHandler(orc_smelter, &singleworker_done_handler);
@@ -235,7 +235,7 @@ void initialize_vanilla_buildings()
     SFBuilding *norcaine_stonecutter = registrationAPI.registerBuilding(0x5a);
     registrationAPI.linkBuildingDoneHandler(norcaine_stonecutter, &singleworker_done_handler);
     registrationAPI.linkBuildingEntryHandler(norcaine_stonecutter, &sawmill_entry_handler);
-    registrationAPI.applyBuildingTag(norcaine_stonecutter, BuildingTag::CARPENTER_BUILDING);
+    registrationAPI.applyBuildingTag(norcaine_stonecutter, BuildingTag::STONEMASON_BUILDING);
 
     SFBuilding *norcaine_food_store = registrationAPI.registerBuilding(0x5b);
     registrationAPI.linkBuildingDoneHandler(norcaine_food_store, &singleworker_done_handler);

@@ -64,7 +64,7 @@ typedef struct __attribute__((packed))
     void *CGdInfluenceMap;
     void *CGdObject;
     void *CGdObjectToolBox;
-    void *CGdPlayer;
+    SF_CGdPlayer *CGdPlayer;
     void *CGdResource;
     SF_CGdSpell *CGdSpell;
     void *autoclass22;

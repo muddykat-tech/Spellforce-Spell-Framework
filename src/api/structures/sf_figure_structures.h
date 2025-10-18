@@ -155,7 +155,7 @@ struct __attribute__((packed)) SF_CGdFigureJobs
     uint32_t *AutoClass34;
     uint32_t *CGdObject;
     uint32_t *CGdObjectToolBox;
-    uint32_t *CGdPlayer;
+    SF_CGdPlayer *CGdPlayer;
     uint32_t *AutoClass46;
     uint32_t *AutoClass47;
     uint32_t *CGdResource;
