@@ -350,9 +350,10 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
                             0)
                         {
                             uint16_t sec_target = toolboxAPI.getFigureFromWorld(_this->SF_CGdWorldToolBox, near_x,
-                                                                                near_y, 0);
+                                                                                near_y, 1);
 
-                            if (toolboxAPI.figuresCheckHostile(_this->SF_CGdFigureToolBox, target_index, sec_target))
+                            if ((sec_target != 0) && (toolboxAPI.figuresCheckHostile(_this->SF_CGdFigureToolBox,
+                                                                                     target_index, sec_target)))
                             {
                                 sec_prio++;
                             }
