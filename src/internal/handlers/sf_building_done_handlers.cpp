@@ -9,8 +9,10 @@ void __thiscall default_done_handler (SF_CGdBuildingToolbox *_this,uint16_t buil
 // woodcutters, quaries, farms. BUT NOT MINES?!
 void __thiscall multiworker_done_handler(SF_CGdBuildingToolbox *_this,uint16_t building_index)
 {
-    buildingAPI.setBuildingXData(_this, building_index, SpellDataKey::BUILDING_POSITION_X, 0);
-    buildingAPI.setBuildingXData(_this, building_index, SpellDataKey::BUILDING_POSITION_Y, 0);
+    buildingAPI.setBuildingXData(_this, building_index, SpellDataKey::BUILDING_POSITION_X,
+                                 _this->CGdBuilding->buildings[building_index].position.X);
+    buildingAPI.setBuildingXData(_this, building_index, SpellDataKey::BUILDING_POSITION_Y,
+                                 _this->CGdBuilding->buildings[building_index].position.Y);
 }
 
 //resource doubling stuff: foodstores, smelteries, stonecutters, sawmills
