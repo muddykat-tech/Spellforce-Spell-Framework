@@ -328,7 +328,6 @@ bool __thiscall buildingIsShrine(SF_CGdBuilding *_this, uint16_t building_index)
     return buildingAPI.hasBuildingTag(_this->buildings[building_index].type, BuildingTag::SHRINE_BUILDING);
 }
 
-
 // Some funky stuff to clean up Iterator memory, not 100% sure if correct
 void __thiscall disposeFigureIterator(CGdFigureIterator *iterator)
 {

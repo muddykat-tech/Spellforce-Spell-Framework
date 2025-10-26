@@ -178,6 +178,126 @@ uint32_t __thiscall getBuildingTags(uint8_t building_type)
     return 0x0;
 }
 
+uint8_t __thiscall getRacialSmelter (uint8_t race)
+{
+    for (auto &entry : g_internal_building_list)
+    {
+        if (entry->race == race)
+        {
+            if (entry->building_tags & BuildingTag::SMELTER_BUILDING)
+            {
+                return entry->building_id;
+            }
+        }
+    }
+    return 0x0;
+}
+
+uint8_t __thiscall getRacialFoodstore(uint8_t race)
+{
+    for (auto &entry : g_internal_building_list)
+    {
+        if (entry->race == race)
+        {
+            if (entry->building_tags & BuildingTag::FOODSTORE_BUILDING)
+            {
+                return entry->building_id;
+            }
+        }
+    }
+    return 0x0;
+}
+
+uint8_t __thiscall getRacialSawmill(uint8_t race)
+{
+    for (auto &entry : g_internal_building_list)
+    {
+        if (entry->race == race)
+        {
+            if (entry->building_tags & BuildingTag::SAWMILL_BUILDING)
+            {
+                return entry->building_id;
+            }
+        }
+    }
+    return 0x0;
+}
+
+uint8_t __thiscall getRacialStonecutter(uint8_t race)
+{
+    for (auto &entry : g_internal_building_list)
+    {
+        if (entry->race == race)
+        {
+            if (entry->building_tags & BuildingTag::STONEMASON_BUILDING)
+            {
+                return entry->building_id;
+            }
+        }
+    }
+    return 0x0;
+}
+
+uint8_t __thiscall getRacialWoodcutter(uint8_t race)
+{
+    for (auto &entry : g_internal_building_list)
+    {
+        if (entry->race == race)
+        {
+            if (entry->building_tags & BuildingTag::WOODCUTTER_BUILDING)
+            {
+                return entry->building_id;
+            }
+        }
+    }
+    return 0x0;
+}
+
+uint8_t __thiscall getRacialIronMine(uint8_t race)
+{
+    for (auto &entry : g_internal_building_list)
+    {
+        if (entry->race == race)
+        {
+            if ((entry->building_tags & BuildingTag::MINER_BUILDING) &&
+                (entry->building_tags & ~(BuildingTag::MOONSILVER_BUILDING)))
+            {
+                return entry->building_id;
+            }
+        }
+    }
+    return 0x0;
+}
+uint8_t __thiscall getRacialQuarry(uint8_t race)
+{
+    for (auto &entry : g_internal_building_list)
+    {
+        if (entry->race == race)
+        {
+            if (entry->building_tags & BuildingTag::QUARRY_BUILDING)
+            {
+                return entry->building_id;
+            }
+        }
+    }
+    return 0x0;
+}
+
+/* TODO
+   uint8_t __thiscall getRacialSmallHQ(uint8_t race)
+   {
+
+   }
+   uint8_t __thiscall getRacialMediumHQ(uint8_t race)
+   {
+
+   }
+   uint8_t __thiscall getRacialLargeHQ(uint8_t race)
+   {
+
+   }
+ */
+
 /**
  * @brief Registers the mod spells and performs basic conflict checking.
  *

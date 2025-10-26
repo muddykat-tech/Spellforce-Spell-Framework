@@ -38,7 +38,18 @@ DECLARE_FUNCTION(bool, buildingIsTower, SF_CGdBuilding *_this, uint16_t building
 DECLARE_FUNCTION(bool, buildingIsWoodcutter, SF_CGdBuilding *_this, uint16_t building_index);
 DECLARE_FUNCTION(bool, buildingIsShrine, SF_CGdBuilding *_this, uint16_t building_index);
 
-
+DECLARE_FUNCTION(uint8_t, getRacialFoodstore, uint8_t race);
+DECLARE_FUNCTION(uint8_t, getRacialSmelter, uint8_t race);
+DECLARE_FUNCTION(uint8_t, getRacialSawmill, uint8_t race);
+DECLARE_FUNCTION(uint8_t, getRacialStonecutter, uint8_t race);
+DECLARE_FUNCTION(uint8_t, getRacialWoodcutter, uint8_t race);
+DECLARE_FUNCTION(uint8_t, getRacialIronMine, uint8_t race);
+DECLARE_FUNCTION(uint8_t, getRacialQuarry, uint8_t race);
+/*
+   DECLARE_FUNCTION(uint8_t, getRacialSmallHQ, uint8_t race);
+   DECLARE_FUNCTION(uint8_t, getRacialMediumHQ, uint8_t race);
+   DECLARE_FUNCTION(uint8_t, getRacialLargeHQ, uint8_t race);
+ */
 typedef struct
 {
     setBuildingXData_ptr setBuildingXData;
@@ -70,4 +81,16 @@ typedef struct
     buildingIsTower_ptr buildingIsTower;
     buildingIsWoodcutter_ptr buildingIsWoodcutter;
     buildingIsShrine_ptr buildingIsShrine;
+    getRacialFoodstore_ptr getRacialFoodstore;
+    getRacialSmelter_ptr getRacialSmelter;
+    getRacialSawmill_ptr getRacialSawmill;
+    getRacialStonecutter_ptr getRacialStonecutter;
+    getRacialWoodcutter_ptr getRacialWoodcutter;
+    getRacialIronMine_ptr getRacialIronMine;
+    getRacialQuarry_ptr getRacialQuarry;
+    /*
+       getRacialSmallHQ_ptr getRacialSmallHQ;
+       getRacialMediumHQ_ptr getRacialMediumHQ;
+       getRacialLargeHQ_ptr getRacialLargeHQ;
+     */
 } BuildingFunctions;
