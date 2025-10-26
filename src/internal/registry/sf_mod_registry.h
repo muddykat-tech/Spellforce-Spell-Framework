@@ -13,5 +13,7 @@ void register_mod_buildings();
 
 // TODO Clean this up, move to spell API
 uint16_t __thiscall getSpellTags(uint16_t spell_line_id);
+uint32_t __thiscall getBuildingTags(uint8_t building_type);
+
 
 #endif // MOD_REGISTRY_H

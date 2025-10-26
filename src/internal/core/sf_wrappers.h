@@ -32,6 +32,7 @@ extern bool __thiscall isActionMelee(SF_SGtFigureAction *_this);
 extern bool __thiscall hasSpellTag(uint16_t spell_id, SpellTag tag);
 extern void __thiscall setupFigureIterator(CGdFigureIterator *iterator, SF_CGdSpell *spell);
 extern void __thiscall disposeFigureIterator(CGdFigureIterator *iterator);
+extern bool __thiscall hasBuildingTag(uint8_t building_type, BuildingTag tag);
 
 extern void __thiscall spellEffectCallback(SF_CGdSpell *_this,
                                            uint16_t source_index,

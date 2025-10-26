@@ -16,6 +16,8 @@ DECLARE_FUNCTION(uint8_t, releaseWorkers, SF_CGdBuilding* _this, uint16_t buildi
 DECLARE_FUNCTION(void, freeAssignedWorker, SF_CGdBuildingToolbox *_this, uint16_t figure_id);
 DECLARE_FUNCTION(uint8_t, updateProduction, SF_CGdPlayer *_this, uint16_t owner, uint8_t race,
                  uint8_t production_type, uint8_t increase);
+DECLARE_FUNCTION(bool, hasBuildingTag, uint8_t building_type, BuildingTag tag);
+DECLARE_FUNCTION(uint32_t, getBuildingTags, uint8_t building_type);
 
 
 typedef struct
@@ -29,4 +31,6 @@ typedef struct
     releaseWorkers_ptr releaseWorkers;
     freeAssignedWorker_ptr freeAssignedWorker;
     updateProduction_ptr updateProduction;
+    getBuildingTags_ptr getBuildingTags;
+    hasBuildingTag_ptr hasBuildingTag;
 } BuildingFunctions;

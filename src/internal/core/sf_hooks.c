@@ -178,6 +178,7 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(building, freeAssignedWorker, 0x2d8a00);
     DEFINE_FUNCTION(building, updateProduction, 0x2a2b80);
 
+
     log_info("| - IteratorAPI Hooks");
     DEFINE_FUNCTION(iterator, figureIteratorInit, 0x3183f0);
     DEFINE_FUNCTION(iterator, figureIteratorSetPointers, 0x31a680);
@@ -213,6 +214,10 @@ void initialize_data_hooks()
     log_info("| - IteratorAPI Wrappers");
     INCLUDE_FUNCTION(iterator, setupFigureIterator, &setupFigureIterator);
     INCLUDE_FUNCTION(iterator, disposeFigureIterator, &disposeFigureIterator);
+
+    log_info("| - BuildingAPI Wrappers");
+    INCLUDE_FUNCTION(building, getBuildingTags, &getBuildingTags);
+    INCLUDE_FUNCTION(building, hasBuildingTag, &hasBuildingTag);
 
     log_info("| - RegistrationAPI Wrappers");
     INCLUDE_FUNCTION(registration, registerSpell, &registerSpell);

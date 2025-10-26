@@ -166,6 +166,18 @@ uint16_t __thiscall getSpellTags(uint16_t spell_line_id)
     return 0x0;
 }
 
+uint32_t __thiscall getBuildingTags(uint8_t building_type)
+{
+    for (auto &entry : g_internal_building_list)
+    {
+        if (entry->building_id == building_type)
+        {
+            return entry->building_tags;
+        }
+    }
+    return 0x0;
+}
+
 /**
  * @brief Registers the mod spells and performs basic conflict checking.
  *

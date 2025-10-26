@@ -231,6 +231,12 @@ bool __thiscall hasSpellTag(uint16_t spell_id, SpellTag tag)
     return spellAPI.getSpellTags(spell_id) & tag;
 }
 
+bool __thiscall hasBuildingTag(uint8_t building_type, BuildingTag tag)
+{
+    return buildingAPI.getBuildingTags(building_type) & tag;
+}
+
+
 // Some funky stuff to clean up Iterator memory, not 100% sure if correct
 void __thiscall disposeFigureIterator(CGdFigureIterator *iterator)
 {
