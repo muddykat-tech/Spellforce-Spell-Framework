@@ -236,6 +236,98 @@ bool __thiscall hasBuildingTag(uint8_t building_type, BuildingTag tag)
     return buildingAPI.getBuildingTags(building_type) & tag;
 }
 
+bool __thiscall buildingIsScavenger(SF_CGdBuilding *_this, uint16_t building_index)
+{
+    return buildingAPI.hasBuildingTag(_this->buildings[building_index].type, BuildingTag::SCAVENGER_BUILDING);
+}
+
+bool __thiscall buildingIsFisher(SF_CGdBuilding *_this, uint16_t building_index)
+{
+    return buildingAPI.hasBuildingTag(_this->buildings[building_index].type, BuildingTag::FISHER_BUILDING);
+}
+
+bool __thiscall buildingIsFoodstore(SF_CGdBuilding *_this, uint16_t building_index)
+{
+    return buildingAPI.hasBuildingTag(_this->buildings[building_index].type, BuildingTag::FOODSTORE_BUILDING);
+}
+
+bool __thiscall buildingIsForge(SF_CGdBuilding *_this, uint16_t building_index)
+{
+    return buildingAPI.hasBuildingTag(_this->buildings[building_index].type, BuildingTag::FORGE_BUILDING);
+}
+
+bool __thiscall buildingIsGatherer(SF_CGdBuilding *_this, uint16_t building_index)
+{
+    return buildingAPI.hasBuildingTag(_this->buildings[building_index].type, BuildingTag::GATHERER_BUILDING);
+}
+
+bool __thiscall buildingIsHQ(SF_CGdBuilding *_this, uint16_t building_index)
+{
+    return buildingAPI.hasBuildingTag(_this->buildings[building_index].type, BuildingTag::HQ_BUILDING);
+}
+
+bool __thiscall buildingIsHunter(SF_CGdBuilding *_this, uint16_t building_index)
+{
+    return buildingAPI.hasBuildingTag(_this->buildings[building_index].type, BuildingTag::HUNTER_BUILDING);
+}
+
+bool __thiscall buildingIsIronMine(SF_CGdBuilding *_this, uint16_t building_index)
+{
+    return (buildingAPI.hasBuildingTag(_this->buildings[building_index].type, BuildingTag::MINER_BUILDING)
+            && !buildingAPI.hasBuildingTag(_this->buildings[building_index].type, BuildingTag::MOONSILVER_BUILDING));
+}
+
+bool __thiscall buildingIsMaceCarver(SF_CGdBuilding *_this, uint16_t building_index)
+{
+    return buildingAPI.hasBuildingTag(_this->buildings[building_index].type, BuildingTag::MACE_CARVER_BUILDING);
+}
+
+bool __thiscall buildingIsMoonsiverMine(SF_CGdBuilding *_this, uint16_t building_index)
+{
+    return (buildingAPI.hasBuildingTag(_this->buildings[building_index].type, BuildingTag::MINER_BUILDING)
+            && buildingAPI.hasBuildingTag(_this->buildings[building_index].type, BuildingTag::MOONSILVER_BUILDING));
+}
+
+bool __thiscall buildingIsQuarry(SF_CGdBuilding *_this, uint16_t building_index)
+{
+    return buildingAPI.hasBuildingTag(_this->buildings[building_index].type, BuildingTag::QUARRY_BUILDING);
+}
+
+bool __thiscall buildingIsSawmill(SF_CGdBuilding *_this, uint16_t building_index)
+{
+    return buildingAPI.hasBuildingTag(_this->buildings[building_index].type, BuildingTag::SAWMILL_BUILDING);
+}
+
+bool __thiscall buildingIsSmelter(SF_CGdBuilding *_this, uint16_t building_index)
+{
+    return buildingAPI.hasBuildingTag(_this->buildings[building_index].type, BuildingTag::SMELTER_BUILDING);
+}
+
+bool __thiscall buildingIsStonecutter(SF_CGdBuilding *_this, uint16_t building_index)
+{
+    return buildingAPI.hasBuildingTag(_this->buildings[building_index].type, BuildingTag::STONEMASON_BUILDING);
+}
+
+bool __thiscall buildingIsTemple(SF_CGdBuilding *_this, uint16_t building_index)
+{
+    return buildingAPI.hasBuildingTag(_this->buildings[building_index].type, BuildingTag::TEMPLE_BUILDING);
+}
+
+bool __thiscall buildingIsTower(SF_CGdBuilding *_this, uint16_t building_index)
+{
+    return buildingAPI.hasBuildingTag(_this->buildings[building_index].type, BuildingTag::TOWER_BUILDING);
+}
+
+bool __thiscall buildingIsWoodcutter(SF_CGdBuilding *_this, uint16_t building_index)
+{
+    return buildingAPI.hasBuildingTag(_this->buildings[building_index].type, BuildingTag::WOODCUTTER_BUILDING);
+}
+
+bool __thiscall buildingIsShrine(SF_CGdBuilding *_this, uint16_t building_index)
+{
+    return buildingAPI.hasBuildingTag(_this->buildings[building_index].type, BuildingTag::SHRINE_BUILDING);
+}
+
 
 // Some funky stuff to clean up Iterator memory, not 100% sure if correct
 void __thiscall disposeFigureIterator(CGdFigureIterator *iterator)

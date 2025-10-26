@@ -833,7 +833,7 @@ typedef enum : uint16_t
     SPELL_TAG_COUNT = 12
 } SpellTag;
 
-typedef enum :uint32_t
+typedef enum : uint32_t
 {
     HQ_BUILDING = 0x1,
     WOODCUTTER_BUILDING = 0x2,

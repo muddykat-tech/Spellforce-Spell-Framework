@@ -219,6 +219,26 @@ void initialize_data_hooks()
     INCLUDE_FUNCTION(building, getBuildingTags, &getBuildingTags);
     INCLUDE_FUNCTION(building, hasBuildingTag, &hasBuildingTag);
 
+    INCLUDE_FUNCTION(building, buildingIsScavenger, &buildingIsScavenger);
+    INCLUDE_FUNCTION(building, buildingIsFisher, &buildingIsFisher);
+    INCLUDE_FUNCTION(building, buildingIsFoodstore, &buildingIsFoodstore);
+    INCLUDE_FUNCTION(building, buildingIsForge, &buildingIsForge);
+    INCLUDE_FUNCTION(building, buildingIsGatherer, &buildingIsGatherer);
+    INCLUDE_FUNCTION(building, buildingIsHQ, &buildingIsHQ);
+    INCLUDE_FUNCTION(building, buildingIsHunter, &buildingIsHunter);
+    INCLUDE_FUNCTION(building, buildingIsIronMine, &buildingIsIronMine);
+    INCLUDE_FUNCTION(building, buildingIsMaceCarver, &buildingIsMaceCarver);
+    INCLUDE_FUNCTION(building, buildingIsMoonsiverMine, &buildingIsMoonsiverMine);
+    INCLUDE_FUNCTION(building, buildingIsQuarry, &buildingIsQuarry);
+    INCLUDE_FUNCTION(building, buildingIsSawmill, &buildingIsSawmill);
+    INCLUDE_FUNCTION(building, buildingIsSmelter, &buildingIsSmelter);
+    INCLUDE_FUNCTION(building, buildingIsStonecutter, &buildingIsStonecutter);
+    INCLUDE_FUNCTION(building, buildingIsTemple, &buildingIsTemple);
+    INCLUDE_FUNCTION(building, buildingIsTower, &buildingIsTower);
+    INCLUDE_FUNCTION(building, buildingIsWoodcutter, &buildingIsWoodcutter);
+    INCLUDE_FUNCTION(building, buildingIsShrine, &buildingIsShrine);
+
+
     log_info("| - RegistrationAPI Wrappers");
     INCLUDE_FUNCTION(registration, registerSpell, &registerSpell);
     INCLUDE_FUNCTION(registration, linkTypeHandler, &linkTypeHandler);

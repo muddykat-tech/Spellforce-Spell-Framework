@@ -19,6 +19,25 @@ DECLARE_FUNCTION(uint8_t, updateProduction, SF_CGdPlayer *_this, uint16_t owner,
 DECLARE_FUNCTION(bool, hasBuildingTag, uint8_t building_type, BuildingTag tag);
 DECLARE_FUNCTION(uint32_t, getBuildingTags, uint8_t building_type);
 
+DECLARE_FUNCTION(bool, buildingIsScavenger, SF_CGdBuilding *_this, uint16_t building_index);
+DECLARE_FUNCTION(bool, buildingIsFisher, SF_CGdBuilding *_this, uint16_t building_index);
+DECLARE_FUNCTION(bool, buildingIsFoodstore, SF_CGdBuilding *_this, uint16_t building_index);
+DECLARE_FUNCTION(bool, buildingIsForge, SF_CGdBuilding *_this, uint16_t building_index);
+DECLARE_FUNCTION(bool, buildingIsGatherer, SF_CGdBuilding *_this, uint16_t building_index);
+DECLARE_FUNCTION(bool, buildingIsHQ, SF_CGdBuilding *_this, uint16_t building_index);
+DECLARE_FUNCTION(bool, buildingIsHunter, SF_CGdBuilding *_this, uint16_t building_index);
+DECLARE_FUNCTION(bool, buildingIsIronMine, SF_CGdBuilding *_this, uint16_t building_index);
+DECLARE_FUNCTION(bool, buildingIsMaceCarver, SF_CGdBuilding *_this, uint16_t building_index);
+DECLARE_FUNCTION(bool, buildingIsMoonsiverMine, SF_CGdBuilding *_this, uint16_t building_index);
+DECLARE_FUNCTION(bool, buildingIsQuarry, SF_CGdBuilding *_this, uint16_t building_index);
+DECLARE_FUNCTION(bool, buildingIsSawmill, SF_CGdBuilding *_this, uint16_t building_index);
+DECLARE_FUNCTION(bool, buildingIsSmelter, SF_CGdBuilding *_this, uint16_t building_index);
+DECLARE_FUNCTION(bool, buildingIsStonecutter, SF_CGdBuilding *_this, uint16_t building_index);
+DECLARE_FUNCTION(bool, buildingIsTemple, SF_CGdBuilding *_this, uint16_t building_index);
+DECLARE_FUNCTION(bool, buildingIsTower, SF_CGdBuilding *_this, uint16_t building_index);
+DECLARE_FUNCTION(bool, buildingIsWoodcutter, SF_CGdBuilding *_this, uint16_t building_index);
+DECLARE_FUNCTION(bool, buildingIsShrine, SF_CGdBuilding *_this, uint16_t building_index);
+
 
 typedef struct
 {
@@ -33,4 +52,22 @@ typedef struct
     updateProduction_ptr updateProduction;
     getBuildingTags_ptr getBuildingTags;
     hasBuildingTag_ptr hasBuildingTag;
+    buildingIsScavenger_ptr buildingIsScavenger;
+    buildingIsFisher_ptr buildingIsFisher;
+    buildingIsFoodstore_ptr buildingIsFoodstore;
+    buildingIsForge_ptr buildingIsForge;
+    buildingIsGatherer_ptr buildingIsGatherer;
+    buildingIsHQ_ptr buildingIsHQ;
+    buildingIsHunter_ptr buildingIsHunter;
+    buildingIsIronMine_ptr buildingIsIronMine;
+    buildingIsMaceCarver_ptr buildingIsMaceCarver;
+    buildingIsMoonsiverMine_ptr buildingIsMoonsiverMine;
+    buildingIsQuarry_ptr buildingIsQuarry;
+    buildingIsSawmill_ptr buildingIsSawmill;
+    buildingIsSmelter_ptr buildingIsSmelter;
+    buildingIsStonecutter_ptr buildingIsStonecutter;
+    buildingIsTemple_ptr buildingIsTemple;
+    buildingIsTower_ptr buildingIsTower;
+    buildingIsWoodcutter_ptr buildingIsWoodcutter;
+    buildingIsShrine_ptr buildingIsShrine;
 } BuildingFunctions;

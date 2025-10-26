@@ -34,6 +34,27 @@ extern void __thiscall setupFigureIterator(CGdFigureIterator *iterator, SF_CGdSp
 extern void __thiscall disposeFigureIterator(CGdFigureIterator *iterator);
 extern bool __thiscall hasBuildingTag(uint8_t building_type, BuildingTag tag);
 
+
+bool __thiscall buildingIsScavenger(SF_CGdBuilding *_this, uint16_t building_index);
+bool __thiscall buildingIsFisher(SF_CGdBuilding *_this, uint16_t building_index);
+bool __thiscall buildingIsFoodstore(SF_CGdBuilding *_this, uint16_t building_index);
+bool __thiscall buildingIsForge(SF_CGdBuilding *_this, uint16_t building_index);
+bool __thiscall buildingIsGatherer(SF_CGdBuilding *_this, uint16_t building_index);
+bool __thiscall buildingIsHQ(SF_CGdBuilding *_this, uint16_t building_index);
+bool __thiscall buildingIsHunter(SF_CGdBuilding *_this, uint16_t building_index);
+bool __thiscall buildingIsIronMine(SF_CGdBuilding *_this, uint16_t building_index);
+bool __thiscall buildingIsMaceCarver(SF_CGdBuilding *_this, uint16_t building_index);
+bool __thiscall buildingIsMoonsiverMine(SF_CGdBuilding *_this, uint16_t building_index);
+bool __thiscall buildingIsQuarry(SF_CGdBuilding *_this, uint16_t building_index);
+bool __thiscall buildingIsSawmill(SF_CGdBuilding *_this, uint16_t building_index);
+bool __thiscall buildingIsSmelter(SF_CGdBuilding *_this, uint16_t building_index);
+bool __thiscall buildingIsStonecutter(SF_CGdBuilding *_this, uint16_t building_index);
+bool __thiscall buildingIsTemple(SF_CGdBuilding *_this, uint16_t building_index);
+bool __thiscall buildingIsTower(SF_CGdBuilding *_this, uint16_t building_index);
+bool __thiscall buildingIsWoodcutter(SF_CGdBuilding *_this, uint16_t building_index);
+bool __thiscall buildingIsShrine(SF_CGdBuilding *_this, uint16_t building_index);
+
+
 extern void __thiscall spellEffectCallback(SF_CGdSpell *_this,
                                            uint16_t source_index,
                                            uint16_t spell_index,
