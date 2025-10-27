@@ -67,6 +67,7 @@ DECLARE_FUNCTION(void, equipArtisanTools, SF_CGdFigureToolbox* _this, uint16_t f
 // getDistance(SF_Coord *pointA, SF_Coord *pointB)
 DECLARE_FUNCTION(uint32_t, getDistance, SF_Coord *pointA, SF_Coord *pointB);
 
+DECLARE_FUNCTION(uint16_t, findClosestMonument, void *SF_CGdObjectToolBox,uint16_t figure_id,uint16_t *result);
 //bool isBuildingAllied(SF_CGdBuildingToolbox *_this, uint16_t figure_index, uint16_t building_index)
 
 
@@ -101,4 +102,5 @@ typedef struct
     setFigureXData_ptr setFigureXData;
     equipArtisanArmour_ptr equipArtisanArmour;
     equipArtisanTools_ptr equipArtisanTools;
+    findClosestMonument_ptr findClosestMonument;
 } ToolboxFunctions;

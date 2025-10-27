@@ -18,6 +18,10 @@ DECLARE_FUNCTION(uint8_t, updateProduction, SF_CGdPlayer *_this, uint16_t owner,
                  uint8_t production_type, uint8_t increase);
 DECLARE_FUNCTION(bool, hasBuildingTag, uint8_t building_type, BuildingTag tag);
 DECLARE_FUNCTION(uint32_t, getBuildingTags, uint8_t building_type);
+DECLARE_FUNCTION(uint16_t, findClosestBuilding, SF_CGdBuildingToolbox *_this, SF_Coord position, uint8_t type,
+                 uint16_t owner, uint32_t radius);
+DECLARE_FUNCTION(void, addFigureToBuilding, SF_CGdBuildingToolbox *_this,uint16_t building_id, uint16_t figure_id,
+                 bool updateFlag);
 
 DECLARE_FUNCTION(bool, buildingIsScavenger, SF_CGdBuilding *_this, uint16_t building_index);
 DECLARE_FUNCTION(bool, buildingIsFisher, SF_CGdBuilding *_this, uint16_t building_index);
@@ -88,6 +92,8 @@ typedef struct
     getRacialWoodcutter_ptr getRacialWoodcutter;
     getRacialIronMine_ptr getRacialIronMine;
     getRacialQuarry_ptr getRacialQuarry;
+    findClosestBuilding_ptr findClosestBuilding;
+    addFigureToBuilding_ptr addFigureToBuilding;
     /*
        getRacialSmallHQ_ptr getRacialSmallHQ;
        getRacialMediumHQ_ptr getRacialMediumHQ;

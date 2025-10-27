@@ -2,6 +2,7 @@
 #include "../core/sf_wrappers.h"
 #include "../core/hooks/sf_endspell_hook.h"
 
+//FIXME
 bool buildingIsMaster(uint16_t building_type)
 {
     if ((building_type == 0x18) || (building_type == 0x1f) || (building_type == 0x0b))
@@ -11,6 +12,7 @@ bool buildingIsMaster(uint16_t building_type)
     return false;
 }
 
+//FIXME
 bool buildingIsMoonsilverMine(uint16_t building_type)
 {
     if ((building_type == 0x33) || (building_type == 0x59))

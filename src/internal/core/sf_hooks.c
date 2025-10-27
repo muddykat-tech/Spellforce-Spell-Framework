@@ -26,6 +26,7 @@
 #include "hooks/sf_vanilla_fix_hook.h"
 #include "hooks/sf_building_done_hook.h"
 #include "hooks/sf_building_entry_hook.h"
+#include "hooks/sf_worker_logic_hook.h"
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -56,6 +57,8 @@ void initialize_data_hooks()
 {
     log_info("| - Internal Use Hooks");
     initialize_menu_data_hooks();
+
+    initialize_worker_logic_data_hooks();
 
     //TODO RENAME TO DATA HOOKS
     initialize_building_done_hooks();
@@ -99,6 +102,7 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(figure, prepareJobTransition, 0x2df6e0);
     DEFINE_FUNCTION(figure, onStartJob, 0x2e2180);
     DEFINE_FUNCTION(figure, setJob, 0x2dee90);
+    DEFINE_FUNCTION(figure, setFigureWalkPos, 0x2e3660);
     log_info("| - AI API Hooks");
 
     DEFINE_FUNCTION(ai, getTargetAction, 0x2b2f50);
@@ -166,6 +170,7 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(toolbox, getFigureXData, 0x2fe442);
     DEFINE_FUNCTION(toolbox, equipArtisanArmour, 0x2f84c1);
     DEFINE_FUNCTION(toolbox, equipArtisanTools, 0x2fd783);
+    DEFINE_FUNCTION(toolbox, findClosestMonument, 0x2bb380);
 
     log_info("| - BuildingAPI Hooks");
     DEFINE_FUNCTION(building, buildingDealDamage, 0x2d6d80);
@@ -177,7 +182,8 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(building, releaseWorkers, 0x2c6280);
     DEFINE_FUNCTION(building, freeAssignedWorker, 0x2d8a00);
     DEFINE_FUNCTION(building, updateProduction, 0x2a2b80);
-
+    DEFINE_FUNCTION(building, findClosestBuilding, 0x2d97d0);
+    DEFINE_FUNCTION(building, addFigureToBuilding, 0x2d6f00);
 
     log_info("| - IteratorAPI Hooks");
     DEFINE_FUNCTION(iterator, figureIteratorInit, 0x3183f0);
@@ -237,6 +243,14 @@ void initialize_data_hooks()
     INCLUDE_FUNCTION(building, buildingIsTower, &buildingIsTower);
     INCLUDE_FUNCTION(building, buildingIsWoodcutter, &buildingIsWoodcutter);
     INCLUDE_FUNCTION(building, buildingIsShrine, &buildingIsShrine);
+
+    INCLUDE_FUNCTION(building, getRacialFoodstore, &getRacialFoodstore);
+    INCLUDE_FUNCTION(building, getRacialSmelter, &getRacialSmelter);
+    INCLUDE_FUNCTION(building, getRacialSawmill, &getRacialSawmill);
+    INCLUDE_FUNCTION(building, getRacialStonecutter, &getRacialStonecutter);
+    INCLUDE_FUNCTION(building, getRacialWoodcutter, &getRacialWoodcutter);
+    INCLUDE_FUNCTION(building, getRacialIronMine, &getRacialIronMine);
+    INCLUDE_FUNCTION(building, getRacialQuarry, &getRacialQuarry);
 
 
     log_info("| - RegistrationAPI Wrappers");
@@ -564,7 +578,7 @@ static void initialize_utility_hooks()
     // ASI::EndRewrite(storm_test_mreg);
 }
 
-void initialize_spell_buttons_hooks()
+static void initialize_spell_buttons_hooks()
 {
     ASI::MemoryRegion vfunction208_mreg_1 (ASI::AddrOf(0x5ebb23), 5);
     ASI::BeginRewrite(vfunction208_mreg_1);
@@ -589,6 +603,21 @@ void initialize_spell_buttons_hooks()
 
 }
 
+static void initialize_worker_logic_hooks()
+{
+    ASI::MemoryRegion woodcutter_mreg1 (ASI::AddrOf(0x2e68db), 5);
+    ASI::BeginRewrite(woodcutter_mreg1);
+    *(unsigned char *)(ASI::AddrOf(0x2e68db)) = 0xE8; // CALL instruction
+    *(int *)(ASI::AddrOf(0x2e68dc)) = (int)(&onWoodcutterFinishJob) - ASI::AddrOf(0x2e68e0);
+    ASI::EndRewrite(woodcutter_mreg1);
+
+    ASI::MemoryRegion woodcutter_mreg2 (ASI::AddrOf(0x2ef28d), 5);
+    ASI::BeginRewrite(woodcutter_mreg2);
+    *(unsigned char *)(ASI::AddrOf(0x2ef28d)) = 0xE8; // CALL instruction
+    *(int *)(ASI::AddrOf(0x2ef28e)) = (int)(&onWoodcutterFinishJob) - ASI::AddrOf(0x2ef292);
+    ASI::EndRewrite(woodcutter_mreg2);
+
+}
 
 void initialize_beta_hooks()
 {
@@ -631,14 +660,21 @@ void initialize_beta_hooks()
     log_info("Hook AI AOE Handling");
     initialize_ai_aoe_hook();
 
-    log_info ("Hooking Building Done Handleing");
+    log_info ("Hooking Building Done Handling");
     initialize_building_done_hook();
+
+    log_info ("Hooking Building Entry Handling");
+    initialize_building_entry_hook();
+
+    log_info ("Hooking Worker Logic");
+    initialize_worker_logic_hooks();
 
     log_info("Hooking Utility Functions");
     initialize_utility_hooks();
 
     log_info("Hooking spell buttons");
     initialize_spell_buttons_hooks();
+
 }
 
 /**

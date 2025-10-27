@@ -60,6 +60,8 @@ DECLARE_FUNCTION(void, prepareJobTransition, SF_CGdFigureJobs *_this, uint16_t f
 DECLARE_FUNCTION(void, setJob, SF_CGdFigureJobs *_this,uint16_t figure_id,uint16_t job_id);
 DECLARE_FUNCTION(void, onStartJob,  SF_CGdFigureJobs *_this, uint16_t figure_id, uint16_t job_id);
 DECLARE_FUNCTION(void, disposeHealerList, void *healer_list);
+DECLARE_FUNCTION(void, setFigureWalkPos, SF_CGdFigureJobs *_this,uint16_t figure_id,SF_Coord *target_pos,
+                 uint8_t walk_mode,uint32_t param_4);
 /**
  * @ingroup API
  * @brief Group of functions to manipulate the behavior and statistics of the game figures (units)
@@ -101,4 +103,5 @@ typedef struct
     prepareJobTransition_ptr prepareJobTransition;
     onStartJob_ptr onStartJob;
     setJob_ptr setJob;
+    setFigureWalkPos_ptr setFigureWalkPos;
 } FigureFunctions;
