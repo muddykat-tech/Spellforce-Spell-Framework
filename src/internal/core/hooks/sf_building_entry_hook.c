@@ -4,7 +4,7 @@
 
 extern BuildingFunctions buildingAPI;
 
-typedef void (__thiscall *fun006c3ca0_ptr)(void *autoclass30, uint16_t owner,
+typedef void (__thiscall *fun006c3ca0_ptr)(void *autoclass30, uint16_t param_1, uint16_t owner,
                                            SF_CGdTargetData *source, SF_CGdTargetData *target);
 
 
@@ -28,7 +28,7 @@ void __thiscall job_start_working_at_building_hook (SF_CGdFigureJobs *_this, uin
     SF_CGdTargetData source = {0, 0, {0, 0}};
     SF_CGdTargetData target = {1, figure_id, {0, 0}};
     fun006c3ca0_ptr fun006c3ca0 = (fun006c3ca0_ptr)ASI::AddrOf(0x2c3ca0);
-    fun006c3ca0(_this->AutoClass30, owner, &source, &target);
+    fun006c3ca0(_this->AutoClass30, 0x24, owner, &source, &target);
     uint8_t building_type = _this->CGdBuilding->buildings[building_id].type;
     building_entry_handler_ptr handler = get_building_entry_handler(building_type);
     handler(_this, figure_id, building_id);
