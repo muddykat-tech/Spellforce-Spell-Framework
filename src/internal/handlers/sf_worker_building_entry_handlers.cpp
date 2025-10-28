@@ -75,15 +75,16 @@ void __thiscall hq_entry_handler(SF_CGdFigureJobs *_this,uint16_t figure_id, uin
     }
     jobCriticalHit_ptr jobCriticalHit = (jobCriticalHit_ptr)(ASI::AddrOf(0x2df980));
     jobCriticalHit(_this, figure_id);
-    //TODO -- JobCriticalHit(_this, figure_id);
 }
 
 void __thiscall woodcutter_entry_handler (SF_CGdFigureJobs *_this,uint16_t figure_id, uint16_t building_id)
 {
     uint8_t good = _this->CGdFigure->figures[figure_id].good;
+
     if (good == 0)
     {
         figureAPI.setJob(_this, figure_id, kGdJobWoodCutterSearchTree);
+        log_info("Good is empty");
     }
     else
     {

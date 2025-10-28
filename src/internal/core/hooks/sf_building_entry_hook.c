@@ -10,7 +10,7 @@ typedef void (__thiscall *fun006c3ca0_ptr)(void *autoclass30, uint16_t owner,
 
 bool isBuildingDamaged(SF_CGdBuilding *_this, uint16_t building_id)
 {
-    return (_this->buildings[building_id].health_current != _this->buildings[building_id].health_max);
+    return (_this->buildings[building_id].health_current != _this->buildings[building_id].life_current_max);
 }
 
 void __thiscall job_start_working_at_building_hook (SF_CGdFigureJobs *_this, uint16_t figure_id)
