@@ -1,6 +1,7 @@
 #include "sf_worker_logic_hook.h"
 #include "../sf_hooks.h"
 #include "sf_endspell_hook.h"
+#include "../sf_wrappers.h"
 
 extern SpellFunctions spellAPI;
 extern EffectFunctions effectAPI;
@@ -119,7 +120,6 @@ bool __thiscall onWoodcutterFinishJob(SF_CGdFigureJobs *_this, uint16_t figure_i
     if (target_building != 0)
     {
         target_job = kGdJobWoodCutterWalkToDeliverGood;
-        buildingAPI.addFigureToBuilding(_this->CGdBuildingToolBox, target_building, figure_id, 0);
     }
     else
     {
@@ -142,6 +142,13 @@ bool __thiscall onWoodcutterFinishJob(SF_CGdFigureJobs *_this, uint16_t figure_i
         {
             target_building = _this->CGdFigure->figures[figure_id].building;
         }
+    }
+    figureAPI.prepareJobTransition(_this, figure_id, job_id, target_job);
+    terminate_job_spells(_this, figure_id);
+    figureAPI.onStartJob(_this, figure_id, target_job);
+    if (target_job == kGdJobWoodCutterWalkToDeliverGood)
+    {
+        buildingAPI.addFigureToBuilding(_this->CGdBuildingToolBox, target_building, figure_id, 0);
     }
     toolboxAPI.setFigureXData(_this->CGdFigureToolBox, figure_id, WORKER_DELIVERY_BUILDING, target_building);
     toolboxAPI.setFigureXData(_this->CGdFigureToolBox, figure_id, EFFECT_ENTITY_INDEX2, 0);
