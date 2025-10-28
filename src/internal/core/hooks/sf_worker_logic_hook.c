@@ -220,7 +220,7 @@ bool __thiscall onMinerFinishJob(SF_CGdFigureJobs *_this, uint16_t figure_id)
     figureAPI.prepareJobTransition(_this, figure_id, job_id, target_job);
     terminate_job_spells(_this, figure_id);
     figureAPI.onStartJob(_this, figure_id, target_job);
-    if (target_job == kGdJobWoodCutterWalkToDeliverGood)
+    if (target_job == kGdJobMinerWalkToDeliverGood)
     {
         buildingAPI.addFigureToBuilding(_this->CGdBuildingToolBox, target_building, figure_id, 0);
     }
