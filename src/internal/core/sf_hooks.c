@@ -617,6 +617,19 @@ static void initialize_worker_logic_hooks()
     *(int *)(ASI::AddrOf(0x2ef28e)) = (int)(&onWoodcutterFinishJob) - ASI::AddrOf(0x2ef292);
     ASI::EndRewrite(woodcutter_mreg2);
 
+    ASI::MemoryRegion miner_mreg1 (ASI::AddrOf(0x2ec588), 5);
+    ASI::BeginRewrite(miner_mreg1);
+    *(unsigned char *)(ASI::AddrOf(0x2ec588)) = 0xE8; // CALL instruction
+    *(int *)(ASI::AddrOf(0x2ec589)) = (int)(&onMinerFinishJob) - ASI::AddrOf(0x2ec58d);
+    ASI::EndRewrite(miner_mreg1);
+
+    ASI::MemoryRegion miner_mreg2 (ASI::AddrOf(0x2e5d0b), 5);
+    ASI::BeginRewrite(miner_mreg2);
+    *(unsigned char *)(ASI::AddrOf(0x2e5d0b)) = 0xE8; // CALL instruction
+    *(int *)(ASI::AddrOf(0x2e5d0c)) = (int)(&onMinerFinishJob) - ASI::AddrOf(0x2e5d10);
+    ASI::EndRewrite(miner_mreg2);
+
+
 }
 
 void initialize_beta_hooks()
