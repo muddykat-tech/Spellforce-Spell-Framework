@@ -13,14 +13,14 @@
 
 void initialize_vanilla_buildings()
 {
-    uint8_t default_handler_list[102] = { 0x12, 0x13, 0x19, 0x1e, 0x23, 0x25, 0x28, 0x2d, 0x32, 0x36, 0x38, 0x39, 0x48,
-                                          0x51, 0x61, 0x62, 0x65, 0x68, 0x69, 0x6a, 0x6b, 0x6c, 0x6d, 0x6e, 0x6f, 0x70,
-                                          0x71, 0x72, 0x73, 0x74, 0x75, 0x76, 0x77, 0x79, 0x7a, 0x7d, 0x7e, 0x7f, 0x80,
-                                          0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87, 0x88, 0x8a, 0x8b, 0x8c, 0x8d, 0x8e,
-                                          0x8f, 0x90, 0x91, 0x94, 0x96, 0x98, 0x99, 0x9a, 0x9b, 0x9c, 0x9d, 0x9e, 0x9f,
-                                          0xa2, 0xab, 0xad, 0xae, 0xaf, 0xb0, 0xb1, 0xb3, 0xb4, 0xb5, 0xb6, 0xb7, 0xb8,
-                                          0xb9, 0xba, 0xbb, 0xbc, 0xbd, 0xbe, 0xbf, 0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0xc5,
-                                          0xc6, 0xc7, 0xc8, 0xc9, 0xca, 0xcb, 0xcc, 0xcd, 0xce, 0xcf, 0xd0};
+    uint8_t default_handler_list[96] = { 0x12, 0x13, 0x19, 0x1e, 0x28, 0x2d, 0x38, 0x39, 0x48,
+                                         0x51, 0x62, 0x68, 0x6a, 0x6b, 0x6c, 0x6d, 0x6e, 0x6f, 0x70,
+                                         0x71, 0x72, 0x73, 0x74, 0x75, 0x76, 0x77, 0x79, 0x7a, 0x7d, 0x7e, 0x7f, 0x80,
+                                         0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87, 0x88, 0x8a, 0x8b, 0x8c, 0x8d, 0x8e,
+                                         0x8f, 0x90, 0x91, 0x94, 0x96, 0x98, 0x99, 0x9a, 0x9b, 0x9c, 0x9d, 0x9e, 0x9f,
+                                         0xa2, 0xab, 0xad, 0xae, 0xaf, 0xb0, 0xb1, 0xb3, 0xb4, 0xb5, 0xb6, 0xb7, 0xb8,
+                                         0xb9, 0xba, 0xbb, 0xbc, 0xbd, 0xbe, 0xbf, 0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0xc5,
+                                         0xc6, 0xc7, 0xc8, 0xc9, 0xca, 0xcb, 0xcc, 0xcd, 0xce, 0xcf, 0xd0};
 
     uint8_t hq_list[18] = {0x01, 0x02, 0x03, 0x14, 0x15, 0x16, 0x29, 0x2a, 0x2b, 0x3a, 0x3b, 0x3c, 0x49, 0x4a, 0x4c,
                            0x55, 0x56, 0x57};
@@ -35,6 +35,7 @@ void initialize_vanilla_buildings()
         registrationAPI.linkBuildingDoneHandler(building, &default_done_handler);
         registrationAPI.linkBuildingEntryHandler(building, &hunter_entry_handler);
         registrationAPI.applyBuildingTag(building, BuildingTag::HUNTER_BUILDING);
+        registrationAPI.applyBuildingTag(building, BuildingTag::HABITABLE_BUILDING);
         if (hunter_list[i] == 0x1f)
         {
             registrationAPI.applyBuildingTag(building, BuildingTag::MASTER_BUILDING);
@@ -48,6 +49,7 @@ void initialize_vanilla_buildings()
         registrationAPI.linkBuildingDoneHandler(building, &default_done_handler);
         registrationAPI.linkBuildingEntryHandler(building, &miner_entry_handler);
         registrationAPI.applyBuildingTag(building, BuildingTag::MINER_BUILDING);
+        registrationAPI.applyBuildingTag(building, BuildingTag::HABITABLE_BUILDING);
         if ((miner_list[i] == 0x33) || (miner_list[i] == 0x59))
         {
             registrationAPI.applyBuildingTag(building, BuildingTag::MOONSILVER_BUILDING);
@@ -96,6 +98,7 @@ void initialize_vanilla_buildings()
     registrationAPI.linkBuildingDoneHandler(human_fisher, &default_done_handler);
     registrationAPI.linkBuildingEntryHandler(human_fisher, &fisher_entry_handler);
     registrationAPI.applyBuildingTag(human_fisher, BuildingTag::FISHER_BUILDING);
+    registrationAPI.applyBuildingTag(human_fisher, BuildingTag::HABITABLE_BUILDING);
     human_fisher->race = 1;
 
     SFBuilding *human_master_fisher = registrationAPI.registerBuilding(0x0b);
@@ -103,72 +106,84 @@ void initialize_vanilla_buildings()
     registrationAPI.linkBuildingEntryHandler(human_master_fisher, &fisher_entry_handler);
     registrationAPI.applyBuildingTag(human_master_fisher, BuildingTag::FISHER_BUILDING);
     registrationAPI.applyBuildingTag(human_master_fisher, BuildingTag::MASTER_BUILDING);
+    registrationAPI.applyBuildingTag(human_master_fisher, BuildingTag::HABITABLE_BUILDING);
     human_master_fisher->race = 1;
 
     SFBuilding *orc_fisher = registrationAPI.registerBuilding(0x41);
     registrationAPI.linkBuildingDoneHandler(orc_fisher, &default_done_handler);
     registrationAPI.linkBuildingEntryHandler(orc_fisher, &fisher_entry_handler);
     registrationAPI.applyBuildingTag(orc_fisher, BuildingTag::FISHER_BUILDING);
+    registrationAPI.applyBuildingTag(orc_fisher, BuildingTag::HABITABLE_BUILDING);
     orc_fisher->race = 5;
 
     SFBuilding *human_shrine = registrationAPI.registerBuilding(0x10);
     registrationAPI.linkBuildingDoneHandler(human_shrine, &default_done_handler);
     registrationAPI.linkBuildingEntryHandler(human_shrine, &shrine_entry_handler);
     registrationAPI.applyBuildingTag(human_shrine, BuildingTag::SHRINE_BUILDING);
+    registrationAPI.applyBuildingTag(human_shrine, BuildingTag::HABITABLE_BUILDING);
     human_shrine->race = 1;
 
     SFBuilding *elf_shrine = registrationAPI.registerBuilding(0x1b);
     registrationAPI.linkBuildingDoneHandler(elf_shrine, &default_done_handler);
     registrationAPI.linkBuildingEntryHandler(elf_shrine, &shrine_entry_handler);
     registrationAPI.applyBuildingTag(elf_shrine, BuildingTag::SHRINE_BUILDING);
+    registrationAPI.applyBuildingTag(elf_shrine, BuildingTag::HABITABLE_BUILDING);
     elf_shrine->race = 3;
 
     SFBuilding *orc_shrine = registrationAPI.registerBuilding(0x45);
     registrationAPI.linkBuildingDoneHandler(orc_shrine, &default_done_handler);
     registrationAPI.linkBuildingEntryHandler(orc_shrine, &shrine_entry_handler);
     registrationAPI.applyBuildingTag(orc_shrine, BuildingTag::SHRINE_BUILDING);
+    registrationAPI.applyBuildingTag(orc_shrine, BuildingTag::HABITABLE_BUILDING);
     orc_shrine->race = 5;
 
     SFBuilding *norcaine_shrine = registrationAPI.registerBuilding(0x63);
     registrationAPI.linkBuildingDoneHandler(norcaine_shrine, &default_done_handler);
     registrationAPI.linkBuildingEntryHandler(norcaine_shrine, &shrine_entry_handler);
     registrationAPI.applyBuildingTag(norcaine_shrine, BuildingTag::SHRINE_BUILDING);
+    registrationAPI.applyBuildingTag(norcaine_shrine, BuildingTag::HABITABLE_BUILDING);
     norcaine_shrine->race = 6;
 
     SFBuilding *elf_gatherer = registrationAPI.registerBuilding(0x21);
     registrationAPI.linkBuildingDoneHandler(elf_gatherer, &default_done_handler);
     registrationAPI.linkBuildingEntryHandler(elf_gatherer, &gatherer_entry_handler);
     registrationAPI.applyBuildingTag(elf_gatherer, BuildingTag::GATHERER_BUILDING);
+    registrationAPI.applyBuildingTag(elf_gatherer, BuildingTag::HABITABLE_BUILDING);
     elf_gatherer->race = 3;
 
     SFBuilding *troll_scavenger = registrationAPI.registerBuilding(0x52);
     registrationAPI.linkBuildingDoneHandler(troll_scavenger, &default_done_handler);
     registrationAPI.linkBuildingEntryHandler(troll_scavenger, &scavenger_entry_handler);
     registrationAPI.applyBuildingTag(troll_scavenger, BuildingTag::SCAVENGER_BUILDING);
+    registrationAPI.applyBuildingTag(troll_scavenger, BuildingTag::HABITABLE_BUILDING);
     troll_scavenger->race = 4;
 
     SFBuilding *human_woodcutter = registrationAPI.registerBuilding(0x04);
     registrationAPI.linkBuildingDoneHandler(human_woodcutter, &multiworker_done_handler);
     registrationAPI.linkBuildingEntryHandler(human_woodcutter, &woodcutter_entry_handler);
     registrationAPI.applyBuildingTag(human_woodcutter, BuildingTag::WOODCUTTER_BUILDING);
+    registrationAPI.applyBuildingTag(human_woodcutter, BuildingTag::HABITABLE_BUILDING);
     human_woodcutter->race = 1;
 
     SFBuilding *human_quarry = registrationAPI.registerBuilding(0x07);
     registrationAPI.linkBuildingDoneHandler(human_quarry, &multiworker_done_handler);
     registrationAPI.linkBuildingEntryHandler(human_quarry, &quarry_entry_handler);
     registrationAPI.applyBuildingTag(human_quarry, BuildingTag::QUARRY_BUILDING);
+    registrationAPI.applyBuildingTag(human_quarry, BuildingTag::HABITABLE_BUILDING);
     human_quarry->race = 1;
 
     SFBuilding *human_farm = registrationAPI.registerBuilding(0x0c);
     registrationAPI.linkBuildingDoneHandler(human_farm, &multiworker_done_handler);
     registrationAPI.linkBuildingEntryHandler(human_farm, &farmer_entry_handler);
     registrationAPI.applyBuildingTag(human_farm, BuildingTag::FARM_BUILDING);
+    registrationAPI.applyBuildingTag(human_farm, BuildingTag::HABITABLE_BUILDING);
     human_farm->race = 1;
 
     SFBuilding *elf_forester = registrationAPI.registerBuilding(0x17);
     registrationAPI.linkBuildingDoneHandler(elf_forester, &multiworker_done_handler);
     registrationAPI.linkBuildingEntryHandler(elf_forester, &forester_entry_handler);
     registrationAPI.applyBuildingTag(elf_forester, BuildingTag::FORESTER_BUILDING);
+    registrationAPI.applyBuildingTag(elf_forester, BuildingTag::HABITABLE_BUILDING);
     elf_forester->race = 3;
 
     SFBuilding *elf_woodcutter_master = registrationAPI.registerBuilding(0x18);
@@ -176,48 +191,56 @@ void initialize_vanilla_buildings()
     registrationAPI.linkBuildingEntryHandler(elf_woodcutter_master, &woodcutter_entry_handler);
     registrationAPI.applyBuildingTag(elf_woodcutter_master, BuildingTag::WOODCUTTER_BUILDING);
     registrationAPI.applyBuildingTag(elf_woodcutter_master, BuildingTag::MASTER_BUILDING);
+    registrationAPI.applyBuildingTag(elf_woodcutter_master, BuildingTag::HABITABLE_BUILDING);
     elf_woodcutter_master->race = 3;
 
     SFBuilding *elf_woodcutter = registrationAPI.registerBuilding(0x1c);
     registrationAPI.linkBuildingDoneHandler(elf_woodcutter, &multiworker_done_handler);
     registrationAPI.linkBuildingEntryHandler(elf_woodcutter, &woodcutter_entry_handler);
     registrationAPI.applyBuildingTag(elf_woodcutter, BuildingTag::WOODCUTTER_BUILDING);
+    registrationAPI.applyBuildingTag(elf_woodcutter, BuildingTag::HABITABLE_BUILDING);
     elf_woodcutter->race = 3;
 
     SFBuilding *dwarf_quarry = registrationAPI.registerBuilding(0x2c);
     registrationAPI.linkBuildingDoneHandler(dwarf_quarry, &multiworker_done_handler);
     registrationAPI.linkBuildingEntryHandler(dwarf_quarry, &quarry_entry_handler);
     registrationAPI.applyBuildingTag(dwarf_quarry, BuildingTag::QUARRY_BUILDING);
+    registrationAPI.applyBuildingTag(dwarf_quarry, BuildingTag::HABITABLE_BUILDING);
     dwarf_quarry->race = 2;
 
     SFBuilding *orc_woodcutter = registrationAPI.registerBuilding(0x3d);
     registrationAPI.linkBuildingDoneHandler(orc_woodcutter, &multiworker_done_handler);
     registrationAPI.linkBuildingEntryHandler(orc_woodcutter, &woodcutter_entry_handler);
     registrationAPI.applyBuildingTag(orc_woodcutter, BuildingTag::WOODCUTTER_BUILDING);
+    registrationAPI.applyBuildingTag(orc_woodcutter, BuildingTag::HABITABLE_BUILDING);
     orc_woodcutter->race = 5;
 
     SFBuilding *troll_woodcutter = registrationAPI.registerBuilding(0x4d);
     registrationAPI.linkBuildingDoneHandler(troll_woodcutter, &multiworker_done_handler);
     registrationAPI.linkBuildingEntryHandler(troll_woodcutter, &woodcutter_entry_handler);
     registrationAPI.applyBuildingTag(troll_woodcutter, BuildingTag::WOODCUTTER_BUILDING);
+    registrationAPI.applyBuildingTag(troll_woodcutter, BuildingTag::HABITABLE_BUILDING);
     troll_woodcutter->race = 4;
 
     SFBuilding *troll_quarry = registrationAPI.registerBuilding(0x4e);
     registrationAPI.linkBuildingDoneHandler(troll_quarry, &multiworker_done_handler);
     registrationAPI.linkBuildingEntryHandler(troll_quarry, &quarry_entry_handler);
     registrationAPI.applyBuildingTag(troll_quarry, BuildingTag::QUARRY_BUILDING);
+    registrationAPI.applyBuildingTag(troll_quarry, BuildingTag::HABITABLE_BUILDING);
     troll_quarry->race = 4;
 
     SFBuilding *norcaine_quarry = registrationAPI.registerBuilding(0x58);
     registrationAPI.linkBuildingDoneHandler(norcaine_quarry, &multiworker_done_handler);
     registrationAPI.linkBuildingEntryHandler(norcaine_quarry, &quarry_entry_handler);
     registrationAPI.applyBuildingTag(norcaine_quarry, BuildingTag::QUARRY_BUILDING);
+    registrationAPI.applyBuildingTag(norcaine_quarry, BuildingTag::HABITABLE_BUILDING);
     norcaine_quarry->race = 6;
 
     SFBuilding *norcaine_farm = registrationAPI.registerBuilding(0x5c);
     registrationAPI.linkBuildingDoneHandler(norcaine_farm, &multiworker_done_handler);
     registrationAPI.linkBuildingEntryHandler(norcaine_farm, &farmer_entry_handler);
     registrationAPI.applyBuildingTag(norcaine_farm, BuildingTag::FARM_BUILDING);
+    registrationAPI.applyBuildingTag(norcaine_farm, BuildingTag::HABITABLE_BUILDING);
     norcaine_farm->race = 6;
 
 
@@ -225,84 +248,112 @@ void initialize_vanilla_buildings()
     registrationAPI.linkBuildingDoneHandler(human_sawmill, &singleworker_done_handler);
     registrationAPI.linkBuildingEntryHandler(human_sawmill, &sawmill_entry_handler);
     registrationAPI.applyBuildingTag(human_sawmill, BuildingTag::SAWMILL_BUILDING);
+    registrationAPI.applyBuildingTag(human_sawmill, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(human_sawmill, BuildingTag::HABITABLE_SINGLE_BUILDING);
     human_sawmill->race = 1;
 
     SFBuilding *human_foodstore = registrationAPI.registerBuilding(0x08);
     registrationAPI.linkBuildingDoneHandler(human_foodstore, &singleworker_done_handler);
     registrationAPI.linkBuildingEntryHandler(human_foodstore, &foodstore_entry_handler);
     registrationAPI.applyBuildingTag(human_foodstore, BuildingTag::FOODSTORE_BUILDING);
+    registrationAPI.applyBuildingTag(human_foodstore, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(human_foodstore, BuildingTag::HABITABLE_SINGLE_BUILDING);
     human_foodstore->race = 1;
 
     SFBuilding *human_smelter = registrationAPI.registerBuilding(0x0f);
     registrationAPI.linkBuildingDoneHandler(human_smelter, &singleworker_done_handler);
     registrationAPI.linkBuildingEntryHandler(human_smelter, &smelter_entry_handler);
     registrationAPI.applyBuildingTag(human_smelter, BuildingTag::SMELTER_BUILDING);
+    registrationAPI.applyBuildingTag(human_smelter, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(human_smelter, BuildingTag::HABITABLE_SINGLE_BUILDING);
     human_smelter->race = 1;
 
     SFBuilding *elf_food_store = registrationAPI.registerBuilding(0x1a);
     registrationAPI.linkBuildingDoneHandler(elf_food_store, &singleworker_done_handler);
     registrationAPI.linkBuildingEntryHandler(elf_food_store, &foodstore_entry_handler);
     registrationAPI.applyBuildingTag(elf_food_store, BuildingTag::FOODSTORE_BUILDING);
+    registrationAPI.applyBuildingTag(elf_food_store, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(elf_food_store, BuildingTag::HABITABLE_SINGLE_BUILDING);
     elf_food_store->race = 3;
 
     SFBuilding *dwarf_stonecutter = registrationAPI.registerBuilding(0x2e);
     registrationAPI.linkBuildingDoneHandler(dwarf_stonecutter, &singleworker_done_handler);
     registrationAPI.linkBuildingEntryHandler(dwarf_stonecutter, &sawmill_entry_handler);
     registrationAPI.applyBuildingTag(dwarf_stonecutter, BuildingTag::STONEMASON_BUILDING);
+    registrationAPI.applyBuildingTag(dwarf_stonecutter, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(dwarf_stonecutter, BuildingTag::HABITABLE_SINGLE_BUILDING);
     dwarf_stonecutter->race = 2;
 
     SFBuilding *dwarf_food_store = registrationAPI.registerBuilding(0x2f);
     registrationAPI.linkBuildingDoneHandler(dwarf_food_store, &singleworker_done_handler);
     registrationAPI.linkBuildingEntryHandler(dwarf_food_store, &foodstore_entry_handler);
     registrationAPI.applyBuildingTag(dwarf_food_store, BuildingTag::FOODSTORE_BUILDING);
+    registrationAPI.applyBuildingTag(dwarf_food_store, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(dwarf_food_store, BuildingTag::HABITABLE_SINGLE_BUILDING);
     dwarf_food_store->race = 2;
 
     SFBuilding *dwarf_smelter = registrationAPI.registerBuilding(0x34);
     registrationAPI.linkBuildingDoneHandler(dwarf_smelter, &singleworker_done_handler);
     registrationAPI.linkBuildingEntryHandler(dwarf_smelter, &smelter_entry_handler);
     registrationAPI.applyBuildingTag(dwarf_smelter, BuildingTag::SMELTER_BUILDING);
+    registrationAPI.applyBuildingTag(dwarf_smelter, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(dwarf_smelter, BuildingTag::HABITABLE_SINGLE_BUILDING);
     dwarf_smelter->race = 2;
 
     SFBuilding *elf_sawmill = registrationAPI.registerBuilding(0x37);
     registrationAPI.linkBuildingDoneHandler(elf_sawmill, &singleworker_done_handler);
     registrationAPI.linkBuildingEntryHandler(elf_sawmill, &sawmill_entry_handler);
     registrationAPI.applyBuildingTag(elf_sawmill, BuildingTag::SAWMILL_BUILDING);
+    registrationAPI.applyBuildingTag(elf_sawmill, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(elf_sawmill, BuildingTag::HABITABLE_SINGLE_BUILDING);
     elf_sawmill->race = 3;
 
     SFBuilding *orc_smelter = registrationAPI.registerBuilding(0x3e);
     registrationAPI.linkBuildingDoneHandler(orc_smelter, &singleworker_done_handler);
     registrationAPI.linkBuildingEntryHandler(orc_smelter, &smelter_entry_handler);
     registrationAPI.applyBuildingTag(orc_smelter, BuildingTag::SMELTER_BUILDING);
+    registrationAPI.applyBuildingTag(orc_smelter, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(orc_smelter, BuildingTag::HABITABLE_SINGLE_BUILDING);
     orc_smelter->race = 5;
 
     SFBuilding *orc_food_store = registrationAPI.registerBuilding(0x3f);
     registrationAPI.linkBuildingDoneHandler(orc_food_store, &singleworker_done_handler);
     registrationAPI.linkBuildingEntryHandler(orc_food_store, &foodstore_entry_handler);
     registrationAPI.applyBuildingTag(orc_food_store, BuildingTag::FOODSTORE_BUILDING);
+    registrationAPI.applyBuildingTag(orc_food_store, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(orc_food_store, BuildingTag::HABITABLE_SINGLE_BUILDING);
     orc_food_store->race = 5;
 
     SFBuilding *troll_food_store = registrationAPI.registerBuilding(0x4f);
     registrationAPI.linkBuildingDoneHandler(troll_food_store, &singleworker_done_handler);
     registrationAPI.linkBuildingEntryHandler(troll_food_store, &foodstore_entry_handler);
     registrationAPI.applyBuildingTag(troll_food_store, BuildingTag::FOODSTORE_BUILDING);
+    registrationAPI.applyBuildingTag(troll_food_store, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(troll_food_store, BuildingTag::HABITABLE_SINGLE_BUILDING);
     troll_food_store->race = 4;
 
     SFBuilding *norcaine_stonecutter = registrationAPI.registerBuilding(0x5a);
     registrationAPI.linkBuildingDoneHandler(norcaine_stonecutter, &singleworker_done_handler);
     registrationAPI.linkBuildingEntryHandler(norcaine_stonecutter, &sawmill_entry_handler);
     registrationAPI.applyBuildingTag(norcaine_stonecutter, BuildingTag::STONEMASON_BUILDING);
+    registrationAPI.applyBuildingTag(norcaine_stonecutter, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(norcaine_stonecutter, BuildingTag::HABITABLE_SINGLE_BUILDING);
     norcaine_stonecutter->race = 6;
 
     SFBuilding *norcaine_food_store = registrationAPI.registerBuilding(0x5b);
     registrationAPI.linkBuildingDoneHandler(norcaine_food_store, &singleworker_done_handler);
     registrationAPI.linkBuildingEntryHandler(norcaine_food_store, &foodstore_entry_handler);
     registrationAPI.applyBuildingTag(norcaine_food_store, BuildingTag::FOODSTORE_BUILDING);
+    registrationAPI.applyBuildingTag(norcaine_food_store, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(norcaine_food_store, BuildingTag::HABITABLE_SINGLE_BUILDING);
     norcaine_food_store->race = 6;
 
     SFBuilding *norcaine_smelter = registrationAPI.registerBuilding(0x5e);
     registrationAPI.linkBuildingDoneHandler(norcaine_smelter, &singleworker_done_handler);
     registrationAPI.linkBuildingEntryHandler(norcaine_smelter, &smelter_entry_handler);
     registrationAPI.applyBuildingTag(norcaine_smelter, BuildingTag::SMELTER_BUILDING);
+    registrationAPI.applyBuildingTag(norcaine_smelter, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(norcaine_smelter, BuildingTag::HABITABLE_SINGLE_BUILDING);
     norcaine_smelter->race = 6;
 
 
@@ -310,24 +361,32 @@ void initialize_vanilla_buildings()
     registrationAPI.linkBuildingDoneHandler(human_breeder, &breeder_done_handler);
     registrationAPI.linkBuildingEntryHandler(human_breeder, &cattle_breeder_entry_handler);
     registrationAPI.applyBuildingTag(human_breeder, BuildingTag::BREEDER_BUILDING);
+    registrationAPI.applyBuildingTag(human_breeder, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(human_breeder, BuildingTag::HABITABLE_SINGLE_BUILDING);
     human_breeder->race = 1;
 
     SFBuilding *dwarf_breeder = registrationAPI.registerBuilding(0x30);
     registrationAPI.linkBuildingDoneHandler(dwarf_breeder, &breeder_done_handler);
     registrationAPI.linkBuildingEntryHandler(dwarf_breeder, &cattle_breeder_entry_handler);
     registrationAPI.applyBuildingTag(dwarf_breeder, BuildingTag::BREEDER_BUILDING);
+    registrationAPI.applyBuildingTag(dwarf_breeder, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(dwarf_breeder, BuildingTag::HABITABLE_SINGLE_BUILDING);
     dwarf_breeder->race = 2;
 
     SFBuilding *orc_breeder = registrationAPI.registerBuilding(0x42);
     registrationAPI.linkBuildingDoneHandler(orc_breeder, &breeder_done_handler);
     registrationAPI.linkBuildingEntryHandler(orc_breeder, &cattle_breeder_entry_handler);
     registrationAPI.applyBuildingTag(orc_breeder, BuildingTag::BREEDER_BUILDING);
+    registrationAPI.applyBuildingTag(orc_breeder, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(orc_breeder, BuildingTag::HABITABLE_SINGLE_BUILDING);
     orc_breeder->race = 5;
 
     SFBuilding *norcaine_breeder = registrationAPI.registerBuilding(0x5d);
     registrationAPI.linkBuildingDoneHandler(norcaine_breeder, &breeder_done_handler);
     registrationAPI.linkBuildingEntryHandler(norcaine_breeder, &cattle_breeder_entry_handler);
     registrationAPI.applyBuildingTag(norcaine_breeder, BuildingTag::BREEDER_BUILDING);
+    registrationAPI.applyBuildingTag(norcaine_breeder, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(norcaine_breeder, BuildingTag::HABITABLE_SINGLE_BUILDING);
     norcaine_breeder->race = 6;
 
 
@@ -335,67 +394,88 @@ void initialize_vanilla_buildings()
     registrationAPI.linkBuildingDoneHandler(human_temple, &army_worker_done_handler);
     registrationAPI.linkBuildingEntryHandler(human_temple, &temple_entry_handler);
     registrationAPI.applyBuildingTag(human_temple, BuildingTag::TEMPLE_BUILDING);
+    registrationAPI.applyBuildingTag(human_temple, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(human_temple, BuildingTag::HABITABLE_SINGLE_BUILDING);
     human_temple->race = 1;
 
     SFBuilding *elf_armory = registrationAPI.registerBuilding(0x22);
     registrationAPI.linkBuildingDoneHandler(elf_armory, &army_worker_done_handler);
     registrationAPI.linkBuildingEntryHandler(elf_armory, &forge_entry_handler);
     registrationAPI.applyBuildingTag(elf_armory, BuildingTag::FORGE_BUILDING);
+    registrationAPI.applyBuildingTag(elf_armory, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(elf_armory, BuildingTag::HABITABLE_SINGLE_BUILDING);
     elf_armory->race = 3;
 
     SFBuilding *elf_temple = registrationAPI.registerBuilding(0x24);
     registrationAPI.linkBuildingDoneHandler(elf_temple, &army_worker_done_handler);
     registrationAPI.linkBuildingEntryHandler(elf_temple, &temple_entry_handler);
     registrationAPI.applyBuildingTag(elf_temple, BuildingTag::TEMPLE_BUILDING);
+    registrationAPI.applyBuildingTag(elf_temple, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(elf_temple, BuildingTag::HABITABLE_SINGLE_BUILDING);
     elf_temple->race = 3;
-
 
     SFBuilding *dwarf_forge = registrationAPI.registerBuilding(0x35);
     registrationAPI.linkBuildingDoneHandler(dwarf_forge, &army_worker_done_handler);
     registrationAPI.linkBuildingEntryHandler(dwarf_forge, &forge_entry_handler);
     registrationAPI.applyBuildingTag(dwarf_forge, BuildingTag::FORGE_BUILDING);
+    registrationAPI.applyBuildingTag(dwarf_forge, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(dwarf_forge, BuildingTag::HABITABLE_SINGLE_BUILDING);
     dwarf_forge->race = 2;
 
     SFBuilding *orc_forge = registrationAPI.registerBuilding(0x44);
     registrationAPI.linkBuildingDoneHandler(orc_forge, &army_worker_done_handler);
     registrationAPI.linkBuildingEntryHandler(orc_forge, &forge_entry_handler);
     registrationAPI.applyBuildingTag(orc_forge, BuildingTag::FORGE_BUILDING);
+    registrationAPI.applyBuildingTag(orc_forge, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(orc_forge, BuildingTag::HABITABLE_SINGLE_BUILDING);
     orc_forge->race = 5;
 
     SFBuilding *orc_temple = registrationAPI.registerBuilding(0x46);
     registrationAPI.linkBuildingDoneHandler(orc_temple, &army_worker_done_handler);
     registrationAPI.linkBuildingEntryHandler(orc_temple, &temple_entry_handler);
     registrationAPI.applyBuildingTag(orc_temple, BuildingTag::TEMPLE_BUILDING);
+    registrationAPI.applyBuildingTag(orc_temple, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(orc_temple, BuildingTag::HABITABLE_SINGLE_BUILDING);
     orc_temple->race = 5;
 
     SFBuilding *human_forge = registrationAPI.registerBuilding(0x4b);
     registrationAPI.linkBuildingDoneHandler(human_forge, &army_worker_done_handler);
     registrationAPI.linkBuildingEntryHandler(human_forge, &forge_entry_handler);
     registrationAPI.applyBuildingTag(human_forge, BuildingTag::FORGE_BUILDING);
+    registrationAPI.applyBuildingTag(human_forge, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(human_forge, BuildingTag::HABITABLE_SINGLE_BUILDING);
     human_forge->race = 1;
 
     SFBuilding *troll_armory = registrationAPI.registerBuilding(0x53);
     registrationAPI.linkBuildingDoneHandler(troll_armory, &army_worker_done_handler);
     registrationAPI.linkBuildingEntryHandler(troll_armory, &forge_entry_handler);
     registrationAPI.applyBuildingTag(troll_armory, BuildingTag::FORGE_BUILDING);
+    registrationAPI.applyBuildingTag(troll_armory, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(troll_armory, BuildingTag::HABITABLE_SINGLE_BUILDING);
     troll_armory->race = 4;
 
     SFBuilding *norcaine_forge = registrationAPI.registerBuilding(0x60);
     registrationAPI.linkBuildingDoneHandler(norcaine_forge, &army_worker_done_handler);
     registrationAPI.linkBuildingEntryHandler(norcaine_forge, &forge_entry_handler);
     registrationAPI.applyBuildingTag(norcaine_forge, BuildingTag::FORGE_BUILDING);
+    registrationAPI.applyBuildingTag(norcaine_forge, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(norcaine_forge, BuildingTag::HABITABLE_SINGLE_BUILDING);
     norcaine_forge->race = 6;
 
     SFBuilding *norcaine_temple = registrationAPI.registerBuilding(0x64);
     registrationAPI.linkBuildingDoneHandler(norcaine_temple, &army_worker_done_handler);
     registrationAPI.linkBuildingEntryHandler(norcaine_temple, &temple_entry_handler);
     registrationAPI.applyBuildingTag(norcaine_temple, BuildingTag::TEMPLE_BUILDING);
+    registrationAPI.applyBuildingTag(norcaine_temple, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(norcaine_temple, BuildingTag::HABITABLE_SINGLE_BUILDING);
     norcaine_temple->race = 6;
 
     SFBuilding *orc_armory = registrationAPI.registerBuilding(0x89);
     registrationAPI.linkBuildingDoneHandler(orc_armory, &army_worker_done_handler);
     registrationAPI.linkBuildingEntryHandler(orc_armory, &mace_carver_entry_handler);
     registrationAPI.applyBuildingTag(orc_armory, BuildingTag::MACE_CARVER_BUILDING);
+    registrationAPI.applyBuildingTag(orc_armory, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(orc_armory, BuildingTag::HABITABLE_SINGLE_BUILDING);
     orc_armory->race = 5;
 
 

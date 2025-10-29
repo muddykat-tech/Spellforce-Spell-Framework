@@ -629,7 +629,39 @@ static void initialize_worker_logic_hooks()
     *(int *)(ASI::AddrOf(0x2e5d0c)) = (int)(&onMinerFinishJob) - ASI::AddrOf(0x2e5d10);
     ASI::EndRewrite(miner_mreg2);
 
+    ASI::MemoryRegion stone_miner_mreg1 (ASI::AddrOf(0x2ee55d), 5);
+    ASI::BeginRewrite(stone_miner_mreg1);
+    *(unsigned char *)(ASI::AddrOf(0x2ee55d)) = 0xE8; // CALL instruction
+    *(int *)(ASI::AddrOf(0x2ee55e)) = (int)(&onStoneMinerFinishJob) - ASI::AddrOf(0x2ee562);
+    ASI::EndRewrite(stone_miner_mreg1);
 
+    ASI::MemoryRegion stone_miner_mreg2 (ASI::AddrOf(0x2e6427), 5);
+    ASI::BeginRewrite(stone_miner_mreg2);
+    *(unsigned char *)(ASI::AddrOf(0x2e6427)) = 0xE8; // CALL instruction
+    *(int *)(ASI::AddrOf(0x2e6428)) = (int)(&onStoneMinerFinishJob) - ASI::AddrOf(0x2e642c);
+    ASI::EndRewrite(stone_miner_mreg2);
+
+    ASI::MemoryRegion isQuarry_mreg (ASI::AddrOf(0x2f0afb), 5);
+    ASI::BeginRewrite(isQuarry_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x2f0afb)) = 0xE8; // CALL instruction
+    *(int *)(ASI::AddrOf(0x2f0afc)) = (int)(&buildingIsQuarry) - ASI::AddrOf(0x2f0b00);
+    ASI::EndRewrite(isQuarry_mreg);
+
+    ASI::MemoryRegion isHabitable_mreg(ASI::AddrOf(0x2c7600), 7);
+    ASI::BeginRewrite(isHabitable_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x2c7600)) = 0xE9; // CALL instruction
+    *(int *)(ASI::AddrOf(0x2c7601)) = (int)(&buildingIsHabitable) - ASI::AddrOf(0x2c7605);
+    *(unsigned char *)(ASI::AddrOf(0x2c7605)) = 0x90;
+    *(unsigned char *)(ASI::AddrOf(0x2c7606)) = 0x90;
+    ASI::EndRewrite(isHabitable_mreg);
+
+    ASI::MemoryRegion isHabitableS_mreg(ASI::AddrOf(0x2c7530), 7);
+    ASI::BeginRewrite(isHabitableS_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x2c7530)) = 0xE9; // CALL instruction
+    *(int *)(ASI::AddrOf(0x2c7531)) = (int)(&buildingIsHabitableSingle) - ASI::AddrOf(0x2c7535);
+    *(unsigned char *)(ASI::AddrOf(0x2c7535)) = 0x90;
+    *(unsigned char *)(ASI::AddrOf(0x2c7536)) = 0x90;
+    ASI::EndRewrite(isHabitableS_mreg);
 }
 
 void initialize_beta_hooks()

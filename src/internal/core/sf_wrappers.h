@@ -53,6 +53,8 @@ bool __thiscall buildingIsTemple(SF_CGdBuilding *_this, uint16_t building_index)
 bool __thiscall buildingIsTower(SF_CGdBuilding *_this, uint16_t building_index);
 bool __thiscall buildingIsWoodcutter(SF_CGdBuilding *_this, uint16_t building_index);
 bool __thiscall buildingIsShrine(SF_CGdBuilding *_this, uint16_t building_index);
+bool __thiscall buildingIsHabitable(SF_CGdBuilding *_this, uint16_t building_index);
+bool __thiscall buildingIsHabitableSingle(SF_CGdBuilding *_this, uint16_t building_index);
 
 
 extern void __thiscall spellEffectCallback(SF_CGdSpell *_this,

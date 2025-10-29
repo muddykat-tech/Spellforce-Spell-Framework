@@ -241,6 +241,16 @@ bool __thiscall buildingIsScavenger(SF_CGdBuilding *_this, uint16_t building_ind
     return buildingAPI.hasBuildingTag(_this->buildings[building_index].type, BuildingTag::SCAVENGER_BUILDING);
 }
 
+bool __thiscall buildingIsHabitable(SF_CGdBuilding *_this, uint16_t building_index)
+{
+    return buildingAPI.hasBuildingTag(_this->buildings[building_index].type, BuildingTag::HABITABLE_BUILDING);
+}
+
+bool __thiscall buildingIsHabitableSingle(SF_CGdBuilding *_this, uint16_t building_index)
+{
+    return buildingAPI.hasBuildingTag(_this->buildings[building_index].type, BuildingTag::HABITABLE_SINGLE_BUILDING);
+}
+
 bool __thiscall buildingIsFisher(SF_CGdBuilding *_this, uint16_t building_index)
 {
     return buildingAPI.hasBuildingTag(_this->buildings[building_index].type, BuildingTag::FISHER_BUILDING);

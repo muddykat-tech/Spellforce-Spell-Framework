@@ -231,3 +231,77 @@ bool __thiscall onMinerFinishJob(SF_CGdFigureJobs *_this, uint16_t figure_id)
 
     return true;
 }
+
+bool __thiscall onStoneMinerFinishJob(SF_CGdFigureJobs *_this, uint16_t figure_id)
+{
+    uint16_t job_id = _this->CGdFigure->figures[figure_id].current_job.GdJobId;
+    uint8_t figure_task = _this->CGdFigure->figures[figure_id].current_job.task;
+    uint8_t target_building_type = 0;
+    uint16_t target_building = 0;
+    uint32_t target_job = kGdJobStoneMinerWalkHome;
+    if (figure_task == CGdFigureTask::TASK_WORKER)
+    {
+        uint8_t race = _this->CGdFigure->figures[figure_id].race;
+        target_building_type = getRacialSmallHQ(race);
+        if (target_building_type != 0)
+        {
+            target_building = buildingAPI.findClosestBuilding(_this->CGdBuildingToolBox,
+                                                              _this->CGdFigure->figures[figure_id].position,
+                                                              target_building_type,
+                                                              _this->CGdFigure->figures[figure_id].owner, 0x19);
+        }
+    }
+    else
+    {
+        uint8_t race = _this->CGdFigure->figures[figure_id].race;
+        target_building_type = buildingAPI.getRacialStonecutter(race);
+        if (target_building_type != 0)
+        {
+            uint16_t building_index = _this->CGdFigure->figures[figure_id].building;
+            //NO, there's no invariant here!
+            target_building = buildingAPI.findClosestBuilding(_this->CGdBuildingToolBox,
+                                                              _this->CGdBuilding->buildings[building_index].position,
+                                                              target_building_type,
+                                                              _this->CGdFigure->figures[figure_id].owner, 0x19);
+        }
+    }
+    if (target_building != 0)
+    {
+        target_job = kGdJobStoneMinerWalkToDeliverGood;
+    }
+    else
+    {
+        if (figure_task == CGdFigureTask::TASK_WORKER)
+        {
+            uint16_t monument_id, unused;
+            monument_id = toolboxAPI.findClosestMonument(_this->CGdObjectToolBox, figure_id, &unused);
+            if (monument_id == 0)
+            {
+                figureAPI.setJob(_this, figure_id, job_id);
+                return false;
+            }
+            figureAPI.prepareJobTransition(_this, figure_id, job_id, target_job);
+            terminate_job_spells(_this, figure_id);
+            figureAPI.onStartJob(_this, figure_id, target_job);
+            setupWalkToMonument(_this, figure_id, monument_id);
+            return true;
+        }
+        else
+        {
+            target_building = _this->CGdFigure->figures[figure_id].building;
+        }
+    }
+    figureAPI.prepareJobTransition(_this, figure_id, job_id, target_job);
+    terminate_job_spells(_this, figure_id);
+    figureAPI.onStartJob(_this, figure_id, target_job);
+    if (target_job == kGdJobStoneMinerWalkToDeliverGood)
+    {
+        buildingAPI.addFigureToBuilding(_this->CGdBuildingToolBox, target_building, figure_id, 0);
+    }
+    toolboxAPI.setFigureXData(_this->CGdFigureToolBox, figure_id, WORKER_DELIVERY_BUILDING, target_building);
+    toolboxAPI.setFigureXData(_this->CGdFigureToolBox, figure_id, EFFECT_ENTITY_INDEX2, 0);
+    SF_Coord walk_pos = _this->CGdBuilding->buildings[target_building].position;
+    figureAPI.setFigureWalkPos(_this, figure_id, &walk_pos, 0, 1);
+
+    return true;
+}
