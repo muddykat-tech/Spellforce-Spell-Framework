@@ -88,7 +88,7 @@ void initialize_vanilla_buildings()
         }
     }
 
-    for (int i = 0; i < 102; i++)
+    for (int i = 0; i < 96; i++)
     {
         SFBuilding *building = registrationAPI.registerBuilding(default_handler_list[i]);
         registrationAPI.linkBuildingDoneHandler(building, &default_done_handler);
