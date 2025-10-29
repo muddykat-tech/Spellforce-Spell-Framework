@@ -292,7 +292,7 @@ bool __thiscall buildingIsMaceCarver(SF_CGdBuilding *_this, uint16_t building_in
     return buildingAPI.hasBuildingTag(_this->buildings[building_index].type, BuildingTag::MACE_CARVER_BUILDING);
 }
 
-bool __thiscall buildingIsMoonsiverMine(SF_CGdBuilding *_this, uint16_t building_index)
+bool __thiscall buildingIsMoonsilverMine(SF_CGdBuilding *_this, uint16_t building_index)
 {
     return (buildingAPI.hasBuildingTag(_this->buildings[building_index].type, BuildingTag::MINER_BUILDING)
             && buildingAPI.hasBuildingTag(_this->buildings[building_index].type, BuildingTag::MOONSILVER_BUILDING));

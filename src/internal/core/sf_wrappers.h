@@ -44,7 +44,7 @@ bool __thiscall buildingIsHQ(SF_CGdBuilding *_this, uint16_t building_index);
 bool __thiscall buildingIsHunter(SF_CGdBuilding *_this, uint16_t building_index);
 bool __thiscall buildingIsIronMine(SF_CGdBuilding *_this, uint16_t building_index);
 bool __thiscall buildingIsMaceCarver(SF_CGdBuilding *_this, uint16_t building_index);
-bool __thiscall buildingIsMoonsiverMine(SF_CGdBuilding *_this, uint16_t building_index);
+bool __thiscall buildingIsMoonsilverMine(SF_CGdBuilding *_this, uint16_t building_index);
 bool __thiscall buildingIsQuarry(SF_CGdBuilding *_this, uint16_t building_index);
 bool __thiscall buildingIsSawmill(SF_CGdBuilding *_this, uint16_t building_index);
 bool __thiscall buildingIsSmelter(SF_CGdBuilding *_this, uint16_t building_index);

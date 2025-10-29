@@ -12,16 +12,6 @@ bool buildingIsMaster(uint16_t building_type)
     return false;
 }
 
-//FIXME
-bool buildingIsMoonsilverMine(uint16_t building_type)
-{
-    if ((building_type == 0x33) || (building_type == 0x59))
-    {
-        return true;
-    }
-    return false;
-}
-
 
 void __thiscall building_repair(SF_CGdFigureJobs *_this,uint16_t figure_id, uint16_t building_id)
 {
@@ -232,7 +222,7 @@ void __thiscall miner_entry_handler (SF_CGdFigureJobs *_this,uint16_t figure_id,
     SF_SGtFigureAction action;
     action.type = 0;
     action.subtype = 8;
-    if (buildingIsMoonsilverMine(_this->CGdBuilding->buildings[building_id].type))
+    if (buildingIsMoonsilverMine(_this->CGdBuilding, building_id))
     {
         action.subtype = 6;
     }

@@ -32,7 +32,7 @@ DECLARE_FUNCTION(bool, buildingIsHQ, SF_CGdBuilding *_this, uint16_t building_in
 DECLARE_FUNCTION(bool, buildingIsHunter, SF_CGdBuilding *_this, uint16_t building_index);
 DECLARE_FUNCTION(bool, buildingIsIronMine, SF_CGdBuilding *_this, uint16_t building_index);
 DECLARE_FUNCTION(bool, buildingIsMaceCarver, SF_CGdBuilding *_this, uint16_t building_index);
-DECLARE_FUNCTION(bool, buildingIsMoonsiverMine, SF_CGdBuilding *_this, uint16_t building_index);
+DECLARE_FUNCTION(bool, buildingIsMoonsilverMine, SF_CGdBuilding *_this, uint16_t building_index);
 DECLARE_FUNCTION(bool, buildingIsQuarry, SF_CGdBuilding *_this, uint16_t building_index);
 DECLARE_FUNCTION(bool, buildingIsSawmill, SF_CGdBuilding *_this, uint16_t building_index);
 DECLARE_FUNCTION(bool, buildingIsSmelter, SF_CGdBuilding *_this, uint16_t building_index);
@@ -78,7 +78,7 @@ typedef struct
     buildingIsHunter_ptr buildingIsHunter;
     buildingIsIronMine_ptr buildingIsIronMine;
     buildingIsMaceCarver_ptr buildingIsMaceCarver;
-    buildingIsMoonsiverMine_ptr buildingIsMoonsiverMine;
+    buildingIsMoonsilverMine_ptr buildingIsMoonsilverMine;
     buildingIsQuarry_ptr buildingIsQuarry;
     buildingIsSawmill_ptr buildingIsSawmill;
     buildingIsSmelter_ptr buildingIsSmelter;

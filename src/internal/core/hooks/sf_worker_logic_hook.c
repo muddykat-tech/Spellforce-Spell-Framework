@@ -180,15 +180,23 @@ bool __thiscall onMinerFinishJob(SF_CGdFigureJobs *_this, uint16_t figure_id)
     else
     {
         uint8_t race = _this->CGdFigure->figures[figure_id].race;
-        target_building_type = buildingAPI.getRacialSmelter(race);
-        if (target_building_type != 0)
+        uint16_t building_index = _this->CGdFigure->figures[figure_id].building;
+        if (buildingAPI.buildingIsMoonsilverMine(_this->CGdBuilding, building_index))
         {
-            uint16_t building_index = _this->CGdFigure->figures[figure_id].building;
-            //NO, there's no invariant here!
-            target_building = buildingAPI.findClosestBuilding(_this->CGdBuildingToolBox,
-                                                              _this->CGdBuilding->buildings[building_index].position,
-                                                              target_building_type,
-                                                              _this->CGdFigure->figures[figure_id].owner, 0x19);
+            target_building = 0;
+        }
+        else
+        {
+            target_building_type = buildingAPI.getRacialSmelter(race);
+            if (target_building_type != 0)
+            {
+                building_index = _this->CGdFigure->figures[figure_id].building;
+                //NO, there's no invariant here!
+                target_building = buildingAPI.findClosestBuilding(_this->CGdBuildingToolBox,
+                                                                  _this->CGdBuilding->buildings[building_index].position,
+                                                                  target_building_type,
+                                                                  _this->CGdFigure->figures[figure_id].owner, 0x19);
+            }
         }
     }
     if (target_building != 0)

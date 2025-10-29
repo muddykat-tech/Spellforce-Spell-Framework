@@ -234,7 +234,7 @@ void initialize_data_hooks()
     INCLUDE_FUNCTION(building, buildingIsHunter, &buildingIsHunter);
     INCLUDE_FUNCTION(building, buildingIsIronMine, &buildingIsIronMine);
     INCLUDE_FUNCTION(building, buildingIsMaceCarver, &buildingIsMaceCarver);
-    INCLUDE_FUNCTION(building, buildingIsMoonsiverMine, &buildingIsMoonsiverMine);
+    INCLUDE_FUNCTION(building, buildingIsMoonsilverMine, &buildingIsMoonsilverMine);
     INCLUDE_FUNCTION(building, buildingIsQuarry, &buildingIsQuarry);
     INCLUDE_FUNCTION(building, buildingIsSawmill, &buildingIsSawmill);
     INCLUDE_FUNCTION(building, buildingIsSmelter, &buildingIsSmelter);
@@ -643,11 +643,31 @@ static void initialize_worker_logic_hooks()
     *(int *)(ASI::AddrOf(0x2e6428)) = (int)(&onStoneMinerFinishJob) - ASI::AddrOf(0x2e642c);
     ASI::EndRewrite(stone_miner_mreg2);
 
+
+    ASI::MemoryRegion isWoodCutter_mreg (ASI::AddrOf(0x2f1dab), 5);
+    ASI::BeginRewrite(isWoodCutter_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x2f1dab)) = 0xE8; // CALL instruction
+    *(int *)(ASI::AddrOf(0x2f1dac)) = (int)(&buildingIsQuarry) - ASI::AddrOf(0x2f1db0);
+    ASI::EndRewrite(isWoodCutter_mreg);
+
     ASI::MemoryRegion isQuarry_mreg (ASI::AddrOf(0x2f0afb), 5);
     ASI::BeginRewrite(isQuarry_mreg);
     *(unsigned char *)(ASI::AddrOf(0x2f0afb)) = 0xE8; // CALL instruction
     *(int *)(ASI::AddrOf(0x2f0afc)) = (int)(&buildingIsQuarry) - ASI::AddrOf(0x2f0b00);
     ASI::EndRewrite(isQuarry_mreg);
+
+    ASI::MemoryRegion isIronMine_mreg (ASI::AddrOf(0x2efc83), 5);
+    ASI::BeginRewrite(isIronMine_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x2efc83)) = 0xE8; // CALL instruction
+    *(int *)(ASI::AddrOf(0x2efc84)) = (int)(&buildingIsIronMine) - ASI::AddrOf(0x2efc88);
+    ASI::EndRewrite(isIronMine_mreg);
+
+    ASI::MemoryRegion isIronMine_mreg2 (ASI::AddrOf(0x2f02a1), 5);
+    ASI::BeginRewrite(isIronMine_mreg2);
+    *(unsigned char *)(ASI::AddrOf(0x2f02a1)) = 0xE8; // CALL instruction
+    *(int *)(ASI::AddrOf(0x2f02a2)) = (int)(&buildingIsIronMine) - ASI::AddrOf(0x2f02a6);
+    ASI::EndRewrite(isIronMine_mreg2);
+
 
     ASI::MemoryRegion isSawmill_mreg (ASI::AddrOf(0x2ef82d), 5);
     ASI::BeginRewrite(isSawmill_mreg);
@@ -683,6 +703,15 @@ static void initialize_worker_logic_hooks()
     *(unsigned char *)(ASI::AddrOf(0x2c7535)) = 0x90;
     *(unsigned char *)(ASI::AddrOf(0x2c7536)) = 0x90;
     ASI::EndRewrite(isHabitableS_mreg);
+
+    ASI::MemoryRegion isTower_mreg(ASI::AddrOf(0x2c71b0), 7);
+    ASI::BeginRewrite(isTower_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x2c71b0)) = 0xE9; // CALL instruction
+    *(int *)(ASI::AddrOf(0x2c71b1)) = (int)(&buildingIsTower) - ASI::AddrOf(0x2c71b5);
+    *(unsigned char *)(ASI::AddrOf(0x2c71b5)) = 0x90;
+    *(unsigned char *)(ASI::AddrOf(0x2c71b6)) = 0x90;
+    ASI::EndRewrite(isTower_mreg);
+
 }
 
 void initialize_beta_hooks()
