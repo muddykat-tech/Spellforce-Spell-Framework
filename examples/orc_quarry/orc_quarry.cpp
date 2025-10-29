@@ -42,7 +42,6 @@ void __thiscall orc_quarry_done_handler(SF_CGdBuildingToolbox *_this,uint16_t bu
 
 void __thiscall quarry_entry_handler (SF_CGdFigureJobs *_this,uint16_t figure_id, uint16_t building_id)
 {
-    logger->logInfo("Entry handler is called");
     uint8_t good = _this->CGdFigure->figures[figure_id].good;
     if (good == 0)
     {

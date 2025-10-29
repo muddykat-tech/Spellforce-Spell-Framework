@@ -244,6 +244,9 @@ void initialize_data_hooks()
     INCLUDE_FUNCTION(building, buildingIsWoodcutter, &buildingIsWoodcutter);
     INCLUDE_FUNCTION(building, buildingIsShrine, &buildingIsShrine);
 
+    INCLUDE_FUNCTION(building, buildingIsHabitableSingle, &buildingIsHabitableSingle);
+    INCLUDE_FUNCTION(building, buildingIsHabitable, &buildingIsHabitable);
+
     INCLUDE_FUNCTION(building, getRacialFoodstore, &getRacialFoodstore);
     INCLUDE_FUNCTION(building, getRacialSmelter, &getRacialSmelter);
     INCLUDE_FUNCTION(building, getRacialSawmill, &getRacialSawmill);
@@ -251,7 +254,6 @@ void initialize_data_hooks()
     INCLUDE_FUNCTION(building, getRacialWoodcutter, &getRacialWoodcutter);
     INCLUDE_FUNCTION(building, getRacialIronMine, &getRacialIronMine);
     INCLUDE_FUNCTION(building, getRacialQuarry, &getRacialQuarry);
-
 
     log_info("| - RegistrationAPI Wrappers");
     INCLUDE_FUNCTION(registration, registerSpell, &registerSpell);

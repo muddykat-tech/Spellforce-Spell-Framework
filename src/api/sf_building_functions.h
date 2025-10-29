@@ -41,6 +41,8 @@ DECLARE_FUNCTION(bool, buildingIsTemple, SF_CGdBuilding *_this, uint16_t buildin
 DECLARE_FUNCTION(bool, buildingIsTower, SF_CGdBuilding *_this, uint16_t building_index);
 DECLARE_FUNCTION(bool, buildingIsWoodcutter, SF_CGdBuilding *_this, uint16_t building_index);
 DECLARE_FUNCTION(bool, buildingIsShrine, SF_CGdBuilding *_this, uint16_t building_index);
+DECLARE_FUNCTION(bool, buildingIsHabitable, SF_CGdBuilding *_this, uint16_t building_index);
+DECLARE_FUNCTION(bool, buildingIsHabitableSingle, SF_CGdBuilding *_this, uint16_t building_index);
 
 DECLARE_FUNCTION(uint8_t, getRacialFoodstore, uint8_t race);
 DECLARE_FUNCTION(uint8_t, getRacialSmelter, uint8_t race);
@@ -94,6 +96,8 @@ typedef struct
     getRacialQuarry_ptr getRacialQuarry;
     findClosestBuilding_ptr findClosestBuilding;
     addFigureToBuilding_ptr addFigureToBuilding;
+    buildingIsHabitable_ptr buildingIsHabitable;
+    buildingIsHabitableSingle_ptr buildingIsHabitableSingle;
     /*
        getRacialSmallHQ_ptr getRacialSmallHQ;
        getRacialMediumHQ_ptr getRacialMediumHQ;
