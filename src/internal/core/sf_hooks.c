@@ -649,9 +649,28 @@ static void initialize_worker_logic_hooks()
     *(int *)(ASI::AddrOf(0x2f0afc)) = (int)(&buildingIsQuarry) - ASI::AddrOf(0x2f0b00);
     ASI::EndRewrite(isQuarry_mreg);
 
+    ASI::MemoryRegion isSawmill_mreg (ASI::AddrOf(0x2ef82d), 5);
+    ASI::BeginRewrite(isSawmill_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x2ef82d)) = 0xE8; // CALL instruction
+    *(int *)(ASI::AddrOf(0x2ef82e)) = (int)(&buildingIsSawmill) - ASI::AddrOf(0x2ef832);
+    ASI::EndRewrite(isSawmill_mreg);
+
+    ASI::MemoryRegion isStoneMason_mreg (ASI::AddrOf(0x2eeb2d), 5);
+    ASI::BeginRewrite(isStoneMason_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x2eeb2d)) = 0xE8; // CALL instruction
+    *(int *)(ASI::AddrOf(0x2eeb2e)) = (int)(&buildingIsStonecutter) - ASI::AddrOf(0x2eeb32);
+    ASI::EndRewrite(isStoneMason_mreg);
+
+    ASI::MemoryRegion isSmelterMason_mreg (ASI::AddrOf(0x2ec022), 5);
+    ASI::BeginRewrite(isSmelterMason_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x2ec022)) = 0xE8; // CALL instruction
+    *(int *)(ASI::AddrOf(0x2ec023)) = (int)(&buildingIsSmelter) - ASI::AddrOf(0x2ec027);
+    ASI::EndRewrite(isSmelterMason_mreg);
+
+
     ASI::MemoryRegion isHabitable_mreg(ASI::AddrOf(0x2c7600), 7);
     ASI::BeginRewrite(isHabitable_mreg);
-    *(unsigned char *)(ASI::AddrOf(0x2c7600)) = 0xE9; // CALL instruction
+    *(unsigned char *)(ASI::AddrOf(0x2c7600)) = 0xE9; // JUMP instruction
     *(int *)(ASI::AddrOf(0x2c7601)) = (int)(&buildingIsHabitable) - ASI::AddrOf(0x2c7605);
     *(unsigned char *)(ASI::AddrOf(0x2c7605)) = 0x90;
     *(unsigned char *)(ASI::AddrOf(0x2c7606)) = 0x90;
