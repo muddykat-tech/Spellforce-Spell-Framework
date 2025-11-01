@@ -9,9 +9,11 @@
 typedef struct __attribute__((packed))
 {
     uint16_t type;
-    uint8_t subtype;
-    SF_CGdTargetData target;
-    uint16_t unkn;
+    uint16_t subtype;
+    uint16_t unkn1;
+    uint16_t unkn2;
+    uint16_t unkn3;
+    uint16_t unkn4;
 } SF_SGtFigureAction;
 
 /**

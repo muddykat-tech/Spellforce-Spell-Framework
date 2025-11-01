@@ -47,11 +47,11 @@ uint32_t __thiscall onSpellCastHook(SF_CGdFigureToolbox *_this, uint16_t figure_
 
         SF_SGtFigureAction action;
         action.type = spell_data.spell_line_id;
-        action.subtype = spell_id;
+        action.subtype =spell_id;
+        action.unkn1 = 0;
         action.unkn2 = 0;
         action.unkn3 = 0;
         action.unkn4 = 0;
-        action.unkn5 = 0;
 
         setFigureAction(ac24, &action);
         return 1;

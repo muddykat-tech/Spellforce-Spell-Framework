@@ -22,9 +22,10 @@ void clearAction(SF_SGtFigureAction *_this)
 {
     _this->type = 0xffff;
     _this->subtype = 0;
-    _this->target.entity_index = 0;
-    _this->target.entity_type = 0;
-    _this->target.position = {0,0};
+    _this->unkn1 = 0;
+    _this->unkn2 = 0;
+    _this->unkn3 = 0;
+    _this->unkn4 = 0;
 }
 
 bool isSpellAction(SF_SGtFigureAction *_this)
