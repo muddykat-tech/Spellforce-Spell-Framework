@@ -46,6 +46,9 @@ vfunction2_callback_attach_ptr attach_callback;
 vfunction_ptr vfunction16_attach_callback;
 CMnuBase_setname_ptr CMnuBase_setname;
 get_phys_damage_reduction_ptr g_get_damage_reduction;
+destory_container_ptr f_destory_container;
+destory_button_ptr f_destory_button;
+set_menu_id_ptr set_menu_id;
 
 //checky thiscall but not really. ~muddykat (fix this later add support for non thiscalls)
 uint32_t __thiscall getDistance(SF_Coord *pointA, SF_Coord *pointB)
@@ -110,6 +113,10 @@ void initialize_wrapper_data_hooks()
     vfunction25 = (vfunction_ptr)(ASI::AddrOf(0x511ae0));
     CMnuBase_setname = (CMnuBase_setname_ptr)(ASI::AddrOf(0x512E30));
     g_get_damage_reduction = (get_phys_damage_reduction_ptr)(ASI::AddrOf(0x317070));
+    f_destory_container = (destory_container_ptr)(ASI::AddrOf(0x512AB0));
+    f_destory_button = (destory_button_ptr)(ASI::AddrOf(0xB7B270));
+    set_menu_id = (set_menu_id_ptr)(ASI::AddrOf(0x50E660));
+    //
 }
 
 void log_message(const char *filename, const char *format, ...)
@@ -560,6 +567,15 @@ uint16_t __thiscall getMaxStat(SF_CGdFigure *_this, uint16_t target, StatisticDa
     }
 }
 
+void __thiscall update_label(void* label, char* label_text)
+{
+    SF_String s_alt_btn_name;
+    SF_String *p_alt_btn_name;
+    p_alt_btn_name = g_create_sf_string(&s_alt_btn_name, label_text);
+
+    set_button_name(label, p_alt_btn_name);
+    g_destroy_sf_string(p_alt_btn_name);
+}
 
 void __thiscall addBonusMultToStatistic(SF_CGdFigure *figure,
                                         StatisticDataKey key, uint16_t target,
@@ -862,21 +878,26 @@ void attach_mod_labels(CMnuContainer *container, int mods_per_page, int page)
                                          6, 100, absolute_y_pos - 32, 50,
                                          y_item_spacing);
 
+                    set_menu_id(mod_struct.title_label, 0x6);
+
                     mod_struct.desc_label =
                         attach_new_label(nullptr, container,
                                          wrapped_description,
                                          11, 48, absolute_y_pos + 24,
                                          227, y_item_spacing);
 
+                    set_menu_id(mod_struct.desc_label, 0x6);
                     mod_struct.page_label =
                         attach_new_label(nullptr, container, mod_page_info,
                                          6, 92, 382, 50, y_item_spacing);
 
+                    set_menu_id(mod_struct.page_label, 0x6);
                     mod_struct.error_label =
                         attach_new_label(nullptr, container, wrapped_error_info,
                                          11, 48, absolute_y_pos + 224,
                                          227, y_item_spacing);
 
+                    set_menu_id(mod_struct.error_label, 0x6);
                     // Set label colors
                     set_label_color(mod_struct.error_label, 1.0, 0.0, 0.0,
                                     '\x01');
@@ -934,6 +955,8 @@ void __fastcall navigate_callback_right(CMnuSmpButton *button,
 
 SFSF_ModlistStruct modinformation;
 CMnuContainer *mod_list;
+CMnuSmpButton* left_nav;
+CMnuSmpButton* right_nav;
 static bool is_mod_list_shown = false;
 static bool does_mod_list_exist = false;
 
@@ -941,7 +964,6 @@ void __thiscall show_mod_list(CMnuSmpButton *button)
 {
     CMnuContainer *parent =
         (CMnuContainer *) button->CMnuBase_data.param_2_callback;
-
 
     if(!does_mod_list_exist)
     {
@@ -957,15 +979,18 @@ void __thiscall show_mod_list(CMnuSmpButton *button)
         g_destroy_sf_string(p_alt_btn_name);
         mod_list = (CMnuContainer *) g_new_operator(0x340);
         initialize_menu_container(mod_list);
+        set_menu_id(mod_list, 0x3e);
+        //ui_bgr_options_select_border.msb
+        //ui_bgr_options_select_border_transparency.msb
 
         // Setup mesh loading for background of the container.
-        char menu_border[128] = "ui_bgr_options_select_border.msb";
-        char menu_background_fade[128] =
-            "ui_bgr_options_select_border_transparency.msb";
+        char menu_border[128] = "ui_bgr_pregame_border.msb";
+        char menu_background_fade[128] = "ui_bgr_landscape_bg.msb";
         p_menu_border = g_create_sf_string(&s_menu_border, menu_border);
         p_menu_background = g_create_sf_string(&s_menu_background,
                                                menu_background_fade);
-
+        //500, 124, 432, 432
+        // full screen?  11,6,1008,757,
         setup_menu_container_data(mod_list, 500, 124, 432, 432,
                                   p_menu_background, p_menu_border);
 
@@ -984,53 +1009,35 @@ void __thiscall show_mod_list(CMnuSmpButton *button)
         char btn_default[128]  = "ui_btn_togglearrow_right_default.msh";
         char btn_label[1] = "";
 
-        attach_new_button(mod_list, btn_default, btn_pressed, btn_load,
+        right_nav = attach_new_button(mod_list, btn_default, btn_pressed, btn_load,
                           btn_disabled, btn_label, 7, (432 - (48 + 32)), 332,
                           48, 48, 0, (uint32_t) &navigate_callback_right);
 
+        set_menu_id(right_nav, 0x3f);
         char btn_disabled_left[128] = "ui_btn_togglearrow_left_disabled.msh";
         char btn_pressed_left[128] = "ui_btn_togglearrow_left_pressed.msh";
         char btn_default_left[128] = "ui_btn_togglearrow_left_default.msh";
 
-        attach_new_button(mod_list, btn_default_left, btn_pressed_left,
+        left_nav = attach_new_button(mod_list, btn_default_left, btn_pressed_left,
                           btn_load, btn_disabled_left, btn_label, 7, 28, 332,
                           48, 48, 1, (uint32_t) &navigate_callback_left);
 
+        set_menu_id(left_nav, 0x3f);
         attach_mod_labels(mod_list, 1, 0);
         does_mod_list_exist = true;
     }
     else
     {
-        if(is_mod_list_shown)
-        {
-            log_info("Hide Mod List");
-            char alt_name[32] = "SHOW MOD LIST";
-            SF_String s_alt_btn_name;
-            SF_String *p_alt_btn_name;
-            p_alt_btn_name = g_create_sf_string(&s_alt_btn_name, alt_name);
+        log_info("Hide Mod List");
+        char alt_name[32] = "SHOW MOD LIST";
+        update_label(button, alt_name);
+        //set_container_alpha(mod_list, 0.0);
 
-            set_button_name(button, p_alt_btn_name);
-            g_destroy_sf_string(p_alt_btn_name);
-
-            set_container_alpha(mod_list, 0.0);
-            is_mod_list_shown = false;
-        }
-        else
-        {
-            log_info("Show Mod List");
-            char alt_name[32] = "HIDE MOD LIST";
-            SF_String s_alt_btn_name;
-            SF_String *p_alt_btn_name;
-            p_alt_btn_name = g_create_sf_string(&s_alt_btn_name, alt_name);
-
-            set_button_name(button, p_alt_btn_name);
-            g_destroy_sf_string(p_alt_btn_name);
-
-            set_container_alpha(mod_list, 0.99);
-            is_mod_list_shown = true;
-        }
+        f_destory_container((void *)mod_list, 2); // 2 is used in the menu option back button...
+        does_mod_list_exist = false;
     }
 }
+
 
 void __fastcall show_mod_list_callback(CMnuSmpButton *button,
                                        int32_t *cui_menu_ptr_maybe)
@@ -1043,7 +1050,7 @@ void __fastcall show_mod_list_callback(CMnuSmpButton *button,
 }
 
 
-void __thiscall attach_new_button(CMnuContainer *parent,
+CMnuSmpButton* __thiscall attach_new_button(CMnuContainer *parent,
                                   char *button_mesh_default,
                                   char *button_mesh_pressed,
                                   char *button_initial_load_mesh,
@@ -1129,6 +1136,8 @@ void __thiscall attach_new_button(CMnuContainer *parent,
     g_destroy_sf_string(init_load_mesh);
     g_destroy_sf_string(mesh_string_disabled);
     g_destroy_sf_string(label_string);
+
+    return new_button;
 }
 
 CMnuLabel * __thiscall attach_new_meshed_label(CMnuLabel *new_label,

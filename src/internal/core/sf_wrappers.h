@@ -104,6 +104,10 @@ typedef void (__thiscall *create_button_ptr)(CMnuSmpButton *smpButton,
 typedef void (__thiscall *set_label_color_ptr)(CMnuLabel *_this, float r,
                                                float g, float b, char flag);
 typedef void (__thiscall *set_btn_name_ptr)(void *button, SF_String *string);
+typedef void (__thiscall *destory_container_ptr)(void *container, int unknown_param);
+typedef void (__thiscall *destory_button_ptr)(void *button);
+typedef void (__thiscall *set_menu_id_ptr)(void *container, uint32_t id);
+
 typedef CMnuSmpButton *(__thiscall *initialize_smp_button_ptr)(
     CMnuSmpButton *btn);
 typedef void (__thiscall *vfunction2_callback_attach_ptr)(void *, void *,void *,

@@ -67,9 +67,6 @@ fun_00910de0_ptr fun_00910de0;
 
 void initialize_menu_data_hooks()
 {
-    // Retrieve function pointers using the Memory Address of Intercepted Function
-    // These addresses are found using a Reverse Engineering program called Ghidra
-
     s_initialize_menu_label = (menu_label_ptr)(ASI::AddrOf(0x51a180));
     s_initialize_menu_container =
         (initialize_menu_container_ptr)(ASI::AddrOf(0x505780));

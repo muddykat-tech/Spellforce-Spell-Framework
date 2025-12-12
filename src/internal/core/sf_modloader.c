@@ -15,17 +15,15 @@ int g_error_count = 0;
 
 void cleanup(void *modHandle)
 {
-    // Free resources (unload mod library using FreeLibrary)
     if (modHandle)
     {
         FreeLibrary((HMODULE)modHandle);
     }
 }
 
-// Function to extract filename from the path
 const char *get_filename(const char *path)
 {
-    const char *filename = strrchr(path, '\\'); // Find the last occurrence of '\\' in the path
+    const char *filename = strrchr(path, '\\');
     return (filename) ? (filename + 1) : path;
 }
 
@@ -99,6 +97,7 @@ void load_all_mods(const char *subfolder, void *pFrameworkAPI)
 
 void initialize_mods()
 {
+    log_info("| - Core Mod [%s] Initialized", g_current_mod->mod_id);
     load_all_mods("sfsf", &frameworkAPI);
     log_info("| - %d Mods Initialized with %d error(s)", g_mod_count, g_error_count);
 }

@@ -39,7 +39,7 @@ void include_owner_on_map(uint16_t owner, uint16_t building_index)
             object_ptr = l_AC65_init(temp_alloc);
         }
     }
-    l_fun0074ca30(*object_ptr, building_index, 1);
+    l_fun0074ca30((uint32_t*)*object_ptr, building_index, 1);
 }
 
 void __thiscall sf_building_done_hook(SF_CGdBuildingToolbox *_this, uint16_t building_index)
