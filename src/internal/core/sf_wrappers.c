@@ -49,6 +49,7 @@ get_phys_damage_reduction_ptr g_get_damage_reduction;
 destory_container_ptr f_destory_container;
 destory_button_ptr f_destory_button;
 set_menu_id_ptr set_menu_id;
+set_container_visible_ptr set_container_visible;
 
 //checky thiscall but not really. ~muddykat (fix this later add support for non thiscalls)
 uint32_t __thiscall getDistance(SF_Coord *pointA, SF_Coord *pointB)
@@ -116,7 +117,7 @@ void initialize_wrapper_data_hooks()
     f_destory_container = (destory_container_ptr)(ASI::AddrOf(0x512AB0));
     f_destory_button = (destory_button_ptr)(ASI::AddrOf(0xB7B270));
     set_menu_id = (set_menu_id_ptr)(ASI::AddrOf(0x50E660));
-    //
+    set_container_visible = (set_container_visible_ptr)(ASI::AddrOf(0x513910));
 }
 
 void log_message(const char *filename, const char *format, ...)
@@ -979,7 +980,6 @@ void __thiscall show_mod_list(CMnuSmpButton *button)
         g_destroy_sf_string(p_alt_btn_name);
         mod_list = (CMnuContainer *) g_new_operator(0x340);
         initialize_menu_container(mod_list);
-        set_menu_id(mod_list, 0x3e);
         //ui_bgr_options_select_border.msb
         //ui_bgr_options_select_border_transparency.msb
 
@@ -1013,7 +1013,6 @@ void __thiscall show_mod_list(CMnuSmpButton *button)
                           btn_disabled, btn_label, 7, (432 - (48 + 32)), 332,
                           48, 48, 0, (uint32_t) &navigate_callback_right);
 
-        set_menu_id(right_nav, 0x3f);
         char btn_disabled_left[128] = "ui_btn_togglearrow_left_disabled.msh";
         char btn_pressed_left[128] = "ui_btn_togglearrow_left_pressed.msh";
         char btn_default_left[128] = "ui_btn_togglearrow_left_default.msh";
@@ -1021,20 +1020,27 @@ void __thiscall show_mod_list(CMnuSmpButton *button)
         left_nav = attach_new_button(mod_list, btn_default_left, btn_pressed_left,
                           btn_load, btn_disabled_left, btn_label, 7, 28, 332,
                           48, 48, 1, (uint32_t) &navigate_callback_left);
-
-        set_menu_id(left_nav, 0x3f);
         attach_mod_labels(mod_list, 1, 0);
         does_mod_list_exist = true;
     }
     else
     {
-        log_info("Hide Mod List");
-        char alt_name[32] = "SHOW MOD LIST";
-        update_label(button, alt_name);
-        //set_container_alpha(mod_list, 0.0);
-
-        f_destory_container((void *)mod_list, 2); // 2 is used in the menu option back button...
-        does_mod_list_exist = false;
+        if(is_mod_list_shown)
+        {
+            log_info("Hide Mod List");
+            char alt_name[32] = "SHOW MOD LIST";
+            update_label(button, alt_name);
+            set_container_visible(mod_list, 0, "\0");
+            is_mod_list_shown = false;
+        }
+        else
+        {
+            log_info("Show Mod List");
+            char alt_name[32] = "HIDE MOD LIST";
+            update_label(button, alt_name);
+            set_container_visible(mod_list, 1, "\1");
+            is_mod_list_shown = true;
+        }
     }
 }
 
