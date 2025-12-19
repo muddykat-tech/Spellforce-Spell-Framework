@@ -107,7 +107,7 @@ typedef void (__thiscall *set_btn_name_ptr)(void *button, SF_String *string);
 typedef void (__thiscall *destory_container_ptr)(void *container, int unknown_param);
 typedef void (__thiscall *destory_button_ptr)(void *button);
 typedef void (__thiscall *set_menu_id_ptr)(void *container, uint32_t id);
-typedef void (__thiscall *set_container_visible_ptr)(void *container, uint32_t visible, char _unknown);
+typedef void (__thiscall *set_container_visible_ptr)(void *container, uint32_t visible, uint8_t _unknown);
 
 typedef CMnuSmpButton *(__thiscall *initialize_smp_button_ptr)(
     CMnuSmpButton *btn);
@@ -122,6 +122,9 @@ typedef void (__thiscall *setup_menu_container_data_ptr)(CMnuContainer *_this,
                                                          SF_String *border);
 typedef void (__thiscall *container_alpha_ptr)(CMnuContainer *_this,
                                                float alpha);
+
+typedef void (__thiscall *set_visual_control_ptr)(CMnuContainer *_this);
+
 typedef void (__thiscall *CMnuBase_setname_ptr)(CMnuBase *_this,
                                                 SF_String *name);
 

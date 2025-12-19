@@ -128,47 +128,55 @@ void initialize_menu_data_hooks()
         (CMnuScreen_attach_control_ptr)(ASI::AddrOf(0x507240));
 }
 
+CMnuSmpButton* show_mod_list_button;
 
 SFSF_ModlistStruct mod_struct;
-void __attribute__((no_caller_saved_registers,
-                    thiscall)) sf_menu_hook(uint32_t _CAppMenu)
+void __attribute__((no_caller_saved_registers, thiscall))
+sf_menu_hook(uint32_t _CAppMenu)
 {
     log_info("Starting Menu Hook");
-    // String to display in the new label we're attaching to the menu
+
     char sfsf_info[256];
-    sprintf(sfsf_info, "Spell Framework %s\n%d Mod(s) Loaded with %d Error(s)",
-            g_framework_mod->mod_version, g_mod_count, g_error_count);
-    // Manually move the pointer in order to access the CMNuContainer, We'll need to annotate the CAppMenu Structure more to
-    // Switch to a more convential method.
-    uint32_t CAppMenu_data = *(uint32_t *)(_CAppMenu + 0x4);
-    uint32_t container_hack_ptr = *(uint32_t *)(_CAppMenu + 0x58);
-    CMnuContainer *container_hack = (CMnuContainer *)container_hack_ptr;
+    snprintf(sfsf_info, sizeof(sfsf_info),
+             "Spell Framework %s\n%d Mod(s) Loaded with %d Error(s)",
+             g_framework_mod->mod_version, g_mod_count, g_error_count);
+
+    CMnuContainer *container = *(CMnuContainer **)(_CAppMenu + 0x58);
 
     CMnuLabel *sfsf_version_label;
-    attach_new_label(sfsf_version_label, container_hack, sfsf_info, 6, 10, 729,
-                     strlen(sfsf_info) * 4, 100);
-    char sfsf_test_button_default[256];
-    char sfsf_test_button_pressed[256];
-    char sfsf_test_button_disabled[256];
-    char sfsf_test_button_highlight[256];
-    char sfsf_test_button_label[256];
+    attach_new_label(sfsf_version_label, container, sfsf_info,
+                     6, 10, 729, strlen(sfsf_info) * 4, 100);
 
-    sprintf(sfsf_test_button_default, "ui_mainmenu_button_default.msh");
-    sprintf(sfsf_test_button_pressed, "ui_mainmenu_button_pressed.msh");
-    sprintf(sfsf_test_button_highlight, "");
-    sprintf(sfsf_test_button_disabled, "ui_mainmenu_button_disabled.msh");
-    sprintf(sfsf_test_button_label, "SHOW MOD LIST");
+    char button_default[32]     = "ui_mainmenu_button_default.msh";
+    char button_pressed[32]     = "ui_mainmenu_button_pressed.msh";
+    char button_disabled[32]    = "ui_mainmenu_button_disabled.msh";
+    char button_highlight[32]   = "";
+    char button_label[32]       = "SHOW MOD LIST";
 
-    // Initialize struct members
     mod_struct.toggle = 0;
     mod_struct.index = 0;
 
     log_info("Adding Mod List Button");
-    int button_index = 15;
-    attach_new_button(container_hack, sfsf_test_button_default,
-                      sfsf_test_button_pressed, sfsf_test_button_highlight,
-                      sfsf_test_button_disabled, sfsf_test_button_label, 7, 822,
-                      705, 192, 36, button_index,
+
+    const int BUTTON_INDEX = 15;
+    const int BUTTON_X = 822;
+    const int BUTTON_Y = 705;
+    const int BUTTON_WIDTH = 192;
+    const int BUTTON_HEIGHT = 36;
+    const int BUTTON_FONT_INDEX = 7;
+
+    show_mod_list_button = attach_new_button(container,
+                      button_default,
+                      button_pressed,
+                      button_highlight,
+                      button_disabled,
+                      button_label,
+                      BUTTON_FONT_INDEX,
+                      BUTTON_X,
+                      BUTTON_Y,
+                      BUTTON_WIDTH,
+                      BUTTON_HEIGHT,
+                      BUTTON_INDEX,
                       (uint32_t)&show_mod_list_callback);
 
     s_menu_func(_CAppMenu);
