@@ -25,7 +25,7 @@ void __thiscall rock_bullet_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
 
 
     uint16_t target_index = spell->target.entity_index;
-    uint16_t source_index = spell->target.entity_index;
+    uint16_t source_index = spell->source.entity_index;
 
     //target is figure, target index has been passed through
     //figure is owned by any clan present on the map
@@ -148,7 +148,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     effectAPI = sfsf->effectAPI;
 
     SFSpell *rock_bullet = registrationAPI->registerSpell(kGdSpellLineRockBullet);
-    registrationAPI->linkEffectHandler(rock_bullet, kGdSpellLineRockBullet, &rock_bullet_effect_handler);
+    registrationAPI->linkEffectHandler(rock_bullet, kGdSpellJobRockBullet, &rock_bullet_effect_handler);
 }
 
 

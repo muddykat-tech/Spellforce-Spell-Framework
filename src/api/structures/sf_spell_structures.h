@@ -35,7 +35,7 @@ struct __attribute__((packed)) SF_CGdSpell
     void *SF_CGdFigureJobs;
     SF_CGdFigureToolbox *SF_CGdFigureToolBox;
     void *SF_CGdFormation;
-    void *unkn2;  // Seems to be used as first param for GetChanceToResistSpell
+    void *AutoClass34;  // Seems to be used as first param for GetChanceToResistSpell
     void *SF_CGdObject;
     void *SF_CGdObjectToolBox;
     SF_CGdPlayer *CGdPlayer;
