@@ -348,19 +348,18 @@ bool __thiscall onStoneMinerFinishJob(SF_CGdFigureJobs *_this, uint16_t figure_i
 void __thiscall update_owner_resources(SF_CGdFigureJobs *_this, uint16_t owner, uint16_t figure_id,
                                        uint8_t resource_type, uint8_t amount)
 {
-    uint32_t *object_ptr = (uint32_t *)ASI::AddrOf(0x00949fec);
+    uint32_t *object_ptr = (uint32_t *)ASI::AddrOf(0x949fec);
     if (*object_ptr == 0)
     {
 
         uint32_t *temp_alloc = (uint32_t *)op_new(8);
         if (temp_alloc != 0)
         {
-            object_ptr = l_AC65_init(temp_alloc);
+            *object_ptr = l_AC65_init(temp_alloc);
         }
     }
-    AC65_FUN_0074caf0(object_ptr, owner, 0, amount);
+    AC65_FUN_0074caf0(*object_ptr, owner, 0, amount);
     AC30_FUN_006c3880(_this->AutoClass30, figure_id, resource_type, amount);
-
 }
 
 void __thiscall onCarpenterFinishJob(SF_CGdFigureJobs *_this, uint16_t figure_id)
@@ -397,7 +396,7 @@ void __thiscall onCarpenterFinishJob(SF_CGdFigureJobs *_this, uint16_t figure_id
         }
         uint8_t race = _this->CGdFigure->figures[figure_id].race;
         uint16_t owner = _this->CGdFigure->figures[figure_id].owner;
-        bool side = !((race != 3) && (race != 2) && (race != 1));
+        bool side = ((race != 3) && (race != 2) && (race != 1));
         addResource(_this->CGdPlayer, owner, side, resource_type, 10);
         update_owner_resources(_this, owner, figure_id, resource_type, 10);
     }
