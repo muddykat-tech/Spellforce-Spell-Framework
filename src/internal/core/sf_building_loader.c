@@ -25,7 +25,6 @@ void init_building(Building *building)
     building->resource_count = 0;
 }
 
-// Compares a JSON token string with a given C string.
 static bool json_token_streq(const char *json, const jsmntok_t *token, const char *s)
 {
     return token->type == JSMN_STRING && (int)strlen(s) == token->end - token->start && strncmp(json + token->start, s,
@@ -33,7 +32,6 @@ static bool json_token_streq(const char *json, const jsmntok_t *token, const cha
                                                                                                 token->start) == 0;
 }
 
-// Converts a JSON token to an integer.
 static int jsonint(const char *json, const jsmntok_t *token)
 {
     char temp[32];
