@@ -23,6 +23,8 @@
  * @{
  */
 
+typedef uint32_t (__thiscall *XDataGet_ptr)(void *_this,uint16_t key,uint8_t keyType);
+
 FUN_0069eaf0_ptr FUN_0069eaf0;
 fidfree_ptr fidFree;
 SF_String_ctor_ptr g_create_sf_string;
@@ -51,6 +53,7 @@ destory_container_ptr f_destory_container;
 destory_button_ptr f_destory_button;
 set_menu_id_ptr set_menu_id;
 set_container_visible_ptr set_container_visible;
+XDataGet_ptr XDataGet;
 
 //checky thiscall but not really. ~muddykat (fix this later add support for non thiscalls)
 uint32_t __thiscall getDistance(SF_Coord *pointA, SF_Coord *pointB)
@@ -94,6 +97,7 @@ bool __thiscall isSiegeUnit (SF_CGdFigure *_this, uint16_t figure_index)
 
 void initialize_wrapper_data_hooks()
 {
+    XDataGet = (XDataGet_ptr)(ASI::AddrOf(0x354210));
     FUN_0069eaf0 = (FUN_0069eaf0_ptr)(ASI::AddrOf(0x29EAF0));
     fidFree = (fidfree_ptr)(ASI::AddrOf(0x6B6E25));
     has_spell_effect = (has_spell_effect_ptr)(ASI::AddrOf(0x2fe46f));
@@ -224,6 +228,16 @@ bool __thiscall isActionMelee(SF_SGtFigureAction *_this)
     if ((_this->type == 10000) || (_this->type == 0x2711))
     {
         return 1;
+    }
+    return 0;
+}
+
+uint32_t __thiscall getBuildingXData(SF_CGdBuildingToolbox *_this, uint16_t building_index, uint8_t key_type)
+{
+    uint16_t key = _this->CGdBuilding->buildings[building_index].xdata_key;
+    if (key!=0)
+    {
+        return XDataGet(_this->CGdXDataList, key, key_type);
     }
     return 0;
 }
@@ -570,7 +584,7 @@ uint16_t __thiscall getMaxStat(SF_CGdFigure *_this, uint16_t target, StatisticDa
     }
 }
 
-void __thiscall update_label(void* label, char* label_text)
+void __thiscall update_label(void *label, char *label_text)
 {
     SF_String s_alt_btn_name;
     SF_String *p_alt_btn_name;
@@ -797,9 +811,9 @@ static void update_label_text(CMnuLabel *label, const char *text)
 SFSF_ModlistStruct modinformation;
 CMnuContainer *mod_list;
 CMnuContainer *mod_container;
-CMnuLabel* mod_list_title;
-CMnuSmpButton* left_nav;
-CMnuSmpButton* right_nav;
+CMnuLabel *mod_list_title;
+CMnuSmpButton *left_nav;
+CMnuSmpButton *right_nav;
 static bool is_mod_list_shown = false;
 static bool does_mod_list_exist = false;
 
@@ -856,7 +870,7 @@ void prepare_mod_page_info(int page, int total_pages, char *mod_page_info, size_
 }
 
 void prepare_mod_error_info(SFMod *parent_mod, char *mod_error_info, size_t error_buffer_size,
-                             char *wrapped_error_info, size_t wrapped_buffer_size)
+                            char *wrapped_error_info, size_t wrapped_buffer_size)
 {
     if (parent_mod->mod_errors && (parent_mod->mod_errors[0] != '\0'))
     {
@@ -1009,7 +1023,7 @@ void __fastcall navigate_callback_right(CMnuSmpButton *button, int32_t *cui_menu
     int total_pages = calculate_total_pages(total_unique_mods, 1);
 
     mod_struct.index = (mod_struct.index >= total_pages) ?
-        0 : mod_struct.index + 1;
+                       0 : mod_struct.index + 1;
 
     attach_mod_labels(parent, 1, mod_struct.index);
 }
@@ -1023,16 +1037,16 @@ void add_navigation_buttons(CMnuContainer *parent)
     char btn_label[1] = "";
 
     right_nav = attach_new_button(parent, btn_default, btn_pressed, btn_load,
-                      btn_disabled, btn_label, 7, (1008 - (48 + 32)), 640,
-                      48, 48, 0, (uint32_t) &navigate_callback_right);
+                                  btn_disabled, btn_label, 7, (1008 - (48 + 32)), 640,
+                                  48, 48, 0, (uint32_t) &navigate_callback_right);
 
     char btn_disabled_left[128] = "ui_btn_togglearrow_left_disabled.msh";
     char btn_pressed_left[128] = "ui_btn_togglearrow_left_pressed.msh";
     char btn_default_left[128] = "ui_btn_togglearrow_left_default.msh";
 
     left_nav = attach_new_button(parent, btn_default_left, btn_pressed_left,
-                      btn_load, btn_disabled_left, btn_label, 7, 28, 640,
-                      48, 48, 1, (uint32_t) &navigate_callback_left);
+                                 btn_load, btn_disabled_left, btn_label, 7, 28, 640,
+                                 48, 48, 1, (uint32_t) &navigate_callback_left);
 
     attach_mod_labels(parent, 1, 0);
 }
@@ -1053,7 +1067,7 @@ void add_close_button(CMnuContainer *mod_list)
     char close_btn_load[1] = "";
     char close_btn_label[1] = "";
 
-    CMnuSmpButton* close_btn = attach_new_button(
+    CMnuSmpButton *close_btn = attach_new_button(
         mod_list,
         close_btn_default,
         close_btn_pressed,
@@ -1067,7 +1081,7 @@ void add_close_button(CMnuContainer *mod_list)
         48,                 // Height
         2,                  // Button index
         (uint32_t) &close_mod_list_callback  // Callback function
-    );
+        );
 }
 
 void __thiscall show_mod_list(CMnuSmpButton *button)
@@ -1126,19 +1140,20 @@ void __thiscall show_mod_list(CMnuSmpButton *button)
         add_close_button(mod_container);
         add_navigation_buttons(mod_container);
         /*
-        CMnuLabel *label_ptr,
+           CMnuLabel *label_ptr,
                                         CMnuContainer *parent,
                                         char *label_chars, uint8_t font_index,
                                         uint16_t x_pos, uint16_t y_pos,
                                         uint16_t width, uint16_t height
-                                        */
+         */
         char sfsf_mod_info[32] = "Mod Information";
         mod_list_title = attach_new_label(nullptr, mod_container, sfsf_mod_info, 6, 468, 16, 128, 16);
         set_menu_id(mod_list_title, 0x6);
         set_label_color(mod_list_title, 0.85, 0.64, 0.12, '\0');
         set_label_color(mod_list_title, 0.85, 0.64, 0.12, '\x01');
 
-        if(!mod_list) {
+        if(!mod_list)
+        {
             log_error("Unable to create Mod Menu, Mod List Container is NULL");
             return;
         }
@@ -1161,15 +1176,15 @@ void __fastcall show_mod_list_callback(CMnuSmpButton *button,
     show_mod_list(button);
 }
 
-CMnuSmpButton* __thiscall attach_new_button(CMnuContainer *parent,
-                                  char *button_mesh_default,
-                                  char *button_mesh_pressed,
-                                  char *button_initial_load_mesh,
-                                  char *button_mesh_disabled, char *label_char,
-                                  uint8_t font_index, uint16_t x_pos,
-                                  uint16_t y_pos, uint16_t width,
-                                  uint16_t height, int button_index,
-                                  uint32_t callback_func_ptr)
+CMnuSmpButton * __thiscall attach_new_button(CMnuContainer *parent,
+                                             char *button_mesh_default,
+                                             char *button_mesh_pressed,
+                                             char *button_initial_load_mesh,
+                                             char *button_mesh_disabled, char *label_char,
+                                             uint8_t font_index, uint16_t x_pos,
+                                             uint16_t y_pos, uint16_t width,
+                                             uint16_t height, int button_index,
+                                             uint32_t callback_func_ptr)
 {
     SF_String m_mesh_string_default;
     SF_String m_mesh_string_pressed;

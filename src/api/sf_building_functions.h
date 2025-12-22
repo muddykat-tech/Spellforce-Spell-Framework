@@ -1,8 +1,9 @@
 #pragma once
 #include "./structures/sf_building_structures.h"
 
-DECLARE_FUNCTION(void, setBuildingXData, SF_CGdBuildingToolbox *_this, uint16_t building_index, uint8_t xdatakey,
+DECLARE_FUNCTION(void, setBuildingXData, SF_CGdBuildingToolbox *_this, uint16_t building_index, uint8_t key_type,
                  uint32_t value);
+DECLARE_FUNCTION(uint32_t, getBuildingXData, SF_CGdBuildingToolbox *_this, uint16_t building_index, uint8_t key_type);
 DECLARE_FUNCTION(void, attachTowerUnit, SF_CGdBuildingToolbox *_this, uint16_t building_index, uint16_t unit_id);
 DECLARE_FUNCTION(void, buildingDealDamage, SF_CGdBuildingToolbox *_this, uint16_t figure_id, uint16_t building_id,
                  uint16_t damage, uint32_t is_spell_damage);
@@ -98,6 +99,7 @@ typedef struct
     addFigureToBuilding_ptr addFigureToBuilding;
     buildingIsHabitable_ptr buildingIsHabitable;
     buildingIsHabitableSingle_ptr buildingIsHabitableSingle;
+    getBuildingXData_ptr getBuildingXData;
     /*
        getRacialSmallHQ_ptr getRacialSmallHQ;
        getRacialMediumHQ_ptr getRacialMediumHQ;

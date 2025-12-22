@@ -34,6 +34,7 @@ extern void __thiscall setupFigureIterator(CGdFigureIterator *iterator, SF_CGdSp
 extern void __thiscall disposeFigureIterator(CGdFigureIterator *iterator);
 extern bool __thiscall hasBuildingTag(uint8_t building_type, BuildingTag tag);
 
+uint32_t __thiscall getBuildingXData(SF_CGdBuildingToolbox *_this, uint16_t building_index, uint8_t key_type);
 
 bool __thiscall buildingIsScavenger(SF_CGdBuilding *_this, uint16_t building_index);
 bool __thiscall buildingIsFisher(SF_CGdBuilding *_this, uint16_t building_index);
