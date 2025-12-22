@@ -39,8 +39,8 @@ initialize_smp_button_ptr initialize_smp_button;
 set_btn_name_ptr set_button_name;
 initialize_menu_container_ptr initialize_menu_container;
 set_label_color_ptr set_label_color;
-container_alpha_ptr set_container_alpha;
-set_visual_control_ptr set_visual_control;
+set_base_alpha_ptr set_base_alpha;
+get_visual_control_ptr get_visual_control;
 setup_menu_container_data_ptr setup_menu_container_data;
 vfunction_2_ptr set_font;
 set_btn_index_ptr set_button_index;
@@ -102,8 +102,8 @@ void initialize_wrapper_data_hooks()
     fidFree = (fidfree_ptr)(ASI::AddrOf(0x6B6E25));
     has_spell_effect = (has_spell_effect_ptr)(ASI::AddrOf(0x2fe46f));
     set_label_color = (set_label_color_ptr)(ASI::AddrOf(0x530330));
-    set_container_alpha = (container_alpha_ptr)(ASI::AddrOf(0x512EB0));
-    set_visual_control = (set_visual_control_ptr)(ASI::AddrOf(0x507BC0));//
+    set_base_alpha = (set_base_alpha_ptr)(ASI::AddrOf(0x512EB0));
+    get_visual_control = (get_visual_control_ptr)(ASI::AddrOf(0x507BC0));//
     set_button_name = (set_btn_name_ptr) (ASI::AddrOf(0x52f8a0));
     initialize_menu_container =
         (initialize_menu_container_ptr)(ASI::AddrOf(0x505780));
@@ -584,124 +584,37 @@ uint16_t __thiscall getMaxStat(SF_CGdFigure *_this, uint16_t target, StatisticDa
     }
 }
 
-void __thiscall update_label(void *label, char *label_text)
-{
-    SF_String s_alt_btn_name;
-    SF_String *p_alt_btn_name;
-    p_alt_btn_name = g_create_sf_string(&s_alt_btn_name, label_text);
-
-    set_button_name(label, p_alt_btn_name);
-    g_destroy_sf_string(p_alt_btn_name);
-}
-
 void __thiscall addBonusMultToStatistic(SF_CGdFigure *figure,
                                         StatisticDataKey key, uint16_t target,
                                         int8_t value)
 {
-    bool invalid = FALSE;
-    FigureStatistic *statistic;
+    FigureStatistic *statistic = NULL;
     switch (key)
     {
-        case ARMOR:
-        {
-            statistic = &(figure->figures[target].armor);
-            break;
-        }
-        case AGILITY:
-        {
-            statistic = &(figure->figures[target].agility);
-            break;
-        }
-        case CHARISMA:
-        {
-            statistic = &(figure->figures[target].charisma);
-            break;
-        }
-        case DEXTERITY:
-        {
-            statistic = &(figure->figures[target].dexterity);
-            break;
-        }
-        case INTELLIGENCE:
-        {
-            statistic = &(figure->figures[target].intelligence);
-            break;
-        }
-        case STRENGTH:
-        {
-            statistic = &(figure->figures[target].strength);
-            break;
-        }
-        /***
-         * Stamina, mana and HP are EXT multipliers and require specific handling
-         */
-        case STAMINA:
-        {
-            addBonusMultExt(&(figure->figures[target].stamina), value);
-            return;
-        }
-        case MANA:
-        {
-            addBonusMultExt(&(figure->figures[target].mana), value);
-            return;
-        }
-        case HEALTH:
-        {
-            addBonusMultExt(&(figure->figures[target].health), value);
-            return;
-        }
-        case WISDOM:
-        {
-            statistic = &(figure->figures[target].wisdom);
-            break;
-        }
-        case RESISTANCE_FIRE:
-        {
-            statistic = &(figure->figures[target].resistance_fire);
-            break;
-        }
-        case RESISTANCE_ICE:
-        {
-            statistic = &(figure->figures[target].resistance_ice);
-            break;
-        }
-        case RESISTANCE_MENTAL:
-        {
-            statistic = &(figure->figures[target].resistance_mental);
-            break;
-        }
-        case RESISTANCE_BLACK:
-        {
-            statistic = &(figure->figures[target].resistance_black);
-            break;
-        }
-        case WALK_SPEED:
-        {
-            statistic = &(figure->figures[target].walk_speed);
-            break;
-        }
-        case FIGHT_SPEED:
-        {
-            statistic = &(figure->figures[target].fight_speed);
-            break;
-        }
-        case CAST_SPEED:
-        {
-            statistic = &(figure->figures[target].cast_speed);
-            break;
-        }
+        case STAMINA: addBonusMultExt(&figure->figures[target].stamina, value); return;
+        case MANA: addBonusMultExt(&figure->figures[target].mana, value); return;
+        case HEALTH: addBonusMultExt(&figure->figures[target].health, value); return;
+
+        case ARMOR:              statistic = &figure->figures[target].armor; break;
+        case AGILITY:            statistic = &figure->figures[target].agility; break;
+        case CHARISMA:           statistic = &figure->figures[target].charisma; break;
+        case DEXTERITY:          statistic = &figure->figures[target].dexterity; break;
+        case INTELLIGENCE:       statistic = &figure->figures[target].intelligence; break;
+        case STRENGTH:           statistic = &figure->figures[target].strength; break;
+        case WISDOM:             statistic = &figure->figures[target].wisdom; break;
+        case RESISTANCE_FIRE:    statistic = &figure->figures[target].resistance_fire; break;
+        case RESISTANCE_ICE:     statistic = &figure->figures[target].resistance_ice; break;
+        case RESISTANCE_MENTAL:  statistic = &figure->figures[target].resistance_mental; break;
+        case RESISTANCE_BLACK:   statistic = &figure->figures[target].resistance_black; break;
+        case WALK_SPEED:         statistic = &figure->figures[target].walk_speed; break;
+        case FIGHT_SPEED:        statistic = &figure->figures[target].fight_speed; break;
+        case CAST_SPEED:         statistic = &figure->figures[target].cast_speed; break;
+
         default:
-        {
-            invalid = TRUE;
-            break;
-        }
+            log_warning("INVALID STATISTIC KEY: %d", key);
+            return;
     }
 
-    if (invalid)
-    {
-        log_warning("INVALID STATISTIC KEY: %d", key);
-        return;
-    }
     figureAPI.addBonusMult(statistic, value);
 }
 
@@ -745,8 +658,7 @@ CMnuLabel * __thiscall attach_new_label(CMnuLabel *label_ptr,
                                         uint16_t x_pos, uint16_t y_pos,
                                         uint16_t width, uint16_t height)
 {
-    char empty[1];
-    sprintf(empty, "");
+    char empty[] = "";
     return attach_new_meshed_label(label_ptr, parent, empty, label_chars,
                                    font_index, x_pos, y_pos, width, height);
 }
@@ -811,9 +723,11 @@ static void update_label_text(CMnuLabel *label, const char *text)
 SFSF_ModlistStruct modinformation;
 CMnuContainer *mod_list;
 CMnuContainer *mod_container;
-CMnuLabel *mod_list_title;
-CMnuSmpButton *left_nav;
-CMnuSmpButton *right_nav;
+CMnuContainer *mod_info_page;
+
+CMnuLabel* mod_list_title;
+CMnuSmpButton* left_nav;
+CMnuSmpButton* right_nav;
 static bool is_mod_list_shown = false;
 static bool does_mod_list_exist = false;
 
@@ -903,17 +817,16 @@ void attach_mod_labels(CMnuContainer *container, int mods_per_page, int page)
 
     int total_pages = calculate_total_pages(total_unique_mods, mods_per_page);
 
-    // Normalize page index
     page = normalize_page_index(page, total_pages);
     mod_struct.index = page;
 
-    // Local layout variables for full screen
-    const int y_base_offset = 100;     // Start lower on the screen
-    const int y_item_spacing = 150;    // More space between mod entries
-    const int x_title_pos = 200;       // Centered horizontally
-    const int x_desc_pos = 200;        // Matched with title
-    const int title_width = 600;       // Wider title area
-    const int desc_width = 600;        // Wider description area
+    const int y_base_offset = 100;
+    const int y_item_spacing = 150;
+    const int x_title_pos = 468;
+    const int x_page_number_pos = 468;
+    const int x_desc_pos = 200;
+    const int title_width = 600;
+    const int desc_width = 800;
 
     const int start_index = mods_per_page * page;
     const int end_index = start_index + mods_per_page;
@@ -964,7 +877,7 @@ void attach_mod_labels(CMnuContainer *container, int mods_per_page, int page)
                 {
                     mod_struct.title_label =
                         attach_new_label(nullptr, container, mod_title,
-                                         6, 100, absolute_y_pos - 32, title_width,
+                                         6, x_title_pos, absolute_y_pos - 48, title_width,
                                          y_item_spacing);
                     set_menu_id(mod_struct.title_label, 0x6);
                     set_label_color(mod_struct.title_label, 0.85, 0.64, 0.12, '\0');
@@ -1002,28 +915,13 @@ void attach_mod_labels(CMnuContainer *container, int mods_per_page, int page)
     }
 }
 
-void __fastcall navigate_callback_left(CMnuSmpButton *button, int32_t *cui_menu_ptr_maybe)
-{
-    CMnuContainer *parent = (CMnuContainer *) button->CMnuBase_data.param_2_callback;
-
-    int total_unique_mods = calculate_total_unique_mods();
-    int total_pages = calculate_total_pages(total_unique_mods, 1);
-
-    mod_struct.index = (mod_struct.index - 1 + total_pages) % total_pages;
-
-    attach_mod_labels(parent, 1, mod_struct.index);
-}
-
-void __fastcall navigate_callback_right(CMnuSmpButton *button, int32_t *cui_menu_ptr_maybe)
+static void navigate_page(CMnuSmpButton *button, int delta)
 {
     CMnuContainer *parent =
-        (CMnuContainer *) button->CMnuBase_data.param_2_callback;
+        (CMnuContainer *)button->CMnuBase_data.param_2_callback;
 
-    int total_unique_mods = calculate_total_unique_mods();
-    int total_pages = calculate_total_pages(total_unique_mods, 1);
-
-    mod_struct.index = (mod_struct.index >= total_pages) ?
-                       0 : mod_struct.index + 1;
+    int total = calculate_total_pages(calculate_total_unique_mods(), 1);
+    mod_struct.index = normalize_page_index(mod_struct.index + delta, total);
 
     attach_mod_labels(parent, 1, mod_struct.index);
 }
@@ -1037,16 +935,16 @@ void add_navigation_buttons(CMnuContainer *parent)
     char btn_label[1] = "";
 
     right_nav = attach_new_button(parent, btn_default, btn_pressed, btn_load,
-                                  btn_disabled, btn_label, 7, (1008 - (48 + 32)), 640,
-                                  48, 48, 0, (uint32_t) &navigate_callback_right);
+                      btn_disabled, btn_label, 7, (886 - 96), 619 - 80,
+                      48, 48, 0, (uint32_t) &navigate_page, 1);
 
     char btn_disabled_left[128] = "ui_btn_togglearrow_left_disabled.msh";
     char btn_pressed_left[128] = "ui_btn_togglearrow_left_pressed.msh";
     char btn_default_left[128] = "ui_btn_togglearrow_left_default.msh";
 
     left_nav = attach_new_button(parent, btn_default_left, btn_pressed_left,
-                                 btn_load, btn_disabled_left, btn_label, 7, 28, 640,
-                                 48, 48, 1, (uint32_t) &navigate_callback_left);
+                      btn_load, btn_disabled_left, btn_label, 7, 48, 619 - 80,
+                      48, 48, 1, (uint32_t) &navigate_page, -1);
 
     attach_mod_labels(parent, 1, 0);
 }
@@ -1057,6 +955,49 @@ void __fastcall close_mod_list_callback(CMnuSmpButton *button, int32_t *cui_menu
         (CMnuContainer *) button->CMnuBase_data.param_2_callback;
     set_container_visible(mod_list, false, false);
     is_mod_list_shown = false;
+}
+
+CMnuContainer *create_menu_container(
+    uint16_t x,
+    uint16_t y,
+    uint16_t width,
+    uint16_t height,
+    const char *background_msb,
+    const char *border_msb,
+    float alpha
+)
+{
+    CMnuContainer *container;
+    SF_String s_bg, s_border;
+    SF_String *p_bg, *p_border;
+
+    container = (CMnuContainer *)g_new_operator(0x340);
+    if (!container) {
+        log_error("Failed to allocate CMnuContainer");
+        return NULL;
+    }
+
+    initialize_menu_container(container);
+
+    p_bg = g_create_sf_string(&s_bg, (char *)background_msb);
+    p_border = g_create_sf_string(&s_border, (char *)border_msb);
+
+    setup_menu_container_data(
+        container,
+        x,
+        y,
+        width,
+        height,
+        p_bg,
+        p_border
+    );
+
+    g_destroy_sf_string(p_bg);
+    g_destroy_sf_string(p_border);
+    void* CMnuVisControl = (void*) get_visual_control(container);
+    set_base_alpha(CMnuVisControl, alpha);
+
+    return container;
 }
 
 void add_close_button(CMnuContainer *mod_list)
@@ -1074,14 +1015,14 @@ void add_close_button(CMnuContainer *mod_list)
         close_btn_load,
         close_btn_disabled,
         close_btn_label,
-        7,                  // Menu ID or layer
-        28,                 // X position
-        700,                // Y position
-        48,                // Width
-        48,                 // Height
-        2,                  // Button index
-        (uint32_t) &close_mod_list_callback  // Callback function
-        );
+        7,
+        28,
+        700,
+        48,
+        48,
+        2,
+        (uint32_t) &close_mod_list_callback, 0
+    );
 }
 
 void __thiscall show_mod_list(CMnuSmpButton *button)
@@ -1091,61 +1032,31 @@ void __thiscall show_mod_list(CMnuSmpButton *button)
     if(!does_mod_list_exist)
     {
         is_mod_list_shown = true;
-        SF_String s_menu_border, s_menu_background, s_sub_menu_border, s_sub_menu_background, s_alt_btn_name;
-        SF_String *p_menu_border, *p_menu_background, *p_sub_menu_border, *p_sub_menu_background, *p_alt_btn_name;
+        mod_info_page = create_menu_container(
+            0, 0, 1024, 768,
+            "ui_bgr_landscape_bg.msb",
+            "", 0.99f
+        );
 
-        char alt_name[32] = "OPEN MOD LIST";
-        p_alt_btn_name = g_create_sf_string(&s_alt_btn_name, alt_name);
-        set_button_name(button, p_alt_btn_name);
-        g_destroy_sf_string(p_alt_btn_name);
+        mod_container = create_menu_container(
+            11,6,1008,757,
+            "ui_bgr_pregame_border_transparency.msb",
+            "ui_bgr_pregame_border.msb", 0.5f
+        );
 
-        //ui_bgr_pregame_window_small
+        mod_list = create_menu_container(
+            59, 50, 886, 619,
+            "ui_bgr_options_border_transparency.msb",
+            "ui_bgr_options_border.msb", 0.5f
+        );
 
-        mod_container = (CMnuContainer *) g_new_operator(0x340);
-        initialize_menu_container(mod_container);
-
-        mod_list = (CMnuContainer *) g_new_operator(0x340);
-        initialize_menu_container(mod_list);
-
-        char menu_border[128] = "ui_bgr_pregame_border.msb";
-        char menu_background_fade[128] = "ui_bgr_landscape_bg.msb";
-        p_menu_border = g_create_sf_string(&s_menu_border, menu_border);
-        p_menu_background = g_create_sf_string(&s_menu_background, menu_background_fade);
-
-        setup_menu_container_data(mod_container, 0, 0, 1024, 768,
-                                  p_menu_background, p_menu_border);
-
-
-        g_destroy_sf_string(p_menu_background);
-        g_destroy_sf_string(p_menu_border);
-
-        char sub_menu_border[128] = "ui_bgr_options_border.msb";
-        char sub_menu_background_fade[128] = "ui_bgr_options_border_transparency.msb";
-        p_sub_menu_border = g_create_sf_string(&s_sub_menu_border, sub_menu_border);
-        p_sub_menu_background = g_create_sf_string(&s_sub_menu_background, sub_menu_background_fade);
-
-        setup_menu_container_data(mod_list, 59, 50, 886, 619, p_sub_menu_background, p_sub_menu_border);
-
-        set_container_alpha(mod_container, 0.99);
-
-        set_visual_control(mod_list);
-        set_container_alpha(mod_list, 0.5);
-
-        g_container_add_control(parent, (CMnuBase *)mod_container, '\x01', '\x01', 0);
+        g_container_add_control(parent, (CMnuBase *)mod_info_page, '\x01', '\x01', 0);
+        g_container_add_control(mod_info_page, (CMnuBase *)mod_container, '\x01', '\x01', 0);
         g_container_add_control(mod_container, (CMnuBase *)mod_list, '\x01', '\x01', 0);
 
-        g_destroy_sf_string(p_sub_menu_border);
-        g_destroy_sf_string(p_sub_menu_background);
+        add_close_button(mod_info_page);
+        add_navigation_buttons(mod_list);
 
-        add_close_button(mod_container);
-        add_navigation_buttons(mod_container);
-        /*
-           CMnuLabel *label_ptr,
-                                        CMnuContainer *parent,
-                                        char *label_chars, uint8_t font_index,
-                                        uint16_t x_pos, uint16_t y_pos,
-                                        uint16_t width, uint16_t height
-         */
         char sfsf_mod_info[32] = "Mod Information";
         mod_list_title = attach_new_label(nullptr, mod_container, sfsf_mod_info, 6, 468, 16, 128, 16);
         set_menu_id(mod_list_title, 0x6);
@@ -1162,12 +1073,11 @@ void __thiscall show_mod_list(CMnuSmpButton *button)
     else
     {
         is_mod_list_shown = !is_mod_list_shown;
-        set_container_visible(mod_container, is_mod_list_shown, 0);
+        set_container_visible(mod_info_page, is_mod_list_shown, 0);
     }
 }
 
-void __fastcall show_mod_list_callback(CMnuSmpButton *button,
-                                       int32_t *cui_menu_ptr_maybe)
+void __fastcall show_mod_list_callback(CMnuSmpButton *button)
 {
     CMnuContainer *parent =
         (CMnuContainer *) button->CMnuBase_data.param_2_callback;
@@ -1176,15 +1086,15 @@ void __fastcall show_mod_list_callback(CMnuSmpButton *button,
     show_mod_list(button);
 }
 
-CMnuSmpButton * __thiscall attach_new_button(CMnuContainer *parent,
-                                             char *button_mesh_default,
-                                             char *button_mesh_pressed,
-                                             char *button_initial_load_mesh,
-                                             char *button_mesh_disabled, char *label_char,
-                                             uint8_t font_index, uint16_t x_pos,
-                                             uint16_t y_pos, uint16_t width,
-                                             uint16_t height, int button_index,
-                                             uint32_t callback_func_ptr)
+CMnuSmpButton* __thiscall attach_new_button(CMnuContainer *parent,
+                                  char *button_mesh_default,
+                                  char *button_mesh_pressed,
+                                  char *button_initial_load_mesh,
+                                  char *button_mesh_disabled, char *label_char,
+                                  uint8_t font_index, uint16_t x_pos,
+                                  uint16_t y_pos, uint16_t width,
+                                  uint16_t height, int button_index,
+                                  uint32_t callback_func_ptr, int callback_param1)
 {
     SF_String m_mesh_string_default;
     SF_String m_mesh_string_pressed;
@@ -1245,11 +1155,11 @@ CMnuSmpButton * __thiscall attach_new_button(CMnuContainer *parent,
     callback.param_ptr = (uint32_t) parent;
     callback.callback_func = callback_func_ptr;
 
-    uint32_t param1, param2, param3;
+    uint32_t param2, param3;
 
-    attach_callback(&callback, &param1, &param2, &param3);
+    attach_callback(&callback, &callback_param1, &param2, &param3);
 
-    new_button->CMnuBase_data.param_1_callback = param1;
+    new_button->CMnuBase_data.param_1_callback = callback_param1;
     new_button->CMnuBase_data.param_2_callback = param2;
     new_button->CMnuBase_data.param_3_callback = param3;
 

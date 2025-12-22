@@ -1,8 +1,9 @@
-# Spellforce Spell Framework Coding Style
 
+# Spellforce Spell Framework Coding Style
 This style is based on the Linux kernel coding style.
 
 ## 1) Indentation and Switch Statements
+### **General Rule**
 
 Indentations should be 4 spaces.
 
@@ -29,9 +30,42 @@ switch (suffix)
     }
 }
 ```
+### Exception: Single-Line Case Statements
+A `case` may omit braces *only* when all of the following conditions are met:
+
+1. The case contains exactly one statement
+2. The statement fits on one line
+3. The statement is immediately followed by `break;` or `return;`
+4. No fallthrough occurs
+5. The statement has no side-effects that depend on scope (e.g. no variable declarations)
+6. The statement is trivial and self-contained (like a single assignment or function call)
+
+### Allowed Examples
+```c
+switch (input)
+{
+    case STAMINA: addBonusMultExt(&figure->figures[target].stamina, value); return;
+    case ARMOR: statistic = &figure->figures[target].armor; break;
+    default: log_warning("INVALID STATISTIC KEY: %d", key); return;
+}
+```
+
+### Not Allowed Examples
+```c
+switch (input)
+{
+    case ARMOR:
+        FigureStatistic *s = &figure->figures[target].armor;
+        break;
+
+    case AGILITY:
+        statistic = &figure->figures[target].agility;
+        do_something_else();
+        break;
+}
+```
 
 Fallthrough without braces or implicit continuation between cases is not permitted, as it reduces clarity and increases the chance of bugs:
-
 ```c
 switch (input)
 {
@@ -44,7 +78,6 @@ switch (input)
 ```
 
 Don't put multiple statements on a single line unless you have something to hide:
-
 ```c
 if (condition) do_this;
   do_something_everytime;

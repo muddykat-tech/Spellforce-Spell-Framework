@@ -121,10 +121,10 @@ typedef void (__thiscall *setup_menu_container_data_ptr)(CMnuContainer *_this,
                                                          float height,
                                                          SF_String *background,
                                                          SF_String *border);
-typedef void (__thiscall *container_alpha_ptr)(CMnuContainer *_this,
+typedef void (__thiscall *set_base_alpha_ptr)(void *_this,
                                                float alpha);
 
-typedef void (__thiscall *set_visual_control_ptr)(CMnuContainer *_this);
+typedef uint32_t (__thiscall *get_visual_control_ptr)(CMnuContainer *_this);
 
 typedef void (__thiscall *CMnuBase_setname_ptr)(CMnuBase *_this,
                                                 SF_String *name);
@@ -146,7 +146,7 @@ extern initialize_smp_button_ptr initialize_smp_button;
 extern set_btn_name_ptr set_button_name;
 extern initialize_menu_container_ptr initialize_menu_container;
 extern set_label_color_ptr set_label_color;
-extern container_alpha_ptr set_container_alpha;
+extern set_base_alpha_ptr set_base_alpha;
 extern setup_menu_container_data_ptr setup_menu_container_data;
 extern vfunction_2_ptr set_font;
 extern set_btn_index_ptr set_button_index;
