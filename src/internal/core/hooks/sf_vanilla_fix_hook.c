@@ -23,16 +23,16 @@ bool __thiscall get_salvo_target_list (SF_CGdFigureJobs *_this, SF_CGdTargetData
     uint16_t next_figure = 0;
     SF_Coord source_pos = _this->CGdFigure->figures[source->entity_index].position;
     SF_Coord target_pos = target->position;
-    log_info("Salvo source_pos X: %d, Y: %d ", source_pos.X, source_pos.Y);
-    log_info("Salvo target_pos X: %d, Y: %d ", target_pos.X, target_pos.Y);
+    //   log_info("Salvo source_pos X: %d, Y: %d ", source_pos.X, source_pos.Y);
+    //   log_info("Salvo target_pos X: %d, Y: %d ", target_pos.X, target_pos.Y);
 
     uint32_t distance = toolboxAPI.getDistance(&source_pos, &target_pos);
 
     uint32_t radius =  (uint32_t)round((distance << 10) * tan((angle*M_PI_2)/180)) >> 10;
-    log_info("Salvo distance %d, radius %d, angle %d", distance, radius, angle);
+    //   log_info("Salvo distance %d, radius %d, angle %d", distance, radius, angle);
     uint16_t min_range = ranges[0];
     uint16_t max_range = ranges[1];
-    log_info("Salvo min range %d, max range %d", min_range, max_range);
+    //   log_info("Salvo min range %d, max range %d", min_range, max_range);
 
     output->data = output->first;
     iteratorAPI.figureIteratorInit(&iter, 0, 0, 0x3ff, 0x3ff);
