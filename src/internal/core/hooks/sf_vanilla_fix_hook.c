@@ -1,7 +1,61 @@
 #include "../sf_wrappers.h"
 #include "../../../asi/sf_asi.h"
 #include "sf_vanilla_fix_hook.h"
+#define _USE_MATH_DEFINES
+#include <math.h>
 
+extern SpellFunctions spellAPI;
+extern ToolboxFunctions toolboxAPI;
+extern BuildingFunctions buildingAPI;
+extern FigureFunctions figureAPI;
+extern IteratorFunctions iteratorAPI;
+extern RegistrationFunctions registrationAPI;
+extern EffectFunctions effectAPI;
+extern AiFunctions aiAPI;
+
+typedef void (__thiscall *add_item_ptr)(ushort_list_node *_this,uint16_t *item);
+add_item_ptr add_item;
+bool __thiscall get_salvo_target_list (SF_CGdFigureJobs *_this, SF_CGdTargetData *source, SF_CGdTargetData *target,
+                                       uint32_t angle, uint16_t *ranges, uint32_t target_count,
+                                       ushort_list_node *output)
+{
+    CGdFigureIterator iter;
+    uint16_t next_figure = 0;
+    SF_Coord source_pos = _this->CGdFigure->figures[source->entity_index].position;
+    SF_Coord target_pos = target->position;
+    log_info("Salvo source_pos X: %d, Y: %d ", source_pos.X, source_pos.Y);
+    log_info("Salvo target_pos X: %d, Y: %d ", target_pos.X, target_pos.Y);
+
+    uint32_t distance = toolboxAPI.getDistance(&source_pos, &target_pos);
+
+    uint32_t radius =  (uint32_t)round((distance << 10) * tan((angle*M_PI_2)/180)) >> 10;
+    log_info("Salvo distance %d, radius %d, angle %d", distance, radius, angle);
+    uint16_t min_range = ranges[0];
+    uint16_t max_range = ranges[1];
+    log_info("Salvo min range %d, max range %d", min_range, max_range);
+
+    output->data = output->first;
+    iteratorAPI.figureIteratorInit(&iter, 0, 0, 0x3ff, 0x3ff);
+    iteratorAPI.figureIteratorSetPointers(&iter, _this->CGdFigure, _this->AutoClass22, _this->CGdWorld);
+    iteratorAPI.iteratorSetArea(&iter, &target_pos, radius);
+    next_figure = iteratorAPI.getNextFigure(&iter);
+    while ((next_figure != 0) && (target_count != 0))
+    {
+        SF_Coord secondary_pos = _this->CGdFigure->figures[next_figure].position;
+        distance = toolboxAPI.getDistance(&source_pos, &secondary_pos);
+        if ((distance > min_range) && (distance < max_range))
+        {
+            if (toolboxAPI.figuresCheckHostile(_this->CGdFigureToolBox, source->entity_index, next_figure))
+            {
+                add_item(output, &next_figure);
+                target_count--;
+            }
+        }
+        next_figure = iteratorAPI.getNextFigure(&iter);
+    }
+    iteratorAPI.disposeFigureIterator(&iter);
+    return (((uint32_t)output->data - (uint32_t)output->first) != 0);
+}
 
 uint16_t __thiscall get_figure_statistic_max_hp(SF_CGdFigure *_this, uint16_t figure_id)
 {
@@ -531,8 +585,20 @@ static void figure_statistic_hook_current_cast_spd()
     ASI::EndRewrite(ac_mreg);
 }
 
+static void salvo_fix_hook()
+{
+    ASI::MemoryRegion salvo_mreg1 (ASI::AddrOf(0x2eb294), 5);
+    ASI::BeginRewrite(salvo_mreg1);
+    *(unsigned char *)(ASI::AddrOf(0x2eb294)) = 0xE8;
+    *(int *)(ASI::AddrOf(0x2eb295)) = (int)(&get_salvo_target_list) - ASI::AddrOf((0x2eb299));
+    ASI::EndRewrite(salvo_mreg1);
+
+}
+
 void initialize_vanilla_fix_hooks()
 {
+    add_item = (add_item_ptr)(ASI::AddrOf(0x260d70));
+
     log_info("| - Vanilla Fix Hooks");
     figure_statistic_hook_current_ac();
     figure_statistic_hook_current_agi();
@@ -551,4 +617,5 @@ void initialize_vanilla_fix_hooks()
     figure_statistic_hook_current_walk_spd();
     figure_statistic_hook_current_fight_spd();
     figure_statistic_hook_current_cast_spd();
+    salvo_fix_hook();
 }
