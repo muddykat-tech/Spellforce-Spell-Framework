@@ -31,24 +31,32 @@ void __thiscall sf_subeffect_hook(SF_CGDEffect *_this, uint16_t effect_id)
 }
 
 /** @} */
+uint16_t __thiscall assistance_onhit_handler(SF_CGdFigureJobs *_this,
+                                             uint16_t source_index,
+                                             uint16_t target_index,
+                                             uint16_t damage);
 
 //just rewritten logic from ghidra to butcher forward
 void __thiscall sf_phys_sub_effect_hook(SF_CGDEffect *_this, uint16_t effect_id)
 {
     //STONE RAIN HANDLER
+    uint32_t source_id = effectAPI.getEffectXData(_this, effect_id, EFFECT_ENTITY_INDEX);
+    uint32_t source_type = effectAPI.getEffectXData(_this, effect_id, EFFECT_ENTITY_TYPE);
+    uint32_t target_id = effectAPI.getEffectXData(_this, effect_id, EFFECT_ENTITY_INDEX2);
+    uint32_t target_type = effectAPI.getEffectXData(_this, effect_id, EFFECT_ENTITY_TYPE2);
+    uint32_t damage = effectAPI.getEffectXData(_this, effect_id, EFFECT_PHYSICAL_DAMAGE);
+
     if (effectAPI.getEffectXData(_this, effect_id, EFFECT_DO_NOT_ADD_SUBSPELL))
     {
         uint32_t pos_x = _this->active_effect_list[effect_id].position.X;
         uint32_t pos_y = _this->active_effect_list[effect_id].position.Y;
         for (uint32_t i = 9, j = 0; i > 0; i--, j+=7)
         {
-            uint16_t w_x = _this->SF_CGdWorld->unknown1[j+pos_x];
-            uint16_t w_y = _this->SF_CGdWorld->unknown1[j+pos_y];
+            uint16_t w_x = _this->SF_CGdWorld->unknown1[j+pos_x].uknwn1;
+            uint16_t w_y = _this->SF_CGdWorld->unknown1[j+pos_y].uknwn1;
             uint16_t map_size =  _this->SF_CGdWorld->map_size;
             if ((w_x < map_size) && (w_y < map_size))
             {
-                uint32_t damage = effectAPI.getEffectXData(_this, effect_id, EFFECT_PHYSICAL_DAMAGE);
-                uint32_t source_id = effectAPI.getEffectXData(_this, effect_id, EFFECT_ENTITY_INDEX);
                 if ((_this->SF_CGdWorld->cells[w_y*0x400 + w_y].world_cell_flags & 0x10) != 0)
                 {
                     uint16_t target_id = toolboxAPI.getFigureFromWorld(_this->SF_CGdWorldToolBox, w_x, w_y, 0);
@@ -56,8 +64,10 @@ void __thiscall sf_phys_sub_effect_hook(SF_CGDEffect *_this, uint16_t effect_id)
                         (_this->SF_CGdFigure->figures[target_id].flags & 0xa == 0) &&
                         (toolboxAPI.isTargetable(_this->SF_CGdFigureToolBox, target_id)))
                     {
-                        bool isFriendly = toolboxAPI.figuresCheckFriendly(_this, source_id, target_id);
-                        bool isNeutral = toolboxAPI.figuresCheckNeutral(_this, source_id, target_id);
+                        bool isFriendly = toolboxAPI.figuresCheckFriendly(_this->SF_CGdFigureToolBox, source_id,
+                                                                          target_id);
+                        bool isNeutral = toolboxAPI.figuresCheckNeutral(_this->SF_CGdFigureToolBox, source_id,
+                                                                        target_id);
                         if ((!isFriendly && !isNeutral) || (_this->SF_CGdFigure->figures[target_id].owner != 0))
                         {
                             //kGdSpellLineStone
@@ -80,5 +90,42 @@ void __thiscall sf_phys_sub_effect_hook(SF_CGDEffect *_this, uint16_t effect_id)
             }
         }
 
+    }
+    bool isMagicDamage = 0;
+    if (target_type == 1)
+    {
+        //spark handler
+        if (effectAPI.getEffectXData(_this, effect_id, EFFECT_SPELL_LINE) == 160)
+        {
+            isMagicDamage = true;
+        }
+        //assistance handler
+        damage = assistance_onhit_handler(_this->SF_CGdFigureToolBox->CGdFigureJobs, source_id, target_id, damage);
+        toolboxAPI.dealDamage(_this->SF_CGdFigureToolBox, source_id, target_id, damage, isMagicDamage, 0, 0);
+        //Monument protection handler
+        uint32_t mana_cost = effectAPI.getEffectXData(_this, effect_id, EFFECT_MANA_COST);
+        if (mana_cost != 0)
+        {
+            SF_CGdTargetData source;
+            source.position = {0,0};
+            source.entity_index = source_id;
+            source.entity_type = source_type;
+
+            SF_CGdTargetData target;
+            target.position = {0,0};
+            target.entity_index = target_id;
+            target.entity_type = target_type;
+
+            SF_Rectangle rect = {0,0};
+
+            effectAPI.addEffect(_this, kGdEffectMonumentHitFigure, &source, &target, _this->OpaqueClass->current_step,
+                                0x14, &rect);
+            figureAPI.subMana(_this->SF_CGdFigure, target_id, mana_cost);
+        }
+    }
+    //Siege Aura Handler
+    else
+    {
+        buildingAPI.buildingDealDamage(_this->SF_CGdBuildingToolbox, source_id, target_id, damage, 0);
     }
 }

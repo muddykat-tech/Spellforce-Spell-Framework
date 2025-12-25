@@ -10,12 +10,12 @@ struct __attribute__((packed)) SF_CGdFigureToolbox
     uint32_t *CGdAStar;
     AutoClass14 *maybe_random;
     SF_CGdBuilding *CGdBuilding;
-    uint32_t *CGdBuildingToolbox;
+    SF_CGdBuildingToolbox *CGdBuildingToolbox;
     uint32_t *CGdDoubleLinkedList;
     SF_CGDEffect *CGdEffect;
     uint32_t *autoclass30;
     SF_CGdFigure *CGdFigure;
-    uint32_t *CGdFigureJobs;
+    SF_CGdFigureJobs *CGdFigureJobs;
     uint32_t *CGdFormation;
     uint32_t *autoclass34;
     uint32_t *autoclass50;

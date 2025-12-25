@@ -475,6 +475,8 @@ typedef enum
     EFFECT_SUBSPELL_ID = 0x1C,
     EFFECT_PHYSICAL_DAMAGE = 0x1E,
     BUILDING_ANIM_LENGTH = 0x20,
+    EFFECT_MANA_COST = 0x21,
+    EFFECT_SPELL_LINE = 0x24,
     BUILDING_ANIM_START = 0x25,
     SPELL_DOUBLE_DAMAGE = 0x26,
     BUILDING_QUEUE_COUNT = 0x28,
@@ -1406,17 +1408,17 @@ extern CMnuLabel * __thiscall attach_new_label(CMnuLabel *label_ptr,
                                                uint8_t font_index,
                                                uint16_t x_pos, uint16_t y_pos,
                                                uint16_t width, uint16_t height);
-extern CMnuSmpButton* __thiscall attach_new_button(CMnuContainer *parent,
-                                         char *button_mesh_default,
-                                         char *button_mesh_pressed,
-                                         char *button_mesh_highlight,
-                                         char *button_mesh_disabled,
-                                         char *label_char, uint8_t font_index,
-                                         uint16_t x_pos, uint16_t y_pos,
-                                         uint16_t width, uint16_t height,
-                                         int button_index,
-                                         uint32_t callback_function_pointer,
-                                         int callback_param1);
+extern CMnuSmpButton * __thiscall attach_new_button(CMnuContainer *parent,
+                                                    char *button_mesh_default,
+                                                    char *button_mesh_pressed,
+                                                    char *button_mesh_highlight,
+                                                    char *button_mesh_disabled,
+                                                    char *label_char, uint8_t font_index,
+                                                    uint16_t x_pos, uint16_t y_pos,
+                                                    uint16_t width, uint16_t height,
+                                                    int button_index,
+                                                    uint32_t callback_function_pointer,
+                                                    int callback_param1);
 
 extern void __fastcall show_mod_list_callback(CMnuSmpButton *button);
 
