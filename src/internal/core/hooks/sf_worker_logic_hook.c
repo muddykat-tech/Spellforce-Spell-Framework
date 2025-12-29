@@ -348,7 +348,7 @@ bool __thiscall onStoneMinerFinishJob(SF_CGdFigureJobs *_this, uint16_t figure_i
 void __thiscall update_owner_resources(SF_CGdFigureJobs *_this, uint16_t owner, uint16_t figure_id,
                                        uint8_t resource_type, uint8_t amount)
 {
-    uint32_t *object_ptr = (uint32_t *)ASI::AddrOf(0x949fec);
+    uint32_t **object_ptr = (uint32_t **)ASI::AddrOf(0x949fec);
     if (*object_ptr == 0)
     {
 
