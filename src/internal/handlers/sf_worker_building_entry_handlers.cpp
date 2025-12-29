@@ -216,6 +216,8 @@ void __thiscall miner_entry_handler (SF_CGdFigureJobs *_this,uint16_t figure_id,
                               _this->CGdBuilding->buildings[building_id].position.X);
     toolboxAPI.setFigureXData(_this->CGdFigureToolBox, figure_id, WORKER_HOST_BUILDING_POS_Y,
                               _this->CGdBuilding->buildings[building_id].position.Y);
+    log_debug (DEBUG_HIGH,"XData X %d Y %d", _this->CGdBuilding->buildings[building_id].position.X,
+               _this->CGdBuilding->buildings[building_id].position.Y);
     toolboxAPI.equipArtisanArmour(_this->CGdFigureToolBox, figure_id);
     figureAPI.setTask(_this->CGdFigure, figure_id, CGdFigureTask::TASK_MINE);
     toolboxAPI.equipArtisanTools(_this->CGdFigureToolBox, figure_id, 6, 0);
