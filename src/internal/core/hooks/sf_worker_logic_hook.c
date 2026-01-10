@@ -221,11 +221,13 @@ bool __thiscall onMinerFinishJob(SF_CGdFigureJobs *_this, uint16_t figure_id)
             target_building_type = buildingAPI.getRacialSmelter(race);
             if (target_building_type != 0)
             {
-                building_index = _this->CGdFigure->figures[figure_id].building;
+                SF_Coord pos;
+                pos.X = toolboxAPI.getFigureXData(_this->CGdFigureToolBox, figure_id, WORKER_HOST_BUILDING_POS_X);
+                pos.Y = toolboxAPI.getFigureXData(_this->CGdFigureToolBox, figure_id, WORKER_HOST_BUILDING_POS_Y);
+
                 //NO, there's no invariant here!
                 target_building = buildingAPI.findClosestBuilding(_this->CGdBuildingToolBox,
-                                                                  _this->CGdBuilding->buildings[building_index].position,
-                                                                  target_building_type,
+                                                                  pos, target_building_type,
                                                                   _this->CGdFigure->figures[figure_id].owner, 0x19);
             }
         }
