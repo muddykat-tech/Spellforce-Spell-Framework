@@ -786,17 +786,20 @@ void prepare_mod_page_info(int page, int total_pages, char *mod_page_info, size_
 void prepare_mod_error_info(SFMod *parent_mod, char *mod_error_info, size_t error_buffer_size,
                             char *wrapped_error_info, size_t wrapped_buffer_size)
 {
-    if (parent_mod->mod_errors && (parent_mod->mod_errors[0] != '\0'))
+    log_info("Called into error Prep");
+    if (parent_mod->mod_errors && (parent_mod->mod_errors[0] != 0))
     {
+
+        log_info("Error Exists? %s", parent_mod->mod_errors);
         snprintf(mod_error_info, error_buffer_size, "%s",
                  parent_mod->mod_errors);
+        wrap_text(mod_error_info, wrapped_error_info, 80);
     }
     else
     {
+        log_info("No Errors %s", " ");
         snprintf(mod_error_info, error_buffer_size, "");
     }
-
-    wrap_text(mod_error_info, wrapped_error_info, 80);
 }
 
 /**
@@ -917,14 +920,16 @@ void attach_mod_labels(CMnuContainer *container, int mods_per_page, int page)
 
 static void navigate_page(CMnuSmpButton *button, int delta)
 {
+    // Figure out how the fuck call back params work. as for some reason callback_param2 works as a parent?
     CMnuContainer *parent =
-        (CMnuContainer *)button->CMnuBase_data.param_2_callback;
-
+        (CMnuContainer *)button->CMnuBase_data.parent_ptr;
     int total = calculate_total_pages(calculate_total_unique_mods(), 1);
     mod_struct.index = normalize_page_index(mod_struct.index + delta, total);
-
     attach_mod_labels(parent, 1, mod_struct.index);
 }
+
+static void navigate_page_left(CMnuSmpButton *button) {navigate_page(button, -1);};
+static void navigate_page_right(CMnuSmpButton *button){navigate_page(button, 1);};
 
 void add_navigation_buttons(CMnuContainer *parent)
 {
@@ -936,7 +941,7 @@ void add_navigation_buttons(CMnuContainer *parent)
 
     right_nav = attach_new_button(parent, btn_default, btn_pressed, btn_load,
                       btn_disabled, btn_label, 7, (886 - 96), 619 - 80,
-                      48, 48, 0, (uint32_t) &navigate_page, 1);
+                      48, 48, 0, (uint32_t) &navigate_page_right);
 
     char btn_disabled_left[128] = "ui_btn_togglearrow_left_disabled.msh";
     char btn_pressed_left[128] = "ui_btn_togglearrow_left_pressed.msh";
@@ -944,7 +949,7 @@ void add_navigation_buttons(CMnuContainer *parent)
 
     left_nav = attach_new_button(parent, btn_default_left, btn_pressed_left,
                       btn_load, btn_disabled_left, btn_label, 7, 48, 619 - 80,
-                      48, 48, 1, (uint32_t) &navigate_page, -1);
+                      48, 48, 1, (uint32_t) &navigate_page_left);
 
     attach_mod_labels(parent, 1, 0);
 }
@@ -1021,7 +1026,7 @@ void add_close_button(CMnuContainer *mod_list)
         48,
         48,
         2,
-        (uint32_t) &close_mod_list_callback, 0
+        (uint32_t) &close_mod_list_callback
     );
 }
 
@@ -1094,7 +1099,7 @@ CMnuSmpButton* __thiscall attach_new_button(CMnuContainer *parent,
                                   uint8_t font_index, uint16_t x_pos,
                                   uint16_t y_pos, uint16_t width,
                                   uint16_t height, int button_index,
-                                  uint32_t callback_func_ptr, int callback_param1)
+                                  uint32_t callback_func_ptr)
 {
     SF_String m_mesh_string_default;
     SF_String m_mesh_string_pressed;
@@ -1155,11 +1160,11 @@ CMnuSmpButton* __thiscall attach_new_button(CMnuContainer *parent,
     callback.param_ptr = (uint32_t) parent;
     callback.callback_func = callback_func_ptr;
 
-    uint32_t param2, param3;
+    uint32_t param1, param2, param3;
 
-    attach_callback(&callback, &callback_param1, &param2, &param3);
+    attach_callback(&callback, &param1, &param2, &param3);
 
-    new_button->CMnuBase_data.param_1_callback = callback_param1;
+    new_button->CMnuBase_data.param_1_callback = param1;
     new_button->CMnuBase_data.param_2_callback = param2;
     new_button->CMnuBase_data.param_3_callback = param3;
 

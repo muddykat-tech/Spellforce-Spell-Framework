@@ -356,12 +356,12 @@ void register_mod_spells()
             snprintf(info, sizeof(info),
                      "| - Starting Registration for [%s by %s]",
                      parent_mod->mod_id, parent_mod->mod_author);
-            parent_mod->mod_errors[0] = '\0';
             log_info(info);
+            g_current_mod->mod_errors[0] = 0;
             temp = g_current_mod;
         }
-        else
-        {
+        else {
+            temp->mod_errors[0] = 0;
             spell_count_for_mod = spell_count_for_mod + 1;
         }
 
@@ -493,6 +493,8 @@ void register_mod_spells()
         log_info(spell_count_info);
         spell_count_for_mod = 0;
     }
+
+    log_info("Error Contains2?: %s", temp->mod_errors);
 }
 
 addBuilding_ptr AddBuilding;
