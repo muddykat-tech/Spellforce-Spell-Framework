@@ -4,19 +4,6 @@
 #include "../sf_general_structures.h"
 
 /**
- * @struct SF_SGtFigureAction
- */
-typedef struct __attribute__((packed))
-{
-    uint16_t type;
-    uint16_t subtype;
-    uint16_t unkn1;
-    uint16_t unkn2;
-    uint16_t unkn3;
-    uint16_t unkn4;
-} SF_SGtFigureAction;
-
-/**
  * @struct EntityPriorityList_data
  * @brief Stores data related to a specific entity in the AI system.
  *

@@ -23,6 +23,8 @@
  * @{
  */
 
+typedef uint32_t (__thiscall *XDataGet_ptr)(void *_this,uint16_t key,uint8_t keyType);
+
 FUN_0069eaf0_ptr FUN_0069eaf0;
 fidfree_ptr fidFree;
 SF_String_ctor_ptr g_create_sf_string;
@@ -51,6 +53,7 @@ destory_container_ptr f_destory_container;
 destory_button_ptr f_destory_button;
 set_menu_id_ptr set_menu_id;
 set_container_visible_ptr set_container_visible;
+XDataGet_ptr XDataGet;
 
 //checky thiscall but not really. ~muddykat (fix this later add support for non thiscalls)
 uint32_t __thiscall getDistance(SF_Coord *pointA, SF_Coord *pointB)
@@ -94,6 +97,7 @@ bool __thiscall isSiegeUnit (SF_CGdFigure *_this, uint16_t figure_index)
 
 void initialize_wrapper_data_hooks()
 {
+    XDataGet = (XDataGet_ptr)(ASI::AddrOf(0x354210));
     FUN_0069eaf0 = (FUN_0069eaf0_ptr)(ASI::AddrOf(0x29EAF0));
     fidFree = (fidfree_ptr)(ASI::AddrOf(0x6B6E25));
     has_spell_effect = (has_spell_effect_ptr)(ASI::AddrOf(0x2fe46f));
@@ -224,6 +228,16 @@ bool __thiscall isActionMelee(SF_SGtFigureAction *_this)
     if ((_this->type == 10000) || (_this->type == 0x2711))
     {
         return 1;
+    }
+    return 0;
+}
+
+uint32_t __thiscall getBuildingXData(SF_CGdBuildingToolbox *_this, uint16_t building_index, uint8_t key_type)
+{
+    uint16_t key = _this->CGdBuilding->buildings[building_index].xdata_key;
+    if (key!=0)
+    {
+        return XDataGet(_this->CGdXDataList, key, key_type);
     }
     return 0;
 }
@@ -770,7 +784,7 @@ void prepare_mod_page_info(int page, int total_pages, char *mod_page_info, size_
 }
 
 void prepare_mod_error_info(SFMod *parent_mod, char *mod_error_info, size_t error_buffer_size,
-                             char *wrapped_error_info, size_t wrapped_buffer_size)
+                            char *wrapped_error_info, size_t wrapped_buffer_size)
 {
     if (parent_mod->mod_errors && (parent_mod->mod_errors[0] != '\0'))
     {
@@ -996,7 +1010,7 @@ void add_close_button(CMnuContainer *mod_list)
     char close_btn_load[1] = "";
     char close_btn_label[1] = "";
 
-    CMnuSmpButton* close_btn = attach_new_button(
+    CMnuSmpButton *close_btn = attach_new_button(
         mod_list,
         close_btn_default,
         close_btn_pressed,
@@ -1051,7 +1065,8 @@ void __thiscall show_mod_list(CMnuSmpButton *button)
         set_label_color(mod_list_title, 0.85, 0.64, 0.12, '\0');
         set_label_color(mod_list_title, 0.85, 0.64, 0.12, '\x01');
 
-        if(!mod_list) {
+        if(!mod_list)
+        {
             log_error("Unable to create Mod Menu, Mod List Container is NULL");
             return;
         }

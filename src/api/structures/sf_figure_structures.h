@@ -10,6 +10,20 @@ typedef struct __attribute__((packed))
     uint16_t hate_value;
 } CGdFigureHateEntry;
 
+/**
+ * @struct SF_SGtFigureAction
+ */
+typedef struct __attribute__((packed))
+{
+    uint16_t type;
+    uint16_t subtype;
+    uint16_t unkn1;
+    uint16_t unkn2;
+    uint16_t unkn3;
+    uint16_t unkn4;
+} SF_SGtFigureAction;
+
+
 typedef struct __attribute__((packed))
 {
     uint16_t min_dmg;
@@ -41,12 +55,12 @@ typedef struct __attribute__((packed))
 typedef struct __attribute__((packed))
 {
     uint16_t GdJobId;
-    CGdFigureTask task;
+    uint8_t task;
     uint8_t padding;
     uint16_t flags;
     uint8_t pathing_mode;
     SF_CGdTargetData target;  // it is stored WEIRDLY
-    uint8_t SGtFigureAction[0xc];
+    SF_SGtFigureAction action;
     uint16_t xdata_key;
     uint8_t walking_mode;
     uint8_t padding2;

@@ -291,13 +291,9 @@ uint16_t __thiscall assistance_onhit_handler(SF_CGdFigureJobs *_this,
             friend_data.entity_index = t;
             friend_pos = friend_pos;
             SF_Rectangle unused = {0, 0};
-            effectAPI.addEffect(_this->CGdEffect,
-                                kGdEffectSpellAssistanceHitFigure, &source_data,
-                                &friend_data,
-                                _this->OpaqueClass->current_step, distance,
-                                &unused);
-            toolboxAPI.dealDamage(_this->CGdFigureToolBox, source_index, t,
-                                  shared_damage, 0, 0, 0);
+            effectAPI.addEffect(_this->CGdEffect, kGdEffectSpellAssistanceHitFigure, &source_data, &friend_data,
+                                _this->OpaqueClass->current_step, distance, &unused);
+            toolboxAPI.dealDamage(_this->CGdFigureToolBox, source_index, t, shared_damage, 0, 0, 0);
         }
         damage = shared_damage + remainder;
     }

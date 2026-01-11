@@ -25,7 +25,7 @@ struct __attribute__((packed)) SF_CGDEffect
 {
     AutoClass14 *OpaqueClass;
     SF_CGdBuilding *CGdBuilding;
-    void *SF_CGdBuildingToolbox;
+    SF_CGdBuildingToolbox *SF_CGdBuildingToolbox;
     void *SF_CGdDoubleLinkedList;
     SF_CGdFigure *SF_CGdFigure;
     SF_CGdFigureToolbox *SF_CGdFigureToolBox;

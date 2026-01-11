@@ -225,6 +225,8 @@ void initialize_data_hooks()
     INCLUDE_FUNCTION(building, getBuildingTags, &getBuildingTags);
     INCLUDE_FUNCTION(building, hasBuildingTag, &hasBuildingTag);
 
+    INCLUDE_FUNCTION(building, getBuildingXData, &getBuildingXData);
+
     INCLUDE_FUNCTION(building, buildingIsScavenger, &buildingIsScavenger);
     INCLUDE_FUNCTION(building, buildingIsFisher, &buildingIsFisher);
     INCLUDE_FUNCTION(building, buildingIsFoodstore, &buildingIsFoodstore);
@@ -642,6 +644,12 @@ static void initialize_worker_logic_hooks()
     *(unsigned char *)(ASI::AddrOf(0x2e6427)) = 0xE8; // CALL instruction
     *(int *)(ASI::AddrOf(0x2e6428)) = (int)(&onStoneMinerFinishJob) - ASI::AddrOf(0x2e642c);
     ASI::EndRewrite(stone_miner_mreg2);
+
+    ASI::MemoryRegion carpenter_mreg(ASI::AddrOf(0x2f1849), 5);
+    ASI::BeginRewrite(carpenter_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x2f1849)) = 0xE8; // CALL instruction
+    *(int *)(ASI::AddrOf(0x2f184a)) = (int)(&onCarpenterFinishJob) - ASI::AddrOf(0x2f184e);
+    ASI::EndRewrite(carpenter_mreg);
 
 
     ASI::MemoryRegion isWoodCutter_mreg (ASI::AddrOf(0x2f1dab), 5);

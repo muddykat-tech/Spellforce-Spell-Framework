@@ -27,19 +27,20 @@ void initialize_building_done_hooks()
     op_new = (op_new_ptr)ASI::AddrOf(0x675A9D);
 }
 
-void include_owner_on_map(uint16_t owner, uint16_t building_index)
+void include_owner_on_map(uint16_t owner)
 {
-    uint32_t *object_ptr = (uint32_t *)ASI::AddrOf(0x00949fec);
+    uint32_t **object_ptr = (uint32_t **)ASI::AddrOf(0x949fec);
+    log_debug (DEBUG_HIGH, "DAT_00d49fec %d", (uint32_t)(*object_ptr));
     if (*object_ptr == 0)
     {
 
         uint32_t *temp_alloc = (uint32_t *)op_new(8);
         if (temp_alloc != 0)
         {
-            object_ptr = l_AC65_init(temp_alloc);
+            *object_ptr = l_AC65_init(temp_alloc);
         }
     }
-    l_fun0074ca30((uint32_t*)*object_ptr, building_index, 1);
+    l_fun0074ca30(*object_ptr, owner, 1);
 }
 
 void __thiscall sf_building_done_hook(SF_CGdBuildingToolbox *_this, uint16_t building_index)
@@ -49,7 +50,7 @@ void __thiscall sf_building_done_hook(SF_CGdBuildingToolbox *_this, uint16_t bui
     _this->CGdBuilding->buildings[building_index].flags |= 1;
     if (_this->CGdBuilding->buildings[building_index].owner != 0)
     {
-        include_owner_on_map(_this->CGdBuilding->buildings[building_index].owner, building_index);
+        include_owner_on_map(_this->CGdBuilding->buildings[building_index].owner);
     }
     uint16_t building_xdata_key = _this->CGdBuilding->buildings[building_index].xdata_key;
     if (XDataListExists(_this->CGdXDataList, building_xdata_key, SpellDataKey::SPELL_CONSERVATION_SHIELD))
