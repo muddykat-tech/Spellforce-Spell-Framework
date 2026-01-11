@@ -29,7 +29,8 @@ building_done_handler_ptr get_building_done_handler(uint8_t building_type)
     if (it == s_bulding_done_map.end())
     {
         // Element doesn't exist, insert the default value
-        log_warning("Unknown buidling type [%d] for done handler, Assigning a default handler.", building_type);
+        log_debug (DEBUG_HIGH,"Unknown buidling type [%d] for done handler, Assigning a default handler.",
+                   building_type);
         it = s_bulding_done_map.emplace(building_type, &default_done_handler).first;
     }
     return it->second;
