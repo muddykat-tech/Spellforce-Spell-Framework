@@ -74,11 +74,9 @@ void register_vanilla_spell_refresh_handlers()
 
     int vanilla_domination_cases[] = {0x2e, 0x6c, 0x78, 0x7a, 0xc5, 0xed};
 
-    for (int i = 0; i < sizeof(firstblock_cases) / sizeof(firstblock_cases[0]);
-         i++)
+    for (uint32_t i = 0; i < sizeof(firstblock_cases) / sizeof(firstblock_cases[0]); i++)
     {
-        registerSpellRefreshHandler(firstblock_cases[i],
-                                    &first_block_refresh_handler);
+        registerSpellRefreshHandler(firstblock_cases[i], &first_block_refresh_handler);
     }
 
     registerSpellRefreshHandler(0x04, &slowness_refresh_handler);
@@ -119,10 +117,7 @@ void register_vanilla_spell_refresh_handlers()
 
     registerSpellRefreshHandler(0x17, &pestilence_refresh_handler);
 
-    for (int i = 0;
-         i <
-         sizeof(vanilla_domination_cases) / sizeof(vanilla_domination_cases[0]);
-         i++)
+    for (uint32_t i = 0; i < sizeof(vanilla_domination_cases) / sizeof(vanilla_domination_cases[0]); i++)
     {
         registerSpellRefreshHandler(vanilla_domination_cases[i],
                                     &domination_spell_refresh_handler);

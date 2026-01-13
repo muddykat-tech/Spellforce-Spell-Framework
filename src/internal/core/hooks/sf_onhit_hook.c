@@ -391,16 +391,8 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
                     }
                 }
                 std::list<std::pair<uint16_t,
-                onhit_handler_ptr>> onhit_list = get_onhit_phase(static_cast<
-                                                                 OnHitPhase>
-                                                                 (i));
-
-                //uint16_t list_size = onhit_list.size();
-
-                //int return_damage = weapon_damage;
-
-                for (auto it = onhit_list.crbegin(); it != onhit_list.crend();
-                     ++it)
+                onhit_handler_ptr>> onhit_list = get_onhit_phase(static_cast<OnHitPhase>(i));
+                for (auto it = onhit_list.crbegin(); it != onhit_list.crend(); ++it)
                 {
                     std::pair<uint16_t, onhit_handler_ptr> entry = *it;
 
@@ -408,8 +400,7 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
 
                     if (hasSpellTag(spell_line_id, TARGET_ONHIT_SPELL))
                     {
-                        if ((_this->CGdFigure->figures[target.entity_index].
-                             flags & F_CHECK_SPELLS_BEFORE_JOB) != 0)
+                        if ((_this->CGdFigure->figures[target.entity_index].flags & F_CHECK_SPELLS_BEFORE_JOB) != 0)
                         {
                             if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, target.entity_index, spell_line_id))
                             {
@@ -560,7 +551,6 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
             }
             else
             {
-                //uint16_t subspell_id = 0;
                 // Havoc & DeathKnight upgrade
                 if ((_this->CGdFigure->figures[target.entity_index].unit_data_id == 0x510) ||
                     (_this->CGdFigure->figures[target.entity_index].unit_data_id == 0x513))

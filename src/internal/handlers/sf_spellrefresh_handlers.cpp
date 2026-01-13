@@ -1092,9 +1092,7 @@ int __thiscall domination_spell_refresh_handler(SF_CGdSpell *_this,
     uint16_t spell_id = _this->active_spell_list[spell_index].spell_id;
 
     SF_CGdResourceSpell spell_data;
-    SF_CGdResourceSpell *ref =
-        spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data,
-                                      spell_id);
+    SF_CGdResourceSpell *ref = spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, spell_id);
 
     uint16_t spell_line_id = ref->spell_line_id;
     uint16_t target_entity_index = _this->active_spell_list[spell_line_id].target.entity_index;
@@ -1107,7 +1105,7 @@ int __thiscall domination_spell_refresh_handler(SF_CGdSpell *_this,
     {
         if (spell->spell_tags & SpellTag::DOMINATION_SPELL)
         {
-            domination_spell_ids.push_back(spell->spell_id);
+            domination_spell_ids.push_back(spell_line_id);
         }
     }
 #if _DEBUG_
@@ -1117,11 +1115,9 @@ int __thiscall domination_spell_refresh_handler(SF_CGdSpell *_this,
     bool hasDominationSpell = false;
     for (uint16_t spell_id : domination_spell_ids)
     {
-        if (toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox,
-                                    target_entity_index, spell_id) == 0)
+        if (toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_entity_index, spell_id) == 0)
         {
-            if (toolboxAPI.getSpellIndexOfType(_this->SF_CGdFigureToolBox,
-                                               target_entity_index, spell_id,
+            if (toolboxAPI.getSpellIndexOfType(_this->SF_CGdFigureToolBox, target_entity_index, spell_id,
                                                spell_index) != 0)
             {
                 hasDominationSpell = true;

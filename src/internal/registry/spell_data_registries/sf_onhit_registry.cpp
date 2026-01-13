@@ -51,7 +51,7 @@ void registerOnHitHandler(uint16_t spell_line_id, onhit_handler_ptr handler,
 std::list<std::pair<uint16_t,
                     onhit_handler_ptr> > get_onhit_phase(OnHitPhase phase)
 {
-    int enumValue = static_cast<int>(phase);
+    //int enumValue = static_cast<int>(phase);
     auto it = s_onhit_handler_map.find(phase);
     if (it == s_onhit_handler_map.end())
     {

@@ -787,7 +787,7 @@ void prepare_mod_error_info(SFMod *parent_mod, char *mod_error_info, size_t erro
                             char *wrapped_error_info, size_t wrapped_buffer_size)
 {
     log_info("Called into error Prep");
-    if (parent_mod->mod_errors && (parent_mod->mod_errors[0] != 0))
+    if (parent_mod->mod_errors[0] != 0)
     {
 
         log_info("Error Exists? %s", parent_mod->mod_errors);
