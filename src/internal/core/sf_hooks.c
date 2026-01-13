@@ -598,8 +598,7 @@ static void initialize_spell_buttons_hooks()
     ASI::MemoryRegion vfunction208_mreg_1 (ASI::AddrOf(0x5ebb23), 5);
     ASI::BeginRewrite(vfunction208_mreg_1);
     *(unsigned char *)(ASI::AddrOf(0x5ebb23)) = 0xE8; // CALL instruction
-    *(int *)(ASI::AddrOf(0x5ebb24)) = (int)(&sf_click_vertical_button) -
-                                      ASI::AddrOf(0x5ebb28);
+    *(int *)(ASI::AddrOf(0x5ebb24)) = (int)(&sf_click_vertical_button) - ASI::AddrOf(0x5ebb28);
     ASI::EndRewrite(vfunction208_mreg_1);
 
     ASI::MemoryRegion vfunction208_mreg_2 (ASI::AddrOf(0x5ebb7b), 5);
@@ -787,7 +786,7 @@ void initialize_beta_hooks()
     initialize_utility_hooks();
 
     log_info("Hooking spell buttons");
-    initialize_spell_buttons_hooks();
+    // initialize_spell_buttons_hooks();
 
 }
 
