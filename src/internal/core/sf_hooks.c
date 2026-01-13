@@ -56,23 +56,34 @@ RegistrationFunctions registrationAPI;
 void initialize_data_hooks()
 {
     log_info("| - Internal Use Hooks");
+
+    log_debug (DEBUG_HIGH, "| - Spelltypes");
+
     initialize_menu_data_hooks();
 
+    log_debug (DEBUG_HIGH, "| - Worker Logic");
     initialize_worker_logic_data_hooks();
 
+    log_debug (DEBUG_HIGH, "| - Building Done");
     //TODO RENAME TO DATA HOOKS
     initialize_building_done_hooks();
+
+    log_debug (DEBUG_HIGH, "| - Spelltypes");
     // Required for internal use
     initialize_spelltype_data_hooks();
 
     // Used in Iterator for AOE Spells Dispose
+    log_debug (DEBUG_HIGH, "| - Wrapper Functions");
     initialize_wrapper_data_hooks();
 
+    log_debug (DEBUG_HIGH, "| - On Hit");
     initialize_onhit_data_hooks();
 
     // Used to print to the game console
+    log_debug (DEBUG_HIGH, "| - Game Console");
     initialize_console_data_hooks();
 
+    log_debug (DEBUG_HIGH, "| - Vanilla Fixes");
     initialize_vanilla_fix_hooks();
 
     log_info("| - FigureAPI Hooks");
