@@ -330,7 +330,7 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
             uint16_t prio = 0;
             if (spell->spell_line == kGdSpellLineAuraHealing)
             {
-                for (int j = 0; j < targets.size(); j++)
+                for (uint16_t j = 0; j < targets.size(); j++)
                 {
                     target_index = targets.at(j);
                     SF_Coord target_pos = _this->SF_CGdFigure->figures[target_index].position;

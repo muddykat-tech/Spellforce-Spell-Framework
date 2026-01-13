@@ -178,7 +178,7 @@ sf_menu_hook(uint32_t _CAppMenu)
                                              BUTTON_WIDTH,
                                              BUTTON_HEIGHT,
                                              BUTTON_INDEX,
-                                             (uint32_t)&show_mod_list_callback);
+                                             (uint32_t)&show_mod_list);
 
     s_menu_func(_CAppMenu);
 }

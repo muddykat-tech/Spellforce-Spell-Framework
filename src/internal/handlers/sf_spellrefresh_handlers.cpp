@@ -1097,7 +1097,7 @@ int __thiscall domination_spell_refresh_handler(SF_CGdSpell *_this,
                                       spell_id);
 
     uint16_t spell_line_id = ref->spell_line_id;
-    uint16_t target_entity_index = _this->active_spell_list[spell_index].target.entity_index;
+    uint16_t target_entity_index = _this->active_spell_list[spell_line_id].target.entity_index;
     // This is quite literially, just so domination spells do not stack
     // if any of these spells are on the target, we return 0
 

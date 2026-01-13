@@ -57,6 +57,7 @@ bool __thiscall buildingIsShrine(SF_CGdBuilding *_this, uint16_t building_index)
 bool __thiscall buildingIsHabitable(SF_CGdBuilding *_this, uint16_t building_index);
 bool __thiscall buildingIsHabitableSingle(SF_CGdBuilding *_this, uint16_t building_index);
 
+void __thiscall show_mod_list(CMnuSmpButton *button);
 
 extern void __thiscall spellEffectCallback(SF_CGdSpell *_this,
                                            uint16_t source_index,

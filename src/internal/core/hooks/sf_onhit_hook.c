@@ -395,9 +395,9 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
                                                                  OnHitPhase>
                                                                  (i));
 
-                uint16_t list_size = onhit_list.size();
+                //uint16_t list_size = onhit_list.size();
 
-                int return_damage = weapon_damage;
+                //int return_damage = weapon_damage;
 
                 for (auto it = onhit_list.crbegin(); it != onhit_list.crend();
                      ++it)
@@ -560,7 +560,7 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
             }
             else
             {
-                uint16_t subspell_id = 0;
+                //uint16_t subspell_id = 0;
                 // Havoc & DeathKnight upgrade
                 if ((_this->CGdFigure->figures[target.entity_index].unit_data_id == 0x510) ||
                     (_this->CGdFigure->figures[target.entity_index].unit_data_id == 0x513))

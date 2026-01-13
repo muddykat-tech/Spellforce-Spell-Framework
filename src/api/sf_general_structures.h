@@ -1419,8 +1419,6 @@ extern CMnuSmpButton* __thiscall attach_new_button(CMnuContainer *parent,
                                          int button_index,
                                          uint32_t callback_function_pointer);
 
-extern void __fastcall show_mod_list_callback(CMnuSmpButton *button);
-
 extern SFSF_ModlistStruct mod_struct;
 
 /**

@@ -798,7 +798,7 @@ void prepare_mod_error_info(SFMod *parent_mod, char *mod_error_info, size_t erro
     else
     {
         log_info("No Errors %s", " ");
-        snprintf(mod_error_info, error_buffer_size, "");
+        snprintf(mod_error_info, error_buffer_size, " ");
     }
 }
 
@@ -826,8 +826,6 @@ void attach_mod_labels(CMnuContainer *container, int mods_per_page, int page)
     const int y_base_offset = 100;
     const int y_item_spacing = 150;
     const int x_title_pos = 468;
-    const int x_page_number_pos = 468;
-    const int x_desc_pos = 200;
     const int title_width = 600;
     const int desc_width = 800;
 
@@ -1013,7 +1011,7 @@ void add_close_button(CMnuContainer *mod_list)
     char close_btn_load[1] = "";
     char close_btn_label[1] = "";
 
-    CMnuSmpButton *close_btn = attach_new_button(
+    attach_new_button(
         mod_list,
         close_btn_default,
         close_btn_pressed,
@@ -1082,15 +1080,6 @@ void __thiscall show_mod_list(CMnuSmpButton *button)
     }
 }
 
-void __fastcall show_mod_list_callback(CMnuSmpButton *button)
-{
-    CMnuContainer *parent =
-        (CMnuContainer *) button->CMnuBase_data.param_2_callback;
-    uint8_t toggle = mod_struct.toggle;
-
-    show_mod_list(button);
-}
-
 CMnuSmpButton* __thiscall attach_new_button(CMnuContainer *parent,
                                   char *button_mesh_default,
                                   char *button_mesh_pressed,
@@ -1108,7 +1097,7 @@ CMnuSmpButton* __thiscall attach_new_button(CMnuContainer *parent,
 
     SF_String m_label_string;
     CMnuSmpButton *new_button;
-    void *new_btn_operation;
+    //void *new_btn_operation;
 
     SF_FontStruct *fonts = g_get_smth_fonts();
     SF_String *label_string = g_create_sf_string(&m_label_string, label_char);
