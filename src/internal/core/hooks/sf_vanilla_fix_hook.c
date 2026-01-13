@@ -62,13 +62,14 @@ uint16_t __thiscall get_figure_statistic_max_hp(SF_CGdFigure *_this, uint16_t fi
     int32_t base_val = _this->figures[figure_id].health.base_val;
     int32_t bonus_val = _this->figures[figure_id].health.bonus_val;
     int32_t total_flat = base_val+bonus_val;
-    uint16_t result = 0;
+    uint16_t result = 1;
     if (total_flat >= 0)
     {
         int16_t multiplier = _this->figures[figure_id].health.bonus_multiplier + 100;
         (multiplier < 0) ? (multiplier = 1) : (multiplier);
         result = (uint16_t)((total_flat * multiplier) / 100);
     }
+    (result == 0) ? (result = 1) ? (result);
     return result;
 }
 
@@ -77,13 +78,14 @@ uint16_t __thiscall get_figure_statistic_max_mp(SF_CGdFigure *_this, uint16_t fi
     int32_t base_val = _this->figures[figure_id].mana.base_val;
     int32_t bonus_val = _this->figures[figure_id].mana.bonus_val;
     int32_t total_flat = base_val+bonus_val;
-    uint16_t result = 0;
+    uint16_t result = 1;
     if (total_flat >= 0)
     {
         int16_t multiplier = _this->figures[figure_id].mana.bonus_multiplier + 100;
         (multiplier < 0) ? (multiplier = 1) : (multiplier);
         result = (uint16_t)((total_flat * multiplier) / 100);
     }
+    (result == 0) ? (result = 1) ? (result);
     return result;
 }
 
@@ -92,13 +94,14 @@ uint16_t __thiscall get_figure_statistic_max_sta(SF_CGdFigure *_this, uint16_t f
     int32_t base_val = _this->figures[figure_id].stamina.base_val;
     int32_t bonus_val = _this->figures[figure_id].stamina.bonus_val;
     int32_t total_flat = base_val+bonus_val;
-    uint16_t result = 0;
+    uint16_t result = 1;
     if (total_flat >= 0)
     {
         int16_t multiplier = _this->figures[figure_id].stamina.bonus_multiplier + 100;
         (multiplier < 0) ? (multiplier = 1) : (multiplier);
         result = (uint16_t)((total_flat * multiplier) / 100);
     }
+    (result == 0) ? (result = 1) ? (result);
     return result;
 }
 
@@ -114,6 +117,7 @@ uint16_t __thiscall get_figure_statistic_current_ac(SF_CGdFigure *_this, uint16_
         (multiplier < 0) ? (multiplier = 1) : (multiplier);
         result = (uint16_t)((total_flat * multiplier) / 100);
     }
+    (result == 0) ? (result = 1) ? (result);
     return result;
 }
 
@@ -129,6 +133,7 @@ uint16_t __thiscall get_figure_statistic_current_agi(SF_CGdFigure *_this, uint16
         (multiplier < 0) ? (multiplier = 1) : (multiplier);
         result = (uint16_t)((total_flat * multiplier) / 100);
     }
+    (result == 0) ? (result = 1) ? (result);
     return result;
 }
 
@@ -144,6 +149,7 @@ uint16_t __thiscall get_figure_statistic_current_cha(SF_CGdFigure *_this, uint16
         (multiplier < 0) ? (multiplier = 1) : (multiplier);
         result = (uint16_t)((total_flat * multiplier) / 100);
     }
+    (result == 0) ? (result = 1) ? (result);
     return result;
 }
 
@@ -159,6 +165,7 @@ uint16_t __thiscall get_figure_statistic_current_dex(SF_CGdFigure *_this, uint16
         (multiplier < 0) ? (multiplier = 1) : (multiplier);
         result = (uint16_t)((total_flat * multiplier) / 100);
     }
+    (result == 0) ? (result = 1) ? (result);
     return result;
 }
 
@@ -191,6 +198,7 @@ uint16_t __thiscall get_figure_statistic_current_int(SF_CGdFigure *_this, uint16
         (multiplier < 0) ? (multiplier = 1) : (multiplier);
         result = (uint16_t)((total_flat * multiplier) / 100);
     }
+    (result == 0) ? (result = 1) ? (result);
     return result;
 }
 
@@ -223,7 +231,7 @@ uint16_t __thiscall get_figure_statistic_current_sta(SF_CGdFigure *_this, uint16
         uint16_t missing_val = _this->figures[figure_id].stamina.missing_val;
         (multiplier < 0) ? (multiplier = 1) : (multiplier);
         result = (uint16_t)((total_flat * multiplier) / 100);
-        (result - missing_val < 0) ? (result = 0) : (result -= missing_val);
+        (result - missing_val < 0) ? (result = 1) : (result -= missing_val);
     }
     return result;
 }
@@ -240,6 +248,7 @@ uint16_t __thiscall get_figure_statistic_current_str(SF_CGdFigure *_this, uint16
         (multiplier < 0) ? (multiplier = 1) : (multiplier);
         result = (uint16_t)((total_flat * multiplier) / 100);
     }
+    (result == 0) ? (result = 1) ? (result);
     return result;
 }
 
@@ -255,6 +264,7 @@ uint16_t __thiscall get_figure_statistic_current_wis(SF_CGdFigure *_this, uint16
         (multiplier < 0) ? (multiplier = 1) : (multiplier);
         result = (uint16_t)((total_flat * multiplier) / 100);
     }
+    (result == 0) ? (result = 1) ? (result);
     return result;
 }
 
@@ -263,13 +273,14 @@ uint16_t __thiscall get_figure_statistic_current_fire_res(SF_CGdFigure *_this, u
     int32_t base_val = _this->figures[figure_id].resistance_fire.base_val;
     int32_t bonus_val = _this->figures[figure_id].resistance_fire.bonus_val;
     int32_t total_flat = base_val+bonus_val;
-    uint16_t result = 0;
+    uint16_t result = 1;
     if (total_flat >= 0)
     {
         int16_t multiplier = _this->figures[figure_id].resistance_fire.bonus_multiplier + 100;
         (multiplier < 0) ? (multiplier = 1) : (multiplier);
         result = (uint16_t)((total_flat * multiplier) / 100);
     }
+    (result == 0) ? (result = 1) ? (result);
     return result;
 }
 
@@ -278,13 +289,14 @@ uint16_t __thiscall get_figure_statistic_current_ice_res(SF_CGdFigure *_this, ui
     int32_t base_val = _this->figures[figure_id].resistance_ice.base_val;
     int32_t bonus_val = _this->figures[figure_id].resistance_ice.bonus_val;
     int32_t total_flat = base_val+bonus_val;
-    uint16_t result = 0;
+    uint16_t result = 1;
     if (total_flat >= 0)
     {
         int16_t multiplier = _this->figures[figure_id].resistance_ice.bonus_multiplier + 100;
         (multiplier < 0) ? (multiplier = 1) : (multiplier);
         result = (uint16_t)((total_flat * multiplier) / 100);
     }
+    (result == 0) ? (result = 1) ? (result);
     return result;
 }
 
@@ -293,13 +305,14 @@ uint16_t __thiscall get_figure_statistic_current_mental_res(SF_CGdFigure *_this,
     int32_t base_val = _this->figures[figure_id].resistance_mental.base_val;
     int32_t bonus_val = _this->figures[figure_id].resistance_mental.bonus_val;
     int32_t total_flat = base_val+bonus_val;
-    uint16_t result = 0;
+    uint16_t result = 1;
     if (total_flat >= 0)
     {
         int16_t multiplier = _this->figures[figure_id].resistance_mental.bonus_multiplier + 100;
         (multiplier < 0) ? (multiplier = 1) : (multiplier);
         result = (uint16_t)((total_flat * multiplier) / 100);
     }
+    (result == 0) ? (result = 1) ? (result);
     return result;
 }
 
@@ -308,13 +321,14 @@ uint16_t __thiscall get_figure_statistic_current_black_res(SF_CGdFigure *_this, 
     int32_t base_val = _this->figures[figure_id].resistance_black.base_val;
     int32_t bonus_val = _this->figures[figure_id].resistance_black.bonus_val;
     int32_t total_flat = base_val+bonus_val;
-    uint16_t result = 0;
+    uint16_t result = 1;
     if (total_flat >= 0)
     {
         int16_t multiplier = _this->figures[figure_id].resistance_black.bonus_multiplier + 100;
         (multiplier < 0) ? (multiplier = 1) : (multiplier);
         result = (uint16_t)((total_flat * multiplier) / 100);
     }
+    (result == 0) ? (result = 1) ? (result);
     return result;
 }
 
@@ -330,6 +344,7 @@ uint16_t __thiscall get_figure_statistic_current_walk_spd(SF_CGdFigure *_this, u
         (multiplier < 0) ? (multiplier = 1) : (multiplier);
         result = (uint16_t)((total_flat * multiplier) / 100);
     }
+    (result == 0) ? (result = 1) ? (result);
     return result;
 }
 
@@ -345,6 +360,7 @@ uint16_t __thiscall get_figure_statistic_current_fight_spd(SF_CGdFigure *_this, 
         (multiplier < 0) ? (multiplier = 1) : (multiplier);
         result = (uint16_t)((total_flat * multiplier) / 100);
     }
+    (result == 0) ? (result = 1) ? (result);
     return result;
 }
 
@@ -360,6 +376,7 @@ uint16_t __thiscall get_figure_statistic_current_cast_spd(SF_CGdFigure *_this, u
         (multiplier < 0) ? (multiplier = 1) : (multiplier);
         result = (uint16_t)((total_flat * multiplier) / 100);
     }
+    (result == 0) ? (result = 1) ? (result);
     return result;
 }
 
@@ -376,8 +393,7 @@ static void figure_statistic_hook_current_ac()
     addrbase = addrbase+1;
     *(unsigned char *)(ASI::AddrOf(addrbase)) = 0xE9; // jmp instruction
     addrbase = addrbase+1;
-    *(int *)(ASI::AddrOf(addrbase)) = (int)(&get_figure_statistic_current_ac)-
-                                        ASI::AddrOf((addrbase + 4));
+    *(int *)(ASI::AddrOf(addrbase)) = (int)(&get_figure_statistic_current_ac) - ASI::AddrOf((addrbase + 4));
     ASI::EndRewrite(ac_mreg);
 }
 
@@ -394,7 +410,7 @@ static void figure_statistic_hook_current_agi()
     *(unsigned char *)(ASI::AddrOf(addrbase)) = 0xE9; // jmp instruction
     addrbase = addrbase+1;
     *(int *)(ASI::AddrOf(addrbase)) = (int)(&get_figure_statistic_current_agi)-
-                                        ASI::AddrOf((addrbase + 4));
+                                      ASI::AddrOf((addrbase + 4));
     ASI::EndRewrite(ac_mreg);
 }
 
@@ -411,7 +427,7 @@ static void figure_statistic_hook_current_cha()
     *(unsigned char *)(ASI::AddrOf(addrbase)) = 0xE9; // jmp instruction
     addrbase = addrbase+1;
     *(int *)(ASI::AddrOf(addrbase)) = (int)(&get_figure_statistic_current_cha)-
-                                        ASI::AddrOf((addrbase + 4));
+                                      ASI::AddrOf((addrbase + 4));
     ASI::EndRewrite(ac_mreg);
 }
 
@@ -428,7 +444,7 @@ static void figure_statistic_hook_current_dex()
     *(unsigned char *)(ASI::AddrOf(addrbase)) = 0xE9; // jmp instruction
     addrbase = addrbase+1;
     *(int *)(ASI::AddrOf(addrbase)) = (int)(&get_figure_statistic_current_dex)-
-                                        ASI::AddrOf((addrbase + 4));
+                                      ASI::AddrOf((addrbase + 4));
     ASI::EndRewrite(ac_mreg);
 }
 
@@ -445,7 +461,7 @@ static void figure_statistic_hook_current_int()
     *(unsigned char *)(ASI::AddrOf(addrbase)) = 0xE9; // jmp instruction
     addrbase = addrbase+1;
     *(int *)(ASI::AddrOf(addrbase)) = (int)(&get_figure_statistic_current_int)-
-                                        ASI::AddrOf((addrbase + 4));
+                                      ASI::AddrOf((addrbase + 4));
     ASI::EndRewrite(ac_mreg);
 }
 
@@ -462,7 +478,7 @@ static void figure_statistic_hook_current_hp()
     *(unsigned char *)(ASI::AddrOf(addrbase)) = 0xE9; // jmp instruction
     addrbase = addrbase+1;
     *(int *)(ASI::AddrOf(addrbase)) = (int)(&get_figure_statistic_current_hp)-
-                                        ASI::AddrOf((addrbase + 4));
+                                      ASI::AddrOf((addrbase + 4));
     ASI::EndRewrite(ac_mreg);
 }
 
@@ -479,7 +495,7 @@ static void figure_statistic_hook_current_mp()
     *(unsigned char *)(ASI::AddrOf(addrbase)) = 0xE9; // jmp instruction
     addrbase = addrbase+1;
     *(int *)(ASI::AddrOf(addrbase)) = (int)(&get_figure_statistic_current_mp)-
-                                        ASI::AddrOf((addrbase + 4));
+                                      ASI::AddrOf((addrbase + 4));
     ASI::EndRewrite(ac_mreg);
 }
 
@@ -496,7 +512,7 @@ static void figure_statistic_hook_current_sta()
     *(unsigned char *)(ASI::AddrOf(addrbase)) = 0xE9; // jmp instruction
     addrbase = addrbase+1;
     *(int *)(ASI::AddrOf(addrbase)) = (int)(&get_figure_statistic_current_sta)-
-                                        ASI::AddrOf((addrbase + 4));
+                                      ASI::AddrOf((addrbase + 4));
     ASI::EndRewrite(ac_mreg);
 }
 
@@ -513,7 +529,7 @@ static void figure_statistic_hook_current_str()
     *(unsigned char *)(ASI::AddrOf(addrbase)) = 0xE9; // jmp instruction
     addrbase = addrbase+1;
     *(int *)(ASI::AddrOf(addrbase)) = (int)(&get_figure_statistic_current_str)-
-                                        ASI::AddrOf((addrbase + 4));
+                                      ASI::AddrOf((addrbase + 4));
     ASI::EndRewrite(ac_mreg);
 }
 
@@ -530,7 +546,7 @@ static void figure_statistic_hook_current_wis()
     *(unsigned char *)(ASI::AddrOf(addrbase)) = 0xE9; // jmp instruction
     addrbase = addrbase+1;
     *(int *)(ASI::AddrOf(addrbase)) = (int)(&get_figure_statistic_current_wis)-
-                                        ASI::AddrOf((addrbase + 4));
+                                      ASI::AddrOf((addrbase + 4));
     ASI::EndRewrite(ac_mreg);
 }
 
@@ -547,113 +563,74 @@ static void figure_statistic_hook_current_fire_res()
     *(unsigned char *)(ASI::AddrOf(addrbase)) = 0xE9; // jmp instruction
     addrbase = addrbase+1;
     *(int *)(ASI::AddrOf(addrbase)) = (int)(&get_figure_statistic_current_fire_res)-
-                                        ASI::AddrOf((addrbase + 4));
+                                      ASI::AddrOf((addrbase + 4));
     ASI::EndRewrite(ac_mreg);
 }
 
 static void figure_statistic_hook_current_ice_res()
 {
-    uint32_t addrbase = 0x2b2ca0;
-    ASI::MemoryRegion ac_mreg (ASI::AddrOf(addrbase), 7);
+    ASI::MemoryRegion ac_mreg (ASI::AddrOf(0x2b2ca0), 7);
     ASI::BeginRewrite(ac_mreg);
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0x90; // nop
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0x90; // nop
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0xE9; // jmp instruction
-    addrbase = addrbase+1;
-    *(int *)(ASI::AddrOf(addrbase)) = (int)(&get_figure_statistic_current_ice_res)-
-                                        ASI::AddrOf((addrbase + 4));
+    *(unsigned char *)(ASI::AddrOf(0x2b2ca0)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x2b2ca1)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x2b2ca2)) = 0xE9; // jmp instruction
+    *(int *)(ASI::AddrOf(0x2b2ca3)) = (int)(&get_figure_statistic_current_ice_res) - ASI::AddrOf((0x2b2ca7));
     ASI::EndRewrite(ac_mreg);
 }
 
 static void figure_statistic_hook_current_mental_res()
 {
-    uint32_t addrbase = 0x2b2d40;
-    ASI::MemoryRegion ac_mreg (ASI::AddrOf(addrbase), 7);
+    ASI::MemoryRegion ac_mreg (ASI::AddrOf(0x2b2d40), 7);
     ASI::BeginRewrite(ac_mreg);
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0x90; // nop
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0x90; // nop
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0xE9; // jmp instruction
-    addrbase = addrbase+1;
-    *(int *)(ASI::AddrOf(addrbase)) = (int)(&get_figure_statistic_current_mental_res)-
-                                        ASI::AddrOf((addrbase + 4));
+    *(unsigned char *)(ASI::AddrOf(0x2b2d40)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x2b2d41)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x2b2d42)) = 0xE9; // jmp instruction
+    *(int *)(ASI::AddrOf(0x2b2d43)) = (int)(&get_figure_statistic_current_mental_res) - ASI::AddrOf((0x2b2d47));
     ASI::EndRewrite(ac_mreg);
 }
 
 static void figure_statistic_hook_current_black_res()
 {
-    uint32_t addrbase = 0x2b2b60;
-    ASI::MemoryRegion ac_mreg (ASI::AddrOf(addrbase), 7);
+    ASI::MemoryRegion ac_mreg (ASI::AddrOf(0x2b2b60), 7);
     ASI::BeginRewrite(ac_mreg);
-
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0x90; // nop
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0x90; // nop
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0xE9; // jmp instruction
-    addrbase = addrbase+1;
-    *(int *)(ASI::AddrOf(addrbase)) = (int)(&get_figure_statistic_current_black_res)-
-                                        ASI::AddrOf((addrbase + 4));
+    *(unsigned char *)(ASI::AddrOf(0x2b2b60)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x2b2b61)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x2b2b62)) = 0xE9; // jmp instruction
+    *(int *)(ASI::AddrOf(0x2b2b63)) = (int)(&get_figure_statistic_current_black_res) - ASI::AddrOf((0x2b2b67));
     ASI::EndRewrite(ac_mreg);
 }
 
 static void figure_statistic_hook_current_walk_spd()
 {
-    uint32_t addrbase = 0x2b2fb0;
-    ASI::MemoryRegion ac_mreg (ASI::AddrOf(addrbase), 7);
+    ASI::MemoryRegion ac_mreg (ASI::AddrOf(0x2b2fb0), 7);
     ASI::BeginRewrite(ac_mreg);
-
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0x90; // nop
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0x90; // nop
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0xE9; // jmp instruction
-    addrbase = addrbase+1;
-    *(int *)(ASI::AddrOf(addrbase)) = (int)(&get_figure_statistic_current_walk_spd)-
-                                        ASI::AddrOf((addrbase + 4));
+    *(unsigned char *)(ASI::AddrOf(0x2b2fb0)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x2b2fb1)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x2b2fb2)) = 0xE9; // jmp instruction
+    *(int *)(ASI::AddrOf(0x2b2fb3)) = (int)(&get_figure_statistic_current_walk_spd) - ASI::AddrOf((0x2b2fb7));
     ASI::EndRewrite(ac_mreg);
 }
 
 static void figure_statistic_hook_current_fight_spd()
 {
     uint32_t addrbase = 0x2b26d0;
-    ASI::MemoryRegion ac_mreg (ASI::AddrOf(addrbase), 7);
+    ASI::MemoryRegion ac_mreg (ASI::AddrOf(0x2b26d0), 7);
     ASI::BeginRewrite(ac_mreg);
-
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0x90; // nop
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0x90; // nop
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0xE9; // jmp instruction
-    addrbase = addrbase+1;
-    *(int *)(ASI::AddrOf(addrbase)) = (int)(&get_figure_statistic_current_fight_spd)-
-                                        ASI::AddrOf((addrbase + 4));
+    *(unsigned char *)(ASI::AddrOf(0x2b26d0)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x2b26d1)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x2b26d2)) = 0xE9; // jmp instruction
+    *(int *)(ASI::AddrOf(0x2b26d3)) = (int)(&get_figure_statistic_current_fight_spd) - ASI::AddrOf((0x2b26d7));
     ASI::EndRewrite(ac_mreg);
 }
 
 static void figure_statistic_hook_current_cast_spd()
 {
-    uint32_t addrbase = 0x2b1b90;
-    ASI::MemoryRegion ac_mreg (ASI::AddrOf(addrbase), 7);
+    ASI::MemoryRegion ac_mreg (ASI::AddrOf(0x2b1b90), 7);
     ASI::BeginRewrite(ac_mreg);
-
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0x90; // nop
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0x90; // nop
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0xE9; // jmp instruction
-    addrbase = addrbase+1;
-    *(int *)(ASI::AddrOf(addrbase)) = (int)(&get_figure_statistic_current_cast_spd)-
-                                        ASI::AddrOf((addrbase + 4));
+    *(unsigned char *)(ASI::AddrOf(0x2b1b90)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x2b1b91)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x2b1b92)) = 0xE9; // jmp instruction
+    *(int *)(ASI::AddrOf(0x2b1b93)) = (int)(&get_figure_statistic_current_cast_spd) - ASI::AddrOf((0x2b1b97));
     ASI::EndRewrite(ac_mreg);
 }
 
