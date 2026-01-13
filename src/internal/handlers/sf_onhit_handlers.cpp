@@ -107,9 +107,8 @@ uint16_t __thiscall critical_hits_onhit_handler(SF_CGdFigureJobs *_this,
         return 0x7fff;
     }
     SF_CGdResourceSpell spell_data;
-    uint16_t spell_index =
-        toolboxAPI.getSpellIndexOfType(_this->CGdFigureToolBox, spell_index,
-                                       kGdSpellLineAbilityCriticalHits, 0);
+    uint16_t spell_index = toolboxAPI.getSpellIndexOfType(_this->CGdFigureToolBox, source_index,
+                                                          kGdSpellLineAbilityCriticalHits, 0);
     uint16_t spell_id = spellAPI.getSpellID(_this->CGdSpell, spell_index);
     spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
 

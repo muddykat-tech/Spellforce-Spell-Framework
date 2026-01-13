@@ -1054,7 +1054,6 @@ int __thiscall endurance_durability_refresh_handler(SF_CGdSpell *_this,
 int __thiscall pestilence_refresh_handler(SF_CGdSpell *_this,
                                           uint16_t spell_index)
 {
-    uint16_t remove_id = spell_index;
     uint16_t spell_id = _this->active_spell_list[spell_index].spell_id;
 
     SF_CGdResourceSpell spell_data;
@@ -1090,7 +1089,6 @@ int __thiscall domination_spell_refresh_handler(SF_CGdSpell *_this,
     log_info("Domination Spell Refresh Handler Called");
 #endif
 
-    uint16_t spell_line = _this->active_spell_list[spell_index].spell_line;
     uint16_t spell_id = _this->active_spell_list[spell_index].spell_id;
 
     SF_CGdResourceSpell spell_data;
@@ -1099,8 +1097,7 @@ int __thiscall domination_spell_refresh_handler(SF_CGdSpell *_this,
                                       spell_id);
 
     uint16_t spell_line_id = ref->spell_line_id;
-    uint16_t target_entity_index =
-        _this->active_spell_list[spell_index].target.entity_index;
+    uint16_t target_entity_index = _this->active_spell_list[spell_index].target.entity_index;
     // This is quite literially, just so domination spells do not stack
     // if any of these spells are on the target, we return 0
 
