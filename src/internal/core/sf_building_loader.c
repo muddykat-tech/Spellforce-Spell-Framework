@@ -9,7 +9,7 @@
 
 void init_building(Building *building)
 {
-    memset(building, 0, sizeof(building));
+    memset(building, 0, sizeof(Building));
     building->id = -1;
     building->building_required = -1;
     building->can_enter = false;
