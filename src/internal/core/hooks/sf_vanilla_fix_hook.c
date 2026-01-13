@@ -383,187 +383,133 @@ uint16_t __thiscall get_figure_statistic_current_cast_spd(SF_CGdFigure *_this, u
 /* Figure Statistics */
 static void figure_statistic_hook_current_ac()
 {
-    uint32_t addrbase = 0x2b18e0;
-    ASI::MemoryRegion ac_mreg (ASI::AddrOf(addrbase), 7);
+    ASI::MemoryRegion ac_mreg (ASI::AddrOf(0x2b18e0), 7);
     ASI::BeginRewrite(ac_mreg);
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0x90; // nop
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0x90; // nop
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0xE9; // jmp instruction
-    addrbase = addrbase+1;
-    *(int *)(ASI::AddrOf(addrbase)) = (int)(&get_figure_statistic_current_ac) - ASI::AddrOf((addrbase + 4));
+    *(unsigned char *)(ASI::AddrOf(0x2b18e0)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x2b18e1)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x2b18e2)) = 0xE9; // jmp instruction
+    *(int *)(ASI::AddrOf(0x2b18e3)) = (int)(&get_figure_statistic_current_ac)-
+                                        ASI::AddrOf((0x2b18e7));
     ASI::EndRewrite(ac_mreg);
 }
 
 static void figure_statistic_hook_current_agi()
 {
-    uint32_t addrbase = 0x2b1af0;
-    ASI::MemoryRegion ac_mreg (ASI::AddrOf(addrbase), 7);
+    ASI::MemoryRegion ac_mreg (ASI::AddrOf(0x2b1af0), 7);
     ASI::BeginRewrite(ac_mreg);
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0x90; // nop
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0x90; // nop
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0xE9; // jmp instruction
-    addrbase = addrbase+1;
-    *(int *)(ASI::AddrOf(addrbase)) = (int)(&get_figure_statistic_current_agi)-
-                                      ASI::AddrOf((addrbase + 4));
+    *(unsigned char *)(ASI::AddrOf(0x2b1af0)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x2b1af1)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x2b1af2)) = 0xE9; // jmp instruction
+    *(int *)(ASI::AddrOf(0x2b1af3)) = (int)(&get_figure_statistic_current_agi)-
+                                        ASI::AddrOf((0x2b1af7));
     ASI::EndRewrite(ac_mreg);
 }
 
 static void figure_statistic_hook_current_cha()
 {
-    uint32_t addrbase = 0x2b1c30;
-    ASI::MemoryRegion ac_mreg (ASI::AddrOf(addrbase), 7);
+    ASI::MemoryRegion ac_mreg (ASI::AddrOf(0x2b1c30), 7);
     ASI::BeginRewrite(ac_mreg);
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0x90; // nop
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0x90; // nop
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0xE9; // jmp instruction
-    addrbase = addrbase+1;
-    *(int *)(ASI::AddrOf(addrbase)) = (int)(&get_figure_statistic_current_cha)-
-                                      ASI::AddrOf((addrbase + 4));
+    *(unsigned char *)(ASI::AddrOf(0x2b1c30)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x2b1c31)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x2b1c32)) = 0xE9; // jmp instruction
+    *(int *)(ASI::AddrOf(0x2b1c33)) = (int)(&get_figure_statistic_current_cha)-
+                                        ASI::AddrOf((0x2b1c37));
     ASI::EndRewrite(ac_mreg);
 }
 
 static void figure_statistic_hook_current_dex()
 {
-    uint32_t addrbase = 0x2b2600;
-    ASI::MemoryRegion ac_mreg (ASI::AddrOf(addrbase), 7);
+    ASI::MemoryRegion ac_mreg (ASI::AddrOf(0x2b2600), 7);
     ASI::BeginRewrite(ac_mreg);
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0x90; // nop
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0x90; // nop
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0xE9; // jmp instruction
-    addrbase = addrbase+1;
-    *(int *)(ASI::AddrOf(addrbase)) = (int)(&get_figure_statistic_current_dex)-
-                                      ASI::AddrOf((addrbase + 4));
+    *(unsigned char *)(ASI::AddrOf(0x2b2600)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x2b2601)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x2b2602)) = 0xE9; // jmp instruction
+    *(int *)(ASI::AddrOf(0x2b2603)) = (int)(&get_figure_statistic_current_dex)-
+                                        ASI::AddrOf((0x2b2607));
     ASI::EndRewrite(ac_mreg);
 }
 
 static void figure_statistic_hook_current_int()
 {
-    uint32_t addrbase = 0x2b28a0;
-    ASI::MemoryRegion ac_mreg (ASI::AddrOf(addrbase), 7);
+    ASI::MemoryRegion ac_mreg (ASI::AddrOf(0x2b28a0), 7);
     ASI::BeginRewrite(ac_mreg);
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0x90; // nop
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0x90; // nop
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0xE9; // jmp instruction
-    addrbase = addrbase+1;
-    *(int *)(ASI::AddrOf(addrbase)) = (int)(&get_figure_statistic_current_int)-
-                                      ASI::AddrOf((addrbase + 4));
+    *(unsigned char *)(ASI::AddrOf(0x2b28a0)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x2b28a1)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x2b28a2)) = 0xE9; // jmp instruction
+    *(int *)(ASI::AddrOf(0x2b28a3)) = (int)(&get_figure_statistic_current_int)-
+                                        ASI::AddrOf((0x2b28a7));
     ASI::EndRewrite(ac_mreg);
 }
 
 static void figure_statistic_hook_current_hp()
 {
-    uint32_t addrbase = 0x279350;
-    ASI::MemoryRegion ac_mreg (ASI::AddrOf(addrbase), 7);
+    ASI::MemoryRegion ac_mreg (ASI::AddrOf(0x279350), 7);
     ASI::BeginRewrite(ac_mreg);
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0x90; // nop
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0x90; // nop
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0xE9; // jmp instruction
-    addrbase = addrbase+1;
-    *(int *)(ASI::AddrOf(addrbase)) = (int)(&get_figure_statistic_current_hp)-
-                                      ASI::AddrOf((addrbase + 4));
+    *(unsigned char *)(ASI::AddrOf(0x279350)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x279351)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x279352)) = 0xE9; // jmp instruction
+    *(int *)(ASI::AddrOf(0x279353)) = (int)(&get_figure_statistic_current_hp)-
+                                        ASI::AddrOf((0x279357));
     ASI::EndRewrite(ac_mreg);
 }
 
 static void figure_statistic_hook_current_mp()
 {
-    uint32_t addrbase = 0x2b29c0;
-    ASI::MemoryRegion ac_mreg (ASI::AddrOf(addrbase), 7);
+    ASI::MemoryRegion ac_mreg (ASI::AddrOf(0x2b29c0), 7);
     ASI::BeginRewrite(ac_mreg);
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0x90; // nop
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0x90; // nop
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0xE9; // jmp instruction
-    addrbase = addrbase+1;
-    *(int *)(ASI::AddrOf(addrbase)) = (int)(&get_figure_statistic_current_mp)-
-                                      ASI::AddrOf((addrbase + 4));
+    *(unsigned char *)(ASI::AddrOf(0x2b29c0)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x2b29c1)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x2b29c2)) = 0xE9; // jmp instruction
+    *(int *)(ASI::AddrOf(0x2b29c3)) = (int)(&get_figure_statistic_current_mp)-
+                                        ASI::AddrOf((0x2b29c7));
     ASI::EndRewrite(ac_mreg);
 }
 
 static void figure_statistic_hook_current_sta()
 {
-    uint32_t addrbase = 0x2b2e00;
-    ASI::MemoryRegion ac_mreg (ASI::AddrOf(addrbase), 7);
+    ASI::MemoryRegion ac_mreg (ASI::AddrOf(0x2b2e00), 7);
     ASI::BeginRewrite(ac_mreg);
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0x90; // nop
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0x90; // nop
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0xE9; // jmp instruction
-    addrbase = addrbase+1;
-    *(int *)(ASI::AddrOf(addrbase)) = (int)(&get_figure_statistic_current_sta)-
-                                      ASI::AddrOf((addrbase + 4));
+    *(unsigned char *)(ASI::AddrOf(0x2b2e00)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x2b2e01)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x2b2e02)) = 0xE9; // jmp instruction
+    *(int *)(ASI::AddrOf(0x2b2e03)) = (int)(&get_figure_statistic_current_sta)-
+                                        ASI::AddrOf((0x2b2e07));
     ASI::EndRewrite(ac_mreg);
 }
 
 static void figure_statistic_hook_current_str()
 {
-    uint32_t addrbase = 0x2b2eb0;
-    ASI::MemoryRegion ac_mreg (ASI::AddrOf(addrbase), 7);
+    ASI::MemoryRegion ac_mreg (ASI::AddrOf(0x2b2eb0), 7);
     ASI::BeginRewrite(ac_mreg);
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0x90; // nop
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0x90; // nop
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0xE9; // jmp instruction
-    addrbase = addrbase+1;
-    *(int *)(ASI::AddrOf(addrbase)) = (int)(&get_figure_statistic_current_str)-
-                                      ASI::AddrOf((addrbase + 4));
+    *(unsigned char *)(ASI::AddrOf(0x2b2eb0)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x2b2eb1)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x2b2eb2)) = 0xE9; // jmp instruction
+    *(int *)(ASI::AddrOf(0x2b2eb3)) = (int)(&get_figure_statistic_current_str)-
+                                        ASI::AddrOf((0x2b2eb7));
     ASI::EndRewrite(ac_mreg);
 }
 
 static void figure_statistic_hook_current_wis()
 {
-    uint32_t addrbase = 0x2b3160;
-    ASI::MemoryRegion ac_mreg (ASI::AddrOf(addrbase), 7);
+    ASI::MemoryRegion ac_mreg (ASI::AddrOf(0x2b3160), 7);
     ASI::BeginRewrite(ac_mreg);
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0x90; // nop
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0x90; // nop
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0xE9; // jmp instruction
-    addrbase = addrbase+1;
-    *(int *)(ASI::AddrOf(addrbase)) = (int)(&get_figure_statistic_current_wis)-
-                                      ASI::AddrOf((addrbase + 4));
+    *(unsigned char *)(ASI::AddrOf(0x2b3160)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x2b3161)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x2b3162)) = 0xE9; // jmp instruction
+    *(int *)(ASI::AddrOf(0x2b3163)) = (int)(&get_figure_statistic_current_wis)-
+                                        ASI::AddrOf((0x2b3167));
     ASI::EndRewrite(ac_mreg);
 }
 
 static void figure_statistic_hook_current_fire_res()
 {
-    uint32_t addrbase = 0x2b2c00;
-    ASI::MemoryRegion ac_mreg (ASI::AddrOf(addrbase), 7);
+    ASI::MemoryRegion ac_mreg (ASI::AddrOf(0x2b2c00), 7);
     ASI::BeginRewrite(ac_mreg);
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0x90; // nop
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0x90; // nop
-    addrbase = addrbase+1;
-    *(unsigned char *)(ASI::AddrOf(addrbase)) = 0xE9; // jmp instruction
-    addrbase = addrbase+1;
-    *(int *)(ASI::AddrOf(addrbase)) = (int)(&get_figure_statistic_current_fire_res)-
-                                      ASI::AddrOf((addrbase + 4));
+    *(unsigned char *)(ASI::AddrOf(0x2b2c00)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x2b2c01)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x2b2c02)) = 0xE9; // jmp instruction
+    *(int *)(ASI::AddrOf(0x2b2c03)) = (int)(&get_figure_statistic_current_fire_res)-
+                                        ASI::AddrOf((0x2b2c07));
     ASI::EndRewrite(ac_mreg);
 }
 
@@ -660,11 +606,11 @@ void initialize_vanilla_fix_hooks()
     figure_statistic_hook_current_str();
     figure_statistic_hook_current_wis();
     figure_statistic_hook_current_fire_res();
-    figure_statistic_hook_current_ice_res();
-    figure_statistic_hook_current_mental_res();
-    figure_statistic_hook_current_black_res();
-    figure_statistic_hook_current_walk_spd();
-    figure_statistic_hook_current_fight_spd();
-    figure_statistic_hook_current_cast_spd();
-    salvo_fix_hook();
+    // figure_statistic_hook_current_ice_res();
+    // figure_statistic_hook_current_mental_res();
+    // figure_statistic_hook_current_black_res();
+    // figure_statistic_hook_current_walk_spd();
+    // figure_statistic_hook_current_fight_spd();
+    // figure_statistic_hook_current_cast_spd();
+    // salvo_fix_hook();
 }
