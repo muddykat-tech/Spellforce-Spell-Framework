@@ -343,7 +343,7 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
                                           target_pos.X;
                         uint16_t near_y = *(uint16_t *)((uint32_t)&_this->SF_CGdWorld->unknown1[0].uknwn2 + dx) +
                                           target_pos.Y;
-                        if ((*(uint8_t *)&_this->SF_CGdWorld->cells[near_y*0x400 + near_x].world_cell_flags) & 0x10 !=
+                        if (((*(uint8_t *)&_this->SF_CGdWorld->cells[near_y*0x400 + near_x].world_cell_flags) & 0x10) !=
                             0)
                         {
                             uint16_t sec_target = toolboxAPI.getFigureFromWorld(_this->SF_CGdWorldToolBox, near_x,

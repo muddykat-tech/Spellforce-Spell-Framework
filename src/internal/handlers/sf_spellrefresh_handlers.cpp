@@ -1009,13 +1009,10 @@ int __thiscall endurance_durability_refresh_handler(SF_CGdSpell *_this,
                                                     uint16_t spell_index)
 {
     // Essentially, prevents warcry from being used if Berserk is active.
-    uint16_t spell_line = _this->active_spell_list[spell_index].spell_line;
     uint16_t spell_id = _this->active_spell_list[spell_index].spell_id;
 
     SF_CGdResourceSpell spell_data;
-    SF_CGdResourceSpell *ref =
-        spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data,
-                                      spell_id);
+    SF_CGdResourceSpell *ref = spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, spell_id);
 
     uint16_t spell_line_id = ref->spell_line_id;
     uint16_t target_entity_index =

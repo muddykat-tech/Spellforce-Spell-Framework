@@ -128,7 +128,7 @@ void initialize_menu_data_hooks()
         (CMnuScreen_attach_control_ptr)(ASI::AddrOf(0x507240));
 }
 
-CMnuSmpButton* show_mod_list_button;
+CMnuSmpButton *show_mod_list_button;
 
 SFSF_ModlistStruct mod_struct;
 void __attribute__((no_caller_saved_registers, thiscall))
@@ -166,18 +166,18 @@ sf_menu_hook(uint32_t _CAppMenu)
     const int BUTTON_FONT_INDEX = 7;
 
     show_mod_list_button = attach_new_button(container,
-                      button_default,
-                      button_pressed,
-                      button_highlight,
-                      button_disabled,
-                      button_label,
-                      BUTTON_FONT_INDEX,
-                      BUTTON_X,
-                      BUTTON_Y,
-                      BUTTON_WIDTH,
-                      BUTTON_HEIGHT,
-                      BUTTON_INDEX,
-                      (uint32_t)&show_mod_list_callback);
+                                             button_default,
+                                             button_pressed,
+                                             button_highlight,
+                                             button_disabled,
+                                             button_label,
+                                             BUTTON_FONT_INDEX,
+                                             BUTTON_X,
+                                             BUTTON_Y,
+                                             BUTTON_WIDTH,
+                                             BUTTON_HEIGHT,
+                                             BUTTON_INDEX,
+                                             (uint32_t)&show_mod_list_callback);
 
     s_menu_func(_CAppMenu);
 }
@@ -237,9 +237,7 @@ void __attribute__((thiscall)) sf_click_vertical_button(SF_CUiMain *_this,
                      0);
         if (ac113.first != 0)
         {
-            fun_009a2790(&ac113, ac113.first,
-                         (uint32_t)ac113.post_last - (uint32_t)ac113.first >>
-                         2);
+            fun_009a2790(&ac113, ac113.first, ((uint32_t)ac113.post_last - (uint32_t)ac113.first) >> 2);
             return;
         }
     }
