@@ -527,7 +527,7 @@ char *readfile(const char *path)
 
     if(read_len != (size_t)len)
     {
-        log_error("File Read Incomplete: \"%s\" (Expected %ld bytes, got %zu bytes)\n", path, len, read_len);
+        log_error("File Read Incomplete: \"%s\" (Expected %ld bytes, got %zu bytes)\n", path, len,read_len);
         free(buffer);
         return NULL;
     }

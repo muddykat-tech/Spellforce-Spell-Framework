@@ -786,17 +786,20 @@ void prepare_mod_page_info(int page, int total_pages, char *mod_page_info, size_
 void prepare_mod_error_info(SFMod *parent_mod, char *mod_error_info, size_t error_buffer_size,
                             char *wrapped_error_info, size_t wrapped_buffer_size)
 {
-    if (parent_mod->mod_errors && (parent_mod->mod_errors[0] != '\0'))
+    log_info("Called into error Prep");
+    if (parent_mod->mod_errors && (parent_mod->mod_errors[0] != 0))
     {
+
+        log_info("Error Exists? %s", parent_mod->mod_errors);
         snprintf(mod_error_info, error_buffer_size, "%s",
                  parent_mod->mod_errors);
+        wrap_text(mod_error_info, wrapped_error_info, 80);
     }
     else
     {
+        log_info("No Errors %s", " ");
         snprintf(mod_error_info, error_buffer_size, "");
     }
-
-    wrap_text(mod_error_info, wrapped_error_info, 80);
 }
 
 /**
