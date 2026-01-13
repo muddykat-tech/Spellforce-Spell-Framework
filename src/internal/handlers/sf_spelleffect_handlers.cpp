@@ -225,10 +225,7 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
 {
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
     SF_CGdResourceSpell spell_data;
-    SF_SpellEffectInfo effect_info;
     uint16_t source_index = spell->source.entity_index;
-    effect_info.spell_id = spell->spell_id;
-    effect_info.job_id = spell->spell_job;
     spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
     uint16_t sub_effect_id = spell_data.params[6];
     SF_CGdResourceSpell sub_spell_data;
@@ -395,10 +392,7 @@ void __thiscall effect_siege_aura (SF_CGdSpell *_this, uint16_t spell_index)
 {
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
     SF_CGdResourceSpell spell_data;
-    SF_SpellEffectInfo effect_info;
     uint16_t source_index = spell->source.entity_index;
-    effect_info.spell_id = spell->spell_id;
-    effect_info.job_id = spell->spell_job;
     spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
     SF_CGdTargetData source_data;
     source_data.entity_index = source_index;
@@ -511,9 +505,6 @@ void __thiscall effect_fire_resistance (SF_CGdSpell *_this, uint16_t spell_index
 {
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
     SF_CGdResourceSpell spell_data;
-    SF_SpellEffectInfo effect_info;
-    effect_info.spell_id = spell->spell_id;
-    effect_info.job_id = spell->spell_job;
     spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
     uint16_t source_index = spell->source.entity_index;
     if (spell->target.entity_type == 5)

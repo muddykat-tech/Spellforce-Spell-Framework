@@ -212,15 +212,13 @@ uint16_t __thiscall handle_riposte_set(SF_CGdFigureJobs *_this,
     bool apply_set = false;
     if (_this->CGdFigure->figures[target_index].set_type == 0x03)
     {
-        uint16_t counter = spellAPI.getRandom(_this->OpaqueClass, 100); char
-            apply_set = (counter < 0x0b);
+        uint16_t counter = spellAPI.getRandom(_this->OpaqueClass, 100);
+        apply_set = (counter < 0x0b);
     }
     if (apply_set)
     {
-        uint16_t damage = g_get_reduced_damage(_this->AutoClass34, source_index,
-                                               source_index, weapon_damage);
-        toolboxAPI.dealDamage(_this->CGdFigureToolBox, source_index,
-                              source_index, damage, 0, 0, 0);
+        uint16_t damage = g_get_reduced_damage(_this->AutoClass34, source_index, source_index, weapon_damage);
+        toolboxAPI.dealDamage(_this->CGdFigureToolBox, source_index, source_index, damage, 0, 0, 0);
         return 0;
     }
     // TODO: fix enchatments on weapon applying with reflected hit
@@ -413,14 +411,10 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
                         if ((_this->CGdFigure->figures[target.entity_index].
                              flags & F_CHECK_SPELLS_BEFORE_JOB) != 0)
                         {
-                            if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox,
-                                                        target.entity_index,
-                                                        spell_line_id))
+                            if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, target.entity_index, spell_line_id))
                             {
                                 onhit_handler_ptr onhit_func = entry.second;
-                                damage = onhit_func(_this, source_index,
-                                                    target.entity_index,
-                                                    damage);
+                                damage = onhit_func(_this, source_index, target.entity_index, damage);
                             }
                         }
                     }
@@ -434,9 +428,7 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
                                                         spell_line_id))
                             {
                                 onhit_handler_ptr onhit_func = entry.second;
-                                damage = onhit_func(_this, source_index,
-                                                    target.entity_index,
-                                                    damage);
+                                damage = onhit_func(_this, source_index, target.entity_index, damage);
                             }
                         }
                     }
@@ -570,10 +562,8 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
             {
                 uint16_t subspell_id = 0;
                 // Havoc & DeathKnight upgrade
-                if ((_this->CGdFigure->figures[target.entity_index].unit_data_id
-                     == 0x510) ||
-                    (_this->CGdFigure->figures[target.entity_index].unit_data_id
-                     == 0x513))
+                if ((_this->CGdFigure->figures[target.entity_index].unit_data_id == 0x510) ||
+                    (_this->CGdFigure->figures[target.entity_index].unit_data_id == 0x513))
                 {
                     // NOT a bug, but feature. The higher the level of enemy, the stronger curse gets.
                     uint16_t spell_id = spellAPI.getLeveledSpellID(_this->CGdResource, 0x167,
@@ -584,9 +574,8 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
                         t_data.entity_index = source_index;
                         t_data.entity_type = 1;
                         t_data.position = {0, 0};
-                        spellAPI.addSpell(_this->CGdSpell, spell_id,
-                                          _this->OpaqueClass->current_step,
-                                          &target, &t_data, 0);
+                        spellAPI.addSpell(_this->CGdSpell, spell_id, _this->OpaqueClass->current_step, &target, &t_data,
+                                          0);
                     }
                 }
                 if(damage != 0)

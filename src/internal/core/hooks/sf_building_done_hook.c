@@ -64,7 +64,7 @@ void __thiscall sf_building_done_hook(SF_CGdBuildingToolbox *_this, uint16_t bui
     }
 
     uint8_t building_type = _this->CGdBuilding->buildings[building_index].type;
-
+    log_debug(DEBUG_HIGH, "Called handler for building %d type %d", building_index, building_type);
     building_done_handler_ptr handler = get_building_done_handler (building_type);
     handler(_this, building_index);
 }

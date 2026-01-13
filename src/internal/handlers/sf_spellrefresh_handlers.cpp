@@ -917,8 +917,6 @@ int __thiscall eternity_refresh_handler(SF_CGdSpell *_this,
 int __thiscall warcry_berserk_refresh_handler(SF_CGdSpell *_this,
                                               uint16_t spell_index)
 {
-
-    uint16_t spell_line = _this->active_spell_list[spell_index].spell_line;
     uint16_t spell_id = _this->active_spell_list[spell_index].spell_id;
 
     SF_CGdResourceSpell spell_data;
@@ -927,8 +925,7 @@ int __thiscall warcry_berserk_refresh_handler(SF_CGdSpell *_this,
                                       spell_id);
 
     uint16_t spell_line_id = ref->spell_line_id;
-    uint16_t target_entity_index =
-        _this->active_spell_list[spell_index].target.entity_index;
+    uint16_t target_entity_index = _this->active_spell_list[spell_index].target.entity_index;
 
     // We need the prelog, not sure if 100% required, but following vanilla logic is best.
     bool returnValue = first_block_refresh_handler(_this, spell_index);
@@ -966,13 +963,10 @@ int __thiscall warcry_berserk_refresh_handler(SF_CGdSpell *_this,
 int __thiscall patronize_shelter_refresh_handler(SF_CGdSpell *_this,
                                                  uint16_t spell_index)
 {
-    uint16_t spell_line = _this->active_spell_list[spell_index].spell_line;
     uint16_t spell_id = _this->active_spell_list[spell_index].spell_id;
 
     SF_CGdResourceSpell spell_data;
-    SF_CGdResourceSpell *ref =
-        spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data,
-                                      spell_id);
+    SF_CGdResourceSpell *ref = spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, spell_id);
 
     uint16_t spell_line_id = ref->spell_line_id;
     uint16_t target_entity_index =
