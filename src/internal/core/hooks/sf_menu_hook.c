@@ -131,6 +131,8 @@ void initialize_menu_data_hooks()
 CMnuSmpButton* show_mod_list_button;
 
 SFSF_ModlistStruct mod_struct;
+CMnuLabel *sfsf_version_label;
+
 void __attribute__((no_caller_saved_registers, thiscall))
 sf_menu_hook(uint32_t _CAppMenu)
 {
@@ -143,7 +145,6 @@ sf_menu_hook(uint32_t _CAppMenu)
 
     CMnuContainer *container = *(CMnuContainer **)(_CAppMenu + 0x58);
 
-    CMnuLabel *sfsf_version_label;
     attach_new_label(sfsf_version_label, container, sfsf_info,
                      6, 10, 729, strlen(sfsf_info) * 4, 100);
 
@@ -238,8 +239,7 @@ void __attribute__((thiscall)) sf_click_vertical_button(SF_CUiMain *_this,
         if (ac113.first != 0)
         {
             fun_009a2790(&ac113, ac113.first,
-                         (uint32_t)ac113.post_last - (uint32_t)ac113.first >>
-                         2);
+                         ((uint32_t)ac113.post_last - (uint32_t)ac113.first) >> 2);
             return;
         }
     }
@@ -255,8 +255,7 @@ void __attribute__((thiscall)) sf_click_vertical_button(SF_CUiMain *_this,
                 return;
             }
         }
-        CGdFigureTask task =
-            _this->CUiMain_data.CGdFigure->figures[figure_id].current_job.task;
+        CGdFigureTask task = (CGdFigureTask) _this->CUiMain_data.CGdFigure->figures[figure_id].current_job.task;
         SF_CGdTargetData data;
         data.entity_index = target_id;
         data.entity_type = entity_type;

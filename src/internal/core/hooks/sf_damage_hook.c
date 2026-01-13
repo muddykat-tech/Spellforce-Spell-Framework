@@ -40,7 +40,6 @@ uint32_t __attribute__((no_caller_saved_registers,
     bool check_spells_before_job = figureAPI.isFlagSet(figureToolbox->CGdFigure,
                                                        dmg_target,
                                                        F_CHECK_SPELLS_BEFORE_JOB);
-    bool figure_set_new_job = false;
     if (check_spells_before_job)
     {
         uint16_t spell_job_start_node =

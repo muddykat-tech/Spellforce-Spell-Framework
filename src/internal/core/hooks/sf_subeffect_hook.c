@@ -61,7 +61,7 @@ void __thiscall sf_phys_sub_effect_hook(SF_CGDEffect *_this, uint16_t effect_id)
                 {
                     uint16_t target_id = toolboxAPI.getFigureFromWorld(_this->SF_CGdWorldToolBox, w_x, w_y, 0);
                     if ((_this->SF_CGdFigure->figures[target_id].owner != (uint16_t)(-1)) &&
-                        (_this->SF_CGdFigure->figures[target_id].flags & 0xa == 0) &&
+                        ((_this->SF_CGdFigure->figures[target_id].flags & 0xa) == 0) &&
                         (toolboxAPI.isTargetable(_this->SF_CGdFigureToolBox, target_id)))
                     {
                         bool isFriendly = toolboxAPI.figuresCheckFriendly(_this->SF_CGdFigureToolBox, source_id,
