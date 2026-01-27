@@ -38,6 +38,7 @@ SFBuilding *__thiscall registerBuilding(uint8_t building_type)
     building->done_handler = nullptr;
     building->entry_handler = nullptr;
     building->flags = 0;
+    building->building_tags = 0;
     return building;
 }
 
@@ -360,7 +361,8 @@ void register_mod_spells()
             g_current_mod->mod_errors[0] = 0;
             temp = g_current_mod;
         }
-        else {
+        else
+        {
             temp->mod_errors[0] = 0;
             spell_count_for_mod = spell_count_for_mod + 1;
         }

@@ -32,7 +32,7 @@ extern bool __thiscall isActionMelee(SF_SGtFigureAction *_this);
 extern bool __thiscall hasSpellTag(uint16_t spell_id, SpellTag tag);
 extern void __thiscall setupFigureIterator(CGdFigureIterator *iterator, SF_CGdSpell *spell);
 extern void __thiscall disposeFigureIterator(CGdFigureIterator *iterator);
-extern bool __thiscall hasBuildingTag(uint8_t building_type, BuildingTag tag);
+bool __thiscall hasBuildingTag(uint8_t building_type, BuildingTag tag)  __attribute__((optimize("-O0")));
 
 uint32_t __thiscall getBuildingXData(SF_CGdBuildingToolbox *_this, uint16_t building_index, uint8_t key_type);
 
@@ -123,7 +123,7 @@ typedef void (__thiscall *setup_menu_container_data_ptr)(CMnuContainer *_this,
                                                          SF_String *background,
                                                          SF_String *border);
 typedef void (__thiscall *set_base_alpha_ptr)(void *_this,
-                                               float alpha);
+                                              float alpha);
 
 typedef uint32_t (__thiscall *get_visual_control_ptr)(CMnuContainer *_this);
 

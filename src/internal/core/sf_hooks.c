@@ -317,13 +317,13 @@ static void initialize_building_done_hook()
 {
     ASI::MemoryRegion done_mreg1 (ASI::AddrOf(0x2f05d3), 5);
     ASI::BeginRewrite(done_mreg1);
-    *(unsigned char *)(ASI::AddrOf(0x2f05d3)) = 0xE8; // CALL instruction
+    *(unsigned char *)(ASI::AddrOf(0x2f05d3)) = 0xE8;  // CALL instruction
     *(int *)(ASI::AddrOf(0x2f05d4)) = (int)(&sf_building_done_hook) - ASI::AddrOf(0x2f05d8);
     ASI::EndRewrite(done_mreg1);
 
     ASI::MemoryRegion done_mreg2 (ASI::AddrOf(0x2d6d31), 5);
     ASI::BeginRewrite(done_mreg2);
-    *(unsigned char *)(ASI::AddrOf(0x2d6d31)) = 0xE8; // CALL instruction
+    *(unsigned char *)(ASI::AddrOf(0x2d6d31)) = 0xE8;  // CALL instruction
     *(int *)(ASI::AddrOf(0x2d6d32)) = (int)(&sf_building_done_hook) - ASI::AddrOf(0x2d6d36);
     ASI::EndRewrite(done_mreg2);
 
@@ -597,13 +597,13 @@ static void initialize_spell_buttons_hooks()
 {
     ASI::MemoryRegion vfunction208_mreg_1 (ASI::AddrOf(0x5ebb23), 5);
     ASI::BeginRewrite(vfunction208_mreg_1);
-    *(unsigned char *)(ASI::AddrOf(0x5ebb23)) = 0xE8; // CALL instruction
+    *(unsigned char *)(ASI::AddrOf(0x5ebb23)) = 0xE8;  // CALL instruction
     *(int *)(ASI::AddrOf(0x5ebb24)) = (int)(&sf_click_vertical_button) - ASI::AddrOf(0x5ebb28);
     ASI::EndRewrite(vfunction208_mreg_1);
 
     ASI::MemoryRegion vfunction208_mreg_2 (ASI::AddrOf(0x5ebb7b), 5);
     ASI::BeginRewrite(vfunction208_mreg_2);
-    *(unsigned char *)(ASI::AddrOf(0x5ebb7b)) = 0xE8; // CALL instruction
+    *(unsigned char *)(ASI::AddrOf(0x5ebb7b)) = 0xE8;  // CALL instruction
     *(int *)(ASI::AddrOf(0x5ebb7c)) = (int)(&sf_click_vertical_button) -
                                       ASI::AddrOf(0x5bb80);
     ASI::EndRewrite(vfunction208_mreg_2);
@@ -716,7 +716,7 @@ static void initialize_worker_logic_hooks()
 
     ASI::MemoryRegion isHabitableS_mreg(ASI::AddrOf(0x2c7530), 7);
     ASI::BeginRewrite(isHabitableS_mreg);
-    *(unsigned char *)(ASI::AddrOf(0x2c7530)) = 0xE9; // CALL instruction
+    *(unsigned char *)(ASI::AddrOf(0x2c7530)) = 0xE9; // JUMP instruction
     *(int *)(ASI::AddrOf(0x2c7531)) = (int)(&buildingIsHabitableSingle) - ASI::AddrOf(0x2c7535);
     *(unsigned char *)(ASI::AddrOf(0x2c7535)) = 0x90;
     *(unsigned char *)(ASI::AddrOf(0x2c7536)) = 0x90;
@@ -786,7 +786,7 @@ void initialize_beta_hooks()
     initialize_utility_hooks();
 
     log_info("Hooking spell buttons");
-    // initialize_spell_buttons_hooks();
+    //initialize_spell_buttons_hooks();
 
 }
 

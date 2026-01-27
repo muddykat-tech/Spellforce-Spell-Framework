@@ -51,7 +51,7 @@ typedef struct __attribute__((packed))
     uint8_t worker_count;
     uint8_t worker_count_max;
     uint8_t level;
-    uint32_t unknown2;
+    SF_Coord entry_point;
 } GdBuilding;
 
 struct __attribute__((packed)) SF_CGdBuilding
