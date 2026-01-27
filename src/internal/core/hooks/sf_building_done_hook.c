@@ -8,6 +8,8 @@ typedef uint32_t *(__thiscall *AC65_init_ptr)(void *autoclass65);
 
 typedef uint16_t (__thiscall *XDataListExists_ptr)(void *SF_CGdXDataList, uint16_t index, uint8_t xdata_type);
 typedef uint16_t (__thiscall *XDataListZero_ptr)(void *SF_CGdXDataList, uint16_t xdata_key, uint8_t xdata_type);
+typedef void (__thiscall *fun006c3ca0_ptr)(void *autoclass30, uint16_t param_1, uint16_t owner,
+                                           SF_CGdTargetData *source, SF_CGdTargetData *target);
 typedef void *(__cdecl *op_new_ptr)(uint32_t size);
 
 AC65_init_ptr l_AC65_init;
@@ -16,6 +18,7 @@ fun0074ca30_ptr l_fun0074ca30;
 XDataListZero_ptr XDataListZero;
 XDataListExists_ptr XDataListExists;
 op_new_ptr op_new;
+fun006c3ca0_ptr fun006c3ca0;
 
 void initialize_building_done_hooks()
 {
@@ -25,12 +28,11 @@ void initialize_building_done_hooks()
     XDataListZero = (XDataListZero_ptr) ASI::AddrOf(0x353ef0);
     XDataListExists = (XDataListExists_ptr) ASI::AddrOf(0x3549d0);
     op_new = (op_new_ptr)ASI::AddrOf(0x675A9D);
+    fun006c3ca0 = (fun006c3ca0_ptr)ASI::AddrOf(0x2c3ca0);
 }
-
 void include_owner_on_map(uint16_t owner)
 {
     uint32_t **object_ptr = (uint32_t **)ASI::AddrOf(0x949fec);
-    log_debug (DEBUG_HIGH, "DAT_00d49fec %d", (uint32_t)(*object_ptr));
     if (*object_ptr == 0)
     {
 
@@ -64,7 +66,6 @@ void __thiscall sf_building_done_hook(SF_CGdBuildingToolbox *_this, uint16_t bui
     }
 
     uint8_t building_type = _this->CGdBuilding->buildings[building_index].type;
-    log_debug(DEBUG_HIGH, "Called handler for building %d type %d", building_index, building_type);
     building_done_handler_ptr handler = get_building_done_handler (building_type);
     handler(_this, building_index);
 }
