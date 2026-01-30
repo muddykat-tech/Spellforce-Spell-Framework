@@ -390,10 +390,10 @@ static void __declspec(naked) menuload_hook_beta()
 static void __declspec(naked) ui_overlay_hook()
 {
     asm ("pop %%eax                 \n\t"       // Pop EAX to clean it for our use case
-         "push %%ebx                \n\t"       // Push Figure ID into our hook
+         "push -0x184(%%ebp)        \n\t"       // Push Figure ID into our hook
          "push %%eax                \n\t"       // Push Spell ID into our hook
          "push %%ecx                \n\t"       // Push CGDResource into our hook
-         "mov %%esi, %%ecx          \n\t"       // CGDFigure is moved into our hook
+         "mov -0x1d4(%%ebp), %%ecx  \n\t"       // CGDFigure is moved into our hook
          "call %P0                  \n\t"       // Call our Hook
          "push %%eax                \n\t"       // Put Correct Spell ID from out Hook to the stack
          "lea -0x120(%%ebp),%%eax   \n\t"       // Assign the EAX to original stack variable.
@@ -406,10 +406,10 @@ static void __declspec(naked) ui_overlay_hook()
 static void __declspec(naked) ui_overlay_hook2()
 {
     asm ("pop %%eax                 \n\t"       // Pop EAX to clean it for our use case
-         "push %%ebx                \n\t"       // Push Figure ID into our hook
+         "push -0x184(%%ebp)        \n\t"       // Push Figure ID into our hook
          "push %%eax                \n\t"       // Push Spell ID into our hook
          "push %%ecx                \n\t"       // Push CGDResource into our hook
-         "mov %%esi, %%ecx          \n\t"       // CGDFigure is moved into our hook
+         "mov -0x1d4(%%ebp), %%ecx  \n\t"       // CGDFigure is moved into our hook
          "call %P0                  \n\t"       // Call our Hook
          "push %%eax                \n\t"       // Put Correct Spell ID from out Hook to the stack
          "lea -0x120(%%ebp),%%eax   \n\t"       // Assign the EAX to original stack variable.
