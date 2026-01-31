@@ -786,7 +786,7 @@ void initialize_beta_hooks()
     initialize_utility_hooks();
 
     log_info("Hooking spell buttons");
-    //initialize_spell_buttons_hooks();
+    initialize_spell_buttons_hooks();
 
 }
 

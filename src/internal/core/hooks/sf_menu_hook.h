@@ -26,12 +26,9 @@ void __thiscall sf_menu_hook(uint32_t _CAppMenu);
 uint16_t __thiscall sf_ui_overlay_fix(SF_CGdFigure *_this, void *CGdResource, uint16_t spell_id, uint16_t figure_id);
 
 void initialize_menu_data_hooks();
-void __thiscall sf_click_vertical_button(SF_CUiMain *_this, uint16_t figure_id,
-                                         uint8_t entity_type,
-                                         uint16_t target_id,
-                                         SF_UIElement *element);
-void __thiscall sf_click_horizontal_button(SF_CUiMain *_this,
-                                           uint_list_node *param1,
-                                           SF_UIElement *param2);
-void __thiscall sf_handle_button_flashing_maybe(SF_CUiMain *_this);
+void __thiscall sf_click_vertical_button(SF_CUiMain *_this, uint16_t figure_id, uint8_t entity_type, uint16_t target_id,
+                                         SF_UIElement *element)  __attribute__((optimize("-O0")));
+void __thiscall sf_click_horizontal_button(SF_CUiMain *_this, uint_list_node *param1,
+                                           SF_UIElement *param2)  __attribute__((optimize("-O0")));
+void __thiscall sf_handle_button_flashing_maybe(SF_CUiMain *_this)  __attribute__((optimize("-O0")));
 #endif
