@@ -1759,13 +1759,11 @@ void initialize_vanilla_spells()
     registrationAPI.applySpellTag(ability_shift_life,
                                   SpellTag::COMBAT_ABILITY_SPELL);
 
-    SFSpell *ability_riposte =
-        registrationAPI.registerSpell(kGdSpellLineAbilityRiposte);
+    SFSpell *ability_riposte = registrationAPI.registerSpell(kGdSpellLineAbilityRiposte);
     registrationAPI.applySpellTag(ability_riposte,
                                   SpellTag::TARGET_ONHIT_SPELL);
     registrationAPI.linkTypeHandler(ability_riposte, &ability_riposte_handler);
-    registrationAPI.linkOnHitHandler(ability_riposte, &riposte_onhit_handler,
-                                     PHASE_3);
+    registrationAPI.linkOnHitHandler(ability_riposte, &riposte_onhit_handler, PHASE_3);
     registrationAPI.linkSingleTargetAIHandler(ability_riposte,
                                               &riposte_ability_ai_handler);
     registrationAPI.applySpellTag(ability_riposte,
@@ -1775,8 +1773,7 @@ void initialize_vanilla_spells()
         registrationAPI.registerSpell(kGdSpellLineAbilityCriticalHits);
     registrationAPI.linkTypeHandler(ability_critical_hits,
                                     &ability_critical_hits_handler);
-    registrationAPI.linkOnHitHandler(ability_critical_hits,
-                                     &critical_hits_onhit_handler, PHASE_1);
+    registrationAPI.linkOnHitHandler(ability_critical_hits, &critical_hits_onhit_handler, PHASE_1);
     registrationAPI.linkSingleTargetAIHandler(ability_critical_hits,
                                               &critical_hits_ai_handler);
     registrationAPI.applySpellTag(ability_critical_hits,

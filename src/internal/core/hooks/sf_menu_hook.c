@@ -246,11 +246,9 @@ void __attribute__((thiscall)) sf_click_vertical_button(SF_CUiMain *_this,
     {
         if (spellAPI.hasSpellTag(actionID, SpellTag::AURA_SPELL))
         {
-            if (hasThisAuraRunning(_this->CUiMain_data.CGdFigureToolBox,
-                                   subActionID, figure_id))
+            if (hasThisAuraRunning(_this->CUiMain_data.CGdFigureToolBox, subActionID, figure_id))
             {
-                fun_0069f8d0((_this->CUiMain_data.CGdControllerClient),
-                             figure_id);
+                fun_0069f8d0((_this->CUiMain_data.CGdControllerClient),figure_id);
                 return;
             }
         }
@@ -263,9 +261,7 @@ void __attribute__((thiscall)) sf_click_vertical_button(SF_CUiMain *_this,
         uint32_t some_flag = 0;
         if (task == TASK_MAINCHAR)
         {
-            some_flag =
-                (uint32_t)(*(uint32_t *)&(_this->CUiMain_data.unkn5[0x2A0]) ==
-                           2);
+            some_flag = (uint32_t)(*(uint32_t *)&(_this->CUiMain_data.unkn5[0x2A0]) == 2);
         }
         fun_0069fb90(_this->CUiMain_data.CGdControllerClient, figure_id,
                      element->unknown_flag, element->unknown_config_param,
