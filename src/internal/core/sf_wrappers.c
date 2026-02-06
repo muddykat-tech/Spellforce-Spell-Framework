@@ -257,7 +257,11 @@ bool __thiscall hasSpellTag(uint16_t spell_id, SpellTag tag)
 
 bool __thiscall hasBuildingTag(uint8_t building_type, BuildingTag tag)
 {
-    return !!((buildingAPI.getBuildingTags(building_type) & tag) != 0);
+    if ((buildingAPI.getBuildingTags(building_type) & tag) != 0)
+    {
+        return 1;
+    }
+    return 0;
 }
 
 bool __thiscall buildingIsScavenger(SF_CGdBuilding *_this, uint16_t building_index)
