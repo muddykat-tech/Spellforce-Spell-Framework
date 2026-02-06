@@ -705,6 +705,17 @@ static void initialize_worker_logic_hooks()
     *(int *)(ASI::AddrOf(0x2ec023)) = (int)(&buildingIsSmelter) - ASI::AddrOf(0x2ec027);
     ASI::EndRewrite(isSmelterMason_mreg);
 
+    ASI::MemoryRegion isMoonsilverMine_mreg(ASI::AddrOf(0x2efd57), 5);
+    ASI::BeginRewrite(isMoonsilverMine_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x2efd57)) = 0xE8; // CALL instruction
+    *(int *)(ASI::AddrOf(0x2efd58)) = (int)(&buildingIsMoonsilverMine) - ASI::AddrOf(0x2efd5c);
+    ASI::EndRewrite(isMoonsilverMine_mreg);
+
+    ASI::MemoryRegion isMoonsilverMine_mreg2(ASI::AddrOf(0x2f02b7), 5);
+    ASI::BeginRewrite(isMoonsilverMine_mreg2);
+    *(unsigned char *)(ASI::AddrOf(0x2f02b8)) = 0xE8; // CALL instruction
+    *(int *)(ASI::AddrOf(0x2f02b8)) = (int)(&buildingIsMoonsilverMine) - ASI::AddrOf(0x2f02bc);
+    ASI::EndRewrite(isMoonsilverMine_mreg2);
 
     ASI::MemoryRegion isHabitable_mreg(ASI::AddrOf(0x2c7600), 7);
     ASI::BeginRewrite(isHabitable_mreg);
@@ -724,7 +735,7 @@ static void initialize_worker_logic_hooks()
 
     ASI::MemoryRegion isTower_mreg(ASI::AddrOf(0x2c71b0), 7);
     ASI::BeginRewrite(isTower_mreg);
-    *(unsigned char *)(ASI::AddrOf(0x2c71b0)) = 0xE9; // CALL instruction
+    *(unsigned char *)(ASI::AddrOf(0x2c71b0)) = 0xE9; // JUMP instruction
     *(int *)(ASI::AddrOf(0x2c71b1)) = (int)(&buildingIsTower) - ASI::AddrOf(0x2c71b5);
     *(unsigned char *)(ASI::AddrOf(0x2c71b5)) = 0x90;
     *(unsigned char *)(ASI::AddrOf(0x2c71b6)) = 0x90;
