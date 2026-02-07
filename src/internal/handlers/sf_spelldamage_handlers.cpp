@@ -129,10 +129,8 @@ uint16_t __thiscall feedback_dmg_handler(SF_CGdFigureToolbox *_this,
     if (is_spell_damage)
     {
         SF_CGdResourceSpell spell_data;
-        spellAPI.getResourceSpellData(_this->CGdResource, &spell_data,
-                                      spell_id);
-        uint16_t reflect_amount = (uint16_t)((current_damage *
-                                              spell_data.params[0]) / 100);
+        spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
+        uint16_t reflect_amount = (uint16_t)((current_damage * spell_data.params[0]) / 100);
         if (current_damage < reflect_amount)
         {
             current_damage = 0;
@@ -142,13 +140,15 @@ uint16_t __thiscall feedback_dmg_handler(SF_CGdFigureToolbox *_this,
         {
             current_damage = current_damage - reflect_amount;
         }
-        toolboxAPI.dealDamage(_this, target, source, reflect_amount, 1, 0, 0);
-        SF_CGdTargetData source_data = {1, source, {0, 0}};
-        SF_CGdTargetData target_data = {1, target, {0, 0}};
-        SF_Rectangle rect = {0, 0};
-        effectAPI.addEffect(_this->CGdEffect, kGdEffectSpellVoodooHitFigure,
-                            &source_data, &target_data,
-                            _this->maybe_random->current_step, 10, &rect);
+        if ((_this->CGdFigure->figures[target].flags & TOWER) == 0)
+        {
+            toolboxAPI.dealDamage(_this, target, source, reflect_amount, 1, 0, 0);
+            SF_CGdTargetData source_data = {1, source, {0, 0}};
+            SF_CGdTargetData target_data = {1, target, {0, 0}};
+            SF_Rectangle rect = {0, 0};
+            effectAPI.addEffect(_this->CGdEffect, kGdEffectSpellVoodooHitFigure, &source_data, &target_data,
+                                _this->maybe_random->current_step, 10, &rect);
+        }
     }
     return current_damage;
 }
