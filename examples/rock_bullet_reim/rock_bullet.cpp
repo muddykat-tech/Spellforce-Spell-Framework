@@ -112,7 +112,7 @@ void __thiscall rock_bullet_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
                                       _this->active_spell_list[spell_index].spell_id);
 
             effectAPI->setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_PHYSICAL_DAMAGE, damage);
-            effectAPI->setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_DO_NOT_ADD_SUBSPELL, 1);
+            effectAPI->setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_ADD_SUBSPELL, 1);
             effectAPI->setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_ENTITY_INDEX, source_index);
             effectAPI->setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_ENTITY_TYPE, 1);
             effectAPI->setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_ENTITY_INDEX2, target_index);

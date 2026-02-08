@@ -208,7 +208,7 @@ uint16_t __thiscall arrows_reflection_onhit_handler(SF_CGdFigureJobs *_this, uin
         effectAPI->setEffectXData(_this->CGdEffect, effect_id, EFFECT_ENTITY_INDEX, source_index);
         effectAPI->setEffectXData(_this->CGdEffect, effect_id, EFFECT_ENTITY_INDEX2, target.entity_index);
         // we should specify that the projectile doesn't bring any subspell with itself
-        effectAPI->setEffectXData(_this->CGdEffect, effect_id, EFFECT_DO_NOT_ADD_SUBSPELL, 1);
+        effectAPI->setEffectXData(_this->CGdEffect, effect_id, EFFECT_ADD_SUBSPELL, 1);
         // we should set the projectile's physical damage, let's just return full damage the attacker was going to deal
         effectAPI->setEffectXData(_this->CGdEffect, effect_id, EFFECT_PHYSICAL_DAMAGE, damage);
 

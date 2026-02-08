@@ -514,7 +514,7 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
                                          EFFECT_ENTITY_INDEX2,
                                          target.entity_index);
                 effectAPI.setEffectXData(_this->CGdEffect, effect_id,
-                                         EFFECT_DO_NOT_ADD_SUBSPELL, 1);
+                                         EFFECT_ADD_SUBSPELL, 1);
                 effectAPI.setEffectXData(_this->CGdEffect, effect_id,
                                          EFFECT_PHYSICAL_DAMAGE, damage);
 

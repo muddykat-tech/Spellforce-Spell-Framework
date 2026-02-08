@@ -806,6 +806,11 @@ void prepare_mod_error_info(SFMod *parent_mod, char *mod_error_info, size_t erro
     }
 }
 
+boolean __thiscall xDataExists(SF_CGDEffect _this, uint16_t effect_index, SpellDataKey data)
+{
+
+}
+
 /**
  * Attaches mod labels to the container based on pagination settings
  *

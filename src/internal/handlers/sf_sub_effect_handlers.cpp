@@ -13,7 +13,7 @@ void __thiscall elemental_sub_effect_handler(SF_CGDEffect *_this,
     {
         figure_type1 = effectAPI.getEffectXData(_this, effect_index, EFFECT_ENTITY_TYPE);
     }
-    uint16_t sub_spell_flag = effectAPI.getEffectXData(_this, effect_index, EFFECT_DO_NOT_ADD_SUBSPELL);
+    uint16_t sub_spell_flag = effectAPI.getEffectXData(_this, effect_index, EFFECT_ADD_SUBSPELL);
     if (sub_spell_flag != 1)
     {
         // here comes the black magic

@@ -486,7 +486,7 @@ typedef enum
     EFFECT_ENTITY_INDEX3 = 0x2D,
     EFFECT_ENTITY_INDEX = 0x2F,
     EFFECT_ENTITY_TYPE = 0x30,
-    EFFECT_DO_NOT_ADD_SUBSPELL = 0x33,
+    EFFECT_ADD_SUBSPELL = 0x33,
 } SpellDataKey;
 
 typedef enum
