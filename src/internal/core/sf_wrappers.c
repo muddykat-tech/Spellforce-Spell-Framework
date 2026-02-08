@@ -24,6 +24,9 @@
  */
 
 typedef uint32_t (__thiscall *XDataGet_ptr)(void *_this,uint16_t key,uint8_t keyType);
+typedef uint32_t (__thiscall *CGdXDataExists_ptr)(void *_this, uint16_t key, uint8_t keyType);
+
+
 
 FUN_0069eaf0_ptr FUN_0069eaf0;
 fidfree_ptr fidFree;
@@ -54,6 +57,7 @@ destory_button_ptr f_destory_button;
 set_menu_id_ptr set_menu_id;
 set_container_visible_ptr set_container_visible;
 XDataGet_ptr XDataGet;
+CGdXDataExists_ptr CGdXDataExists;
 
 //checky thiscall but not really. ~muddykat (fix this later add support for non thiscalls)
 uint32_t __thiscall getDistance(SF_Coord *pointA, SF_Coord *pointB)
@@ -124,6 +128,8 @@ void initialize_wrapper_data_hooks()
     f_destory_button = (destory_button_ptr)(ASI::AddrOf(0xB7B270));
     set_menu_id = (set_menu_id_ptr)(ASI::AddrOf(0x50E660));
     set_container_visible = (set_container_visible_ptr)(ASI::AddrOf(0x513910));
+
+    CGdXDataExists = (CGdXDataExists_ptr)(ASI::AddrOf(0x2549d0));
 }
 
 void log_message(const char *filename, const char *format, ...)
@@ -806,9 +812,15 @@ void prepare_mod_error_info(SFMod *parent_mod, char *mod_error_info, size_t erro
     }
 }
 
-boolean __thiscall xDataExists(SF_CGDEffect _this, uint16_t effect_index, SpellDataKey data)
+bool __thiscall XDataExists(SF_CGDEffect *_this, uint16_t effect_index, SpellDataKey data)
 {
-
+    uint8_t xdata_key = _this->active_effect_list[effect_index].xdata_key;
+    uint32_t result = CGdXDataExists(_this->SF_CGdXDataList, xdata_key, data);
+    if ((result != 0) && (xdata_key != 0))
+    {
+        return 1;
+    }
+    return 0;
 }
 
 /**

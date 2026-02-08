@@ -215,7 +215,7 @@ void initialize_data_hooks()
     INCLUDE_FUNCTION(spell, getSpellTags, &getSpellTags);
     INCLUDE_FUNCTION(spell, hasSpellTag, &hasSpellTag);
 
-
+    INCLUDE_FUNCTION(effect, effectXDataExists, &XDataExists);
     log_info("| - FigureAPI Wrappers");
     INCLUDE_FUNCTION(figure, addBonusMultToStatistic, &addBonusMultToStatistic);
 

@@ -44,7 +44,8 @@ void __thiscall stone_rain_handler(SF_CGDEffect *_this, uint16_t effect_id)
     uint32_t target_type = effectAPI.getEffectXData(_this, effect_id, EFFECT_ENTITY_TYPE2);
     uint32_t damage = effectAPI.getEffectXData(_this, effect_id, EFFECT_PHYSICAL_DAMAGE);
 
-    if (!effectAPI.getEffectXData(_this, effect_id, EFFECT_ADD_SUBSPELL))
+    if ((!effectAPI.getEffectXData(_this, effect_id, EFFECT_ADD_SUBSPELL)) &&
+        (effectAPI.effectXDataExists(_this, effect_id, EFFECT_ADD_SUBSPELL)))
     {
         uint32_t pos_x = _this->active_effect_list[effect_id].position.X;
         uint32_t pos_y = _this->active_effect_list[effect_id].position.Y;
@@ -93,9 +94,16 @@ void __thiscall stone_rain_handler(SF_CGDEffect *_this, uint16_t effect_id)
 //just rewritten logic from ghidra to butcher forward
 void __thiscall sf_phys_sub_effect_hook(SF_CGDEffect *_this, uint16_t effect_id)
 {
+    uint32_t source_id = effectAPI.getEffectXData(_this, effect_id, EFFECT_ENTITY_INDEX);
+    uint32_t source_type = effectAPI.getEffectXData(_this, effect_id, EFFECT_ENTITY_TYPE);
+    uint32_t target_id = effectAPI.getEffectXData(_this, effect_id, EFFECT_ENTITY_INDEX2);
+    uint32_t target_type = effectAPI.getEffectXData(_this, effect_id, EFFECT_ENTITY_TYPE2);
+    uint32_t damage = effectAPI.getEffectXData(_this, effect_id, EFFECT_PHYSICAL_DAMAGE);
+
     //STONE RAIN HANDLER
     uint32_t spell_line = effectAPI.getEffectXData(_this, effect_id, EFFECT_SPELL_LINE);
 
+    //need to check for spells ON the target, NOT PROJECTILE spell line
     if(spellAPI.hasSpellTag(spell_line, SpellTag::TARGET_ONHIT_SPELL))
     {
         // Handle hits us*
@@ -104,7 +112,7 @@ void __thiscall sf_phys_sub_effect_hook(SF_CGDEffect *_this, uint16_t effect_id)
 
 
 
-     else
+    else
     {
         bool isMagicDamage = 0;
         if (target_type == 1)
@@ -134,7 +142,8 @@ void __thiscall sf_phys_sub_effect_hook(SF_CGDEffect *_this, uint16_t effect_id)
 
                 SF_Rectangle rect = {0,0};
 
-                effectAPI.addEffect(_this, kGdEffectMonumentHitFigure, &source, &target, _this->OpaqueClass->current_step,
+                effectAPI.addEffect(_this, kGdEffectMonumentHitFigure, &source, &target,
+                                    _this->OpaqueClass->current_step,
                                     0x14, &rect);
                 figureAPI.subMana(_this->SF_CGdFigure, target_id, mana_cost);
             }
