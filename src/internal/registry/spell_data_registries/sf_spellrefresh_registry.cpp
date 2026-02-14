@@ -11,20 +11,14 @@
 
 static std::map<uint16_t, refresh_handler_ptr> s_spellrefresh_handler_map;
 
-void registerSpellRefreshHandler(uint16_t spell_line_id,
-                                 refresh_handler_ptr handler)
+void registerSpellRefreshHandler(uint16_t spell_line_id, refresh_handler_ptr handler)
 {
     auto check = s_spellrefresh_handler_map.find(spell_line_id);
     if (check != s_spellrefresh_handler_map.end())
     {
-        char message[256];
-        sprintf(message,
-                "%s (v%s) has replaced an Spell Refresh Handler [%d] (Was this on purpose?)",
-                g_current_mod->mod_id, g_current_mod->mod_version,
-                spell_line_id);
-        log_warning(message);
+        log_warning("%s (v%s) has replaced an Spell Refresh Handler [%d] (Was this on purpose?)",
+                    g_current_mod->mod_id, g_current_mod->mod_version, spell_line_id);
     }
-
     s_spellrefresh_handler_map[spell_line_id] = handler;
 }
 

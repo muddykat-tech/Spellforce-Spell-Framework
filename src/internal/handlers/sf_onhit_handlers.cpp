@@ -234,17 +234,14 @@ uint16_t __thiscall assistance_onhit_handler(SF_CGdFigureJobs *_this,
         return damage;
     }
     SF_CGdResourceSpell spell_data;
-    uint16_t spell_index =
-        toolboxAPI.getSpellIndexOfType(_this->CGdFigureToolBox, target_index,
-                                       kGdSpellLineAssistance, 0);
+    uint16_t spell_index = toolboxAPI.getSpellIndexOfType(_this->CGdFigureToolBox, target_index, kGdSpellLineAssistance,
+                                                          0);
     uint16_t spell_id = spellAPI.getSpellID(_this->CGdSpell, spell_index);
     spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
     CGdFigureIterator iter;
     iteratorAPI.figureIteratorInit(&iter, 0, 0, 0x3ff, 0x3ff);
-    iteratorAPI.figureIteratorSetPointers(&iter, _this->CGdFigure,
-                                          _this->AutoClass22, _this->CGdWorld);
-    iteratorAPI.iteratorSetArea(&iter, &_this->CGdFigure->figures->position,
-                                spell_data.params[0]);
+    iteratorAPI.figureIteratorSetPointers(&iter, _this->CGdFigure, _this->AutoClass22, _this->CGdWorld);
+    iteratorAPI.iteratorSetArea(&iter, &_this->CGdFigure->figures->position, spell_data.params[0]);
     std::list<uint16_t> affected_figures;
     uint16_t figure_id = iteratorAPI.getNextFigure(&iter);
     uint16_t element_count = 0;

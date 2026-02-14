@@ -129,7 +129,7 @@ void initialize_wrapper_data_hooks()
     set_menu_id = (set_menu_id_ptr)(ASI::AddrOf(0x50E660));
     set_container_visible = (set_container_visible_ptr)(ASI::AddrOf(0x513910));
 
-    CGdXDataExists = (CGdXDataExists_ptr)(ASI::AddrOf(0x2549d0));
+    CGdXDataExists = (CGdXDataExists_ptr)(ASI::AddrOf(0x3549d0));
 }
 
 void log_message(const char *filename, const char *format, ...)
@@ -814,7 +814,7 @@ void prepare_mod_error_info(SFMod *parent_mod, char *mod_error_info, size_t erro
 
 bool __thiscall XDataExists(SF_CGDEffect *_this, uint16_t effect_index, SpellDataKey data)
 {
-    uint8_t xdata_key = _this->active_effect_list[effect_index].xdata_key;
+    uint16_t xdata_key = _this->active_effect_list[effect_index].xdata_key;
     uint32_t result = CGdXDataExists(_this->SF_CGdXDataList, xdata_key, data);
     if ((result != 0) && (xdata_key != 0))
     {
