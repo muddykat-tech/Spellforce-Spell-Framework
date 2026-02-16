@@ -7,6 +7,7 @@
 #include "spell_data_registries/sf_spellrefresh_registry.h"
 #include "spell_data_registries/sf_onhit_registry.h"
 #include "spell_data_registries/sf_spelldamage_registry.h"
+#include "spell_data_registries/sf_phys_effect_registry.h"
 #include "../../api/structures/sf_building_structures.h"
 #include "ai_data_registries/sf_ai_aoe_registry.h"
 #include "ai_data_registries/sf_ai_avoidance_registry.h"
@@ -82,6 +83,7 @@ SFSpell *__thiscall registerSpell(uint16_t spell_id)
     sf_spell->ai_aoe_handler = nullptr;
     sf_spell->ai_single_handler = nullptr;
     sf_spell->ai_avoidance_handler = nullptr;
+    sf_spell->phys_rain_handler = nullptr;
     sf_spell->damage_phase = SpellDamagePhase::DEFAULT;
     sf_spell->hit_phase = OnHitPhase::PHASE_5;
     g_internal_spell_list.push_back(sf_spell);
@@ -95,19 +97,27 @@ void __thiscall applySpellTag(SFSpell *spell, SpellTag tag)
     spell->spell_tags = current_tags | tag;
 }
 
+void __thiscall linkPhysRainHandler(SFSpell *spell, sub_effect_handler_ptr handler)
+{
+    spell->phys_rain_handler = handler;
+}
+
+void __thiscall linkPhysEffectHandler(SFSpell *spell, phys_effect_handler_ptr handler)
+{
+    spell->phys_effect_handler = handler;
+}
+
 void __thiscall linkTypeHandler(SFSpell *spell, handler_ptr typeHandler)
 {
     spell->spell_type_handler = typeHandler;
 }
 
-void __thiscall linkSingleTargetAIHandler(SFSpell *spell,
-                                          ai_single_handler_ptr handler)
+void __thiscall linkSingleTargetAIHandler(SFSpell *spell, ai_single_handler_ptr handler)
 {
     spell->ai_single_handler = handler;
 }
 
-void __thiscall linkAvoidanceAIHandler(SFSpell *spell,
-                                       ai_avoidance_handler_ptr handler)
+void __thiscall linkAvoidanceAIHandler(SFSpell *spell, ai_avoidance_handler_ptr handler)
 {
     spell->ai_avoidance_handler = handler;
 }
@@ -117,15 +127,13 @@ void __thiscall linkAOEAIHandler(SFSpell *spell, ai_aoe_handler_ptr handler)
     spell->ai_aoe_handler = handler;
 }
 
-void __thiscall linkOnHitHandler(SFSpell *spell, onhit_handler_ptr onhitHandler,
-                                 OnHitPhase phase)
+void __thiscall linkOnHitHandler(SFSpell *spell, onhit_handler_ptr onhitHandler, OnHitPhase phase)
 {
     spell->spell_onhit_handler = onhitHandler;
     spell->hit_phase = phase;
 }
 
-void __thiscall linkEffectHandler(SFSpell *spell, uint16_t spell_effect_id,
-                                  handler_ptr effectHandler)
+void __thiscall linkEffectHandler(SFSpell *spell, uint16_t spell_effect_id, handler_ptr effectHandler)
 {
     spell->spell_effect_id = spell_effect_id;
     spell->spell_effect_handler = effectHandler;
@@ -136,8 +144,7 @@ void __thiscall linkEndHandler(SFSpell *spell, handler_ptr endHandler)
     spell->spell_end_handler = endHandler;
 }
 
-void __thiscall linkSubEffectHandler(SFSpell *spell,
-                                     sub_effect_handler_ptr handler)
+void __thiscall linkSubEffectHandler(SFSpell *spell, sub_effect_handler_ptr handler)
 {
     spell->sub_effect_handler = handler;
 }
@@ -147,9 +154,7 @@ void __thiscall linkRefreshHandler(SFSpell *spell, refresh_handler_ptr handler)
     spell->spell_refresh_handler = handler;
 }
 
-void __thiscall linkDealDamageHandler(SFSpell *spell,
-                                      damage_handler_ptr handler,
-                                      SpellDamagePhase phase)
+void __thiscall linkDealDamageHandler(SFSpell *spell, damage_handler_ptr handler, SpellDamagePhase phase)
 {
     spell->deal_damage_handler = handler;
     spell->damage_phase = phase;
@@ -335,7 +340,8 @@ void register_mod_spells()
         ai_aoe_handler_ptr ai_aoe_handler = spell_data->ai_aoe_handler;
         ai_avoidance_handler_ptr ai_avoidance_handler = spell_data->ai_avoidance_handler;
         ai_single_handler_ptr ai_single_handler = spell_data->ai_single_handler;
-
+        sub_effect_handler_ptr phys_rain_handler = spell_data->phys_rain_handler;
+        phys_effect_handler_ptr phys_effect_handler = spell_data->phys_effect_handler;
         SpellDamagePhase damage_phase = spell_data->damage_phase;
         OnHitPhase onhit_phase = spell_data->hit_phase;
         SFMod *parent_mod = spell_data->parent_mod;
@@ -483,6 +489,14 @@ void register_mod_spells()
         if(ai_avoidance_handler != nullptr)
         {
             registerAiAvoidanceHandler(spell_id, ai_avoidance_handler);
+        }
+        if (phys_rain_handler != nullptr)
+        {
+            registerPhysRainHandler(spell_id, phys_rain_handler);
+        }
+        if (phys_effect_handler != nullptr)
+        {
+            registerPhysEffectHandler(spell_id, phys_effect_handler);
         }
     }
 

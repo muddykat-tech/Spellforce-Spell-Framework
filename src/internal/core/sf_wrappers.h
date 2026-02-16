@@ -56,6 +56,7 @@ bool __thiscall buildingIsWoodcutter(SF_CGdBuilding *_this, uint16_t building_in
 bool __thiscall buildingIsShrine(SF_CGdBuilding *_this, uint16_t building_index);
 bool __thiscall buildingIsHabitable(SF_CGdBuilding *_this, uint16_t building_index);
 bool __thiscall buildingIsHabitableSingle(SF_CGdBuilding *_this, uint16_t building_index);
+bool __thiscall XDataExists(SF_CGDEffect *_this, uint16_t effect_index, SpellDataKey data);
 
 void __thiscall show_mod_list(CMnuSmpButton *button);
 

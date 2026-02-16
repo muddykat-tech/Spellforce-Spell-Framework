@@ -27,7 +27,7 @@
 #include "hooks/sf_building_done_hook.h"
 #include "hooks/sf_building_entry_hook.h"
 #include "hooks/sf_worker_logic_hook.h"
-
+#include "hooks/sf_phys_effect_hook.h"
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -215,7 +215,7 @@ void initialize_data_hooks()
     INCLUDE_FUNCTION(spell, getSpellTags, &getSpellTags);
     INCLUDE_FUNCTION(spell, hasSpellTag, &hasSpellTag);
 
-
+    INCLUDE_FUNCTION(effect, effectXDataExists, &XDataExists);
     log_info("| - FigureAPI Wrappers");
     INCLUDE_FUNCTION(figure, addBonusMultToStatistic, &addBonusMultToStatistic);
 
@@ -277,13 +277,12 @@ void initialize_data_hooks()
     INCLUDE_FUNCTION(registration, applySpellTag, &applySpellTag);
     INCLUDE_FUNCTION(registration, linkSubEffectHandler, &linkSubEffectHandler);
     INCLUDE_FUNCTION(registration, linkRefreshHandler, &linkRefreshHandler);
-    INCLUDE_FUNCTION(registration, linkDealDamageHandler,
-                     &linkDealDamageHandler);
+    INCLUDE_FUNCTION(registration, linkDealDamageHandler, &linkDealDamageHandler);
     INCLUDE_FUNCTION(registration, linkAOEAIHandler, &linkAOEAIHandler);
-    INCLUDE_FUNCTION(registration, linkAvoidanceAIHandler,
-                     &linkAvoidanceAIHandler);
-    INCLUDE_FUNCTION(registration, linkSingleTargetAIHandler,
-                     &linkSingleTargetAIHandler);
+    INCLUDE_FUNCTION(registration, linkAvoidanceAIHandler, &linkAvoidanceAIHandler);
+    INCLUDE_FUNCTION(registration, linkSingleTargetAIHandler, &linkSingleTargetAIHandler);
+    INCLUDE_FUNCTION(registration, linkPhysEffectHandler, &linkPhysEffectHandler);
+    INCLUDE_FUNCTION(registration, linkPhysRainHandler, &linkPhysRainHandler);
 
     INCLUDE_FUNCTION(registration, registerBuilding, &registerBuilding);
     INCLUDE_FUNCTION(registration, linkBuildingJSON, &linkBuildingJSON);
@@ -349,9 +348,15 @@ static void initialize_subeffect_add_hook()
     ASI::MemoryRegion add_spell_mreg (ASI::AddrOf(0x2de3b7), 5);
     ASI::BeginRewrite(add_spell_mreg);
     *(unsigned char *)(ASI::AddrOf(0x2de3b7)) = 0xE8; // CALL instruction
-    *(int *)(ASI::AddrOf(0x2de3b8)) = (int)(&sf_subeffect_hook) -
-                                      ASI::AddrOf(0x2de3bc);
+    *(int *)(ASI::AddrOf(0x2de3b8)) = (int)(&sf_subeffect_hook) - ASI::AddrOf(0x2de3bc);
     ASI::EndRewrite(add_spell_mreg);
+
+    ASI::MemoryRegion add_spell_mreg2 (ASI::AddrOf(0x2de3ed), 5);
+    ASI::BeginRewrite(add_spell_mreg2);
+    *(unsigned char *)(ASI::AddrOf(0x2de3ed)) = 0xE8; // CALL instruction
+    *(int *)(ASI::AddrOf(0x2de3ee)) = (int)(&sf_phys_effect_hook) - ASI::AddrOf(0x2de3f2);
+    ASI::EndRewrite(add_spell_mreg2);
+
 }
 
 static void initialize_spellend_hook()
