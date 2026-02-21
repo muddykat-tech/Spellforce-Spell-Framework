@@ -861,7 +861,6 @@ void attach_mod_labels(CMnuContainer *container, int mods_per_page, int page)
     {
         SFMod *parent_mod = spell_data->parent_mod;
 
-        // Only process each unique mod once
         if (parent_mod != current_parent)
         {
             if (mod_index >= start_index && mod_index < end_index)
