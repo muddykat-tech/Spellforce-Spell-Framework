@@ -380,6 +380,21 @@ uint16_t __thiscall get_figure_statistic_current_cast_spd(SF_CGdFigure *_this, u
     return result;
 }
 
+uint8_t __thiscall getEffectiveRace(SF_CGdFigure *_this, uint16_t figure_id)
+{
+    uint16_t master_id = _this->figures[figure_id].master_figure;
+
+    while (master_id != 0)
+    {
+        if ((_this->figures[figure_id].flags & FOLLOW_MODE) == 0)
+        {
+            figure_id = master_id;
+            master_id = _this->figures[figure_id].master_figure;
+        }
+    }
+    return _this->figures[figure_id].race;
+}
+
 /* Figure Statistics */
 static void figure_statistic_hook_current_ac()
 {
@@ -589,6 +604,17 @@ static void salvo_fix_hook()
 
 }
 
+static void get_race_fix_hook()
+{
+    ASI::MemoryRegion race_mreg1 (ASI::AddrOf(0x29b230), 7);
+    ASI::BeginRewrite(race_mreg1);
+    *(unsigned char *)(ASI::AddrOf(0x29b230)) = 0x90;
+    *(unsigned char *)(ASI::AddrOf(0x29b231)) = 0x90;
+    *(unsigned char *)(ASI::AddrOf(0x29b232)) = 0xE9;
+    *(int *)(ASI::AddrOf(0x29b233)) = (int)(&getEffectiveRace) - ASI::AddrOf((0x29b237));
+    ASI::EndRewrite(race_mreg1);
+}
+
 void initialize_vanilla_fix_hooks()
 {
     add_item = (add_item_ptr)(ASI::AddrOf(0x260d70));
@@ -612,4 +638,5 @@ void initialize_vanilla_fix_hooks()
     figure_statistic_hook_current_fight_spd();
     figure_statistic_hook_current_cast_spd();
     salvo_fix_hook();
+    get_race_fix_hook();
 }
