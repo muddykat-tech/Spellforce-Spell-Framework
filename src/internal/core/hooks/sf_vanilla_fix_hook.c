@@ -391,6 +391,10 @@ uint8_t __thiscall getEffectiveRace(SF_CGdFigure *_this, uint16_t figure_id)
             figure_id = master_id;
             master_id = _this->figures[figure_id].master_figure;
         }
+        else
+        {
+            break;
+        }
     }
     return _this->figures[figure_id].race;
 }
