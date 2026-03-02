@@ -20,6 +20,7 @@ extern IteratorFunctions iteratorAPI;
 extern RegistrationFunctions registrationAPI;
 extern EffectFunctions effectAPI;
 extern AiFunctions aiAPI;
+extern UiFunctions uiAPI;
 
 extern SFBuilding *__thiscall registerBuilding(uint8_t building_type);
 extern void __thiscall linkBuildingDoneHandler (SFBuilding *building, building_done_handler_ptr handler);

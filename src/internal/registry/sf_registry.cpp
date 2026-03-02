@@ -54,6 +54,7 @@ void registerFrameworkAPI()
     log_info("| - Loading framework with API Addresses");
     frameworkAPI.figureAPI = &figureAPI;
     frameworkAPI.spellAPI = &spellAPI;
+    frameworkAPI.uiAPI = &uiAPI;
     frameworkAPI.toolboxAPI = &toolboxAPI;
     frameworkAPI.iteratorAPI = &iteratorAPI;
     frameworkAPI.registrationAPI = &registrationAPI;

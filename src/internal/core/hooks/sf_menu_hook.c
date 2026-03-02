@@ -8,6 +8,7 @@
  */
 
 #include "../sf_wrappers.h"
+#include "../sf_ui_wrappers.h"
 #include "sf_menu_hook.h"
 #include "../sf_hooks.h"
 #include "../sf_modloader.h"
@@ -23,7 +24,7 @@ static initialize_menu_container_ptr s_initialize_menu_container;
 static original_menu_func_ptr s_menu_func;
 static construct_default_sf_string_ptr s_construct_default_sf_string;
 static message_box_ptr s_show_message_box;
-static menu_label_set_data_ptr s_menu_label_set_color;
+
 
 cuiVideoSequence_constructor_ptr cuiVideoSequence_constructor;
 CMnuScreen_attach_control_ptr CMnuScreen_attach_control;
@@ -73,7 +74,6 @@ void initialize_menu_data_hooks()
     s_construct_default_sf_string =
         (construct_default_sf_string_ptr)(ASI::AddrOf(0x383900));
     s_menu_func = (original_menu_func_ptr)(ASI::AddrOf(0x197b10));
-    s_menu_label_set_color = (menu_label_set_data_ptr)(ASI::AddrOf(0x530330));
     s_show_message_box = (message_box_ptr)(ASI::AddrOf(0x198660));
 
     g_set_label_flags = (set_label_flags_ptr)(ASI::AddrOf(0x52f1d0));
@@ -145,7 +145,7 @@ sf_menu_hook(uint32_t _CAppMenu)
 
     CMnuContainer *container = *(CMnuContainer **)(_CAppMenu + 0x58);
 
-    attach_new_label(sfsf_version_label, container, sfsf_info,
+    uiAPI.attachLabel(sfsf_version_label, container, sfsf_info,
                      6, 10, 729, strlen(sfsf_info) * 4, 100);
 
     char button_default[32]     = "ui_mainmenu_button_default.msh";
@@ -166,7 +166,7 @@ sf_menu_hook(uint32_t _CAppMenu)
     const int BUTTON_HEIGHT = 36;
     const int BUTTON_FONT_INDEX = 7;
 
-    show_mod_list_button = attach_new_button(container,
+    show_mod_list_button = uiAPI.attachNewButton(container,
                                              button_default,
                                              button_pressed,
                                              button_highlight,

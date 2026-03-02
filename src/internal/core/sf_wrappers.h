@@ -58,7 +58,6 @@ bool __thiscall buildingIsHabitable(SF_CGdBuilding *_this, uint16_t building_ind
 bool __thiscall buildingIsHabitableSingle(SF_CGdBuilding *_this, uint16_t building_index);
 bool __thiscall XDataExists(SF_CGDEffect *_this, uint16_t effect_index, SpellDataKey data);
 
-void __thiscall show_mod_list(CMnuSmpButton *button);
 
 extern void __thiscall spellEffectCallback(SF_CGdSpell *_this,
                                            uint16_t source_index,
@@ -90,46 +89,7 @@ extern uint16_t __thiscall getPhysDamageReduction(SF_CGdFigureToolbox *_this, ui
                                                   uint16_t action_id);
 
 
-typedef void (__thiscall *vfunction_2_ptr)(void *_this, void *input);
-typedef void (__thiscall *vfunction_ptr)(void *_this, char p1);
-typedef void (__thiscall *vfunction12_ptr)(void *container, void *test,
-                                           char p1);
-typedef void (__thiscall *attach_string_ptr)(void *container, void *string);
-typedef void (__thiscall *set_button_flag_ptr)(void *container, char flag);
-typedef void (__thiscall *set_btn_index_ptr)(void *container, int index);
-typedef void (__thiscall *create_button_ptr)(CMnuSmpButton *smpButton,
-                                             float x_pos, float y_pos,
-                                             float width, float height,
-                                             SF_String *default_mesh,
-                                             SF_String *unkn_mesh_string,
-                                             SF_String *pressed_mesh,
-                                             SF_String *disable_mesh);
-typedef void (__thiscall *set_label_color_ptr)(CMnuLabel *_this, float r,
-                                               float g, float b, char flag);
-typedef void (__thiscall *set_btn_name_ptr)(void *button, SF_String *string);
-typedef void (__thiscall *destory_container_ptr)(void *container, int unknown_param);
-typedef void (__thiscall *destory_button_ptr)(void *button);
-typedef void (__thiscall *set_menu_id_ptr)(void *container, uint32_t id);
-typedef void (__thiscall *set_container_visible_ptr)(void *container, uint32_t visible, uint8_t _unknown);
 
-typedef CMnuSmpButton *(__thiscall *initialize_smp_button_ptr)(
-    CMnuSmpButton *btn);
-typedef void (__thiscall *vfunction2_callback_attach_ptr)(void *, void *,void *,
-                                                          void *);
-typedef void (__thiscall *initialize_menu_container_ptr)(CMnuContainer *_this);
-typedef void (__thiscall *setup_menu_container_data_ptr)(CMnuContainer *_this,
-                                                         float x, float y,
-                                                         float width,
-                                                         float height,
-                                                         SF_String *background,
-                                                         SF_String *border);
-typedef void (__thiscall *set_base_alpha_ptr)(void *_this,
-                                              float alpha);
-
-typedef uint32_t (__thiscall *get_visual_control_ptr)(CMnuContainer *_this);
-
-typedef void (__thiscall *CMnuBase_setname_ptr)(CMnuBase *_this,
-                                                SF_String *name);
 
 typedef uint16_t (__thiscall *get_phys_damage_reduction_ptr)(void *AutoClass34, uint16_t source_index,
                                                              uint16_t target_index,
@@ -139,22 +99,7 @@ extern fidfree_ptr fidFree;
 extern SF_String_ctor_ptr g_create_sf_string;
 extern SF_String_dtor_ptr g_destroy_sf_string;
 extern has_spell_effect_ptr has_spell_effect;
-extern create_button_ptr create_button_func;
-extern attach_string_ptr vfunction_apply_string;
-extern vfunction_ptr vfunction176;
-extern vfunction_ptr vfunction25;
-extern vfunction12_ptr vfunction12;
-extern initialize_smp_button_ptr initialize_smp_button;
-extern set_btn_name_ptr set_button_name;
-extern initialize_menu_container_ptr initialize_menu_container;
-extern set_label_color_ptr set_label_color;
-extern set_base_alpha_ptr set_base_alpha;
-extern setup_menu_container_data_ptr setup_menu_container_data;
-extern vfunction_2_ptr set_font;
-extern set_btn_index_ptr set_button_index;
-extern set_button_flag_ptr set_menu_button_flag;
-extern vfunction2_callback_attach_ptr attach_callback;
-extern vfunction_ptr vfunction16_attach_callback;
+
 extern get_phys_damage_reduction_ptr g_get_reduced_damage;
 
 extern "C" void log_warning(const char *format, ...) LOG_PRINTF_FMT(1, 2);

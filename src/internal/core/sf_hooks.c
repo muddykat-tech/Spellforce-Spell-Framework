@@ -6,6 +6,7 @@
  */
 
 #include "sf_wrappers.h"
+#include "sf_ui_wrappers.h"
 #include "sf_modloader.h"
 #include "sf_hooks.h"
 #include "../handlers/sf_spelltype_handlers.h"
@@ -43,6 +44,7 @@ ToolboxFunctions toolboxAPI;
 BuildingFunctions buildingAPI;
 FigureFunctions figureAPI;
 IteratorFunctions iteratorAPI;
+UiFunctions uiAPI;
 AiFunctions aiAPI;
 RegistrationFunctions registrationAPI;
 
@@ -204,6 +206,36 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(iterator, buildingIteratorInit, 0x318290);
     DEFINE_FUNCTION(iterator, buildingIteratorSetPointers, 0x31A640);
     DEFINE_FUNCTION(iterator, getNextBuilding, 0x318ca0);
+
+    log_info("| - uiAPI Hooks");
+    DEFINE_FUNCTION(ui, setBaseAlpha, 0x512EB0);
+    DEFINE_FUNCTION(ui, getVisualControl, 0x507BC0);
+    DEFINE_FUNCTION(ui, setButtonName, 0x52f8a0);
+    DEFINE_FUNCTION(ui, initializeMenuContainer, 0x505780);
+    DEFINE_FUNCTION(ui, setupMenuContainerData, 0x50FD30);
+    DEFINE_FUNCTION(ui, initializeSmpButton, 0x51a9d0);
+    DEFINE_FUNCTION(ui, createButton, 0x52E1E0);
+    DEFINE_FUNCTION(ui, setFont, 0x530C20);
+    DEFINE_FUNCTION(ui, setButtonIndex, 0x5136A0);
+    DEFINE_FUNCTION(ui, setMenuButtonFlag, 0x5308A0);
+    DEFINE_FUNCTION(ui, attachCallback, 0x6188B0);
+    DEFINE_FUNCTION(ui, vfunction16AttachCallback, 0x532B90);
+    DEFINE_FUNCTION(ui, vfunction176, 0x52f520);
+    DEFINE_FUNCTION(ui, vfunction25, 0x511AE0);
+    DEFINE_FUNCTION(ui, CMnuBaseSetName, 0x512E30);
+    DEFINE_FUNCTION(ui, destroyContainer, 0x512AB0);
+    DEFINE_FUNCTION(ui, destroyButton, 0xB7B270);
+    DEFINE_FUNCTION(ui, setMenuID, 0x50E660);
+    DEFINE_FUNCTION(ui, setContainerVisible, 0x513910);
+    DEFINE_FUNCTION(ui, setLabelColour, 0x530330);
+
+    log_info("| - uiAPI Wrappers");
+    INCLUDE_FUNCTION(ui, updateLabelText, &updateLabelText);
+    INCLUDE_FUNCTION(ui, attachLabel, &attachLabel);
+    INCLUDE_FUNCTION(ui, attachMeshedLabel, &attachMeshedLabel);
+    INCLUDE_FUNCTION(ui, attachNewButton, &attachNewButton);
+    INCLUDE_FUNCTION(ui, createContainer, &createContainer);
+
 
     log_info("| - SpellAPI Wrappers");
     // Method to include functions WE define in the Internal code.
