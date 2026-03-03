@@ -98,6 +98,24 @@ DECLARE_FUNCTION(void, setLabelColour, CMnuLabel *_this, float r, float g, float
 typedef struct
 {
     createContainer_ptr createContainer;
+
+    /**
+     * @brief Used to attach buttons (Note callbacks are required to be __thiscall otherwise you will crash)
+     * @example Mod Menu Button on the main screen
+     * @param CMnuContainer *parent,
+     * @param char *button_mesh_default,
+     * @param char *button_mesh_pressed,
+     * @param char *button_initial_load_mesh,
+     * @param char *button_mesh_disabled,
+     * @param char *label_char,
+     * @param uint8_t font_index,
+     * @param uint16_t x_pos,
+     * @param uint16_t y_pos,
+     * @param uint16_t width,
+     * @param uint16_t height,
+     * @param int button_index,
+     * @param uint32_t callback_func_ptr
+     */
     attachNewButton_ptr attachNewButton;
     destroyLabel_ptr destroyLabel;
     setLabelColour_ptr setLabelColour;

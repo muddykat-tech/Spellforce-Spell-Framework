@@ -293,7 +293,7 @@ void add_navigation_buttons(CMnuContainer *parent)
     char btn_label[1] = "";
 
     right_nav = uiAPI.attachNewButton(parent, btn_default, btn_pressed, btn_load,
-                                  btn_disabled, btn_label, 7, (886 - 96), 619 - 80,
+                                  btn_disabled, btn_label, 7, (443 - 96), 619 - 80,
                                   48, 48, 0, (uint32_t) &navigate_page_right);
 
     char btn_disabled_left[128] = "ui_btn_togglearrow_left_disabled.msh";
@@ -407,26 +407,27 @@ void __thiscall show_mod_list(CMnuSmpButton *button)
 
         log_info("Callback for Mod List 4");
         mod_list = uiAPI.createContainer(
-            59, 50, 886, 619,
-            "ui_bgr_options_border_transparency.msb",
-            "ui_bgr_options_border.msb", 0.5f
+            59, 50, 443, 619,
+            "ui_bgr_pregame_border_left_transparency.msb",
+            "ui_bgr_pregame_border_left.msb", 0.5f
             );
 
-        log_info("Callback for Mod List 5");
+        log_info("Callback for Mod List 4");
+        CMnuContainer *mod_list_info = uiAPI.createContainer(
+            502, 50, 443, 619,
+            "ui_bgr_pregame_border_right_transparency.msb",
+            "ui_bgr_pregame_border_right.msb", 0.5f
+            );
+
         g_container_add_control(parent, (CMnuBase *)mod_info_page, '\x01', '\x01', 0);
 
-        log_info("Callback for Mod List 6");
         g_container_add_control(mod_info_page, (CMnuBase *)mod_container, '\x01', '\x01', 0);
 
-        log_info("Callback for Mod List 7");
         g_container_add_control(mod_container, (CMnuBase *)mod_list, '\x01', '\x01', 0);
+        g_container_add_control(mod_container, (CMnuBase *)mod_list_info, '\x01', '\x01', 0);
 
-        log_info("Callback for Mod List 8");
         add_close_button(mod_info_page);
-        log_info("Callback for Mod List 9");
         add_navigation_buttons(mod_list);
-
-        log_info("Callback for Mod List 10");
         char sfsf_mod_info[32] = "Mod Information";
         mod_list_title = uiAPI.attachLabel(nullptr, mod_container, sfsf_mod_info, 6, 468, 16, 128, 16);
 

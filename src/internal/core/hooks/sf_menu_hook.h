@@ -22,9 +22,14 @@ extern cuiVideoSequence_constructor_ptr cuiVideoSequence_constructor;
 extern CMnuScreen_attach_control_ptr CMnuScreen_attach_control;
 
 extern CMnuLabel *sfsf_version_label;
+extern CMnuLabel *campaign_title_label;
+extern CMnuContainer* custom_campaign_screen;
+
 void __thiscall sf_menu_hook(uint32_t _CAppMenu);
 uint16_t __thiscall sf_ui_overlay_fix(SF_CGdFigure *_this, void *CGdResource, uint16_t spell_id, uint16_t figure_id);
+void __thiscall show_campaign_screen(CMnuSmpButton *_this);
 
+void __fastcall close_campaign_callback(CMnuSmpButton *button, int32_t *cui_menu_ptr_maybe);
 void initialize_menu_data_hooks();
 void __thiscall sf_click_vertical_button(SF_CUiMain *_this, uint16_t figure_id, uint8_t entity_type, uint16_t target_id,
                                          SF_UIElement *element)  __attribute__((optimize("-O0")));
