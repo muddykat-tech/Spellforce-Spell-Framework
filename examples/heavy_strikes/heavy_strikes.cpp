@@ -14,6 +14,7 @@ FigureFunctions *figureAPI;
 EffectFunctions *effectAPI;
 RegistrationFunctions *registrationAPI;
 AiFunctions *aiAPI;
+UiFunctions *uiAPI;
 SFLog *logAPI;
 
 void __thiscall heavy_strikes_type_handler(SF_CGdSpell *_this, uint16_t spell_index)
@@ -162,6 +163,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     registrationAPI = sfsf->registrationAPI;
     effectAPI = sfsf->effectAPI;
     aiAPI = sfsf->aiAPI;
+    uiAPI = sfsf->uiAPI;
     logAPI = sfsf->logAPI;
 
     SFSpell *heavy_strikes_spell = registrationAPI->registerSpell(HEAVY_STRIKES_LINE);
@@ -171,6 +173,8 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     registrationAPI->linkOnHitHandler(heavy_strikes_spell, &heavy_strikes_onhit_handler, OnHitPhase::PHASE_4);
     registrationAPI->applySpellTag(heavy_strikes_spell,SpellTag::AURA_SPELL);
     registrationAPI->applySpellTag(heavy_strikes_spell,SpellTag::COMBAT_ABILITY_SPELL);
+
+    uiAPI->attachLabel()
 
 }
 

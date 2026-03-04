@@ -10,7 +10,7 @@ HOOK_OBJ = obj/sf_hooks.o obj/sf_onhit_hook.o obj/sf_refresh_hook.o obj/sf_endsp
 REGISTRY_OBJ = obj/sf_registry.o obj/sf_mod_registry.o obj/sf_spelltype_registry.o obj/sf_spelleffect_registry.o obj/sf_spellend_registry.o obj/sf_subeffect_registry.o obj/sf_spellrefresh_registry.o obj/sf_vanilla_registry.o obj/sf_spelldamage_registry.o obj/sf_onhit_registry.o obj/sf_ai_avoidance_registry.o obj/sf_ai_single_target_registry.o obj/sf_ai_aoe_registry.o obj/sf_phys_effect_registry.o obj/sf_building_done_registry.o obj/sf_building_entry_registry.o obj/sf_enchant_registry.o
 HANDLER_OBJ = obj/sf_spelltype_handlers.o obj/sf_spelleffect_handlers.o obj/sf_spellend_handlers.o obj/sf_sub_effect_handlers.o obj/sf_spellrefresh_handlers.o obj/sf_spelldamage_handlers.o obj/sf_onhit_handlers.o obj/sf_ai_avoidance_handlers.o obj/sf_ai_spell_handlers.o obj/sf_ai_aoe_handlers.o obj/sf_building_done_handlers.o obj/sf_worker_building_entry_handlers.o obj/sf_phys_effect_handlers.o
 
-NTERNALS_OBJ = obj/sfsf.o obj/sf_modloader.o obj/sf_building_loader.o obj/sf_asi.o obj/sf_wrappers.o ${REGISTRY_OBJ} ${HANDLER_OBJ} ${HOOK_OBJ}
+NTERNALS_OBJ = obj/sfsf.o obj/sf_modloader.o obj/sf_building_loader.o obj/sf_asi.o obj/sf_wrappers.o obj/sf_ui_wrappers.o ${REGISTRY_OBJ} ${HANDLER_OBJ} ${HOOK_OBJ}
 TEST_MOD_OBJ = obj/TestMod.o
 INTERNALS_SRC = src/internal
 
@@ -72,6 +72,9 @@ obj/sfsf.o: ${INTERNALS_SRC}/sfsf.cpp src/asi/sf_asi.h | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_wrappers.o: ${CORE_SRC}/sf_wrappers.c | obj
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
+
+obj/sf_ui_wrappers.o: ${CORE_SRC}/sf_ui_wrappers.c | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_building_loader.o: ${CORE_SRC}/sf_building_loader.c ${CORE_SRC}/sf_building_loader.h ${CORE_SRC}/jsmn.h | obj
