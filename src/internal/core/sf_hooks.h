@@ -41,6 +41,7 @@ extern void __thiscall linkAOEAIHandler(SFSpell *spell, ai_aoe_handler_ptr handl
 extern void __thiscall linkAvoidanceAIHandler(SFSpell *spell, ai_avoidance_handler_ptr handler);
 extern void __thiscall linkPhysRainHandler(SFSpell *spell, sub_effect_handler_ptr handler);
 extern void __thiscall linkPhysEffectHandler(SFSpell *spell, phys_effect_handler_ptr handler);
+extern void __thiscall linkEnchantChanceHandler(SFSpell *spell, enchant_handler_ptr handler);
 
 extern SFMod *createModInfo(const char *mod_id, char *mod_version, const char *mod_author, const char *mod_description);
 

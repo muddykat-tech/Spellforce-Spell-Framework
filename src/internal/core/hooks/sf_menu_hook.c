@@ -32,6 +32,8 @@ container_add_control_ptr g_container_add_control;
 uint32_t g_menu_return_addr;
 uint32_t g_ui_hook_fix_addr;
 uint32_t g_ui_hook_fix_addr2;
+uint32_t g_sf_enchant_addr;
+uint32_t g_sf_enchant_addr2;
 new_operator_ptr g_new_operator;
 menu_label_constructor_ptr g_menu_label_constructor;
 set_label_flags_ptr g_set_label_flags;
@@ -77,11 +79,14 @@ void initialize_menu_data_hooks()
     s_show_message_box = (message_box_ptr)(ASI::AddrOf(0x198660));
 
     g_set_label_flags = (set_label_flags_ptr)(ASI::AddrOf(0x52f1d0));
-    g_menu_label_set_string =
-        (menu_label_set_string_ptr)(ASI::AddrOf(0x52fab0));
+    g_menu_label_set_string = (menu_label_set_string_ptr)(ASI::AddrOf(0x52fab0));
     g_menu_return_addr = (ASI::AddrOf(0x182799));
     g_ui_hook_fix_addr = (ASI::AddrOf(0x5D119E));
     g_ui_hook_fix_addr2 = (ASI::AddrOf(0x5d0a7e));
+
+    g_sf_enchant_addr = (ASI::AddrOf(0x5d0bbd));
+    g_sf_enchant_addr2 = (ASI::AddrOf(0x5d12e7));
+
     g_new_operator = (new_operator_ptr)(ASI::AddrOf(0x675A9D));
     g_menu_label_constructor =
         (menu_label_constructor_ptr)(ASI::AddrOf(0x51a180));

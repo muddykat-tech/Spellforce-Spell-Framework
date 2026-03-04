@@ -8,6 +8,8 @@
 #include "spell_data_registries/sf_onhit_registry.h"
 #include "spell_data_registries/sf_spelldamage_registry.h"
 #include "spell_data_registries/sf_phys_effect_registry.h"
+#include "spell_data_registries/sf_enchant_registry.h"
+
 #include "../../api/structures/sf_building_structures.h"
 #include "ai_data_registries/sf_ai_aoe_registry.h"
 #include "ai_data_registries/sf_ai_avoidance_registry.h"
@@ -72,6 +74,7 @@ SFSpell *__thiscall registerSpell(uint16_t spell_id)
     sf_spell->spell_id = spell_id;
     sf_spell->spell_effect_id = 0x00;
     sf_spell->spell_tags = 0x0;
+
     sf_spell->spell_type_handler = nullptr;
     sf_spell->spell_effect_handler = nullptr;
     sf_spell->spell_end_handler = nullptr;
@@ -84,6 +87,8 @@ SFSpell *__thiscall registerSpell(uint16_t spell_id)
     sf_spell->ai_single_handler = nullptr;
     sf_spell->ai_avoidance_handler = nullptr;
     sf_spell->phys_rain_handler = nullptr;
+    sf_spell->spell_enchtant_handler = nullptr;
+
     sf_spell->damage_phase = SpellDamagePhase::DEFAULT;
     sf_spell->hit_phase = OnHitPhase::PHASE_5;
     g_internal_spell_list.push_back(sf_spell);
@@ -158,6 +163,11 @@ void __thiscall linkDealDamageHandler(SFSpell *spell, damage_handler_ptr handler
 {
     spell->deal_damage_handler = handler;
     spell->damage_phase = phase;
+}
+
+void __thiscall linkEnchantChanceHandler(SFSpell *spell, enchant_handler_ptr handler)
+{
+    spell->spell_enchtant_handler = handler;
 }
 
 uint16_t __thiscall getSpellTags(uint16_t spell_line_id)
@@ -342,6 +352,7 @@ void register_mod_spells()
         ai_single_handler_ptr ai_single_handler = spell_data->ai_single_handler;
         sub_effect_handler_ptr phys_rain_handler = spell_data->phys_rain_handler;
         phys_effect_handler_ptr phys_effect_handler = spell_data->phys_effect_handler;
+        enchant_handler_ptr enchant_handler = spell_data->spell_enchtant_handler;
         SpellDamagePhase damage_phase = spell_data->damage_phase;
         OnHitPhase onhit_phase = spell_data->hit_phase;
         SFMod *parent_mod = spell_data->parent_mod;
@@ -497,6 +508,10 @@ void register_mod_spells()
         if (phys_effect_handler != nullptr)
         {
             registerPhysEffectHandler(spell_id, phys_effect_handler);
+        }
+        if (enchant_handler != nullptr)
+        {
+            registerEnchantHandler(spell_id, enchant_handler);
         }
     }
 

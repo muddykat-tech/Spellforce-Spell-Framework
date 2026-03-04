@@ -31,6 +31,8 @@
 #include "spell_data_registries/sf_spellrefresh_registry.h"
 #include "spell_data_registries/sf_subeffect_registry.h"
 #include "spell_data_registries/sf_spelldamage_registry.h"
+#include "spell_data_registries/sf_enchant_registry.h"
+
 
 #include <windows.h>
 #include <iostream>
@@ -133,6 +135,8 @@ void initialize_framework()
     log_info("| - Registration of Vanilla Sub Effect Handlers");
 
     register_vanilla_sub_effect_handlers();
+    log_info("| - Registration of Vanilla Enchantnments Chance Handlers");
+    register_vanilla_enchants_handlers();
 
     log_info("| - Registration of Vanilla Spell Refresh Handlers");
 

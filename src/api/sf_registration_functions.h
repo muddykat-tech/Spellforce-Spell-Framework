@@ -22,6 +22,7 @@ DECLARE_FUNCTION(void, linkAOEAIHandler, SFSpell *spell, ai_aoe_handler_ptr hand
 DECLARE_FUNCTION(void, linkAvoidanceAIHandler, SFSpell *spell, ai_avoidance_handler_ptr handler);
 DECLARE_FUNCTION(void, linkPhysRainHandler, SFSpell *spell, sub_effect_handler_ptr handler);
 DECLARE_FUNCTION(void, linkPhysEffectHandler, SFSpell *spell, phys_effect_handler_ptr handler);
+DECLARE_FUNCTION(void, linkEnchantChanceHandler, SFSpell *spell, enchant_handler_ptr handler);
 
 DECLARE_FUNCTION(SFBuilding *, registerBuilding, uint8_t building_type);
 DECLARE_FUNCTION(void, linkBuildingDoneHandler, SFBuilding *building, building_done_handler_ptr handler);
@@ -53,6 +54,7 @@ typedef struct
     linkAOEAIHandler_ptr linkAOEAIHandler;
     linkPhysRainHandler_ptr linkPhysRainHandler;
     linkPhysEffectHandler_ptr linkPhysEffectHandler;
+    linkEnchantChanceHandler_ptr linkEnchantChanceHandler;
 
     registerBuilding_ptr registerBuilding;
     linkBuildingJSON_ptr linkBuildingJSON;

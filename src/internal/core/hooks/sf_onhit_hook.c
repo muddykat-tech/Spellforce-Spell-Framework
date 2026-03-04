@@ -524,9 +524,15 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
                             break;
                         SF_CGdResourceSpell spell_data;
                         spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, enchant_id);
+
+/*
                         uint16_t curr_dex = getCurrentDex(_this->CGdFigure, source_index);
                         uint16_t curr_int = getCurrentInt(_this->CGdFigure, source_index);
                         uint16_t chance = get_effect_chance(curr_dex, curr_int, spell_data.spell_line_id);
+ */
+
+                        enchant_handler_ptr chance_handler =  get_enchant_handler(spell_data.spell_line_id);
+                        uint16_t chance = chance_handler(_this->CGdFigure, source_index);
                         if (spellAPI.getRandom(_this->OpaqueClass, 10000) < chance)
                         {
                             if ((_this->CGdFigure->figures[source_index].race != 0) &&

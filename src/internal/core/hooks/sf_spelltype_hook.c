@@ -19,10 +19,8 @@ static figure_toolbox_add_spell_ptr s_figure_toolbox_add_spell;
 void initialize_spelltype_data_hooks()
 {
     s_get_spell_spell_line = (get_spell_spell_line_ptr)(ASI::AddrOf(0x26E100));
-    s_figure_toolbox_get_unkn =
-        (figure_toolbox_get_unkn_ptr)(ASI::AddrOf(0x2FE704));
-    s_figure_toolbox_add_spell =
-        (figure_toolbox_add_spell_ptr)(ASI::AddrOf(0x2F673A));
+    s_figure_toolbox_get_unkn = (figure_toolbox_get_unkn_ptr)(ASI::AddrOf(0x2FE704));
+    s_figure_toolbox_add_spell = (figure_toolbox_add_spell_ptr)(ASI::AddrOf(0x2F673A));
 }
 
 uint16_t __thiscall sf_spelltype_hook(SF_CGdSpell *_this, uint16_t spell_id,

@@ -28,6 +28,8 @@
 #include "hooks/sf_building_entry_hook.h"
 #include "hooks/sf_worker_logic_hook.h"
 #include "hooks/sf_phys_effect_hook.h"
+#include "hooks/sf_enchant_hook.h"
+
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -283,6 +285,7 @@ void initialize_data_hooks()
     INCLUDE_FUNCTION(registration, linkSingleTargetAIHandler, &linkSingleTargetAIHandler);
     INCLUDE_FUNCTION(registration, linkPhysEffectHandler, &linkPhysEffectHandler);
     INCLUDE_FUNCTION(registration, linkPhysRainHandler, &linkPhysRainHandler);
+    INCLUDE_FUNCTION(registration, linkEnchantChanceHandler, &linkEnchantChanceHandler);
 
     INCLUDE_FUNCTION(registration, registerBuilding, &registerBuilding);
     INCLUDE_FUNCTION(registration, linkBuildingJSON, &linkBuildingJSON);
@@ -424,6 +427,24 @@ static void __declspec(naked) ui_overlay_hook2()
          "o" (g_ui_hook_fix_addr2));
 }
 
+static void __declspec(naked) ui_enchant_chance_hook()
+{
+    asm ("nop                      \n\t"
+         "call %P0                 \n\t"       // Call our Hook
+         "jmp *%1                  \n\t" : :  // Jump back to control flow
+         "i" (sf_enchant_hook),
+         "o" (g_sf_enchant_addr));
+}
+
+static void __declspec(naked) ui_enchant_chance_hook2()
+{
+    asm ("nop                      \n\t"
+         "call %P0                 \n\t"       // Call our Hook
+         "jmp *%1                  \n\t" : :  // Jump back to control flow
+         "i" (sf_enchant_hook),
+         "o" (g_sf_enchant_addr2));
+}
+
 static void initialize_ui_overlay_fix_hook()
 {
     ASI::MemoryRegion ui_load_mreg (ASI::AddrOf(0x5D1198), 6);
@@ -434,12 +455,23 @@ static void initialize_ui_overlay_fix_hook()
     ASI::EndRewrite(ui_load_mreg);
 
     ASI::MemoryRegion ui_load_mreg2 (ASI::AddrOf(0x5d0a78), 6);
-
     ASI::BeginRewrite(ui_load_mreg2);
     *(uint8_t *)(ASI::AddrOf(0x5d0a78)) = 0x90; //Nop Trail
     *(uint8_t *)(ASI::AddrOf(0x5d0a79)) = 0xE9; // jmp instruction
     *(int *)(ASI::AddrOf(0x5d0a7a)) = (int)(&ui_overlay_hook2) - ASI::AddrOf(0x5d0a7e);
     ASI::EndRewrite(ui_load_mreg2);
+
+    ASI::MemoryRegion ui_load_mreg3 (ASI::AddrOf(0x5d0b99), 5);
+    ASI::BeginRewrite(ui_load_mreg3);
+    *(uint8_t *)(ASI::AddrOf(0x5d0b99)) = 0xE9; // jmp instruction
+    *(int *)(ASI::AddrOf(0x5d0b9a)) = (int)(&ui_enchant_chance_hook) - ASI::AddrOf(0x5d0b9e);
+    ASI::EndRewrite(ui_load_mreg3);
+
+    ASI::MemoryRegion ui_load_mreg4 (ASI::AddrOf(0x5d12be), 5);
+    ASI::BeginRewrite(ui_load_mreg4);
+    *(uint8_t *)(ASI::AddrOf(0x5d12be)) = 0xE9; // jmp instruction
+    *(int *)(ASI::AddrOf(0x5d12bf)) = (int)(&ui_enchant_chance_hook2) - ASI::AddrOf(0x5d12c3);
+    ASI::EndRewrite(ui_load_mreg4);
 
 }
 
