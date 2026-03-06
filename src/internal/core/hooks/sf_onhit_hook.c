@@ -532,7 +532,7 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
  */
 
                         enchant_handler_ptr chance_handler =  get_enchant_handler(spell_data.spell_line_id);
-                        uint16_t chance = chance_handler(_this->CGdFigure, source_index);
+                        uint32_t chance = chance_handler(_this->CGdFigure, source_index);
                         if (spellAPI.getRandom(_this->OpaqueClass, 10000) < chance)
                         {
                             if ((_this->CGdFigure->figures[source_index].race != 0) &&

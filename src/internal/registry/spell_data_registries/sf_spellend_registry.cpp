@@ -34,8 +34,7 @@ handler_ptr get_spell_end(uint16_t spell_line)
         /* char message[256];
            sprintf(message, "Unknown Spell Line [%d] for Spell End Effect, Assigning a default handler.", spell_line);
            log_warning(message);*/
-        it = s_spellend_handler_map.emplace(spell_line,
-                                            &default_end_handler).first;
+        it = s_spellend_handler_map.emplace(spell_line, &default_end_handler).first;
     }
     return it->second;
 }

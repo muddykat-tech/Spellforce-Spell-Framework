@@ -32,10 +32,8 @@ sub_effect_handler_ptr get_sub_effect_handler(uint16_t spell_line)
     if (it == s_sub_effect_handler_map.end())
     {
         // Element doesn't exist, insert the default value
-        log_warning(
-            "Unknown Job ID for Spell End Effect, Assigning a default handler.");
-        it = s_sub_effect_handler_map.emplace(spell_line,
-                                              &default_sub_effect_handler).first;
+        log_warning("Unknown Job ID for Spell End Effect, Assigning a default handler.");
+        it = s_sub_effect_handler_map.emplace(spell_line, &default_sub_effect_handler).first;
     }
     return it->second;
 }

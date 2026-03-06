@@ -88,6 +88,7 @@ SFSpell *__thiscall registerSpell(uint16_t spell_id)
     sf_spell->ai_avoidance_handler = nullptr;
     sf_spell->phys_rain_handler = nullptr;
     sf_spell->spell_enchtant_handler = nullptr;
+    sf_spell->phys_effect_handler = nullptr;
 
     sf_spell->damage_phase = SpellDamagePhase::DEFAULT;
     sf_spell->hit_phase = OnHitPhase::PHASE_5;

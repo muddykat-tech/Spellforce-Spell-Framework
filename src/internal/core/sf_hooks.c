@@ -399,8 +399,7 @@ static void initialize_spellend_hook()
     ASI::MemoryRegion end_spell_mreg (ASI::AddrOf(0x34b0a0), 5);
     ASI::BeginRewrite(end_spell_mreg);
     *(unsigned char *)(ASI::AddrOf(0x34b0a0)) = 0xE9; // jmp instruction
-    *(int *)(ASI::AddrOf(0x34b0a1)) = (int)(&sf_endspell_hook) -
-                                      ASI::AddrOf(0x34b0a5);
+    *(int *)(ASI::AddrOf(0x34b0a1)) = (int)(&sf_endspell_hook) - ASI::AddrOf(0x34b0a5);
     ASI::EndRewrite(end_spell_mreg);
 }
 
