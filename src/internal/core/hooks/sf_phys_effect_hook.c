@@ -26,10 +26,10 @@ void __thiscall sf_phys_effect_hook(SF_CGDEffect *_this, uint16_t effect_id)
         bool isMagicDamage = 0;
         if (target_type == 1)
         {
-            uint16_t spell_index = effectAPI.getEffectXData(_this, effect_id, EFFECT_SPELL_INDEX);
-            uint16_t spell_line = spellAPI.getSpellLine(_this->CGdSpell, spell_index);
+            uint16_t spell_line = effectAPI.getEffectXData(_this, effect_id, EFFECT_SPELL_LINE);
             if (spell_line != 0)
             {
+                log_debug(DEBUG_HIGH, "Spell line [%d], damage [%d]", spell_line, damage);
                 phys_effect_handler_ptr single_handler = get_phys_effect_handler(spell_line);
                 //spark handler by default
                 damage = single_handler(_this, source_id, target_id, &isMagicDamage, damage);
@@ -69,7 +69,10 @@ void __thiscall sf_phys_effect_hook(SF_CGDEffect *_this, uint16_t effect_id)
         //Siege Aura Handler
         else
         {
-            buildingAPI.buildingDealDamage(_this->SF_CGdBuildingToolbox, source_id, target_id, damage, 0);
+            if (_this->CGdBuilding->buildings[target_id].health_current != 0)
+            {
+                buildingAPI.buildingDealDamage(_this->SF_CGdBuildingToolbox, source_id, target_id, damage, 0);
+            }
         }
     }
 }

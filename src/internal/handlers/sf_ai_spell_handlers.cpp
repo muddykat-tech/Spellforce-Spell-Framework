@@ -1001,22 +1001,15 @@ uint32_t __thiscall dispel_white_aura_ai_handler(SF_CGdBattleDevelopment *_this,
 {
     uint32_t rank = 2;
     bool hasAura = false;
-    if (toolboxAPI.hasAuraActive(_this->battleData.CGdFigureToolBox,
-                                 target_index))
+    if (toolboxAPI.hasAuraActive(_this->battleData.CGdFigureToolBox, target_index))
     {
-        for (uint16_t node_id =
-                 figureAPI.getSpellJobStartNode(_this->battleData.CGdFigure,
-                                                target_index);
+        for (uint16_t node_id = figureAPI.getSpellJobStartNode(_this->battleData.CGdFigure, target_index);
              node_id != 0;
-             node_id =
-                 toolboxAPI.getNextNode(
-                     (uint32_t *)_this->battleData.CGdDoubleLinkList, node_id))
+             node_id = toolboxAPI.getNextNode((uint32_t *)_this->battleData.CGdDoubleLinkList, node_id))
         {
-            uint16_t spell_index =
-                toolboxAPI.getSpellIndexFromDLL(
-                    (uint32_t *) _this->battleData.CGdDoubleLinkList, node_id);
-            uint16_t spell_line =
-                spellAPI.getSpellLine(_this->battleData.CGdSpell, spell_index);
+            uint16_t spell_index = toolboxAPI.getSpellIndexFromDLL((uint32_t *) _this->battleData.CGdDoubleLinkList,
+                                                                   node_id);
+            uint16_t spell_line = spellAPI.getSpellLine(_this->battleData.CGdSpell, spell_index);
             if (spellAPI.hasSpellTag(spell_line, SpellTag::WHITE_AURA_SPELL))
             {
                 hasAura = true;
