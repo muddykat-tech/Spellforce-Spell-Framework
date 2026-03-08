@@ -1,5 +1,8 @@
 #include "sf_phys_effect_hook.h"
 #include "../../registry/spell_data_registries/sf_phys_effect_registry.h"
+#include "../../registry/spell_data_registries/sf_onhit_registry.h"
+#include <utility>
+#include <list>
 
 uint16_t __thiscall assistance_onhit_handler(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index,
                                              uint16_t damage);
@@ -38,8 +41,18 @@ void __thiscall sf_phys_effect_hook(SF_CGDEffect *_this, uint16_t effect_id)
             if (toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_id, kGdSpellLineAssistance) &&
                 (damage != 0x7fff))
             {
-                damage = assistance_onhit_handler(_this->SF_CGdFigureToolBox->CGdFigureJobs, source_id, target_id,
-                                                  damage);
+                std::list<std::pair<uint16_t, onhit_handler_ptr>> onhit_list = get_onhit_phase(OnHitPhase::PHASE_2);
+                for (auto it = onhit_list.crbegin(); it != onhit_list.crend(); ++it)
+                {
+                    std::pair<uint16_t, onhit_handler_ptr> entry = *it;
+                    uint16_t spell_line_id = entry.first;
+                    if (spell_line_id == kGdSpellLineAssistance)
+                    {
+                        onhit_handler_ptr onhit_func = entry.second;
+                        damage = onhit_func(_this->SF_CGdFigureToolBox->CGdFigureJobs, source_id, target_id, damage);
+                    }
+                }
+
             }
             toolboxAPI.dealDamage(_this->SF_CGdFigureToolBox, source_id, target_id, damage, isMagicDamage, 0, 0);
             //Monument protection handler

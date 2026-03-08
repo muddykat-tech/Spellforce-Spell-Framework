@@ -362,8 +362,8 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
                         damage = handle_trueshot_set(_this, source_index, target.entity_index, damage);
                     }
                 }
-                std::list<std::pair<uint16_t,
-                onhit_handler_ptr>> onhit_list = get_onhit_phase(static_cast<OnHitPhase>(i));
+                std::list<std::pair<uint16_t, onhit_handler_ptr>> onhit_list =
+                    get_onhit_phase(static_cast<OnHitPhase>(i));
                 for (auto it = onhit_list.crbegin(); it != onhit_list.crend(); ++it)
                 {
                     std::pair<uint16_t, onhit_handler_ptr> entry = *it;

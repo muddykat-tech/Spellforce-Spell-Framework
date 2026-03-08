@@ -241,14 +241,13 @@ uint16_t __thiscall assistance_onhit_handler(SF_CGdFigureJobs *_this,
     CGdFigureIterator iter;
     iteratorAPI.figureIteratorInit(&iter, 0, 0, 0x3ff, 0x3ff);
     iteratorAPI.figureIteratorSetPointers(&iter, _this->CGdFigure, _this->AutoClass22, _this->CGdWorld);
-    iteratorAPI.iteratorSetArea(&iter, &_this->CGdFigure->figures->position, spell_data.params[0]);
+    iteratorAPI.iteratorSetArea(&iter, &_this->CGdFigure->figures[target_index].position, spell_data.params[0]);
     std::list<uint16_t> affected_figures;
     uint16_t figure_id = iteratorAPI.getNextFigure(&iter);
     uint16_t element_count = 0;
     while (figure_id != 0)
     {
-        if (toolboxAPI.figuresCheckFriendly(_this->CGdFigureToolBox,
-                                            target_index, figure_id))
+        if (toolboxAPI.figuresCheckFriendly(_this->CGdFigureToolBox,target_index, figure_id))
         {
             if (figure_id != target_index)
             {
