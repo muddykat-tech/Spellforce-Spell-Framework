@@ -606,9 +606,7 @@ void __thiscall aura_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
     {
         sf_figures->figures[source_index].flags =
             static_cast<GdFigureFlags>(sf_figures->figures[source_index].flags &
-                                       (~static_cast<unsigned int>(GdFigureFlags
-                                                                   ::
-                                                                   AURA_RUNNING)));
+                                       (~static_cast<unsigned int>(GdFigureFlags::AURA_RUNNING)));
     }
     uint16_t effect_index = spellAPI.getXData(_this, spell_index,
                                               EFFECT_EFFECT_INDEX);

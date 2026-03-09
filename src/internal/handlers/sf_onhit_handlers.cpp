@@ -249,14 +249,18 @@ uint16_t __thiscall assistance_onhit_handler(SF_CGdFigureJobs *_this,
     {
         if (toolboxAPI.figuresCheckFriendly(_this->CGdFigureToolBox,target_index, figure_id))
         {
-            if (figure_id != target_index)
+            if ((figureAPI.isAlive(_this->CGdFigure, target_index))
+                && (toolboxAPI.isTargetable(_this->CGdFigureToolBox, target_index)))
             {
-                affected_figures.push_back(figure_id);
-                element_count++;
-            }
-            if (element_count == spell_data.params[1])
-            {
-                break;
+                if (figure_id != target_index)
+                {
+                    affected_figures.push_back(figure_id);
+                    element_count++;
+                }
+                if (element_count == spell_data.params[1])
+                {
+                    break;
+                }
             }
         }
         figure_id = iteratorAPI.getNextFigure(&iter);

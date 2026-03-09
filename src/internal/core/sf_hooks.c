@@ -610,8 +610,7 @@ static void initialize_utility_hooks()
     ASI::MemoryRegion is_aura_mreg (ASI::AddrOf(0x32ae20), 5);
     ASI::BeginRewrite(is_aura_mreg);
     *(unsigned char *)(ASI::AddrOf(0x32ae20)) = 0xE9; // JUMP instruction
-    *(int *)(ASI::AddrOf(0x32ae21)) = (int)(&is_aura_spell) -
-                                      ASI::AddrOf(0x32ae25);
+    *(int *)(ASI::AddrOf(0x32ae21)) = (int)(&is_aura_spell) - ASI::AddrOf(0x32ae25);
     ASI::EndRewrite(is_aura_mreg);
 
     log_info("Hooking Black Aura Detection");

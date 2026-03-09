@@ -71,10 +71,8 @@ fun_00910de0_ptr fun_00910de0;
 void initialize_menu_data_hooks()
 {
     s_initialize_menu_label = (menu_label_ptr)(ASI::AddrOf(0x51a180));
-    s_initialize_menu_container =
-        (initialize_menu_container_ptr)(ASI::AddrOf(0x505780));
-    s_construct_default_sf_string =
-        (construct_default_sf_string_ptr)(ASI::AddrOf(0x383900));
+    s_initialize_menu_container = (initialize_menu_container_ptr)(ASI::AddrOf(0x505780));
+    s_construct_default_sf_string = (construct_default_sf_string_ptr)(ASI::AddrOf(0x383900));
     s_menu_func = (original_menu_func_ptr)(ASI::AddrOf(0x197b10));
     s_show_message_box = (message_box_ptr)(ASI::AddrOf(0x198660));
 
@@ -88,14 +86,12 @@ void initialize_menu_data_hooks()
     g_sf_enchant_addr2 = (ASI::AddrOf(0x5d12e7));
 
     g_new_operator = (new_operator_ptr)(ASI::AddrOf(0x675A9D));
-    g_menu_label_constructor =
-        (menu_label_constructor_ptr)(ASI::AddrOf(0x51a180));
+    g_menu_label_constructor = (menu_label_constructor_ptr)(ASI::AddrOf(0x51a180));
     g_init_menu_element = (mnu_label_init_data_ptr)(ASI::AddrOf(0x52cfe0));
     g_get_smth_fonts = (get_smth_fonts_ptr)(ASI::AddrOf(0x5357b0));
     g_menu_label_set_font = (menu_label_set_font_ptr)(ASI::AddrOf(0x530e00));
     g_get_font = (get_font_ptr)(ASI::AddrOf(0x535180));
-    g_container_add_control =
-        (container_add_control_ptr)(ASI::AddrOf(0x506f30));
+    g_container_add_control = (container_add_control_ptr)(ASI::AddrOf(0x506f30));
 
     f_create_menu_option = (create_option_ptr)(ASI::AddrOf(0x61CF80));
 
@@ -123,19 +119,15 @@ void initialize_menu_data_hooks()
     vfun164 = (vfun164_ptr)(ASI::AddrOf(0x50F8B0));
     vfun41 = (vfun41_ptr)(ASI::AddrOf(0x510d70));
 
-    getSpellLineIsTargetSelf =
-        (getSpellLineIsTargetSelf_ptr)(ASI::AddrOf(0x26e410));
+    getSpellLineIsTargetSelf = (getSpellLineIsTargetSelf_ptr)(ASI::AddrOf(0x26e410));
 
-    cuiVideoSequence_constructor =
-        (cuiVideoSequence_constructor_ptr)(ASI::AddrOf(0x618980));
-
-    CMnuScreen_attach_control =
-        (CMnuScreen_attach_control_ptr)(ASI::AddrOf(0x507240));
+    cuiVideoSequence_constructor = (cuiVideoSequence_constructor_ptr)(ASI::AddrOf(0x618980));
+    CMnuScreen_attach_control = (CMnuScreen_attach_control_ptr)(ASI::AddrOf(0x507240));
 }
 
 CMnuSmpButton *show_mod_list_button;
 CMnuSmpButton *open_campaign_screen;
-CMnuContainer* custom_campaign_screen;
+CMnuContainer *custom_campaign_screen;
 
 SFSF_ModlistStruct mod_struct;
 CMnuLabel *sfsf_version_label;
@@ -154,7 +146,7 @@ sf_menu_hook(uint32_t _CAppMenu)
     CMnuContainer *container = *(CMnuContainer **)(_CAppMenu + 0x58);
 
     uiAPI.attachLabel(sfsf_version_label, container, sfsf_info,
-                     6, 10, 729, strlen(sfsf_info) * 4, 100);
+                      6, 10, 729, strlen(sfsf_info) * 4, 100);
 
     char button_default[32]     = "ui_mainmenu_button_default.msh";
     char button_pressed[32]     = "ui_mainmenu_button_pressed.msh";
@@ -175,33 +167,33 @@ sf_menu_hook(uint32_t _CAppMenu)
     const int BUTTON_FONT_INDEX = 7;
 
     show_mod_list_button = uiAPI.attachNewButton(container,
-                                             button_default,
-                                             button_pressed,
-                                             button_highlight,
-                                             button_disabled,
-                                             button_label,
-                                             BUTTON_FONT_INDEX,
-                                             BUTTON_X,
-                                             BUTTON_Y,
-                                             BUTTON_WIDTH,
-                                             BUTTON_HEIGHT,
-                                             BUTTON_INDEX,
-                                             (uint32_t)&show_mod_list);
+                                                 button_default,
+                                                 button_pressed,
+                                                 button_highlight,
+                                                 button_disabled,
+                                                 button_label,
+                                                 BUTTON_FONT_INDEX,
+                                                 BUTTON_X,
+                                                 BUTTON_Y,
+                                                 BUTTON_WIDTH,
+                                                 BUTTON_HEIGHT,
+                                                 BUTTON_INDEX,
+                                                 (uint32_t)&show_mod_list);
 
 
     char campaign_label[32]       = "Custom Campaign";
     open_campaign_screen = uiAPI.attachNewButton(container, button_default,
-                                             button_pressed,
-                                             button_highlight,
-                                             button_disabled,
-                                             campaign_label,
-                                             BUTTON_FONT_INDEX,
-                                             BUTTON_X,
-                                             32,
-                                             BUTTON_WIDTH,
-                                             BUTTON_HEIGHT,
-                                             16,
-                                             (uint32_t)&show_campaign_screen);
+                                                 button_pressed,
+                                                 button_highlight,
+                                                 button_disabled,
+                                                 campaign_label,
+                                                 BUTTON_FONT_INDEX,
+                                                 BUTTON_X,
+                                                 32,
+                                                 BUTTON_WIDTH,
+                                                 BUTTON_HEIGHT,
+                                                 16,
+                                                 (uint32_t)&show_campaign_screen);
 
     s_menu_func(_CAppMenu);
 }
@@ -223,21 +215,21 @@ void __thiscall show_campaign_screen(CMnuSmpButton *_this)
             );
 
         log_info("Called Campaign Screen 2");
-        CMnuContainer* custom_campaign_container = uiAPI.createContainer(
+        CMnuContainer *custom_campaign_container = uiAPI.createContainer(
             11,6,1008,757,
             "ui_bgr_pregame_border_transparency.msb",
             "ui_bgr_pregame_border.msb", 0.5f
             );
 
         log_info("Called Campaign Screen 3");
-        CMnuContainer* campaign_list = uiAPI.createContainer(
+        CMnuContainer *campaign_list = uiAPI.createContainer(
             59, 50, 443, 619,
             "ui_bgr_pregame_border_left_transparency.msb",
             "ui_bgr_pregame_border_left.msb", 0.5f
             );
 
         log_info("Called Campaign Screen 4");
-        CMnuContainer* campaign_list_right = uiAPI.createContainer(
+        CMnuContainer *campaign_list_right = uiAPI.createContainer(
             502, 50, 443, 619,
             "ui_bgr_pregame_border_right_transparency.msb",
             "ui_bgr_pregame_border_right.msb", 0.5f
@@ -274,13 +266,14 @@ void __thiscall show_campaign_screen(CMnuSmpButton *_this)
             48,
             2,
             (uint32_t) &close_campaign_callback
-        );
-        
+            );
+
         log_info("Called Campaign Screen Label Setup");
         char campaign_title[32] = "Custom Campaigns";
 
         log_info("Called Campaign Screen Label Attach");
-        campaign_title_label = uiAPI.attachLabel(nullptr, custom_campaign_container, campaign_title, 6, 468, 16, 128, 16);
+        campaign_title_label = uiAPI.attachLabel(nullptr, custom_campaign_container, campaign_title, 6, 468, 16, 128,
+                                                 16);
 
         log_info("Called Campaign Screen Menu ID set");
         uiAPI.setMenuID(campaign_title_label, 0x6);
@@ -311,14 +304,12 @@ void __thiscall show_campaign_screen(CMnuSmpButton *_this)
 
 void __fastcall close_campaign_callback(CMnuSmpButton *button, int32_t *cui_menu_ptr_maybe)
 {
-    CMnuContainer *campaign_screen =
-        (CMnuContainer *) button->CMnuBase_data.param_2_callback;
+    CMnuContainer *campaign_screen = (CMnuContainer *) button->CMnuBase_data.param_2_callback;
     uiAPI.setContainerVisible(campaign_screen, false, false);
     is_campaign_screen_visible = false;
 }
 
-bool hasThisAuraRunning(SF_CGdFigureToolbox *_this, uint16_t aura_spell_id,
-                        uint16_t figure_id)
+bool hasThisAuraRunning(SF_CGdFigureToolbox *_this, uint16_t aura_spell_id, uint16_t figure_id)
 {
     if (figureAPI.isAlive(_this->CGdFigure, figure_id))
     {
@@ -328,17 +319,13 @@ bool hasThisAuraRunning(SF_CGdFigureToolbox *_this, uint16_t aura_spell_id,
                                                               figure_id);
             while (node_id != 0)
             {
-                uint16_t spell_index =
-                    toolboxAPI.getSpellIndexFromDLL(_this->CGdDoubleLinkedList,
-                                                    node_id);
-                uint16_t spell_id = spellAPI.getSpellID(_this->CGdSpell,
-                                                        spell_index);
+                uint16_t spell_index = toolboxAPI.getSpellIndexFromDLL(_this->CGdDoubleLinkedList, node_id);
+                uint16_t spell_id = spellAPI.getSpellID(_this->CGdSpell, spell_index);
                 if (spell_id == aura_spell_id)
                 {
                     return 1;
                 }
-                node_id = toolboxAPI.getNextNode(_this->CGdDoubleLinkedList,
-                                                 node_id);
+                node_id = toolboxAPI.getNextNode(_this->CGdDoubleLinkedList, node_id);
             }
         }
     }
@@ -464,11 +451,9 @@ void __attribute__((thiscall)) sf_click_horizontal_button(SF_CUiMain *_this,
 
     if (!spellAPI.hasSpellTag(spell_data.spell_line_id, SpellTag::AURA_SPELL))
     {
-        if (!getSpellLineIsTargetSelf(_this->CUiMain_data.CGdResource,
-                                      spell_data.spell_line_id))
+        if (!getSpellLineIsTargetSelf(_this->CUiMain_data.CGdResource, spell_data.spell_line_id))
         {
-            uint_list_node *node = (uint_list_node *)
-                                   fun_009a0750(_this->CUiMain_data.CUiGame);
+            uint_list_node *node = (uint_list_node *) fun_009a0750(_this->CUiMain_data.CUiGame);
             fun_009de190(node, param1);
             fun_0099f610(_this->CUiMain_data.CUiGame, param2->actionType_id,
                          param2->actionSubtype_id, param2->unknown_flag,
@@ -477,10 +462,8 @@ void __attribute__((thiscall)) sf_click_horizontal_button(SF_CUiMain *_this,
         }
         if (spell_data.cast_type2 == 5)
         {
-            data.position.X =
-                _this->CUiMain_data.CGdFigure->figures[figure_id].position.X;
-            data.position.Y =
-                _this->CUiMain_data.CGdFigure->figures[figure_id].position.Y;
+            data.position.X = _this->CUiMain_data.CGdFigure->figures[figure_id].position.X;
+            data.position.Y = _this->CUiMain_data.CGdFigure->figures[figure_id].position.Y;
             data.entity_type = 5;
         }
         else
@@ -488,8 +471,7 @@ void __attribute__((thiscall)) sf_click_horizontal_button(SF_CUiMain *_this,
             data.entity_type = 1;
             data.entity_index = figure_id;
         }
-        uint_list_node *node = (uint_list_node *)
-                               fun_009a0750(_this->CUiMain_data.CUiGame);
+        uint_list_node *node = (uint_list_node *) fun_009a0750(_this->CUiMain_data.CUiGame);
         fun_009de190(node, param1);
     }
     else
