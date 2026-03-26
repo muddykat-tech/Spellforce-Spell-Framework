@@ -478,31 +478,38 @@ static void __declspec(naked) ui_enchant_chance_hook2()
 
 static void initialize_ui_overlay_fix_hook()
 {
-    ASI::MemoryRegion ui_load_mreg (ASI::AddrOf(0x5D1198), 6);
+    ASI::MemoryRegion ui_load_mreg (ASI::AddrOf(0x647b9c), 5);
     ASI::BeginRewrite(ui_load_mreg);
-    *(uint8_t *)(ASI::AddrOf(0x5D1198)) = 0x90; //Nop Trail
-    *(uint8_t *)(ASI::AddrOf(0x5D1199)) = 0xE9; // jmp instruction
-    *(int *)(ASI::AddrOf(0x5D119a)) = (int)(&ui_overlay_hook) - ASI::AddrOf(0x5D119e);
+    *(uint8_t *)(ASI::AddrOf(0x647b9c)) = 0xE8; // CALL instruction
+    *(int *)(ASI::AddrOf(0x647b9d)) = (int)(&portrait_overlay_hook) - ASI::AddrOf(0x647ba1);
     ASI::EndRewrite(ui_load_mreg);
+    /*
+       ASI::MemoryRegion ui_load_mreg (ASI::AddrOf(0x5D1198), 6);
+       ASI::BeginRewrite(ui_load_mreg);
+     *(uint8_t *)(ASI::AddrOf(0x5D1198)) = 0x90; //Nop Trail
+     *(uint8_t *)(ASI::AddrOf(0x5D1199)) = 0xE9; // jmp instruction
+     *(int *)(ASI::AddrOf(0x5D119a)) = (int)(&ui_overlay_hook) - ASI::AddrOf(0x5D119e);
+       ASI::EndRewrite(ui_load_mreg);
 
-    ASI::MemoryRegion ui_load_mreg2 (ASI::AddrOf(0x5d0a78), 6);
-    ASI::BeginRewrite(ui_load_mreg2);
-    *(uint8_t *)(ASI::AddrOf(0x5d0a78)) = 0x90; //Nop Trail
-    *(uint8_t *)(ASI::AddrOf(0x5d0a79)) = 0xE9; // jmp instruction
-    *(int *)(ASI::AddrOf(0x5d0a7a)) = (int)(&ui_overlay_hook2) - ASI::AddrOf(0x5d0a7e);
-    ASI::EndRewrite(ui_load_mreg2);
+       ASI::MemoryRegion ui_load_mreg2 (ASI::AddrOf(0x5d0a78), 6);
+       ASI::BeginRewrite(ui_load_mreg2);
+     *(uint8_t *)(ASI::AddrOf(0x5d0a78)) = 0x90; //Nop Trail
+     *(uint8_t *)(ASI::AddrOf(0x5d0a79)) = 0xE9; // jmp instruction
+     *(int *)(ASI::AddrOf(0x5d0a7a)) = (int)(&ui_overlay_hook2) - ASI::AddrOf(0x5d0a7e);
+       ASI::EndRewrite(ui_load_mreg2);
 
-    ASI::MemoryRegion ui_load_mreg3 (ASI::AddrOf(0x5d0b99), 5);
-    ASI::BeginRewrite(ui_load_mreg3);
-    *(uint8_t *)(ASI::AddrOf(0x5d0b99)) = 0xE9; // jmp instruction
-    *(int *)(ASI::AddrOf(0x5d0b9a)) = (int)(&ui_enchant_chance_hook) - ASI::AddrOf(0x5d0b9e);
-    ASI::EndRewrite(ui_load_mreg3);
+       ASI::MemoryRegion ui_load_mreg3 (ASI::AddrOf(0x5d0b99), 5);
+       ASI::BeginRewrite(ui_load_mreg3);
+     *(uint8_t *)(ASI::AddrOf(0x5d0b99)) = 0xE9; // jmp instruction
+     *(int *)(ASI::AddrOf(0x5d0b9a)) = (int)(&ui_enchant_chance_hook) - ASI::AddrOf(0x5d0b9e);
+       ASI::EndRewrite(ui_load_mreg3);
 
-    ASI::MemoryRegion ui_load_mreg4 (ASI::AddrOf(0x5d12be), 5);
-    ASI::BeginRewrite(ui_load_mreg4);
-    *(uint8_t *)(ASI::AddrOf(0x5d12be)) = 0xE9; // jmp instruction
-    *(int *)(ASI::AddrOf(0x5d12bf)) = (int)(&ui_enchant_chance_hook2) - ASI::AddrOf(0x5d12c3);
-    ASI::EndRewrite(ui_load_mreg4);
+       ASI::MemoryRegion ui_load_mreg4 (ASI::AddrOf(0x5d12be), 5);
+       ASI::BeginRewrite(ui_load_mreg4);
+     *(uint8_t *)(ASI::AddrOf(0x5d12be)) = 0xE9; // jmp instruction
+     *(int *)(ASI::AddrOf(0x5d12bf)) = (int)(&ui_enchant_chance_hook2) - ASI::AddrOf(0x5d12c3);
+       ASI::EndRewrite(ui_load_mreg4);
+     */
 
 }
 

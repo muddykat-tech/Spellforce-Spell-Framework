@@ -26,7 +26,7 @@ extern CMnuScreen_attach_control_ptr CMnuScreen_attach_control;
 
 extern CMnuLabel *sfsf_version_label;
 extern CMnuLabel *campaign_title_label;
-extern CMnuContainer* custom_campaign_screen;
+extern CMnuContainer *custom_campaign_screen;
 
 void __thiscall sf_menu_hook(uint32_t _CAppMenu);
 uint16_t __thiscall sf_ui_overlay_fix(SF_CGdFigure *_this, void *CGdResource, uint16_t spell_id, uint16_t figure_id);

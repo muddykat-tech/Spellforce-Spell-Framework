@@ -8,14 +8,14 @@
 
 static std::map<uint16_t, enchant_handler_ptr> s_enchant_handlers_map;
 
-uint32_t __thiscall default_enchant_handler(SF_CGdFigure *_this, uint16_t figure_id)
+uint16_t __thiscall default_enchant_handler(SF_CGdFigure *_this, uint16_t figure_id)
 {
     uint16_t dex_current = figureAPI.getCurrentStat(_this, figure_id, DEXTERITY);
     uint16_t int_current = figureAPI.getCurrentStat(_this, figure_id, INTELLIGENCE);
     return dex_current * 5 + int_current * 5 + 500;
 }
 
-uint32_t __thiscall poison_enchant_handler(SF_CGdFigure *_this, uint16_t figure_id)
+uint16_t __thiscall poison_enchant_handler(SF_CGdFigure *_this, uint16_t figure_id)
 {
     uint16_t dex_current = figureAPI.getCurrentStat(_this, figure_id, DEXTERITY);
     uint16_t int_current = figureAPI.getCurrentStat(_this, figure_id, INTELLIGENCE);

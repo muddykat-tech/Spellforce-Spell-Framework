@@ -4,6 +4,8 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
+#include "../../registry/spell_data_registries/sf_enchant_registry.h"
+
 extern SpellFunctions spellAPI;
 extern ToolboxFunctions toolboxAPI;
 extern BuildingFunctions buildingAPI;
@@ -15,6 +17,59 @@ extern AiFunctions aiAPI;
 
 typedef void (__thiscall *add_item_ptr)(ushort_list_node *_this,uint16_t *item);
 add_item_ptr add_item;
+
+
+typedef SF_String *(__thiscall *AC95_get_figure_name_ptr)(void *AC95, SF_String *name_buffer, uint32_t figure_id);
+typedef void (__cdecl *GetColoredText_ptr)(SF_String *param_1, uint32_t param_2);
+typedef void (__thiscall *GetDescriptionText_ptr)(void *_this,uint32_t param_1,SF_String *name_buffer);
+typedef void (__thiscall *GetTextById_ptr)(void *_this,uint16_t text_id,SF_String *out_string);
+typedef SF_String *( *ExpandSpellDescription_ptr)(SF_String *param_1,SF_String *param_2,SF_CGdResourceSpell *param_3);
+
+
+typedef uint32_t (__cdecl *SFprintf_ptr)(SF_String *_this, const wchar_t *format, ...);
+typedef SF_String *(__thiscall *SFStringConcat_ptr)(SF_String *destination, SF_String *source);
+typedef void (__thiscall *SFStringSetLength_ptr)(SF_String *_this, uint32_t length);
+typedef SF_String *(__thiscall *SFStringFromWchar_ptr)(SF_String *_this, wchar_t value, uint32_t length);
+typedef void (__thiscall *SFStringDestructor_ptr)(SF_String *_this);
+typedef SF_String *(__thiscall *SFStringCopy_ptr)(SF_String *destination, SF_String *source);
+typedef SF_String *(__thiscall *GetItemInfo_ptr)(SF_CGdResource *_this, CGdResourceWeaponData *stats,
+                                                 uint16_t item_id);
+typedef uint8_t (__thiscall *GetWeaponType_ptr)(SF_CGdResource *_this, uint16_t item_id);
+typedef uint32_t (__thiscall *GetDamageMultiplierPerLevel_ptr)(SF_CGdResource *_this, uint8_t level);
+typedef uint16_t *(__thiscall *GetWeaponEffects_ptr)(SF_CGdResource *_this, uint16_t *param_1, uint16_t item_id);
+typedef uint32_t (__thiscall *AC34calculateWeaponSpeed_ptr) (void *_this,uint32_t base_fight_speed,uint8_t race,
+                                                             uint16_t item_id, uint32_t dual_wield,uint32_t is_ranged);
+typedef void *(__thiscall *CGdMainGetAC34_ptr)(void *_this);
+
+typedef SF_String *(__cdecl *getSpecialDesc_ptr)(SF_String *param_1,uint32_t param_2);
+typedef void (__stdcall *getWeaponRangeDescription_ptr)(SF_String *param_1, uint16_t param_2,uint16_t param_3,
+                                                        SF_String *param_4, uint8_t param_5);
+
+typedef uint32_t (__thiscall *GetResourceSpellLine_ptr)(SF_CGdResource *_this, uint16_t spell_line_id,
+                                                        SF_CGdResourceSpellLine *value);
+
+AC95_get_figure_name_ptr AC95_get_figure_name;
+GetColoredText_ptr GetColoredText;
+GetDescriptionText_ptr GetDescriptionText;
+SFprintf_ptr SFprintf;
+SFStringConcat_ptr SFStringConcat;
+SFStringSetLength_ptr SFStringSetLength;
+SFStringFromWchar_ptr SFStringFromWchar;
+SFStringDestructor_ptr SFStringDestructor;
+SFStringCopy_ptr SFStringCopy;
+
+getSpecialDesc_ptr getSpecialDesc;
+GetItemInfo_ptr GetItemInfo;
+GetWeaponType_ptr GetWeaponType;
+GetDamageMultiplierPerLevel_ptr GetDamageMultiplierPerLevel;
+AC34calculateWeaponSpeed_ptr AC34calculateWeaponSpeed;
+getWeaponRangeDescription_ptr getWeaponRangeDescription;
+CGdMainGetAC34_ptr CGdMainGetAC34;
+GetWeaponEffects_ptr GetWeaponEffects;
+GetResourceSpellLine_ptr GetResourceSpellLine;
+GetTextById_ptr GetTextById;
+ExpandSpellDescription_ptr ExpandSpellDescription;
+
 bool __thiscall get_salvo_target_list (SF_CGdFigureJobs *_this, SF_CGdTargetData *source, SF_CGdTargetData *target,
                                        uint32_t angle, uint16_t *ranges, uint32_t target_count,
                                        ushort_list_node *output)
@@ -619,9 +674,312 @@ static void get_race_fix_hook()
     ASI::EndRewrite(race_mreg1);
 }
 
+
+static SF_CGdFigure * getFigurePtr(void *CGdMain)
+{
+    return (SF_CGdFigure *)(*(uint32_t *)((uint32_t)CGdMain + 0x30));
+}
+
+void __thiscall SFStringConstructor(SF_String *_this)
+{
+    _this->raw_data = nullptr;
+    _this->data = nullptr;
+    _this->str_length = 0x0;
+    _this->unknown_length_var = 0x0;
+}
+
+SF_String * __thiscall SFStringConstructor_char(SF_String *_this, const char *char_string)
+{
+    SFStringConstructor(_this);
+    uint32_t length = 0;
+    if (char_string != 0)
+    {
+        //not sure here, might need to use internal implementation?
+        length = strlen(char_string);
+    }
+    SFStringSetLength(_this, length);
+    if (length != 0)
+    {
+        mbstowcs(_this->raw_data, char_string, length);
+    }
+    _this->str_length = length;
+    return _this;
+}
+
+SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *param_1, uint16_t figure_id,
+                                             uint32_t param3,
+                                             uint32_t param4, uint32_t param5)
+{
+    SF_String figure_name;
+    SF_String full_desc;
+    SF_String description;
+    SF_String damage_string;
+    SF_String result_string;
+    SF_String newline;
+    SF_String aspd_string;
+    SFStringConstructor(&figure_name);
+    SFStringConstructor(&full_desc);
+    SFStringConstructor(&description);
+    SFStringConstructor(&damage_string);
+    SFStringConstructor(&aspd_string);
+
+    SFStringConstructor_char(&result_string, "");
+    SFStringFromWchar(&newline, L'\n', 1);
+
+
+    SF_CGdFigure *SF_Figures = getFigurePtr(_this->CGdMain);
+
+    if (SF_Figures->figures[figure_id].owner != (uint16_t)(-1))
+    {
+        AC95_get_figure_name(_this->AC95, &figure_name, figure_id);
+        GetColoredText(&figure_name, 282);
+        GetDescriptionText(_this->UiDbProxy, 4425, &description);
+        if (param3 == 0)
+        {
+            SFprintf(&full_desc, L"%s", figure_name.raw_data);
+        }
+        else
+        {
+            uint8_t level = SF_Figures->figures[figure_id].level;
+            SFprintf(&full_desc, L"%s (%s %i)", figure_name.raw_data, description.raw_data, level);
+        }
+        SFStringConcat(&result_string, &full_desc);
+        if (param3 != 0)
+        {
+
+            SFStringConcat(&result_string, &newline); //concatenate newline
+            uint32_t max_hp = figureAPI.getMaxStat(SF_Figures, figure_id, HEALTH);
+            uint32_t hp = figureAPI.getCurrentStat(SF_Figures, figure_id, HEALTH);
+            SFprintf(&full_desc, L"%i/%i", hp, max_hp);
+            GetColoredText(&full_desc, 280);
+            GetDescriptionText(_this->UiDbProxy, 4407, &description);
+            SFprintf(&figure_name, L"%s: %s", description.raw_data, full_desc.raw_data);
+            SFStringConcat(&result_string, &figure_name);
+        }
+        if (param4 != 0)
+        {
+            SFStringConcat(&result_string, &newline);  //concatenate newline
+            uint32_t max_mp = figureAPI.getMaxStat(SF_Figures, figure_id, MANA);
+            uint32_t mp = figureAPI.getCurrentStat(SF_Figures, figure_id, MANA);
+            SFprintf(&full_desc, L"%i/%i", mp, max_mp);
+            GetColoredText(&full_desc, 280);
+            GetDescriptionText(_this->UiDbProxy, 4408, &description);
+            SFprintf(&figure_name, L"%s: %s", description.raw_data, full_desc.raw_data);
+            SFStringConcat(&result_string, &figure_name);
+        }
+        if (param5 != 0)
+        {
+            uint32_t lvl_mult = 0;
+            bool both_hands = true;
+            uint32_t dual_wield = 0;
+            CGdResourceWeaponData l_item_info;
+            CGdResourceWeaponData r_item_info;
+            CGdResourceWeaponData *active_hand_info = nullptr;
+            SF_String desc_str1;
+            SF_String desc_str2;
+
+            SFStringConstructor(&desc_str1);
+            SFStringConstructor(&desc_str2);
+
+
+            uint8_t r_type;
+            uint8_t l_type;
+            uint16_t r_item_id = SF_Figures->figures[figure_id].equipment[1];
+            GetItemInfo(_this->SF_CGdResource,&r_item_info, r_item_id);
+
+            uint16_t l_item_id =  SF_Figures->figures[figure_id].equipment[3];
+            GetItemInfo(_this->SF_CGdResource,&l_item_info, l_item_id);
+
+            r_type = GetWeaponType(_this->SF_CGdResource, r_item_id);
+            l_type = GetWeaponType(_this->SF_CGdResource, l_item_id);
+            active_hand_info = &r_item_info;
+            if ((l_item_info.min_dmg == 0) || (r_item_info.min_dmg == 0))
+            {
+                both_hands = false;
+                if (l_item_info.min_dmg != 0)
+                {
+                    active_hand_info = &l_item_info;
+                    r_type = l_type;
+                    r_item_id = l_item_id;
+                }
+            }
+            else
+            {
+                GetDescriptionText(_this->UiDbProxy, 4800, &desc_str1);
+                GetDescriptionText(_this->UiDbProxy, 4801, &desc_str2);
+                if ((r_type != 7) || (l_type != 7))
+                {
+                    dual_wield = 0;
+                }
+                else
+                {
+                    dual_wield = 1;
+                }
+            }
+            if (active_hand_info != nullptr)
+            {
+                SFStringConcat(&result_string, &newline);
+                SFStringSetLength(&full_desc, 0);
+                if (both_hands)
+                {
+                    SFprintf(&full_desc, L"%s: ", desc_str2.raw_data);
+                }
+                //TASK_MAIN_CHAR or TASK_HERO
+                if ((SF_Figures->figures[figure_id].current_job.task == 0xa) ||
+                    (SF_Figures->figures[figure_id].current_job.task == 0x9))
+                {
+                    lvl_mult = 100;
+                }
+                else
+                {
+                    lvl_mult = GetDamageMultiplierPerLevel(_this->SF_CGdResource,
+                                                           SF_Figures->figures[figure_id].level);
+                }
+                uint32_t str_mult = figureAPI.getCurrentStat(SF_Figures, figure_id, STRENGTH);
+                str_mult *= 3 * (SF_Figures->figures[figure_id].level + 9);
+                GetDescriptionText(_this->UiDbProxy, 4531, &description);
+                if (active_hand_info->min_dmg == active_hand_info->max_dmg)
+                {
+                    uint32_t damage = (active_hand_info->max_dmg * str_mult * lvl_mult + 50000) / 100000;
+                    SFprintf(&damage_string,L"%s %i ", description.raw_data, damage);
+                }
+                else
+                {
+                    uint32_t max_damage = (active_hand_info->max_dmg * str_mult * lvl_mult + 50000) / 100000;
+                    uint32_t min_damage = (active_hand_info->min_dmg * str_mult * lvl_mult + 50000) / 100000;
+                    SFprintf(&damage_string,L"%s %i-%i ", description.raw_data, min_damage,max_damage);
+                }
+                GetColoredText(&damage_string, 280);
+                SFStringConcat(&full_desc, &damage_string);
+
+                GetDescriptionText(_this->UiDbProxy, 4803, &aspd_string);
+                SFprintf(&description, L"%s, ", aspd_string.raw_data);
+
+                uint8_t race = SF_Figures->figures[figure_id].race;
+                uint32_t aspd = figureAPI.getCurrentStat(SF_Figures, figure_id, FIGHT_SPEED);
+                uint32_t *AC34 = (uint32_t *)CGdMainGetAC34(_this->CGdMain);
+                aspd = AC34calculateWeaponSpeed(AC34, aspd, race, r_item_id, dual_wield, (r_type == 12));
+
+                double disp_aspd = static_cast<double>(aspd) / 1000.0;
+                SFprintf(&description, description.raw_data, disp_aspd);
+                SFStringConcat(&full_desc, &description);
+
+                GetDescriptionText(_this->UiDbProxy, 4532, &description);
+                GetColoredText(&description, 280);
+                //Stucture is SORTA the same, but some fields are re-ordered
+                //So, wpn_spd becomes min_rng
+                if (active_hand_info->min_rng ==  active_hand_info->max_rng)
+                {
+                    SF_String temp_str;
+                    SFStringConstructor(&temp_str);
+
+                    if (active_hand_info->min_rng != 0)
+                    {
+                        getSpecialDesc(&figure_name, 280);
+                        SFprintf(&temp_str, L"%s_%s%i%s%c ", description.raw_data, figure_name.raw_data,
+                                 active_hand_info->min_rng, L"%d", L',');
+                        SFStringDestructor(&figure_name);
+                    }
+                    SFStringConcat(&full_desc, &temp_str);
+                    SFStringDestructor(&temp_str);
+                }
+                else
+                {
+                    getWeaponRangeDescription(&full_desc, active_hand_info->max_rng, active_hand_info->wpn_spd,
+                                              &description, 0x01);
+                }
+                if (full_desc.str_length != 0)
+                {
+                    SFStringConcat(&result_string, &full_desc);
+                }
+
+                SFStringDestructor(&full_desc);
+                SFStringDestructor(&damage_string);
+                SFStringDestructor(&description);
+
+                SFStringConstructor(&full_desc);
+                SFStringConstructor(&damage_string);
+                SFStringConstructor(&description);
+                uint16_t effects[4];
+                GetWeaponEffects(_this->SF_CGdResource, effects, r_item_id);
+                for (int i = 1; i < 4; i++)
+                {
+                    SF_String effect_string;
+                    SFStringConstructor(&effect_string);
+                    SF_String chance_string;
+                    SFStringConstructor(&chance_string);
+                    if (effects[i] == 0)
+                    {
+                        break;
+                    }
+                    SF_CGdResourceSpell spell_data;
+                    spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, effects[i]);
+                    SF_CGdResourceSpellLine spell_line_data;
+                    GetResourceSpellLine(_this->SF_CGdResource, spell_data.spell_line_id, &spell_line_data);
+                    if (spell_data.spell_line_id != 0 && spell_line_data.description_id != 0)
+                    {
+                        SFStringConcat(&full_desc, &newline);
+                        GetDescriptionText(_this->UiDbProxy, 6550, &damage_string);
+                        SFprintf(&effect_string,L"%%c%x%s:%%d ",0xc0d0ff,damage_string.raw_data);
+                        GetTextById(_this->UiDbProxy, spell_line_data.text_id, &description);
+                        GetColoredText(&description, 278);
+                        SFStringConcat(&effect_string, &description);
+                        enchant_handler_ptr handler = get_enchant_handler(spell_data.spell_line_id);
+                        uint16_t chance = handler(SF_Figures, figure_id);
+                        SFprintf(&chance_string,L" (%.1f%%%%)", (double)((float)chance / 100.0));
+                        SFStringConcat(&effect_string, &chance_string);
+                        GetDescriptionText(_this->UiDbProxy, spell_line_data.description_id, &damage_string);
+                        SF_String temp_str;
+                        ExpandSpellDescription(&temp_str, &damage_string, &spell_data);
+                        SFStringCopy(&description, &temp_str);
+                        SFStringDestructor(&temp_str);
+                        SFStringConcat(&effect_string, &newline);
+                        SFStringConcat(&effect_string, &description);
+                    }
+                    SFStringConcat(&full_desc, &effect_string);
+                }
+                if (full_desc.str_length != 0)
+                {
+                    SFStringConcat(&result_string, &full_desc);
+                }
+            }
+        }
+    }
+    SFStringCopy(param_1, &result_string);
+    SFStringDestructor(&result_string);
+    SFStringDestructor(&figure_name);
+    SFStringDestructor(&full_desc);
+    SFStringDestructor(&damage_string);
+    SFStringDestructor(&description);
+    SFStringDestructor(&newline);
+    return param_1;
+}
+
 void initialize_vanilla_fix_hooks()
 {
     add_item = (add_item_ptr)(ASI::AddrOf(0x260d70));
+
+    AC95_get_figure_name = (AC95_get_figure_name_ptr)(ASI::AddrOf(0x567086));
+    GetColoredText = (GetColoredText_ptr)(ASI::AddrOf(0x619670));
+    GetDescriptionText = (GetDescriptionText_ptr)(ASI::AddrOf(0x575cd0));
+    GetTextById = (GetTextById_ptr)(ASI::AddrOf(0x575740));
+    ExpandSpellDescription = (ExpandSpellDescription_ptr)(ASI::AddrOf(0x5d7c20));
+    SFprintf = (SFprintf_ptr)(ASI::AddrOf(0x384170));
+    SFStringConcat = (SFStringConcat_ptr)(ASI::AddrOf(0x383d00));
+    SFStringSetLength = (SFStringSetLength_ptr)(ASI::AddrOf(0x3846d0));
+    SFStringFromWchar = (SFStringFromWchar_ptr)(ASI::AddrOf(0x383920));
+    SFStringDestructor = (SFStringDestructor_ptr)(ASI::AddrOf(0x3839c0));
+    SFStringCopy = (SFStringCopy_ptr)(ASI::AddrOf(0x383720));
+
+    GetItemInfo = (GetItemInfo_ptr)(ASI::AddrOf(0x269460));
+    GetWeaponType = (GetWeaponType_ptr)(ASI::AddrOf(0x269260));
+    GetDamageMultiplierPerLevel = (GetDamageMultiplierPerLevel_ptr)(ASI::AddrOf(0x26f170));
+    CGdMainGetAC34 = (CGdMainGetAC34_ptr)(ASI::AddrOf(0x277271));
+    AC34calculateWeaponSpeed = (AC34calculateWeaponSpeed_ptr)(ASI::AddrOf(0x3175c0));
+    getSpecialDesc = (getSpecialDesc_ptr)(ASI::AddrOf(0x619530));
+    getWeaponRangeDescription = (getWeaponRangeDescription_ptr)(ASI::AddrOf(0x5cf200));
+    GetWeaponEffects = (GetWeaponEffects_ptr)(ASI::AddrOf(0x2693b0));
+    GetResourceSpellLine = (GetResourceSpellLine_ptr)(ASI::AddrOf(0x26e2d0));
 
     log_info("| - Vanilla Fix Hooks");
     figure_statistic_hook_current_ac();

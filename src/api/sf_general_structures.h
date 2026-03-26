@@ -25,6 +25,7 @@ typedef struct SF_CGdFigure SF_CGdFigure;
 typedef struct SF_SpellEffectInfo SF_SpellEffectInfo;
 typedef struct SF_CGdResource SF_CGdResource;
 typedef struct SF_CGdPlayer SF_CGdPlayer;
+typedef struct CGdControllerClient CGdControllerClient;
 
 /* |-========== Enums ==========-| */
 
@@ -937,7 +938,7 @@ typedef struct __attribute__((packed))
 
 typedef struct __attribute__((packed))
 {
-    void *raw_data;
+    wchar_t *raw_data;
     uint32_t str_length;
     uint32_t unknown_length_var;
     char *data;
@@ -1025,6 +1026,31 @@ typedef struct __attribute__((packed))
     uint16_t unknown7;
     uint8_t swarm_size;
 } GdPlayer;
+
+typedef struct __attribute__((packed))
+{
+    void *UiDbProxy;
+    void *CGdMain;
+    CGdControllerClient *SF_CGdControllerClient;
+    void *AC95;
+    SF_CGdResource *SF_CGdResource;
+    SF_CGdBuilding *SF_CGdBuilding;
+    SF_CGdBuildingToolbox *SF_CGdBuildingToolbox;
+    SF_CGdPlayer *SF_CGdPlayer;
+    uint32_t ShowItemId;
+} AutoClass101;
+
+typedef struct __attribute__((packed))
+{
+    uint16_t id;
+    uint16_t min_dmg;
+    uint16_t max_dmg;
+    uint16_t min_rng;
+    uint16_t max_rng;
+    uint16_t wpn_spd;
+    uint16_t wpn_type;
+    uint16_t wpn_mat;
+} CGdResourceWeaponData;
 
 struct __attribute__((packed)) SF_CGdPlayer
 {
@@ -1188,12 +1214,12 @@ typedef struct __attribute__((packed))
     uint8_t padding[0x19a];
 } CGdControllerClientData;
 
-typedef struct __attribute__((packed))
+struct __attribute__((packed)) CGdControllerClient
 {
     void *vftable;
     uint32_t CGdControllerBaseData[0x220];
     CGdControllerClientData data;
-} CGdControllerClient;
+};
 
 typedef struct __attribute__((packed))
 {
@@ -1408,16 +1434,16 @@ extern CMnuLabel * __thiscall attach_new_label(CMnuLabel *label_ptr,
                                                uint8_t font_index,
                                                uint16_t x_pos, uint16_t y_pos,
                                                uint16_t width, uint16_t height);
-extern CMnuSmpButton* __thiscall attach_new_button(CMnuContainer *parent,
-                                         char *button_mesh_default,
-                                         char *button_mesh_pressed,
-                                         char *button_mesh_highlight,
-                                         char *button_mesh_disabled,
-                                         char *label_char, uint8_t font_index,
-                                         uint16_t x_pos, uint16_t y_pos,
-                                         uint16_t width, uint16_t height,
-                                         int button_index,
-                                         uint32_t callback_function_pointer);
+extern CMnuSmpButton * __thiscall attach_new_button(CMnuContainer *parent,
+                                                    char *button_mesh_default,
+                                                    char *button_mesh_pressed,
+                                                    char *button_mesh_highlight,
+                                                    char *button_mesh_disabled,
+                                                    char *label_char, uint8_t font_index,
+                                                    uint16_t x_pos, uint16_t y_pos,
+                                                    uint16_t width, uint16_t height,
+                                                    int button_index,
+                                                    uint32_t callback_function_pointer);
 
 extern SFSF_ModlistStruct mod_struct;
 

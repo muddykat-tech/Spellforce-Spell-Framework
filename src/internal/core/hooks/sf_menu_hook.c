@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <string.h>
 
+
 static menu_label_ptr s_initialize_menu_label;
 static initialize_menu_container_ptr s_initialize_menu_container;
 static original_menu_func_ptr s_menu_func;
@@ -67,6 +68,7 @@ fun_009cd1f0_ptr fun_009cd1f0;
 fun_009a1fd0_ptr fun_009a1fd0;
 fun_006f8c06_ptr fun_006f8c06;
 fun_00910de0_ptr fun_00910de0;
+
 
 void initialize_menu_data_hooks()
 {

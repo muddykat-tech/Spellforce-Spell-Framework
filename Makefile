@@ -2,8 +2,8 @@
 CC = g++
 RC = windres
 DLL_CFLAGS = -Wall -O1 -g -std=c++11 ${WARNS} -Iinclude -DADD_EXPORTS -fpermissive -m32
-DLL_LDFLAGS = -m32 -shared -static-libgcc -static-libstdc++ -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive -Wl,--subsystem,windows,--out-implib,lib/testmod.a
-FW_LDFLAGS = -m32 -shared -static-libgcc -static-libstdc++ -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive -Wl,--subsystem,windows,--out-implib,lib/sfsf.a
+DLL_LDFLAGS = -m32 -shared -lgcc -static-libgcc -static-libstdc++ -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive -Wl,--subsystem,windows,--out-implib,lib/testmod.a
+FW_LDFLAGS = -m32 -shared -lgcc -static-libgcc -static-libstdc++ -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive -Wl,--subsystem,windows,--out-implib,lib/sfsf.a
 
 # Object files for the new architecture
 HOOK_OBJ = obj/sf_hooks.o obj/sf_onhit_hook.o obj/sf_refresh_hook.o obj/sf_endspell_hook.o obj/sf_menu_hook.o obj/sf_spelleffect_hook.o obj/sf_subeffect_hook.o obj/sf_spelltype_hook.o obj/sf_damage_hook.o obj/sf_console_hook.o obj/sf_ai_hook.o obj/sf_utility_hooks.o obj/sf_vanilla_fix_hook.o obj/sf_building_done_hook.o obj/sf_building_entry_hook.o obj/sf_worker_logic_hook.o obj/sf_phys_effect_hook.o obj/sf_enchant_hook.o

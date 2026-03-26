@@ -20,7 +20,7 @@ typedef int (__thiscall *refresh_handler_ptr)(SF_CGdSpell *, uint16_t);
 typedef uint16_t (__thiscall *phys_effect_handler_ptr)(SF_CGDEffect *_this, uint16_t source, uint16_t target,
                                                        bool *isSpellDamage, uint16_t damage);
 
-typedef uint32_t (__thiscall *enchant_handler_ptr)(SF_CGdFigure *_this, uint16_t figure_id);
+typedef uint16_t (__thiscall *enchant_handler_ptr)(SF_CGdFigure *_this, uint16_t figure_id);
 
 typedef void (__thiscall *building_done_handler_ptr)(SF_CGdBuildingToolbox *_this,uint16_t building_index);
 typedef void (__thiscall *building_entry_handler_ptr)(SF_CGdFigureJobs *_this,uint16_t figure_id, uint16_t building_id);

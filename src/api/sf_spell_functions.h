@@ -20,6 +20,19 @@ typedef struct __attribute__((packed))
     uint16_t effect_range;
 } SF_CGdResourceSpell;
 
+typedef struct __attribute__ ((packed))
+{
+    uint16_t spellline_id;
+    uint16_t text_id;
+    uint8_t flags;
+    uint8_t magic_type;
+    uint8_t min_level;
+    uint8_t max_level;
+    uint8_t availability;
+    char ui_handle[64];
+    uint16_t description_id;
+} SF_CGdResourceSpellLine;
+
 // Declare the function pointers for the SpellFunctions group
 DECLARE_FUNCTION(void, setXData, SF_CGdSpell *_this, uint16_t spell_id,
                  uint8_t xdatakey, uint32_t value);
