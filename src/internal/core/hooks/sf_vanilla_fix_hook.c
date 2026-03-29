@@ -773,7 +773,7 @@ void prepareMPString(AutoClass101 *_this, SF_CGdFigure *figures, uint16_t figure
     uint32_t mp = figureAPI.getCurrentStat(figures, figure_id, MANA);
     SFprintf(&full_desc, L"%i/%i", mp, max_mp);
     GetColoredText(&full_desc, 280);
-    GetDescriptionText(_this->UiDbProxy, 4407, &description);
+    GetDescriptionText(_this->UiDbProxy, 4408, &description);
     SFprintf(out_string, L"%s: %s", description.raw_data, full_desc.raw_data);
 
     SFStringDestructor(&description);
@@ -1012,6 +1012,88 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
                 if (full_desc.str_length != 0)
                 {
                     SFStringConcat(&result_string, &full_desc);
+                }
+                if (both_hands)
+                {
+                    SF_String damage_string;
+                    SFStringConstructor(&damage_string);
+
+                    SFStringConcat(&result_string, &newline);
+                    SFStringSetLength(&full_desc, 0);
+                    if (both_hands)
+                    {
+                        SFprintf(&full_desc, L"%s: ", desc_str1.raw_data);
+                    }
+                    prepareDamageString(_this, SF_Figures, figure_id, &l_item_info, &damage_string);
+                    GetColoredText(&damage_string, 280);
+                    SFStringConcat(&full_desc, &damage_string);
+                    SFStringDestructor(&damage_string);
+
+                    GetDescriptionText(_this->UiDbProxy, 4803, &aspd_string);
+                    SFprintf(&description, L"%s, ", aspd_string.raw_data);
+
+                    uint8_t race = SF_Figures->figures[figure_id].race;
+                    uint32_t aspd = figureAPI.getCurrentStat(SF_Figures, figure_id, FIGHT_SPEED);
+                    uint32_t *AC34 = (uint32_t *)CGdMainGetAC34(_this->CGdMain);
+                    aspd = AC34calculateWeaponSpeed(AC34, aspd, race, l_item_id, dual_wield, (r_type == 12));
+
+                    double disp_aspd = static_cast<double>(aspd) / 1000.0;
+                    SFprintf(&description, description.raw_data, disp_aspd);
+                    SFStringConcat(&full_desc, &description);
+
+                    GetDescriptionText(_this->UiDbProxy, 4531, &description);
+                    GetColoredText(&description, 280);
+
+                    if (l_item_info.min_rng == l_item_info.max_rng)
+                    {
+                        SF_String temp_str;
+                        SFStringConstructor(&temp_str);
+
+                        if (l_item_info.min_rng != 0)
+                        {
+                            getSpecialDesc(&figure_name, 280);
+                            SFprintf(&temp_str, L"%s_%s%i%s%c ", description.raw_data, figure_name.raw_data,
+                                     l_item_info.min_rng, L"%d", L',');
+                            SFStringDestructor(&figure_name);
+                        }
+                        SFStringConcat(&full_desc, &temp_str);
+                        SFStringDestructor(&temp_str);
+                    }
+                    else
+                    {
+                        getWeaponRangeDescription(&full_desc, l_item_info.min_rng, l_item_info.max_rng, &description,
+                                                  0x01);
+                    }
+                    if (full_desc.str_length != 0)
+                    {
+                        SFStringConcat(&result_string, &full_desc);
+                    }
+
+                    SFStringDestructor(&full_desc);
+                    SFStringDestructor(&description);
+
+                    SFStringConstructor(&full_desc);
+                    SFStringConstructor(&description);
+
+                    uint16_t effects[4];
+                    GetWeaponEffects(_this->SF_CGdResource, effects, l_item_id);
+                    for (int i = 1; i < 4; i++)
+                    {
+                        SF_String effect_string;
+                        SFStringConstructor(&effect_string);
+
+                        if (effects[i] == 0)
+                        {
+                            break;
+                        }
+                        SFStringConcat(&full_desc, &newline);
+                        prepareEffectString(_this, SF_Figures, figure_id, effects[i], &effect_string);
+                        SFStringConcat(&full_desc, &effect_string);
+                    }
+                    if (full_desc.str_length != 0)
+                    {
+                        SFStringConcat(&result_string, &full_desc);
+                    }
                 }
             }
         }
