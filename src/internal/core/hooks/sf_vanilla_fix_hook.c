@@ -23,7 +23,8 @@ typedef SF_String *(__thiscall *AC95_get_figure_name_ptr)(void *AC95, SF_String 
 typedef void (__cdecl *GetColoredText_ptr)(SF_String *param_1, uint32_t param_2);
 typedef void (__thiscall *GetDescriptionText_ptr)(void *_this,uint32_t param_1,SF_String *name_buffer);
 typedef void (__thiscall *GetTextById_ptr)(void *_this,uint16_t text_id,SF_String *out_string);
-typedef SF_String *( *ExpandSpellDescription_ptr)(SF_String *param_1,SF_String *param_2,SF_CGdResourceSpell *param_3);
+typedef SF_String *(__stdcall *ExpandSpellDescription_ptr)(SF_String *out_string,SF_String *in_string,
+                                                           SF_CGdResourceSpell *param_3);
 
 
 typedef uint32_t (__cdecl *SFprintf_ptr)(SF_String *_this, const wchar_t *format, ...);
@@ -683,9 +684,9 @@ static SF_CGdFigure * getFigurePtr(void *CGdMain)
 void __thiscall SFStringConstructor(SF_String *_this)
 {
     _this->raw_data = nullptr;
-    _this->data = nullptr;
+    _this->char_data = nullptr;
     _this->str_length = 0x0;
-    _this->unknown_length_var = 0x0;
+    _this->str_length_char = 0x0;
 }
 
 SF_String * __thiscall SFStringConstructor_char(SF_String *_this, const char *char_string)
@@ -706,6 +707,127 @@ SF_String * __thiscall SFStringConstructor_char(SF_String *_this, const char *ch
     return _this;
 }
 
+void __thiscall prepareDamageString(AutoClass101 *_this, SF_CGdFigure *figures, uint16_t figure_id,
+                                    CGdResourceWeaponData *weapon_data, SF_String *out_string)
+{
+    uint32_t lvl_mult = 0;
+    SF_String description;
+    SFStringConstructor(&description);
+
+    //TASK_MAIN_CHAR or TASK_HERO
+    if ((figures->figures[figure_id].current_job.task == 0xa) ||
+        (figures->figures[figure_id].current_job.task == 0x9))
+    {
+        lvl_mult = 100;
+    }
+    else
+    {
+        lvl_mult = GetDamageMultiplierPerLevel(_this->SF_CGdResource, figures->figures[figure_id].level);
+    }
+    uint32_t str_mult = figureAPI.getCurrentStat(figures, figure_id, STRENGTH);
+    str_mult *= 3 * (figures->figures[figure_id].level + 9);
+    GetDescriptionText(_this->UiDbProxy, 4531, &description);
+    if (weapon_data->min_dmg == weapon_data->max_dmg)
+    {
+        uint32_t damage = (weapon_data->max_dmg * str_mult * lvl_mult + 50000) / 100000;
+        SFprintf(out_string,L"%s %i ", description.raw_data, damage);
+    }
+    else
+    {
+        uint32_t max_damage = (weapon_data->max_dmg * str_mult * lvl_mult + 50000) / 100000;
+        uint32_t min_damage = (weapon_data->min_dmg * str_mult * lvl_mult + 50000) / 100000;
+        SFprintf(out_string,L"%s %i-%i ", description.raw_data, min_damage,max_damage);
+    }
+    SFStringDestructor(&description);
+}
+
+
+void prepareHPString(AutoClass101 *_this, SF_CGdFigure *figures, uint16_t figure_id, SF_String *out_string)
+{
+    SF_String full_desc;
+    SF_String description;
+
+    SFStringConstructor(&full_desc);
+    SFStringConstructor(&description);
+
+    uint32_t max_hp = figureAPI.getMaxStat(figures, figure_id, HEALTH);
+    uint32_t hp = figureAPI.getCurrentStat(figures, figure_id, HEALTH);
+    SFprintf(&full_desc, L"%i/%i", hp, max_hp);
+    GetColoredText(&full_desc, 280);
+    GetDescriptionText(_this->UiDbProxy, 4407, &description);
+    SFprintf(out_string, L"%s: %s", description.raw_data, full_desc.raw_data);
+
+    SFStringDestructor(&description);
+    SFStringDestructor(&full_desc);
+}
+
+void prepareMPString(AutoClass101 *_this, SF_CGdFigure *figures, uint16_t figure_id, SF_String *out_string)
+{
+    SF_String full_desc;
+    SF_String description;
+
+    SFStringConstructor(&full_desc);
+    SFStringConstructor(&description);
+
+    uint32_t max_mp = figureAPI.getMaxStat(figures, figure_id, MANA);
+    uint32_t mp = figureAPI.getCurrentStat(figures, figure_id, MANA);
+    SFprintf(&full_desc, L"%i/%i", mp, max_mp);
+    GetColoredText(&full_desc, 280);
+    GetDescriptionText(_this->UiDbProxy, 4407, &description);
+    SFprintf(out_string, L"%s: %s", description.raw_data, full_desc.raw_data);
+
+    SFStringDestructor(&description);
+    SFStringDestructor(&full_desc);
+
+}
+
+void prepareEffectString(AutoClass101 *_this, SF_CGdFigure *figures, uint16_t figure_id, uint16_t effect_id,
+                         SF_String *out_string)
+{
+    SF_String desc_str1;
+    SF_String desc_str2;
+    SF_String description;
+    SF_String newline;
+    SF_String chance_string;
+
+    SFStringConstructor(&chance_string);
+    SFStringConstructor(&desc_str1);
+    SFStringConstructor(&desc_str2);
+    SFStringConstructor(&description);
+    SFStringFromWchar(&newline, L'\n', 1);
+
+    SF_CGdResourceSpell spell_data;
+    spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, effect_id);
+    SF_CGdResourceSpellLine spell_line_data;
+    GetResourceSpellLine(_this->SF_CGdResource, spell_data.spell_line_id, &spell_line_data);
+    if (spell_data.spell_line_id != 0 && spell_line_data.description_id != 0)
+    {
+        GetDescriptionText(_this->UiDbProxy, 6550, &desc_str1);
+        SFprintf(out_string,L"%%c%x%s:%%d ",0xc0d0ff,desc_str1.raw_data);
+        GetTextById(_this->UiDbProxy, spell_line_data.text_id, &description);
+        GetColoredText(&description, 278);
+        SFStringConcat(out_string, &description);
+        enchant_handler_ptr handler = get_enchant_handler(spell_data.spell_line_id);
+        uint16_t chance = handler(figures, figure_id);
+        SFprintf(&chance_string,L" (%.1f%%%%)", (double)((float)chance / 100.0));
+        SFStringConcat(out_string, &chance_string);
+
+        GetDescriptionText(_this->UiDbProxy, spell_line_data.description_id, &desc_str2);
+        SF_String temp_str;
+        ExpandSpellDescription(&temp_str, &desc_str2, &spell_data);
+        SFStringConcat(&newline, &temp_str);
+        SFStringConcat(out_string, &newline);
+
+        SFStringDestructor(&temp_str);
+    }
+    SFStringDestructor(&desc_str1);
+    SFStringDestructor(&desc_str2);
+
+    SFStringDestructor(&description);
+    SFStringDestructor(&chance_string);
+    SFStringDestructor(&newline);
+}
+
 SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *param_1, uint16_t figure_id,
                                              uint32_t param3,
                                              uint32_t param4, uint32_t param5)
@@ -713,15 +835,15 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
     SF_String figure_name;
     SF_String full_desc;
     SF_String description;
-    SF_String damage_string;
+
     SF_String result_string;
     SF_String newline;
     SF_String aspd_string;
-    SFStringConstructor(&figure_name);
+
     SFStringConstructor(&full_desc);
     SFStringConstructor(&description);
-    SFStringConstructor(&damage_string);
     SFStringConstructor(&aspd_string);
+    SFStringConstructor(&figure_name);
 
     SFStringConstructor_char(&result_string, "");
     SFStringFromWchar(&newline, L'\n', 1);
@@ -746,30 +868,24 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
         SFStringConcat(&result_string, &full_desc);
         if (param3 != 0)
         {
-
-            SFStringConcat(&result_string, &newline); //concatenate newline
-            uint32_t max_hp = figureAPI.getMaxStat(SF_Figures, figure_id, HEALTH);
-            uint32_t hp = figureAPI.getCurrentStat(SF_Figures, figure_id, HEALTH);
-            SFprintf(&full_desc, L"%i/%i", hp, max_hp);
-            GetColoredText(&full_desc, 280);
-            GetDescriptionText(_this->UiDbProxy, 4407, &description);
-            SFprintf(&figure_name, L"%s: %s", description.raw_data, full_desc.raw_data);
-            SFStringConcat(&result_string, &figure_name);
+            SFStringConcat(&result_string, &newline);             //concatenate newline
+            SF_String hp_string;
+            SFStringConstructor(&hp_string);
+            prepareHPString(_this, SF_Figures, figure_id, &hp_string);
+            SFStringConcat(&result_string, &hp_string);
+            SFStringDestructor(&hp_string);
         }
         if (param4 != 0)
         {
-            SFStringConcat(&result_string, &newline);  //concatenate newline
-            uint32_t max_mp = figureAPI.getMaxStat(SF_Figures, figure_id, MANA);
-            uint32_t mp = figureAPI.getCurrentStat(SF_Figures, figure_id, MANA);
-            SFprintf(&full_desc, L"%i/%i", mp, max_mp);
-            GetColoredText(&full_desc, 280);
-            GetDescriptionText(_this->UiDbProxy, 4408, &description);
-            SFprintf(&figure_name, L"%s: %s", description.raw_data, full_desc.raw_data);
-            SFStringConcat(&result_string, &figure_name);
+            SF_String mp_string;
+            SFStringConstructor(&mp_string);
+            SFStringConcat(&result_string, &newline);              //concatenate newline
+            prepareMPString(_this, SF_Figures, figure_id, &mp_string);
+            SFStringConcat(&result_string, &mp_string);
+            SFStringDestructor(&mp_string);
         }
         if (param5 != 0)
         {
-            uint32_t lvl_mult = 0;
             bool both_hands = true;
             uint32_t dual_wield = 0;
             CGdResourceWeaponData l_item_info;
@@ -780,7 +896,6 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
 
             SFStringConstructor(&desc_str1);
             SFStringConstructor(&desc_str2);
-
 
             uint8_t r_type;
             uint8_t l_type;
@@ -818,39 +933,20 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
             }
             if (active_hand_info != nullptr)
             {
+                SF_String damage_string;
+                SFStringConstructor(&damage_string);
+
                 SFStringConcat(&result_string, &newline);
                 SFStringSetLength(&full_desc, 0);
                 if (both_hands)
                 {
                     SFprintf(&full_desc, L"%s: ", desc_str2.raw_data);
                 }
-                //TASK_MAIN_CHAR or TASK_HERO
-                if ((SF_Figures->figures[figure_id].current_job.task == 0xa) ||
-                    (SF_Figures->figures[figure_id].current_job.task == 0x9))
-                {
-                    lvl_mult = 100;
-                }
-                else
-                {
-                    lvl_mult = GetDamageMultiplierPerLevel(_this->SF_CGdResource,
-                                                           SF_Figures->figures[figure_id].level);
-                }
-                uint32_t str_mult = figureAPI.getCurrentStat(SF_Figures, figure_id, STRENGTH);
-                str_mult *= 3 * (SF_Figures->figures[figure_id].level + 9);
-                GetDescriptionText(_this->UiDbProxy, 4531, &description);
-                if (active_hand_info->min_dmg == active_hand_info->max_dmg)
-                {
-                    uint32_t damage = (active_hand_info->max_dmg * str_mult * lvl_mult + 50000) / 100000;
-                    SFprintf(&damage_string,L"%s %i ", description.raw_data, damage);
-                }
-                else
-                {
-                    uint32_t max_damage = (active_hand_info->max_dmg * str_mult * lvl_mult + 50000) / 100000;
-                    uint32_t min_damage = (active_hand_info->min_dmg * str_mult * lvl_mult + 50000) / 100000;
-                    SFprintf(&damage_string,L"%s %i-%i ", description.raw_data, min_damage,max_damage);
-                }
+                prepareDamageString(_this, SF_Figures, figure_id, active_hand_info, &damage_string);
                 GetColoredText(&damage_string, 280);
                 SFStringConcat(&full_desc, &damage_string);
+                SFStringDestructor(&damage_string);
+
 
                 GetDescriptionText(_this->UiDbProxy, 4803, &aspd_string);
                 SFprintf(&description, L"%s, ", aspd_string.raw_data);
@@ -866,8 +962,7 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
 
                 GetDescriptionText(_this->UiDbProxy, 4532, &description);
                 GetColoredText(&description, 280);
-                //Stucture is SORTA the same, but some fields are re-ordered
-                //So, wpn_spd becomes min_rng
+
                 if (active_hand_info->min_rng ==  active_hand_info->max_rng)
                 {
                     SF_String temp_str;
@@ -885,7 +980,7 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
                 }
                 else
                 {
-                    getWeaponRangeDescription(&full_desc, active_hand_info->max_rng, active_hand_info->wpn_spd,
+                    getWeaponRangeDescription(&full_desc, active_hand_info->min_rng, active_hand_info->max_rng,
                                               &description, 0x01);
                 }
                 if (full_desc.str_length != 0)
@@ -894,48 +989,24 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
                 }
 
                 SFStringDestructor(&full_desc);
-                SFStringDestructor(&damage_string);
                 SFStringDestructor(&description);
 
                 SFStringConstructor(&full_desc);
-                SFStringConstructor(&damage_string);
                 SFStringConstructor(&description);
+
                 uint16_t effects[4];
                 GetWeaponEffects(_this->SF_CGdResource, effects, r_item_id);
                 for (int i = 1; i < 4; i++)
                 {
                     SF_String effect_string;
                     SFStringConstructor(&effect_string);
-                    SF_String chance_string;
-                    SFStringConstructor(&chance_string);
+
                     if (effects[i] == 0)
                     {
                         break;
                     }
-                    SF_CGdResourceSpell spell_data;
-                    spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, effects[i]);
-                    SF_CGdResourceSpellLine spell_line_data;
-                    GetResourceSpellLine(_this->SF_CGdResource, spell_data.spell_line_id, &spell_line_data);
-                    if (spell_data.spell_line_id != 0 && spell_line_data.description_id != 0)
-                    {
-                        SFStringConcat(&full_desc, &newline);
-                        GetDescriptionText(_this->UiDbProxy, 6550, &damage_string);
-                        SFprintf(&effect_string,L"%%c%x%s:%%d ",0xc0d0ff,damage_string.raw_data);
-                        GetTextById(_this->UiDbProxy, spell_line_data.text_id, &description);
-                        GetColoredText(&description, 278);
-                        SFStringConcat(&effect_string, &description);
-                        enchant_handler_ptr handler = get_enchant_handler(spell_data.spell_line_id);
-                        uint16_t chance = handler(SF_Figures, figure_id);
-                        SFprintf(&chance_string,L" (%.1f%%%%)", (double)((float)chance / 100.0));
-                        SFStringConcat(&effect_string, &chance_string);
-                        GetDescriptionText(_this->UiDbProxy, spell_line_data.description_id, &damage_string);
-                        SF_String temp_str;
-                        ExpandSpellDescription(&temp_str, &damage_string, &spell_data);
-                        SFStringCopy(&description, &temp_str);
-                        SFStringDestructor(&temp_str);
-                        SFStringConcat(&effect_string, &newline);
-                        SFStringConcat(&effect_string, &description);
-                    }
+                    SFStringConcat(&full_desc, &newline);
+                    prepareEffectString(_this, SF_Figures, figure_id, effects[i], &effect_string);
                     SFStringConcat(&full_desc, &effect_string);
                 }
                 if (full_desc.str_length != 0)
@@ -949,7 +1020,6 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
     SFStringDestructor(&result_string);
     SFStringDestructor(&figure_name);
     SFStringDestructor(&full_desc);
-    SFStringDestructor(&damage_string);
     SFStringDestructor(&description);
     SFStringDestructor(&newline);
     return param_1;

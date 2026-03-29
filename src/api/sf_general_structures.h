@@ -940,8 +940,8 @@ typedef struct __attribute__((packed))
 {
     wchar_t *raw_data;
     uint32_t str_length;
-    uint32_t unknown_length_var;
-    char *data;
+    uint32_t str_length_char;
+    char *char_data;
 } SF_String;
 
 typedef struct __attribute__((packed))
