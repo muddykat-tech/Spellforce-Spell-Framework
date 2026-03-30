@@ -183,20 +183,20 @@ sf_menu_hook(uint32_t _CAppMenu)
                                                  (uint32_t)&show_mod_list);
 
 
-    char campaign_label[32]       = "Custom Campaign";
-    open_campaign_screen = uiAPI.attachNewButton(container, button_default,
-                                                 button_pressed,
-                                                 button_highlight,
-                                                 button_disabled,
-                                                 campaign_label,
-                                                 BUTTON_FONT_INDEX,
-                                                 BUTTON_X,
-                                                 32,
-                                                 BUTTON_WIDTH,
-                                                 BUTTON_HEIGHT,
-                                                 16,
-                                                 (uint32_t)&show_campaign_screen);
-
+    /*  char campaign_label[32]       = "Custom Campaign";
+       open_campaign_screen = uiAPI.attachNewButton(container, button_default,
+                                                   button_pressed,
+                                                   button_highlight,
+                                                   button_disabled,
+                                                   campaign_label,
+                                                   BUTTON_FONT_INDEX,
+                                                   BUTTON_X,
+                                                   32,
+                                                   BUTTON_WIDTH,
+                                                   BUTTON_HEIGHT,
+                                                   16,
+                                                   (uint32_t)&show_campaign_screen);
+     */
     s_menu_func(_CAppMenu);
 }
 

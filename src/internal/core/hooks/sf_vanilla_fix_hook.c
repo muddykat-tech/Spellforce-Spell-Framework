@@ -23,8 +23,8 @@ typedef SF_String *(__thiscall *AC95_get_figure_name_ptr)(void *AC95, SF_String 
 typedef void (__cdecl *GetColoredText_ptr)(SF_String *param_1, uint32_t param_2);
 typedef void (__thiscall *GetDescriptionText_ptr)(void *_this,uint32_t param_1,SF_String *name_buffer);
 typedef void (__thiscall *GetTextById_ptr)(void *_this,uint16_t text_id,SF_String *out_string);
-typedef SF_String *(__stdcall *ExpandSpellDescription_ptr)(SF_String *out_string,SF_String *in_string,
-                                                           SF_CGdResourceSpell *param_3);
+typedef SF_String *(__thiscall *ExpandSpellDescription_ptr)(AutoClass101 *_this, SF_String *out_string,
+                                                            SF_String *in_string, SF_CGdResourceSpell *param_3);
 
 
 typedef uint32_t (__cdecl *SFprintf_ptr)(SF_String *_this, const wchar_t *format, ...);
@@ -778,7 +778,74 @@ void prepareMPString(AutoClass101 *_this, SF_CGdFigure *figures, uint16_t figure
 
     SFStringDestructor(&description);
     SFStringDestructor(&full_desc);
+}
 
+void prepareSpellsHeaderString(AutoClass101 *_this, SF_String *out_string)
+{
+    SF_String header_string;
+    SF_String desc_str1;
+    SF_String desc_str2;
+    SF_String newline;
+
+    SFStringFromWchar(&header_string, L'\n', 1);
+    SFStringFromWchar(&newline, L'\n', 1);
+    SFStringConstructor(&desc_str1);
+    SFStringConstructor(&desc_str2);
+
+    GetDescriptionText(_this->UiDbProxy, 4802, &desc_str1);
+    SFprintf(&desc_str2, L"%s ", desc_str1);
+    SFStringConcat(&header_string, &desc_str2);
+    SFprintf(&header_string, L"%%c%x%s%%d",0xc0d0ff,header_string.raw_data);
+//    SFStringConcat(&header_string, &newline);
+
+    SFStringCopy(out_string, &header_string);
+
+    SFStringDestructor(&newline);
+    SFStringDestructor(&header_string);
+    SFStringDestructor(&desc_str1);
+    SFStringDestructor(&desc_str2);
+}
+
+void prepareSpellString(AutoClass101 *_this, SF_String *out_string, uint16_t spell_id)
+{
+    SF_CGdResourceSpell spell_data;
+    SF_CGdResourceSpellLine spell_line_data;
+
+    SF_String spell_string;
+    SF_String newline;
+    SF_String desc_str1;
+    SF_String desc_str2;
+    SF_String full_desc;
+
+    SFStringConstructor(&desc_str1);
+    SFStringConstructor(&desc_str2);
+    SFStringFromWchar(&spell_string, L'\n', 1);
+    SFStringFromWchar(&newline, L'\n', 1);
+
+    spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, spell_id);
+    if ((GetResourceSpellLine(_this->SF_CGdResource, spell_data.spell_line_id,
+                              &spell_line_data) != 0) && (spell_line_data.description_id != 0))
+    {
+        GetTextById(_this->UiDbProxy, spell_line_data.text_id, &desc_str1);
+        GetColoredText(&desc_str1, 278);
+        SFStringConcat(&spell_string, &desc_str1);
+        SFStringConcat(&spell_string, &newline);
+
+        GetDescriptionText(_this->UiDbProxy, spell_line_data.description_id, &desc_str2);
+        ExpandSpellDescription(_this,&full_desc, &desc_str2, &spell_data);
+        SFStringConcat(&spell_string, &full_desc);
+    }
+    if (spell_string.str_length > 1)
+    {
+        SFStringCopy(out_string, &spell_string);
+    }
+
+    SFStringDestructor(&desc_str1);
+    SFStringDestructor(&desc_str2);
+
+    SFStringDestructor(&full_desc);
+    SFStringDestructor(&spell_string);
+    SFStringDestructor(&newline);
 }
 
 void prepareEffectString(AutoClass101 *_this, SF_CGdFigure *figures, uint16_t figure_id, uint16_t effect_id,
@@ -814,7 +881,7 @@ void prepareEffectString(AutoClass101 *_this, SF_CGdFigure *figures, uint16_t fi
 
         GetDescriptionText(_this->UiDbProxy, spell_line_data.description_id, &desc_str2);
         SF_String temp_str;
-        ExpandSpellDescription(&temp_str, &desc_str2, &spell_data);
+        ExpandSpellDescription(_this, &temp_str, &desc_str2, &spell_data);
         SFStringConcat(&newline, &temp_str);
         SFStringConcat(out_string, &newline);
 
@@ -1005,8 +1072,17 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
                     {
                         break;
                     }
+                    uint16_t effect_id = effects[i];
+                    if ((SF_Figures->figures[figure_id].race != 0) && (SF_Figures->figures[figure_id].race < 7))
+                    {
+                        if (SF_Figures->figures[figure_id].owner != 0)
+                        {
+                            effect_id = spellAPI.getLeveledSpellID(_this->SF_CGdResource, effect_id,
+                                                                   SF_Figures->figures[figure_id].level);
+                        }
+                    }
                     SFStringConcat(&full_desc, &newline);
-                    prepareEffectString(_this, SF_Figures, figure_id, effects[i], &effect_string);
+                    prepareEffectString(_this, SF_Figures, figure_id, effect_id, &effect_string);
                     SFStringConcat(&full_desc, &effect_string);
                 }
                 if (full_desc.str_length != 0)
@@ -1041,7 +1117,7 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
                     SFprintf(&description, description.raw_data, disp_aspd);
                     SFStringConcat(&full_desc, &description);
 
-                    GetDescriptionText(_this->UiDbProxy, 4531, &description);
+                    GetDescriptionText(_this->UiDbProxy, 4532, &description);
                     GetColoredText(&description, 280);
 
                     if (l_item_info.min_rng == l_item_info.max_rng)
@@ -1086,8 +1162,17 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
                         {
                             break;
                         }
+                        uint16_t effect_id = effects[i];
+                        if ((SF_Figures->figures[figure_id].race != 0) && (SF_Figures->figures[figure_id].race < 7))
+                        {
+                            if (SF_Figures->figures[figure_id].owner != 0)
+                            {
+                                effect_id = spellAPI.getLeveledSpellID(_this->SF_CGdResource, effect_id,
+                                                                       SF_Figures->figures[figure_id].level);
+                            }
+                        }
                         SFStringConcat(&full_desc, &newline);
-                        prepareEffectString(_this, SF_Figures, figure_id, effects[i], &effect_string);
+                        prepareEffectString(_this, SF_Figures, figure_id, effect_id, &effect_string);
                         SFStringConcat(&full_desc, &effect_string);
                     }
                     if (full_desc.str_length != 0)
@@ -1095,6 +1180,59 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
                         SFStringConcat(&result_string, &full_desc);
                     }
                 }
+            }
+            uint8_t spells_count = 0;
+            for (uint8_t i = 0; i < 15; i++)
+            {
+                SF_SGtFigureAction action;
+                memset(&action, 0, sizeof(SF_SGtFigureAction));
+                aiAPI.getFigureAction(SF_Figures, &action, figure_id, i);
+                if (action.type == 0)
+                {
+                    continue;
+                }
+                if ((action.type < 9999) && (action.type != 241))
+                {
+                    spells_count++;
+                }
+            }
+            if (spells_count != 0)
+            {
+                SF_String header_string;
+                SFStringConstructor(&header_string);
+                prepareSpellsHeaderString(_this, &header_string);
+                for (int i = 0; i < 15; i++)
+                {
+                    SF_SGtFigureAction action;
+                    memset(&action, 0, sizeof(SF_SGtFigureAction));
+                    aiAPI.getFigureAction(SF_Figures, &action, figure_id, i);
+                    if (action.type == 0)
+                    {
+                        continue;
+                    }
+                    if ((action.type < 9999) && (action.type != 241))
+                    {
+                        SF_String spell_string;
+                        uint16_t spell_id = action.subtype;
+                        if ((SF_Figures->figures[figure_id].race != 0) && (SF_Figures->figures[figure_id].race < 7))
+                        {
+                            if (SF_Figures->figures[figure_id].owner != 0)
+                            {
+                                spell_id = spellAPI.getLeveledSpellID(_this->SF_CGdResource, spell_id,
+                                                                      SF_Figures->figures[figure_id].level);
+                            }
+                        }
+                        SFStringConstructor(&spell_string);
+                        prepareSpellString(_this, &spell_string, spell_id);
+                        if (spell_string.str_length != 0)
+                        {
+                            SFStringConcat(&header_string, &spell_string);
+                        }
+                        SFStringDestructor(&spell_string);
+                    }
+                }
+                SFStringConcat(&result_string, &header_string);
+                SFStringDestructor(&header_string);
             }
         }
     }
