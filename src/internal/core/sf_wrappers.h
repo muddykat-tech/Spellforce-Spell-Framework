@@ -29,7 +29,7 @@ bool __thiscall isSiegeUnit (SF_CGdFigure *_this, uint16_t figure_index);
 
 extern bool __thiscall hasAuraActive(SF_CGdFigureToolbox *_this, uint16_t figure_id);
 extern bool __thiscall isActionMelee(SF_SGtFigureAction *_this);
-extern bool __thiscall hasSpellTag(uint16_t spell_id, SpellTag tag);
+extern bool __thiscall hasSpellTag(uint16_t spell_id, SpellTag tag) __attribute__((optimize("-O0")));
 extern void __thiscall setupFigureIterator(CGdFigureIterator *iterator, SF_CGdSpell *spell);
 extern void __thiscall disposeFigureIterator(CGdFigureIterator *iterator);
 bool __thiscall hasBuildingTag(uint8_t building_type, BuildingTag tag)  __attribute__((optimize("-O0")));

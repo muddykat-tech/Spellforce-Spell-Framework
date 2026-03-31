@@ -35,7 +35,7 @@ bool __thiscall is_domination_spellline(SF_CGdSpell *_this,
 }
 
 
-bool __thiscall is_summon_spell(SF_CGdSpell *_this, GdSpellLine spell_line)
+bool __thiscall is_summon_spellline(SF_CGdSpell *_this, GdSpellLine spell_line)
 {
     return hasSpellTag(spell_line, SpellTag::SUMMON_SPELL);
 }
