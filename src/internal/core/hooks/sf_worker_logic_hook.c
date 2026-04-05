@@ -66,12 +66,11 @@ typedef void (__thiscall *doArtisanAnimation_ptr)(SF_CGdFigureJobs *_this, uint1
 typedef uint32_t (__thiscall *addResource_ptr)(SF_CGdPlayer *_this, uint16_t player_id, bool isLight,
                                                uint8_t resource_type,
                                                uint32_t amount);
-typedef void *(__cdecl *op_new_ptr)(uint32_t size);
-typedef uint32_t *(__thiscall *AC65_init_ptr)(void *autoclass65);
 
 typedef void (__thiscall *AC65_FUN_0074caf0_ptr)(void *autoclass65, uint16_t owner, uint16_t resource, uint16_t amount);
 typedef void (__thiscall *AC30_FUN_006c3880_ptr)(void *autoclass30, uint16_t figure_id, uint8_t resource,
                                                  uint16_t amount);
+typedef uint32_t *(*getGlobalAC65_ptr)(void);
 
 
 
@@ -80,8 +79,7 @@ getObjectQueue_ptr getObjectQueue;
 addToObjectQueue_ptr addToObjectQueue;
 doArtisanAnimation_ptr doArtisanAnimation;
 addResource_ptr addResource;
-extern op_new_ptr op_new;
-extern AC65_init_ptr l_AC65_init;
+extern getGlobalAC65_ptr getGlobalAC65;
 AC65_FUN_0074caf0_ptr AC65_FUN_0074caf0;
 AC30_FUN_006c3880_ptr AC30_FUN_006c3880;
 
@@ -94,8 +92,6 @@ void initialize_worker_logic_data_hooks()
     doArtisanAnimation = (doArtisanAnimation_ptr)ASI::AddrOf(0x2f0530);
     addResource = (addResource_ptr)ASI::AddrOf(0x2a2a80);
 
-//  l_AC65_init = (AC65_init_ptr)ASI::AddrOf(0x34c810);
-//  op_new = (op_new_ptr)ASI::AddrOf(0x675A9D);
     AC65_FUN_0074caf0 = (AC65_FUN_0074caf0_ptr) (ASI::AddrOf(0x34caf0));
     AC30_FUN_006c3880 = (AC30_FUN_006c3880_ptr) (ASI::AddrOf(0x2c3880));
 
@@ -350,17 +346,8 @@ bool __thiscall onStoneMinerFinishJob(SF_CGdFigureJobs *_this, uint16_t figure_i
 void __thiscall update_owner_resources(SF_CGdFigureJobs *_this, uint16_t owner, uint16_t figure_id,
                                        uint8_t resource_type, uint8_t amount)
 {
-    uint32_t **object_ptr = (uint32_t **)ASI::AddrOf(0x949fec);
-    if (*object_ptr == 0)
-    {
-
-        uint32_t *temp_alloc = (uint32_t *)op_new(8);
-        if (temp_alloc != 0)
-        {
-            *object_ptr = l_AC65_init(temp_alloc);
-        }
-    }
-    AC65_FUN_0074caf0(*object_ptr, owner, 0, amount);
+    uint32_t *AC65 = getGlobalAC65();
+    AC65_FUN_0074caf0(AC65, owner, 0, amount);
     AC30_FUN_006c3880(_this->AutoClass30, figure_id, resource_type, amount);
 }
 

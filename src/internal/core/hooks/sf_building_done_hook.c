@@ -11,6 +11,7 @@ typedef uint16_t (__thiscall *XDataListZero_ptr)(void *SF_CGdXDataList, uint16_t
 typedef void (__thiscall *fun006c3ca0_ptr)(void *autoclass30, uint16_t param_1, uint16_t owner,
                                            SF_CGdTargetData *source, SF_CGdTargetData *target);
 typedef void *(__cdecl *op_new_ptr)(uint32_t size);
+typedef uint32_t *(*getGlobalAC65_ptr)(void);
 
 AC65_init_ptr l_AC65_init;
 fun006c3650_ptr l_fun006c3650;
@@ -19,6 +20,7 @@ XDataListZero_ptr XDataListZero;
 XDataListExists_ptr XDataListExists;
 op_new_ptr op_new;
 fun006c3ca0_ptr fun006c3ca0;
+getGlobalAC65_ptr getGlobalAC65;
 
 void initialize_building_done_hooks()
 {
@@ -29,20 +31,13 @@ void initialize_building_done_hooks()
     XDataListExists = (XDataListExists_ptr) ASI::AddrOf(0x3549d0);
     op_new = (op_new_ptr)ASI::AddrOf(0x675A9D);
     fun006c3ca0 = (fun006c3ca0_ptr)ASI::AddrOf(0x2c3ca0);
+    getGlobalAC65 = (getGlobalAC65_ptr)(ASI::AddrOf(0x277330));
+
 }
 void include_owner_on_map(uint16_t owner)
 {
-    uint32_t **object_ptr = (uint32_t **)ASI::AddrOf(0x949fec);
-    if (*object_ptr == 0)
-    {
-
-        uint32_t *temp_alloc = (uint32_t *)op_new(8);
-        if (temp_alloc != 0)
-        {
-            *object_ptr = l_AC65_init(temp_alloc);
-        }
-    }
-    l_fun0074ca30(*object_ptr, owner, 1);
+    uint32_t *AC65 = getGlobalAC65();
+    l_fun0074ca30(AC65, owner, 1);
 }
 
 void __thiscall sf_building_done_hook(SF_CGdBuildingToolbox *_this, uint16_t building_index)
