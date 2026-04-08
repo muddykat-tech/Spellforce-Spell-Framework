@@ -355,8 +355,7 @@ void __attribute__((thiscall)) sf_click_vertical_button(SF_CUiMain *_this,
         data.entity_type = entity_type;
         data.position.X = 0;
         data.position.Y = 0;
-        uint32_t uVar3 = fun_00a2ald0(&ac113,
-                                      _this->CUiMain_data.CGdControllerClient);
+        uint32_t uVar3 = fun_00a2ald0(&ac113, _this->CUiMain_data.CGdControllerClient);
         fun_006a0140(_this->CUiMain_data.CGdControllerClient, uVar3, &data, 0,
                      0);
         if (ac113.first != 0)
@@ -367,7 +366,8 @@ void __attribute__((thiscall)) sf_click_vertical_button(SF_CUiMain *_this,
     }
     if ((actionID != 0) && (actionID < 10000))
     {
-        if (spellAPI.hasSpellTag(actionID, SpellTag::AURA_SPELL))
+        if (spellAPI.hasSpellTag(actionID, SpellTag::AURA_SPELL) ||
+            spellAPI.hasSpellTag(actionID, SpellTag::SIEGE_AURA_SPELL))
         {
             if (hasThisAuraRunning(_this->CUiMain_data.CGdFigureToolBox, subActionID, figure_id))
             {
@@ -451,7 +451,8 @@ void __attribute__((thiscall)) sf_click_horizontal_button(SF_CUiMain *_this,
     data.position.X = 0;
     data.position.Y = 0;
 
-    if (!spellAPI.hasSpellTag(spell_data.spell_line_id, SpellTag::AURA_SPELL))
+    if ((!spellAPI.hasSpellTag(spell_data.spell_line_id, SpellTag::AURA_SPELL)) &&
+        (!spellAPI.hasSpellTag(spell_data.spell_line_id, SpellTag::SIEGE_AURA_SPELL)))
     {
         if (!getSpellLineIsTargetSelf(_this->CUiMain_data.CGdResource, spell_data.spell_line_id))
         {

@@ -385,13 +385,13 @@ static void initialize_subeffect_add_hook()
     *(unsigned char *)(ASI::AddrOf(0x2de3b7)) = 0xE8; // CALL instruction
     *(int *)(ASI::AddrOf(0x2de3b8)) = (int)(&sf_subeffect_hook) - ASI::AddrOf(0x2de3bc);
     ASI::EndRewrite(add_spell_mreg);
-
+/*
     ASI::MemoryRegion add_spell_mreg2 (ASI::AddrOf(0x2de3ed), 5);
     ASI::BeginRewrite(add_spell_mreg2);
-    *(unsigned char *)(ASI::AddrOf(0x2de3ed)) = 0xE8; // CALL instruction
-    *(int *)(ASI::AddrOf(0x2de3ee)) = (int)(&sf_phys_effect_hook) - ASI::AddrOf(0x2de3f2);
+ *(unsigned char *)(ASI::AddrOf(0x2de3ed)) = 0xE8; // CALL instruction
+ *(int *)(ASI::AddrOf(0x2de3ee)) = (int)(&sf_phys_effect_hook) - ASI::AddrOf(0x2de3f2);
     ASI::EndRewrite(add_spell_mreg2);
-
+ */
 }
 
 static void initialize_spellend_hook()
@@ -520,8 +520,7 @@ static void initialize_menuload_hook()
     ASI::MemoryRegion menu_load_mreg (ASI::AddrOf(0x182794), 5);
     ASI::BeginRewrite(menu_load_mreg);
     *(unsigned char *)(ASI::AddrOf(0x182794)) = 0xE9; // jmp instruction
-    *(int *)(ASI::AddrOf(0x182795)) = (int)(&menuload_hook_beta) -
-                                      ASI::AddrOf(0x182799);
+    *(int *)(ASI::AddrOf(0x182795)) = (int)(&menuload_hook_beta) - ASI::AddrOf(0x182799);
     ASI::EndRewrite(menu_load_mreg);
 }
 
@@ -672,15 +671,13 @@ static void initialize_spell_buttons_hooks()
     ASI::MemoryRegion vfunction208_mreg_2 (ASI::AddrOf(0x5ebb7b), 5);
     ASI::BeginRewrite(vfunction208_mreg_2);
     *(unsigned char *)(ASI::AddrOf(0x5ebb7b)) = 0xE8;   // CALL instruction
-    *(int *)(ASI::AddrOf(0x5ebb7c)) = (int)(&sf_click_vertical_button) -
-                                      ASI::AddrOf(0x5bb80);
+    *(int *)(ASI::AddrOf(0x5ebb7c)) = (int)(&sf_click_vertical_button) - ASI::AddrOf(0x5bb80);
     ASI::EndRewrite(vfunction208_mreg_2);
 
     ASI::MemoryRegion  vfunction210_mreg(ASI::AddrOf(0x5ed94a), 5);
     ASI::BeginRewrite(vfunction210_mreg);
     *(unsigned char *)(ASI::AddrOf(0x5ed94a)) = 0xE8;  // JUMP instruction
-    *(int *)(ASI::AddrOf(0x5ed94b)) = (int)(&sf_click_horizontal_button) -
-                                      ASI::AddrOf(0x5ed94f);
+    *(int *)(ASI::AddrOf(0x5ed94b)) = (int)(&sf_click_horizontal_button) - ASI::AddrOf(0x5ed94f);
     ASI::EndRewrite(vfunction210_mreg);
 
 }

@@ -4,11 +4,9 @@
 #include <utility>
 #include <list>
 
-uint16_t __thiscall assistance_onhit_handler(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index,
-                                             uint16_t damage);
-
-void __thiscall sf_phys_effect_hook(SF_CGDEffect *_this, uint16_t effect_id)
-{
+/*
+   void __thiscall sf_phys_effect_hook(SF_CGDEffect *_this, uint16_t effect_id)
+   {
     uint32_t source_id = effectAPI.getEffectXData(_this, effect_id, EFFECT_ENTITY_INDEX);
     uint32_t source_type = effectAPI.getEffectXData(_this, effect_id, EFFECT_ENTITY_TYPE);
     uint32_t target_id = effectAPI.getEffectXData(_this, effect_id, EFFECT_ENTITY_INDEX2);
@@ -22,6 +20,7 @@ void __thiscall sf_phys_effect_hook(SF_CGDEffect *_this, uint16_t effect_id)
         uint16_t spell_index = effectAPI.getEffectXData(_this, effect_id, EFFECT_SPELL_INDEX);
         uint16_t spell_line = spellAPI.getSpellLine(_this->CGdSpell, spell_index);
         sub_effect_handler_ptr rain_handler = get_rain_handler(spell_line);
+        log_debug(DEBUG_HIGH, "Rain spell line [%d] fired");
         rain_handler(_this, effect_id);
     }
     else
@@ -41,6 +40,8 @@ void __thiscall sf_phys_effect_hook(SF_CGDEffect *_this, uint16_t effect_id)
             if (toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_id, kGdSpellLineAssistance) &&
                 (damage != 0x7fff))
             {
+                log_debug(DEBUG_HIGH, "Assistance effect fired");
+
                 std::list<std::pair<uint16_t, onhit_handler_ptr>> onhit_list = get_onhit_phase(OnHitPhase::PHASE_2);
                 for (auto it = onhit_list.crbegin(); it != onhit_list.crend(); ++it)
                 {
@@ -59,6 +60,8 @@ void __thiscall sf_phys_effect_hook(SF_CGDEffect *_this, uint16_t effect_id)
             uint32_t mana_cost = effectAPI.getEffectXData(_this, effect_id, EFFECT_MANA_COST);
             if (mana_cost != 0)
             {
+                log_debug(DEBUG_HIGH, "Mana cost effect fired");
+
                 SF_CGdTargetData source;
                 source.position = {0,0};
                 source.entity_index = source_id;
@@ -82,12 +85,42 @@ void __thiscall sf_phys_effect_hook(SF_CGDEffect *_this, uint16_t effect_id)
         //Siege Aura Handler
         else
         {
+            log_debug(DEBUG_HIGH, "Siege effect fired");
+
             if (_this->CGdBuilding->buildings[target_id].health_current != 0)
             {
                 buildingAPI.buildingDealDamage(_this->SF_CGdBuildingToolbox, source_id, target_id, damage, 0);
             }
         }
     }
+   }
+ */
+
+void __thiscall sf_phys_effect_hook(SF_CGDEffect *_this, uint16_t effect_id)
+{
+    uint32_t source_id = effectAPI.getEffectXData(_this, effect_id, EFFECT_ENTITY_INDEX);
+    uint32_t source_type = effectAPI.getEffectXData(_this, effect_id, EFFECT_ENTITY_TYPE);
+    uint32_t target_id = effectAPI.getEffectXData(_this, effect_id, EFFECT_ENTITY_INDEX2);
+    uint32_t target_type = effectAPI.getEffectXData(_this, effect_id, EFFECT_ENTITY_TYPE2);
+    uint32_t damage = effectAPI.getEffectXData(_this, effect_id, EFFECT_PHYSICAL_DAMAGE);
+    if (target_type == 1)
+    {
+        bool isMagicDamage = 0;
+        toolboxAPI.dealDamage(_this->SF_CGdFigureToolBox, source_id, target_id, damage, isMagicDamage, 0, 0);
+        return;
+    }
+    if (target_type == 2)
+    {
+        log_debug(DEBUG_HIGH, "Building target? Source [%d] Target [%d]", target_id, source_id);
+
+        if (_this->CGdBuilding->buildings[target_id].health_current != 0)
+        {
+            buildingAPI.buildingDealDamage(_this->SF_CGdBuildingToolbox, source_id, target_id, damage, 0);
+        }
+    }
+    else
+    {
+        log_debug(DEBUG_HIGH, "Unknown target type [%d]", target_type);
+
+    }
 }
-
-
