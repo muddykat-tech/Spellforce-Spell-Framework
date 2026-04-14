@@ -1294,7 +1294,9 @@ typedef struct __attribute__((packed))
     uint8_t data[0x28];
     SF_CUiVideoSequence *CUiVideoSequence_ptr;
     CMnuBase *CMnuBase_ptr;
-    uint8_t more_data[0x658];
+    uint32_t more_data[17];
+    void *AC95;
+    uint8_t more_data2[0x60C];
 } CAppMenu_data;
 
 typedef struct __attribute__((packed))
@@ -1302,6 +1304,27 @@ typedef struct __attribute__((packed))
     uint32_t vftable_ptr;
     CAppMenu_data CAppMenu_data;
 } CAppMenu;
+
+
+typedef struct __attribute__((packed))
+{
+    CAppMenu *CAppMenu;
+    void *CAppSession;
+    void *CAppSound;
+    void *CNetMain;
+    void *unknownBitSet;
+    void *unknown;
+    void *CUtlLua;
+    void *unknown2;
+    void *unknown3;
+    void *unknown4;
+} CAppMain_data;
+
+typedef struct __attribute__((packed))
+{
+    uint32_t vftable_ptr;
+    CAppMain_data CAppMain_data;
+} CAppMain;
 
 /* |-========== Internal Functions ==========-| */
 // These functions are used in SFSF internally, and WILL be moved.

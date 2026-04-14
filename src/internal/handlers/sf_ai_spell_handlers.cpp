@@ -374,15 +374,12 @@ uint32_t __thiscall wave_ai_handler(SF_CGdBattleDevelopment *_this,
     else
     {
         uint8_t figure_count = 0;
-        for (uint16_t i = 0; i < _this->battleData.enemy_figures.entityCount;
-             i++)
+        for (uint16_t i = 0; i < _this->battleData.enemy_figures.entityCount; i++)
         {
-            uint16_t enemy_index =
-                _this->battleData.enemy_figures.data[i].entity_index;
+            uint16_t enemy_index = _this->battleData.enemy_figures.data[i].entity_index;
             if (figureAPI.isAlive(_this->battleData.CGdFigure, enemy_index))
             {
-                SF_Coord enemy_pos =
-                    _this->battleData.CGdFigure->figures[enemy_index].position;
+                SF_Coord enemy_pos = _this->battleData.CGdFigure->figures[enemy_index].position;
                 SF_Coord caster_pos = _this->battleData.current_figure_pos;
                 if (getDistance(&enemy_pos, &caster_pos) < 10)
                 {

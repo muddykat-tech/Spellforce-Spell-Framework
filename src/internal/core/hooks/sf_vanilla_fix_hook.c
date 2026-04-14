@@ -49,6 +49,9 @@ typedef void (__stdcall *getWeaponRangeDescription_ptr)(SF_String *param_1, uint
 typedef uint32_t (__thiscall *GetResourceSpellLine_ptr)(SF_CGdResource *_this, uint16_t spell_line_id,
                                                         SF_CGdResourceSpellLine *value);
 
+typedef uint16_t (__thiscall *getUnitStringID_ptr)(SF_CGdResource *_this,uint16_t unit_id);
+typedef bool (__thiscall *getTextString_ptr)(SF_CGdResource *_this,uint16_t text_id,char *out_string);
+
 AC95_get_figure_name_ptr AC95_get_figure_name;
 GetColoredText_ptr GetColoredText;
 GetDescriptionText_ptr GetDescriptionText;
@@ -70,6 +73,8 @@ GetWeaponEffects_ptr GetWeaponEffects;
 GetResourceSpellLine_ptr GetResourceSpellLine;
 GetTextById_ptr GetTextById;
 ExpandSpellDescription_ptr ExpandSpellDescription;
+getUnitStringID_ptr getUnitStringID;
+getTextString_ptr getTextString;
 
 bool __thiscall get_salvo_target_list (SF_CGdFigureJobs *_this, SF_CGdTargetData *source, SF_CGdTargetData *target,
                                        uint32_t angle, uint16_t *ranges, uint32_t target_count,
@@ -1245,6 +1250,83 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
     return param_1;
 }
 
+
+SF_String * __thiscall getSpecialFigureName(SF_CGdFigureToolbox *_this, SF_String *in_string, uint16_t figure_id)
+{
+    SF_String out_string;
+    SFStringConstructor(&out_string);
+    uint8_t figure_task = _this->CGdFigure->figures[figure_id].current_job.task;
+    switch (figure_task)
+    {
+        case TASK_HERO:
+        {
+            uint16_t owner = _this->CGdFigure->figures[figure_id].owner;
+            uint8_t hero_index = 0xff;
+            for (int i = 0; i < 5; i++)
+            {
+                if (_this->CGdPlayer->players[owner].hero_figure_index[i] == figure_id)
+                {
+                    hero_index = i;
+                    break;
+                }
+            }
+            if (hero_index != 0xff)
+            {
+                SFStringCopy(&out_string, &_this->CGdPlayer->players[owner].hero_names[hero_index]);
+            }
+            break;
+        }
+        case TASK_MAINCHAR:
+        {
+            uint16_t owner = _this->CGdFigure->figures[figure_id].owner;
+            uint16_t avatar_id = _this->CGdPlayer->players[owner].avatar_figure_index;
+            if (avatar_id != 0)
+            {
+                SFStringCopy(&out_string, &_this->CGdPlayer->players[owner].avatar_name);
+            }
+            break;
+        }
+        default:
+        {
+            if ((_this->CGdFigure->figures[figure_id].flags & ILLUSION) != 0)
+            {
+                uint16_t master_id = _this->CGdFigure->figures[figure_id].master_figure;
+                SF_String master_name;
+                SFStringConstructor(&master_name);
+
+                getSpecialFigureName(_this, &master_name, master_id);
+                SFStringCopy(&out_string, &master_name);
+                SFStringDestructor(&master_name);
+            }
+            else
+            {
+                uint16_t data_id = _this->CGdFigure->figures[figure_id].unit_data_id;
+                if (data_id == 0)
+                {
+                    SF_String empty;
+                    SFStringConstructor_char(&empty, "");
+                    SFStringCopy(&out_string, &empty);
+                    SFStringDestructor(&empty);
+                }
+                else
+                {
+                    uint16_t unit_str_id = getUnitStringID(_this->CGdResource, data_id);
+                    char resource_str[512];
+                    getTextString(_this->CGdResource, unit_str_id, resource_str);
+                    SF_String sf_resource_str;
+                    SFStringConstructor_char(&sf_resource_str, resource_str);
+                    SFStringCopy(&out_string, &sf_resource_str);
+                    SFStringDestructor(&sf_resource_str);
+                }
+            }
+            break;
+        }
+    }
+
+    SFStringCopy(in_string, &out_string);
+    return in_string;
+}
+
 void initialize_vanilla_fix_hooks()
 {
     add_item = (add_item_ptr)(ASI::AddrOf(0x260d70));
@@ -1270,6 +1352,8 @@ void initialize_vanilla_fix_hooks()
     getWeaponRangeDescription = (getWeaponRangeDescription_ptr)(ASI::AddrOf(0x5cf200));
     GetWeaponEffects = (GetWeaponEffects_ptr)(ASI::AddrOf(0x2693b0));
     GetResourceSpellLine = (GetResourceSpellLine_ptr)(ASI::AddrOf(0x26e2d0));
+    getUnitStringID = (getUnitStringID_ptr)(ASI::AddrOf(0x26e9f0));
+    getTextString = (getTextString_ptr)(ASI::AddrOf(0x26e510));
 
     log_info("| - Vanilla Fix Hooks");
     figure_statistic_hook_current_ac();

@@ -197,6 +197,7 @@ sf_menu_hook(uint32_t _CAppMenu)
                                                    16,
                                                    (uint32_t)&show_campaign_screen);
      */
+    log_info ("CAppMenu addr %x", _CAppMenu);
     s_menu_func(_CAppMenu);
 }
 

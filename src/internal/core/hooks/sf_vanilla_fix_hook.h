@@ -5,6 +5,7 @@
 
 SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *param_1, uint16_t figure_id,
                                              uint32_t param3,uint32_t param4, uint32_t param5);
+SF_String * __thiscall getSpecialFigureName(SF_CGdFigureToolbox *_this, SF_String *in_string, uint16_t figure_id);
 
 uint16_t __thiscall get_figure_statistic_max_mp(SF_CGdFigure *_this, uint16_t figure_id);
 uint16_t __thiscall get_figure_statistic_max_sta(SF_CGdFigure *_this, uint16_t figure_id);
