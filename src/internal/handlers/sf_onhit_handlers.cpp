@@ -247,11 +247,12 @@ uint16_t __thiscall assistance_onhit_handler(SF_CGdFigureJobs *_this,
     uint16_t element_count = 0;
     while (figure_id != 0)
     {
-        if (toolboxAPI.figuresCheckFriendly(_this->CGdFigureToolBox,target_index, figure_id))
+        if ((figureAPI.isAlive(_this->CGdFigure, figure_id))
+            && (toolboxAPI.isTargetable(_this->CGdFigureToolBox, figure_id)))
         {
-            if ((figureAPI.isAlive(_this->CGdFigure, target_index))
-                && (toolboxAPI.isTargetable(_this->CGdFigureToolBox, target_index)))
+            if (toolboxAPI.figuresCheckFriendly(_this->CGdFigureToolBox,target_index, figure_id))
             {
+
                 if (figure_id != target_index)
                 {
                     affected_figures.push_back(figure_id);

@@ -140,13 +140,13 @@ uint16_t __thiscall feedback_dmg_handler(SF_CGdFigureToolbox *_this,
         {
             current_damage = current_damage - reflect_amount;
         }
-        if ((_this->CGdFigure->figures[target].flags & TOWER) == 0)
+        if (((_this->CGdFigure->figures[source].flags & TOWER) == 0) && (figureAPI.isAlive(_this->CGdFigure, source)))
         {
             toolboxAPI.dealDamage(_this, target, source, reflect_amount, 1, 0, 0);
             SF_CGdTargetData source_data = {1, source, {0, 0}};
             SF_CGdTargetData target_data = {1, target, {0, 0}};
             SF_Rectangle rect = {0, 0};
-            effectAPI.addEffect(_this->CGdEffect, kGdEffectSpellVoodooHitFigure, &source_data, &target_data,
+            effectAPI.addEffect(_this->CGdEffect, kGdEffectSpellVoodooHitFigure, &target_data, &source_data,
                                 _this->maybe_random->current_step, 10, &rect);
         }
     }

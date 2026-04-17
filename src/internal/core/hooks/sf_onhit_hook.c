@@ -372,12 +372,17 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
 
                     if (hasSpellTag(spell_line_id, TARGET_ONHIT_SPELL))
                     {
-                        if ((_this->CGdFigure->figures[target.entity_index].flags & F_CHECK_SPELLS_BEFORE_JOB) != 0)
+                        //Target on-hits for ranged spells should be handled in phys effect hook, not here
+                        if (isActionMelee(&action))
                         {
-                            if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, target.entity_index, spell_line_id))
+                            if ((_this->CGdFigure->figures[target.entity_index].flags & F_CHECK_SPELLS_BEFORE_JOB) != 0)
                             {
-                                onhit_handler_ptr onhit_func = entry.second;
-                                damage = onhit_func(_this, source_index, target.entity_index, damage);
+                                if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, target.entity_index,
+                                                            spell_line_id))
+                                {
+                                    onhit_handler_ptr onhit_func = entry.second;
+                                    damage = onhit_func(_this, source_index, target.entity_index, damage);
+                                }
                             }
                         }
                     }
