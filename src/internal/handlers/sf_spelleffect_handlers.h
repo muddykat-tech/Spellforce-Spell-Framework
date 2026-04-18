@@ -19,7 +19,7 @@ extern handler_ptr effect_ability_shelter_handler;
 extern handler_ptr effect_ability_shift_life_handler;
 extern handler_ptr effect_ability_steelskin_handler;
 extern handler_ptr effect_ability_trueshot_handler;
-extern handler_ptr effect_ability_warcy_handler;
+extern handler_ptr effect_ability_warcry_handler;
 extern handler_ptr effect_acid_cloud_handler;
 extern handler_ptr effect_almightiness_black_handler;
 extern handler_ptr effect_almightiness_elemental_handler;

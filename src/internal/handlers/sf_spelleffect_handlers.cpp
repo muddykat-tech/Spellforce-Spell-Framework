@@ -17,7 +17,7 @@ handler_ptr effect_ability_shelter_handler;
 handler_ptr effect_ability_shift_life_handler;
 handler_ptr effect_ability_steelskin_handler;
 handler_ptr effect_ability_trueshot_handler;
-handler_ptr effect_ability_warcy_handler;
+handler_ptr effect_ability_warcry_handler;
 handler_ptr effect_acid_cloud_handler;
 handler_ptr effect_almightiness_black_handler;
 handler_ptr effect_almightiness_elemental_handler;
@@ -219,6 +219,117 @@ void __thiscall apply_aura_effect(SF_CGdSpell *_this, uint16_t spell_index, uint
     effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_ENTITY_TYPE2, 1);
     effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_ENTITY_INDEX2,
                              target_index);
+}
+
+void __thiscall effect_ability_warcry(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    SF_GdSpell *spell = &_this->active_spell_list[spell_index];
+    uint16_t source_index = spell->source.entity_index;
+
+    if (spell->target.entity_type == 1)
+    {
+        uint32_t tick_count =  spellAPI.addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1);
+        if (tick_count == 1)
+        {
+            SF_CGdResourceSpell spell_data;
+            spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+
+            _this->active_spell_list[spell_index].to_do_count = (spell_data.params[0] * 10) / 1000;
+
+            SF_Rectangle rect = {0,0};
+            SF_Coord caster_pos = _this->SF_CGdFigure->figures[source_index].position;
+            //spellAPI.getTargetsRectangle(_this, &rect, spell_index, spell_data.params[3], &caster_pos);
+
+            SF_CGdTargetData source_data;
+            source_data.entity_index = source_index;
+            source_data.entity_type = 1;
+            source_data.position = {0,0};
+
+            spellAPI.addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &rect, &source_data,
+                                     _this->OpaqueClass->current_step, 100, &rect);
+
+            _this->SF_CGdFigure->figures[source_index].flags |=  F_CHECK_SPELLS_BEFORE_JOB;
+            spell->flags |= CHECK_SPELLS_BEFORE_JOB2;
+
+            CGdFigureIterator iter;
+            iteratorAPI.setupFigureIterator(&iter, _this);
+            iteratorAPI.iteratorSetArea(&iter,  &caster_pos, spell_data.params[3]);
+            std::vector<uint16_t> targets;
+            std::vector<uint16_t> meh_targets;
+            uint16_t next_figure = iteratorAPI.getNextFigure(&iter);
+            while (next_figure != 0)
+            {
+                if ((_this->SF_CGdFigure->figures[next_figure].owner != (uint16_t)(-1)) &&
+                    ((_this->SF_CGdFigure->figures[next_figure].flags & (IS_DEAD|RESESRVED_ONLY)) == 0))
+                {
+                    if ((next_figure != source_index) &&
+                        (toolboxAPI.figuresCheckFriendly(_this->SF_CGdFigureToolBox, source_index, next_figure)) &&
+                        (toolboxAPI.isTargetable(_this->SF_CGdFigureToolBox, next_figure)) &&
+                        (!toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, next_figure, kGdSpellLineAbilityWarCry)))
+                    {
+                        if (toolboxAPI.isUnitMelee(_this->SF_CGdFigureToolBox, next_figure))
+                        {
+                            targets.push_back(next_figure);
+                        }
+                        else
+                        {
+                            meh_targets.push_back(next_figure);
+                        }
+
+                    }
+                }
+                if (targets.size() < spell_data.params[2])
+                {
+                    next_figure = iteratorAPI.getNextFigure(&iter);
+                }
+                else
+                {
+                    break;
+                }
+            }
+            iteratorAPI.disposeFigureIterator(&iter);
+            if (targets.size() < spell_data.params[2])
+            {
+                uint16_t count = spell_data.params[2] - targets.size();
+                while (meh_targets.size() > 0 && count > 0)
+                {
+                    uint16_t add_target = meh_targets.back();
+                    targets.push_back(add_target);
+                    meh_targets.pop_back();
+                    count--;
+                }
+            }
+            while (targets.size() > 0)
+            {
+                uint16_t target_index = targets.back();
+
+                _this->SF_CGdFigure->figures[target_index].flags |=  F_CHECK_SPELLS_BEFORE_JOB;
+
+                SF_CGdTargetData target_data;
+                target_data.entity_index = target_index;
+                target_data.entity_type = 1;
+                target_data.position = {0,0};
+                spellAPI.addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &rect, &target_data,
+                                         _this->OpaqueClass->current_step, 100, &rect);
+                toolboxAPI.addSpellToFigure(_this->SF_CGdFigureToolBox, target_index, spell_index);
+                targets.pop_back();
+            }
+            return;
+        }
+        for (int i = 0; i<_this->SF_CGdFigure->max_used; i++)
+        {
+            if ((_this->SF_CGdFigure->figures[i].owner != (uint16_t)(-1)) &&
+                ((_this->SF_CGdFigure->figures[i].flags & (IS_DEAD|RESESRVED_ONLY)) == 0))
+            {
+                if (toolboxAPI.removeSpellFromList(_this->SF_CGdFigureToolBox, i, spell_index))
+                {
+                    spellAPI.figTryClrCHkSPlBfrJob2(_this, spell_index);
+                }
+            }
+        }
+        spellAPI.setEffectDone(_this, spell_index, 0);
+    }
+
 }
 
 void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
@@ -576,7 +687,7 @@ void initialize_vanilla_effect_handler_hooks()
     effect_ability_shift_life_handler = (handler_ptr)(ASI::AddrOf(0x32d880));
     effect_ability_steelskin_handler = (handler_ptr)(ASI::AddrOf(0x32dbf0));
     effect_ability_trueshot_handler = (handler_ptr)(ASI::AddrOf(0x32ddc0));
-    effect_ability_warcy_handler = (handler_ptr)(ASI::AddrOf(0x32df90));
+    effect_ability_warcry_handler = &effect_ability_warcry;// (handler_ptr)(ASI::AddrOf(0x32df90));
     effect_acid_cloud_handler = (handler_ptr)(ASI::AddrOf(0x32e370));
     effect_almightiness_black_handler = (handler_ptr)(ASI::AddrOf(0x32e730));
     effect_almightiness_elemental_handler = (handler_ptr)(ASI::AddrOf(0x32e9d0));

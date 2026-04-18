@@ -144,7 +144,7 @@ void register_vanilla_effect_handlers()
     registerEffectHandler(0x66, effect_lifetap_aura_handler);
     registerEffectHandler(0x67, effect_fireball2_handler);
     registerEffectHandler(0x68, effect_self_illusion_handler);
-    registerEffectHandler(0x69, effect_ability_warcy_handler);
+    registerEffectHandler(0x69, effect_ability_warcry_handler);
     registerEffectHandler(0x6a, effect_ability_benefactions_handler);
     registerEffectHandler(0x6b, effect_ability_patronize_handler);
     registerEffectHandler(0x6c, effect_ability_endurance_handler);
