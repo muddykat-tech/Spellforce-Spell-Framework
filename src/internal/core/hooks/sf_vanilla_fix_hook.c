@@ -680,6 +680,100 @@ static void get_race_fix_hook()
     ASI::EndRewrite(race_mreg1);
 }
 
+bool __thiscall isTitan(SF_CGdFigure *_this, uint16_t figure_id)
+{
+    uint16_t figure_data_id = _this->figures[figure_id].unit_data_id;
+    bool result = false;
+
+    switch (figure_data_id)
+    {
+        case 1047:
+        case 1079:
+        case 1098:
+        case 1099:
+        case 1100:
+        case 1101:
+        case 2281:
+        case 2282:
+        case 2283:
+        case 2284:
+        case 2285:
+        case 2286:
+        {
+            result = true;
+            break;
+        }
+        default:
+        {
+            result = false;
+            break;
+        }
+    }
+    return result;
+}
+
+bool __thiscall isSwarm(SF_CGdFigure *_this, uint16_t figure_id)
+{
+    uint16_t figure_data_id = _this->figures[figure_id].unit_data_id;
+    bool result = ((figure_data_id > 2219) && (figure_data_id < 2226));
+    return result;
+}
+void __thiscall decreaseUsedArmyUnitCount(SF_CGdPlayer *_this, uint16_t owner, uint8_t side)
+{
+    uint16_t unit_count = _this->players[owner].warrior_count[side];
+    if (unit_count > 0)
+    {
+        unit_count--;
+    }
+    _this->players[owner].warrior_count[side] = unit_count;
+}
+
+uint32_t __thiscall decreaseUnitCount(AutoClass46 *_this, uint16_t figure_id)
+{
+    uint8_t race = _this->CGdFigure->figures[figure_id].race;
+    uint16_t owner = _this->CGdFigure->figures[figure_id].owner;
+    if ((owner != 0)  && (race != 0) && (race < 7))
+    {
+        if ((_this->CGdFigure->figures[figure_id].flags & ILLUSION) != 0)
+        {
+            return 0;
+        }
+        if ((!isTitan(_this->CGdFigure, figure_id)) && (!isSwarm(_this->CGdFigure, figure_id)))
+        {
+            if (!figureAPI.isWarrior(_this->CGdFigure, figure_id))
+            {
+                uint16_t worker_count = _this->CGdPlayer->players[owner].civilian_count[race - 1];
+                if (worker_count > 0)
+                {
+                    worker_count--;
+                }
+                _this->CGdPlayer->players[owner].civilian_count[race - 1] = worker_count;
+                return 0;
+            }
+            else
+            {
+                bool side = ((race != 3) && (race != 2) && (race != 1));
+                decreaseUsedArmyUnitCount(_this->CGdPlayer, owner, side);
+                if (figureAPI.isSiegeUnit(_this->CGdFigure, figure_id))
+                {
+                    decreaseUsedArmyUnitCount(_this->CGdPlayer, owner, side);
+                    decreaseUsedArmyUnitCount(_this->CGdPlayer, owner, side);
+                }
+            }
+        }
+
+    }
+    return 0;
+}
+
+static void army_size_fix_hook()
+{
+    ASI::MemoryRegion race_mreg1 (ASI::AddrOf(0x326e40), 5);
+    ASI::BeginRewrite(race_mreg1);
+    *(unsigned char *)(ASI::AddrOf(0x326e40)) = 0xE9;
+    *(int *)(ASI::AddrOf(0x326e41)) = (int)(&decreaseUnitCount) - ASI::AddrOf((0x326e45));
+    ASI::EndRewrite(race_mreg1);
+}
 
 static SF_CGdFigure * getFigurePtr(void *CGdMain)
 {
@@ -1375,4 +1469,5 @@ void initialize_vanilla_fix_hooks()
     figure_statistic_hook_current_cast_spd();
     salvo_fix_hook();
     get_race_fix_hook();
+    army_size_fix_hook();
 }

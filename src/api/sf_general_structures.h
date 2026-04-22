@@ -20,12 +20,15 @@ typedef struct SF_CGdWorldToolBox SF_CGdWorldToolBox;
 typedef struct SF_CGdFigureJobs SF_CGdFigureJobs;
 typedef struct SF_CGdBuilding SF_CGdBuilding;
 typedef struct SF_CGdBuildingToolbox SF_CGdBuildingToolbox;
-typedef struct CMnuLabel CMnuLabel;
+typedef struct AutoClass46 AutoClass46;
 typedef struct SF_CGdFigure SF_CGdFigure;
 typedef struct SF_SpellEffectInfo SF_SpellEffectInfo;
 typedef struct SF_CGdResource SF_CGdResource;
 typedef struct SF_CGdPlayer SF_CGdPlayer;
+
+typedef struct CMnuLabel CMnuLabel;
 typedef struct CGdControllerClient CGdControllerClient;
+
 
 /* |-========== Enums ==========-| */
 
@@ -1105,6 +1108,29 @@ struct __attribute__((packed)) SF_CGdWorld
     uint8_t unknown7[63];
 };
 
+
+struct __attribute__((packed)) AutoClass46
+{
+    void *CGdAiMain;
+    AutoClass14 *OpaqueClass;
+    SF_CGdBuilding *CGdBuilding;
+    SF_CGdBuildingToolbox *CGdBuildingToolBox;
+    void *CGdDoubleLinkedList;
+    SF_CGDEffect *CGdEffect;
+    void *AutoClass30;
+    SF_CGdFigure *CGdFigure;
+    SF_CGdFigureJobs *CGdFigureJobs;
+    SF_CGdFigureToolbox *CGdFigureToolBox;
+    void *AutoClass36;
+    void *CGdObject;
+    void *CGdObjectToolBox;
+    SF_CGdPlayer *CGdPlayer;
+    SF_CGdResource *CGdResource;
+    void *AutoClass22;
+    SF_CGdWorld *CGdWorld;
+    SF_CGdWorldToolBox *CGdWorldToolBox;
+    void *CGdXDataList;
+};
 /* Menu Structures */
 
 typedef struct __attribute__((packed))
