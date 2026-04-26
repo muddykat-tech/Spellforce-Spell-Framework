@@ -411,7 +411,10 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
                             if (!toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index,
                                                          sub_spell_data.spell_line_id))
                             {
-                                targets.push_back(target_index);
+                                if (figureAPI.isWarrior(_this->SF_CGdFigure, target_index))
+                                {
+                                    targets.push_back(target_index);
+                                }
                             }
                         }
                     }
