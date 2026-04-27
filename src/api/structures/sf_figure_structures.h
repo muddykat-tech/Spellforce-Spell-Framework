@@ -78,7 +78,7 @@ typedef struct __attribute__((packed))
     uint16_t anim_length;
     uint16_t anim_length_remainder;
     uint8_t activity;
-    uint8_t unknown1;
+    uint8_t retreat_related;
     uint16_t building;
     uint32_t flags; // packed with GdFigureFlags
     uint8_t race;
@@ -109,37 +109,37 @@ typedef struct __attribute__((packed))
     FigureStatistic cast_speed;
     uint16_t equipment[16];  // No idea how this works, may need a class (undefined2[16] in ghidra, but is 20 bytes FigureStatistic is 6 bytes)
     uint16_t head;           // Not sure what this does
-    uint32_t unknown2[3];    // three 4 byte data points in a row, no name known for these.
-    uint8_t unknown3[168];   // Many 1 byte sections in a row
-    uint32_t unknown4[7];    // Many 4 byte sections in a row
-    uint16_t unknown5;
+    SF_SGtFigureAction actions[15];
+    GdFigureAbility abilties[10];
     SF_CGdFigureWeaponStats weapon_stats[2];
-    uint8_t padding0;
-    uint8_t good;  // I assume perhaps alignment?
+    uint8_t check_battle_sleeping;
+    uint8_t good;  // good that worker is carrying -- wood, stone, etc
     uint8_t direction;
-    uint8_t unknown8;
+    uint8_t last_direction;
     uint8_t path_dir;
     uint8_t path_wish_dir;
     uint32_t path_bits;
-    uint8_t unknown9;
-    uint32_t unknown10[3];
-    uint16_t unknown11;
+    uint8_t path_wait_counter;
+    uint32_t path_data_related_ptrs[3];
+    uint16_t spell_job_start_node;
     CGdFigureHateEntry hate_entry[10];
     uint8_t debug_flags;
-    uint8_t unknown12;
+    uint8_t rune_id;
     uint16_t formation;
     uint8_t faction;
-    uint8_t unknown13;
+    uint8_t faction_flags;
     uint32_t clan_relations;
-    uint16_t unknown14;
-    uint32_t padding1;
+    uint16_t scaling;
+    uint8_t formation_walkspeed_mod;
+    uint16_t creo;
+    uint8_t anim_type;
     FigureJobData current_job; // Current Active Job Data
-    uint8_t padding2[3];
+    uint8_t padding[3];
     FigureJobData next_job; // Feign Death, Acting in Buildings? Seems to be about the Next Target Job Data?
+    uint8_t padding2[3];
+    FigureJobData prev_job;
     uint8_t padding3[3];
-    FigureJobData ac_4;
-    uint8_t padding4[3];
-    uint32_t unknown15[3];  // Skipping some variable sections, contains differences Also Check what FigureJobData is, it's used multiple times in this section
+    uint32_t incoming_spells_vector[3];  // Skipping some variable sections, contains differences Also Check what FigureJobData is, it's used multiple times in this section
     uint8_t dwarf_rank;
     uint8_t set_type;
 } GdFigure;
@@ -191,3 +191,42 @@ struct __attribute__((packed)) SF_CGdFigureJobs
     void *unkn4;
     uint32_t padding4;
 };
+
+typedef struct __attribute__((packed))
+{
+    uint8_t id;
+    uint8_t spec;
+    uint8_t level;
+} GdFigureAbility;
+
+typedef struct __attribute__((packed))
+{
+    uint16_t unknwn; //offset 0
+    uint8_t level; //offset 2
+    uint8_t unknwn2; //offset 3
+    uint8_t race; //offset 4
+
+    uint16_t agility; //offset 5
+    uint16_t dexterity; //offset 7
+    uint16_t charisma; //offset 9
+    uint16_t intelligence; //offset 11
+    uint16_t stamina; //offset 13
+    uint16_t strength; //offset 15
+    uint16_t wisdom; //offset 17
+    uint16_t unknwn3; //offset 19
+    uint16_t fres; //offset 21
+    uint16_t ires; //offset 23
+    uint16_t bres; //offset 25
+    uint16_t mres; //offset 27
+
+    uint16_t wspeed; //offset 29
+    uint16_t fspeed; //offset 31
+    uint16_t cspeed; //offset 33
+    uint16_t some_job_id; //offset 35
+    uint8_t unknwn6[6];
+    uint8_t unit_flags; //offset 43
+    uint16_t head; //offset 44
+    uint8_t unknwn4; //offset 46
+
+    GdFigureAbility abilities[10]; //offset 47
+} CGdResourceUnitStats;
