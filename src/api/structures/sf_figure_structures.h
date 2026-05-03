@@ -194,16 +194,11 @@ struct __attribute__((packed)) SF_CGdFigureJobs
 
 typedef struct __attribute__((packed))
 {
-    uint8_t id;
-    uint8_t spec;
-    uint8_t level;
-} GdFigureAbility;
-
-typedef struct __attribute__((packed))
-{
-    uint16_t unknwn; //offset 0
+    uint16_t creo; //offset 0
     uint8_t level; //offset 2
-    uint8_t unknwn2; //offset 3
+
+    uint8_t unknwn; //offset 3
+
     uint8_t race; //offset 4
 
     uint16_t agility; //offset 5
@@ -213,7 +208,9 @@ typedef struct __attribute__((packed))
     uint16_t stamina; //offset 13
     uint16_t strength; //offset 15
     uint16_t wisdom; //offset 17
-    uint16_t unknwn3; //offset 19
+
+    uint16_t unknwn2; //offset 19
+
     uint16_t fres; //offset 21
     uint16_t ires; //offset 23
     uint16_t bres; //offset 25
@@ -222,11 +219,15 @@ typedef struct __attribute__((packed))
     uint16_t wspeed; //offset 29
     uint16_t fspeed; //offset 31
     uint16_t cspeed; //offset 33
-    uint16_t some_job_id; //offset 35
-    uint8_t unknwn6[6];
+    uint16_t scaling; //offset 35
+
+    uint16_t unknwn3;
+    uint32_t unknwn4;
+
     uint8_t unit_flags; //offset 43
     uint16_t head; //offset 44
-    uint8_t unknwn4; //offset 46
+
+    uint8_t unknwn5; //offset 46
 
     GdFigureAbility abilities[10]; //offset 47
 } CGdResourceUnitStats;

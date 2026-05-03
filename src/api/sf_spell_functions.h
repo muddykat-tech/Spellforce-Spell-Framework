@@ -68,11 +68,11 @@ DECLARE_FUNCTION(uint16_t, addSpell, SF_CGdSpell *_this, uint16_t spell_id,
                  SF_CGdTargetData *target, uint16_t param5);
 DECLARE_FUNCTION(uint16_t, getSpellLine, SF_CGdSpell *_this, uint16_t spell_id);
 DECLARE_FUNCTION(void, figClrChkSplBfrChkBattle, SF_CGdSpell *_this,
-                 uint16_t spell_id, uint16_t unk1);
+                 uint16_t spell_id, uint16_t figure_id);
 DECLARE_FUNCTION(void, figTryClrCHkSPlBfrJob2, SF_CGdSpell *_this,
                  uint16_t spell_id);
 DECLARE_FUNCTION(void, figTryUnfreeze, SF_CGdSpell *_this, uint16_t spell_id,
-                 uint16_t unk1);
+                 uint16_t figure_id);
 DECLARE_FUNCTION(uint16_t, getSpellID, SF_CGdSpell *_this,
                  uint16_t spell_index);
 DECLARE_FUNCTION(uint16_t, getSpellTags, uint16_t spell_index);

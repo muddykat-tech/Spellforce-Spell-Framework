@@ -31,3 +31,51 @@ void __thiscall sf_endspell_hook(SF_CGdSpell *_this, uint16_t spell_index)
         spellend_handler(_this, spell_index);
     }
 }
+
+void __thiscall tryClearCheckSpellsBeforeJob(SF_CGdSpell *_this, uint16_t spell_index, uint16_t figure_index)
+{
+    uint16_t spell_node = figureAPI.getSpellJobStartNode(_this->SF_CGdFigure, figure_index);
+    while (spell_node != 0)
+    {
+        uint16_t spell_id = toolboxAPI.getSpellIndexFromDLL(_this->SF_CGdDoubleLinkedList, spell_node);
+        if ((spell_index != spell_id) && ((_this->active_spell_list[spell_id].flags & 0x2) != 0))
+        {
+            return;
+        }
+        spell_node = toolboxAPI.getNextNode(_this->SF_CGdDoubleLinkedList, spell_node);
+    }
+    _this->SF_CGdFigure->figures[figure_index].flags &= ~(F_CHECK_SPELLS_BEFORE_JOB);
+
+}
+void __thiscall sf_figure_end_spells_hook(SF_CGdFigureToolbox *_this, uint16_t figure_id)
+{
+    uint16_t spell_node = figureAPI.getSpellJobStartNode(_this->CGdFigure, figure_id);
+    while (spell_node != 0)
+    {
+        uint16_t spell_index = toolboxAPI.getSpellIndexFromDLL(_this->CGdDoubleLinkedList, spell_node);
+        if (!spellAPI.hasSpellTag(spell_index, SpellTag::AOE_SPELL))
+        {
+            sf_endspell_hook(_this->CGdSpell, spell_index);
+            toolboxAPI.removeSpellFromList(_this, figure_id, spell_node);
+        }
+        else
+        {
+            if (toolboxAPI.removeSpellFromList(_this, figure_id, spell_node))
+            {
+                uint16_t spell_line = spellAPI.getSpellLine(_this->CGdSpell, spell_index);
+                if (spell_line == kGdSpellLineFreezeArea)
+                {
+                    spellAPI.figTryUnfreeze(_this->CGdSpell, spell_index, figure_id);
+                    spellAPI.figClrChkSplBfrChkBattle(_this->CGdSpell, spell_index, figure_id);
+                }
+                if (spell_line == kGdSpellLineHypnotizeArea)
+                {
+                    spellAPI.figTryUnfreeze(_this->CGdSpell, spell_index, figure_id);
+                    tryClearCheckSpellsBeforeJob(_this->CGdSpell, spell_index, figure_id);
+                    spellAPI.figClrChkSplBfrChkBattle(_this->CGdSpell, spell_index, figure_id);
+                }
+            }
+        }
+        spell_node = toolboxAPI.getNextNode(_this->CGdDoubleLinkedList, spell_node);
+    }
+}

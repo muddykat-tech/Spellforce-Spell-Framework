@@ -401,6 +401,14 @@ static void initialize_spellend_hook()
     *(unsigned char *)(ASI::AddrOf(0x34b0a0)) = 0xE9; // jmp instruction
     *(int *)(ASI::AddrOf(0x34b0a1)) = (int)(&sf_endspell_hook) - ASI::AddrOf(0x34b0a5);
     ASI::EndRewrite(end_spell_mreg);
+
+
+    ASI::MemoryRegion end_spell_mreg2 (ASI::AddrOf(0x2ff6f9), 5);
+    ASI::BeginRewrite(end_spell_mreg2);
+    *(unsigned char *)(ASI::AddrOf(0x2ff6f9)) = 0xE8; // CALL instruction
+    *(int *)(ASI::AddrOf(0x2ff6fa)) = (int)(&sf_figure_end_spells_hook) - ASI::AddrOf(0x2ff6fe);
+    ASI::EndRewrite(end_spell_mreg2);
+
 }
 
 static void initialize_spellrefresh_hook()

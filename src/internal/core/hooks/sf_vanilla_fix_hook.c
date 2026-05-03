@@ -721,7 +721,7 @@ bool __thiscall isSwarm(SF_CGdFigure *_this, uint16_t figure_id)
 void __thiscall decreaseUsedArmyUnitCount(SF_CGdPlayer *_this, uint16_t owner, uint8_t side)
 {
     uint16_t unit_count = _this->players[owner].warrior_count[side];
-    if (unit_count > 0)
+    if (unit_count != 0)
     {
         unit_count--;
     }

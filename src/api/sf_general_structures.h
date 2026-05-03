@@ -900,6 +900,13 @@ typedef struct __attribute__((packed))
 
 /* |-========== Global Structures ==========-| */
 
+typedef struct __attribute__((packed))
+{
+    uint8_t id;
+    uint8_t spec;
+    uint8_t level;
+} GdFigureAbility;
+
 /**
  * @struct ushort_list_node
  * @brief Represents a node in a list of unsigned short values.

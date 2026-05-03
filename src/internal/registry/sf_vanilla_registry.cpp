@@ -1141,7 +1141,7 @@ void initialize_vanilla_spells()
 
     SFSpell *disenchant = registrationAPI.registerSpell(kGdSpellLineDisenchant);
     registrationAPI.linkTypeHandler(disenchant, &disenchant_handler);
-    registrationAPI.linkSingleTargetAIHandler(disenchant, &befriend_ai_handler);
+    registrationAPI.linkSingleTargetAIHandler(disenchant, &disenchant_ai_handler);
 
     SFSpell *charisma = registrationAPI.registerSpell(kGdSpellLineCharisma);
     registrationAPI.linkTypeHandler(charisma, &charisma_handler);
@@ -1461,6 +1461,7 @@ void initialize_vanilla_spells()
 
     SFSpell *dominate_undead = registrationAPI.registerSpell(kGdSpellLineDominateUndead);
     registrationAPI.linkTypeHandler(dominate_undead, &dominate_undead_handler);
+    registrationAPI.linkSingleTargetAIHandler(dominate_undead, &dominate_undead_ai_handler);
     registrationAPI.applySpellTag(dominate_undead, SpellTag::DOMINATION_SPELL);
 
     SFSpell *summon_12 = registrationAPI.registerSpell(kGdSpellLineSummonBlade);

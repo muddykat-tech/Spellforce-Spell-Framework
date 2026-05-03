@@ -611,7 +611,56 @@ void __thiscall effect_siege_aura (SF_CGdSpell *_this, uint16_t spell_index)
     return;
 }
 
+void __thiscall effect_self_illusion(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    SF_GdSpell *spell = &_this->active_spell_list[spell_index];
+    if (spell->target.entity_type == 1)
+    {
+        SF_CGdResourceSpell spell_data;
+        CGdResourceUnitStats stats;
+        memset(&stats, 0, sizeof(CGdResourceUnitStats));
+        spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
 
+        if (spellAPI.addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1) == 1)
+        {
+
+            uint16_t source_index = spell->source.entity_index;
+            uint16_t scale_factor = spell_data.params[1];
+            uint16_t summon_count = spell_data.params[0];
+            stats.level = _this->SF_CGdFigure->figures[source_index].level;
+            stats.race = _this->SF_CGdFigure->figures[source_index].race;
+            stats.head = _this->SF_CGdFigure->figures[source_index].head;
+
+            for (int i = 0; i< 10; i++)
+            {
+                stats.abilities[i].id = 0xff;
+                stats.abilities[i].spec = 0xff;
+                stats.abilities[i].level = 0xff;
+            }
+            if ((_this->SF_CGdFigure->figures[source_index].flags & FEMALE) != 0)
+            {
+                stats.unit_flags |= 1;
+            }
+
+            stats.agility = _this->SF_CGdFigure->figures[source_index].agility.base_val;
+            stats.dexterity = _this->SF_CGdFigure->figures[source_index].dexterity.base_val;
+            stats.charisma = _this->SF_CGdFigure->figures[source_index].charisma.base_val;
+            stats.strength = _this->SF_CGdFigure->figures[source_index].strength.base_val;
+            stats.stamina = (_this->SF_CGdFigure->figures[source_index].stamina.base_val * scale_factor) / 100;
+            stats.intelligence = _this->SF_CGdFigure->figures[source_index].intelligence.base_val;
+            stats.wisdom = _this->SF_CGdFigure->figures[source_index].wisdom.base_val;
+
+            stats.ires = _this->SF_CGdFigure->figures[source_index].resistance_ice.base_val;
+            stats.fres = _this->SF_CGdFigure->figures[source_index].resistance_fire.base_val;
+            stats.bres = _this->SF_CGdFigure->figures[source_index].resistance_black.base_val;
+            stats.mres = _this->SF_CGdFigure->figures[source_index].resistance_mental.base_val;
+
+            stats.fspeed = _this->SF_CGdFigure->figures[source_index].fight_speed.base_val;
+            stats.wspeed = _this->SF_CGdFigure->figures[source_index].walk_speed.base_val;
+            stats.cspeed = _this->SF_CGdFigure->figures[source_index].cast_speed.base_val;
+        }
+    }
+}
 
 //hotfix for firebane
 //TODO: fix some stuff about hasSpellOnIt

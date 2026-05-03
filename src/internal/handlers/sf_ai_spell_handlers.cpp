@@ -30,8 +30,7 @@ uint32_t __thiscall shields_ai_handler(SF_CGdBattleDevelopment *_this,
     }
     else
     {
-        if (toolboxAPI.isUnitMelee(_this->battleData.CGdFigureToolBox,
-                                   target_index))
+        if (toolboxAPI.isUnitMelee(_this->battleData.CGdFigureToolBox, target_index))
         {
             rank = rank << 2;
         }
@@ -55,8 +54,7 @@ uint32_t __thiscall cure_disease_ai_handler(SF_CGdBattleDevelopment *_this,
                                             SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 1;
-    if (!toolboxAPI.hasSpellOnIt((_this->battleData).CGdFigureToolBox,
-                                 target_index, kGdSpellLinePestilence))
+    if (!toolboxAPI.hasSpellOnIt((_this->battleData).CGdFigureToolBox, target_index, kGdSpellLinePestilence))
     {
         rank = 0;
     }
@@ -69,8 +67,7 @@ uint32_t __thiscall death_grasp_ai_handler(SF_CGdBattleDevelopment *_this,
                                            SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 1;
-    if (figureAPI.getCurrentHealthPercent(_this->battleData.CGdFigure,
-                                          target_index) < 50)
+    if (figureAPI.getCurrentHealthPercent(_this->battleData.CGdFigure, target_index) < 50)
     {
         rank = rank * 10;
     }
@@ -101,6 +98,12 @@ uint32_t __thiscall offensive_aura_ai_handler(SF_CGdBattleDevelopment *_this,
         {
             uint16_t manacost = (spell_data->mana_cost * 3) / 2;
             if (figureAPI.getCurrentStat(_this->battleData.CGdFigure, target_index, MANA) < manacost)
+            {
+                rank = 0;
+            }
+            if ((spellAPI.hasSpellTag(spell_line, SpellTag::BLACK_AURA_SPELL)) &&
+                (toolboxAPI.hasSpellOnIt(_this->battleData.CGdFigureToolBox, target_index,
+                                         kGdSpellLineDispelBlackAura)))
             {
                 rank = 0;
             }
@@ -137,6 +140,12 @@ uint32_t __thiscall defensive_aura_ai_handler(SF_CGdBattleDevelopment *_this,
         {
             uint16_t manacost = (spell_data->mana_cost * 3) / 2;
             if (figureAPI.getCurrentStat(_this->battleData.CGdFigure, target_index, MANA) < manacost)
+            {
+                rank = 0;
+            }
+            if ((spellAPI.hasSpellTag(spell_line, SpellTag::WHITE_AURA_SPELL)) &&
+                (toolboxAPI.hasSpellOnIt(_this->battleData.CGdFigureToolBox, target_index,
+                                         kGdSpellLineDispelWhiteAura)))
             {
                 rank = 0;
             }
@@ -202,14 +211,10 @@ uint32_t __thiscall aura_light_ai_handler(SF_CGdBattleDevelopment *_this,
         {
             rank = 0;
             // Vanilla Bug Fix
-            for (uint16_t i =
-                     0; i < _this->battleData.enemy_figures.entityCount;
-                 i++)
+            for (uint16_t i =  0; i < _this->battleData.enemy_figures.entityCount; i++)
             {
-                uint16_t enemy_index =
-                    _this->battleData.enemy_figures.data[i].entity_index;
-                if (_this->battleData.CGdFigure->figures[enemy_index].flags &
-                    UNDEAD)
+                uint16_t enemy_index = _this->battleData.enemy_figures.data[i].entity_index;
+                if (_this->battleData.CGdFigure->figures[enemy_index].flags & UNDEAD)
                 {
                     rank = 1;
                     break;
@@ -256,10 +261,8 @@ uint32_t __thiscall HCA_ability_ai_handler(SF_CGdBattleDevelopment *_this,
             uint16_t ally_index =
                 _this->battleData.ally_figures.data[i].entity_index;
             if ((figureAPI.isAlive(_this->battleData.CGdFigure, ally_index)) &&
-                (figureAPI.isWarrior(_this->battleData.CGdFigure,
-                                     ally_index)) &&
-                (!toolboxAPI.hasSpellOnIt(_this->battleData.CGdFigureToolBox,
-                                          ally_index, spell_line)))
+                (figureAPI.isWarrior(_this->battleData.CGdFigure, ally_index)) &&
+                (!toolboxAPI.hasSpellOnIt(_this->battleData.CGdFigureToolBox, ally_index, spell_line)))
             {
                 figure_count++;
             }
@@ -309,8 +312,7 @@ uint32_t __thiscall riposte_ability_ai_handler(SF_CGdBattleDevelopment *_this,
     }
     else
     {
-        if (figureAPI.getCurrentHealthPercent(_this->battleData.CGdFigure,
-                                              target_index) > 80)
+        if (figureAPI.getCurrentHealthPercent(_this->battleData.CGdFigure, target_index) > 80)
         {
             rank = 0;
         }
@@ -415,8 +417,7 @@ uint32_t __thiscall berserk_ai_handler(SF_CGdBattleDevelopment *_this,
         // Berserk level 101 is special case for trolls
         if (spell_data->skill_requirements[2] > 100)
         {
-            if (figureAPI.getCurrentHealthPercent(_this->battleData.CGdFigure,
-                                                  target_index) > 25)
+            if (figureAPI.getCurrentHealthPercent(_this->battleData.CGdFigure, target_index) > 25)
             {
                 rank = 0;
             }
@@ -439,8 +440,7 @@ uint32_t __thiscall blessing_ai_handler(SF_CGdBattleDevelopment *_this,
     else
     {
         if (figureAPI.getCurrentHealthPercent(_this->battleData.CGdFigure,
-                                              target_index) >
-            (100 - spell_data->params[0]))
+                                              target_index) > (100 - spell_data->params[0]))
         {
             rank = 0;
         }
@@ -471,15 +471,12 @@ uint32_t __thiscall benefactions_ai_handler(SF_CGdBattleDevelopment *_this,
                 _this->battleData.ally_figures.data[i].entity_index;
             if (figureAPI.isAlive(_this->battleData.CGdFigure, ally_index))
             {
-                if (!toolboxAPI.hasSpellOnIt(_this->battleData.CGdFigureToolBox,
-                                             ally_index, spell_line))
+                if (!toolboxAPI.hasSpellOnIt(_this->battleData.CGdFigureToolBox, ally_index, spell_line))
                 {
-                    if (figureAPI.isWarrior(_this->battleData.CGdFigure,
-                                            ally_index))
+                    if (figureAPI.isWarrior(_this->battleData.CGdFigure, ally_index))
                     {
                         if (figureAPI.getCurrentHealthPercent(
-                                _this->battleData.CGdFigure,
-                                ally_index) < (100 - spell_data->params[0]))
+                                _this->battleData.CGdFigure, ally_index) < (100 - spell_data->params[0]))
                         {
                             figures_count++;
                         }
@@ -514,9 +511,7 @@ uint32_t __thiscall shift_life_ai_handler(SF_CGdBattleDevelopment *_this,
     }
     else
     {
-        uint16_t percent =
-            figureAPI.getCurrentHealthPercent(_this->battleData.CGdFigure,
-                                              target_index);
+        uint16_t percent = figureAPI.getCurrentHealthPercent(_this->battleData.CGdFigure, target_index);
         // hardcode value is 75% gamedata value is 50%, i go with gamedata value
         if (percent > (100 - spell_data->params[1]))
         {
@@ -547,8 +542,7 @@ uint32_t __thiscall critical_hits_ai_handler(SF_CGdBattleDevelopment *_this,
                                               _this->battleData.autoclass22,
                                               _this->battleData.CGdWorld);
         figureAPI.getPosition(_this->battleData.CGdFigure, &pos, target_index);
-        if (toolboxAPI.isUnitMelee(_this->battleData.CGdFigureToolBox,
-                                   target_index))
+        if (toolboxAPI.isUnitMelee(_this->battleData.CGdFigureToolBox, target_index))
         {
             iteratorAPI.iteratorSetArea(&iter, &pos, 2);
         }
@@ -560,18 +554,13 @@ uint32_t __thiscall critical_hits_ai_handler(SF_CGdBattleDevelopment *_this,
         uint16_t figure_id = iteratorAPI.getNextFigure(&iter);
         while (figure_id != 0)
         {
-            if (_this->battleData.CGdFigure->figures[figure_id].owner !=
-                (uint16_t)-1)
+            if (_this->battleData.CGdFigure->figures[figure_id].owner != (uint16_t)-1)
             {
-                if (toolboxAPI.figuresCheckHostile(
-                        _this->battleData.CGdFigureToolBox, target_index,
-                        figure_id))
+                if (toolboxAPI.figuresCheckHostile( _this->battleData.CGdFigureToolBox, target_index, figure_id))
                 {
-                    if (figureAPI.isAlive(_this->battleData.CGdFigure,
-                                          figure_id))
+                    if (figureAPI.isAlive(_this->battleData.CGdFigure, figure_id))
                     {
-                        if (figureAPI.getCurrentHealthPercent(
-                                _this->battleData.CGdFigure, figure_id) < 50)
+                        if (figureAPI.getCurrentHealthPercent(_this->battleData.CGdFigure, figure_id) < 50)
                         {
                             should_use = true;
                             break;
@@ -633,8 +622,7 @@ uint32_t __thiscall sacrifice_mana_ai_handler(SF_CGdBattleDevelopment *_this,
             }
             else
             {
-                rank = (current_health * 2 - max_health) /
-                       (max_health * max_health);
+                rank = (current_health * 2 - max_health) / (max_health * max_health);
             }
         }
     }
@@ -651,8 +639,7 @@ uint32_t __thiscall tower_extinct_ai_handler(SF_CGdBattleDevelopment *_this,
                                              SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 1;
-    ushort_list_node node =
-        _this->battleData.another_figure_list[_this->battleData.current_figure];
+    ushort_list_node node = _this->battleData.another_figure_list[_this->battleData.current_figure];
     uint16_t list_length = ((uint32_t)node.data - (uint32_t)node.first) >> 1;
     if ((_this->battleData.enemy_figures.entityCount == 0) ||
         (list_length == 0))
@@ -661,13 +648,10 @@ uint32_t __thiscall tower_extinct_ai_handler(SF_CGdBattleDevelopment *_this,
     }
     else
     {
-        _this->battleData.current_source_maybe.entity_index =
-            _this->battleData.current_figure;
+        _this->battleData.current_source_maybe.entity_index = _this->battleData.current_figure;
         _this->battleData.current_source_maybe.entity_type = 1;
-        _this->battleData.current_source_maybe.position.X =
-            _this->battleData.current_figure_pos.X;
-        _this->battleData.current_source_maybe.position.Y =
-            _this->battleData.current_figure_pos.Y;
+        _this->battleData.current_source_maybe.position.X = _this->battleData.current_figure_pos.X;
+        _this->battleData.current_source_maybe.position.Y = _this->battleData.current_figure_pos.Y;
     }
     return rank;
 }
@@ -684,18 +668,14 @@ uint32_t __thiscall extinct_ai_handler(SF_CGdBattleDevelopment *_this,
         uint16_t count = 0;
         for (int i = 0; i < _this->battleData.enemy_figures.entityCount; i++)
         {
-            uint16_t figure_index =
-                _this->battleData.enemy_figures.data[i].entity_index;
+            uint16_t figure_index = _this->battleData.enemy_figures.data[i].entity_index;
             if (figureAPI.isAlive(_this->battleData.CGdFigure, figure_index))
             {
                 if (figureAPI.getCurrentStat(_this->battleData.CGdFigure, figure_index, HEALTH) < threshold)
                 {
                     SF_Coord position;
-                    figureAPI.getPosition(_this->battleData.CGdFigure,
-                                          &position, figure_index);
-                    uint16_t distance = getDistance(&position,
-                                                    &(_this->battleData.
-                                                      current_figure_pos));
+                    figureAPI.getPosition(_this->battleData.CGdFigure, &position, figure_index);
+                    uint16_t distance = getDistance(&position, &(_this->battleData.current_figure_pos));
                     if (distance < 10)
                     {
                         count++;
@@ -775,8 +755,7 @@ uint32_t __thiscall amok_ai_handler(SF_CGdBattleDevelopment *_this,
 {
     uint32_t rank = 2;
     if ((_this->battleData.enemy_figures.entityCount < 2) ||
-        (spell_data->params[2] <
-         _this->battleData.current_target_level_possibly))
+        (spell_data->params[2] < _this->battleData.current_target_level_possibly))
     {
         rank = 0;
     }
@@ -800,8 +779,7 @@ uint32_t __thiscall hypnotize_ai_handler(SF_CGdBattleDevelopment *_this,
     }
     else
     {
-        if (toolboxAPI.isUnitMelee(_this->battleData.CGdFigureToolBox,
-                                   target_index))
+        if (toolboxAPI.isUnitMelee(_this->battleData.CGdFigureToolBox, target_index))
         {
             rank = 4;
         }
@@ -863,15 +841,12 @@ uint32_t __thiscall lifetap_ai_handler(SF_CGdBattleDevelopment *_this,
                                        SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 2;
-    uint16_t percent =
-        figureAPI.getCurrentHealthPercent(_this->battleData.CGdFigure,
-                                          _this->battleData.current_figure);
+    uint16_t percent = figureAPI.getCurrentHealthPercent(_this->battleData.CGdFigure, _this->battleData.current_figure);
     if (percent > 95)
     {
         rank = 0;
     }
-    percent = figureAPI.getCurrentHealthPercent(_this->battleData.CGdFigure,
-                                                target_index);
+    percent = figureAPI.getCurrentHealthPercent(_this->battleData.CGdFigure, target_index);
     if (percent > 10)
     {
         rank = 0;
@@ -900,10 +875,8 @@ uint32_t __thiscall charm_ai_handler(SF_CGdBattleDevelopment *_this,
                                      SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 2;
-    if ((figureAPI.isFlagSet(_this->battleData.CGdFigure, target_index,
-                             UNKILLABLE)) ||
-        (spell_data->params[6] <
-         _this->battleData.current_target_level_possibly))
+    if ((figureAPI.isFlagSet(_this->battleData.CGdFigure, target_index, UNKILLABLE)) ||
+        (spell_data->params[6] < _this->battleData.current_target_level_possibly))
     {
         rank = 0;
     }
@@ -916,8 +889,7 @@ uint32_t __thiscall hallow_ai_handler(SF_CGdBattleDevelopment *_this,
                                       SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 2;
-    if ((_this->battleData.CGdFigure->figures[target_index].flags &
-         GdFigureFlags::UNDEAD) == 0)
+    if ((_this->battleData.CGdFigure->figures[target_index].flags & GdFigureFlags::UNDEAD) == 0)
     {
         rank = 0;
     }
@@ -955,8 +927,7 @@ uint32_t __thiscall confuse_ai_handler(SF_CGdBattleDevelopment *_this,
                                        SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 2;
-    if (!toolboxAPI.isUnitMelee(_this->battleData.CGdFigureToolBox,
-                                target_index))
+    if (!toolboxAPI.isUnitMelee(_this->battleData.CGdFigureToolBox, target_index))
     {
         rank = 0;
     }
@@ -991,6 +962,22 @@ uint32_t __thiscall befriend_ai_handler(SF_CGdBattleDevelopment *_this,
     return rank;
 }
 
+uint32_t __thiscall disenchant_ai_handler(SF_CGdBattleDevelopment *_this,
+                                          uint16_t target_index,
+                                          uint16_t spell_line,
+                                          SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 2;
+    if (spell_data->params[0] < _this->battleData.current_target_level_possibly)
+    {
+        rank = 0;
+    }
+    if (_this->battleData.CGdFigure->figures[target_index].current_job.task != TASK_PET)
+    {
+        rank = 0;
+    }
+    return rank;
+}
 uint32_t __thiscall dispel_white_aura_ai_handler(SF_CGdBattleDevelopment *_this,
                                                  uint16_t target_index,
                                                  uint16_t spell_line,
@@ -1031,19 +1018,13 @@ uint32_t __thiscall dispel_black_aura_ai_handler(SF_CGdBattleDevelopment *_this,
     if (toolboxAPI.hasAuraActive(_this->battleData.CGdFigureToolBox,
                                  target_index))
     {
-        for (uint16_t node_id =
-                 figureAPI.getSpellJobStartNode(_this->battleData.CGdFigure,
-                                                target_index);
+        for (uint16_t node_id = figureAPI.getSpellJobStartNode(_this->battleData.CGdFigure, target_index);
              node_id != 0;
-             node_id =
-                 toolboxAPI.getNextNode(
-                     (uint32_t *) _this->battleData.CGdDoubleLinkList, node_id))
+             node_id = toolboxAPI.getNextNode((uint32_t *) _this->battleData.CGdDoubleLinkList, node_id))
         {
-            uint16_t spell_index =
-                toolboxAPI.getSpellIndexFromDLL(
-                    (uint32_t *) _this->battleData.CGdDoubleLinkList, node_id);
-            uint16_t spell_line =
-                spellAPI.getSpellLine(_this->battleData.CGdSpell, spell_index);
+            uint16_t spell_index = toolboxAPI.getSpellIndexFromDLL((uint32_t *) _this->battleData.CGdDoubleLinkList,
+                                                                   node_id);
+            uint16_t spell_line = spellAPI.getSpellLine(_this->battleData.CGdSpell, spell_index);
             if (spellAPI.hasSpellTag(spell_line, SpellTag::BLACK_AURA_SPELL))
             {
                 hasAura = true;
@@ -1072,10 +1053,47 @@ uint32_t __thiscall dominate_ai_handler(SF_CGdBattleDevelopment *_this,
                                         SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 2;
-    if ((spell_data->params[2] <
-         _this->battleData.current_target_level_possibly) ||
-        (figureAPI.isFlagSet(_this->battleData.CGdFigure, target_index,
-                             UNKILLABLE)))
+    if ((spell_data->params[2] < _this->battleData.current_target_level_possibly) ||
+        (figureAPI.isFlagSet(_this->battleData.CGdFigure, target_index, UNKILLABLE)))
+    {
+        rank = 0;
+    }
+    return rank;
+}
+
+uint32_t __thiscall dominate_animal_ai_handler(SF_CGdBattleDevelopment *_this,
+                                               uint16_t target_index,
+                                               uint16_t spell_line,
+                                               SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 2;
+    if ((spell_data->params[2] < _this->battleData.current_target_level_possibly) ||
+        (figureAPI.isFlagSet(_this->battleData.CGdFigure, target_index, UNKILLABLE)))
+    {
+        rank = 0;
+    }
+    uint8_t race = _this->battleData.CGdFigure->figures[target_index].race;
+    //TODO CGdResource::isRaceAnimal passthrough
+    if (false)
+    {
+        rank = 0;
+    }
+    return rank;
+}
+
+
+uint32_t __thiscall dominate_undead_ai_handler(SF_CGdBattleDevelopment *_this,
+                                               uint16_t target_index,
+                                               uint16_t spell_line,
+                                               SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 2;
+    if ((spell_data->params[2] < _this->battleData.current_target_level_possibly) ||
+        (figureAPI.isFlagSet(_this->battleData.CGdFigure, target_index, UNKILLABLE)))
+    {
+        rank = 0;
+    }
+    if (!figureAPI.isFlagSet(_this->battleData.CGdFigure, target_index, UNDEAD))
     {
         rank = 0;
     }
