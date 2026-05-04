@@ -528,9 +528,17 @@ static void figure_statistic_hook_current_hp()
     *(unsigned char *)(ASI::AddrOf(0x279350)) = 0x90; // nop
     *(unsigned char *)(ASI::AddrOf(0x279351)) = 0x90; // nop
     *(unsigned char *)(ASI::AddrOf(0x279352)) = 0xE9; // jmp instruction
-    *(int *)(ASI::AddrOf(0x279353)) = (int)(&get_figure_statistic_current_hp)-
-                                      ASI::AddrOf((0x279357));
+    *(int *)(ASI::AddrOf(0x279353)) = (int)(&get_figure_statistic_current_hp)- ASI::AddrOf((0x279357));
     ASI::EndRewrite(ac_mreg);
+
+    ASI::MemoryRegion ac_mreg2 (ASI::AddrOf(0x2b2970), 7);
+    ASI::BeginRewrite(ac_mreg2);
+    *(unsigned char *)(ASI::AddrOf(0x2b2970)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x2b2971)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x2b2972)) = 0xE9; // jmp instruction
+    *(int *)(ASI::AddrOf(0x2b2973)) = (int)(&get_figure_statistic_max_hp)- ASI::AddrOf((0x2b2977));
+    ASI::EndRewrite(ac_mreg2);
+
 }
 
 static void figure_statistic_hook_current_mp()
@@ -540,9 +548,17 @@ static void figure_statistic_hook_current_mp()
     *(unsigned char *)(ASI::AddrOf(0x2b29c0)) = 0x90; // nop
     *(unsigned char *)(ASI::AddrOf(0x2b29c1)) = 0x90; // nop
     *(unsigned char *)(ASI::AddrOf(0x2b29c2)) = 0xE9; // jmp instruction
-    *(int *)(ASI::AddrOf(0x2b29c3)) = (int)(&get_figure_statistic_current_mp)-
-                                      ASI::AddrOf((0x2b29c7));
+    *(int *)(ASI::AddrOf(0x2b29c3)) = (int)(&get_figure_statistic_current_mp) - ASI::AddrOf((0x2b29c7));
     ASI::EndRewrite(ac_mreg);
+
+    ASI::MemoryRegion ac_mreg2 (ASI::AddrOf(0x2b2a20), 7);
+    ASI::BeginRewrite(ac_mreg2);
+    *(unsigned char *)(ASI::AddrOf(0x2b2a20)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x2b2a21)) = 0x90; // nop
+    *(unsigned char *)(ASI::AddrOf(0x2b2a22)) = 0xE9; // jmp instruction
+    *(int *)(ASI::AddrOf(0x2b2a23)) = (int)(&get_figure_statistic_max_mp) - ASI::AddrOf((0x2b2a27));
+    ASI::EndRewrite(ac_mreg2);
+
 }
 
 static void figure_statistic_hook_current_sta()
