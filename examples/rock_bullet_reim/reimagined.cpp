@@ -1,4 +1,5 @@
-#include "api/sfsf.h"
+#include "../../src/api/sfsf.h"
+
 
 // NOTE sfsf.h includes the OTHER api files, but other libraries are still required
 #include <windows.h>
@@ -11,6 +12,7 @@ ToolboxFunctions *toolboxAPI;
 FigureFunctions *figureAPI;
 EffectFunctions *effectAPI;
 RegistrationFunctions *registrationAPI;
+SFLog *logAPI;
 
 //TODO: export this function somewhere?
 uint32_t getDistance(SF_Coord *pointA, SF_Coord *pointB)
@@ -667,6 +669,144 @@ uint16_t __thiscall spark_enchant_handler(SF_CGdFigure *_this, uint16_t figure_i
  * otherwise framework won't load your plugin
  ***/
 
+/*  Summons fix  */
+
+bool __thiscall isTower(SF_CGdFigure *_this, uint16_t figure_index)
+{
+    return _this->figures[figure_index].flags >> 11 & 1;
+}
+
+bool __thiscall isInMapBounds(SF_CGdWorld *_this, SF_Coord *position)
+{
+    if ((position->X < _this->map_size) && (position->Y < _this->map_size))
+    {
+        return 1;
+    }
+    return 0;
+}
+
+uint16_t __thiscall getSector(SF_CGdWorld *_this, SF_Coord *position)
+{
+    uint32_t index = position->X + position->Y * 0x400;
+    return _this->cells[index].sector;
+}
+
+uint16_t __thiscall summonCreature(SF_CGdFigureToolbox *_this, uint16_t master_index, uint16_t creature_type)
+{
+    logAPI->logInfo("Summon creature triggered!");
+    SF_Coord master_postion;
+    SF_Coord summon_pos;
+    uint16_t summon_index = 0;
+    figureAPI->getPosition(_this->CGdFigure, &master_postion, master_index);
+    summon_pos.X = master_postion.X;
+    summon_pos.Y = master_postion.Y;
+    if (isTower(_this->CGdFigure, master_index))
+    {
+        for (int i = 0; i < 9999; i++)
+        {
+            uint16_t someX = _this->CGdWorld->unknown1[i].uknwn1;
+            uint16_t someY = _this->CGdWorld->unknown1[i].uknwn2;
+            SF_Coord new_pos = {someX, someY};
+            new_pos.X += master_postion.X;
+            new_pos.Y += master_postion.Y;
+            if (isInMapBounds(_this->CGdWorld, &new_pos) && getSector(_this->CGdWorld, &new_pos))
+            {
+                summon_pos.X = new_pos.X;
+                summon_pos.Y = new_pos.Y;
+                break;
+            }
+        }
+    }
+    uint16_t sector = getSector(_this->CGdWorld, &summon_pos);
+    SF_Coord offset = {1, 4};
+    SF_Coord real_pos = {0, 0};
+
+    if (toolboxAPI->findClosestFreePosition(_this->CGdWorldToolBox, &summon_pos, &offset, sector, &real_pos))
+    {
+        uint16_t owner = _this->CGdFigure->figures[master_index].owner;
+        summon_index = toolboxAPI->addUnit(_this, real_pos.X, real_pos.Y, owner, creature_type, 0x13, 0, 100, 0);
+        if (summon_index != 0)
+        {
+            figureAPI->setTask(_this->CGdFigure, summon_index, TASK_PET);
+            figureAPI->setJob(_this->CGdFigureJobs,summon_index, kGdJobPetIdle);
+            _this->CGdFigure->figures[summon_index].master_figure = master_index;
+            _this->CGdFigure->figures[summon_index].flags &= ~(FOLLOW_MODE);
+        }
+    }
+    return summon_index;
+}
+
+void __thiscall summon_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    SF_CGdResourceSpell spell_data;
+    // we pull the pointer for this instance of spell
+    SF_GdSpell *spell = &_this->active_spell_list[spell_index];
+    uint16_t source_index = spell->source.entity_index;
+    spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+    uint32_t tick_number = spellAPI->getXData(_this, spell_index, SPELL_TICK_COUNT_AUX);
+    if (tick_number == 0)
+    {
+        uint16_t target_index = summonCreature(_this->SF_CGdFigureToolBox, source_index, spell_data.params[2]);
+        if (target_index != 0)
+        {
+            toolboxAPI->addSpellToFigure(_this->SF_CGdFigureToolBox, target_index, spell_index);
+            spellAPI->addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1);
+            _this->active_spell_list[spell_index].to_do_count = (spell_data.params[0] * 10) / 1000;
+            _this->active_spell_list[spell_index].target.entity_index = target_index;
+            _this->active_spell_list[spell_index].target.entity_type = 1;
+            _this->active_spell_list[spell_index].target.position.X = 0;
+            _this->active_spell_list[spell_index].target.position.Y = 0;
+            return;
+        }
+    }
+    else
+    {
+        uint16_t required_mana =  spell_data.params[1];
+        if ((_this->SF_CGdFigure->figures[source_index].set_type == 10))
+        {
+            required_mana = required_mana >> 1;
+        }
+        uint16_t current_mana = figureAPI->getCurrentStat(_this->SF_CGdFigure, source_index, MANA);
+        if (current_mana >= required_mana)
+        {
+            _this->active_spell_list[spell_index].to_do_count = (spell_data.params[0] * 10) / 1000;
+            figureAPI->subMana(_this->SF_CGdFigure, source_index, required_mana);
+            return;
+        }
+        else
+        {
+            SF_Rectangle some_rect = {0, 0};
+            SF_CGdTargetData target;
+            uint16_t target_index = spell->target.entity_index;
+            target.entity_index = target_index;
+            target.position = {0, 0};
+            target.entity_type = 1;
+            uint32_t unused;
+            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &target,
+                                      _this->OpaqueClass->current_step, 0x19, &some_rect);
+            if ((figureAPI->isAlive(_this->SF_CGdFigure, target.entity_index)) &&
+                (_this->SF_CGdFigure->figures[target_index].owner != (uint16_t)(-1)) &&
+                (_this->SF_CGdFigure->figures[source_index].owner != (uint16_t)(-1)))
+            {
+                toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, 0, target_index, 0x7FFF, 1, 0, 0);
+            }
+            else
+            {
+                toolboxAPI->removeSpellFromList(_this->SF_CGdFigureToolBox, source_index, spell_index);
+                toolboxAPI->removeSpellFromList(_this->SF_CGdFigureToolBox, target_index, spell_index);
+            }
+            if (_this->SF_CGdFigure->figures[target.entity_index].owner != (uint16_t)(-1))
+            {
+                logAPI->logInfo("Broken figure, index [%d] spell [%d] type [%d]",
+                                target.entity_index, spell_index, spell->spell_line);
+            }
+
+        }
+    }
+    spellAPI->setEffectDone(_this, spell_index, 0);
+}
+
+
 extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *framework)
 {
     sfsf = framework;
@@ -675,6 +815,10 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     figureAPI = sfsf->figureAPI;
     registrationAPI = sfsf->registrationAPI;
     effectAPI = sfsf->effectAPI;
+    logAPI = sfsf->logAPI;
+
+    SFSpell *summon_spell = registrationAPI->registerSpell(kGdSpellLineSummonBear);              // just pull any summoning spell
+    registrationAPI->linkEffectHandler(summon_spell, kGdSpellJobSummon, &summon_effect_handler); // and overwrite it's effect handler which is common
 
 /* EXAMPLE
         SFSpell *fire_burst = registrationAPI->registerSpell(ORIGINALSPELLID);

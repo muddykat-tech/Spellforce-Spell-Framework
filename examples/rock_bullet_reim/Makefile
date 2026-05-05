@@ -1,12 +1,12 @@
 CC = g++
 DLL_CFLAGS = -O0 -g -std=c++11 ${WARNS} -Iinclude -DADD_EXPORTS -fpermissive
-DLL_LDFLAGS = -shared -static-libgcc -static-libstdc++ -s -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive -Wl,--subsystem,windows,--out-implib,lib/rock_bullet.a
-MOD_OBJ = obj/rock_bullet.o
+DLL_LDFLAGS = -shared -static-libgcc -static-libstdc++ -s -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive -Wl,--subsystem,windows,--out-implib,lib/reimagined.a
+MOD_OBJ = obj/reimagined.o
 
 .PHONY: all clean
 
 # Default target
-all: bin/rock_bullet.sfm
+all: bin/reimagined.sfm
 
 # Target for cleaning up
 clean:
@@ -19,8 +19,8 @@ bin lib obj:
 	@if not exist "$@" mkdir "$@"
 
 #mod build
-obj/rock_bullet.o: rock_bullet.cpp | obj
+obj/reimagined.o: reimagined.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
-bin/rock_bullet.sfm: ${MOD_OBJ} | bin lib
+bin/reimagined.sfm: ${MOD_OBJ} | bin lib
 	${CC} -o "$@" ${MOD_OBJ} ${DLL_LDFLAGS}
