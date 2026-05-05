@@ -607,11 +607,11 @@ static void initialize_utility_hooks()
     ASI::EndRewrite(is_aoe_line_mreg);
 
     log_info("Hooking Aura Detection");
-    ASI::MemoryRegion is_aura_mreg (ASI::AddrOf(0x32ae20), 5);
-    ASI::BeginRewrite(is_aura_mreg);
+    ASI::MemoryRegion is_aura_spell_line_mreg (ASI::AddrOf(0x32ae20), 5);
+    ASI::BeginRewrite(is_aura_spell_line_mreg);
     *(unsigned char *)(ASI::AddrOf(0x32ae20)) = 0xE9; // JUMP instruction
     *(int *)(ASI::AddrOf(0x32ae21)) = (int)(&is_aura_spell) - ASI::AddrOf(0x32ae25);
-    ASI::EndRewrite(is_aura_mreg);
+    ASI::EndRewrite(is_aura_spell_line_mreg);
 
     log_info("Hooking Black Aura Detection");
     ASI::MemoryRegion is_black_aura_mreg (ASI::AddrOf(0x32aec0), 5);
@@ -627,12 +627,12 @@ static void initialize_utility_hooks()
     *(int *)(ASI::AddrOf(0x32af01)) = (int)(&is_white_aura_spell) - ASI::AddrOf(0x32af05);
     ASI::EndRewrite(is_white_aura_mreg);
 
-    log_info("Hooking Summon Spell Detection");
-    ASI::MemoryRegion is_summon_spell_mreg (ASI::AddrOf(0x32b060), 5);
-    ASI::BeginRewrite(is_summon_spell_mreg);
+    log_info("Hooking Summon Spell Line Detection");
+    ASI::MemoryRegion is_summon_spell_line_mreg (ASI::AddrOf(0x32b060), 5);
+    ASI::BeginRewrite(is_summon_spell_line_mreg);
     *(unsigned char *)(ASI::AddrOf(0x32b060)) = 0xE9; // JUMP instruction
     *(int *)(ASI::AddrOf(0x32b061)) = (int)(&is_summon_spellline) - ASI::AddrOf(0x32b065);
-    ASI::EndRewrite(is_summon_spell_mreg);
+    ASI::EndRewrite(is_summon_spell_line_mreg);
 
     log_info("Hooking Domination Spell Detection");
     ASI::MemoryRegion is_domination_spell_mreg (ASI::AddrOf(0x32ac20), 5);

@@ -28,10 +28,8 @@ uint16_t __thiscall durability_dmg_handler(SF_CGdFigureToolbox *_this,
     if ((!is_ranged_damage) && (!is_spell_damage))
     {
         SF_CGdResourceSpell spell_data;
-        spellAPI.getResourceSpellData(_this->CGdResource, &spell_data,
-                                      spell_id);
-        current_damage = (uint16_t)((current_damage * spell_data.params[1]) /
-                                    100);
+        spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
+        current_damage = (uint16_t)((current_damage * spell_data.params[1]) / 100);
         return current_damage;
     }
     return current_damage;
@@ -80,9 +78,7 @@ uint16_t __thiscall conservation_dmg_handler(SF_CGdFigureToolbox *_this,
     {
         uint16_t spell_index = toolboxAPI.getSpellIndexOfType(_this, target,
                                                               0x8c, 0);
-        uint16_t shield_value = (uint16_t)spellAPI.getXData(_this->CGdSpell,
-                                                            spell_index,
-                                                            SPELL_CONSERVATION_SHIELD);
+        uint16_t shield_value = (uint16_t)spellAPI.getXData(_this->CGdSpell, spell_index, SPELL_CONSERVATION_SHIELD);
         if (shield_value < current_damage)
         {
             current_damage = current_damage - shield_value;
@@ -93,8 +89,7 @@ uint16_t __thiscall conservation_dmg_handler(SF_CGdFigureToolbox *_this,
             shield_value = shield_value - current_damage;
             current_damage = 0;
         }
-        spellAPI.setXData(_this->CGdSpell, spell_index,
-                          SPELL_CONSERVATION_SHIELD, shield_value);
+        spellAPI.setXData(_this->CGdSpell, spell_index, SPELL_CONSERVATION_SHIELD, shield_value);
         if (shield_value == 0)
         {
             spellAPI.figTryClrCHkSPlBfrJob2(_this->CGdSpell, spell_index);
@@ -181,9 +176,7 @@ uint16_t __thiscall hypnotize_dmg_handler(SF_CGdFigureToolbox *_this,
 {
     SF_CGdResourceSpell spell_data;
     spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
-    uint16_t spell_index = toolboxAPI.getSpellIndexOfType(_this, target,
-                                                          spell_data.
-                                                          spell_line_id, 0);
+    uint16_t spell_index = toolboxAPI.getSpellIndexOfType(_this, target, spell_data.spell_line_id, 0);
     while (spell_index != 0)
     {
         spellAPI.figTryUnfreeze(_this->CGdSpell, spell_index, 0);
@@ -191,9 +184,7 @@ uint16_t __thiscall hypnotize_dmg_handler(SF_CGdFigureToolbox *_this,
         spellAPI.figClrChkSplBfrChkBattle(_this->CGdSpell, spell_index, 0);
         spellAPI.removeDLLNode(_this->CGdSpell, spell_index);
         spellAPI.setEffectDone(_this->CGdSpell, spell_index, 0);
-        spell_index = toolboxAPI.getSpellIndexOfType(_this, target,
-                                                     spell_data.spell_line_id,
-                                                     0);
+        spell_index = toolboxAPI.getSpellIndexOfType(_this, target, spell_data.spell_line_id, 0);
     }
     return current_damage;
 }
@@ -220,8 +211,7 @@ uint16_t __thiscall mana_shield_dmg_handler(SF_CGdFigureToolbox *_this,
     SF_CGdTargetData source_data = {0, 0, {0, 0}};
     SF_CGdTargetData target_data = {1, target, {0, 0}};
     SF_Rectangle rect = {0, 0};
-    effectAPI.addEffect(_this->CGdEffect, kGdEffectSpellManaShieldHitFigure,
-                        &source_data, &target_data,
+    effectAPI.addEffect(_this->CGdEffect, kGdEffectSpellManaShieldHitFigure, &source_data, &target_data,
                         _this->maybe_random->current_step, 0x14, &rect);
     return current_damage;
 }

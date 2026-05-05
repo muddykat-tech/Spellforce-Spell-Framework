@@ -6,33 +6,22 @@
 #include "sf_spellrefresh_handlers.h"
 
 // default case for spells with duration refresh
-int __thiscall first_block_refresh_handler(SF_CGdSpell *_this,
-                                           uint16_t spell_index)
+int __thiscall first_block_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
-#if _DEBUG_
-    log_info("first block refresh handler called");
-#endif
-    // This is the first block of spells in Ghidra, however we've made exceptions to this rule, by moving warcry, patronize, and endurence to a specific handler
-    // moving stuff covered by "onSpellRemove" to specific handlers ~UnSchtalch
     uint16_t spell_line = _this->active_spell_list[spell_index].spell_line;
-    uint16_t target_entity_index =
-        _this->active_spell_list[spell_index].target.entity_index;
-    bool hasSpell = toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox,
-                                            target_entity_index, spell_line);
+    uint16_t target_entity_index = _this->active_spell_list[spell_index].target.entity_index;
+    bool hasSpell = toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_entity_index, spell_line);
 
     if (hasSpell)
     {
-        uint16_t spell_index_of_type =
-            toolboxAPI.getSpellIndexOfType(_this->SF_CGdFigureToolBox,
-                                           target_entity_index, spell_line,
-                                           spell_index);
+        uint16_t spell_index_of_type = toolboxAPI.getSpellIndexOfType(_this->SF_CGdFigureToolBox, target_entity_index,
+                                                                      spell_line, spell_index);
         if (spell_index_of_type)
         {
             spellAPI.removeDLLNode(_this, spell_index_of_type);
             spellAPI.setEffectDone(_this, spell_index_of_type, 0);
         }
     }
-
     return 1;
 }
 // case 0x04
