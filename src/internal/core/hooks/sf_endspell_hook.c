@@ -53,8 +53,13 @@ void __thiscall sf_figure_end_spells_hook(SF_CGdFigureToolbox *_this, uint16_t f
     while (spell_node != 0)
     {
         uint16_t spell_index = toolboxAPI.getSpellIndexFromDLL(_this->CGdDoubleLinkedList, spell_node);
-        if (!spellAPI.hasSpellTag(spell_index, SpellTag::AOE_SPELL))
+        uint16_t spell_line = _this->CGdSpell->active_spell_list[spell_index].spell_line;
+        if (!spellAPI.hasSpellTag(spell_line, SpellTag::AOE_SPELL))
         {
+            if (spellAPI.hasSpellTag(spell_line, SpellTag::AURA_SPELL))
+            {
+                log_info("Aura spell termination spell [%d] spell line [%d]", spell_index, spell_line);
+            }
             sf_endspell_hook(_this->CGdSpell, spell_index);
             toolboxAPI.removeSpellFromList(_this, figure_id, spell_node);
         }
