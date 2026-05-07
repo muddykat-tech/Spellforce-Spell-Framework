@@ -63,7 +63,7 @@ void __thiscall aura_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
     SF_CGdFigure *sf_figures = _this->SF_CGdFigure;
     uint16_t source_index = _this->active_spell_list[spell_index].source.entity_index;
     if ((sf_figures->figures[source_index].owner != (uint16_t)(-1)) &&
-        ((sf_figures->figures[source_index].flags & GdFigureFlags::REDO) == 0))
+        ((sf_figures->figures[source_index].flags & (IS_DEAD | RESESRVED_ONLY)) == 0))
     {
 
         /*

@@ -44,7 +44,7 @@ void register_vanilla_spell_end_handlers()
     // As we define ALL of the end handlers ourself inside sf_spellend_handlers.cpp, we do NOT need to initialize them here. (unlike sf_spelleffect_registry.cpp)
 
     // Basic Spells that use OnSpellRemove and the default handlers
-    registerSpellEndHandler(0x04, &slowness_end_handler);
+    registerSpellEndHandler(kGdSpellLineSlowness, &slowness_end_handler);
     registerSpellEndHandler(0x10, &decay1_end_handler);
     registerSpellEndHandler(0x22, &inflexibility_end_handler);
     registerSpellEndHandler(0x23, &weaken_end_handler);
@@ -80,8 +80,8 @@ void register_vanilla_spell_end_handlers()
     registerSpellEndHandler(0x80, &common_handler_check_battle);
 
     // Freeze, Petrify
-    registerSpellEndHandler(0x09, &common_handler_check_unfreeze);
-    registerSpellEndHandler(0x19, &common_handler_check_unfreeze);
+    registerSpellEndHandler(kGdSpellLineFreeze, &common_handler_check_unfreeze);
+    registerSpellEndHandler(kGdSpellLinePetrify, &common_handler_check_unfreeze);
 
     registerSpellEndHandler(0x0a, &fog_end_handler);
 
@@ -103,34 +103,34 @@ void register_vanilla_spell_end_handlers()
     registerSpellEndHandler(0x56, &common_handler_job_battle_check2);
 
     // Goto section in switch
-    registerSpellEndHandler(0x11, &common_handler_done);
-    registerSpellEndHandler(0x25, &common_handler_done);
-    registerSpellEndHandler(0x26, &common_handler_done);
-    registerSpellEndHandler(0x27, &common_handler_done);
-    registerSpellEndHandler(0x28, &common_handler_done);
-    registerSpellEndHandler(0x31, &common_handler_done);
-    registerSpellEndHandler(0x33, &common_handler_done);
-    registerSpellEndHandler(0x35, &common_handler_done);
-    registerSpellEndHandler(0x49, &common_handler_done);
-    registerSpellEndHandler(0x4a, &common_handler_done);
-    registerSpellEndHandler(0x4b, &common_handler_done);
-    registerSpellEndHandler(0x4c, &common_handler_done);
-    registerSpellEndHandler(0xad, &common_handler_done);
-    registerSpellEndHandler(0xbe, &common_handler_done);
-    registerSpellEndHandler(0xc1, &common_handler_done);
-    registerSpellEndHandler(0xc4, &common_handler_done);
-    registerSpellEndHandler(0xc8, &common_handler_done); // 200 in ghidra switch case
-    registerSpellEndHandler(0xc9, &common_handler_done);
-    registerSpellEndHandler(0xca, &common_handler_done);
-    registerSpellEndHandler(0xcc, &common_handler_done);
-    registerSpellEndHandler(0xcd, &common_handler_done);
-    registerSpellEndHandler(0xcf, &common_handler_done);
-    registerSpellEndHandler(0xd0, &common_handler_done);
-    registerSpellEndHandler(0xd4, &common_handler_done);
-    registerSpellEndHandler(0xd6, &common_handler_done);
-    registerSpellEndHandler(0xd7, &common_handler_done);
-    registerSpellEndHandler(0xd8, &common_handler_done);
-    registerSpellEndHandler(0xd9, &common_handler_done);
+    registerSpellEndHandler(kGdSpellLineDecayArea, &common_handler_done);
+    registerSpellEndHandler(kGdSpellLineSlownessArea, &common_handler_done);
+    registerSpellEndHandler(kGdSpellLineInflexibilityArea, &common_handler_done);
+    registerSpellEndHandler(kGdSpellLineWeakenArea, &common_handler_done);
+    registerSpellEndHandler(kGdSpellLinePlagueArea, &common_handler_done);
+    registerSpellEndHandler(kGdSpellLineQuicknessArea, &common_handler_done);
+    registerSpellEndHandler(kGdSpellLineFlexibilityArea, &common_handler_done);
+    registerSpellEndHandler(kGdSpellLineStrengthenArea, &common_handler_done);
+    registerSpellEndHandler(kGdSpellLineRainOfFire, &common_handler_done);
+    registerSpellEndHandler(kGdSpellLineBlizzard, &common_handler_done);
+    registerSpellEndHandler(kGdSpellLineAcidCloud, &common_handler_done);
+    registerSpellEndHandler(kGdSpellLineStoneRain, &common_handler_done);
+    registerSpellEndHandler(kGdSpellLineFireResistance, &common_handler_done);
+    registerSpellEndHandler(kGdSpellLineChainHallow, &common_handler_done);
+    registerSpellEndHandler(kGdSpellLineChainPain, &common_handler_done);
+    registerSpellEndHandler(kGdSpellLineChainLifetap, &common_handler_done);
+    registerSpellEndHandler(kGdSpellLineDarknessArea, &common_handler_done); // 200 in ghidra switch case
+    registerSpellEndHandler(kGdSpellLineChainMutation, &common_handler_done);
+    registerSpellEndHandler(kGdSpellLineChainFireburst, &common_handler_done);
+    registerSpellEndHandler(kGdSpellLineChainFireball, &common_handler_done);
+    registerSpellEndHandler(kGdSpellLineChainIceburst, &common_handler_done);
+    registerSpellEndHandler(kGdSpellLineFreezeArea, &common_handler_done);
+    registerSpellEndHandler(kGdSpellLineChainRockBullet, &common_handler_done);
+    registerSpellEndHandler(kGdSpellLineChainCharm, &common_handler_done);
+    registerSpellEndHandler(kGdSpellLineChainShock, &common_handler_done);
+    registerSpellEndHandler(kGdSpellLineHypnotizeArea, &common_handler_done);
+    registerSpellEndHandler(kGdSpellLineConfuseArea, &common_handler_done);
+    registerSpellEndHandler(kGdSpellLineChainManatap, &common_handler_done);
 
     registerSpellEndHandler(0x15, &common_handler_check_unfreeze2);
     registerSpellEndHandler(0xa1, &common_handler_check_unfreeze2);

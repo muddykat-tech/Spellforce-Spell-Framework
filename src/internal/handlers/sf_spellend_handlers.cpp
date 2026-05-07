@@ -486,30 +486,27 @@ void __thiscall eternity_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 // Muddykat Section:
 
 // FIRST BLOCK (has a goto, to FigureClearCheckSpellsBeforeCheckBattle; -> break;)
-void __thiscall common_handler_check_battle(SF_CGdSpell *_this,
-                                            uint16_t spell_index)
+void __thiscall common_handler_check_battle(SF_CGdSpell *_this, uint16_t spell_index)
 {
     spellClearFigureFlag(_this, spell_index, CHECK_SPELLS_BEFORE_CHECK_BATTLE);
     default_end_handler(_this, spell_index);
 }
 
-void __thiscall common_handler_unfreeze(SF_CGdSpell *_this,
-                                        uint16_t spell_index)
+void __thiscall common_handler_unfreeze(SF_CGdSpell *_this, uint16_t spell_index)
 {
     spellClearFigureFlag(_this, spell_index, UNFREEZE);
     default_end_handler(_this, spell_index);
 }
 
-void __thiscall common_handler_check_unfreeze(SF_CGdSpell *_this,
-                                              uint16_t spell_index)
+// Freeze, Petrify
+void __thiscall common_handler_check_unfreeze(SF_CGdSpell *_this, uint16_t spell_index)
 {
     spellClearFigureFlag(_this, spell_index, CHECK_SPELLS_BEFORE_CHECK_BATTLE);
     spellClearFigureFlag(_this, spell_index, UNFREEZE);
     default_end_handler(_this, spell_index);
 }
 
-void __thiscall common_handler_check_unfreeze2(SF_CGdSpell *_this,
-                                               uint16_t spell_index)
+void __thiscall common_handler_check_unfreeze2(SF_CGdSpell *_this, uint16_t spell_index)
 {
     spellClearFigureFlag(_this, spell_index, UNFREEZE);
     spellClearFigureFlag(_this, spell_index, CHECK_SPELLS_BEFORE_CHECK_BATTLE);
@@ -524,8 +521,7 @@ void __thiscall fog_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 };
 
 // FOURTH BLOCK FigureTryClearCheckSpellsBeforeJob2 -> goto -> FigureClearCheckSpellsBeforeCheckBattle -> break;
-void __thiscall common_handler_job_battle_check(SF_CGdSpell *_this,
-                                                uint16_t spell_index)
+void __thiscall common_handler_job_battle_check(SF_CGdSpell *_this, uint16_t spell_index)
 {
     spellClearFigureFlag(_this, spell_index, CHECK_SPELLS_BEFORE_JOB2);
     spellClearFigureFlag(_this, spell_index, CHECK_SPELLS_BEFORE_CHECK_BATTLE);
@@ -538,8 +534,7 @@ void __thiscall common_handler_done(SF_CGdSpell *_this, uint16_t spell_index)
 }
 
 // Not 100% sure if this is neccessary, however the order of operations may be important
-void __thiscall common_handler_job_battle_check2(SF_CGdSpell *_this,
-                                                 uint16_t spell_index)
+void __thiscall common_handler_job_battle_check2(SF_CGdSpell *_this, uint16_t spell_index)
 {
     spellClearFigureFlag(_this, spell_index, CHECK_SPELLS_BEFORE_CHECK_BATTLE);
     spellClearFigureFlag(_this, spell_index, CHECK_SPELLS_BEFORE_JOB2);
@@ -566,7 +561,7 @@ void __thiscall aura_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
     SF_CGdFigure *sf_figures = _this->SF_CGdFigure;
     uint16_t source_index = _this->active_spell_list[spell_index].source.entity_index;
     if ((sf_figures->figures[source_index].owner != (uint16_t)(-1)) &&
-        ((sf_figures->figures[source_index].flags & GdFigureFlags::REDO) == 0))
+        ((sf_figures->figures[source_index].flags & (IS_DEAD | RESESRVED_ONLY)) == 0))
     {
         sf_figures->figures[source_index].flags &= ~(GdFigureFlags::AURA_RUNNING);
     }

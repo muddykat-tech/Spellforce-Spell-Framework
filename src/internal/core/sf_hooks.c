@@ -409,6 +409,7 @@ static void initialize_spellend_hook()
     *(int *)(ASI::AddrOf(0x2ff6fa)) = (int)(&sf_figure_end_spells_hook) - ASI::AddrOf(0x2ff6fe);
     ASI::EndRewrite(end_spell_mreg2);
 
+
 }
 
 static void initialize_spellrefresh_hook()
@@ -420,8 +421,7 @@ static void initialize_spellrefresh_hook()
     *(unsigned char *)(ASI::AddrOf(0x329f92)) = 0x90; // nop trail
     *(unsigned char *)(ASI::AddrOf(0x329f93)) = 0x90; // nop trail
     *(unsigned char *)(ASI::AddrOf(0x329f94)) = 0xE9; // jmp instruction
-    *(int *)(ASI::AddrOf(0x329f95)) = (int)(&sf_refresh_hook) -
-                                      ASI::AddrOf(0x329f99);
+    *(int *)(ASI::AddrOf(0x329f95)) = (int)(&sf_refresh_hook) - ASI::AddrOf(0x329f99);
     ASI::EndRewrite(refresh_spell_mreg);
 }
 

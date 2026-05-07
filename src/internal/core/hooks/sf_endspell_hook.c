@@ -49,23 +49,18 @@ void __thiscall tryClearCheckSpellsBeforeJob(SF_CGdSpell *_this, uint16_t spell_
 }
 void __thiscall sf_figure_end_spells_hook(SF_CGdFigureToolbox *_this, uint16_t figure_id)
 {
-    uint16_t spell_node = figureAPI.getSpellJobStartNode(_this->CGdFigure, figure_id);
-    while (spell_node != 0)
+    for (uint16_t spell_node = figureAPI.getSpellJobStartNode(_this->CGdFigure, figure_id);
+         spell_node != 0; spell_node =  figureAPI.getSpellJobStartNode(_this->CGdFigure, figure_id))
     {
         uint16_t spell_index = toolboxAPI.getSpellIndexFromDLL(_this->CGdDoubleLinkedList, spell_node);
         uint16_t spell_line = _this->CGdSpell->active_spell_list[spell_index].spell_line;
         if (!spellAPI.hasSpellTag(spell_line, SpellTag::AOE_SPELL))
         {
-            if (spellAPI.hasSpellTag(spell_line, SpellTag::AURA_SPELL))
-            {
-                log_info("Aura spell termination spell [%d] spell line [%d]", spell_index, spell_line);
-            }
             sf_endspell_hook(_this->CGdSpell, spell_index);
-            toolboxAPI.removeSpellFromList(_this, figure_id, spell_node);
         }
         else
         {
-            if (toolboxAPI.removeSpellFromList(_this, figure_id, spell_node))
+            if (toolboxAPI.removeSpellFromList(_this, figure_id, spell_index))
             {
                 uint16_t spell_line = spellAPI.getSpellLine(_this->CGdSpell, spell_index);
                 if (spell_line == kGdSpellLineFreezeArea)
@@ -81,6 +76,13 @@ void __thiscall sf_figure_end_spells_hook(SF_CGdFigureToolbox *_this, uint16_t f
                 }
             }
         }
-        spell_node = toolboxAPI.getNextNode(_this->CGdDoubleLinkedList, spell_node);
+        if ((toolboxAPI.hasSpellOnIt(_this, figure_id, spell_line)) &&
+            (_this->CGdSpell->active_spell_list[spell_index].target.entity_index == 0) &&
+            (_this->CGdSpell->active_spell_list[spell_index].source.entity_index == 0))
+        {
+            log_debug(DEBUG_HIGH, "Broken spell [%d] on figure [%d] spell type [%d]",
+                      spell_index, figure_id, spell_line);
+            toolboxAPI.removeSpellFromList(_this, figure_id, spell_index);
+        }
     }
 }

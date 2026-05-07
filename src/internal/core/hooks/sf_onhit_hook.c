@@ -286,7 +286,7 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
     {
         // NB Parenthis matters in flags check. I mean it
         if ((_this->CGdFigure->figures[target.entity_index].owner == -1) ||
-            ((_this->CGdFigure->figures[target.entity_index].flags & (REDO | IS_DEAD)) != 0) ||
+            ((_this->CGdFigure->figures[target.entity_index].flags & (RESESRVED_ONLY | IS_DEAD)) != 0) ||
             (!toolboxAPI.isTargetable(_this->CGdFigureToolBox, target.entity_index)))
         {
             return;
