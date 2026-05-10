@@ -704,7 +704,10 @@ uint32_t __thiscall healing_ai_handler(SF_CGdBattleDevelopment *_this,
     uint32_t rank = 1;
     uint16_t current_health = figureAPI.getCurrentStat(_this->battleData.CGdFigure, target_index, HEALTH);
     uint16_t max_health = figureAPI.getMaxStat(_this->battleData.CGdFigure, target_index, HEALTH);
-
+    if (toolboxAPI.hasSpellOnIt(_this->battleData.CGdFigureToolBox, target_index, kGdSpellLineRemediless))
+    {
+        return 0;
+    }
     uint16_t healing_amount = 0;
     struct
     {
@@ -714,10 +717,8 @@ uint32_t __thiscall healing_ai_handler(SF_CGdBattleDevelopment *_this,
     } some_list;
     uint32_t *list_first;
     uint32_t *list_current;
-    figureAPI.getHealersList(_this->battleData.CGdFigure, &some_list,
-                             target_index);
-    uint32_t list_length = ((uint32_t)some_list.data -
-                            (uint32_t)some_list.first) >> 2;
+    figureAPI.getHealersList(_this->battleData.CGdFigure, &some_list, target_index);
+    uint32_t list_length = ((uint32_t)some_list.data - (uint32_t)some_list.first) >> 2;
     if (list_length != 0)
     {
         list_first = some_list.first;

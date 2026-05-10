@@ -14,17 +14,16 @@
 
 void __thiscall sf_subeffect_hook(SF_CGDEffect *_this, uint16_t effect_id)
 {
-    uint16_t spell_id = effectAPI.getEffectXData(_this, effect_id,
-                                                 EFFECT_SUBSPELL_ID);
+    uint16_t spell_id = effectAPI.getEffectXData(_this, effect_id, EFFECT_SUBSPELL_ID);
     if (spell_id)
     {
         SF_CGdResourceSpell spell_data;
-        spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data,
-                                      spell_id);
-        sub_effect_handler_ptr handler =
-            get_sub_effect_handler(spell_data.spell_line_id);
+        spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, spell_id);
+        sub_effect_handler_ptr handler = get_sub_effect_handler(spell_data.spell_line_id);
         if (handler != NULL)
         {
+            uint16_t source_index = effectAPI.getEffectXData(_this, effect_id, EFFECT_ENTITY_INDEX);
+            log_debug(DEBUG_HIGH, "Spell line [%d] from figure %d", spell_data.spell_line_id, source_index);
             handler(_this, effect_id);
         }
     }

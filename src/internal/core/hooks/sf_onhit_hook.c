@@ -186,7 +186,7 @@ uint16_t __thiscall getAttackInterruptionChance(SF_CGdFigure *_this,
     uint8_t target_level = _this->figures[target_index].level;
     if (target_level < source_level)
     {
-        uint16_t precalc_chance = (source_level - target_level) * 5 + 0xf;
+        uint16_t precalc_chance = (source_level - target_level) * 5 + 15;
         if (precalc_chance > 100)
         {
             return 100;
@@ -195,13 +195,13 @@ uint16_t __thiscall getAttackInterruptionChance(SF_CGdFigure *_this,
     }
     if (target_level == source_level)
     {
-        return 0xf;
+        return 15;
     }
-    if (0xf < ((target_level - source_level) * 2))
+    if ( 15 < ((target_level - source_level) * 2))
     {
         return 0;
     }
-    return (target_index - source_index) * -2 + 0xf;
+    return 15 - (target_level - source_level) * 2;
 }
 
 uint16_t __thiscall handle_riposte_set(SF_CGdFigureJobs *_this,
