@@ -455,32 +455,24 @@ int __thiscall endurance_refresh_handler(SF_CGdSpell *_this,
     return 1;
 }
 
-int __thiscall fast_fighting_refresh_handler(SF_CGdSpell *_this,
-                                             uint16_t spell_index)
+int __thiscall fast_fighting_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     uint16_t spell_line = _this->active_spell_list[spell_index].spell_line;
-    uint16_t target_index =
-        _this->active_spell_list[spell_index].target.entity_index;
-    bool hasSpell = toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox,
-                                            target_index, spell_line);
+    uint16_t target_index =_this->active_spell_list[spell_index].target.entity_index;
+    bool hasSpell = toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index, spell_line);
 
     if (hasSpell)
     {
-        uint16_t spell_index_of_type =
-            toolboxAPI.getSpellIndexOfType(_this->SF_CGdFigureToolBox,
-                                           target_index, spell_line,
-                                           spell_index);
-        if (spell_index_of_type)
+        uint16_t spell_index2 = toolboxAPI.getSpellIndexOfType(_this->SF_CGdFigureToolBox,
+                                                               target_index, spell_line, spell_index);
+        if (spell_index2)
         {
-            spellAPI.removeDLLNode(_this, spell_index_of_type);
+            spellAPI.removeDLLNode(_this, spell_index2);
 
-            SF_CGdResourceSpell spell_data;
-            spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data,
-                                          _this->active_spell_list[
-                                              spell_index_of_type].spell_id);
-            figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, FIGHT_SPEED, target_index, -spell_data.params[0]);
+            int8_t bonus = spellAPI.getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER);
+            figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, FIGHT_SPEED, target_index, bonus);
 
-            spellAPI.setEffectDone(_this, spell_index_of_type, 0);
+            spellAPI.setEffectDone(_this, spell_index2, 0);
         }
     }
     return 1;
