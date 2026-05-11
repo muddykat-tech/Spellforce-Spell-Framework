@@ -693,7 +693,6 @@ uint16_t __thiscall getSector(SF_CGdWorld *_this, SF_Coord *position)
 
 uint16_t __thiscall summonCreature(SF_CGdFigureToolbox *_this, uint16_t master_index, uint16_t creature_type)
 {
-    logAPI->logInfo("Summon creature triggered!");
     SF_Coord master_postion;
     SF_Coord summon_pos;
     uint16_t summon_index = 0;
@@ -797,8 +796,8 @@ void __thiscall summon_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
             }
             if (_this->SF_CGdFigure->figures[target.entity_index].owner != (uint16_t)(-1))
             {
-                logAPI->logInfo("Broken figure, index [%d] spell [%d] type [%d]",
-                                target.entity_index, spell_index, spell->spell_line);
+                logAPI->log_debug(DEBUG_HIGH,"Broken figure, index [%d] spell [%d] type [%d]",
+                                  target.entity_index, spell_index, spell->spell_line);
             }
 
         }
