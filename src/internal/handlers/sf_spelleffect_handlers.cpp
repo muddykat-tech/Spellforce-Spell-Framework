@@ -399,8 +399,10 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
                             //special logic here
                             if (spell->spell_line == kGdSpellLineAuraHealing)
                             {
-                                if (_this->SF_CGdFigure->figures[target_index].health.missing_val >
-                                    sub_spell_data.params[0])
+                                uint16_t missing_hp = _this->SF_CGdFigure->figures[target_index].health.missing_val;
+                                if ((missing_hp >sub_spell_data.params[0]) &&
+                                    (!toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index,
+                                                              kGdSpellLineRemediless)))
                                 {
                                     targets.push_back(target_index);
                                 }

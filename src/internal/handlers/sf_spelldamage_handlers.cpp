@@ -76,8 +76,7 @@ uint16_t __thiscall conservation_dmg_handler(SF_CGdFigureToolbox *_this,
 {
     if (!is_spell_damage)
     {
-        uint16_t spell_index = toolboxAPI.getSpellIndexOfType(_this, target,
-                                                              0x8c, 0);
+        uint16_t spell_index = toolboxAPI.getSpellIndexOfType(_this, target, kGdSpellLineConservation, 0);
         uint16_t shield_value = (uint16_t)spellAPI.getXData(_this->CGdSpell, spell_index, SPELL_CONSERVATION_SHIELD);
         if (shield_value < current_damage)
         {
