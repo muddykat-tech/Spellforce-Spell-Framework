@@ -221,6 +221,61 @@ void __thiscall apply_aura_effect(SF_CGdSpell *_this, uint16_t spell_index, uint
                              target_index);
 }
 
+void __thiscall effect_conservation(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    SF_GdSpell *spell = &_this->active_spell_list[spell_index];
+    uint16_t source_index = spell->source.entity_index;
+    uint16_t target_index = spell->target.entity_index;
+
+
+    if ((_this->SF_CGdFigure->figures[target_index].owner != (uint16_t)(-1)) &&
+        ((_this->SF_CGdFigure->figures[target_index].flags & (IS_DEAD|RESESRVED_ONLY)) == 0))
+    {
+        if (spellAPI.addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1) == 1)
+        {
+            if (spellAPI.checkCanApply(_this, spell_index))
+            {
+                SF_CGdResourceSpell spell_data;
+                spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+                spellAPI.setXData(_this, spell_index, SPELL_CONSERVATION_SHIELD, spell_data.params[0]);
+                _this->SF_CGdFigure->figures[target_index].flags |= F_CHECK_SPELLS_BEFORE_CHECK_BATTLE;
+                _this->SF_CGdFigure->figures[target_index].flags |= F_CHECK_SPELLS_BEFORE_JOB;
+                spell->flags |= CHECK_SPELLS_BEFORE_CHECK_BATTLE;
+                spell->flags |= CHECK_SPELLS_BEFORE_JOB2;
+                spell->to_do_count = 20;
+                uint32_t unused;
+                SF_Rectangle rect = {0,0};
+                SF_CGdTargetData target;
+                target.position = {0,0};
+                target.entity_index = target_index;
+                target.entity_type = 1;
+                spellAPI.addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &target,
+                                         _this->OpaqueClass->current_step, 0, &rect);
+                return;
+            }
+        }
+        else
+        {
+            uint32_t shield = spellAPI.getXData(_this, spell_index, SPELL_CONSERVATION_SHIELD);
+            if (shield != 0)
+            {
+                SF_CGdResourceSpell spell_data;
+                spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+                uint32_t total_ticks = (spell_data.params[1] * 10) / 20000 - 1;
+                if (spellAPI.getXData(_this, spell_index, SPELL_TICK_COUNT_AUX) <= total_ticks)
+                {
+                    spell->to_do_count = 20;
+                    return;
+                }
+            }
+            spellAPI.figTryClrCHkSPlBfrJob2(_this, spell_index);
+            spellAPI.figClrChkSplBfrChkBattle(_this, spell_index, 0);
+            spellAPI.removeDLLNode(_this, spell_index);
+        }
+    }
+    spellAPI.setEffectDone(_this, spell_index, 0);
+}
+
 void __thiscall effect_ability_warcry(SF_CGdSpell *_this, uint16_t spell_index)
 {
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
@@ -766,7 +821,7 @@ void initialize_vanilla_effect_handler_hooks()
     effect_chill_resistance_handler = (handler_ptr)(ASI::AddrOf(0x332750));
     effect_confuse_handler = (handler_ptr)(ASI::AddrOf(0x3329a0));
     effect_confuse_area_handler = (handler_ptr)(ASI::AddrOf(0x332c30));
-    effect_conservation_handler = (handler_ptr)(ASI::AddrOf(0x333130));
+    effect_conservation_handler = &effect_conservation;// (handler_ptr)(ASI::AddrOf(0x333130));
     effect_cure_disease_handler = (handler_ptr)(ASI::AddrOf(0x333360));
     effect_cure_poison_handler = (handler_ptr)(ASI::AddrOf(0x333560));
     effect_dark_banishing_handler = (handler_ptr)(ASI::AddrOf(0x333760));
