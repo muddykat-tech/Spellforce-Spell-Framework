@@ -39,9 +39,8 @@ DECLARE_FUNCTION(bool, isFlagSet, SF_CGdFigure *figure, uint16_t figure_index,
                  GdFigureFlags flag);
 DECLARE_FUNCTION(uint16_t, getSpellJobStartNode, SF_CGdFigure *figure,
                  uint16_t figure_index);
-DECLARE_FUNCTION(void, subMana, SF_CGdFigure *_this, uint16_t param_1,
-                 uint32_t param_2);
-
+DECLARE_FUNCTION(void, subMana, SF_CGdFigure *_this, uint16_t figure_index, int32_t amount);
+DECLARE_FUNCTION(void, subHealth, SF_CGdFigure *_this, uint16_t figure_index, int32_t amount);
 DECLARE_FUNCTION(SF_Coord, getPosition, SF_CGdFigure *figure,
                  SF_Coord *position, uint16_t figure_id);
 DECLARE_FUNCTION(SF_CGdFigureWeaponStats *, getWeaponStats,
@@ -97,6 +96,7 @@ typedef struct
 
     decreaseHealth_ptr decreaseHealth;
     subMana_ptr subMana;
+    subHealth_ptr subHealth;
 
     disposeHealerList_ptr disposeHealerList;
     FUN_006e3a90_ptr FUN_006e3a90;

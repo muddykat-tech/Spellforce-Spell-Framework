@@ -3,6 +3,7 @@
 #include "../registry/spell_data_registries/sf_spelleffect_registry.h"
 #include <cstdio>
 #include <vector>
+#include <algorithm>
 
 handler_ptr effect_ability_benefactions_handler;
 handler_ptr effect_ability_berserk_handler;
@@ -719,6 +720,105 @@ void __thiscall effect_self_illusion(SF_CGdSpell *_this, uint16_t spell_index)
     }
 }
 
+typedef struct
+{
+    uint16_t figure_id;
+    uint32_t missing_hp;
+} healing_entry;
+
+void __thiscall effect_ability_benefactions(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    SF_GdSpell *spell = &_this->active_spell_list[spell_index];
+    uint16_t target_index = spell->target.entity_index;
+    if ((spell->target.entity_type == 1) && (target_index != 0))
+    {
+        SF_CGdResourceSpell spell_data;
+        spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+        uint16_t heal = spell_data.params[0];
+        uint16_t unit_count = spell_data.params[1];
+        uint16_t radius = spell_data.params[2];
+
+        if (!toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index, kGdSpellLineRemediless))
+        {
+            uint16_t current_hp = figureAPI.getCurrentStat(_this->SF_CGdFigure, target_index, HEALTH);
+            uint16_t max_hp = figureAPI.getMaxStat(_this->SF_CGdFigure, target_index, HEALTH);
+
+            if (current_hp <= max_hp)
+            {
+                int16_t heal_amount = (heal * max_hp) / 100;
+                if (max_hp - current_hp < heal_amount)
+                {
+                    heal_amount = max_hp - current_hp;
+                }
+                SF_CGdTargetData target_data;
+                target_data.entity_index = target_index;
+                target_data.entity_type = 1;
+                target_data.position = {0, 0};
+                SF_Rectangle rect = {0,0};
+                uint32_t unused;
+                spellAPI.addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &target_data,
+                                         _this->OpaqueClass->current_step, 10, &rect);
+                figureAPI.subHealth(_this->SF_CGdFigure, target_index, -heal_amount);
+            }
+        }
+
+        CGdFigureIterator iter;
+        iteratorAPI.figureIteratorInit(&iter, 0, 0, 0x3ff,0x3ff );
+        iteratorAPI.figureIteratorSetPointers(&iter, _this->SF_CGdFigure, _this->unkn3, _this->SF_CGdWorld);
+
+        iteratorAPI.iteratorSetArea(&iter, &_this->SF_CGdFigure->figures[target_index].position, radius);
+
+        std::vector<healing_entry> healing_targets;
+        uint16_t next_figure = iteratorAPI.getNextFigure(&iter);
+        while (next_figure != 0)
+        {
+            if ((figureAPI.isAlive(_this->SF_CGdFigure, next_figure)) &&
+                (toolboxAPI.figuresCheckFriendly(_this->SF_CGdFigureToolBox, target_index, next_figure)))
+            {
+                uint16_t current_hp = figureAPI.getCurrentStat(_this->SF_CGdFigure, next_figure, HEALTH);
+                uint16_t max_hp = figureAPI.getMaxStat(_this->SF_CGdFigure, next_figure, HEALTH);
+                if (current_hp < max_hp)
+                {
+                    healing_entry entry = {next_figure, max_hp - current_hp};
+                    healing_targets.push_back(entry);
+                }
+            }
+            next_figure = iteratorAPI.getNextFigure(&iter);
+        }
+        std::sort(healing_targets.begin(), healing_targets.end(), [](const healing_entry& a, const healing_entry& b)
+        {
+            return a.missing_hp > b.missing_hp;
+        });
+        iteratorAPI.disposeFigureIterator(&iter);
+        for (int i = 0; i < healing_targets.size(); i++)
+        {
+            if (i > unit_count)
+            {
+                break;
+            }
+            uint16_t current_hp = figureAPI.getCurrentStat(_this->SF_CGdFigure, healing_targets[i].figure_id, HEALTH);
+            uint16_t max_hp = figureAPI.getMaxStat(_this->SF_CGdFigure, healing_targets[i].figure_id, HEALTH);
+
+            uint16_t heal_amount = (heal * max_hp) / 100;
+            if (max_hp - current_hp < heal_amount)
+            {
+                heal_amount = max_hp - current_hp;
+            }
+
+            SF_CGdTargetData target_data;
+            target_data.entity_index = healing_targets[i].figure_id;
+            target_data.entity_type = 1;
+            target_data.position = {0, 0};
+            SF_Rectangle rect = {0,0};
+            uint32_t unused;
+            spellAPI.addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &target_data,
+                                     _this->OpaqueClass->current_step, 10, &rect);
+            figureAPI.subHealth(_this->SF_CGdFigure, healing_targets[i].figure_id, -heal_amount);
+        }
+    }
+    spellAPI.setEffectDone(_this, spell_index, 0);
+}
+
 //hotfix for firebane
 //TODO: fix some stuff about hasSpellOnIt
 void __thiscall effect_fire_resistance (SF_CGdSpell *_this, uint16_t spell_index)
@@ -783,7 +883,7 @@ void __thiscall effect_fire_resistance (SF_CGdSpell *_this, uint16_t spell_index
  */
 void initialize_vanilla_effect_handler_hooks()
 {
-    effect_ability_benefactions_handler = (handler_ptr)(ASI::AddrOf(0x32c090));
+    effect_ability_benefactions_handler = &effect_ability_benefactions;// (handler_ptr)(ASI::AddrOf(0x32c090));
     effect_ability_berserk_handler = (handler_ptr)(ASI::AddrOf(0x32c4a0));
     effect_ability_boons_handler = (handler_ptr)(ASI::AddrOf(0x32c670));
     effect_ability_critical_hits_handler = (handler_ptr)(ASI::AddrOf(0x32c810));

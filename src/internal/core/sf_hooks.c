@@ -105,6 +105,7 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(figure, isFlagSet, 0x279d20);
     DEFINE_FUNCTION(figure, getSpellJobStartNode, 0x2b2de0);
     DEFINE_FUNCTION(figure, subMana, 0x2b5b60);
+    DEFINE_FUNCTION(figure, subHealth, 0x2b5b40);
     DEFINE_FUNCTION(figure, getPosition, 0x2caaf0);
     DEFINE_FUNCTION(figure, setTask, 0x2b7110);
     DEFINE_FUNCTION(figure, getWeaponStats, 0x2b30a0);
