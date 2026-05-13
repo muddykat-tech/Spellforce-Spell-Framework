@@ -796,6 +796,11 @@ void __thiscall effect_ability_benefactions(SF_CGdSpell *_this, uint16_t spell_i
             {
                 break;
             }
+            if (toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox,  healing_targets[i].figure_id,
+                                        kGdSpellLineRemediless))
+            {
+                continue;
+            }
             uint16_t current_hp = figureAPI.getCurrentStat(_this->SF_CGdFigure, healing_targets[i].figure_id, HEALTH);
             uint16_t max_hp = figureAPI.getMaxStat(_this->SF_CGdFigure, healing_targets[i].figure_id, HEALTH);
 
