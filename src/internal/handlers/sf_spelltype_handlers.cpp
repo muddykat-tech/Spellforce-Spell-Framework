@@ -162,7 +162,8 @@ void __thiscall petrify_handler(SF_CGdSpell *_this, uint16_t spell_index)
 
 void __thiscall area_pain_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
-    _this->active_spell_list[spell_index].spell_job = 0x1b;
+    _this->active_spell_list[spell_index].spell_job = kGdSpellJobPainArea;
+    initializeSpellData(_this, spell_index, SPELL_TICK_COUNT_AUX);
 }
 
 void __thiscall raise_dead_handler(SF_CGdSpell *_this, uint16_t spell_index)

@@ -635,3 +635,20 @@ uint16_t __thiscall sf_get_spell_id(SF_CGdSpell *_this, uint16_t spell_index)
 {
     return _this->active_spell_list[spell_index].spell_id;
 }
+
+
+void __thiscall tryClearCheckSpellsBeforeJob(SF_CGdSpell *_this, uint16_t spell_index, uint16_t figure_index)
+{
+    uint16_t spell_node = figureAPI.getSpellJobStartNode(_this->SF_CGdFigure, figure_index);
+    while (spell_node != 0)
+    {
+        uint16_t spell_id = toolboxAPI.getSpellIndexFromDLL(_this->SF_CGdDoubleLinkedList, spell_node);
+        if ((spell_index != spell_id) && ((_this->active_spell_list[spell_id].flags & 0x2) != 0))
+        {
+            return;
+        }
+        spell_node = toolboxAPI.getNextNode(_this->SF_CGdDoubleLinkedList, spell_node);
+    }
+    _this->SF_CGdFigure->figures[figure_index].flags &= ~(F_CHECK_SPELLS_BEFORE_JOB);
+
+}

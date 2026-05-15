@@ -75,4 +75,11 @@ uint16_t __thiscall hypnotize_dmg_handler(SF_CGdFigureToolbox *_this,
                                           uint32_t is_ranged_damage,
                                           uint16_t spell_id);
 
+uint16_t __thiscall hypnotize_area_dmg_handler(SF_CGdFigureToolbox *_this,
+                                               uint16_t source, uint16_t target,
+                                               uint16_t current_damage,
+                                               uint16_t is_spell_damage,
+                                               uint32_t is_ranged_damage,
+                                               uint16_t spell_id);
+
 #endif

@@ -32,21 +32,6 @@ void __thiscall sf_endspell_hook(SF_CGdSpell *_this, uint16_t spell_index)
     }
 }
 
-void __thiscall tryClearCheckSpellsBeforeJob(SF_CGdSpell *_this, uint16_t spell_index, uint16_t figure_index)
-{
-    uint16_t spell_node = figureAPI.getSpellJobStartNode(_this->SF_CGdFigure, figure_index);
-    while (spell_node != 0)
-    {
-        uint16_t spell_id = toolboxAPI.getSpellIndexFromDLL(_this->SF_CGdDoubleLinkedList, spell_node);
-        if ((spell_index != spell_id) && ((_this->active_spell_list[spell_id].flags & 0x2) != 0))
-        {
-            return;
-        }
-        spell_node = toolboxAPI.getNextNode(_this->SF_CGdDoubleLinkedList, spell_node);
-    }
-    _this->SF_CGdFigure->figures[figure_index].flags &= ~(F_CHECK_SPELLS_BEFORE_JOB);
-
-}
 void __thiscall sf_figure_end_spells_hook(SF_CGdFigureToolbox *_this, uint16_t figure_id)
 {
     for (uint16_t spell_node = figureAPI.getSpellJobStartNode(_this->CGdFigure, figure_id);
@@ -60,6 +45,7 @@ void __thiscall sf_figure_end_spells_hook(SF_CGdFigureToolbox *_this, uint16_t f
         }
         else
         {
+            log_debug(DEBUG_HIGH, "AOE spell [%d] type [%d]", spell_index, spell_line);
             if (toolboxAPI.removeSpellFromList(_this, figure_id, spell_index))
             {
                 uint16_t spell_line = spellAPI.getSpellLine(_this->CGdSpell, spell_index);
