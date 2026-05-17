@@ -16,8 +16,8 @@ void registerSpellRefreshHandler(uint16_t spell_line_id, refresh_handler_ptr han
     auto check = s_spellrefresh_handler_map.find(spell_line_id);
     if (check != s_spellrefresh_handler_map.end())
     {
-        log_warning("%s (v%s) has replaced an Spell Refresh Handler [%d] (Was this on purpose?)",
-                    g_current_mod->mod_id, g_current_mod->mod_version, spell_line_id);
+        log_debug(DEBUG_HIGH, "%s (v%s) has replaced an Spell Refresh Handler [%d] (Was this on purpose?)",
+                  g_current_mod->mod_id, g_current_mod->mod_version, spell_line_id);
     }
     s_spellrefresh_handler_map[spell_line_id] = handler;
 }
@@ -27,9 +27,7 @@ refresh_handler_ptr get_spell_refresh(uint16_t spell_line_id)
     auto it = s_spellrefresh_handler_map.find(spell_line_id);
     if (it == s_spellrefresh_handler_map.end())
     {
-        char message[256];
-        sprintf(message, "Unknown Spell Line ID [%d] for Spell Refresh Handler", spell_line_id);
-        log_warning(message);
+        log_debug(DEBUG_HIGH, "Unknown Spell Line ID [%d] for Spell Refresh Handler", spell_line_id);
         it = s_spellrefresh_handler_map.emplace(spell_line_id, &first_block_refresh_handler).first;
     }
     return it->second;

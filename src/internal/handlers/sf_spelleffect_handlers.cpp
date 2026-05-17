@@ -997,8 +997,45 @@ void __thiscall effect_pain_area (SF_CGdSpell *_this, uint16_t spell_index)
     }
     spellAPI.setEffectDone(_this, spell_index, 0);
     return;
-
 }
+
+void __thiscall effect_assistance(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    SF_GdSpell *spell = &_this->active_spell_list[spell_index];
+    uint16_t target_index = spell->target.entity_index;
+    GdFigure *target_figure = &_this->SF_CGdFigure->figures[target_index];
+    if (spell->target.entity_type == 1)
+    {
+        uint32_t tick = spellAPI.getXData(_this, spell_index, SPELL_TICK_COUNT_AUX);
+        if ((tick == 1) && (spellAPI.checkCanApply(_this, spell_index)))
+        {
+            SF_CGdResourceSpell spell_data;
+            spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+            if (((target_figure->flags & (IS_DEAD | RESESRVED_ONLY)) == 0) &&
+                (target_figure->owner != (uint16_t)(-1)))
+            {
+                target_figure->flags |= F_CHECK_SPELLS_BEFORE_JOB;
+                uint32_t tick_count = (spell_data.params[2] * 10) / 1000;
+                spell->to_do_count = tick_count;
+                spell->flags |= CHECK_SPELLS_BEFORE_JOB2;
+                uint32_t unused;
+                SF_CGdTargetData target;
+                target.entity_index = target_index;
+                target.entity_type = 1;
+                target.position = {0,0};
+
+                SF_Rectangle rect = {0,0};
+                spellAPI.addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &target,
+                                         _this->OpaqueClass->current_step,tick_count, &rect);
+                return;
+            }
+        }
+        spellAPI.figTryClrCHkSPlBfrJob2(_this, spell_index);
+    }
+    spellAPI.setEffectDone(_this, spell_index, 0);
+    return;
+}
+
 /**
  * Initializes all the vanilla effect handlers with their respective addresses.
  *
@@ -1029,7 +1066,7 @@ void initialize_vanilla_effect_handler_hooks()
     effect_almightiness_white_handler = (handler_ptr)(ASI::AddrOf(0x32f330));
     effect_amok_handler = (handler_ptr)(ASI::AddrOf(0x32f590));
     effect_tower_arrow_handler = (handler_ptr)(ASI::AddrOf(0x32f840));
-    effect_assistance_handler = (handler_ptr)(ASI::AddrOf(0x32fbc0));
+    effect_assistance_handler = &effect_assistance; //(handler_ptr)(ASI::AddrOf(0x32fbc0));
     //effect_aura_handler = (handler_ptr)(ASI::AddrOf(0x32fd40));
     effect_aura_handler = &effect_aura; // hotfix lives here
     effect_siege_aura_handler = &effect_siege_aura;
