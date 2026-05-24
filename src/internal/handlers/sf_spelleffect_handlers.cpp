@@ -602,7 +602,7 @@ void __thiscall effect_siege_aura (SF_CGdSpell *_this, uint16_t spell_index)
         caster_pos.Y = _this->SF_CGdFigure->figures[source_index].position.Y;
         CGdBuildingIterator iter;
         iteratorAPI.buildingIteratorInit(&iter, 0, 0, 0x3ff, 0x3ff);
-        iteratorAPI.buildingIteratorSetPointers(&iter, _this->CGdBuilding, _this->unkn3, _this->SF_CGdWorld);
+        iteratorAPI.buildingIteratorSetPointers(&iter, _this->CGdBuilding, _this->SF_CGdTile, _this->SF_CGdWorld);
         //Types are similar, to a point, but I do need to cast it
 
         iteratorAPI.iteratorSetArea((CGdFigureIterator *)&iter, &caster_pos, spell_data.params[2]+10);
@@ -764,7 +764,7 @@ void __thiscall effect_ability_benefactions(SF_CGdSpell *_this, uint16_t spell_i
 
         CGdFigureIterator iter;
         iteratorAPI.figureIteratorInit(&iter, 0, 0, 0x3ff,0x3ff );
-        iteratorAPI.figureIteratorSetPointers(&iter, _this->SF_CGdFigure, _this->unkn3, _this->SF_CGdWorld);
+        iteratorAPI.figureIteratorSetPointers(&iter, _this->SF_CGdFigure, _this->SF_CGdTile, _this->SF_CGdWorld);
 
         iteratorAPI.iteratorSetArea(&iter, &_this->SF_CGdFigure->figures[target_index].position, radius);
 
@@ -999,6 +999,58 @@ void __thiscall effect_pain_area (SF_CGdSpell *_this, uint16_t spell_index)
     return;
 }
 
+void __thiscall effect_detect_metal(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    SF_GdSpell *spell = &_this->active_spell_list[spell_index];
+    uint16_t source_index = spell->source.entity_index;
+    GdFigure *source_figure = &_this->SF_CGdFigure->figures[source_index];
+    if (spell->target.entity_type == 1)
+    {
+        SF_CGdResourceSpell spell_data;
+        spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+        SF_Rectangle t_rect;
+        SF_Coord center = {0,0};
+        spellAPI.getTargetsRectangle(_this, &t_rect, spell_index, spell_data.params[0], &center);
+        SF_CGdTargetData target_data;
+        target_data.entity_type = 4;
+        target_data.entity_index = 0;
+        target_data.position = source_figure->position;
+        spellAPI.addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &t_rect, &target_data,
+                                 _this->OpaqueClass->current_step, 20, &t_rect);
+        CGdObjectIterator iter;
+        iteratorAPI.objectIteratorInit(&iter, 0, 0, 0x3ff, 0x3ff);
+        iteratorAPI.objectIteratorSetPointers(&iter, _this->SF_CGdObject, _this->SF_CGdTile, _this->SF_CGdWorld);
+        iteratorAPI.iteratorSetArea((CGdFigureIterator *)&iter, &source_figure->position, spell_data.params[0]);
+        for (uint16_t i = iteratorAPI.getNextObject(&iter); i != 0; i = iteratorAPI.getNextObject(&iter))
+        {
+            uint16_t data_id = _this->SF_CGdObject->objects[i].object_data_id;
+            uint16_t out_type = 0;
+            if ((uint16_t)(data_id - 1536) < 128)
+            {
+                out_type = 41;
+            }
+            else
+            {
+                if ((uint16_t)(data_id - 1664) < 128)
+                {
+                    out_type = 42;
+                }
+            }
+            if (out_type != 0)
+            {
+                uint16_t pos_x = _this->SF_CGdObject->objects[i].pos.X;
+                uint16_t pos_y = _this->SF_CGdObject->objects[i].pos.Y;
+                uint16_t owner = source_figure->owner;
+                log_debug(DEBUG_HIGH, "GD Oject size %d",sizeof(GdObject));
+                log_debug(DEBUG_HIGH, "Added outcry for object ID %d at {%d, %d}", i, pos_x, pos_y);
+                toolboxAPI.doMapOutCry(_this->AC30, out_type, owner, 4, 0, pos_x, pos_y);
+            }
+        }
+        iteratorAPI.disposeFigureIterator((CGdFigureIterator *)&iter);
+    }
+    spellAPI.setEffectDone(_this, spell_index, 0);
+}
+
 void __thiscall effect_assistance(SF_CGdSpell *_this, uint16_t spell_index)
 {
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
@@ -1095,7 +1147,7 @@ void initialize_vanilla_effect_handler_hooks()
     effect_decay2_handler = (handler_ptr)(ASI::AddrOf(0x334390));
     effect_demoralization_handler = (handler_ptr)(ASI::AddrOf(0x334760));
     effect_detect_magic_handler = (handler_ptr)(ASI::AddrOf(0x334a20));
-    effect_detect_metal_handler = (handler_ptr)(ASI::AddrOf(0x334cb0));
+    effect_detect_metal_handler = effect_detect_metal;//(handler_ptr)(ASI::AddrOf(0x334cb0));
     effect_dexterity_handler = (handler_ptr)(ASI::AddrOf(0x334f30));
     effect_disenchant_handler = (handler_ptr)(ASI::AddrOf(0x335180));
     effect_dispel_black_aura_handler = (handler_ptr)(ASI::AddrOf(0x3353d0));

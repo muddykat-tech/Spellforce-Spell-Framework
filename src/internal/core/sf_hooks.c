@@ -187,6 +187,7 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(toolbox, equipArtisanArmour, 0x2f84c1);
     DEFINE_FUNCTION(toolbox, equipArtisanTools, 0x2fd783);
     DEFINE_FUNCTION(toolbox, findClosestMonument, 0x2bb380);
+    DEFINE_FUNCTION(toolbox, doMapOutCry, 0x2c3d60);
 
     log_info("| - BuildingAPI Hooks");
     DEFINE_FUNCTION(building, buildingDealDamage, 0x2d6d80);
@@ -209,6 +210,9 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(iterator, buildingIteratorInit, 0x318290);
     DEFINE_FUNCTION(iterator, buildingIteratorSetPointers, 0x31A640);
     DEFINE_FUNCTION(iterator, getNextBuilding, 0x318ca0);
+    DEFINE_FUNCTION(iterator, objectIteratorInit, 0x3184a0);
+    DEFINE_FUNCTION(iterator, objectIteratorSetPointers, 0x31a6a0);
+    DEFINE_FUNCTION(iterator, getNextObject, 0x3190c0);
 
     log_info("| - uiAPI Hooks");
     DEFINE_FUNCTION(ui, setBaseAlpha, 0x512EB0);

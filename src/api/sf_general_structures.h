@@ -25,6 +25,7 @@ typedef struct SF_CGdFigure SF_CGdFigure;
 typedef struct SF_SpellEffectInfo SF_SpellEffectInfo;
 typedef struct SF_CGdResource SF_CGdResource;
 typedef struct SF_CGdPlayer SF_CGdPlayer;
+typedef struct SF_CGdObject SF_CGdObject;
 
 typedef struct CMnuLabel CMnuLabel;
 typedef struct CGdControllerClient CGdControllerClient;
@@ -1138,6 +1139,24 @@ struct __attribute__((packed)) AutoClass46
     SF_CGdWorldToolBox *CGdWorldToolBox;
     void *CGdXDataList;
 };
+
+typedef struct  __attribute__((packed))
+{
+    uint16_t object_data_id;
+    SF_Coord pos;
+    uint16_t data_packet;
+    uint16_t angle;
+    uint8_t flags;
+    uint16_t unknown[4];
+} GdObject;
+
+struct __attribute__((packed)) SF_CGdObject
+{
+    GdObject objects[16384];
+    void *astruct40;
+    uint32_t unknown[13];
+};
+
 /* Menu Structures */
 
 typedef struct __attribute__((packed))

@@ -5,16 +5,12 @@
 #include "./structures/sf_toolbox_structures.h"
 
 // Declare the function pointers for the ToolboxFunctions group
-DECLARE_FUNCTION(void, dealDamage, SF_CGdFigureToolbox *CGdFigureToolbox,
-                 uint16_t source_index, uint16_t target_index, uint32_t damage,
-                 uint32_t is_spell_damage, uint32_t param5, uint32_t param6);
-DECLARE_FUNCTION(bool, isTargetable, SF_CGdFigureToolbox *CGdFigureToolbox,
-                 uint16_t figure_index);
-DECLARE_FUNCTION(uint16_t, figuresCheckHostile,
-                 SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t source_index,
+DECLARE_FUNCTION(void, dealDamage, SF_CGdFigureToolbox *CGdFigureToolbox,uint16_t source_index, uint16_t target_index,
+                 uint32_t damage, uint32_t is_spell_damage, uint32_t param5, uint32_t param6);
+DECLARE_FUNCTION(bool, isTargetable, SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t figure_index);
+DECLARE_FUNCTION(uint16_t, figuresCheckHostile, SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t source_index,
                  uint16_t target_index);
-DECLARE_FUNCTION(uint16_t, figuresCheckNeutral,
-                 SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t source_index,
+DECLARE_FUNCTION(uint16_t, figuresCheckNeutral, SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t source_index,
                  uint16_t target_index);
 DECLARE_FUNCTION(uint16_t, figuresCheckFriendly,
                  SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t source_index,
@@ -68,6 +64,9 @@ DECLARE_FUNCTION(void, equipArtisanTools, SF_CGdFigureToolbox* _this, uint16_t f
 DECLARE_FUNCTION(uint32_t, getDistance, SF_Coord *pointA, SF_Coord *pointB);
 
 DECLARE_FUNCTION(uint16_t, findClosestMonument, void *SF_CGdObjectToolBox,uint16_t figure_id,uint16_t *result);
+
+DECLARE_FUNCTION(void, doMapOutCry, void *AC30, uint16_t outCryType, uint16_t owner, uint8_t param3, uint16_t param4,
+                 uint16_t pos_x, uint16_t pos_y);
 //bool isBuildingAllied(SF_CGdBuildingToolbox *_this, uint16_t figure_index, uint16_t building_index)
 
 
@@ -103,4 +102,5 @@ typedef struct
     equipArtisanArmour_ptr equipArtisanArmour;
     equipArtisanTools_ptr equipArtisanTools;
     findClosestMonument_ptr findClosestMonument;
+    doMapOutCry_ptr doMapOutCry;
 } ToolboxFunctions;

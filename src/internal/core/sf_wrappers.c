@@ -210,8 +210,7 @@ void __thiscall setupFigureIterator(CGdFigureIterator *iterator,
                                     SF_CGdSpell *spell)
 {
     iteratorAPI.figureIteratorInit(iterator, 0x0, 0x0, 0x3ff, 0x3ff);
-    iteratorAPI.figureIteratorSetPointers(iterator, spell->SF_CGdFigure,
-                                          spell->unkn3, spell->SF_CGdWorld);
+    iteratorAPI.figureIteratorSetPointers(iterator, spell->SF_CGdFigure, spell->SF_CGdTile, spell->SF_CGdWorld);
 }
 
 bool __thiscall hasSpellTag(uint16_t spell_id, SpellTag tag)

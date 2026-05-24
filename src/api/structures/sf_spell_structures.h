@@ -30,18 +30,18 @@ struct __attribute__((packed)) SF_CGdSpell
     SF_CGdBuildingToolbox *SF_CGdBuildingToolbox;
     void *SF_CGdDoubleLinkedList;
     SF_CGDEffect *SF_CGdEffect;
-    void *unkn1;
+    void *AC30;
     SF_CGdFigure *SF_CGdFigure;
-    void *SF_CGdFigureJobs;
+    SF_CGdFigureJobs *SF_CGdFigureJobs;
     SF_CGdFigureToolbox *SF_CGdFigureToolBox;
     void *SF_CGdFormation;
     void *AutoClass34;  // Seems to be used as first param for GetChanceToResistSpell
-    void *SF_CGdObject;
+    SF_CGdObject *SF_CGdObject;
     void *SF_CGdObjectToolBox;
     SF_CGdPlayer *CGdPlayer;
     void *SF_CGdResource;
-    void *unkn3;
-    void *unkn4;
+    void *SF_CGdTile;
+    void *AC50;
     SF_CGdWorld *SF_CGdWorld;
     SF_CGdWorldToolBox *SF_CGdWorldToolBox;
     void *SF_CGdXDataList;
