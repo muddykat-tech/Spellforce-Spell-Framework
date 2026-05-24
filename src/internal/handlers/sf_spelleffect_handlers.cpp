@@ -1004,10 +1004,12 @@ void __thiscall effect_assistance(SF_CGdSpell *_this, uint16_t spell_index)
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
     uint16_t target_index = spell->target.entity_index;
     GdFigure *target_figure = &_this->SF_CGdFigure->figures[target_index];
+
     if (spell->target.entity_type == 1)
     {
-        uint32_t tick = spellAPI.getXData(_this, spell_index, SPELL_TICK_COUNT_AUX);
-        if ((tick == 1) && (spellAPI.checkCanApply(_this, spell_index)))
+        uint32_t tick = spellAPI.addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1);
+        bool canApply = spellAPI.checkCanApply(_this, spell_index);
+        if ((tick == 1) && (canApply))
         {
             SF_CGdResourceSpell spell_data;
             spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);

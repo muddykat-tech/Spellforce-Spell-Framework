@@ -189,7 +189,7 @@ SFLog *setup_logger()
 // TODO: Parse me through an as an ActionAPI Wrapped Function
 bool __thiscall isActionMelee(SF_SGtFigureAction *_this)
 {
-    if ((_this->type == 10000) || (_this->type == 0x2711))
+    if ((_this->type == 10000) || (_this->type == 10001))
     {
         return 1;
     }
