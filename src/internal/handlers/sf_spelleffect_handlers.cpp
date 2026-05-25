@@ -1041,8 +1041,6 @@ void __thiscall effect_detect_metal(SF_CGdSpell *_this, uint16_t spell_index)
                 uint16_t pos_x = _this->SF_CGdObject->objects[i].pos.X;
                 uint16_t pos_y = _this->SF_CGdObject->objects[i].pos.Y;
                 uint16_t owner = source_figure->owner;
-                log_debug(DEBUG_HIGH, "GD Oject size %d",sizeof(GdObject));
-                log_debug(DEBUG_HIGH, "Added outcry for object ID %d at {%d, %d}", i, pos_x, pos_y);
                 toolboxAPI.doMapOutCry(_this->AC30, out_type, owner, 4, 0, pos_x, pos_y);
             }
         }
