@@ -76,7 +76,7 @@ DECLARE_FUNCTION(void, figTryUnfreeze, SF_CGdSpell *_this, uint16_t spell_id,
 DECLARE_FUNCTION(uint16_t, getSpellID, SF_CGdSpell *_this,
                  uint16_t spell_index);
 DECLARE_FUNCTION(uint16_t, getSpellTags, uint16_t spell_index);
-DECLARE_FUNCTION(bool, hasSpellTag, uint16_t spell_id, SpellTag tag);
+DECLARE_FUNCTION(bool, hasSpellTag, uint16_t spell_line_id, SpellTag tag);
 DECLARE_FUNCTION(int, checkCanApply, SF_CGdSpell *_this, uint16_t index);
 DECLARE_FUNCTION(void, spellEffectCallback, SF_CGdSpell *_this, uint16_t source_index, uint16_t spell_index,
                  bool (*conditionPtr)(SF_CGdSpell *, uint16_t, uint16_t),
@@ -287,7 +287,7 @@ typedef struct
      * @brief Checks if a spell has a specific tag.
      *
      * This function determines whether the given spell contains the specified tag.
-     * @param spell_id The ID of the spell.
+     * @param spell_line_id The ID of the spell.
      * @param tag The tag to check for. @see SpellTag
      * @return True if the spell has the specified tag, false otherwise.
      */

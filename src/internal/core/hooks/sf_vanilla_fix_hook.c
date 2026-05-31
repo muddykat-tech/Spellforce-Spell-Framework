@@ -3,8 +3,10 @@
 #include "sf_vanilla_fix_hook.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include <vector>
 
 #include "../../registry/spell_data_registries/sf_enchant_registry.h"
+#include "sf_endspell_hook.h"
 
 extern SpellFunctions spellAPI;
 extern ToolboxFunctions toolboxAPI;
@@ -52,6 +54,8 @@ typedef uint32_t (__thiscall *GetResourceSpellLine_ptr)(SF_CGdResource *_this, u
 typedef uint16_t (__thiscall *getUnitStringID_ptr)(SF_CGdResource *_this,uint16_t unit_id);
 typedef bool (__thiscall *getTextString_ptr)(SF_CGdResource *_this,uint16_t text_id,char *out_string);
 
+typedef void (__thiscall *onFigureBattleEnd_ptr)(SF_CGdFigureToolbox *_this, uint16_t figure_id);
+
 AC95_get_figure_name_ptr AC95_get_figure_name;
 GetColoredText_ptr GetColoredText;
 GetDescriptionText_ptr GetDescriptionText;
@@ -75,6 +79,8 @@ GetTextById_ptr GetTextById;
 ExpandSpellDescription_ptr ExpandSpellDescription;
 getUnitStringID_ptr getUnitStringID;
 getTextString_ptr getTextString;
+onFigureBattleEnd_ptr onFigureBattleEnd;
+
 
 bool __thiscall get_salvo_target_list (SF_CGdFigureJobs *_this, SF_CGdTargetData *source, SF_CGdTargetData *target,
                                        uint32_t angle, uint16_t *ranges, uint32_t target_count,
@@ -460,6 +466,48 @@ uint8_t __thiscall getEffectiveRace(SF_CGdFigure *_this, uint16_t figure_id)
     return _this->figures[figure_id].race;
 }
 
+void __thiscall figureTurnOffBattleMode(SF_CGdBattleDevelopment *_this)
+{
+    uint16_t figure_id = _this->battleData.current_figure;
+    _this->battleData.CGdFigure->figures[figure_id].flags &= ~(GOT_AGGRO);
+    _this->battleData.CGdFigure->figures[figure_id].flags &= ~(RETREAT);
+    std::vector<uint16_t> spell_indices;
+    if ((figureAPI.isFlagSet(_this->battleData.CGdFigure, figure_id, AURA_RUNNING))
+        && (_this->battleData.current_figure_is_hero == 0)
+        && (_this->battleData.current_figure_is_mainchar == 0))
+    {
+        for (uint16_t i = figureAPI.getSpellJobStartNode(_this->battleData.CGdFigure, figure_id); i != 0;
+             i = toolboxAPI.getNextNode(_this->battleData.CGdDoubleLinkList, i))
+        {
+            uint16_t spell_index = toolboxAPI.getSpellIndexFromDLL(_this->battleData.CGdDoubleLinkList, i);
+            uint16_t spell_line = spellAPI.getSpellLine(_this->battleData.CGdSpell, spell_index);
+            if (((spellAPI.hasSpellTag(spell_line, SpellTag::AURA_SPELL))
+                 || (spellAPI.hasSpellTag(spell_line, SpellTag::SIEGE_AURA_SPELL)))
+                && (_this->battleData.enemy_figures.entityCount == 0))
+            {
+                spell_indices.push_back(spell_index);
+            }
+        }
+        while (spell_indices.size() != 0)
+        {
+            uint16_t spell_index = spell_indices.back();
+            spell_indices.pop_back();
+            sf_endspell_hook(_this->battleData.CGdSpell, spell_index);
+        }
+    }
+    onFigureBattleEnd(_this->battleData.CGdFigureToolBox, figure_id);
+}
+
+static void figure_turn_off_battle_mode_hook()
+{
+    ASI::MemoryRegion mreg(ASI::AddrOf(0x3607a7), 5);
+    ASI::BeginRewrite(mreg);
+    *(unsigned char *)(ASI::AddrOf(0x3607a7)) = 0xE9;  // jmp instruction
+    *(int *)(ASI::AddrOf(0x3607a8)) = (int)(&figureTurnOffBattleMode)- ASI::AddrOf((0x3607ac));
+    ASI::EndRewrite(mreg);
+
+}
+
 /* Figure Statistics */
 static void figure_statistic_hook_current_ac()
 {
@@ -468,8 +516,7 @@ static void figure_statistic_hook_current_ac()
     *(unsigned char *)(ASI::AddrOf(0x2b18e0)) = 0x90; // nop
     *(unsigned char *)(ASI::AddrOf(0x2b18e1)) = 0x90; // nop
     *(unsigned char *)(ASI::AddrOf(0x2b18e2)) = 0xE9; // jmp instruction
-    *(int *)(ASI::AddrOf(0x2b18e3)) = (int)(&get_figure_statistic_current_ac)-
-                                      ASI::AddrOf((0x2b18e7));
+    *(int *)(ASI::AddrOf(0x2b18e3)) = (int)(&get_figure_statistic_current_ac) - ASI::AddrOf((0x2b18e7));
     ASI::EndRewrite(ac_mreg);
 }
 
@@ -480,8 +527,7 @@ static void figure_statistic_hook_current_agi()
     *(unsigned char *)(ASI::AddrOf(0x2b1af0)) = 0x90; // nop
     *(unsigned char *)(ASI::AddrOf(0x2b1af1)) = 0x90; // nop
     *(unsigned char *)(ASI::AddrOf(0x2b1af2)) = 0xE9; // jmp instruction
-    *(int *)(ASI::AddrOf(0x2b1af3)) = (int)(&get_figure_statistic_current_agi)-
-                                      ASI::AddrOf((0x2b1af7));
+    *(int *)(ASI::AddrOf(0x2b1af3)) = (int)(&get_figure_statistic_current_agi) - ASI::AddrOf((0x2b1af7));
     ASI::EndRewrite(ac_mreg);
 }
 
@@ -492,8 +538,7 @@ static void figure_statistic_hook_current_cha()
     *(unsigned char *)(ASI::AddrOf(0x2b1c30)) = 0x90; // nop
     *(unsigned char *)(ASI::AddrOf(0x2b1c31)) = 0x90; // nop
     *(unsigned char *)(ASI::AddrOf(0x2b1c32)) = 0xE9; // jmp instruction
-    *(int *)(ASI::AddrOf(0x2b1c33)) = (int)(&get_figure_statistic_current_cha)-
-                                      ASI::AddrOf((0x2b1c37));
+    *(int *)(ASI::AddrOf(0x2b1c33)) = (int)(&get_figure_statistic_current_cha) - ASI::AddrOf((0x2b1c37));
     ASI::EndRewrite(ac_mreg);
 }
 
@@ -504,8 +549,7 @@ static void figure_statistic_hook_current_dex()
     *(unsigned char *)(ASI::AddrOf(0x2b2600)) = 0x90; // nop
     *(unsigned char *)(ASI::AddrOf(0x2b2601)) = 0x90; // nop
     *(unsigned char *)(ASI::AddrOf(0x2b2602)) = 0xE9; // jmp instruction
-    *(int *)(ASI::AddrOf(0x2b2603)) = (int)(&get_figure_statistic_current_dex)-
-                                      ASI::AddrOf((0x2b2607));
+    *(int *)(ASI::AddrOf(0x2b2603)) = (int)(&get_figure_statistic_current_dex) - ASI::AddrOf((0x2b2607));
     ASI::EndRewrite(ac_mreg);
 }
 
@@ -516,8 +560,7 @@ static void figure_statistic_hook_current_int()
     *(unsigned char *)(ASI::AddrOf(0x2b28a0)) = 0x90; // nop
     *(unsigned char *)(ASI::AddrOf(0x2b28a1)) = 0x90; // nop
     *(unsigned char *)(ASI::AddrOf(0x2b28a2)) = 0xE9; // jmp instruction
-    *(int *)(ASI::AddrOf(0x2b28a3)) = (int)(&get_figure_statistic_current_int)-
-                                      ASI::AddrOf((0x2b28a7));
+    *(int *)(ASI::AddrOf(0x2b28a3)) = (int)(&get_figure_statistic_current_int) - ASI::AddrOf((0x2b28a7));
     ASI::EndRewrite(ac_mreg);
 }
 
@@ -528,7 +571,7 @@ static void figure_statistic_hook_current_hp()
     *(unsigned char *)(ASI::AddrOf(0x279350)) = 0x90; // nop
     *(unsigned char *)(ASI::AddrOf(0x279351)) = 0x90; // nop
     *(unsigned char *)(ASI::AddrOf(0x279352)) = 0xE9; // jmp instruction
-    *(int *)(ASI::AddrOf(0x279353)) = (int)(&get_figure_statistic_current_hp)- ASI::AddrOf((0x279357));
+    *(int *)(ASI::AddrOf(0x279353)) = (int)(&get_figure_statistic_current_hp) - ASI::AddrOf((0x279357));
     ASI::EndRewrite(ac_mreg);
 
     ASI::MemoryRegion ac_mreg2 (ASI::AddrOf(0x2b2970), 7);
@@ -536,7 +579,7 @@ static void figure_statistic_hook_current_hp()
     *(unsigned char *)(ASI::AddrOf(0x2b2970)) = 0x90; // nop
     *(unsigned char *)(ASI::AddrOf(0x2b2971)) = 0x90; // nop
     *(unsigned char *)(ASI::AddrOf(0x2b2972)) = 0xE9; // jmp instruction
-    *(int *)(ASI::AddrOf(0x2b2973)) = (int)(&get_figure_statistic_max_hp)- ASI::AddrOf((0x2b2977));
+    *(int *)(ASI::AddrOf(0x2b2973)) = (int)(&get_figure_statistic_max_hp) - ASI::AddrOf((0x2b2977));
     ASI::EndRewrite(ac_mreg2);
 
 }
@@ -568,8 +611,7 @@ static void figure_statistic_hook_current_sta()
     *(unsigned char *)(ASI::AddrOf(0x2b2e00)) = 0x90; // nop
     *(unsigned char *)(ASI::AddrOf(0x2b2e01)) = 0x90; // nop
     *(unsigned char *)(ASI::AddrOf(0x2b2e02)) = 0xE9; // jmp instruction
-    *(int *)(ASI::AddrOf(0x2b2e03)) = (int)(&get_figure_statistic_current_sta)-
-                                      ASI::AddrOf((0x2b2e07));
+    *(int *)(ASI::AddrOf(0x2b2e03)) = (int)(&get_figure_statistic_current_sta) - ASI::AddrOf((0x2b2e07));
     ASI::EndRewrite(ac_mreg);
 }
 
@@ -580,8 +622,7 @@ static void figure_statistic_hook_current_str()
     *(unsigned char *)(ASI::AddrOf(0x2b2eb0)) = 0x90; // nop
     *(unsigned char *)(ASI::AddrOf(0x2b2eb1)) = 0x90; // nop
     *(unsigned char *)(ASI::AddrOf(0x2b2eb2)) = 0xE9; // jmp instruction
-    *(int *)(ASI::AddrOf(0x2b2eb3)) = (int)(&get_figure_statistic_current_str)-
-                                      ASI::AddrOf((0x2b2eb7));
+    *(int *)(ASI::AddrOf(0x2b2eb3)) = (int)(&get_figure_statistic_current_str) - ASI::AddrOf((0x2b2eb7));
     ASI::EndRewrite(ac_mreg);
 }
 
@@ -592,8 +633,7 @@ static void figure_statistic_hook_current_wis()
     *(unsigned char *)(ASI::AddrOf(0x2b3160)) = 0x90; // nop
     *(unsigned char *)(ASI::AddrOf(0x2b3161)) = 0x90; // nop
     *(unsigned char *)(ASI::AddrOf(0x2b3162)) = 0xE9; // jmp instruction
-    *(int *)(ASI::AddrOf(0x2b3163)) = (int)(&get_figure_statistic_current_wis)-
-                                      ASI::AddrOf((0x2b3167));
+    *(int *)(ASI::AddrOf(0x2b3163)) = (int)(&get_figure_statistic_current_wis) - ASI::AddrOf((0x2b3167));
     ASI::EndRewrite(ac_mreg);
 }
 
@@ -604,8 +644,7 @@ static void figure_statistic_hook_current_fire_res()
     *(unsigned char *)(ASI::AddrOf(0x2b2c00)) = 0x90; // nop
     *(unsigned char *)(ASI::AddrOf(0x2b2c01)) = 0x90; // nop
     *(unsigned char *)(ASI::AddrOf(0x2b2c02)) = 0xE9; // jmp instruction
-    *(int *)(ASI::AddrOf(0x2b2c03)) = (int)(&get_figure_statistic_current_fire_res)-
-                                      ASI::AddrOf((0x2b2c07));
+    *(int *)(ASI::AddrOf(0x2b2c03)) = (int)(&get_figure_statistic_current_fire_res) - ASI::AddrOf((0x2b2c07));
     ASI::EndRewrite(ac_mreg);
 }
 
@@ -1465,6 +1504,8 @@ void initialize_vanilla_fix_hooks()
     getUnitStringID = (getUnitStringID_ptr)(ASI::AddrOf(0x26e9f0));
     getTextString = (getTextString_ptr)(ASI::AddrOf(0x26e510));
 
+    onFigureBattleEnd = (onFigureBattleEnd_ptr)(ASI::AddrOf(0x2f471a));
+
     log_info("| - Vanilla Fix Hooks");
     figure_statistic_hook_current_ac();
     figure_statistic_hook_current_agi();
@@ -1486,4 +1527,6 @@ void initialize_vanilla_fix_hooks()
     salvo_fix_hook();
     get_race_fix_hook();
     army_size_fix_hook();
+    figure_turn_off_battle_mode_hook();
+
 }
