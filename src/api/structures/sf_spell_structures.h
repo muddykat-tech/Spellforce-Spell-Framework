@@ -29,7 +29,7 @@ struct __attribute__((packed)) SF_CGdSpell
     SF_CGdBuilding *CGdBuilding;
     SF_CGdBuildingToolbox *SF_CGdBuildingToolbox;
     void *SF_CGdDoubleLinkedList;
-    SF_CGDEffect *SF_CGdEffect;
+    SF_CGdEffect *SF_CGdEffect;
     void *AC30;
     SF_CGdFigure *SF_CGdFigure;
     SF_CGdFigureJobs *SF_CGdFigureJobs;

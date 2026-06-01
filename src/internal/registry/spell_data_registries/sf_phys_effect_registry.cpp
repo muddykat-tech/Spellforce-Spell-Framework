@@ -7,12 +7,12 @@ static std::map<uint16_t, sub_effect_handler_ptr> s_rain_handlers_map;
 static std::map<uint16_t, phys_effect_handler_ptr> s_phys_effect_handlers_map;
 
 
-void __thiscall default_rain_handler(SF_CGDEffect *_this, uint16_t effect_index)
+void __thiscall default_rain_handler(SF_CGdEffect *_this, uint16_t effect_index)
 {
     return;
 }
 
-uint16_t __thiscall default_phys_effect_handler (SF_CGDEffect *_this, uint16_t source, uint16_t target,
+uint16_t __thiscall default_phys_effect_handler (SF_CGdEffect *_this, uint16_t source, uint16_t target,
                                                  bool *isSpellDamage, uint16_t damage)
 {
     return damage;

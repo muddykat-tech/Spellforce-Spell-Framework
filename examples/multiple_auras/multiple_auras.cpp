@@ -1,168 +1,158 @@
 #include "../../src/api/sfsf.h"
-#include "../../src/asi/sf_asi.h"
+
 // NOTE sfsf.h includes the OTHER api files, but other libraries are still required
 #include <windows.h>
 #include <stdio.h>
-#include "multiple_auras.h"
+
+#define HEAVY_STRIKES_LINE 250
+#define HEAVY_STRIKES_JOB 190
 
 SpellforceSpellFramework *sfsf;
 SpellFunctions *spellAPI;
 ToolboxFunctions *toolboxAPI;
 FigureFunctions *figureAPI;
-RegistrationFunctions *registrationAPI;
 EffectFunctions *effectAPI;
+RegistrationFunctions *registrationAPI;
+AiFunctions *aiAPI;
+UiFunctions *uiAPI;
+SFLog *logAPI;
 
-getFigureJobData_ptr getFigureJobData;
-FUN_006f8c06_ptr FUN_006f8c06;
-FUN_006fa3ce_ptr FUN_006fa3ce;
-setFigureAction_ptr setFigureAction;
-
-void __thiscall default_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
+void __thiscall heavy_strikes_type_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
-    spellAPI->removeDLLNode(_this, spell_index);
-    spellAPI->setEffectDone(_this, spell_index, 0);
+    _this->active_spell_list[spell_index].spell_job = HEAVY_STRIKES_JOB;
+    spellAPI->setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
+    spellAPI->setXData(_this, spell_index, EFFECT_EFFECT_INDEX, 0);
 }
 
-
-uint32_t __thiscall onSpellCastHook(SF_CGdFigureToolbox *_this, uint16_t figure_id, uint16_t spell_id,
-                                    uint16_t target_id, uint8_t target_type, SF_Coord position, uint32_t param6,
-                                    uint32_t param7)
-{
-    FigureJobData *ac24 = getFigureJobData(_this->CGdFigure, figure_id);
-    if (!FUN_006f8c06(_this, figure_id, spell_id, target_id, target_type, position, param6, param7, 0))
-    {
-        return 0;
-    }
-    else
-    {
-        FUN_006fa3ce(_this, figure_id, 0);
-        ac24->flags |= MANUAL_JOB_CHANGE;
-        ac24->GdJobId = kGdJobManualWalkToTarget;
-        ac24->target.entity_index = target_id;
-        ac24->target.entity_type = target_type;
-        ac24->target.position.X = position.X;
-        ac24->target.position.Y = position.Y;
-        SF_CGdResourceSpell spell_data;
-        spellAPI->getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
-
-        SF_SGtFigureAction action;
-        action.type = spell_data.spell_line_id;
-        action.subtype =spell_id;
-        action.unkn1 = 0;
-        action.unkn2 = 0;
-        action.unkn3 = 0;
-        action.unkn4 = 0;
-
-        setFigureAction(ac24, &action);
-        return 1;
-    }
-}
-
-void __thiscall aura_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
+void __thiscall heavy_strikes_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     SF_CGdFigure *sf_figures = _this->SF_CGdFigure;
     uint16_t source_index = _this->active_spell_list[spell_index].source.entity_index;
     if ((sf_figures->figures[source_index].owner != (uint16_t)(-1)) &&
-        ((sf_figures->figures[source_index].flags & (IS_DEAD | RESESRVED_ONLY)) == 0))
+        ((sf_figures->figures[source_index].flags & GdFigureFlags::REDO) == 0))
     {
-
-        /*
-           This should do the same thing as the code below, but as a callback.
-         */
-        // spellAPI->spellEffectCallback(_this, source_index, spell_index,
-        //     [](SF_CGdSpell* spell, uint16_t spell_index, uint16_t walked_index) -> bool {
-        //         uint16_t spell_line = spellAPI->getSpellLine(spell, walked_index);
-        //         return spellAPI->hasSpellTag(spell_line, AURA_SPELL);
-        //     },
-        //     [](SF_CGdSpell* spell, uint16_t src_idx, uint16_t walked_index, uint16_t spell_index) -> void {
-        //         if( walked_index != spell_index ) {
-        //             SF_CGdFigure *sf_figures = spell->SF_CGdFigure;
-        //             sf_figures->figures[src_idx].flags = static_cast<GdFigureFlags>(sf_figures->figures[src_idx].flags &
-        //                 (~static_cast<unsigned int>(GdFigureFlags::AURA_RUNNING)));
-        //         }
-        //     });
-
-        uint16_t node_id = figureAPI->getSpellJobStartNode(_this->SF_CGdFigure, source_index);
-        bool should_stop = true;
-        while (node_id != 0)
-        {
-            uint16_t index = toolboxAPI->getSpellIndexFromDLL(_this->SF_CGdDoubleLinkedList, node_id);
-            if (index != spell_index)
-            {
-                uint16_t spell_line = spellAPI->getSpellLine(_this, index);
-                if (spellAPI->hasSpellTag(spell_line, AURA_SPELL))
-                {
-                    should_stop = false;
-                    break;
-                }
-            }
-            node_id = toolboxAPI->getNextNode(_this->SF_CGdDoubleLinkedList, node_id);
-        }
-        if (should_stop)
-        {
-            sf_figures->figures[source_index].flags =
-                static_cast<GdFigureFlags>(sf_figures->figures[source_index].flags &
-                                           (~static_cast<unsigned int>(GdFigureFlags::AURA_RUNNING)));
-        }
+        sf_figures->figures[source_index].flags = static_cast<GdFigureFlags>(sf_figures->figures[source_index].flags &
+                                                                             (~static_cast<unsigned int>(GdFigureFlags::
+                                                                                                         AURA_RUNNING)));
     }
-
     uint16_t effect_index = spellAPI->getXData(_this, spell_index, EFFECT_EFFECT_INDEX);
     if (effect_index != 0)
     {
         effectAPI->tryEndEffect(_this->SF_CGdEffect, effect_index);
     }
-    default_end_handler(_this, spell_index);
+    spellAPI->figTryClrCHkSPlBfrJob2(_this, spell_index);
+    spellAPI->figClrChkSplBfrChkBattle(_this, spell_index, 0);
+    spellAPI->removeDLLNode(_this, spell_index);
+    spellAPI->setEffectDone(_this, spell_index, 0);
 }
 
-void registerSpells()
+void __thiscall heavy_strikes_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
-    SFSpell *aura1 = registrationAPI->registerSpell(kGdSpellLineAuraWeakness);
-    SFSpell *aura2 = registrationAPI->registerSpell(kGdSpellLineAuraSuffocation);
-    SFSpell *aura3 = registrationAPI->registerSpell(kGdSpellLineAuraLifeTap);
-    SFSpell *aura4 = registrationAPI->registerSpell(kGdSpellLineAuraSlowFighting);
-    SFSpell *aura5 = registrationAPI->registerSpell(kGdSpellLineAuraInflexibility);
-    SFSpell *aura6 = registrationAPI->registerSpell(kGdSpellLineAuraSlowWalking);
-    SFSpell *aura7 = registrationAPI->registerSpell(kGdSpellLineAuraInability);
+    SF_GdSpell *spell = &_this->active_spell_list[spell_index];
+    SF_CGdResourceSpell spell_data;
 
-    SFSpell *aura8 = registrationAPI->registerSpell(kGdSpellLineAuraStrength);
-    SFSpell *aura9 = registrationAPI->registerSpell(kGdSpellLineAuraHealing);
-    SFSpell *aura10 = registrationAPI->registerSpell(kGdSpellLineAuraEndurance);
-    SFSpell *aura11 = registrationAPI->registerSpell(kGdSpellLineAuraRegeneration);
-    SFSpell *aura12 = registrationAPI->registerSpell(kGdSpellLineAuraFastFighting);
-    SFSpell *aura13 = registrationAPI->registerSpell(kGdSpellLineAuraFlexibility);
-    SFSpell *aura14 = registrationAPI->registerSpell(kGdSpellLineAuraFastWalking);
-    SFSpell *aura15 = registrationAPI->registerSpell(kGdSpellLineAuraLight);
-    SFSpell *aura16 = registrationAPI->registerSpell(kGdSpellLineAuraDexterity);
+    uint16_t source_index = spell->source.entity_index;
+    spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+    _this->active_spell_list[spell_index].to_do_count = (spell_data.params[2] * 10) / 1000;
 
-    SFSpell *aura17 = registrationAPI->registerSpell(kGdSpellLineAuraHypnotization);
-    SFSpell *aura18 = registrationAPI->registerSpell(kGdSpellLineAuraBrilliance);
-    SFSpell *aura19 = registrationAPI->registerSpell(kGdSpellLineAuraManaTap);
+    SF_CGdTargetData source_data;
+    source_data.entity_index = source_index;
+    source_data.entity_type = 1;
+    source_data.position = {0,0};
+    if (spell->source.entity_type == 1)
+    {
+        if ((_this->SF_CGdFigure->figures[source_index].owner != (uint16_t)(-1)) &&
+            ((*(uint8_t *)(&_this->SF_CGdFigure->figures[source_index].flags) & 0xa) == 0))
+        {
 
-    SFSpell *aura20 = registrationAPI->registerSpell(kGdSpellLineAuraEternity);
+            uint32_t tick = spellAPI->addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1);
+            if (tick == 1)
+            {
+                _this->SF_CGdFigure->figures[source_index].flags |= AURA_RUNNING;
+                SF_Rectangle rect = {0, 0};
+                uint16_t effect_index = effectAPI->addEffect(_this->SF_CGdEffect, kGdEffectSpellHitTarget, &source_data,
+                                                             &source_data,
+                                                             _this->OpaqueClass->current_step, 0, &rect);
 
-    registrationAPI->linkEndHandler(aura1, &aura_end_handler);
-    registrationAPI->linkEndHandler(aura2, &aura_end_handler);
-    registrationAPI->linkEndHandler(aura3, &aura_end_handler);
-    registrationAPI->linkEndHandler(aura4, &aura_end_handler);
-    registrationAPI->linkEndHandler(aura5, &aura_end_handler);
-    registrationAPI->linkEndHandler(aura6, &aura_end_handler);
-    registrationAPI->linkEndHandler(aura7, &aura_end_handler);
-    registrationAPI->linkEndHandler(aura8, &aura_end_handler);
-    registrationAPI->linkEndHandler(aura9, &aura_end_handler);
-    registrationAPI->linkEndHandler(aura10, &aura_end_handler);
+                spellAPI->setXData(_this, spell_index, EFFECT_EFFECT_INDEX, effect_index);
+                effectAPI->setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_SPELL_INDEX, spell_index);
 
-    registrationAPI->linkEndHandler(aura11, &aura_end_handler);
-    registrationAPI->linkEndHandler(aura12, &aura_end_handler);
-    registrationAPI->linkEndHandler(aura13, &aura_end_handler);
-    registrationAPI->linkEndHandler(aura14, &aura_end_handler);
-    registrationAPI->linkEndHandler(aura15, &aura_end_handler);
-    registrationAPI->linkEndHandler(aura16, &aura_end_handler);
-    registrationAPI->linkEndHandler(aura17, &aura_end_handler);
-    registrationAPI->linkEndHandler(aura18, &aura_end_handler);
-    registrationAPI->linkEndHandler(aura19, &aura_end_handler);
-    registrationAPI->linkEndHandler(aura20, &aura_end_handler);
+                _this->SF_CGdFigure->figures[source_index].flags |= F_CHECK_SPELLS_BEFORE_JOB;
+                _this->active_spell_list[spell_index].flags |= CHECK_SPELLS_BEFORE_JOB2;
+
+            }
+            uint16_t mana_cost = spell_data.params[1];
+            uint16_t current_mp = figureAPI->getCurrentStat(_this->SF_CGdFigure, source_index, MANA);
+            if (current_mp >= mana_cost)
+            {
+                return;
+            }
+        }
+    }
+    if (source_index != 0)
+    {
+        _this->SF_CGdFigure->figures[source_index].flags &= ~AURA_RUNNING;
+    }
+    uint16_t effect_index = spellAPI->getXData(_this, spell_index, EFFECT_EFFECT_INDEX);
+    effectAPI->tryEndEffect(_this->SF_CGdEffect, effect_index);
+    spellAPI->setXData(_this, spell_index, EFFECT_EFFECT_INDEX, 0);
+    spellAPI->setEffectDone(_this, spell_index, 0);
+    return;
 
 }
+
+uint16_t __thiscall heavy_strikes_onhit_handler(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index,
+                                                uint16_t damage)
+{
+    if (damage == 0 || damage == 0x7fff)
+    {
+        return damage;
+    }
+    SF_SGtFigureAction action;
+    aiAPI->getTargetAction(_this->CGdFigure, &action, source_index);
+
+    uint16_t spell_index = toolboxAPI->getSpellIndexOfType(_this->CGdFigureToolBox, source_index, HEAVY_STRIKES_LINE,
+                                                           0);
+
+    uint16_t spell_id = spellAPI->getSpellID(_this->CGdSpell, spell_index);
+    SF_CGdResourceSpell spell_data;
+    spellAPI->getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
+
+    bool isMeleeAttack = 0;
+    if ((action.type == 10000) || (action.type == 10001))
+    {
+        isMeleeAttack = 1;
+    }
+    if (isMeleeAttack)
+    {
+        uint16_t damage_increase = spell_data.params[0];
+        uint16_t mana_cost = spell_data.params[1];
+        uint16_t current_mp = figureAPI->getCurrentStat(_this->CGdFigure, source_index, MANA);
+        if (current_mp >= mana_cost)
+        {
+            damage += damage_increase;
+            figureAPI->subMana(_this->CGdFigure, source_index, mana_cost);
+        }
+        else
+        {
+            if (source_index != 0)
+            {
+                _this->CGdFigure->figures[source_index].flags &= ~AURA_RUNNING;
+            }
+            uint16_t effect_index = spellAPI->getXData(_this->CGdSpell, spell_index, EFFECT_EFFECT_INDEX);
+            effectAPI->tryEndEffect(_this->CGdEffect, effect_index);
+            spellAPI->setXData(_this->CGdSpell, spell_index, EFFECT_EFFECT_INDEX, 0);
+            spellAPI->setEffectDone(_this->CGdSpell, spell_index, 0);
+        }
+    }
+    return damage;
+}
+
+
+/***
+ * This function MUST be present in your code with the exact declaration
+ * otherwise framework won't load your plugin
+ ***/
 
 extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *framework)
 {
@@ -172,33 +162,42 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     figureAPI = sfsf->figureAPI;
     registrationAPI = sfsf->registrationAPI;
     effectAPI = sfsf->effectAPI;
+    aiAPI = sfsf->aiAPI;
+    uiAPI = sfsf->uiAPI;
+    logAPI = sfsf->logAPI;
 
-    getFigureJobData = (getFigureJobData_ptr)ASI::AddrOf(0x2b5cb0);
-    FUN_006f8c06 = (FUN_006f8c06_ptr)ASI::AddrOf(0x2f8c06);
-    FUN_006fa3ce = (FUN_006fa3ce_ptr)ASI::AddrOf(0x2fa3ce);
-    setFigureAction = (setFigureAction_ptr)ASI::AddrOf(0x2c55d0);
+    SFSpell *heavy_strikes_spell = registrationAPI->registerSpell(HEAVY_STRIKES_LINE);
+    registrationAPI->linkTypeHandler(heavy_strikes_spell, &heavy_strikes_type_handler);
+    registrationAPI->linkEffectHandler(heavy_strikes_spell, HEAVY_STRIKES_JOB, &heavy_strikes_effect_handler);
+    registrationAPI->linkEndHandler(heavy_strikes_spell, &heavy_strikes_end_handler);
+    registrationAPI->linkOnHitHandler(heavy_strikes_spell, &heavy_strikes_onhit_handler, OnHitPhase::PHASE_4);
+    registrationAPI->applySpellTag(heavy_strikes_spell,SpellTag::AURA_SPELL);
+    registrationAPI->applySpellTag(heavy_strikes_spell,SpellTag::COMBAT_ABILITY_SPELL);
 
-    ASI::MemoryRegion mreg_1(ASI::AddrOf(0x356247), 5);
-    ASI::BeginRewrite(mreg_1);
-    *(unsigned char *)(ASI::AddrOf(0x356247)) = 0xE8;
-    *(int *)(ASI::AddrOf(0x356248)) = (int)(&onSpellCastHook) - ASI::AddrOf(0x35624c);
-    ASI::EndRewrite(mreg_1);
+    uiAPI->attachLabel()
 
-    registerSpells();
 }
+
+
+/***
+ * This function MUST be present in your code with the exact declaration
+ * otherwise the framework is unable to describe your mod in logs and mod info menu (menu not yet implemented)
+ ***/
 
 extern "C" __declspec(dllexport) SFMod *RegisterMod(SpellforceSpellFramework *framework)
 {
-    return framework->createModInfo("Multiple Auras Mod", "1.0.0", "UnSchtalch",
-                                    "This mod is and experiment to make multiple auras possible using SFSF");
+    return framework->createModInfo("Heavy strikes aura", "1.0.0", "UnSchtalch",
+                                    "This heavy_strikes provides example of custom aura spell");
 }
+
+
+// Required to be present by OS, not required for any functionality
 
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 {
     switch (fdwReason)
     {
         case DLL_PROCESS_ATTACH:
-            ASI::Init(hinstDLL);
             /* Code path executed when DLL is loaded into a process's address space. */
             break;
 

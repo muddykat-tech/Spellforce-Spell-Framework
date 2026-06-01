@@ -6,7 +6,7 @@
 
 struct __attribute__((packed)) SF_GdEffect
 {
-    uint16_t CGdEffectType;
+    uint16_t type;
     SF_CGdTargetData source;
     SF_CGdTargetData target;
     SF_Coord position;
@@ -14,14 +14,11 @@ struct __attribute__((packed)) SF_GdEffect
     uint32_t unkn1;
     uint16_t length;
     uint16_t xdata_key;
-    uint16_t unkn2;
-    uint16_t unkn3;
-    uint16_t unkn4;
-    uint16_t unkn5;
+    SF_Rectangle rect;
     SF_Coord position2;
 };
 
-struct __attribute__((packed)) SF_CGDEffect
+struct __attribute__((packed)) SF_CGdEffect
 {
     AutoClass14 *OpaqueClass;
     SF_CGdBuilding *CGdBuilding;
@@ -30,14 +27,14 @@ struct __attribute__((packed)) SF_CGDEffect
     SF_CGdFigure *SF_CGdFigure;
     SF_CGdFigureToolbox *SF_CGdFigureToolBox;
     void *AutoClass34;
-    void *SF_CGdObject;
-    void *SF_CGdResource;
+    SF_CGdObject *SF_CGdObject;
+    SF_CGdResource *SF_CGdResource;
     SF_CGdSpell *CGdSpell;
-    void *AutoClass22;
+    void *SF_CGdTile;
     void *AutoClass50;
     SF_CGdWorld *SF_CGdWorld;
     SF_CGdWorldToolBox *SF_CGdWorldToolBox;
     void *SF_CGdXDataList;
-    SF_GdEffect active_effect_list[2000];
+    SF_GdEffect effects[2000];
     uint16_t max_used;
 };

@@ -56,7 +56,7 @@ bool __thiscall buildingIsWoodcutter(SF_CGdBuilding *_this, uint16_t building_in
 bool __thiscall buildingIsShrine(SF_CGdBuilding *_this, uint16_t building_index);
 bool __thiscall buildingIsHabitable(SF_CGdBuilding *_this, uint16_t building_index);
 bool __thiscall buildingIsHabitableSingle(SF_CGdBuilding *_this, uint16_t building_index);
-bool __thiscall XDataExists(SF_CGDEffect *_this, uint16_t effect_index, SpellDataKey data);
+bool __thiscall XDataExists(SF_CGdEffect *_this, uint16_t effect_index, SpellDataKey data);
 
 void __thiscall tryClearCheckSpellsBeforeJob(SF_CGdSpell *_this, uint16_t spell_index, uint16_t figure_index);
 

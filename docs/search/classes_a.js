@@ -2,7 +2,7 @@ var searchData=
 [
   ['sf_5fcgdbattledevelopment_0',['SF_CGdBattleDevelopment',['../struct_s_f___c_gd_battle_development.html',1,'']]],
   ['sf_5fcgdbuilding_1',['SF_CGdBuilding',['../struct_s_f___c_gd_building.html',1,'']]],
-  ['sf_5fcgdeffect_2',['SF_CGDEffect',['../struct_s_f___c_g_d_effect.html',1,'']]],
+  ['sf_5fcgdeffect_2',['SF_CGdEffect',['../struct_s_f___c_g_d_effect.html',1,'']]],
   ['sf_5fcgdfigure_3',['SF_CGdFigure',['../struct_s_f___c_gd_figure.html',1,'']]],
   ['sf_5fcgdfigurejobs_4',['SF_CGdFigureJobs',['../struct_s_f___c_gd_figure_jobs.html',1,'']]],
   ['sf_5fcgdfiguretoolbox_5',['SF_CGdFigureToolbox',['../struct_s_f___c_gd_figure_toolbox.html',1,'']]],

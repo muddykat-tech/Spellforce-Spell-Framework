@@ -161,7 +161,7 @@ struct __attribute__((packed)) SF_CGdFigureJobs
     SF_CGdBuilding *CGdBuilding;
     SF_CGdBuildingToolbox *CGdBuildingToolBox;
     uint32_t *CGdDoubleLinkList;
-    SF_CGDEffect *CGdEffect;
+    SF_CGdEffect *CGdEffect;
     uint32_t *AutoClass30;
     SF_CGdFigure *CGdFigure;
     SF_CGdFigureToolbox *CGdFigureToolBox;

@@ -2,12 +2,12 @@
 #include "../core/sf_wrappers.h"
 #include "../core/sf_hooks.h"
 
-void __thiscall stone_rain_phys_handler(SF_CGDEffect *_this, uint16_t effect_id)
+void __thiscall stone_rain_phys_handler(SF_CGdEffect *_this, uint16_t effect_id)
 {
     uint32_t source_id = effectAPI.getEffectXData(_this, effect_id, EFFECT_ENTITY_INDEX);
     uint32_t damage = effectAPI.getEffectXData(_this, effect_id, EFFECT_PHYSICAL_DAMAGE);
-    uint32_t pos_x = _this->active_effect_list[effect_id].position.X;
-    uint32_t pos_y = _this->active_effect_list[effect_id].position.Y;
+    uint32_t pos_x = _this->effects[effect_id].position.X;
+    uint32_t pos_y = _this->effects[effect_id].position.Y;
 
     for (uint32_t i = 9, j = 0; i > 0; i--, j+=7)
     {
@@ -50,7 +50,7 @@ void __thiscall stone_rain_phys_handler(SF_CGDEffect *_this, uint16_t effect_id)
     }
 }
 
-uint16_t __thiscall spark_phys_handler (SF_CGDEffect *_this, uint16_t source, uint16_t target, bool *isSpellDamage,
+uint16_t __thiscall spark_phys_handler (SF_CGdEffect *_this, uint16_t source, uint16_t target, bool *isSpellDamage,
                                         uint16_t damage)
 {
     *isSpellDamage = true;

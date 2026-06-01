@@ -100,7 +100,7 @@ struct __attribute__((packed)) SF_CGdBuildingToolbox
     AutoClass14 *OpaqueClass;
     SF_CGdBuilding *CGdBuilding;
     void *CGdDoubleLinkList;
-    SF_CGDEffect *CGdEffect;
+    SF_CGdEffect *CGdEffect;
     void *AutoClass30;
     SF_CGdFigure *CGdFigure;
     SF_CGdFigureJobs *CGdFigureJobs;

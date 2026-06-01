@@ -4,9 +4,9 @@
 #include <utility>
 #include <list>
 
-/*
-   void __thiscall sf_phys_effect_hook(SF_CGDEffect *_this, uint16_t effect_id)
-   {
+
+void __thiscall sf_phys_effect_hook(SF_CGdEffect *_this, uint16_t effect_id)
+{
     uint32_t source_id = effectAPI.getEffectXData(_this, effect_id, EFFECT_ENTITY_INDEX);
     uint32_t source_type = effectAPI.getEffectXData(_this, effect_id, EFFECT_ENTITY_TYPE);
     uint32_t target_id = effectAPI.getEffectXData(_this, effect_id, EFFECT_ENTITY_INDEX2);
@@ -93,11 +93,11 @@
             }
         }
     }
-   }
- */
+}
 
-void __thiscall sf_phys_effect_hook(SF_CGDEffect *_this, uint16_t effect_id)
-{
+/*
+   void __thiscall sf_phys_effect_hook(SF_CGdEffect *_this, uint16_t effect_id)
+   {
     uint32_t source_id = effectAPI.getEffectXData(_this, effect_id, EFFECT_ENTITY_INDEX);
     uint32_t source_type = effectAPI.getEffectXData(_this, effect_id, EFFECT_ENTITY_TYPE);
     uint32_t target_id = effectAPI.getEffectXData(_this, effect_id, EFFECT_ENTITY_INDEX2);
@@ -123,4 +123,5 @@ void __thiscall sf_phys_effect_hook(SF_CGDEffect *_this, uint16_t effect_id)
         log_debug(DEBUG_HIGH, "Unknown target type [%d]", target_type);
 
     }
-}
+   }
+ */

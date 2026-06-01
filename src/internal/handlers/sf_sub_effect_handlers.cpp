@@ -3,7 +3,7 @@
 #include "../core/sf_wrappers.h"
 #include <cstdio>
 
-void __thiscall elemental_sub_effect_handler(SF_CGDEffect *_this, uint16_t effect_index)
+void __thiscall elemental_sub_effect_handler(SF_CGdEffect *_this, uint16_t effect_index)
 {
     uint16_t spell_id = effectAPI.getEffectXData(_this, effect_index, EFFECT_SUBSPELL_ID);
     uint16_t source_index = effectAPI.getEffectXData(_this, effect_index, EFFECT_ENTITY_INDEX);
@@ -21,8 +21,8 @@ void __thiscall elemental_sub_effect_handler(SF_CGDEffect *_this, uint16_t effec
         uint16_t map_size = *(uint16_t *)(world + 0x11187);
         for (uint16_t i = 0, j = 9; j != 0; j--, i += 7)
         {
-            uint16_t cell_x = *(uint16_t *)(world + i) + _this->active_effect_list[effect_index].position.X;
-            uint16_t cell_y = *(uint16_t *)(world + i + 2) + _this->active_effect_list[effect_index].position.Y;
+            uint16_t cell_x = *(uint16_t *)(world + i) + _this->effects[effect_index].position.X;
+            uint16_t cell_y = *(uint16_t *)(world + i + 2) + _this->effects[effect_index].position.Y;
             if ((cell_x < map_size) && (cell_y < map_size))
             {
                 uint8_t flags = *(uint8_t *)(world + 0x1118A + (cell_y * 0x400 + cell_x) * 6);
@@ -63,7 +63,7 @@ void __thiscall elemental_sub_effect_handler(SF_CGDEffect *_this, uint16_t effec
     }
 }
 
-void __thiscall elemental_chain_sub_effect_handler(SF_CGDEffect *_this,
+void __thiscall elemental_chain_sub_effect_handler(SF_CGdEffect *_this,
                                                    uint16_t effect_index)
 {
     uint16_t spell_id = effectAPI.getEffectXData(_this, effect_index, EFFECT_SUBSPELL_ID);
@@ -89,7 +89,7 @@ void __thiscall elemental_chain_sub_effect_handler(SF_CGDEffect *_this,
     spellAPI.addSpell(_this->CGdSpell, spell_id, _this->OpaqueClass->current_step, &source, &target, figure_index3);
 }
 
-void __thiscall common_sub_effect_handler(SF_CGDEffect *_this, uint16_t effect_index)
+void __thiscall common_sub_effect_handler(SF_CGdEffect *_this, uint16_t effect_index)
 {
     uint16_t spell_id = effectAPI.getEffectXData(_this, effect_index, EFFECT_SUBSPELL_ID);
     uint16_t source_index = effectAPI.getEffectXData(_this, effect_index, EFFECT_ENTITY_INDEX);
@@ -117,7 +117,7 @@ void __thiscall common_sub_effect_handler(SF_CGDEffect *_this, uint16_t effect_i
     spellAPI.addSpell(_this->CGdSpell, spell_id, _this->OpaqueClass->current_step, &source, &target, 0);
 }
 
-void __thiscall default_sub_effect_handler(SF_CGDEffect *_this,
+void __thiscall default_sub_effect_handler(SF_CGdEffect *_this,
                                            uint16_t effect_index)
 {
     return;

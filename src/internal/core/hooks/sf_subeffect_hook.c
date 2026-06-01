@@ -12,7 +12,7 @@
 
 #include "sf_subeffect_hook.h"
 
-void __thiscall sf_subeffect_hook(SF_CGDEffect *_this, uint16_t effect_id)
+void __thiscall sf_subeffect_hook(SF_CGdEffect *_this, uint16_t effect_id)
 {
     uint16_t spell_id = effectAPI.getEffectXData(_this, effect_id, EFFECT_SUBSPELL_ID);
     if (spell_id)

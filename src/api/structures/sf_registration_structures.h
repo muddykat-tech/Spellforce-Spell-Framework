@@ -17,7 +17,7 @@ typedef uint32_t (__thiscall *ai_avoidance_handler_ptr)(CGdAIBattleData *_this, 
 typedef uint16_t (__thiscall *onhit_handler_ptr)(SF_CGdFigureJobs *, uint16_t source, uint16_t target, uint16_t damage);
 typedef int (__thiscall *refresh_handler_ptr)(SF_CGdSpell *, uint16_t);
 
-typedef uint16_t (__thiscall *phys_effect_handler_ptr)(SF_CGDEffect *_this, uint16_t source, uint16_t target,
+typedef uint16_t (__thiscall *phys_effect_handler_ptr)(SF_CGdEffect *_this, uint16_t source, uint16_t target,
                                                        bool *isSpellDamage, uint16_t damage);
 
 typedef uint16_t (__thiscall *enchant_handler_ptr)(SF_CGdFigure *_this, uint16_t figure_id);

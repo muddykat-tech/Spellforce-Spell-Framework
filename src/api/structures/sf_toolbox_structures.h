@@ -12,7 +12,7 @@ struct __attribute__((packed)) SF_CGdFigureToolbox
     SF_CGdBuilding *CGdBuilding;
     SF_CGdBuildingToolbox *CGdBuildingToolbox;
     uint32_t *CGdDoubleLinkedList;
-    SF_CGDEffect *CGdEffect;
+    SF_CGdEffect *CGdEffect;
     uint32_t *autoclass30;
     SF_CGdFigure *CGdFigure;
     SF_CGdFigureJobs *CGdFigureJobs;
@@ -44,7 +44,7 @@ struct __attribute__((packed)) SF_CGdWorldToolBox
     SF_CGdBuilding *CGdBuilding;
     uint32_t *CGdBuildingToolbox;
     uint32_t *CGdDoubleLinkedList;
-    SF_CGDEffect *CGdEffect;
+    SF_CGdEffect *CGdEffect;
     SF_CGdFigure *CGdFigure;
     uint32_t *CGdFigureJobs;
     uint32_t *autoclass47;

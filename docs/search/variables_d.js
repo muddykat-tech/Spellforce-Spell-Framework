@@ -26,6 +26,6 @@ var searchData=
   ['offset_5fb8_23',['offset_b8',['../struct_c_ui_main__data.html#ac0dd48ab5235df33424f82055870dac6',1,'CUiMain_data']]],
   ['old_5freg_5fperm_24',['old_reg_perm',['../struct_a_s_i_1_1_memory_region.html#a8357aac6c7ffd5a3f5e22d72b678a62e',1,'ASI::MemoryRegion']]],
   ['onspellremove_25',['onSpellRemove',['../struct_spell_functions.html#abfc56830d1de7707b3ba9d0a45cc9380',1,'SpellFunctions']]],
-  ['opaqueclass_26',['OpaqueClass',['../struct_s_f___c_gd_figure_jobs.html#a2174243f0a6ccff69493ca570c463b1e',1,'SF_CGdFigureJobs::OpaqueClass'],['../struct_s_f___c_gd_world_tool_box.html#a3557386bf82f62fc9ebff348a317cc5d',1,'SF_CGdWorldToolBox::OpaqueClass'],['../struct_s_f___c_gd_spell.html#aa7a30cd83f344b261e69c31c5e8c6447',1,'SF_CGdSpell::OpaqueClass'],['../struct_s_f___c_g_d_effect.html#a8d70e930e3efcd42f84408af01203bc2',1,'SF_CGDEffect::OpaqueClass']]],
+  ['opaqueclass_26',['OpaqueClass',['../struct_s_f___c_gd_figure_jobs.html#a2174243f0a6ccff69493ca570c463b1e',1,'SF_CGdFigureJobs::OpaqueClass'],['../struct_s_f___c_gd_world_tool_box.html#a3557386bf82f62fc9ebff348a317cc5d',1,'SF_CGdWorldToolBox::OpaqueClass'],['../struct_s_f___c_gd_spell.html#aa7a30cd83f344b261e69c31c5e8c6447',1,'SF_CGdSpell::OpaqueClass'],['../struct_s_f___c_g_d_effect.html#a8d70e930e3efcd42f84408af01203bc2',1,'SF_CGdEffect::OpaqueClass']]],
   ['owner_27',['owner',['../struct_gd_figure.html#a8da29a32db99d7f7105cc1079be8e531',1,'GdFigure::owner'],['../struct_gd_building.html#a95a5b1df651fc9f1feaa8218737c390b',1,'GdBuilding::owner']]]
 ];

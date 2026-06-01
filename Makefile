@@ -6,7 +6,7 @@ DLL_LDFLAGS = -m32 -shared -lgcc -static-libgcc -static-libstdc++ -Wl,-Bstatic,-
 FW_LDFLAGS = -m32 -shared -lgcc -static-libgcc -static-libstdc++ -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive -Wl,--subsystem,windows,--out-implib,lib/sfsf.a
 
 # Object files for the new architecture
-HOOK_OBJ = obj/sf_hooks.o obj/sf_onhit_hook.o obj/sf_refresh_hook.o obj/sf_endspell_hook.o obj/sf_menu_hook.o obj/sf_spelleffect_hook.o obj/sf_subeffect_hook.o obj/sf_spelltype_hook.o obj/sf_damage_hook.o obj/sf_console_hook.o obj/sf_ai_hook.o obj/sf_utility_hooks.o obj/sf_vanilla_fix_hook.o obj/sf_building_done_hook.o obj/sf_building_entry_hook.o obj/sf_worker_logic_hook.o obj/sf_phys_effect_hook.o obj/sf_enchant_hook.o
+HOOK_OBJ = obj/sf_hooks.o obj/sf_onhit_hook.o obj/sf_refresh_hook.o obj/sf_endspell_hook.o obj/sf_menu_hook.o obj/sf_spelleffect_hook.o obj/sf_subeffect_hook.o obj/sf_spelltype_hook.o obj/sf_damage_hook.o obj/sf_console_hook.o obj/sf_ai_hook.o obj/sf_utility_hooks.o obj/sf_vanilla_fix_hook.o obj/sf_building_done_hook.o obj/sf_building_entry_hook.o obj/sf_worker_logic_hook.o obj/sf_phys_effect_hook.o obj/sf_enchant_hook.o obj/sf_effect_hook.o
 REGISTRY_OBJ = obj/sf_registry.o obj/sf_mod_registry.o obj/sf_spelltype_registry.o obj/sf_spelleffect_registry.o obj/sf_spellend_registry.o obj/sf_subeffect_registry.o obj/sf_spellrefresh_registry.o obj/sf_vanilla_registry.o obj/sf_spelldamage_registry.o obj/sf_onhit_registry.o obj/sf_ai_avoidance_registry.o obj/sf_ai_single_target_registry.o obj/sf_ai_aoe_registry.o obj/sf_phys_effect_registry.o obj/sf_building_done_registry.o obj/sf_building_entry_registry.o obj/sf_enchant_registry.o
 HANDLER_OBJ = obj/sf_spelltype_handlers.o obj/sf_spelleffect_handlers.o obj/sf_spellend_handlers.o obj/sf_sub_effect_handlers.o obj/sf_spellrefresh_handlers.o obj/sf_spelldamage_handlers.o obj/sf_onhit_handlers.o obj/sf_ai_avoidance_handlers.o obj/sf_ai_spell_handlers.o obj/sf_ai_aoe_handlers.o obj/sf_building_done_handlers.o obj/sf_worker_building_entry_handlers.o obj/sf_phys_effect_handlers.o
 
@@ -131,6 +131,9 @@ obj/sf_worker_logic_hook.o: ${HOOKS_SRC}/sf_worker_logic_hook.c | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_phys_effect_hook.o: ${HOOKS_SRC}/sf_phys_effect_hook.c | obj
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
+
+obj/sf_effect_hook.o:  ${HOOKS_SRC}/sf_effect_hook.c | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_hooks.o: ${CORE_SRC}/sf_hooks.c src/asi/sf_asi.h | obj

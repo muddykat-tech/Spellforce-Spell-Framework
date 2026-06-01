@@ -17,7 +17,6 @@
 #include "hooks/sf_endspell_hook.h"
 #include "hooks/sf_menu_hook.h"
 #include "hooks/sf_spelleffect_hook.h"
-#include "hooks/sf_subeffect_hook.h"
 #include "hooks/sf_damage_hook.h"
 #include "hooks/sf_spelltype_hook.h"
 #include "hooks/sf_console_hook.h"
@@ -28,8 +27,9 @@
 #include "hooks/sf_building_done_hook.h"
 #include "hooks/sf_building_entry_hook.h"
 #include "hooks/sf_worker_logic_hook.h"
-#include "hooks/sf_phys_effect_hook.h"
 #include "hooks/sf_enchant_hook.h"
+
+#include "hooks/sf_effect_hook.h"
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -162,6 +162,7 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(effect, setEffectXData, 0x2ddb30);
     DEFINE_FUNCTION(effect, getEffectXData, 0x2dd730);
     DEFINE_FUNCTION(effect, tryEndEffect, 0x2dcaa0);
+
 
     log_info("| - ToolboxAPI Hooks");
 
@@ -385,12 +386,13 @@ static void initialize_building_entry_hook()
 
 static void initialize_subeffect_add_hook()
 {
-    ASI::MemoryRegion add_spell_mreg (ASI::AddrOf(0x2de3b7), 5);
+    init_effect_hooks();
+/*    ASI::MemoryRegion add_spell_mreg (ASI::AddrOf(0x2de3b7), 5);
     ASI::BeginRewrite(add_spell_mreg);
-    *(unsigned char *)(ASI::AddrOf(0x2de3b7)) = 0xE8; // CALL instruction
-    *(int *)(ASI::AddrOf(0x2de3b8)) = (int)(&sf_subeffect_hook) - ASI::AddrOf(0x2de3bc);
+ *(unsigned char *)(ASI::AddrOf(0x2de3b7)) = 0xE8; // CALL instruction
+ *(int *)(ASI::AddrOf(0x2de3b8)) = (int)(&sf_subeffect_hook) - ASI::AddrOf(0x2de3bc);
     ASI::EndRewrite(add_spell_mreg);
-/*
+
     ASI::MemoryRegion add_spell_mreg2 (ASI::AddrOf(0x2de3ed), 5);
     ASI::BeginRewrite(add_spell_mreg2);
  *(unsigned char *)(ASI::AddrOf(0x2de3ed)) = 0xE8; // CALL instruction

@@ -16,7 +16,7 @@ var searchData=
   ['setwalkspeed_5fptr_13',['setWalkSpeed_ptr',['../sf__figure__functions_8h.html#a7b220d060eb9728efa1f6bd2848e18ad',1,'sf_figure_functions.h']]],
   ['setxdata_5fptr_14',['setXData_ptr',['../sf__spell__functions_8h.html#a701d5a3519e00570dab668db61157eb3',1,'sf_spell_functions.h']]],
   ['sf_5fcgdbuilding_15',['SF_CGdBuilding',['../sf__general__structures_8h.html#a326f52debb4a3a05138160c72536c17e',1,'sf_general_structures.h']]],
-  ['sf_5fcgdeffect_16',['SF_CGDEffect',['../sf__general__structures_8h.html#a710c54d12a2bf3e29c87578d51d0373d',1,'sf_general_structures.h']]],
+  ['sf_5fcgdeffect_16',['SF_CGdEffect',['../sf__general__structures_8h.html#a710c54d12a2bf3e29c87578d51d0373d',1,'sf_general_structures.h']]],
   ['sf_5fcgdfigurejobs_17',['SF_CGdFigureJobs',['../sf__general__structures_8h.html#a2739681db2b7bff68f1229d5a5f3d5e4',1,'sf_general_structures.h']]],
   ['sf_5fcgdfiguretoolbox_18',['SF_CGdFigureToolbox',['../sf__general__structures_8h.html#a17f35cab19a4752dcf2d3fb1ea9a9f0e',1,'sf_general_structures.h']]],
   ['sf_5fcgdspell_19',['SF_CGdSpell',['../sf__general__structures_8h.html#a65e220538ceb4410156fdcd2afcf91e6',1,'sf_general_structures.h']]],

@@ -619,13 +619,16 @@ uint16_t __thiscall getPhysDamageReduction(SF_CGdFigureToolbox *_this, uint16_t 
     return g_get_damage_reduction(_this->autoclass34, source_index, target_index, action_id);
 }
 
-bool __thiscall XDataExists(SF_CGDEffect *_this, uint16_t effect_index, SpellDataKey data)
+bool __thiscall XDataExists(SF_CGdEffect *_this, uint16_t effect_index, SpellDataKey data)
 {
-    uint16_t xdata_key = _this->active_effect_list[effect_index].xdata_key;
-    uint32_t result = CGdXDataExists(_this->SF_CGdXDataList, xdata_key, data);
-    if ((result != 0) && (xdata_key != 0))
+    uint16_t xdata_key = _this->effects[effect_index].xdata_key;
+    if (xdata_key != 0)
     {
-        return 1;
+        uint32_t result = CGdXDataExists(_this->SF_CGdXDataList, xdata_key, data);
+        if (result != 0)
+        {
+            return 1;
+        }
     }
     return 0;
 }

@@ -14,7 +14,7 @@
 typedef struct SF_CGdSpell SF_CGdSpell;
 typedef struct SF_CGdFigureToolbox SF_CGdFigureToolbox;
 typedef struct SF_GdEffect SF_GdEffect;
-typedef struct SF_CGDEffect SF_CGDEffect;
+typedef struct SF_CGdEffect SF_CGdEffect;
 typedef struct SF_CGdWorld SF_CGdWorld;
 typedef struct SF_CGdWorldToolBox SF_CGdWorldToolBox;
 typedef struct SF_CGdFigureJobs SF_CGdFigureJobs;
@@ -478,6 +478,7 @@ typedef enum
     BUILDING_EFFECT_ID = 0x16,
     EFFECT_ENTITY_INDEX2 = 0x1A,
     EFFECT_SUBSPELL_ID = 0x1C,
+    EFFECT_EFFECT_TYPE = 0x1D,
     EFFECT_PHYSICAL_DAMAGE = 0x1E,
     BUILDING_ANIM_LENGTH = 0x20,
     EFFECT_MANA_COST = 0x21,
@@ -494,7 +495,7 @@ typedef enum
     EFFECT_ADD_SUBSPELL = 0x33,
 } SpellDataKey;
 
-typedef enum
+typedef enum : uint16_t
 {
     kGdEffectNone = 0,
     kGdEffectSpellCast = 1,
@@ -1124,7 +1125,7 @@ struct __attribute__((packed)) AutoClass46
     SF_CGdBuilding *CGdBuilding;
     SF_CGdBuildingToolbox *CGdBuildingToolBox;
     void *CGdDoubleLinkedList;
-    SF_CGDEffect *CGdEffect;
+    SF_CGdEffect *CGdEffect;
     void *AutoClass30;
     SF_CGdFigure *CGdFigure;
     SF_CGdFigureJobs *CGdFigureJobs;

@@ -6,5 +6,4 @@
 #include "../sf_hooks.h"
 #include "../sf_modloader.h"
 
-
-void __thiscall sf_phys_effect_hook(SF_CGdEffect *_this, uint16_t effect_id);
+void init_effect_hooks();

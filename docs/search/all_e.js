@@ -33,7 +33,7 @@ var searchData=
   ['onhitphase_30',['OnHitPhase',['../sf__general__structures_8h.html#a3e8710f28511f2f23efc53abe698d2b7',1,'sf_general_structures.h']]],
   ['onspellremove_31',['onSpellRemove',['../struct_spell_functions.html#abfc56830d1de7707b3ba9d0a45cc9380',1,'SpellFunctions']]],
   ['onspellremove_5fptr_32',['onSpellRemove_ptr',['../sf__spell__functions_8h.html#a4e7aaec23f53d98f83c76590bc1cac15',1,'sf_spell_functions.h']]],
-  ['opaqueclass_33',['OpaqueClass',['../struct_s_f___c_gd_figure_jobs.html#a2174243f0a6ccff69493ca570c463b1e',1,'SF_CGdFigureJobs::OpaqueClass'],['../struct_s_f___c_gd_world_tool_box.html#a3557386bf82f62fc9ebff348a317cc5d',1,'SF_CGdWorldToolBox::OpaqueClass'],['../struct_s_f___c_gd_spell.html#aa7a30cd83f344b261e69c31c5e8c6447',1,'SF_CGdSpell::OpaqueClass'],['../struct_s_f___c_g_d_effect.html#a8d70e930e3efcd42f84408af01203bc2',1,'SF_CGDEffect::OpaqueClass']]],
+  ['opaqueclass_33',['OpaqueClass',['../struct_s_f___c_gd_figure_jobs.html#a2174243f0a6ccff69493ca570c463b1e',1,'SF_CGdFigureJobs::OpaqueClass'],['../struct_s_f___c_gd_world_tool_box.html#a3557386bf82f62fc9ebff348a317cc5d',1,'SF_CGdWorldToolBox::OpaqueClass'],['../struct_s_f___c_gd_spell.html#aa7a30cd83f344b261e69c31c5e8c6447',1,'SF_CGdSpell::OpaqueClass'],['../struct_s_f___c_g_d_effect.html#a8d70e930e3efcd42f84408af01203bc2',1,'SF_CGdEffect::OpaqueClass']]],
   ['operator_20t_34',['operator T',['../struct_a_s_i_1_1_pointer.html#a36eb8732f7b16d1d08935dc9b0e5f885',1,'ASI::Pointer']]],
   ['operator_21_3d_35',['operator!=',['../struct_a_s_i_1_1_pointer.html#a8e74ddcfe9acca12fe624e13ac571592',1,'ASI::Pointer']]],
   ['operator_2a_36',['operator*',['../struct_a_s_i_1_1_pointer.html#a11a1485bf99f3496245c47f88185c5fd',1,'ASI::Pointer']]],
