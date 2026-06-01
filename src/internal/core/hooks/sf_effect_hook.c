@@ -16,11 +16,8 @@ updateStepCount_ptr updateStepCount;
 addEffectFromEffect_ptr addEffectFromEffect;
 
 
-
 void __thiscall effect_trigger_hook(SF_CGdEffect *_this)
 {
-    log_debug (DEBUG_HIGH, "Max used %d", _this->max_used);
-
     for (uint16_t effect_id = 1; (_this->max_used != 0) && (effect_id <= _this->max_used); effect_id++)
     {
         //0 - succes, 1 - need work
@@ -33,15 +30,15 @@ void __thiscall effect_trigger_hook(SF_CGdEffect *_this)
                 if ((effect_len != 0) &&
                     (effect_len + _this->effects[effect_id].start_step < _this->OpaqueClass->current_step))
                 {
-                    if (effectAPI.effectXDataExists(_this->SF_CGdXDataList, effect_id, EFFECT_SUBSPELL_ID))
+                    if (effectAPI.effectXDataExists(_this, effect_id, EFFECT_SUBSPELL_ID))
                     {
                         sf_subeffect_hook(_this, effect_id);
                     }
-                    if (effectAPI.effectXDataExists(_this->SF_CGdXDataList, effect_id, EFFECT_EFFECT_TYPE))
+                    if (effectAPI.effectXDataExists(_this, effect_id, EFFECT_EFFECT_TYPE))
                     {
                         addEffectFromEffect(_this, effect_id);
                     }
-                    if (effectAPI.effectXDataExists(_this->SF_CGdXDataList, effect_id, EFFECT_PHYSICAL_DAMAGE))
+                    if (effectAPI.effectXDataExists(_this, effect_id, EFFECT_PHYSICAL_DAMAGE))
                     {
                         sf_phys_effect_hook(_this, effect_id);
                     }
@@ -58,7 +55,6 @@ void init_effect_hooks()
     updateStepCount = (updateStepCount_ptr) ASI::AddrOf(0x2de230);
     tryRemoveEffect = (tryRemoveEffect_ptr) ASI::AddrOf(0x2de410);
     addEffectFromEffect = (addEffectFromEffect_ptr) ASI::AddrOf(0x2ddc70);
-
     ASI::MemoryRegion effect_trigger_mreg (ASI::AddrOf(0x278789), 5);
     ASI::BeginRewrite(effect_trigger_mreg);
     *(unsigned char *)(ASI::AddrOf(0x278789)) = 0xE8; // CALL instruction

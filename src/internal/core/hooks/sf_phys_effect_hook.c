@@ -20,7 +20,6 @@ void __thiscall sf_phys_effect_hook(SF_CGdEffect *_this, uint16_t effect_id)
         uint16_t spell_index = effectAPI.getEffectXData(_this, effect_id, EFFECT_SPELL_INDEX);
         uint16_t spell_line = spellAPI.getSpellLine(_this->CGdSpell, spell_index);
         sub_effect_handler_ptr rain_handler = get_rain_handler(spell_line);
-        log_debug(DEBUG_HIGH, "Rain spell line [%d] fired");
         rain_handler(_this, effect_id);
     }
     else
@@ -31,7 +30,6 @@ void __thiscall sf_phys_effect_hook(SF_CGdEffect *_this, uint16_t effect_id)
             uint16_t spell_line = effectAPI.getEffectXData(_this, effect_id, EFFECT_SPELL_LINE);
             if (spell_line != 0)
             {
-                log_debug(DEBUG_HIGH, "Spell line [%d], damage [%d]", spell_line, damage);
                 phys_effect_handler_ptr single_handler = get_phys_effect_handler(spell_line);
                 //spark handler by default
                 damage = single_handler(_this, source_id, target_id, &isMagicDamage, damage);
@@ -40,8 +38,6 @@ void __thiscall sf_phys_effect_hook(SF_CGdEffect *_this, uint16_t effect_id)
             if (toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_id, kGdSpellLineAssistance) &&
                 (damage != 0x7fff))
             {
-                log_debug(DEBUG_HIGH, "Assistance effect fired");
-
                 std::list<std::pair<uint16_t, onhit_handler_ptr>> onhit_list = get_onhit_phase(OnHitPhase::PHASE_2);
                 for (auto it = onhit_list.crbegin(); it != onhit_list.crend(); ++it)
                 {
@@ -60,8 +56,6 @@ void __thiscall sf_phys_effect_hook(SF_CGdEffect *_this, uint16_t effect_id)
             uint32_t mana_cost = effectAPI.getEffectXData(_this, effect_id, EFFECT_MANA_COST);
             if (mana_cost != 0)
             {
-                log_debug(DEBUG_HIGH, "Mana cost effect fired");
-
                 SF_CGdTargetData source;
                 source.position = {0,0};
                 source.entity_index = source_id;
@@ -85,7 +79,6 @@ void __thiscall sf_phys_effect_hook(SF_CGdEffect *_this, uint16_t effect_id)
         //Siege Aura Handler
         else
         {
-            log_debug(DEBUG_HIGH, "Siege effect fired");
 
             if (_this->CGdBuilding->buildings[target_id].health_current != 0)
             {
