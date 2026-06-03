@@ -45,7 +45,7 @@ jobs:
       with:
         files: |
           bin/sfsf.asi
-          api-files.zip
+          api.zip
         draft: true
         prerelease: false
         generate_release_notes: true
