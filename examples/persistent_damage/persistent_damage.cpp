@@ -5,11 +5,9 @@
 
 SpellforceSpellFramework *sfsf;
 SpellFunctions *spellAPI;
-EffectFunctions *effectAPI;
 ToolboxFunctions *toolboxAPI;
 FigureFunctions *figureAPI;
 RegistrationFunctions *registrationAPI;
-UiFunctions *uiAPI;
 SFLog *logger;
 // This custom spell type and custom spell effect has to be setup both here (to provide logic)
 // And in GameData.cff (to provide data and spell stats)
@@ -26,7 +24,6 @@ void __thiscall ignite_spelltype_handler(SF_CGdSpell *_this, uint16_t spell_inde
     // each new tick happens after a delay defined in the spell data in milliseconds.
     // we need to make sure that our spell begins tracking its ticks starting at 0
     spellAPI->setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
-    spellAPI->setXData(_this, spell_index, EFFECT_EFFECT_INDEX, 0);
     // here we just put message to log for debug purpose
     logger->logInfo("IGNITE SPELL ACTIVATED");
 }
@@ -36,11 +33,6 @@ void __thiscall ignite_spelltype_handler(SF_CGdSpell *_this, uint16_t spell_inde
 //It is not necessary in this case, but will play it's role in later chapters
 void __thiscall ignite_spellend_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
-    uint16_t effect_index = spellAPI->getXData(_this, spell_index, EFFECT_EFFECT_INDEX);
-    if (effect_index != 0)
-    {
-        effectAPI->tryEndEffect(_this->SF_CGdEffect, effect_index);
-    }
     logger->logInfo("IGNITE HAS ENDED");
     spellAPI->removeDLLNode(_this, spell_index); // this command removes spell from active spells list
     spellAPI->setEffectDone(_this, spell_index, 0); // this function actually ends a spell and can be used within any other handler in order to end a spell
@@ -98,7 +90,7 @@ void __thiscall ignite_spelleffect_handler(SF_CGdSpell *_this, uint16_t spell_in
         if (tick_current == 0)
         {
             // roll only once for the resist
-            uint32_t resist_chance = spellAPI->getChanceToResistSpell(_this->AutoClass34, source_index, target_index, effect_info);
+            uint32_t resist_chance = spellAPI->getChanceToResistSpell(_this->unkn2, source_index, target_index, effect_info);
             uint16_t random_roll = spellAPI->getRandom(_this->OpaqueClass, 100);
             if (resist_chance < random_roll)
             {
@@ -169,8 +161,6 @@ void __thiscall ignite_spelleffect_handler(SF_CGdSpell *_this, uint16_t spell_in
             {
                 // spell worked for specified amount of ticks plus one tick for applying initial damage, it should be stopped now
                 // Last Param for spell effect done should always be 0
-                uint16_t effect_index = spellAPI->getXData(_this, spell_index, EFFECT_EFFECT_INDEX);
-                effectAPI->tryEndEffect(_this->SF_CGdEffect, effect_index);
                 spellAPI->setEffectDone(_this, spell_index, 0);
             }
         }
@@ -190,8 +180,6 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     figureAPI = sfsf->figureAPI;
     logger = sfsf->logAPI;
     registrationAPI = sfsf->registrationAPI;
-    effectAPI = sfsf->effectAPI;
-    uiAPI = sfsf->uiAPI;
 
     // We initialize three main spell handlers here. Each handler corresponds to a certain phase of a spell.
     // First we declare our custom spell and link it with custom spell type by its number (the number corresponds to spell type ID in GameData)
@@ -211,7 +199,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
 // Basically framework call this function and one above when loading mods
 extern "C" __declspec(dllexport) SFMod *RegisterMod(SpellforceSpellFramework *framework)
 {
-    return framework->createModInfo("SF First Spell", "1.1.0", "Teekius", "Example belonging to How-to guide about creating the first custom Spellforce spell");
+    return framework->createModInfo("SF First Spell", "1.0.0", "Teekius", "How-to guide to create the first custom Spellforce spell");
 }
 
 //This function is required for OS to recognize our mod as loadable library. Let it be.
