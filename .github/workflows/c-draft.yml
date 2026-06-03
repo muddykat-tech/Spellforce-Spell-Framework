@@ -1,14 +1,14 @@
-name: Build and Release Framework
+name: Build and Draft Release Framework
 
 on:
   push:
-    tags:
-      - 'v*'
+    branches: [ "master", "indev", "sf_ai" ]
+
 jobs:
   build:
     permissions:
       contents: write
-    runs-on: windows-2019
+    runs-on: windows-2025
     
     steps:
     - name: Checkout code
@@ -39,14 +39,17 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: sfsf-api-headers
-        path: api-files.zip
+        path: api.zip # Fixed from api-files.zip to match the zip target name
 
     - name: Create GitHub Release
       uses: softprops/action-gh-release@v2
       with:
+        # Dynamically falls back to a temporary tag format if no actual Git tag exists
+        tag_name: ${{ github.ref_type == 'tag' && github.ref_name || format('draft-{0}-run-{1}', github.ref_name, github.run_number) }}
+        name: "Draft Release (${{ github.ref_name }})"
         files: |
           bin/sfsf.asi
-          api-files.zip
+          api.zip
         draft: true
         prerelease: false
         generate_release_notes: true
