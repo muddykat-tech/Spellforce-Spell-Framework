@@ -2,8 +2,7 @@ name: Build and Draft Release Framework
 
 on:
   push:
-    tags:
-      - 'v*'
+    branches: [ "master", "indev", "sf_ai" ]
 jobs:
   build:
     permissions:
