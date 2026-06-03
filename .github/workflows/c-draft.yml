@@ -1,0 +1,54 @@
+name: Build and Draft Release Framework
+
+on:
+  push:
+    tags:
+      - 'v*'
+jobs:
+  build:
+    permissions:
+      contents: write
+    runs-on: windows-2019
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up MinGW
+      uses: egor-tensin/setup-mingw@v2
+      with:
+        platform: x86
+        version: 12.2.0
+
+    - name: Compile Project
+      run: |
+        mingw32-make clean
+        mingw32-make
+
+    - name: Zip API files
+      run: |
+        powershell -Command "Compress-Archive -Path src/api/* -DestinationPath api.zip"
+
+    - name: Upload ASI Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: sfsf-asi
+        path: bin/sfsf.asi
+
+    - name: Upload API Zip Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: sfsf-api-headers
+        path: api-files.zip
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        files: |
+          bin/sfsf.asi
+          api-files.zip
+        draft: true
+        prerelease: false
+        generate_release_notes: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
