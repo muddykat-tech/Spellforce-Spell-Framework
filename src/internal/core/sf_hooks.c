@@ -254,6 +254,7 @@ void initialize_data_hooks()
     INCLUDE_FUNCTION(spell, checkCanApply, &sf_refresh_hook)
     INCLUDE_FUNCTION(spell, getSpellTags, &getSpellTags);
     INCLUDE_FUNCTION(spell, hasSpellTag, &hasSpellTag);
+    INCLUDE_FUNCTION(spell, tryClearCheckSpellsBeforeJob, &tryClearCheckSpellsBeforeJob);
 
     INCLUDE_FUNCTION(effect, effectXDataExists, &XDataExists);
     log_info("| - FigureAPI Wrappers");

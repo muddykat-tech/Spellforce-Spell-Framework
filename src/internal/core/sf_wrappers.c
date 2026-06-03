@@ -183,6 +183,7 @@ SFLog *setup_logger()
     sf_logger.logError = &log_error;
     sf_logger.logInfo = &log_info;
     sf_logger.logWarning = &log_warning;
+    sf_logger.logDebug = &log_debug;
     return &sf_logger;
 }
 

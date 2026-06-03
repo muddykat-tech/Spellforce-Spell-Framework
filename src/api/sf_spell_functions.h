@@ -82,6 +82,8 @@ DECLARE_FUNCTION(void, spellEffectCallback, SF_CGdSpell *_this, uint16_t source_
                  bool (*conditionPtr)(SF_CGdSpell *, uint16_t, uint16_t),
                  void (*callbackPtr)(SF_CGdSpell *, uint16_t, uint16_t, uint16_t));
 DECLARE_FUNCTION(uint16_t, getLeveledSpellID, void *CGdResource, uint16_t source_spell_id, uint16_t spell_level);
+DECLARE_FUNCTION(void, tryClearCheckSpellsBeforeJob, SF_CGdSpell *_this, uint16_t spell_index, uint16_t figure_index);
+
 
 //TODO export spelljobs structure
 /**
@@ -318,5 +320,7 @@ typedef struct
      * @example Rune Army Units
      */
     getLeveledSpellID_ptr getLeveledSpellID;
+
+    tryClearCheckSpellsBeforeJob_ptr tryClearCheckSpellsBeforeJob;
 
 } SpellFunctions;

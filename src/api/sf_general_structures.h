@@ -818,11 +818,13 @@ typedef struct __attribute__((packed))
 } SFMod;
 
 typedef void (*log_function_ptr)(const char *format, ...);
+typedef void (*log_debug_ptr)(DebugLevel level, const char *format, ...);
 typedef struct __attribute__((packed))
 {
     log_function_ptr logError;
     log_function_ptr logWarning;
     log_function_ptr logInfo;
+    log_debug_ptr logDebug;
 } SFLog;
 
 typedef enum : uint16_t
