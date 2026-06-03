@@ -3,6 +3,7 @@ name: Build and Draft Release Framework
 on:
   push:
     branches: [ "master", "indev", "sf_ai" ]
+
 jobs:
   build:
     permissions:
@@ -38,11 +39,13 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: sfsf-api-headers
-        path: api-files.zip
+        path: api.zip
 
     - name: Create GitHub Release
       uses: softprops/action-gh-release@v2
       with:
+        tag_name: ${{ github.ref_type == 'tag' && github.ref_name || format('draft-{0}-run-{1}', github.ref_name, github.run_number) }}
+        name: "Draft Release (${{ github.ref_name }})"
         files: |
           bin/sfsf.asi
           api.zip
