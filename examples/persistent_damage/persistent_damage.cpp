@@ -90,7 +90,7 @@ void __thiscall ignite_spelleffect_handler(SF_CGdSpell *_this, uint16_t spell_in
         if (tick_current == 0)
         {
             // roll only once for the resist
-            uint32_t resist_chance = spellAPI->getChanceToResistSpell(_this->unkn2, source_index, target_index, effect_info);
+            uint32_t resist_chance = spellAPI->getChanceToResistSpell(_this->AutoClass34, source_index, target_index, effect_info);
             uint16_t random_roll = spellAPI->getRandom(_this->OpaqueClass, 100);
             if (resist_chance < random_roll)
             {
