@@ -19,7 +19,7 @@ void __thiscall ignite_spelltype_handler(SF_CGdSpell *_this, uint16_t spell_inde
     // Effect ID is the spell_job; Free slots starts from a6. slots 1 to a5 are reserved for vanilla spells
 
     // here we link certain spell with its spell index to its spell_job
-    _this->active_spell_list[spell_index].spell_job = 0xf2;
+    _this->active_spell_list[spell_index].spell_job = 0xa6;
     // our spell affects the target multiple ticks (times),
     // each new tick happens after a delay defined in the spell data in milliseconds.
     // we need to make sure that our spell begins tracking its ticks starting at 0
