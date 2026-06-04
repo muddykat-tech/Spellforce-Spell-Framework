@@ -190,7 +190,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     // Spell effect handler applies logic of the custom spell type to game world. Effect handler is repeatedly called as long as the spell remains active.
     // Spell end handler is called when the spell ends. This handler's functions can be imitated within spell effect handler.
     registrationAPI->linkTypeHandler(ignite_spell, &ignite_spelltype_handler);
-    registrationAPI->linkEffectHandler(ignite_spell, 0xf2, &ignite_spelleffect_handler); // 0xf2 = 242 = custom spell type in Gamedata.cff
+    registrationAPI->linkEffectHandler(ignite_spell, 0xa6, &ignite_spelleffect_handler); // 0xa6 = 166 = custom spell job value, NOT the same value as Spell Type which you take in GameData.cff
     registrationAPI->linkEndHandler(ignite_spell, &ignite_spellend_handler);
 }
 
