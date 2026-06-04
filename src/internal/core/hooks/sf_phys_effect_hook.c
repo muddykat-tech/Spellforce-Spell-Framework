@@ -27,52 +27,57 @@ void __thiscall sf_phys_effect_hook(SF_CGdEffect *_this, uint16_t effect_id)
         bool isMagicDamage = 0;
         if (target_type == 1)
         {
-            uint16_t spell_line = effectAPI.getEffectXData(_this, effect_id, EFFECT_SPELL_LINE);
-            if (spell_line != 0)
+            if ((figureAPI.isAlive(_this->SF_CGdFigure, target_id))
+                && (toolboxAPI.isTargetable(_this->SF_CGdFigureToolBox, target_id)))
             {
-                phys_effect_handler_ptr single_handler = get_phys_effect_handler(spell_line);
-                //spark handler by default
-                damage = single_handler(_this, source_id, target_id, &isMagicDamage, damage);
-
-            }
-            if (toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_id, kGdSpellLineAssistance) &&
-                (damage != 0x7fff))
-            {
-                std::list<std::pair<uint16_t, onhit_handler_ptr>> onhit_list = get_onhit_phase(OnHitPhase::PHASE_2);
-                for (auto it = onhit_list.crbegin(); it != onhit_list.crend(); ++it)
+                uint16_t spell_line = effectAPI.getEffectXData(_this, effect_id, EFFECT_SPELL_LINE);
+                if (spell_line != 0)
                 {
-                    std::pair<uint16_t, onhit_handler_ptr> entry = *it;
-                    uint16_t spell_line_id = entry.first;
-                    if (spell_line_id == kGdSpellLineAssistance)
-                    {
-                        onhit_handler_ptr onhit_func = entry.second;
-                        damage = onhit_func(_this->SF_CGdFigureToolBox->CGdFigureJobs, source_id, target_id, damage);
-                    }
+                    phys_effect_handler_ptr single_handler = get_phys_effect_handler(spell_line);
+                    //spark handler by default
+                    damage = single_handler(_this, source_id, target_id, &isMagicDamage, damage);
+
                 }
-
-            }
-            toolboxAPI.dealDamage(_this->SF_CGdFigureToolBox, source_id, target_id, damage, isMagicDamage, 0, 0);
-            //Monument protection handler
-            uint32_t mana_cost = effectAPI.getEffectXData(_this, effect_id, EFFECT_MANA_COST);
-            if (mana_cost != 0)
-            {
-                SF_CGdTargetData source;
-                source.position = {0,0};
-                source.entity_index = source_id;
-                source.entity_type = source_type;
-
-                SF_CGdTargetData target;
-                target.position = {0,0};
-                target.entity_index = target_id;
-                target.entity_type = target_type;
-
-                SF_Rectangle rect = {0,0};
-
-                effectAPI.addEffect(_this, kGdEffectMonumentHitFigure, &source, &target,
-                                    _this->OpaqueClass->current_step, 0x14, &rect);
-                if (figureAPI.isAlive(_this->SF_CGdFigure, target_id))
+                if (toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_id, kGdSpellLineAssistance) &&
+                    (damage != 0x7fff))
                 {
-                    figureAPI.subMana(_this->SF_CGdFigure, target_id, mana_cost);
+                    std::list<std::pair<uint16_t, onhit_handler_ptr>> onhit_list = get_onhit_phase(OnHitPhase::PHASE_2);
+                    for (auto it = onhit_list.crbegin(); it != onhit_list.crend(); ++it)
+                    {
+                        std::pair<uint16_t, onhit_handler_ptr> entry = *it;
+                        uint16_t spell_line_id = entry.first;
+                        if (spell_line_id == kGdSpellLineAssistance)
+                        {
+                            onhit_handler_ptr onhit_func = entry.second;
+                            damage = onhit_func(_this->SF_CGdFigureToolBox->CGdFigureJobs, source_id, target_id,
+                                                damage);
+                        }
+                    }
+
+                }
+                toolboxAPI.dealDamage(_this->SF_CGdFigureToolBox, source_id, target_id, damage, isMagicDamage, 0, 0);
+                //Monument protection handler
+                uint32_t mana_cost = effectAPI.getEffectXData(_this, effect_id, EFFECT_MANA_COST);
+                if (mana_cost != 0)
+                {
+                    SF_CGdTargetData source;
+                    source.position = {0,0};
+                    source.entity_index = source_id;
+                    source.entity_type = source_type;
+
+                    SF_CGdTargetData target;
+                    target.position = {0,0};
+                    target.entity_index = target_id;
+                    target.entity_type = target_type;
+
+                    SF_Rectangle rect = {0,0};
+
+                    effectAPI.addEffect(_this, kGdEffectMonumentHitFigure, &source, &target,
+                                        _this->OpaqueClass->current_step, 0x14, &rect);
+                    if (figureAPI.isAlive(_this->SF_CGdFigure, target_id))
+                    {
+                        figureAPI.subMana(_this->SF_CGdFigure, target_id, mana_cost);
+                    }
                 }
             }
         }

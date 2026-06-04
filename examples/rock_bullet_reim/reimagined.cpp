@@ -796,8 +796,8 @@ void __thiscall summon_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
             }
             if (_this->SF_CGdFigure->figures[target.entity_index].owner != (uint16_t)(-1))
             {
-                logAPI->log_debug(DEBUG_HIGH,"Broken figure, index [%d] spell [%d] type [%d]",
-                                  target.entity_index, spell_index, spell->spell_line);
+                logAPI->logDebug(DEBUG_HIGH,"Broken figure, index [%d] spell [%d] type [%d]",
+                                 target.entity_index, spell_index, spell->spell_line);
             }
 
         }

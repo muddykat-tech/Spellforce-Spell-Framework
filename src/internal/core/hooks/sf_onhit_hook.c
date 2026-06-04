@@ -450,11 +450,13 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
 
                 uint32_t distance = getDistance(&_this->CGdFigure->figures[source_index].position,
                                                 &_this->CGdFigure->figures[target.entity_index].position);
-                distance = ((distance & 0xffff) * 0x578) / 3000;
+                distance = ((distance & 0xffff) * 1400) / 3000;
                 SF_CGdTargetData source = {1, source_index, {0, 0}};
                 uint16_t effect_id = effectAPI.addEffect(_this->CGdEffect, kGdEffectProjectile, &source, &target,
                                                          _this->OpaqueClass->current_step,
                                                          ((distance != 0) ? distance : 1), &vector);
+                log_debug(DEBUG_LOW, "Effect %d Distance %d", effect_id, distance);
+
                 effectAPI.setEffectXData(_this->CGdEffect, effect_id, EFFECT_ENTITY_TYPE, 1);
                 effectAPI.setEffectXData(_this->CGdEffect, effect_id, EFFECT_ENTITY_TYPE2, 1);
                 effectAPI.setEffectXData(_this->CGdEffect, effect_id, EFFECT_ENTITY_INDEX, source_index);

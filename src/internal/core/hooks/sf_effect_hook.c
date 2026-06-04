@@ -8,13 +8,14 @@ DECLARE_FUNCTION(void, removeFigureEffect, SF_CGdEffect *_this, uint16_t effect_
 DECLARE_FUNCTION(void, updateStepCount, SF_CGdEffect *_this, uint16_t effect_id);
 DECLARE_FUNCTION(uint32_t, tryRemoveEffect, SF_CGdEffect *_this, uint16_t effect_id);
 DECLARE_FUNCTION(void, addEffectFromEffect, SF_CGdEffect *_this, uint16_t effect_id);
+DECLARE_FUNCTION(void, addPhysicalFromEffect, SF_CGdEffect *_this, uint16_t effect_id);
 
 
 tryRemoveEffect_ptr tryRemoveEffect;
 removeFigureEffect_ptr removeFigureEffect;
 updateStepCount_ptr updateStepCount;
 addEffectFromEffect_ptr addEffectFromEffect;
-
+addPhysicalFromEffect_ptr addPhysicalFromEffect;
 
 void __thiscall effect_trigger_hook(SF_CGdEffect *_this)
 {
@@ -40,6 +41,8 @@ void __thiscall effect_trigger_hook(SF_CGdEffect *_this)
                     }
                     if (effectAPI.effectXDataExists(_this, effect_id, EFFECT_PHYSICAL_DAMAGE))
                     {
+                        log_debug(DEBUG_LOW, "Phys Effect %d", effect_id);
+                        //addPhysicalFromEffect(_this, effect_id);
                         sf_phys_effect_hook(_this, effect_id);
                     }
                     removeFigureEffect(_this, effect_id);
@@ -55,6 +58,7 @@ void init_effect_hooks()
     updateStepCount = (updateStepCount_ptr) ASI::AddrOf(0x2de230);
     tryRemoveEffect = (tryRemoveEffect_ptr) ASI::AddrOf(0x2de410);
     addEffectFromEffect = (addEffectFromEffect_ptr) ASI::AddrOf(0x2ddc70);
+    addPhysicalFromEffect = (addPhysicalFromEffect_ptr)ASI::AddrOf(0x2dcba0);
     ASI::MemoryRegion effect_trigger_mreg (ASI::AddrOf(0x278789), 5);
     ASI::BeginRewrite(effect_trigger_mreg);
     *(unsigned char *)(ASI::AddrOf(0x278789)) = 0xE8; // CALL instruction

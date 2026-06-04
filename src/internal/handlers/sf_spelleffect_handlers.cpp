@@ -208,18 +208,13 @@ void __thiscall apply_aura_effect(SF_CGdSpell *_this, uint16_t spell_index, uint
                                                 &source_data, &target_data,
                                                 _this->OpaqueClass->current_step, distance,
                                                 &rect);
-    effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_SPELL_INDEX,
-                             spell_index);
-    effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_SPELL_ID,
-                             spell->spell_id);
-    effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_SUBSPELL_ID,
-                             sub_spell_index);
+    effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_SPELL_INDEX, spell_index);
+    effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_SPELL_ID, spell->spell_id);
+    effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_SUBSPELL_ID, sub_spell_index);
     effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_ENTITY_TYPE, 1);
-    effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_ENTITY_INDEX,
-                             source_index);
+    effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_ENTITY_INDEX, source_index);
     effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_ENTITY_TYPE2, 1);
-    effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_ENTITY_INDEX2,
-                             target_index);
+    effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_ENTITY_INDEX2, target_index);
 }
 
 void __thiscall effect_conservation(SF_CGdSpell *_this, uint16_t spell_index)
