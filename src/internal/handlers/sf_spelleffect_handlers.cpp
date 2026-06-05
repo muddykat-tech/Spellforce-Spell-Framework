@@ -461,6 +461,19 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
                                 continue;
                             }
 
+                            if (spell->spell_line == kGdSpellLineAuraRegeneration)
+                            {
+                                uint16_t missing_hp = _this->SF_CGdFigure->figures[target_index].health.missing_val;
+                                if ((missing_hp != 0) &&
+                                    (!toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index,
+                                                              sub_spell_data.spell_line_id)))
+                                {
+                                    targets.push_back(target_index);
+                                }
+                                target_index = iteratorAPI.getNextFigure(&iter);
+                                continue;
+                            }
+
                             if (!toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index,
                                                          sub_spell_data.spell_line_id))
                             {
@@ -529,6 +542,22 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
                     {
                         prio = sec_prio;
                         aura_target = targets[j];
+                    }
+                }
+            }
+            if (spell->spell_line == kGdSpellLineAuraRegeneration)
+            {
+                uint16_t sec_prio = 0;
+                uint16_t prio = 0;
+
+                for (uint32_t j = 0; j < targets.size(); j++)
+                {
+                    target_index = targets.at(j);
+                    sec_prio = (100 - figureAPI.getCurrentHealthPercent(_this->SF_CGdFigure, target_index));
+                    if (sec_prio > prio)
+                    {
+                        prio = sec_prio;
+                        aura_target = target_index;
                     }
                 }
             }
