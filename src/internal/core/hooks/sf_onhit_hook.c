@@ -1,24 +1,45 @@
-/**
- * @defgroup OnhitHook On Hit Hook
- * @ingroup Hooks
- * @brief Used to inject Onhit Handlers into Spellforce.
- * @addtogroup OnhitHook
- * @{
- */
-
 #include "sf_onhit_hook.h"
-#include "../sf_wrappers.h"
-#include "../sf_hooks.h"
-#include "../sf_modloader.h"
-#include "../../registry/spell_data_registries/sf_onhit_registry.h"
-#include "../../registry/sf_mod_registry.h"
 
-#include <stdint.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <list>
-#include <utility>
+
+// getFigureJobData_ptr getFigureJobData;
+// FUN_006f8c06_ptr FUN_006f8c06;
+// FUN_006fa3ce_ptr FUN_006fa3ce;
+// setFigureAction_ptr setFigureAction;
+
+// uint32_t __thiscall onSpellCastHook(SF_CGdFigureToolbox *_this, uint16_t figure_id, uint16_t spell_id,
+//                                     uint16_t target_id, uint8_t target_type, SF_Coord position, uint32_t param6,
+//                                     uint32_t param7)
+// {
+//     FigureJobData *ac24 = getFigureJobData(_this->CGdFigure, figure_id);
+//     if (!FUN_006f8c06(_this, figure_id, spell_id, target_id, target_type, position, param6, param7, 0))
+//     {
+//         return 0;
+//     }
+//     else
+//     {
+//         FUN_006fa3ce(_this, figure_id, 0);
+//         ac24->flags |= MANUAL_JOB_CHANGE;
+//         ac24->GdJobId = kGdJobManualWalkToTarget;
+//         ac24->target.entity_index = target_id;
+//         ac24->target.entity_type = target_type;
+//         ac24->target.position.X = position.X;
+//         ac24->target.position.Y = position.Y;
+//         SF_CGdResourceSpell spell_data;
+//         spellAPI->getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
+
+//         SF_SGtFigureAction action;
+//         action.type = spell_data.spell_line_id;
+//         action.subtype = spell_id;
+//         action.unkn2 = 0;
+//         action.unkn3 = 0;
+//         action.unkn4 = 0;
+//         action.unkn5 = 0;
+
+//         setFigureAction(ac24, &action);
+//         return 1;
+//     }
+//     return 0;
+// }
 
 typedef uint16_t (__thiscall *get_reduced_damage_ptr)(void *AutoClass34,
                                                       uint16_t source_index,
@@ -93,6 +114,7 @@ uint16_t get_effect_chance(uint16_t dex_val, uint16_t int_val,
     }
     return dex_val * 8 + int_val * 5 + 0x578;
 }
+
 void initialize_onhit_data_hooks()
 {
     g_get_reduced_damage = (get_reduced_damage_ptr)(ASI::AddrOf(0x3177d0));
@@ -106,7 +128,7 @@ void initialize_onhit_data_hooks()
     g_getWeaponEffects = (getWeaponEffects_ptr)(ASI::AddrOf(0x2693b0));
 }
 
-void __thiscall getTargetData(AutoClass24 *_this, SF_CGdTargetData *target)
+void __thiscall getTargetData(FigureJobData *_this, SF_CGdTargetData *target)
 {
     target->entity_type = _this->target.entity_type;
     target->entity_index = _this->target.entity_index;
@@ -144,7 +166,6 @@ bool __thiscall isFigureJobSpell(SF_CGdFigureJobs *_this, uint16_t figure_id)
 }
 
 bool __thiscall canJobBeInterrupted(FigureJobs job_id)
-
 {
     if ((((job_id != kGdJobCastPreResolve) && (job_id != kGdJobCastResolve)) &&
          (job_id != kGdJobHitTargetRange2)) &&
@@ -165,7 +186,7 @@ uint16_t __thiscall getAttackInterruptionChance(SF_CGdFigure *_this,
     uint8_t target_level = _this->figures[target_index].level;
     if (target_level < source_level)
     {
-        uint16_t precalc_chance = (source_level - target_level) * 5 + 0xf;
+        uint16_t precalc_chance = (source_level - target_level) * 5 + 15;
         if (precalc_chance > 100)
         {
             return 100;
@@ -174,13 +195,13 @@ uint16_t __thiscall getAttackInterruptionChance(SF_CGdFigure *_this,
     }
     if (target_level == source_level)
     {
-        return 0xf;
+        return 15;
     }
-    if (0xf < ((target_level - source_level) * 2))
+    if ( 15 < ((target_level - source_level) * 2))
     {
         return 0;
     }
-    return (target_index - source_index) * -2 + 0xf;
+    return 15 - (target_level - source_level) * 2;
 }
 
 uint16_t __thiscall handle_riposte_set(SF_CGdFigureJobs *_this,
@@ -196,10 +217,8 @@ uint16_t __thiscall handle_riposte_set(SF_CGdFigureJobs *_this,
     }
     if (apply_set)
     {
-        uint16_t damage = g_get_reduced_damage(_this->AutoClass34, source_index,
-                                               source_index, weapon_damage);
-        toolboxAPI.dealDamage(_this->CGdFigureToolBox, source_index,
-                              source_index, damage, 0, 0, 0);
+        uint16_t damage = g_get_reduced_damage(_this->AutoClass34, source_index, source_index, weapon_damage);
+        toolboxAPI.dealDamage(_this->CGdFigureToolBox, source_index, source_index, damage, 0, 0, 0);
         return 0;
     }
     // TODO: fix enchatments on weapon applying with reflected hit
@@ -249,8 +268,7 @@ uint16_t __thiscall handle_trueshot_set(SF_CGdFigureJobs *_this,
 void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
                               uint32_t param_2, uint8_t param_3)
 {
-    if ((_this->CGdFigure->figures[source_index].owner == -1) ||
-        (_this->CGdFigure->figures[source_index].flags & 10))
+    if ((_this->CGdFigure->figures[source_index].owner == -1) || (_this->CGdFigure->figures[source_index].flags & 10))
     {
         return;
     }
@@ -259,44 +277,33 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
     SF_CGdTargetData target;
     SF_SGtFigureAction action;
     figureAPI.getWeaponStats(_this->CGdFigure, &weapon_stats, source_index);
-    uint16_t weapon_damage_rng = spellAPI.getRandom(_this->OpaqueClass,
-                                                    weapon_stats.max_dmg -
-                                                    weapon_stats.min_dmg);
+    uint16_t weapon_damage_rng = spellAPI.getRandom(_this->OpaqueClass, weapon_stats.max_dmg - weapon_stats.min_dmg);
     uint16_t weapon_damage = weapon_damage_rng + weapon_stats.min_dmg;
-    getTargetData(&_this->CGdFigure->figures[source_index].ac_1, &target);
+    getTargetData(&_this->CGdFigure->figures[source_index].current_job, &target);
     aiAPI.getTargetAction(_this->CGdFigure, &action, source_index);
 
     if (target.entity_type == 1)
     {
         // NB Parenthis matters in flags check. I mean it
         if ((_this->CGdFigure->figures[target.entity_index].owner == -1) ||
-            ((_this->CGdFigure->figures[target.entity_index].flags &
-              (REDO | IS_DEAD)) != 0) ||
-            (!toolboxAPI.isTargetable(_this->CGdFigureToolBox,
-                                      target.entity_index)))
+            ((_this->CGdFigure->figures[target.entity_index].flags & (RESESRVED_ONLY | IS_DEAD)) != 0) ||
+            (!toolboxAPI.isTargetable(_this->CGdFigureToolBox, target.entity_index)))
         {
             return;
         }
 
-        uint16_t hit_chance = g_get_hit_chance(_this->AutoClass34, source_index,
-                                               target.entity_index);
+        uint16_t hit_chance = g_get_hit_chance(_this->AutoClass34, source_index, target.entity_index);
 
         // miss handling
-        if ((hit_chance < spellAPI.getRandom(_this->OpaqueClass,
-                                             100)) && (param_2 == 0))
+        if ((hit_chance < spellAPI.getRandom(_this->OpaqueClass, 100)) && (param_2 == 0))
         {
-            g_FUN_006c3a60(_this->AutoClass30, source_index,
-                           target.entity_index, 1, 0);
-            uint16_t aggro = figureAPI.getAggroValue(_this->CGdFigure,
-                                                     target.entity_index,
-                                                     source_index);
+            g_FUN_006c3a60(_this->AutoClass30, source_index, target.entity_index, 1, 0);
+            uint16_t aggro = figureAPI.getAggroValue(_this->CGdFigure, target.entity_index, source_index);
             if (aggro < 10000)
             {
-                figureAPI.setAggroValue(_this->CGdFigure, target.entity_index,
-                                        source_index, 12000, 0);
+                figureAPI.setAggroValue(_this->CGdFigure, target.entity_index, source_index, 12000, 0);
             }
-            uint16_t job_id = figureAPI.getJob(_this->CGdFigure,
-                                               target.entity_index);
+            uint16_t job_id = figureAPI.getJob(_this->CGdFigure, target.entity_index);
 
             if (isJobDoNothing(job_id))
             {
@@ -312,9 +319,7 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
          */
 
 
-        uint16_t damage = g_get_reduced_damage(_this->AutoClass34, source_index,
-                                               target.entity_index,
-                                               weapon_damage);
+        uint16_t damage = g_get_reduced_damage(_this->AutoClass34, source_index, target.entity_index, weapon_damage);
         damage = ((damage & 0xffff) * ((uint8_t) param_3) + 0x32) / 100;
         damage = damage & 0xffff;
         // glanced hit
@@ -323,31 +328,23 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
 #if _DEBUG_
             log_info("Damage IS 0");
 #endif
-            uint16_t aggro = figureAPI.getAggroValue(_this->CGdFigure,
-                                                     target.entity_index,
-                                                     source_index);
+            uint16_t aggro = figureAPI.getAggroValue(_this->CGdFigure, target.entity_index, source_index);
             if (aggro < 10000)
             {
-                figureAPI.setAggroValue(_this->CGdFigure, target.entity_index,
-                                        source_index, 12000, 0);
+                figureAPI.setAggroValue(_this->CGdFigure, target.entity_index, source_index, 12000, 0);
             }
         }
         else
         {
             if (isFigureJobSpell(_this, target.entity_index))
             {
-                uint16_t job_id = figureAPI.getJob(_this->CGdFigure,
-                                                   target.entity_index);
+                uint16_t job_id = figureAPI.getJob(_this->CGdFigure, target.entity_index);
                 if (canJobBeInterrupted((FigureJobs) job_id))
                 {
-                    uint16_t chance =
-                        getAttackInterruptionChance(_this->CGdFigure,
-                                                    source_index,
-                                                    target.entity_index);
+                    uint16_t chance = getAttackInterruptionChance(_this->CGdFigure, source_index, target.entity_index);
                     if (spellAPI.getRandom(_this->OpaqueClass, 100) <= chance)
                     {
-                        toolboxAPI.figureSetNewJob(_this, target.entity_index,
-                                                   kGdJobOfferMe, 0, 0, 0);
+                        toolboxAPI.figureSetNewJob(_this, target.entity_index, kGdJobOfferMe, 0, 0, 0);
                     }
                 }
             }
@@ -357,31 +354,17 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
                 {
                     if (isActionMelee(&action))
                     {
-                        damage = handle_berserk_set(_this, source_index,
-                                                    target.entity_index,
-                                                    damage);
-                        damage = handle_riposte_set(_this, source_index,
-                                                    target.entity_index,
-                                                    damage);
+                        damage = handle_berserk_set(_this, source_index, target.entity_index, damage);
+                        damage = handle_riposte_set(_this, source_index, target.entity_index, damage);
                     }
                     else
                     {
-                        damage = handle_trueshot_set(_this, source_index,
-                                                     target.entity_index,
-                                                     damage);
+                        damage = handle_trueshot_set(_this, source_index, target.entity_index, damage);
                     }
                 }
-                std::list<std::pair<uint16_t,
-                onhit_handler_ptr>> onhit_list = get_onhit_phase(static_cast<
-                                                                 OnHitPhase>
-                                                                 (i));
-
-                uint16_t list_size = onhit_list.size();
-
-                int return_damage = weapon_damage;
-
-                for (auto it = onhit_list.crbegin(); it != onhit_list.crend();
-                     ++it)
+                std::list<std::pair<uint16_t, onhit_handler_ptr>> onhit_list =
+                    get_onhit_phase(static_cast<OnHitPhase>(i));
+                for (auto it = onhit_list.crbegin(); it != onhit_list.crend(); ++it)
                 {
                     std::pair<uint16_t, onhit_handler_ptr> entry = *it;
 
@@ -389,33 +372,28 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
 
                     if (hasSpellTag(spell_line_id, TARGET_ONHIT_SPELL))
                     {
-                        if ((_this->CGdFigure->figures[target.entity_index].
-                             flags & F_CHECK_SPELLS_BEFORE_JOB) != 0)
+                        //Target on-hits for ranged spells should be handled in phys effect hook, not here
+                        if (isActionMelee(&action))
                         {
-                            if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox,
-                                                        target.entity_index,
-                                                        spell_line_id))
+                            if ((_this->CGdFigure->figures[target.entity_index].flags & F_CHECK_SPELLS_BEFORE_JOB) != 0)
                             {
-                                onhit_handler_ptr onhit_func = entry.second;
-                                damage = onhit_func(_this, source_index,
-                                                    target.entity_index,
-                                                    damage);
+                                if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, target.entity_index,
+                                                            spell_line_id))
+                                {
+                                    onhit_handler_ptr onhit_func = entry.second;
+                                    damage = onhit_func(_this, source_index, target.entity_index, damage);
+                                }
                             }
                         }
                     }
                     else
                     {
-                        if ((_this->CGdFigure->figures[source_index].flags &
-                             F_CHECK_SPELLS_BEFORE_JOB) != 0)
+                        if ((_this->CGdFigure->figures[source_index].flags & F_CHECK_SPELLS_BEFORE_JOB) != 0)
                         {
-                            if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox,
-                                                        source_index,
-                                                        spell_line_id))
+                            if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, source_index, spell_line_id))
                             {
                                 onhit_handler_ptr onhit_func = entry.second;
-                                damage = onhit_func(_this, source_index,
-                                                    target.entity_index,
-                                                    damage);
+                                damage = onhit_func(_this, source_index, target.entity_index, damage);
                             }
                         }
                     }
@@ -424,41 +402,25 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
             // donnoe wtf is it, looks like shooting?
             if (action.type == 0x2712)
             {
-                uint16_t maxY =
-                    (_this->CGdFigure->figures[source_index].position.Y <=
-                     _this->CGdFigure->figures[target.entity_index].position.Y)
-                                    ? (_this->CGdFigure->figures[target.
-                                                                 entity_index].
-                                       position.Y)
-                                    : (_this->CGdFigure->figures[source_index].
-                                       position.Y);
+                uint16_t maxY = (_this->CGdFigure->figures[source_index].position.Y <=
+                                 _this->CGdFigure->figures[target.entity_index].position.Y)
+                                    ? (_this->CGdFigure->figures[target.entity_index].position.Y)
+                                    : (_this->CGdFigure->figures[source_index].position.Y);
 
-                uint16_t maxX =
-                    (_this->CGdFigure->figures[source_index].position.X <=
-                     _this->CGdFigure->figures[target.entity_index].position.X)
-                                    ? (_this->CGdFigure->figures[target.
-                                                                 entity_index].
-                                       position.X)
-                                    : (_this->CGdFigure->figures[source_index].
-                                       position.X);
+                uint16_t maxX = (_this->CGdFigure->figures[source_index].position.X <=
+                                 _this->CGdFigure->figures[target.entity_index].position.X)
+                                    ? (_this->CGdFigure->figures[target.entity_index].position.X)
+                                    : (_this->CGdFigure->figures[source_index].position.X);
 
-                uint16_t minY =
-                    (_this->CGdFigure->figures[source_index].position.Y >
-                     _this->CGdFigure->figures[target.entity_index].position.Y)
-                                    ? (_this->CGdFigure->figures[target.
-                                                                 entity_index].
-                                       position.Y)
-                                    : (_this->CGdFigure->figures[source_index].
-                                       position.Y);
+                uint16_t minY = (_this->CGdFigure->figures[source_index].position.Y >
+                                 _this->CGdFigure->figures[target.entity_index].position.Y)
+                                    ? (_this->CGdFigure->figures[target.entity_index].position.Y)
+                                    : (_this->CGdFigure->figures[source_index].position.Y);
 
-                uint16_t minX =
-                    (_this->CGdFigure->figures[source_index].position.X >
-                     _this->CGdFigure->figures[target.entity_index].position.X)
-                                    ? (_this->CGdFigure->figures[target.
-                                                                 entity_index].
-                                       position.X)
-                                    : (_this->CGdFigure->figures[source_index].
-                                       position.X);
+                uint16_t minX = (_this->CGdFigure->figures[source_index].position.X >
+                                 _this->CGdFigure->figures[target.entity_index].position.X)
+                                    ? (_this->CGdFigure->figures[target.entity_index].position.X)
+                                    : (_this->CGdFigure->figures[source_index].position.X);
                 SF_Coord p1;
                 SF_Coord p2;
                 SF_Rectangle vector;
@@ -486,73 +448,53 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
                 vector.partA = p1.Y << 0x10 | p1.X;
                 vector.partB = p2.Y << 0x10 | p2.X;
 
-                uint32_t distance =
-                    getDistance(
-                        &_this->CGdFigure->figures[source_index].position,
-                        &_this->CGdFigure->figures[target.entity_index].position);
-                distance = ((distance & 0xffff) * 0x578) / 3000;
+                uint32_t distance = getDistance(&_this->CGdFigure->figures[source_index].position,
+                                                &_this->CGdFigure->figures[target.entity_index].position);
+                distance = ((distance & 0xffff) * 1400) / 3000;
                 SF_CGdTargetData source = {1, source_index, {0, 0}};
-                uint16_t effect_id = effectAPI.addEffect(_this->CGdEffect,
-                                                         kGdEffectProjectile,
-                                                         &source, &target,
-                                                         _this->OpaqueClass->
-                                                         current_step,
-                                                         ((distance !=
-                                                           0) ? distance : 1),
-                                                         &vector);
-                effectAPI.setEffectXData(_this->CGdEffect, effect_id,
-                                         EFFECT_ENTITY_TYPE, 1);
-                effectAPI.setEffectXData(_this->CGdEffect, effect_id,
-                                         EFFECT_ENTITY_TYPE2, 1);
-                effectAPI.setEffectXData(_this->CGdEffect, effect_id,
-                                         EFFECT_ENTITY_INDEX, source_index);
-                effectAPI.setEffectXData(_this->CGdEffect, effect_id,
-                                         EFFECT_ENTITY_INDEX2,
-                                         target.entity_index);
-                effectAPI.setEffectXData(_this->CGdEffect, effect_id,
-                                         EFFECT_DO_NOT_ADD_SUBSPELL, 1);
-                effectAPI.setEffectXData(_this->CGdEffect, effect_id,
-                                         EFFECT_PHYSICAL_DAMAGE, damage);
+                uint16_t effect_id = effectAPI.addEffect(_this->CGdEffect, kGdEffectProjectile, &source, &target,
+                                                         _this->OpaqueClass->current_step,
+                                                         ((distance != 0) ? distance : 1), &vector);
+                log_debug(DEBUG_LOW, "Effect %d Distance %d", effect_id, distance);
+
+                effectAPI.setEffectXData(_this->CGdEffect, effect_id, EFFECT_ENTITY_TYPE, 1);
+                effectAPI.setEffectXData(_this->CGdEffect, effect_id, EFFECT_ENTITY_TYPE2, 1);
+                effectAPI.setEffectXData(_this->CGdEffect, effect_id, EFFECT_ENTITY_INDEX, source_index);
+                effectAPI.setEffectXData(_this->CGdEffect, effect_id, EFFECT_ENTITY_INDEX2, target.entity_index);
+                effectAPI.setEffectXData(_this->CGdEffect, effect_id, EFFECT_ADD_SUBSPELL, 1);
+                effectAPI.setEffectXData(_this->CGdEffect, effect_id, EFFECT_PHYSICAL_DAMAGE, damage);
 
                 uint16_t subspell_id = 0;
                 // troll fire thrower
-                if (_this->CGdFigure->figures[source_index].unit_data_id ==
-                    0x508)
+                if (_this->CGdFigure->figures[source_index].unit_data_id == 0x508)
                 {
                     subspell_id = 0x6de;
                 }
                 // troll ice thrower
-                if (_this->CGdFigure->figures[source_index].unit_data_id ==
-                    0x505)
+                if (_this->CGdFigure->figures[source_index].unit_data_id == 0x505)
                 {
                     subspell_id = 0x6ea;
                 }
                 // windarcher
-                if (_this->CGdFigure->figures[source_index].unit_data_id ==
-                    0x4cd)
+                if (_this->CGdFigure->figures[source_index].unit_data_id == 0x4cd)
                 {
                     subspell_id = 0x6d2;
                 }
                 if (subspell_id != 0)
                 {
-                    uint16_t spell_lvl =
-                        _this->CGdFigure->figures[source_index].level;
+                    uint16_t spell_lvl = _this->CGdFigure->figures[source_index].level;
                     uint16_t spell_id =spellAPI.getLeveledSpellID(_this->CGdResource, subspell_id, spell_lvl);
                     if (spell_id != 0)
                     {
-                        effectAPI.setEffectXData(_this->CGdEffect, effect_id,
-                                                 EFFECT_SUBSPELL_ID, spell_id);
+                        effectAPI.setEffectXData(_this->CGdEffect, effect_id, EFFECT_SUBSPELL_ID, spell_id);
                     }
                 }
             }
             else
             {
-                uint16_t subspell_id = 0;
                 // Havoc & DeathKnight upgrade
-                if ((_this->CGdFigure->figures[target.entity_index].unit_data_id
-                     == 0x510) ||
-                    (_this->CGdFigure->figures[target.entity_index].unit_data_id
-                     == 0x513))
+                if ((_this->CGdFigure->figures[target.entity_index].unit_data_id == 0x510) ||
+                    (_this->CGdFigure->figures[target.entity_index].unit_data_id == 0x513))
                 {
                     // NOT a bug, but feature. The higher the level of enemy, the stronger curse gets.
                     uint16_t spell_id = spellAPI.getLeveledSpellID(_this->CGdResource, 0x167,
@@ -563,23 +505,19 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
                         t_data.entity_index = source_index;
                         t_data.entity_type = 1;
                         t_data.position = {0, 0};
-                        spellAPI.addSpell(_this->CGdSpell, spell_id,
-                                          _this->OpaqueClass->current_step,
-                                          &target, &t_data, 0);
+                        spellAPI.addSpell(_this->CGdSpell, spell_id, _this->OpaqueClass->current_step, &target, &t_data,
+                                          0);
                     }
                 }
                 if(damage != 0)
-                    toolboxAPI.dealDamage(_this->CGdFigureToolBox, source_index,
-                                          target.entity_index, damage, 0, 0, 0);
+                {
+                    toolboxAPI.dealDamage(_this->CGdFigureToolBox, source_index, target.entity_index, damage, 0, 0, 0);
+                }
             }
 
             if (figureAPI.isAlive(_this->CGdFigure, target.entity_index))
             {
-                uint16_t weapon_id =
-                    _this->CGdFigure->figures[source_index].equipment[(action.
-                                                                       type !=
-                                                                       10000) *
-                                                                      2 + 1];
+                uint16_t weapon_id = _this->CGdFigure->figures[source_index].equipment[(action.type != 10000) * 2 + 1];
                 // can't make heads or tails here
                 uint32_t puVar15[2];
                 g_getWeaponEffects(_this->CGdResource, puVar15, weapon_id);
@@ -587,29 +525,27 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
                 {
                     for (int i = 0; i < 3; i++)
                     {
-                        uint16_t enchant_id =
-                            *(uint16_t *)((uint32_t)(&puVar15[0]) + i * 2 + 2);
+                        uint16_t enchant_id = *(uint16_t *)((uint32_t)(&puVar15[0]) + i * 2 + 2);
 
                         if (enchant_id == 0)
                             break;
                         SF_CGdResourceSpell spell_data;
-                        spellAPI.getResourceSpellData(_this->CGdResource,
-                                                      &spell_data, enchant_id);
-                        uint16_t curr_dex = getCurrentDex(_this->CGdFigure,
-                                                          source_index);
-                        uint16_t curr_int = getCurrentInt(_this->CGdFigure,
-                                                          source_index);
-                        uint16_t chance = get_effect_chance(curr_dex, curr_int,
-                                                            spell_data.
-                                                            spell_line_id);
-                        if (spellAPI.getRandom(_this->OpaqueClass,
-                                               10000) < chance)
+                        spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, enchant_id);
+
+/*
+                        uint16_t curr_dex = getCurrentDex(_this->CGdFigure, source_index);
+                        uint16_t curr_int = getCurrentInt(_this->CGdFigure, source_index);
+                        uint16_t chance = get_effect_chance(curr_dex, curr_int, spell_data.spell_line_id);
+ */
+
+                        enchant_handler_ptr chance_handler =  get_enchant_handler(spell_data.spell_line_id);
+                        uint32_t chance = chance_handler(_this->CGdFigure, source_index);
+                        if (spellAPI.getRandom(_this->OpaqueClass, 10000) < chance)
                         {
                             if ((_this->CGdFigure->figures[source_index].race != 0) &&
                                 (_this->CGdFigure->figures[source_index].race < 7))
                             {
-                                if (_this->CGdFigure->figures[source_index].
-                                    owner != 0)
+                                if (_this->CGdFigure->figures[source_index].owner != 0)
                                 {
                                     enchant_id = spellAPI.getLeveledSpellID(_this->CGdResource, enchant_id,
                                                                             _this->CGdFigure->figures[source_index].
@@ -623,10 +559,8 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
                                 source.entity_type = 1;
                                 source.entity_index = source_index;
                                 source.position = {0, 0};
-                                spellAPI.addSpell(_this->CGdSpell, enchant_id,
-                                                  _this->OpaqueClass->
-                                                  current_step, &source,
-                                                  &target, 0);
+                                spellAPI.addSpell(_this->CGdSpell, enchant_id, _this->OpaqueClass->current_step,
+                                                  &source, &target, 0);
                             }
                         }
                     }
@@ -636,29 +570,21 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
     }
     if (target.entity_type == 2)
     {
-        uint16_t damage = g_get_reduced_building_damage(_this->AutoClass34,
-                                                        source_index,
-                                                        target.entity_index,
+        uint16_t damage = g_get_reduced_building_damage(_this->AutoClass34, source_index, target.entity_index,
                                                         weapon_damage);
-        if ((target.entity_index != 0) &&
-            (_this->CGdBuilding->buildings[target.entity_index].health_current
-             != 0))
+        if ((target.entity_index != 0) && (_this->CGdBuilding->buildings[target.entity_index].health_current != 0))
         {
-            toolboxAPI.buildingDealDamage(_this->CGdBuildingToolBox,
-                                          source_index, target.entity_index,
-                                          damage, 0);
+            buildingAPI.buildingDealDamage(_this->CGdBuildingToolBox, source_index, target.entity_index, damage, 0);
         }
     }
     if (target.entity_type == 3)
     {
         if (target.entity_index != 0)
         {
-            uint32_t value_1 = g_FUN_0071d7b0(_this->CGdObject,
-                                              target.entity_index);
+            uint32_t value_1 = g_FUN_0071d7b0(_this->CGdObject, target.entity_index);
             if ((value_1 != 0) && (g_FUN_00755180(value_1) != 0))
             {
-                g_objectDealDamage(_this->CGdObjectToolBox, source_index,
-                                   target.entity_index, weapon_damage, 0);
+                g_objectDealDamage(_this->CGdObjectToolBox, source_index, target.entity_index, weapon_damage, 0);
             }
         }
     }

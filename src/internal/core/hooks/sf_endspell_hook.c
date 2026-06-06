@@ -31,3 +31,44 @@ void __thiscall sf_endspell_hook(SF_CGdSpell *_this, uint16_t spell_index)
         spellend_handler(_this, spell_index);
     }
 }
+
+void __thiscall sf_figure_end_spells_hook(SF_CGdFigureToolbox *_this, uint16_t figure_id)
+{
+    for (uint16_t spell_node = figureAPI.getSpellJobStartNode(_this->CGdFigure, figure_id);
+         spell_node != 0; spell_node =  figureAPI.getSpellJobStartNode(_this->CGdFigure, figure_id))
+    {
+        uint16_t spell_index = toolboxAPI.getSpellIndexFromDLL(_this->CGdDoubleLinkedList, spell_node);
+        uint16_t spell_line = _this->CGdSpell->active_spell_list[spell_index].spell_line;
+        if (!spellAPI.hasSpellTag(spell_line, SpellTag::AOE_SPELL))
+        {
+            sf_endspell_hook(_this->CGdSpell, spell_index);
+        }
+        else
+        {
+            log_debug(DEBUG_HIGH, "AOE spell [%d] type [%d]", spell_index, spell_line);
+            if (toolboxAPI.removeSpellFromList(_this, figure_id, spell_index))
+            {
+                uint16_t spell_line = spellAPI.getSpellLine(_this->CGdSpell, spell_index);
+                if (spell_line == kGdSpellLineFreezeArea)
+                {
+                    spellAPI.figTryUnfreeze(_this->CGdSpell, spell_index, figure_id);
+                    spellAPI.figClrChkSplBfrChkBattle(_this->CGdSpell, spell_index, figure_id);
+                }
+                if (spell_line == kGdSpellLineHypnotizeArea)
+                {
+                    spellAPI.figTryUnfreeze(_this->CGdSpell, spell_index, figure_id);
+                    tryClearCheckSpellsBeforeJob(_this->CGdSpell, spell_index, figure_id);
+                    spellAPI.figClrChkSplBfrChkBattle(_this->CGdSpell, spell_index, figure_id);
+                }
+            }
+        }
+        if ((toolboxAPI.hasSpellOnIt(_this, figure_id, spell_line)) &&
+            (_this->CGdSpell->active_spell_list[spell_index].target.entity_index == 0) &&
+            (_this->CGdSpell->active_spell_list[spell_index].source.entity_index == 0))
+        {
+            log_debug(DEBUG_HIGH, "Broken spell [%d] on figure [%d] spell type [%d]",
+                      spell_index, figure_id, spell_line);
+            toolboxAPI.removeSpellFromList(_this, figure_id, spell_index);
+        }
+    }
+}

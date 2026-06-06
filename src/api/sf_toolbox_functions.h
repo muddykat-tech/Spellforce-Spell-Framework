@@ -2,21 +2,15 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "sf_general_structures.h"
+#include "./structures/sf_toolbox_structures.h"
 
 // Declare the function pointers for the ToolboxFunctions group
-DECLARE_FUNCTION(void, dealDamage, SF_CGdFigureToolbox *CGdFigureToolbox,
-                 uint16_t source_index, uint16_t target_index, uint32_t damage,
-                 uint32_t is_spell_damage, uint32_t param5, uint32_t param6);
-DECLARE_FUNCTION(bool, isTargetable, SF_CGdFigureToolbox *CGdFigureToolbox,
-                 uint16_t figure_index);
-DECLARE_FUNCTION(uint16_t, figuresCheckHostile,
-                 SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t source_index,
+DECLARE_FUNCTION(void, dealDamage, SF_CGdFigureToolbox *CGdFigureToolbox,uint16_t source_index, uint16_t target_index,
+                 uint32_t damage, uint32_t is_spell_damage, uint32_t param5, uint32_t param6);
+DECLARE_FUNCTION(bool, isTargetable, SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t figure_index);
+DECLARE_FUNCTION(uint16_t, figuresCheckHostile, SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t source_index,
                  uint16_t target_index);
-DECLARE_FUNCTION(void, buildingDealDamage, void *CGdBuildingToolBox,
-                 uint16_t figure_id, uint16_t building_id, uint16_t damage,
-                 uint32_t is_spell_damage);
-DECLARE_FUNCTION(uint16_t, figuresCheckNeutral,
-                 SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t source_index,
+DECLARE_FUNCTION(uint16_t, figuresCheckNeutral, SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t source_index,
                  uint16_t target_index);
 DECLARE_FUNCTION(uint16_t, figuresCheckFriendly,
                  SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t source_index,
@@ -38,7 +32,7 @@ DECLARE_FUNCTION(uint16_t, getNextNode, uint32_t *CGdDoubleLinkedList,
                  uint16_t current_node);
 DECLARE_FUNCTION(void, figureSetNewJob, void *CGdFigureJobs, uint32_t figure_id,
                  uint32_t new_job, uint32_t param_3, uint32_t param_4,
-                 uint32_t param_5);
+                 uint32_t param_5); // @SHUFFLE Move to Figure Functions
 DECLARE_FUNCTION(uint32_t, removeSpellFromList,
                  SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t param_1,
                  uint16_t param_2);
@@ -56,7 +50,25 @@ DECLARE_FUNCTION(bool, hasAuraActive, SF_CGdFigureToolbox *_this,
                  uint16_t figure_id);
 
 DECLARE_FUNCTION(uint16_t, getPhysDamageReduction, SF_CGdFigureToolbox *_this, uint16_t source_index,
-                 uint16_t target_index,  uint16_t action_id)
+                 uint16_t target_index,  uint16_t action_id);
+
+DECLARE_FUNCTION(uint32_t, getFigureXData, SF_CGdFigureToolbox *_this, uint16_t figure_id, uint8_t xdata_type);
+DECLARE_FUNCTION(void, setFigureXData, SF_CGdFigureToolbox *_this, uint16_t figure_id, uint8_t xdata_type,
+                 uint32_t value);
+
+DECLARE_FUNCTION(void, equipArtisanArmour, SF_CGdFigureToolbox* _this, uint16_t figure_id);
+DECLARE_FUNCTION(void, equipArtisanTools, SF_CGdFigureToolbox* _this, uint16_t figure_id, uint32_t param2,
+                 uint32_t param3);
+
+// getDistance(SF_Coord *pointA, SF_Coord *pointB)
+DECLARE_FUNCTION(uint32_t, getDistance, SF_Coord *pointA, SF_Coord *pointB);
+
+DECLARE_FUNCTION(uint16_t, findClosestMonument, void *SF_CGdObjectToolBox,uint16_t figure_id,uint16_t *result);
+
+DECLARE_FUNCTION(void, doMapOutCry, void *AC30, uint16_t outCryType, uint16_t owner, uint8_t param3, uint16_t param4,
+                 uint16_t pos_x, uint16_t pos_y);
+//bool isBuildingAllied(SF_CGdBuildingToolbox *_this, uint16_t figure_index, uint16_t building_index)
+
 
 
 /**
@@ -65,6 +77,7 @@ DECLARE_FUNCTION(uint16_t, getPhysDamageReduction, SF_CGdFigureToolbox *_this, u
  */
 typedef struct
 {
+    getDistance_ptr getDistance;
     dealDamage_ptr dealDamage;
     isTargetable_ptr isTargetable;
     figuresCheckHostile_ptr figuresCheckHostile;
@@ -72,17 +85,22 @@ typedef struct
     figuresCheckFriendly_ptr figuresCheckFriendly;
     hasSpellOnIt_ptr hasSpellOnIt;
     hasAuraActive_ptr hasAuraActive;
-    buildingDealDamage_ptr buildingDealDamage;
     rescaleLevelStats_ptr rescaleLevelStats;
     addSpellToFigure_ptr addSpellToFigure;
     getFigureFromWorld_ptr getFigureFromWorld;
     getSpellIndexOfType_ptr getSpellIndexOfType;
-    getSpellIndexFromDLL_ptr getSpellIndexFromDLL;
-    getNextNode_ptr getNextNode;
-    figureSetNewJob_ptr figureSetNewJob;
+    getSpellIndexFromDLL_ptr getSpellIndexFromDLL; // Use Wrappers instead of direct passthrough
+    getNextNode_ptr getNextNode; // Use Wrappers instead of direct passthrough
+    figureSetNewJob_ptr figureSetNewJob; // Send to Figure Functions
     removeSpellFromList_ptr removeSpellFromList;
     addUnit_ptr addUnit;
     findClosestFreePosition_ptr findClosestFreePosition;
     isUnitMelee_ptr isUnitMelee;
     getPhysDamageReduction_ptr getPhysDamageReduction;
+    getFigureXData_ptr getFigureXData;
+    setFigureXData_ptr setFigureXData;
+    equipArtisanArmour_ptr equipArtisanArmour;
+    equipArtisanTools_ptr equipArtisanTools;
+    findClosestMonument_ptr findClosestMonument;
+    doMapOutCry_ptr doMapOutCry;
 } ToolboxFunctions;

@@ -1,16 +1,16 @@
 # Compiler and linker options
 CC = g++
 RC = windres
-DLL_CFLAGS = -O0 -g -std=c++11 ${WARNS} -Iinclude -DADD_EXPORTS -fpermissive -m32
-DLL_LDFLAGS = -m32 -shared -static-libgcc -static-libstdc++ -s -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive -Wl,--subsystem,windows,--out-implib,lib/testmod.a
-FW_LDFLAGS = -m32 -shared -static-libgcc -static-libstdc++ -s -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive -Wl,--subsystem,windows,--out-implib,lib/sfsf.a
+DLL_CFLAGS = -Wall -O1 -g -std=c++11 ${WARNS} -Iinclude -DADD_EXPORTS -fpermissive -m32
+DLL_LDFLAGS = -m32 -shared -lgcc -static-libgcc -static-libstdc++ -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive -Wl,--subsystem,windows,--out-implib,lib/testmod.a
+FW_LDFLAGS = -m32 -shared -lgcc -static-libgcc -static-libstdc++ -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive -Wl,--subsystem,windows,--out-implib,lib/sfsf.a
 
 # Object files for the new architecture
-HOOK_OBJ = obj/sf_hooks.o obj/sf_onhit_hook.o obj/sf_refresh_hook.o obj/sf_endspell_hook.o obj/sf_menu_hook.o obj/sf_spelleffect_hook.o obj/sf_subeffect_hook.o obj/sf_spelltype_hook.o obj/sf_damage_hook.o obj/sf_console_hook.o obj/sf_ai_hook.o obj/sf_utility_hooks.o 
-REGISTRY_OBJ = obj/sf_registry.o obj/sf_mod_registry.o obj/sf_spelltype_registry.o obj/sf_spelleffect_registry.o obj/sf_spellend_registry.o obj/sf_subeffect_registry.o obj/sf_spellrefresh_registry.o obj/sf_vanilla_registry.o obj/sf_spelldamage_registry.o obj/sf_onhit_registry.o obj/sf_ai_avoidance_registry.o obj/sf_ai_single_target_registry.o obj/sf_ai_aoe_registry.o
-HANDLER_OBJ = obj/sf_spelltype_handlers.o obj/sf_spelleffect_handlers.o obj/sf_spellend_handlers.o obj/sf_sub_effect_handlers.o obj/sf_spellrefresh_handlers.o obj/sf_spelldamage_handlers.o obj/sf_onhit_handlers.o obj/sf_ai_avoidance_handlers.o obj/sf_ai_spell_handlers.o obj/sf_ai_aoe_handlers.o
+HOOK_OBJ = obj/sf_hooks.o obj/sf_onhit_hook.o obj/sf_refresh_hook.o obj/sf_endspell_hook.o obj/sf_menu_hook.o obj/sf_spelleffect_hook.o obj/sf_subeffect_hook.o obj/sf_spelltype_hook.o obj/sf_damage_hook.o obj/sf_console_hook.o obj/sf_ai_hook.o obj/sf_utility_hooks.o obj/sf_vanilla_fix_hook.o obj/sf_building_done_hook.o obj/sf_building_entry_hook.o obj/sf_worker_logic_hook.o obj/sf_phys_effect_hook.o obj/sf_enchant_hook.o obj/sf_effect_hook.o
+REGISTRY_OBJ = obj/sf_registry.o obj/sf_mod_registry.o obj/sf_spelltype_registry.o obj/sf_spelleffect_registry.o obj/sf_spellend_registry.o obj/sf_subeffect_registry.o obj/sf_spellrefresh_registry.o obj/sf_vanilla_registry.o obj/sf_spelldamage_registry.o obj/sf_onhit_registry.o obj/sf_ai_avoidance_registry.o obj/sf_ai_single_target_registry.o obj/sf_ai_aoe_registry.o obj/sf_phys_effect_registry.o obj/sf_building_done_registry.o obj/sf_building_entry_registry.o obj/sf_enchant_registry.o
+HANDLER_OBJ = obj/sf_spelltype_handlers.o obj/sf_spelleffect_handlers.o obj/sf_spellend_handlers.o obj/sf_sub_effect_handlers.o obj/sf_spellrefresh_handlers.o obj/sf_spelldamage_handlers.o obj/sf_onhit_handlers.o obj/sf_ai_avoidance_handlers.o obj/sf_ai_spell_handlers.o obj/sf_ai_aoe_handlers.o obj/sf_building_done_handlers.o obj/sf_worker_building_entry_handlers.o obj/sf_phys_effect_handlers.o
 
-NTERNALS_OBJ = obj/sfsf.o obj/sf_modloader.o obj/sf_asi.o obj/sf_wrappers.o ${REGISTRY_OBJ} ${HANDLER_OBJ} ${HOOK_OBJ}
+NTERNALS_OBJ = obj/sfsf.o obj/sf_modloader.o obj/sf_building_loader.o obj/sf_asi.o obj/sf_wrappers.o obj/sf_ui_wrappers.o ${REGISTRY_OBJ} ${HANDLER_OBJ} ${HOOK_OBJ}
 TEST_MOD_OBJ = obj/TestMod.o
 INTERNALS_SRC = src/internal
 
@@ -19,6 +19,7 @@ HOOKS_SRC = ${CORE_SRC}/hooks
 REGISTRY_SRC = ${INTERNALS_SRC}/registry
 SPELL_DATA_REGISTRY_SRC = ${REGISTRY_SRC}/spell_data_registries
 AI_DATA_REGISTRY_SRC = ${REGISTRY_SRC}/ai_data_registries
+BUILDING_REGISTRY_SRC = ${REGISTRY_SRC}/building_registry
 HANDLERS_SRC = ${INTERNALS_SRC}/handlers
 
 
@@ -65,7 +66,7 @@ bin lib obj:
 # Internals build
 obj/sf_asi.o: src/asi/sf_asi.cpp src/asi/sf_asi.h | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
-	
+
 obj/sfsf.o: ${INTERNALS_SRC}/sfsf.cpp src/asi/sf_asi.h | obj
 	$(call print_colored, "================== Starting Build ==================")
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
@@ -73,8 +74,18 @@ obj/sfsf.o: ${INTERNALS_SRC}/sfsf.cpp src/asi/sf_asi.h | obj
 obj/sf_wrappers.o: ${CORE_SRC}/sf_wrappers.c | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
+obj/sf_ui_wrappers.o: ${CORE_SRC}/sf_ui_wrappers.c | obj
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
+
+obj/sf_building_loader.o: ${CORE_SRC}/sf_building_loader.c ${CORE_SRC}/sf_building_loader.h ${CORE_SRC}/jsmn.h | obj
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
+
 # Hooks
-obj/sf_ai_hook.o: ${HOOKS_SRC}/sf_ai_hook.c | 
+
+obj/sf_enchant_hook.o: ${HOOKS_SRC}/sf_enchant_hook.c |
+	${CC} -mgeneral-regs-only ${DLL_CFLAGS} -c "$<" -o "$@"
+
+obj/sf_ai_hook.o: ${HOOKS_SRC}/sf_ai_hook.c |
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_onhit_hook.o: ${HOOKS_SRC}/sf_onhit_hook.c | obj
@@ -95,6 +106,9 @@ obj/sf_spelleffect_hook.o: ${HOOKS_SRC}/sf_spelleffect_hook.c | obj
 obj/sf_subeffect_hook.o: ${HOOKS_SRC}/sf_subeffect_hook.c | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
+obj/sf_vanilla_fix_hook.o: ${HOOKS_SRC}/sf_vanilla_fix_hook.c | obj
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
+
 obj/sf_spelltype_hook.o: ${HOOKS_SRC}/sf_spelltype_hook.c | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
@@ -105,6 +119,21 @@ obj/sf_console_hook.o: ${HOOKS_SRC}/sf_console_hook.c | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_utility_hooks.o: ${HOOKS_SRC}/sf_utility_hooks.c | obj
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
+
+obj/sf_building_done_hook.o: ${HOOKS_SRC}/sf_building_done_hook.c | obj
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
+
+obj/sf_building_entry_hook.o: ${HOOKS_SRC}/sf_building_entry_hook.c | obj
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
+
+obj/sf_worker_logic_hook.o: ${HOOKS_SRC}/sf_worker_logic_hook.c | obj
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
+
+obj/sf_phys_effect_hook.o: ${HOOKS_SRC}/sf_phys_effect_hook.c | obj
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
+
+obj/sf_effect_hook.o:  ${HOOKS_SRC}/sf_effect_hook.c | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_hooks.o: ${CORE_SRC}/sf_hooks.c src/asi/sf_asi.h | obj
@@ -119,32 +148,32 @@ obj/sf_modloader.o: ${CORE_SRC}/sf_modloader.c | obj
 # Registry and Handlers
 obj/sf_registry.o: ${REGISTRY_SRC}/sf_registry.cpp | obj
 	$(call print_colored, "================== Building Registries ==================")
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_mod_registry.o: ${REGISTRY_SRC}/sf_mod_registry.cpp | obj
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_spelltype_handlers.o: ${HANDLERS_SRC}/sf_spelltype_handlers.cpp | obj
 	$(call print_colored, "================== Building Handlers ==================")
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_ai_avoidance_handlers.o: ${HANDLERS_SRC}/sf_ai_avoidance_handlers.cpp | obj
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_onhit_handlers.o: ${HANDLERS_SRC}/sf_onhit_handlers.cpp | obj
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_spelltype_registry.o: ${SPELL_DATA_REGISTRY_SRC}/sf_spelltype_registry.cpp | obj
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_spelleffect_handlers.o: ${HANDLERS_SRC}/sf_spelleffect_handlers.cpp | obj
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_spelleffect_registry.o: ${SPELL_DATA_REGISTRY_SRC}/sf_spelleffect_registry.cpp | obj
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_onhit_registry.o: ${SPELL_DATA_REGISTRY_SRC}/sf_onhit_registry.cpp | obj
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_spellend_handlers.o: ${HANDLERS_SRC}/sf_spellend_handlers.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
@@ -153,7 +182,7 @@ obj/sf_sub_effect_handlers.o: ${HANDLERS_SRC}/sf_sub_effect_handlers.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_spellend_registry.o: ${SPELL_DATA_REGISTRY_SRC}/sf_spellend_registry.cpp | obj
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_subeffect_registry.o: ${SPELL_DATA_REGISTRY_SRC}/sf_subeffect_registry.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
@@ -164,29 +193,50 @@ obj/sf_spellrefresh_handlers.o: ${HANDLERS_SRC}/sf_spellrefresh_handlers.cpp | o
 obj/sf_spellrefresh_registry.o: ${SPELL_DATA_REGISTRY_SRC}/sf_spellrefresh_registry.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
+obj/sf_phys_effect_registry.o: ${SPELL_DATA_REGISTRY_SRC}/sf_phys_effect_registry.cpp | obj
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
+
+obj/sf_phys_effect_handlers.o: ${HANDLERS_SRC}/sf_phys_effect_handlers.cpp | obj
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
+
 obj/sf_vanilla_registry.o: ${REGISTRY_SRC}/sf_vanilla_registry.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_spelldamage_handlers.o: ${HANDLERS_SRC}/sf_spelldamage_handlers.cpp | obj
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_spelldamage_registry.o: ${SPELL_DATA_REGISTRY_SRC}/sf_spelldamage_registry.cpp | obj
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_ai_spell_handlers.o: ${HANDLERS_SRC}/sf_ai_spell_handlers.cpp | obj
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_ai_aoe_handlers.o: ${HANDLERS_SRC}/sf_ai_aoe_handlers.cpp | obj
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
+
+obj/sf_enchant_registry.o: ${SPELL_DATA_REGISTRY_SRC}/sf_enchant_registry.cpp | obj
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_ai_avoidance_registry.o: ${AI_DATA_REGISTRY_SRC}/sf_ai_avoidance_registry.cpp | obj
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_ai_single_target_registry.o: ${AI_DATA_REGISTRY_SRC}/sf_ai_single_target_registry.cpp | obj
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_ai_aoe_registry.o: ${AI_DATA_REGISTRY_SRC}/sf_ai_aoe_registry.cpp | obj
-	${CC} ${DLL_CFLAGS} -c "$<" -o "$@" 
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
+
+obj/sf_building_done_handlers.o: ${HANDLERS_SRC}/sf_building_done_handlers.cpp | obj
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
+
+obj/sf_building_done_registry.o: ${BUILDING_REGISTRY_SRC}/sf_building_done_registry.cpp | obj
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
+
+obj/sf_building_entry_registry.o: ${BUILDING_REGISTRY_SRC}/sf_building_entry_registry.cpp | obj
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
+
+obj/sf_worker_building_entry_handlers.o: ${HANDLERS_SRC}/sf_worker_building_entry_handlers.cpp | obj
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 # Mod build
 obj/TestMod.o: src/dev/TestMod.cpp | obj
@@ -194,8 +244,8 @@ obj/TestMod.o: src/dev/TestMod.cpp | obj
 
 # Target for building DLLs for the new architecture
 bin/testmod.sfm: ${TEST_MOD_OBJ} | bin lib
-	${CC} -o "$@" ${TEST_MOD_OBJ} ${DLL_LDFLAGS}
+	${CC} -g -o "$@" ${NTERNALS_OBJ} ${FW_LDFLAGS}
 
 # Target for building the Spellforce framework
 bin/sfsf.asi: $(NTERNALS_OBJ) | bin lib
-	${CC} -o "$@" ${NTERNALS_OBJ} ${FW_LDFLAGS}
+	${CC} -g -Wl,--export-all-symbols -o "$@" ${NTERNALS_OBJ} ${FW_LDFLAGS}

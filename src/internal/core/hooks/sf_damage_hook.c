@@ -37,15 +37,10 @@ uint32_t __attribute__((no_caller_saved_registers,
        }
      */
 
-    bool check_spells_before_job = figureAPI.isFlagSet(figureToolbox->CGdFigure,
-                                                       dmg_target,
-                                                       F_CHECK_SPELLS_BEFORE_JOB);
-    bool figure_set_new_job = false;
+    bool check_spells_before_job = figureAPI.isFlagSet(figureToolbox->CGdFigure, dmg_target, F_CHECK_SPELLS_BEFORE_JOB);
     if (check_spells_before_job)
     {
-        uint16_t spell_job_start_node =
-            figureAPI.getSpellJobStartNode(figureToolbox->CGdFigure,
-                                           dmg_target);
+        uint16_t spell_job_start_node = figureAPI.getSpellJobStartNode(figureToolbox->CGdFigure, dmg_target);
         uint16_t current_list_size = 0;
 
         uint32_t ids_by_phase[COUNT][799];
@@ -67,17 +62,12 @@ uint32_t __attribute__((no_caller_saved_registers,
                                                              phase);
                 if (exists != NULL)
                 {
-                    /*char message[256];
-                       sprintf(message, "Found Spell Line ID: %d", spell_line_id);
-                       log_error(message);*/
                     ids_by_phase[phase][sizes_by_phase[phase]++] =
                         (spell_index << 0x10) | spell_line_id;
                     current_list_size++;
                 }
             }
-            spell_job_start_node =
-                toolboxAPI.getNextNode(figureToolbox->CGdDoubleLinkedList,
-                                       spell_job_start_node);
+            spell_job_start_node = toolboxAPI.getNextNode(figureToolbox->CGdDoubleLinkedList, spell_job_start_node);
         }
 
         for (int i = PRE; i < COUNT; ++i)
@@ -105,9 +95,7 @@ uint32_t __attribute__((no_caller_saved_registers,
         }
     }
 #if _DEBUG_
-    char message[256];
-    sprintf(message, "Dealing Damage: %d", damage_amount);
-    log_error(message);
+    log_error("Dealing Damage: %d", damage_amount);
 #endif
     return damage_amount;
 }

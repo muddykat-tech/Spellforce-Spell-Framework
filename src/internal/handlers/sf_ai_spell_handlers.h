@@ -170,3 +170,18 @@ uint32_t __thiscall torture_ai_handler(SF_CGdBattleDevelopment *_this,
                                        SF_Coord *cast_position,
                                        uint16_t spell_line,
                                        SF_CGdResourceSpell *spell_data);
+
+uint32_t __thiscall dominate_undead_ai_handler(SF_CGdBattleDevelopment *_this,
+                                               uint16_t target_index,
+                                               uint16_t spell_line,
+                                               SF_CGdResourceSpell *spell_data);
+
+uint32_t __thiscall dominate_animal_ai_handler(SF_CGdBattleDevelopment *_this,
+                                               uint16_t target_index,
+                                               uint16_t spell_line,
+                                               SF_CGdResourceSpell *spell_data);
+
+uint32_t __thiscall disenchant_ai_handler(SF_CGdBattleDevelopment *_this,
+                                          uint16_t target_index,
+                                          uint16_t spell_line,
+                                          SF_CGdResourceSpell *spell_data);

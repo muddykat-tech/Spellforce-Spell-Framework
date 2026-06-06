@@ -11,5 +11,6 @@
 #include "../handlers/sf_sub_effect_handlers.h"
 
 void initialize_vanilla_spells();
+void initialize_vanilla_buildings();
 
 #endif

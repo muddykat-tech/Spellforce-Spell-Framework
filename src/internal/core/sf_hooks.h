@@ -14,51 +14,38 @@
 
 extern SpellFunctions spellAPI;
 extern ToolboxFunctions toolboxAPI;
+extern BuildingFunctions buildingAPI;
 extern FigureFunctions figureAPI;
 extern IteratorFunctions iteratorAPI;
 extern RegistrationFunctions registrationAPI;
 extern EffectFunctions effectAPI;
 extern AiFunctions aiAPI;
+extern UiFunctions uiAPI;
+
+extern SFBuilding *__thiscall registerBuilding(uint8_t building_type);
+extern void __thiscall linkBuildingDoneHandler (SFBuilding *building, building_done_handler_ptr handler);
+extern void __thiscall linkBuildingJSON(SFBuilding *building, const char *building_json_name);
+extern void __thiscall linkBuildingEntryHandler (SFBuilding *building, building_entry_handler_ptr handler);
+extern void __thiscall applyBuildingTag(SFBuilding *spell, BuildingTag tag);
 
 extern SFSpell *__thiscall registerSpell(uint16_t spell_id);
 extern void __thiscall applySpellTag(SFSpell *spell, SpellTag tag);
-
 extern void __thiscall linkTypeHandler(SFSpell *spell, handler_ptr typeHandler);
-
-extern void __thiscall linkEffectHandler(SFSpell *spell,
-                                         uint16_t spell_effect_id,
-                                         handler_ptr effectHandler);
-
+extern void __thiscall linkEffectHandler(SFSpell *spell, uint16_t spell_effect_id, handler_ptr effectHandler);
 extern void __thiscall linkEndHandler(SFSpell *spell, handler_ptr endHandler);
+extern void __thiscall linkSubEffectHandler(SFSpell *spell, sub_effect_handler_ptr handler);
+extern void __thiscall linkRefreshHandler(SFSpell *spell, refresh_handler_ptr handler);
+extern void __thiscall linkDealDamageHandler(SFSpell *spell, damage_handler_ptr handler, SpellDamagePhase phase);
+extern void __thiscall linkOnHitHandler(SFSpell *spell, onhit_handler_ptr handler, OnHitPhase phase);
+extern void __thiscall linkSingleTargetAIHandler(SFSpell *spell, ai_single_handler_ptr handler);
+extern void __thiscall linkAOEAIHandler(SFSpell *spell, ai_aoe_handler_ptr handler);
+extern void __thiscall linkAvoidanceAIHandler(SFSpell *spell, ai_avoidance_handler_ptr handler);
+extern void __thiscall linkPhysRainHandler(SFSpell *spell, sub_effect_handler_ptr handler);
+extern void __thiscall linkPhysEffectHandler(SFSpell *spell, phys_effect_handler_ptr handler);
+extern void __thiscall linkEnchantChanceHandler(SFSpell *spell, enchant_handler_ptr handler);
 
-extern void __thiscall linkSubEffectHandler(SFSpell *spell,
-                                            sub_effect_handler_ptr handler);
-
-extern void __thiscall linkRefreshHandler(SFSpell *spell,
-                                          refresh_handler_ptr handler);
-
-extern void __thiscall linkDealDamageHandler(SFSpell *spell,
-                                             damage_handler_ptr handler,
-                                             SpellDamagePhase phase);
-
-extern void __thiscall linkOnHitHandler(SFSpell *spell,
-                                        onhit_handler_ptr handler,
-                                        OnHitPhase phase);
-
-extern void __thiscall linkSingleTargetAIHandler(SFSpell *spell,
-                                                 ai_single_handler_ptr handler);
-
-extern void __thiscall linkAOEAIHandler(SFSpell *spell,
-                                        ai_aoe_handler_ptr handler);
-
-extern void __thiscall linkAvoidanceAIHandler(SFSpell *spell,
-                                              ai_avoidance_handler_ptr handler);
-
-extern SFMod *createModInfo(const char *mod_id, const char *mod_version,
-                            const char *mod_author,
-                            const char *mod_description);
+extern SFMod *createModInfo(const char *mod_id, char *mod_version, const char *mod_author, const char *mod_description);
 
 void initialize_beta_hooks();
 void initialize_data_hooks();
-
 #endif

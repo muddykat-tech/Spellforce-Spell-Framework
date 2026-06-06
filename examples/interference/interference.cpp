@@ -1,5 +1,8 @@
 #include "../../src/api/sfsf.h"
 #include <windows.h>
+#include <vector>
+#include <algorithm>
+// we'd need vector and algorithm in order to designate AI priorities for Patronize vanilla spell
 
 // We declare macros for Spell Type and Spell Job of both spells
 // it is very unhandy to keep them in mind, so we just declare them here
@@ -12,13 +15,6 @@
 #define INTERFERENCE_LINE 0xf5
 #define INTERFERENCE_JOB 0xac
 
-// spell jobs are obtained with reverse-engineering
-// they can be checked at sf_spelleffect_registry.cpp within API internal code
-// https://github.com/muddykat-tech/Spellforce-Spell-Framework/blob/master/src/internal/registry/sf_spelleffect_registry.cpp
-
-#define PATRONIZE_JOB 0x6b // 107
-#define SHELTER_JOB 0x6f   // 111
-
 SpellforceSpellFramework *sfsf;
 SpellFunctions *spellAPI;
 ToolboxFunctions *toolboxAPI;
@@ -27,22 +23,22 @@ IteratorFunctions *iteratorAPI;
 RegistrationFunctions *registrationAPI;
 SFLog *logger;
 
-// we declare spell type handler for Interference
+
 void __thiscall interference_type_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
-    // we link the specific spell type with its own spell job
     _this->active_spell_list[spell_index].spell_job = INTERFERENCE_JOB;
-    // we ensure that a spell starting tick will be 0
     spellAPI->setXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 0);
 }
 
-// we declare spell end handler for Interference
-// this handler would work in case a spell wasn't finished correctly
+
 void __thiscall interference_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
+    spellAPI->figTryClrCHkSPlBfrJob2(_this, spell_index);
+    spellAPI->figClrChkSplBfrChkBattle(_this, spell_index, 0);
     spellAPI->removeDLLNode(_this, spell_index);    // we remove spell from the list of active spells affecting the target
     spellAPI->setEffectDone(_this, spell_index, 0); // we end a spell
 }
+
 
 // we are used to the fact that spell logic is implemented within the spell effect handler
 // however, interference is very special, its main logic (reducing incoming damage) will be trigged within Damage handler
@@ -51,9 +47,9 @@ void __thiscall interference_end_handler(SF_CGdSpell *_this, uint16_t spell_inde
 // then the game will proceed with applying the modified damage to the target's health as usual
 // if we don't modify the damage due to some reasons (for example, the spell doesn't absorb damage from ranged attacks), we still should return the initial value with the function
 // otherwise the damage will be lost
-
 uint16_t __thiscall interference_deal_damage_handler(SF_CGdFigureToolbox *_toolbox, uint16_t source, uint16_t target,
-                                                     uint16_t current_damage, uint16_t is_spell_damage, uint32_t is_ranged_damage, uint16_t spell_id)
+                                                     uint16_t current_damage, uint16_t is_spell_damage,
+                                                     uint32_t is_ranged_damage, uint16_t spell_id)
 {
 
     // _toolbox stands for the unit which is affected with our spell and got damaged with any means
@@ -62,56 +58,47 @@ uint16_t __thiscall interference_deal_damage_handler(SF_CGdFigureToolbox *_toolb
     // current_damage specifies the amount of damage
     // is_spell_damage and is_ranged_damage specify the damage origin
     // spell_id returns an ID of the spell which triggered the Damage handler
-
+    
     if (is_spell_damage)
-    // we check if the damage which trigged Damage handler comes from the spell
     {
-        // we load spell_data of Interference spell, spell_id stands for the ID of the spell which governs the Damage handler
         SF_CGdResourceSpell spell_data;
         spellAPI->getResourceSpellData(_toolbox->CGdResource, &spell_data, spell_id);
-
-        // we decrease damage by the percentage stated in spell parameters
-        current_damage += -(uint16_t)((current_damage * spell_data.params[1]) / 100);
+        // we decrease damage by the percentage stated in spell parameters and also make sure it doesn't get negative
+        uint16_t reduction = (current_damage * spell_data.params[1]) / 100;
+        (reduction > current_damage) ? (current_damage = 0) : (current_damage -= reduction);
         // we return the modified damage value and game engine uses the modified value as usual
         return current_damage;
     }
 
-    // the damage wasn't caused with another spell, we return its value unchanged
+    // the damage wasn't caused with another spell, we return damage unchanged
     return current_damage;
 }
 
 // we declare effect handler for the Interference
 // in this case effect handler will only govern the spell duration, and will remove the spell when the specified amount of time passes
 // the bulk of spell logic is implemented in damage handler above
-
 void __thiscall interference_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
+
     // we pull the pointer for this instance of spell
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
-
+    
     // we store index of the spellcaster, we won't need target index for this spell
     uint16_t source_index = _this->active_spell_list[spell_index].source.entity_index;
-
-    // bool check_spells_before_job = figureAPI->isFlagSet(figureToolbox->CGdFigure, source_index, F_CHECK_SPELLS_BEFORE_JOB);
-
-    // we get the current tick of the spell, should be 0 at the beginning, and 1 in the end
-    uint32_t current_tick = spellAPI->getXData(_this, spell_index, SPELL_TICK_COUNT_AUX);
-    // we increase amount of ticks passed by 1
-    spellAPI->addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1);
-
-    // we load the spell from GameData.cff in order to get tick_interval
-    SF_CGdResourceSpell spell_data;
-    spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
-
-    if (current_tick == 0)
+    // we increase spell tick by 1 and record the new value
+    // hence spell tick will be 1 at the start
+    uint32_t current_tick = spellAPI->addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1);
+    if (current_tick == 1)
     // spell start
     {
+        // we make the game launch refresh handler for the spell
+        // the refresh handler will check if another instance of the same spell exists over the target, and will decide whether new spell can be applied
         if (spellAPI->checkCanApply(_this, spell_index))
         {
-            // let's trigger refresh for interference or other vanilla spells which work in the same way
-            // the refresh handler will clear them from the target if either of them is currently affecting the target
+            // we load the spell from GameData.cff 
+            SF_CGdResourceSpell spell_data;
+            spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
 
-            // we declare structures to store relative position of visual effect
             SF_CGdTargetData relative_data;
             relative_data.position = {0, 0};
             relative_data.entity_type = 1;
@@ -123,39 +110,52 @@ void __thiscall interference_effect_handler(SF_CGdSpell *_this, uint16_t spell_i
             aux_data.partB = 0;
 
             // we apply the visual effect filling the area which we specified above
-            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 0x5, &aux_data);
+            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data,
+                                      _this->OpaqueClass->current_step, 0x5, &aux_data);
             // the parameter before the last stands for spell area, effects affecting single target usually have this parameter set to 0
             // but if we want to make the effect look cool, we could put the number above 0 and it will look like an AoE spell on activation
 
+            
             // we have to activate the flag F_CHECK_SPELLS_BEFORE_JOB in order to make it possible for Deal Damage handler to trigger when the damage is received
             _this->SF_CGdFigure->figures[source_index].flags |= F_CHECK_SPELLS_BEFORE_JOB;
-
             // we activate the flag F_CHECK_SPELLS_BEFORE_BATTLE for the sake of optimization
-            _this->active_spell_list[spell_index].flags |= 2;
-
-            // let's get spell duration from game data
-            uint16_t ticks_interval = spell_data.params[0];
-            // we disable the spell from being triggered for a specified number of internal game ticks, and after a specified in ticks_interval amount of time has passed, we may remove the spell
+            _this->active_spell_list[spell_index].flags |= SpellFlagKey::CHECK_SPELLS_BEFORE_JOB2;
+            
+            // we get spell duration from game data
+            uint32_t ticks_interval = spell_data.params[0];
+            // we disable the spell from being triggered for a specified number of internal game ticks, and after a specified in ticks_interval amount of time has passed, we can remove the spell
             _this->active_spell_list[spell_index].to_do_count = (uint16_t)((ticks_interval * 10) / 1000);
+            return;
         }
     }
-    else
-    // spell end, main spell logic is implemented with another handlerso we have only to clear flag which allowed triggering damage handler and stop the spell in this block
-    {
-        // we should clear the flags we raised during tick 0 for the sake of optimization
-        spellAPI->figTryClrCHkSPlBfrJob2(_this, spell_index);
-        spellAPI->figClrChkSplBfrChkBattle(_this, spell_index, 0);
-        spellAPI->setEffectDone(_this, spell_index, 0); // we end a spell
-    }
+
+<<<<<<< HEAD
+=======
+    // spell end, main spell logic is implemented with another handler, so we have only to clear flag which allowed triggering damage handler and stop the spell in this block
+    // we should clear the flags we raised during the tick 1 for the sake of optimization
+>>>>>>> 0eb79b3b663124ead8ee4e40c289baf96b71f3c6
+    spellAPI->figTryClrCHkSPlBfrJob2(_this, spell_index);
+    spellAPI->figClrChkSplBfrChkBattle(_this, spell_index, 0);
+    spellAPI->setEffectDone(_this, spell_index, 0);
 }
 
+
+<<<<<<< HEAD
+=======
 // removing the Patronize requires running a loop to clear the spell from all targets affected
 // because we remove the Patronize in different handlers (Spell Effect, Spell Refresh)
 // it's more convenient to pack it in a function and call this function whenever we want to remove the Patronize
+>>>>>>> 0eb79b3b663124ead8ee4e40c289baf96b71f3c6
 
 void ClearPatronizeInArea(SF_CGdSpell *_this, uint16_t spell_index)
 {
-    for (uint16_t target_index = 0; target_index <= _this->SF_CGdFigure->max_used; target_index++)
+    //indices start from 1(!)
+    for (uint16_t target_index = 1; target_index <= _this->SF_CGdFigure->max_used; target_index++)
+<<<<<<< HEAD
+    {
+        if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index, kGdSpellLineAbilityPatronize) &&
+            (figureAPI->getSpellJobStartNode(_this->SF_CGdFigure, target_index) != 0))
+=======
     // we run a loop through all figures in game and check whether they're affected with the Patronize
     // we can't use an iterator, because affected figures might move outside a specific radius around the spellcaster
     {
@@ -165,60 +165,149 @@ void ClearPatronizeInArea(SF_CGdSpell *_this, uint16_t spell_index)
         // we check whether this spell is actually present in the list of spells affecting the creature
 
         // however, we will remove only the specific instance of Patronize which we know by spell_index argument
-        // if the creature was under the Patronize from another source, that Patronize won't be removed
+        // if the creature was under the Patronize from another source, that Patronize won't be removed            
+>>>>>>> 0eb79b3b663124ead8ee4e40c289baf96b71f3c6
         {
             toolboxAPI->removeSpellFromList(_this->SF_CGdFigureToolBox, target_index, spell_index);
-
-            /*char aliveInfo[256];
-            sprintf(aliveInfo, "PATRONIZE WAS REMOVED FROM FIGURE %hd \n", target_index);
-            logger->logInfo(aliveInfo);*/
+            spellAPI->tryClearCheckSpellsBeforeJob(_this, spell_index, target_index);
         }
     }
-
-    // we also can finish the entire spell within this function, to avoid copy-pasting this block into all places which call the function
-    spellAPI->removeDLLNode(_this, spell_index);
-    spellAPI->setEffectDone(_this, spell_index, 0);
+<<<<<<< HEAD
 }
+
+typedef struct
+{
+    uint16_t figure_id;
+    uint16_t prio;
+} patronize_entry;
+
+uint16_t calculatePrio(SF_CGdSpell *_this, uint16_t figure_id)
+{
+=======
+}
+
+
+// we declare structure which will be used to govern targets priroty for Patronize
+typedef struct
+{
+    uint16_t figure_id;
+    uint16_t prio;
+} patronize_entry;
+
+// we calculate targets priority for Patronize spell
+// this function will be run for every figure caught in area of Patronize spell
+// this function will check how many enemies are around the figure in check, and move it in priority list respectively
+uint16_t calculatePrio(SF_CGdSpell *_this, uint16_t figure_id)
+{
+    // we obtain figure's coordinates
+    SF_Coord target_pos = _this->SF_CGdFigure->figures[figure_id].position;
+    uint16_t dx = 7;
+    uint16_t sec_prio = 0;
+    // in game engine every tile is surrouned by 8 tiles, we have to check for all of them
+    for (int i = 8; i> 0; i--)
+    {
+        //some serious bitfuckery
+        uint16_t near_x = *(uint16_t *)((uint32_t)&_this->SF_CGdWorld->unknown1[0].uknwn1 + dx) + target_pos.X;
+        uint16_t near_y = *(uint16_t *)((uint32_t)&_this->SF_CGdWorld->unknown1[0].uknwn2 + dx) + target_pos.Y;
+        // we check whether the terrain tile is passable, otherwise no sense in checking it
+        if (((*(uint8_t *)&_this->SF_CGdWorld->cells[near_y*0x400 + near_x].world_cell_flags) & 0x10) != 0)
+        {
+            // we get the target index of a figure occupying the surrounding tile
+            uint16_t sec_target = toolboxAPI->getFigureFromWorld(_this->SF_CGdWorldToolBox, near_x, near_y, 1);
+
+            // if there is a figure in a tile, we check whether the figure is hostile
+            if ((sec_target != 0)
+                && (toolboxAPI->figuresCheckHostile(_this->SF_CGdFigureToolBox, figure_id, sec_target)))
+            {
+                // we increase the priority by 1
+                sec_prio++;
+            }
+        }
+        dx += 7;
+    }
+    // if the friendly figure is melee, it needs Patronize more than ranged units, we double it's priority and add 1 to it
+    if (toolboxAPI->isUnitMelee(_this->SF_CGdFigureToolBox, figure_id))
+    {
+        sec_prio *= 2;
+        sec_prio +=1;
+    }
+    // we return total priroty for the figure
+    return sec_prio;
+}
+
 
 // the custom implementation of vanilla spell effect handler for the Patronize
 // it's necessary in order to make the custom refresh handler work
 // otherwise custom refresh handler gets ignored due to a bug in vanilla code
+>>>>>>> 0eb79b3b663124ead8ee4e40c289baf96b71f3c6
 
-// worth of noting, that the Patronize is also AoE spell similar to the Shieldwall from the previous example
-// however, the Patronize is made as as a single spell rather than as combination of two spells
+    SF_Coord target_pos = _this->SF_CGdFigure->figures[figure_id].position;
+    uint16_t dx = 7;
+    uint16_t sec_prio = 0;
+    for (int i = 8; i> 0; i--)
+    {
+        //some serious bitfuckery
+        uint16_t near_x = *(uint16_t *)((uint32_t)&_this->SF_CGdWorld->unknown1[0].uknwn1 + dx) + target_pos.X;
+        uint16_t near_y = *(uint16_t *)((uint32_t)&_this->SF_CGdWorld->unknown1[0].uknwn2 + dx) + target_pos.Y;
+        if (((*(uint8_t *)&_this->SF_CGdWorld->cells[near_y*0x400 + near_x].world_cell_flags) & 0x10) != 0)
+        {
+            uint16_t sec_target = toolboxAPI->getFigureFromWorld(_this->SF_CGdWorldToolBox, near_x, near_y, 1);
+
+            if ((sec_target != 0)
+                && (toolboxAPI->figuresCheckHostile(_this->SF_CGdFigureToolBox, figure_id, sec_target)))
+            {
+                sec_prio++;
+            }
+        }
+        dx += 7;
+    }
+    if (toolboxAPI->isUnitMelee(_this->SF_CGdFigureToolBox, figure_id))
+    {
+        sec_prio *= 2;
+        sec_prio +=1;
+    }
+    return sec_prio;
+}
 
 void __thiscall patronize_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
-    // we pull the pointer for this instance of spell
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
-
+<<<<<<< HEAD
+    uint16_t source_index = _this->active_spell_list[spell_index].source.entity_index;
+=======
     // we store index of the spellcaster, we won't need target index for this spell
     uint16_t source_index = _this->active_spell_list[spell_index].source.entity_index;
+    // we increase the current tick by 1 and get the new value
+>>>>>>> 0eb79b3b663124ead8ee4e40c289baf96b71f3c6
+    uint32_t current_tick = spellAPI->addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1);
 
-    // we get the current tick of the spell, should be 0 at the beginning, and 1 in the end
-    uint32_t current_tick = spellAPI->getXData(_this, spell_index, SPELL_TICK_COUNT_AUX);
-    // we increase amount of ticks passed by 1
-    spellAPI->addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1);
-
-    if (current_tick == 0)
+    if (current_tick == 1)
     {
-        // spell start
         if (spellAPI->checkCanApply(_this, spell_index))
         {
-
-            // we load the spell from GameData.cff in order to get tick_interval
+<<<<<<< HEAD
             SF_CGdResourceSpell spell_data;
             spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
 
-            // key for spell radius of Patronize is 2
-            // key for amount of figures affected is 3
+=======
+            // we load spell data
+            SF_CGdResourceSpell spell_data;
+            spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
 
+            // we pull spell parameters from GameData.cff
+>>>>>>> 0eb79b3b663124ead8ee4e40c289baf96b71f3c6
+            uint32_t ticks_interval = spell_data.params[0];
             uint16_t effect_radius = spell_data.params[2];
-            uint16_t figure_count = spell_data.params[3]; // the effect is automatically applied to the target, we don't need to check it within iterator
+            uint16_t figure_count = spell_data.params[3];
 
-            SF_Coord cast_center;
+            spell->flags |= SpellFlagKey::CHECK_SPELLS_BEFORE_JOB2;
+            _this->SF_CGdFigure->figures[source_index].flags |= F_CHECK_SPELLS_BEFORE_JOB;
+            // we make the spell last a specified amount of in-game ticks (not the same as spell ticks, crudely saying it's something akin to fps)
+            _this->active_spell_list[spell_index].to_do_count = (uint16_t)((ticks_interval * 10) / 1000);
+
             // we get XY coordinates of the spell center with API function
             // basically, we just center the spell around its spellcaster (source)
+            SF_Coord cast_center;
             figureAPI->getPosition(_this->SF_CGdFigure, &cast_center, source_index);
 
             // we declare structures to store relative position of visual effect
@@ -230,358 +319,319 @@ void __thiscall patronize_effect_handler(SF_CGdSpell *_this, uint16_t spell_inde
 
             SF_Rectangle hit_area;
 
-            // we get coordinates of area affected and record them as a squared circle
             spellAPI->getTargetsRectangle(_this, &hit_area, spell_index, spell_data.params[0], &cast_center);
 
-            // we apply the visual effect filling the area which we specified above
-            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitWorld, &unused, &relative_data, _this->OpaqueClass->current_step, 0x25, &hit_area);
+            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitWorld, &unused, &relative_data,
+                                      _this->OpaqueClass->current_step, 0x25, &hit_area);
 
             hit_area.partA = 0;
             hit_area.partB = 0;
-            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 0x96, &hit_area);
+            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data,
+                                      _this->OpaqueClass->current_step, 0x96, &hit_area);
 
             CGdFigureIterator figure_iterator;
             iteratorAPI->setupFigureIterator(&figure_iterator, _this);
             // we set iterator area as a circle of specific radius (defined in spell data) with the spellcaster being at its center
             iteratorAPI->iteratorSetArea(&figure_iterator, &cast_center, effect_radius);
 
-            uint16_t target_index = iteratorAPI->getNextFigure(&figure_iterator);
+            // let's use a vector to store potential targets and their priorities
+            std::vector<patronize_entry> targets;
 
-            // the Patronize is automatically added to a target on spell cast, we don't have to add it via iterator loop
-            // if the iterator picked the spellcaster as a the first target, let's get the next target
-            while (target_index == source_index)
+            // let's check all targets in iterator area 
+            for (uint16_t target_index = iteratorAPI->getNextFigure(&figure_iterator); target_index != 0;
+                 target_index = iteratorAPI->getNextFigure(&figure_iterator))
             {
-                target_index = iteratorAPI->getNextFigure(&figure_iterator);
-            }
-
-            // let's do the iterator loop until we exhaust spell uses or there are no valid targets in radius anymore
-            while (figure_count != 0 && target_index != 0)
-            {
-                // let's check whether the figure belongs to the spellcaster team, whether it's alive and whether it's targetable
-                if (((int16_t)(_this->SF_CGdFigure->figures[target_index].owner) == (int16_t)(_this->SF_CGdFigure->figures[source_index].owner)) &&
-                    (((uint8_t)(_this->SF_CGdFigure->figures[target_index].flags) & 0xa) == 0) &&
+                if (((int16_t)(_this->SF_CGdFigure->figures[target_index].owner) ==
+                     (int16_t)(_this->SF_CGdFigure->figures[source_index].owner)) &&
+                    (((uint8_t)(_this->SF_CGdFigure->figures[target_index].flags) & (IS_DEAD | RESESRVED_ONLY)) == 0) &&
                     (toolboxAPI->isTargetable(_this->SF_CGdFigureToolBox, target_index)))
-
-                    // we should pass target index to spell data, because otherwise refresh handler won't be able to access it
+                {
                     spell->target.entity_index = target_index;
 
-                // let's check whether the spell can be applied to a target
-                // or call for refresh it it's already present
-                if (spellAPI->checkCanApply(_this, spell_index))
-                // the refresh handler allowed to apply the spell to a target
-                {
-                    // we have to apply the visual effect to each target separately
-                    SF_CGdTargetData relative_data;
-                    relative_data.position = {0, 0};
-                    relative_data.entity_type = 1; // 1 stands for individual figure
+                    // we check whether the target doesn't have Patronize active already
+                    if (spellAPI->checkCanApply(_this, spell_index) && (source_index != target_index))
+                    {
 
-                    // entity_index must be set to correspond the target_index, otherwise the effect won't be persistent over a creature
-                    relative_data.entity_index = target_index; //
-                    uint32_t unused;
-
-                    SF_Rectangle aux_data;
-                    aux_data.partA = 0;
-                    aux_data.partB = 0;
-
-                    // because we don't pass 0 for duration (we pass 0x96 as in vanilla implementation), it will create lingering effect below the creature
-                    // so we will see it while the target is affected with the Patronize
-                    spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 0x96, &aux_data);
-
-                    // we extend the current spell to a target
-                    toolboxAPI->addSpellToFigure(_this->SF_CGdFigureToolBox, target_index, spell_index);
-
-                    // we decrease the spell uses amount by 1
-                    figure_count--;
-                    /*char aliveInfo[256];
-                    sprintf(aliveInfo, "Patronize added to target index: %hd \n", target_index);
-                    logger->logInfo(aliveInfo);*/
+                        // we declare temporary entity to store figure index and its priority value before adding the entity to the vector
+                        patronize_entry entry;
+                        entry.figure_id = target_index;
+                        // we calculate priority for the target
+                        entry.prio = calculatePrio(_this, target_index);
+                        // we record the target within the vector
+                        targets.push_back(entry);
+                    }
                 }
-                // we search for the next figure in radius
-                target_index = iteratorAPI->getNextFigure(&figure_iterator);
             }
 
-            // the loop has ended either because we exhausted all uses or all targets in radius
-            // let's dispose of figures iterator
-            iteratorAPI->disposeFigureIterator(figure_iterator);
+            // we dispose iterator after all targets in area were evaluated
+            iteratorAPI->disposeFigureIterator(&figure_iterator);
 
-            // let's get spell duration from game data, for Patronize key for spell duration is 0
-            uint16_t ticks_interval = spell_data.params[0];
+            // we sort the vector from highest priority to lowest
+            std::sort(targets.begin(), targets.end(), [](const patronize_entry& a, const patronize_entry& b)
+            {
+                return a.prio > b.prio;
+            });
 
-            // we disable the spell from being triggered for a specified number of internal game ticks, and after a specified in ticks_interval amount of time has passed, we may remove the spell
-            _this->active_spell_list[spell_index].to_do_count = (uint16_t)((ticks_interval * 10) / 1000);
-            logger->logInfo("PATRONIZE ACTIVATED");
+            // we apply spell to the targets with highest priority until there are no more valid targets or we've exceeded figures limit defined by spell parameters
+            for (int i = 0; ((i < targets.size()) && (figure_count > 0)); i++)
+            {
+                // we apply visual effect to every target
+                SF_CGdTargetData relative_data;
+                relative_data.position = {0, 0};
+                relative_data.entity_type = 1;         // 1 stands for individual figure
+                relative_data.entity_index = targets.at(i).figure_id;         //
+                uint32_t unused;
+
+                SF_Rectangle aux_data;
+                aux_data.partA = 0;
+                aux_data.partB = 0;
+
+                spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data,
+                                          _this->OpaqueClass->current_step, 0x96, &aux_data);
+                _this->SF_CGdFigure->figures[source_index].flags |= F_CHECK_SPELLS_BEFORE_JOB;
+
+                // we add a spell to each figure
+                toolboxAPI->addSpellToFigure(_this->SF_CGdFigureToolBox,  targets.at(i).figure_id, spell_index);
+                figure_count--;
+            }
+
         }
-        else
-        // the Patronize can't be applied to the spellcaster due to some reasons
-        // let's finish the spell to avoid it going for the tick 1
-        {
-            spellAPI->setEffectDone(_this, spell_index, 0);
-            logger->logInfo("PATRONIZE CAN'T BE APPLIED");
-        }
+        logger->logDebug(DEBUG_HIGH, "Patronize activated");
+        return;
     }
-    else
-    // spell end, main spell logic is implemented within another functions, let's just clear the spell from targets
-    {
-        // we call for function which will clear the spell from the spellcaster and all targets affected
-        // we pass the current spell spell_index to identify it and not mistake with any other instances of Patronize which might be present over nearest characters
-        ClearPatronizeInArea(_this, spell_index);
-        logger->logInfo("PATRONIZE FINISHED");
-    }
+    logger->logDebug(DEBUG_HIGH, "Patronize done");
+    // when there is a new tick, we clear spell from all targets affected
+    // we do it with a function implemented above 
+    ClearPatronizeInArea(_this, spell_index);
+    // after that we stop the spell
+    spellAPI->setEffectDone(_this, spell_index, 0);
 }
 
-// the custom implementation of vanilla spell effect handler for the Shelter
-// it's necessary in order to make the custom refresh handler work
-// otherwise custom refresh handler gets ignored due to a bug in vanilla code
 
+// we also have to manually re-implenet Shelter Effect handler in order to make it use custom refresh handler
 void __thiscall shelter_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
-    // we pull the pointer for this instance of spell
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
-
-    // we store index of the spellcaster, we won't need target index for this spell
     uint16_t source_index = _this->active_spell_list[spell_index].source.entity_index;
-
-    // we get the current tick of the spell, should be 0 at the beginning, and 1 in the end
-    uint32_t current_tick = spellAPI->getXData(_this, spell_index, SPELL_TICK_COUNT_AUX);
-
-    // we increase amount of ticks passed by 1
-    spellAPI->addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1);
-
-    if (current_tick == 0)
-    // spell start
+    uint32_t current_tick = spellAPI->addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1);
+    if (current_tick == 1)
     {
-        // let's check whether we can apply the shelter to a target
-        // whether we should refresh it
-        // and whether we should clear the instance of Patronize over a target
         if (spellAPI->checkCanApply(_this, spell_index))
         {
-            // the check returned TRUE, let's apply the spell and its visuals
-
-            // we load the spell from GameData.cff in order to get tick_interval
             SF_CGdResourceSpell spell_data;
             spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
 
-            // we declare structures to store relative position of visual effect
 
             SF_CGdTargetData relative_data;
             relative_data.position = {0, 0};
             relative_data.entity_type = 1;
-
-            // it's important to assign the source (target) index as an entity index for relative data
-            // otherwise the visual effect won't linger over a spellcaster for the spell duration
             relative_data.entity_index = source_index;
+
             uint32_t unused;
 
             SF_Rectangle aux_data;
             aux_data.partA = 0;
             aux_data.partB = 0;
 
-            // we apply the visual effect filling the area which we specified above
-            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 0x96, &aux_data);
+            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data,
+                                      _this->OpaqueClass->current_step, 0x96, &aux_data);
+            uint32_t ticks_interval = spell_data.params[0];
 
-            // let's get spell duration from game data
-            // shelter uses 0 for spell duration
-            uint16_t ticks_interval = spell_data.params[0];
-            // we disable the spell from being triggered for a specified number of internal game ticks, and after a specified in ticks_interval amount of time has passed, we may remove the spell
-            _this->active_spell_list[spell_index].to_do_count = (uint16_t)((ticks_interval * 10) / 1000);
-            logger->logInfo("SHELTER ACTIVATED");
+            spell->to_do_count = (uint16_t)((ticks_interval * 10) / 1000);
+            spell->flags |= SpellFlagKey::CHECK_SPELLS_BEFORE_JOB2;
+            _this->SF_CGdFigure->figures[source_index].flags |= F_CHECK_SPELLS_BEFORE_JOB;
+            logger->logDebug(DEBUG_HIGH, "SHELTER ACTIVATED");
         }
         else
         {
             // the Shelter can't be applied to the spellcaster being under the Interference
             // let's finish the spell to avoid it going for the tick 1
             spellAPI->setEffectDone(_this, spell_index, 0); // we end a spell
-            logger->logInfo("SHELTER CAN'T BE APPLIED");
+            logger->logDebug(DEBUG_HIGH, "SHELTER ACTIVATED");
         }
+        return;
     }
-    else
-    // spell stops, main spell logic is implemented within another functions, so let's just end the spell
+    if (figureAPI->isAlive(_this->SF_CGdFigure, source_index))
     {
-        spellAPI->setEffectDone(_this, spell_index, 0); // we end a spell
-        logger->logInfo("SHELTER FINISHED");
+        spellAPI->figTryClrCHkSPlBfrJob2(_this, spell_index);
     }
+    spellAPI->setEffectDone(_this, spell_index, 0);     // we end a spell
+    logger->logInfo("SHELTER FINISHED");
 }
 
-// we declare refresh handler for group of three spells: Interference, Patronize, Shelter
-// they provide the same effect, hence we have to prevent them from stacking
-// in the previous example we implemented that the mechanics according to which spell blocks the casting if it's already affecting the target
-// here we will remove already affecting spells and make the figure clear for applying new spell
-// the handler is the same for all three spells: custom one, and shelter and patronize from vanilla
 
-int __thiscall interference_patronize_shelter_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index) // we casted shieldwall group again before the previous expired
+// this is the common refresh handler for all 3 spells: Interference, Patronize, Shelter
+// the elder spell removes lesser spells when applied
+// the elder spells blocks lesser spells from being applied (e. g. target can't benefit from shelter if it's having interference currently)
+// the new instance of the same spell removes the older instance and refreshes spell duration
+// we use the same handler with switch-case construction because it's easier than making separate handlers with virtually the same logic
+int __thiscall interference_patronize_shelter_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
 
-    // except for patronize, the spell is cast on self, we can use the source index
-    // because patronize is AoE spell, we will have to use target indice, but we will access them directly via spell pointer
     uint16_t source_index = spell->source.entity_index;
 
-    // in hindsight, it will make more sense to implement three separate refresh handlers for each of spells we make
-    // however, vanilla spells generally use a single refresh handler for mutually exclusive spells, and we're aiming to replicate this
-    // let's just implement switcher to know which spell triggered the refresh handler now
-
-    uint8_t scenario = 0;
-
-    if (spell->spell_job == INTERFERENCE_JOB)
-        scenario = 1;
-
-    if (spell->spell_job == PATRONIZE_JOB)
-        scenario = 2;
-
-    if (spell->spell_job == SHELTER_JOB)
-        scenario = 3;
-
-    // below we'll check for which spells the target is currently affected with
-    // the general idea is to remove all spells which are lower in hierarchy
-    // or remove the previous instance of the spell itself to make the spell refreshable
-    // if we encounter the spell which is higher in hierarchy, we return 0, which means we can't apply the current spell
-    // if no higher spells were found, we return 1, which means the spell can be applied
-
-    if (scenario == 1)
-    // we run checks for interference spell
+    // we check which spell triggered the refresh handler
+    switch (spell->spell_job)
     {
-        if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, source_index, INTERFERENCE_LINE))
-        // the INTERFERENCE spell already exists on the target
+        // Interference logic
+        case INTERFERENCE_JOB:
         {
-            // here comes the magic
-            // we can get the spell index from the list of active spells affecting the target by knowing this spell's spell job id
-            // we pass spell_index given with the refresh handler as the last known spell index for this figure, but this value is insignificant (used for optimizing search purposes?)
-
-            uint16_t pruned_spell_index = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, source_index, INTERFERENCE_LINE, spell_index);
-
-            // the trick is getSpellIndexOfType would return 0 if the spell_index given to us with the refresh handler (current spell) corresponds to the spell index we found
-            // it prevents us from removing the spell which we're trying to add
-            // however, it's better to additionally check for whether new and old spell_indices don't match
-
-            // we finish the INTERFERENCE spell using its spell index
-            // we should remove the spell correctly, so we remove both Effect and DLLNode here
-
-            if (spell_index != pruned_spell_index && pruned_spell_index != 0)
+            // if target already has Interference effect active
+            if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, source_index, INTERFERENCE_LINE))
             {
+
+                // we get the spell index of Interference spell by its Spell Type 
+                // the function returns the first spell index of a spell with given Spell Type except from the specific spell index which we might pass to function
+                // this spell index is passed as last argument in getSpellIndexOfType() 
+                uint16_t pruned_spell_index = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, source_index,
+                                                                              INTERFERENCE_LINE, spell_index);
+                if (spell_index != pruned_spell_index && pruned_spell_index != 0)
+                {
+                    // we remove the older instance of a spell
+                    spellAPI->removeDLLNode(_this, pruned_spell_index);
+                    spellAPI->setEffectDone(_this, pruned_spell_index, 0);
+                    logger->logDebug(DEBUG_HIGH, "INTERFERENCE WAS REFRESHED");
+                }
+            }
+
+            // if there is a Shelter effect active, we get its spell index and clear it
+            if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, source_index, kGdSpellLineAbilityShelter))
+            {
+                uint16_t pruned_spell_index = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, source_index,
+                                                                              kGdSpellLineAbilityShelter, 0);
                 spellAPI->removeDLLNode(_this, pruned_spell_index);
                 spellAPI->setEffectDone(_this, pruned_spell_index, 0);
-                logger->logInfo("INTERFERENCE WAS REFRESHED");
+                logger->logDebug(DEBUG_HIGH, "SHELTER WAS OVERLAPPED WITH INTERFERENCE");
             }
-        }
 
-        if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, source_index, kGdSpellLineAbilityShelter))
-        // the SHELTER spell already exists on the target
-        // it must be cleared, because the Interference takes the precedence
-        {
-            uint16_t pruned_spell_index = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, source_index, kGdSpellLineAbilityShelter, 0);
-            spellAPI->removeDLLNode(_this, pruned_spell_index);
-            spellAPI->setEffectDone(_this, pruned_spell_index, 0);
-            logger->logInfo("SHELTER WAS OVERLAPPED WITH INTERFERENCE");
-        }
-
-        if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, source_index, kGdSpellLineAbilityPatronize))
-        // the PATRONIZE spell already exists on the target
-        // it must be cleared, because the Interference has the precedence over it
-        {
-            uint16_t pruned_spell_index = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, spell->target.entity_index, kGdSpellLineAbilityPatronize, 0);
-            ClearPatronizeInArea(_this, pruned_spell_index);
-            logger->logInfo("PATRONIZE WAS OVERLAPPED WITH INTERFERENCE");
-        }
-
-        // as you might notice, the Interference spell could never return 0
-        // it would remove vanilla spells from target, or the old instance of itself either
-        // but there are no conditions which might make the new instance of the Interference inapplicable
-        // this scenario of the refresh handler will always return 1
-        return 1;
-    }
-    else if (scenario == 2)
-    // we run checks for patronize spell
-    {
-        if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, spell->target.entity_index, INTERFERENCE_LINE))
-        // the INTERFERENCE spell already exists on the target
-        // it blocks the Patronize spell from being applied
-        {
-            logger->logInfo("CAN'T CAST PATRONIZE ON TARGET AFFECTED BY INTERFERENCE");
-            return 0;
-        }
-
-        if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, spell->target.entity_index, kGdSpellLineAbilityShelter))
-        // the SHELTER spell already exists on the target
-        // it blocks the Patronize spell from being applied
-        {
-            logger->logInfo("CAN'T CAST PATRONIZE ON TARGET AFFECTED BY SHELTER");
-            return 0;
-        }
-
-        if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, spell->target.entity_index, kGdSpellLineAbilityPatronize))
-        // the PATRONIZE spell already exists on the target
-        // we must remove the previous instance of the Patronize from the spellcaster and from the targets around it
-        {
-            uint16_t pruned_spell_index = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, spell->target.entity_index, kGdSpellLineAbilityPatronize, spell_index);
-            if (spell_index != pruned_spell_index && pruned_spell_index != 0)
-                // the Patronize was detected
-                // let's check whether we remove the spell from the source or from the secondary target
-                if (source_index == spell->target.entity_index)
-                // we update the spell over the source, and hence remove all secondary instances of this spell from other targets
-                {
-                    ClearPatronizeInArea(_this, pruned_spell_index);
-                    logger->logInfo("PATRONIZE WAS REFRESHED OVER THE SOURCE");
-                }
-                else
-                // we remove the secondary instance of the spell from specific target, but we don't terminate the spell and don't touch other targets
-                {
-                    toolboxAPI->removeSpellFromList(_this->SF_CGdFigureToolBox, spell->target.entity_index, spell_index);
-                    logger->logInfo("PATRONIZE WAS REFRESHED OVER THE TARGET");
-                }
-        }
-
-        // the Patronize wasn't interruped, we return true for 'checkCanApply'
-        return 1;
-    }
-    else if (scenario == 3)
-    // we run checks for shelter spell
-    {
-
-        if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, source_index, INTERFERENCE_LINE))
-        // the INTERFERENCE spell already exists on the target, it blocks the Shelter from being applied
-        {
-            logger->logInfo("CAN'T CAST SHELTER ON TARGET AFFECTED BY INTERFERENCE");
-            return 0;
-        }
-
-        if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, source_index, kGdSpellLineAbilityShelter))
-        // the SHELTER spell already exists on the target
-        // we must remove the previous instance in order to refresh the spell
-        {
-
-            uint16_t pruned_spell_index = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, source_index, kGdSpellLineAbilityShelter, spell_index);
-
-            if (spell_index != pruned_spell_index && pruned_spell_index != 0)
+            // if there is a Patronize effect active, we get its spell index and clear it
+            if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, source_index, kGdSpellLineAbilityPatronize))
             {
-                spellAPI->removeDLLNode(_this, pruned_spell_index);
-                spellAPI->setEffectDone(_this, pruned_spell_index, 0);
-                logger->logInfo("SHELTER WAS REFRESHED");
+                uint16_t pruned_spell_index = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox,
+                                                                              source_index,
+                                                                              kGdSpellLineAbilityPatronize, 0);
+                toolboxAPI->removeSpellFromList(_this->SF_CGdFigureToolBox, source_index, pruned_spell_index);
+                logger->logDebug(DEBUG_HIGH, "PATRONIZE WAS OVERLAPPED WITH INTERFERENCE");
             }
+            // we return 1 to stop the refresh handler working and to allow to apply other logic of Spell Effect handler to a target
+            return 1;
         }
 
-        if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, source_index, kGdSpellLineAbilityPatronize))
-        // the PATRONIZE spell already exists on the target
-        // it must be cleared, because the Shelter has the precedence over it
+        //Patronize logic
+        case kGdSpellJobAbilityPatronize:
         {
-            uint16_t pruned_spell_index = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, source_index, kGdSpellLineAbilityPatronize, 0);
-            ClearPatronizeInArea(_this, pruned_spell_index);
-            logger->logInfo("PATRONIZE WAS OVERLAPPED WITH SHELTER");
+            // Inteference effect active
+            if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, spell->target.entity_index, INTERFERENCE_LINE))
+
+            {
+                // we forbid applying Patronize to a target, because there is an Interference active already
+                // spellAPI->checkCanApply() returns false, and Spell Effect handler acts accordingly
+                logger->logDebug(DEBUG_HIGH, "CAN'T CAST PATRONIZE ON TARGET AFFECTED BY INTERFERENCE");
+                return 0;
+            }
+
+            // Shelter effect active
+            if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, spell->target.entity_index,
+                                         kGdSpellLineAbilityShelter))
+            {
+                // we forbid applying Patronize to a target, because there is a Shelter active already
+                // spellAPI->checkCanApply() returns false, and Spell Effect handler acts accordingly
+                logger->logDebug(DEBUG_HIGH, "CAN'T CAST PATRONIZE ON TARGET AFFECTED BY SHELTER");
+                return 0;
+            }
+
+            // Another Patronize effect active
+            if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, spell->target.entity_index,
+                                         kGdSpellLineAbilityPatronize))
+            {
+                // we get spell index of an older Patronize instance    
+                uint16_t pruned_spell_index = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox,
+                                                                              spell->target.entity_index,
+                                                                              kGdSpellLineAbilityPatronize,
+                                                                              spell_index);
+                // we stop older Patronize effect
+                if (spell_index != pruned_spell_index && pruned_spell_index != 0)
+                {
+                    if (source_index == spell->target.entity_index)
+                    {
+                        // if we're making Refresh Handler check for the original spellcaster, we also trigger function to remove Patronize effect from all its targets
+                        ClearPatronizeInArea(_this, pruned_spell_index);
+                        logger->logInfo("PATRONIZE WAS REFRESHED OVER THE SOURCE");
+                    }
+                    else
+                    {
+                        // if we're making Refresh Handler check for the figure being affected by someone's other spell, we simply remove older instance of Patronize from it
+                        toolboxAPI->removeSpellFromList(_this->SF_CGdFigureToolBox, spell->target.entity_index,
+                                                        spell_index);
+                        logger->logDebug(DEBUG_HIGH, "PATRONIZE WAS REFRESHED OVER THE TARGET");
+                    }
+                }
+            }
+            // we return true to allow applying new Patronize effect to a target
+            return 1;
         }
 
-        // nothing interrupted the new instance of the SHELTER from being applied
-        // we return 1 for 'checkCanApply'
-        return 1;
+        // Shelter logic
+        case kGdSpellJobAbilityShelter:
+        {
+            // Interference effect active
+            if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, source_index, INTERFERENCE_LINE))
+            {
+                // we forbid applying Shelter to a target, because there is an Interference active already
+                // spellAPI->checkCanApply() returns false, and Spell Effect handler acts accordingly
+                logger->logDebug(DEBUG_HIGH, "CAN'T CAST SHELTER ON TARGET AFFECTED BY INTERFERENCE");
+                return 0;
+            }
+
+            // Shelter effect active
+            if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, source_index, kGdSpellLineAbilityShelter))
+            {
+                // we remove older instance of Shelter
+                uint16_t pruned_spell_index = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, source_index,
+                                                                              kGdSpellLineAbilityShelter, spell_index);
+
+                if (spell_index != pruned_spell_index && pruned_spell_index != 0)
+                {
+                    spellAPI->removeDLLNode(_this, pruned_spell_index);
+                    spellAPI->setEffectDone(_this, pruned_spell_index, 0);
+                    logger->logDebug(DEBUG_HIGH, "SHELTER WAS REFRESHED");
+                }
+            }
+
+            // Patronize effect active
+            if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, source_index, kGdSpellLineAbilityPatronize))
+            {
+                // we remove Patronize from target, because it's overlapped with Shelter
+                uint16_t pruned_spell_index = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, source_index,
+                                                                              kGdSpellLineAbilityPatronize, 0);
+                // we also remove Patronize from all targets its might been affecting
+                ClearPatronizeInArea(_this, pruned_spell_index);
+                logger->logDebug(DEBUG_HIGH, "PATRONIZE WAS OVERLAPPED WITH SHELTER");
+            }
+            // we return true allowing Shelter to be applied to a target
+            return 1;
+        }
+
+        // just in case we didn't get any of options above, we break switch-case cycle
+        default:
+        {
+            break;
+        }
     }
 
     return 1; // adding this line for safety, most likely it won't be ever triggered
 }
 
-uint32_t __thiscall interference_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line, SF_CGdResourceSpell *spell_data)
+// adding AI handler to interference to make units actively use the spell
+// AI handlers will be explained in more details in later chapters
+uint32_t __thiscall interference_ai_handler(SF_CGdBattleDevelopment *_this, uint16_t target_index, uint16_t spell_line,
+                                            SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 1;
     if ((_this->battleData.current_figure != target_index) ||
         ((_this->battleData.enemy_figures.entityCount == 0) &&
-        (_this->battleData.building_not_ally.entityCount == 0)))
+         (_this->battleData.building_not_ally.entityCount == 0)))
     {
         rank = 0;
     }
@@ -610,7 +660,8 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     registrationAPI->linkTypeHandler(interference_spell, &interference_type_handler);
     registrationAPI->linkEffectHandler(interference_spell, INTERFERENCE_JOB, &interference_effect_handler);
     registrationAPI->linkRefreshHandler(interference_spell, &interference_patronize_shelter_refresh_handler);
-    registrationAPI->linkDealDamageHandler(interference_spell, &interference_deal_damage_handler, SpellDamagePhase::PRE);
+    registrationAPI->linkDealDamageHandler(interference_spell, &interference_deal_damage_handler,
+                                           SpellDamagePhase::PRE);
     registrationAPI->linkSingleTargetAIHandler(interference_spell, &interference_ai_handler);
     // SpellDamagePhase controls when damage is registered
     // there are three possible phases: PRE, default, post
@@ -630,11 +681,11 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     // it's worth of mentioning that the custom refresh handler will replace the existing vanilla handler, they won't work simultaneously
 
     SFSpell *patronize_spell = registrationAPI->registerSpell(kGdSpellLineAbilityPatronize);
-    registrationAPI->linkEffectHandler(patronize_spell, PATRONIZE_JOB, &patronize_effect_handler);
+    registrationAPI->linkEffectHandler(patronize_spell, kGdSpellJobAbilityPatronize, &patronize_effect_handler);
     registrationAPI->linkRefreshHandler(patronize_spell, &interference_patronize_shelter_refresh_handler);
 
     SFSpell *shelter_spell = registrationAPI->registerSpell(kGdSpellLineAbilityShelter);
-    registrationAPI->linkEffectHandler(shelter_spell, SHELTER_JOB, &shelter_effect_handler);
+    registrationAPI->linkEffectHandler(shelter_spell, kGdSpellJobAbilityShelter, &shelter_effect_handler);
     registrationAPI->linkRefreshHandler(shelter_spell, &interference_patronize_shelter_refresh_handler);
 }
 
@@ -644,7 +695,8 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
  ***/
 extern "C" __declspec(dllexport) SFMod *RegisterMod(SpellforceSpellFramework *framework)
 {
-    return framework->createModInfo("Interference mod", "1.0.0", "S'Baad", "This mod provides an example of an Interference which negates 20% of incoming damage from all spells.");
+    return framework->createModInfo("Interference mod", "1.2.0", "S'Baad, Un'Schtalch",
+                                    "This mod provides an example of an Interference which negates 20% of incoming damage from all spells.");
 }
 
 // Required to be present by, not required for any functionality
@@ -652,21 +704,21 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 {
     switch (fdwReason)
     {
-    case DLL_PROCESS_ATTACH:
-        /* Code path executed when DLL is loaded into a process's address space. */
-        break;
+        case DLL_PROCESS_ATTACH:
+            /* Code path executed when DLL is loaded into a process's address space. */
+            break;
 
-    case DLL_THREAD_ATTACH:
-        /* Code path executed when a new thread is created within the process. */
-        break;
+        case DLL_THREAD_ATTACH:
+            /* Code path executed when a new thread is created within the process. */
+            break;
 
-    case DLL_THREAD_DETACH:
-        /* Code path executed when a thread within the process has exited *cleanly*. */
-        break;
+        case DLL_THREAD_DETACH:
+            /* Code path executed when a thread within the process has exited *cleanly*. */
+            break;
 
-    case DLL_PROCESS_DETACH:
-        /* Code path executed when DLL is unloaded from a process's address space. */
-        break;
+        case DLL_PROCESS_DETACH:
+            /* Code path executed when DLL is unloaded from a process's address space. */
+            break;
     }
 
     return TRUE;

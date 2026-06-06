@@ -1,7 +1,7 @@
 #pragma once
 #include <stdint.h>
 #include <stdbool.h>
-#include "sf_general_structures.h"
+#include "./structures/sf_iterator_structures.h"
 
 typedef struct __attribute__((packed))
 {
@@ -41,6 +41,13 @@ typedef struct __attribute__((packed))
     CGdTileIterator_data data;
 } CGdBuildingIterator;
 
+typedef struct __attribute__((packed))
+{
+    uint32_t btable_ptr;
+    CGdTileIterator_data data;
+} CGdObjectIterator;
+
+
 // Declare the function pointers for IteratorFunctions group
 DECLARE_FUNCTION(void, figureIteratorInit, CGdFigureIterator *iterator,
                  uint16_t x_start, uint16_t y_start, uint16_t x_end,
@@ -60,8 +67,15 @@ DECLARE_FUNCTION(void, buildingIteratorInit, CGdBuildingIterator *iterator,
 DECLARE_FUNCTION(void, buildingIteratorSetPointers,
                  CGdBuildingIterator *iterator, void *SF_CGdBuilding,
                  void *AutoClass22, void *CGdWorld);
-
 DECLARE_FUNCTION(uint16_t, getNextBuilding, CGdBuildingIterator *_this);
+
+DECLARE_FUNCTION(void, objectIteratorInit, CGdObjectIterator *iterator,
+                 uint16_t x_start, uint16_t y_start, uint16_t x_end,
+                 uint16_t y_end);
+DECLARE_FUNCTION(void, objectIteratorSetPointers,
+                 CGdObjectIterator *iterator, void *SF_CGdBuilding,
+                 void *AutoClass22, void *CGdWorld);
+DECLARE_FUNCTION(uint16_t, getNextObject, CGdObjectIterator *_this);
 
 /**
  *
@@ -79,4 +93,7 @@ typedef struct
     getNextBuilding_ptr getNextBuilding;
     buildingIteratorInit_ptr buildingIteratorInit;
     buildingIteratorSetPointers_ptr buildingIteratorSetPointers;
+    getNextObject_ptr getNextObject;
+    objectIteratorInit_ptr objectIteratorInit;
+    objectIteratorSetPointers_ptr objectIteratorSetPointers;
 } IteratorFunctions;

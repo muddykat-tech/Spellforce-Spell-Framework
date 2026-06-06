@@ -39,11 +39,12 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: sfsf-api-headers
-        path: api.zip
+        path: api.zip # Fixed from api-files.zip to match the zip target name
 
     - name: Create GitHub Release
       uses: softprops/action-gh-release@v2
       with:
+        # Dynamically falls back to a temporary tag format if no actual Git tag exists
         tag_name: ${{ github.ref_type == 'tag' && github.ref_name || format('draft-{0}-run-{1}', github.ref_name, github.run_number) }}
         name: "Draft Release (${{ github.ref_name }})"
         files: |

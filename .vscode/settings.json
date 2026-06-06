@@ -109,7 +109,14 @@
         "sf_ai_single_target_registry.h": "c",
         "sf_ai_avoidance_registry.h": "c",
         "sf_utility_hooks.h": "c",
-        "sf_onhit_registry.h": "c"
+        "sf_onhit_registry.h": "c",
+<<<<<<< HEAD
+        "text_encoding": "c",
+        "sf_ai_structures.h": "c",
+        "sf_spell_structures.h": "c"
+=======
+        "sf_vanilla_fix_hook.h": "c"
+>>>>>>> hotfix
     },
     "C_Cpp.errorSquiggles": "disabled",
     "makefile.makePath": "mingw32-make",
@@ -137,4 +144,6 @@
     "[cpp]": {
         "editor.defaultFormatter": "zachflower.uncrustify"
     },
+    "editor.indentSize": "tabSize",
+    "editor.tabSize": 4
 }

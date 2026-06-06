@@ -11,12 +11,17 @@
 #include "sf_toolbox_functions.h"
 #include "sf_registration_functions.h"
 #include "sf_ai_functions.h"
-
+#include "sf_ui_functions.h"
+#include "sf_building_functions.h"
 #include <stdint.h>
 
+#define SPELLFRAMEWORK_VERSION_MAJOR 4
+#define SPELLFRAMEWORK_VERSION_MINOR 0
+#define SPELLFRAMEWORK_VERSION_PATCH 0
+#define CONFIG_FILE "sfsf.ini"
 typedef void (*initializeModule_ptr)(void *);
 typedef SFMod *(*registerMod_ptr)(void *);
-typedef SFMod *(*createModInfo_ptr)(const char *mod_id, const char *mod_version,
+typedef SFMod *(*createModInfo_ptr)(const char *mod_id, char *mod_version,
                                     const char *mod_author,
                                     const char *mod_description);
 
@@ -45,6 +50,13 @@ struct SpellforceSpellFramework
      * Provides utilities for managing and manipulating spells within the framework.
      */
     SpellFunctions *spellAPI;
+
+    /**
+     * @brief Interface for UI related functions.
+     * Provides functions for manipulating user interface, use with caution this can cause
+     * crashes if used without testing.
+     */
+    UiFunctions *uiAPI;
 
     /**
      * @brief Interface for toolbox-related functions.
@@ -91,6 +103,8 @@ struct SpellforceSpellFramework
      * Enables logging of information, warnings, and errors to assist in debugging and monitoring.
      */
     SFLog *logAPI;
+
+    BuildingFunctions *buildingAPI;
 };
 
 

@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['target_0',['target',['../struct_auto_class24.html#ae1db8ef2092fa1e0593e321167929e47',1,'AutoClass24::target'],['../struct_s_f___gd_spell.html#a6f606b39af217ca9d1bfe462d4d9c51f',1,'SF_GdSpell::target'],['../struct_s_f___gd_effect.html#a92dd9c8e059e222ace6b50ed98ac61fd',1,'SF_GdEffect::target']]],
-  ['task_1',['task',['../struct_auto_class24.html#a024972801ecb5052b07bc5c2a23240a0',1,'AutoClass24']]],
+  ['target_0',['target',['../struct_auto_class24.html#ae1db8ef2092fa1e0593e321167929e47',1,'FigureJobData::target'],['../struct_s_f___gd_spell.html#a6f606b39af217ca9d1bfe462d4d9c51f',1,'SF_GdSpell::target'],['../struct_s_f___gd_effect.html#a92dd9c8e059e222ace6b50ed98ac61fd',1,'SF_GdEffect::target']]],
+  ['task_1',['task',['../struct_auto_class24.html#a024972801ecb5052b07bc5c2a23240a0',1,'FigureJobData']]],
   ['tile_5ftype_2',['tile_type',['../struct_s_f__world__unkn__2.html#ab3f7e020a538ae940bd8ed7cba55d129',1,'SF_world_unkn_2']]],
   ['title_5flabel_3',['title_label',['../struct_s_f_s_f___modlist_struct.html#a176769ff34656c9a902fc6bb2bc06afc',1,'SFSF_ModlistStruct']]],
   ['to_5fdo_5fcount_4',['to_do_count',['../struct_gd_figure.html#a05b25c03e6bbc3b48a04f055261f2b34',1,'GdFigure::to_do_count'],['../struct_s_f___gd_spell.html#a58d2d45cfbd41a86bbd5d40682f33bb0',1,'SF_GdSpell::to_do_count']]],

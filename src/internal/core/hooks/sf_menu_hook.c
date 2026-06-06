@@ -8,6 +8,7 @@
  */
 
 #include "../sf_wrappers.h"
+#include "../sf_ui_wrappers.h"
 #include "sf_menu_hook.h"
 #include "../sf_hooks.h"
 #include "../sf_modloader.h"
@@ -18,12 +19,13 @@
 #include <stdio.h>
 #include <string.h>
 
+
 static menu_label_ptr s_initialize_menu_label;
 static initialize_menu_container_ptr s_initialize_menu_container;
 static original_menu_func_ptr s_menu_func;
 static construct_default_sf_string_ptr s_construct_default_sf_string;
 static message_box_ptr s_show_message_box;
-static menu_label_set_data_ptr s_menu_label_set_color;
+
 
 cuiVideoSequence_constructor_ptr cuiVideoSequence_constructor;
 CMnuScreen_attach_control_ptr CMnuScreen_attach_control;
@@ -32,6 +34,8 @@ container_add_control_ptr g_container_add_control;
 uint32_t g_menu_return_addr;
 uint32_t g_ui_hook_fix_addr;
 uint32_t g_ui_hook_fix_addr2;
+uint32_t g_sf_enchant_addr;
+uint32_t g_sf_enchant_addr2;
 new_operator_ptr g_new_operator;
 menu_label_constructor_ptr g_menu_label_constructor;
 set_label_flags_ptr g_set_label_flags;
@@ -65,35 +69,31 @@ fun_009a1fd0_ptr fun_009a1fd0;
 fun_006f8c06_ptr fun_006f8c06;
 fun_00910de0_ptr fun_00910de0;
 
+
 void initialize_menu_data_hooks()
 {
-    // Retrieve function pointers using the Memory Address of Intercepted Function
-    // These addresses are found using a Reverse Engineering program called Ghidra
-
     s_initialize_menu_label = (menu_label_ptr)(ASI::AddrOf(0x51a180));
-    s_initialize_menu_container =
-        (initialize_menu_container_ptr)(ASI::AddrOf(0x505780));
-    s_construct_default_sf_string =
-        (construct_default_sf_string_ptr)(ASI::AddrOf(0x383900));
+    s_initialize_menu_container = (initialize_menu_container_ptr)(ASI::AddrOf(0x505780));
+    s_construct_default_sf_string = (construct_default_sf_string_ptr)(ASI::AddrOf(0x383900));
     s_menu_func = (original_menu_func_ptr)(ASI::AddrOf(0x197b10));
-    s_menu_label_set_color = (menu_label_set_data_ptr)(ASI::AddrOf(0x530330));
     s_show_message_box = (message_box_ptr)(ASI::AddrOf(0x198660));
 
     g_set_label_flags = (set_label_flags_ptr)(ASI::AddrOf(0x52f1d0));
-    g_menu_label_set_string =
-        (menu_label_set_string_ptr)(ASI::AddrOf(0x52fab0));
+    g_menu_label_set_string = (menu_label_set_string_ptr)(ASI::AddrOf(0x52fab0));
     g_menu_return_addr = (ASI::AddrOf(0x182799));
     g_ui_hook_fix_addr = (ASI::AddrOf(0x5D119E));
     g_ui_hook_fix_addr2 = (ASI::AddrOf(0x5d0a7e));
+
+    g_sf_enchant_addr = (ASI::AddrOf(0x5d0bbd));
+    g_sf_enchant_addr2 = (ASI::AddrOf(0x5d12e7));
+
     g_new_operator = (new_operator_ptr)(ASI::AddrOf(0x675A9D));
-    g_menu_label_constructor =
-        (menu_label_constructor_ptr)(ASI::AddrOf(0x51a180));
+    g_menu_label_constructor = (menu_label_constructor_ptr)(ASI::AddrOf(0x51a180));
     g_init_menu_element = (mnu_label_init_data_ptr)(ASI::AddrOf(0x52cfe0));
     g_get_smth_fonts = (get_smth_fonts_ptr)(ASI::AddrOf(0x5357b0));
     g_menu_label_set_font = (menu_label_set_font_ptr)(ASI::AddrOf(0x530e00));
     g_get_font = (get_font_ptr)(ASI::AddrOf(0x535180));
-    g_container_add_control =
-        (container_add_control_ptr)(ASI::AddrOf(0x506f30));
+    g_container_add_control = (container_add_control_ptr)(ASI::AddrOf(0x506f30));
 
     f_create_menu_option = (create_option_ptr)(ASI::AddrOf(0x61CF80));
 
@@ -121,68 +121,198 @@ void initialize_menu_data_hooks()
     vfun164 = (vfun164_ptr)(ASI::AddrOf(0x50F8B0));
     vfun41 = (vfun41_ptr)(ASI::AddrOf(0x510d70));
 
-    getSpellLineIsTargetSelf =
-        (getSpellLineIsTargetSelf_ptr)(ASI::AddrOf(0x26e410));
+    getSpellLineIsTargetSelf = (getSpellLineIsTargetSelf_ptr)(ASI::AddrOf(0x26e410));
 
-    cuiVideoSequence_constructor =
-        (cuiVideoSequence_constructor_ptr)(ASI::AddrOf(0x618980));
-
-    CMnuScreen_attach_control =
-        (CMnuScreen_attach_control_ptr)(ASI::AddrOf(0x507240));
+    cuiVideoSequence_constructor = (cuiVideoSequence_constructor_ptr)(ASI::AddrOf(0x618980));
+    CMnuScreen_attach_control = (CMnuScreen_attach_control_ptr)(ASI::AddrOf(0x507240));
 }
 
+CMnuSmpButton *show_mod_list_button;
+CMnuSmpButton *open_campaign_screen;
+CMnuContainer *custom_campaign_screen;
+
 SFSF_ModlistStruct mod_struct;
-void __attribute__((no_caller_saved_registers,
-                    thiscall)) sf_menu_hook(uint32_t _CAppMenu)
+CMnuLabel *sfsf_version_label;
+CMnuLabel *campaign_title_label;
+
+void __attribute__((no_caller_saved_registers, thiscall))
+sf_menu_hook(uint32_t _CAppMenu)
 {
     log_info("Starting Menu Hook");
-    // String to display in the new label we're attaching to the menu
+
     char sfsf_info[256];
-    sprintf(sfsf_info, "Spell Framework %s\n%d Mod(s) Loaded with %d Error(s)",
-            g_framework_mod->mod_version, g_mod_count, g_error_count);
-    // Manually move the pointer in order to access the CMNuContainer, We'll need to annotate the CAppMenu Structure more to
-    // Switch to a more convential method.
-    uint32_t CAppMenu_data = *(uint32_t *)(_CAppMenu + 0x4);
-    uint32_t container_hack_ptr = *(uint32_t *)(_CAppMenu + 0x58);
-    CMnuContainer *container_hack = (CMnuContainer *)container_hack_ptr;
+    snprintf(sfsf_info, sizeof(sfsf_info),
+             "Spell Framework %s\n%d Mod(s) Loaded with %d Error(s)",
+             g_framework_mod->mod_version, g_mod_count, g_error_count);
 
-    CMnuLabel *sfsf_version_label;
-    attach_new_label(sfsf_version_label, container_hack, sfsf_info, 6, 10, 729,
-                     strlen(sfsf_info) * 4, 100);
-    char sfsf_test_button_default[256];
-    char sfsf_test_button_pressed[256];
-    char sfsf_test_button_disabled[256];
-    char sfsf_test_button_highlight[256];
-    char sfsf_test_button_label[256];
+    CMnuContainer *container = *(CMnuContainer **)(_CAppMenu + 0x58);
 
-    sprintf(sfsf_test_button_default, "ui_mainmenu_button_default.msh");
-    sprintf(sfsf_test_button_pressed, "ui_mainmenu_button_pressed.msh");
-    sprintf(sfsf_test_button_highlight, "");
-    sprintf(sfsf_test_button_disabled, "ui_mainmenu_button_disabled.msh");
-    sprintf(sfsf_test_button_label, "SHOW MOD LIST");
+    uiAPI.attachLabel(sfsf_version_label, container, sfsf_info,
+                      6, 10, 729, strlen(sfsf_info) * 4, 100);
 
-    // Initialize struct members
+    char button_default[32]     = "ui_mainmenu_button_default.msh";
+    char button_pressed[32]     = "ui_mainmenu_button_pressed.msh";
+    char button_disabled[32]    = "ui_mainmenu_button_disabled.msh";
+    char button_highlight[32]   = "";
+    char button_label[32]       = "SHOW MOD LIST";
+
     mod_struct.toggle = 0;
     mod_struct.index = 0;
 
     log_info("Adding Mod List Button");
-    int button_index = 15;
-    attach_new_button(container_hack, sfsf_test_button_default,
-                      sfsf_test_button_pressed, sfsf_test_button_highlight,
-                      sfsf_test_button_disabled, sfsf_test_button_label, 7, 822,
-                      705, 192, 36, button_index,
-                      (uint32_t)&show_mod_list_callback);
 
-    // Call original menu function to show the menu
-    // char vid_loc[256];
-    // sprintf(vid_loc, "videos\\sfsf");
-    // attachVideo((CAppMenu*)_CAppMenu, container_hack, vid_loc);
+    const int BUTTON_INDEX = 15;
+    const int BUTTON_X = 822;
+    const int BUTTON_Y = 705;
+    const int BUTTON_WIDTH = 192;
+    const int BUTTON_HEIGHT = 36;
+    const int BUTTON_FONT_INDEX = 7;
 
+    show_mod_list_button = uiAPI.attachNewButton(container,
+                                                 button_default,
+                                                 button_pressed,
+                                                 button_highlight,
+                                                 button_disabled,
+                                                 button_label,
+                                                 BUTTON_FONT_INDEX,
+                                                 BUTTON_X,
+                                                 BUTTON_Y,
+                                                 BUTTON_WIDTH,
+                                                 BUTTON_HEIGHT,
+                                                 BUTTON_INDEX,
+                                                 (uint32_t)&show_mod_list);
+
+
+    /*  char campaign_label[32]       = "Custom Campaign";
+       open_campaign_screen = uiAPI.attachNewButton(container, button_default,
+                                                   button_pressed,
+                                                   button_highlight,
+                                                   button_disabled,
+                                                   campaign_label,
+                                                   BUTTON_FONT_INDEX,
+                                                   BUTTON_X,
+                                                   32,
+                                                   BUTTON_WIDTH,
+                                                   BUTTON_HEIGHT,
+                                                   16,
+                                                   (uint32_t)&show_campaign_screen);
+     */
+    log_info ("CAppMenu addr %x", _CAppMenu);
     s_menu_func(_CAppMenu);
 }
 
-bool hasThisAuraRunning(SF_CGdFigureToolbox *_this, uint16_t aura_spell_id,
-                        uint16_t figure_id)
+bool does_campaign_screen_exist = false;
+bool is_campaign_screen_visible = false;
+void __thiscall show_campaign_screen(CMnuSmpButton *_this)
+{
+    log_info("Called Campaign Screen");
+    CMnuContainer *parent = (CMnuContainer *) _this->CMnuBase_data.param_2_callback;
+    if(!does_campaign_screen_exist)
+    {
+        log_info("Called Campaign Screen 1");
+        is_campaign_screen_visible = true;
+        custom_campaign_screen = uiAPI.createContainer(
+            0, 0, 1024, 768,
+            "ui_bgr_landscape_bg.msb",
+            "", 0.99f
+            );
+
+        log_info("Called Campaign Screen 2");
+        CMnuContainer *custom_campaign_container = uiAPI.createContainer(
+            11,6,1008,757,
+            "ui_bgr_pregame_border_transparency.msb",
+            "ui_bgr_pregame_border.msb", 0.5f
+            );
+
+        log_info("Called Campaign Screen 3");
+        CMnuContainer *campaign_list = uiAPI.createContainer(
+            59, 50, 443, 619,
+            "ui_bgr_pregame_border_left_transparency.msb",
+            "ui_bgr_pregame_border_left.msb", 0.5f
+            );
+
+        log_info("Called Campaign Screen 4");
+        CMnuContainer *campaign_list_right = uiAPI.createContainer(
+            502, 50, 443, 619,
+            "ui_bgr_pregame_border_right_transparency.msb",
+            "ui_bgr_pregame_border_right.msb", 0.5f
+            );
+
+        log_info("Called Campaign Screen ATTACH Containers");
+        g_container_add_control(parent, (CMnuBase *)custom_campaign_screen, '\x01', '\x01', 0);
+        log_info("Called Campaign Screen ATTACH Containers 2");
+        g_container_add_control(custom_campaign_screen, (CMnuBase *)custom_campaign_container, '\x01', '\x01', 0);
+        log_info("Called Campaign Screen ATTACH Containers 3");
+        g_container_add_control(custom_campaign_container, (CMnuBase *)campaign_list, '\x01', '\x01', 0);
+        log_info("Called Campaign Screen ATTACH Containers 3");
+        g_container_add_control(custom_campaign_container, (CMnuBase *)campaign_list_right, '\x01', '\x01', 0);
+
+        log_info("Called Campaign Screen Close Btn Setup");
+        char close_btn_default[128] = "ui_btn_nav_back_default.msh";
+        char close_btn_pressed[128] = "ui_btn_nav_back_pressed.msh";
+        char close_btn_disabled[128] = "ui_btn_nav_back_disabled.msh";
+        char close_btn_load[1] = "";
+        char close_btn_label[1] = "";
+
+        log_info("Called Campaign Screen Close Btn Attach");
+        uiAPI.attachNewButton(
+            custom_campaign_screen,
+            close_btn_default,
+            close_btn_pressed,
+            close_btn_load,
+            close_btn_disabled,
+            close_btn_label,
+            7,
+            52,
+            678,
+            48,
+            48,
+            2,
+            (uint32_t) &close_campaign_callback
+            );
+
+        log_info("Called Campaign Screen Label Setup");
+        char campaign_title[32] = "Custom Campaigns";
+
+        log_info("Called Campaign Screen Label Attach");
+        campaign_title_label = uiAPI.attachLabel(nullptr, custom_campaign_container, campaign_title, 6, 468, 16, 128,
+                                                 16);
+
+        log_info("Called Campaign Screen Menu ID set");
+        uiAPI.setMenuID(campaign_title_label, 0x6);
+
+        log_info("Called Campaign Screen Label Set Colour 1");
+        uiAPI.setLabelColour(campaign_title_label, 0.85, 0.64, 0.12, '\0');
+
+        log_info("Called Campaign Screen Label Set Colour 2");
+        uiAPI.setLabelColour(campaign_title_label, 0.85, 0.64, 0.12, '\x01');
+
+        log_info("Called Campaign Screen Check Condition ");
+        if(!campaign_title_label)
+        {
+            log_error("Unable to create Campaign Menu, Campaign List Container is NULL");
+            return;
+        }
+
+        log_info("Called Campaign Screen Complete");
+        does_campaign_screen_exist = true;
+    }
+    else
+    {
+        log_info("Called Campaign Screen Toggle ");
+        is_campaign_screen_visible = !is_campaign_screen_visible;
+        uiAPI.setContainerVisible(custom_campaign_screen, is_campaign_screen_visible, 0);
+    }
+}
+
+void __fastcall close_campaign_callback(CMnuSmpButton *button, int32_t *cui_menu_ptr_maybe)
+{
+    CMnuContainer *campaign_screen = (CMnuContainer *) button->CMnuBase_data.param_2_callback;
+    uiAPI.setContainerVisible(campaign_screen, false, false);
+    is_campaign_screen_visible = false;
+}
+
+bool hasThisAuraRunning(SF_CGdFigureToolbox *_this, uint16_t aura_spell_id, uint16_t figure_id)
 {
     if (figureAPI.isAlive(_this->CGdFigure, figure_id))
     {
@@ -192,17 +322,13 @@ bool hasThisAuraRunning(SF_CGdFigureToolbox *_this, uint16_t aura_spell_id,
                                                               figure_id);
             while (node_id != 0)
             {
-                uint16_t spell_index =
-                    toolboxAPI.getSpellIndexFromDLL(_this->CGdDoubleLinkedList,
-                                                    node_id);
-                uint16_t spell_id = spellAPI.getSpellID(_this->CGdSpell,
-                                                        spell_index);
+                uint16_t spell_index = toolboxAPI.getSpellIndexFromDLL(_this->CGdDoubleLinkedList, node_id);
+                uint16_t spell_id = spellAPI.getSpellID(_this->CGdSpell, spell_index);
                 if (spell_id == aura_spell_id)
                 {
                     return 1;
                 }
-                node_id = toolboxAPI.getNextNode(_this->CGdDoubleLinkedList,
-                                                 node_id);
+                node_id = toolboxAPI.getNextNode(_this->CGdDoubleLinkedList, node_id);
             }
         }
     }
@@ -230,32 +356,27 @@ void __attribute__((thiscall)) sf_click_vertical_button(SF_CUiMain *_this,
         data.entity_type = entity_type;
         data.position.X = 0;
         data.position.Y = 0;
-        uint32_t uVar3 = fun_00a2ald0(&ac113,
-                                      _this->CUiMain_data.CGdControllerClient);
+        uint32_t uVar3 = fun_00a2ald0(&ac113, _this->CUiMain_data.CGdControllerClient);
         fun_006a0140(_this->CUiMain_data.CGdControllerClient, uVar3, &data, 0,
                      0);
         if (ac113.first != 0)
         {
-            fun_009a2790(&ac113, ac113.first,
-                         (uint32_t)ac113.post_last - (uint32_t)ac113.first >>
-                         2);
+            fun_009a2790(&ac113, ac113.first, ((uint32_t)ac113.post_last - (uint32_t)ac113.first) >> 2);
             return;
         }
     }
     if ((actionID != 0) && (actionID < 10000))
     {
-        if (spellAPI.hasSpellTag(actionID, SpellTag::AURA_SPELL))
+        if (spellAPI.hasSpellTag(actionID, SpellTag::AURA_SPELL) ||
+            spellAPI.hasSpellTag(actionID, SpellTag::SIEGE_AURA_SPELL))
         {
-            if (hasThisAuraRunning(_this->CUiMain_data.CGdFigureToolBox,
-                                   subActionID, figure_id))
+            if (hasThisAuraRunning(_this->CUiMain_data.CGdFigureToolBox, subActionID, figure_id))
             {
-                fun_0069f8d0((_this->CUiMain_data.CGdControllerClient),
-                             figure_id);
+                fun_0069f8d0((_this->CUiMain_data.CGdControllerClient),figure_id);
                 return;
             }
         }
-        CGdFigureTask task =
-            _this->CUiMain_data.CGdFigure->figures[figure_id].ac_1.task;
+        CGdFigureTask task = (CGdFigureTask) _this->CUiMain_data.CGdFigure->figures[figure_id].current_job.task;
         SF_CGdTargetData data;
         data.entity_index = target_id;
         data.entity_type = entity_type;
@@ -264,9 +385,7 @@ void __attribute__((thiscall)) sf_click_vertical_button(SF_CUiMain *_this,
         uint32_t some_flag = 0;
         if (task == TASK_MAINCHAR)
         {
-            some_flag =
-                (uint32_t)(*(uint32_t *)&(_this->CUiMain_data.unkn5[0x2A0]) ==
-                           2);
+            some_flag = (uint32_t)(*(uint32_t *)&(_this->CUiMain_data.unkn5[0x2A0]) == 2);
         }
         fun_0069fb90(_this->CUiMain_data.CGdControllerClient, figure_id,
                      element->unknown_flag, element->unknown_config_param,
@@ -333,13 +452,12 @@ void __attribute__((thiscall)) sf_click_horizontal_button(SF_CUiMain *_this,
     data.position.X = 0;
     data.position.Y = 0;
 
-    if (!spellAPI.hasSpellTag(spell_data.spell_line_id, SpellTag::AURA_SPELL))
+    if ((!spellAPI.hasSpellTag(spell_data.spell_line_id, SpellTag::AURA_SPELL)) &&
+        (!spellAPI.hasSpellTag(spell_data.spell_line_id, SpellTag::SIEGE_AURA_SPELL)))
     {
-        if (!getSpellLineIsTargetSelf(_this->CUiMain_data.CGdResource,
-                                      spell_data.spell_line_id))
+        if (!getSpellLineIsTargetSelf(_this->CUiMain_data.CGdResource, spell_data.spell_line_id))
         {
-            uint_list_node *node = (uint_list_node *)
-                                   fun_009a0750(_this->CUiMain_data.CUiGame);
+            uint_list_node *node = (uint_list_node *) fun_009a0750(_this->CUiMain_data.CUiGame);
             fun_009de190(node, param1);
             fun_0099f610(_this->CUiMain_data.CUiGame, param2->actionType_id,
                          param2->actionSubtype_id, param2->unknown_flag,
@@ -348,10 +466,8 @@ void __attribute__((thiscall)) sf_click_horizontal_button(SF_CUiMain *_this,
         }
         if (spell_data.cast_type2 == 5)
         {
-            data.position.X =
-                _this->CUiMain_data.CGdFigure->figures[figure_id].position.X;
-            data.position.Y =
-                _this->CUiMain_data.CGdFigure->figures[figure_id].position.Y;
+            data.position.X = _this->CUiMain_data.CGdFigure->figures[figure_id].position.X;
+            data.position.Y = _this->CUiMain_data.CGdFigure->figures[figure_id].position.Y;
             data.entity_type = 5;
         }
         else
@@ -359,8 +475,7 @@ void __attribute__((thiscall)) sf_click_horizontal_button(SF_CUiMain *_this,
             data.entity_type = 1;
             data.entity_index = figure_id;
         }
-        uint_list_node *node = (uint_list_node *)
-                               fun_009a0750(_this->CUiMain_data.CUiGame);
+        uint_list_node *node = (uint_list_node *) fun_009a0750(_this->CUiMain_data.CUiGame);
         fun_009de190(node, param1);
     }
     else

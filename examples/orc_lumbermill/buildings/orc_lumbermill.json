@@ -1,0 +1,70 @@
+{
+  "building_required": 0,
+  "can_enter": true,
+  "center_x": 0,
+  "center_y": -700,
+  "collision_count": 1,
+  "collisions": [
+    {
+      "points": [
+        {
+          "x": -56,
+          "y": -482
+        },
+        {
+          "x": 41,
+          "y": -586
+        },
+        {
+          "x": 238,
+          "y": -578
+        },
+        {
+          "x": 226,
+          "y": -193
+        },
+        {
+          "x": 420,
+          "y": -199
+        },
+        {
+          "x": 617,
+          "y": -75
+        },
+        {
+          "x": 614,
+          "y": 314
+        },
+        {
+          "x": 530,
+          "y": 312
+        },
+        {
+          "x": 527,
+          "y": 191
+        },
+        {
+          "x": -25,
+          "y": 191
+        }
+      ],
+      "shadow": false
+    }
+  ],
+  "description_id": 0,
+  "flags": 1,
+  "health": 100,
+  "id": 35,
+  "name_id": 11873,
+  "race": 2,
+  "resources": {
+    "list": [
+      {
+        "amount": 140,
+        "type": "wood"
+      }
+    ],
+    "number": 1
+  },
+  "slot_count": 1
+}

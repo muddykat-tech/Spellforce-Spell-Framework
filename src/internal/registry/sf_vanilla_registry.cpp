@@ -5,10 +5,625 @@
 #include "../handlers/sf_ai_spell_handlers.h"
 #include "../handlers/sf_ai_avoidance_handlers.h"
 #include "../handlers/sf_ai_aoe_handlers.h"
+#include "../handlers/sf_building_done_handlers.h"
+#include "../handlers/sf_worker_building_entry_handlers.h"
+#include "../handlers/sf_phys_effect_handlers.h"
+
+
+
+void initialize_vanilla_buildings()
+{
+    uint8_t default_handler_list[96] = { 0x12, 0x13, 0x19, 0x1e, 0x28, 0x2d, 0x38, 0x39, 0x48,
+                                         0x51, 0x62, 0x68, 0x6a, 0x6b, 0x6c, 0x6d, 0x6e, 0x6f, 0x70,
+                                         0x71, 0x72, 0x73, 0x74, 0x75, 0x76, 0x77, 0x79, 0x7a, 0x7d, 0x7e, 0x7f, 0x80,
+                                         0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87, 0x88, 0x8a, 0x8b, 0x8c, 0x8d, 0x8e,
+                                         0x8f, 0x90, 0x91, 0x94, 0x96, 0x98, 0x99, 0x9a, 0x9b, 0x9c, 0x9d, 0x9e, 0x9f,
+                                         0xa2, 0xab, 0xad, 0xae, 0xaf, 0xb0, 0xb1, 0xb3, 0xb4, 0xb5, 0xb6, 0xb7, 0xb8,
+                                         0xb9, 0xba, 0xbb, 0xbc, 0xbd, 0xbe, 0xbf, 0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0xc5,
+                                         0xc6, 0xc7, 0xc8, 0xc9, 0xca, 0xcb, 0xcc, 0xcd, 0xce, 0xcf, 0xd0};
+
+    uint8_t hq_list[18] = {0x01, 0x02, 0x03, 0x14, 0x15, 0x16, 0x29, 0x2a, 0x2b, 0x3a, 0x3b, 0x3c, 0x49, 0x4a, 0x4c,
+                           0x55, 0x56, 0x57};
+
+    uint8_t hunter_list[5] = {0x09, 0x1d, 0x1f, 0x40, 0x50};
+
+    uint8_t miner_list[6] = {0x0e, 0x31, 0x33, 0x43, 0x59, 0x5f};
+
+    for (int i = 0; i < 5; i++)
+    {
+        SFBuilding *building = registrationAPI.registerBuilding(hunter_list[i]);
+        registrationAPI.linkBuildingDoneHandler(building, &default_done_handler);
+        registrationAPI.linkBuildingEntryHandler(building, &hunter_entry_handler);
+        registrationAPI.applyBuildingTag(building, BuildingTag::HUNTER_BUILDING);
+        registrationAPI.applyBuildingTag(building, BuildingTag::HABITABLE_BUILDING);
+        if (hunter_list[i] == 0x1f)
+        {
+            registrationAPI.applyBuildingTag(building, BuildingTag::MASTER_BUILDING);
+
+        }
+    }
+
+    for (int i = 0; i < 6; i++)
+    {
+        SFBuilding *building = registrationAPI.registerBuilding(miner_list[i]);
+        registrationAPI.linkBuildingDoneHandler(building, &default_done_handler);
+        registrationAPI.linkBuildingEntryHandler(building, &miner_entry_handler);
+        registrationAPI.applyBuildingTag(building, BuildingTag::MINER_BUILDING);
+        registrationAPI.applyBuildingTag(building, BuildingTag::HABITABLE_BUILDING);
+        if ((miner_list[i] == 0x33) || (miner_list[i] == 0x59))
+        {
+            registrationAPI.applyBuildingTag(building, BuildingTag::MOONSILVER_BUILDING);
+        }
+    }
+
+    for (int i = 0; i < 18; i++)
+    {
+        SFBuilding *building = registrationAPI.registerBuilding(hq_list[i]);
+        registrationAPI.linkBuildingDoneHandler(building, &default_done_handler);
+        registrationAPI.linkBuildingEntryHandler(building, &hq_entry_handler);
+        registrationAPI.applyBuildingTag(building, BuildingTag::HQ_BUILDING);
+        if ( i / 3  == 0)
+        {
+            building->race = 1;
+        }
+        if (i / 3  == 1)
+        {
+            building->race = 3;
+        }
+        if (i / 3 == 2)
+        {
+            building->race = 2;
+        }
+        if (i / 3 == 3)
+        {
+            building->race = 5;
+        }
+        if (i / 3 == 4)
+        {
+            building->race = 4;
+        }
+        if (i / 3 == 5)
+        {
+            building->race = 6;
+        }
+    }
+
+    for (int i = 0; i < 96; i++)
+    {
+        SFBuilding *building = registrationAPI.registerBuilding(default_handler_list[i]);
+        registrationAPI.linkBuildingDoneHandler(building, &default_done_handler);
+    }
+
+    SFBuilding *human_fisher = registrationAPI.registerBuilding(0x0a);
+    registrationAPI.linkBuildingDoneHandler(human_fisher, &default_done_handler);
+    registrationAPI.linkBuildingEntryHandler(human_fisher, &fisher_entry_handler);
+    registrationAPI.applyBuildingTag(human_fisher, BuildingTag::FISHER_BUILDING);
+    registrationAPI.applyBuildingTag(human_fisher, BuildingTag::HABITABLE_BUILDING);
+    human_fisher->race = 1;
+
+    SFBuilding *human_master_fisher = registrationAPI.registerBuilding(0x0b);
+    registrationAPI.linkBuildingDoneHandler(human_master_fisher, &default_done_handler);
+    registrationAPI.linkBuildingEntryHandler(human_master_fisher, &fisher_entry_handler);
+    registrationAPI.applyBuildingTag(human_master_fisher, BuildingTag::FISHER_BUILDING);
+    registrationAPI.applyBuildingTag(human_master_fisher, BuildingTag::MASTER_BUILDING);
+    registrationAPI.applyBuildingTag(human_master_fisher, BuildingTag::HABITABLE_BUILDING);
+    human_master_fisher->race = 1;
+
+    SFBuilding *orc_fisher = registrationAPI.registerBuilding(0x41);
+    registrationAPI.linkBuildingDoneHandler(orc_fisher, &default_done_handler);
+    registrationAPI.linkBuildingEntryHandler(orc_fisher, &fisher_entry_handler);
+    registrationAPI.applyBuildingTag(orc_fisher, BuildingTag::FISHER_BUILDING);
+    registrationAPI.applyBuildingTag(orc_fisher, BuildingTag::HABITABLE_BUILDING);
+    orc_fisher->race = 5;
+
+    SFBuilding *human_shrine = registrationAPI.registerBuilding(0x10);
+    registrationAPI.linkBuildingDoneHandler(human_shrine, &default_done_handler);
+    registrationAPI.linkBuildingEntryHandler(human_shrine, &shrine_entry_handler);
+    registrationAPI.applyBuildingTag(human_shrine, BuildingTag::SHRINE_BUILDING);
+    registrationAPI.applyBuildingTag(human_shrine, BuildingTag::HABITABLE_BUILDING);
+    human_shrine->race = 1;
+
+    SFBuilding *elf_shrine = registrationAPI.registerBuilding(0x1b);
+    registrationAPI.linkBuildingDoneHandler(elf_shrine, &default_done_handler);
+    registrationAPI.linkBuildingEntryHandler(elf_shrine, &shrine_entry_handler);
+    registrationAPI.applyBuildingTag(elf_shrine, BuildingTag::SHRINE_BUILDING);
+    registrationAPI.applyBuildingTag(elf_shrine, BuildingTag::HABITABLE_BUILDING);
+    elf_shrine->race = 3;
+
+    SFBuilding *orc_shrine = registrationAPI.registerBuilding(0x45);
+    registrationAPI.linkBuildingDoneHandler(orc_shrine, &default_done_handler);
+    registrationAPI.linkBuildingEntryHandler(orc_shrine, &shrine_entry_handler);
+    registrationAPI.applyBuildingTag(orc_shrine, BuildingTag::SHRINE_BUILDING);
+    registrationAPI.applyBuildingTag(orc_shrine, BuildingTag::HABITABLE_BUILDING);
+    orc_shrine->race = 5;
+
+    SFBuilding *norcaine_shrine = registrationAPI.registerBuilding(0x63);
+    registrationAPI.linkBuildingDoneHandler(norcaine_shrine, &default_done_handler);
+    registrationAPI.linkBuildingEntryHandler(norcaine_shrine, &shrine_entry_handler);
+    registrationAPI.applyBuildingTag(norcaine_shrine, BuildingTag::SHRINE_BUILDING);
+    registrationAPI.applyBuildingTag(norcaine_shrine, BuildingTag::HABITABLE_BUILDING);
+    norcaine_shrine->race = 6;
+
+    SFBuilding *elf_gatherer = registrationAPI.registerBuilding(0x21);
+    registrationAPI.linkBuildingDoneHandler(elf_gatherer, &default_done_handler);
+    registrationAPI.linkBuildingEntryHandler(elf_gatherer, &gatherer_entry_handler);
+    registrationAPI.applyBuildingTag(elf_gatherer, BuildingTag::GATHERER_BUILDING);
+    registrationAPI.applyBuildingTag(elf_gatherer, BuildingTag::HABITABLE_BUILDING);
+    elf_gatherer->race = 3;
+
+    SFBuilding *troll_scavenger = registrationAPI.registerBuilding(0x52);
+    registrationAPI.linkBuildingDoneHandler(troll_scavenger, &default_done_handler);
+    registrationAPI.linkBuildingEntryHandler(troll_scavenger, &scavenger_entry_handler);
+    registrationAPI.applyBuildingTag(troll_scavenger, BuildingTag::SCAVENGER_BUILDING);
+    registrationAPI.applyBuildingTag(troll_scavenger, BuildingTag::HABITABLE_BUILDING);
+    troll_scavenger->race = 4;
+
+    SFBuilding *human_woodcutter = registrationAPI.registerBuilding(0x04);
+    registrationAPI.linkBuildingDoneHandler(human_woodcutter, &multiworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(human_woodcutter, &woodcutter_entry_handler);
+    registrationAPI.applyBuildingTag(human_woodcutter, BuildingTag::WOODCUTTER_BUILDING);
+    registrationAPI.applyBuildingTag(human_woodcutter, BuildingTag::HABITABLE_BUILDING);
+    human_woodcutter->race = 1;
+
+    SFBuilding *human_quarry = registrationAPI.registerBuilding(0x07);
+    registrationAPI.linkBuildingDoneHandler(human_quarry, &multiworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(human_quarry, &quarry_entry_handler);
+    registrationAPI.applyBuildingTag(human_quarry, BuildingTag::QUARRY_BUILDING);
+    registrationAPI.applyBuildingTag(human_quarry, BuildingTag::HABITABLE_BUILDING);
+    human_quarry->race = 1;
+
+    SFBuilding *human_farm = registrationAPI.registerBuilding(0x0c);
+    registrationAPI.linkBuildingDoneHandler(human_farm, &multiworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(human_farm, &farmer_entry_handler);
+    registrationAPI.applyBuildingTag(human_farm, BuildingTag::FARM_BUILDING);
+    registrationAPI.applyBuildingTag(human_farm, BuildingTag::HABITABLE_BUILDING);
+    human_farm->race = 1;
+
+    SFBuilding *elf_forester = registrationAPI.registerBuilding(0x17);
+    registrationAPI.linkBuildingDoneHandler(elf_forester, &multiworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(elf_forester, &forester_entry_handler);
+    registrationAPI.applyBuildingTag(elf_forester, BuildingTag::FORESTER_BUILDING);
+    registrationAPI.applyBuildingTag(elf_forester, BuildingTag::HABITABLE_BUILDING);
+    elf_forester->race = 3;
+
+    SFBuilding *elf_woodcutter_master = registrationAPI.registerBuilding(0x18);
+    registrationAPI.linkBuildingDoneHandler(elf_woodcutter_master, &multiworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(elf_woodcutter_master, &woodcutter_entry_handler);
+    registrationAPI.applyBuildingTag(elf_woodcutter_master, BuildingTag::WOODCUTTER_BUILDING);
+    registrationAPI.applyBuildingTag(elf_woodcutter_master, BuildingTag::MASTER_BUILDING);
+    registrationAPI.applyBuildingTag(elf_woodcutter_master, BuildingTag::HABITABLE_BUILDING);
+    elf_woodcutter_master->race = 3;
+
+    SFBuilding *elf_woodcutter = registrationAPI.registerBuilding(0x1c);
+    registrationAPI.linkBuildingDoneHandler(elf_woodcutter, &multiworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(elf_woodcutter, &woodcutter_entry_handler);
+    registrationAPI.applyBuildingTag(elf_woodcutter, BuildingTag::WOODCUTTER_BUILDING);
+    registrationAPI.applyBuildingTag(elf_woodcutter, BuildingTag::HABITABLE_BUILDING);
+    elf_woodcutter->race = 3;
+
+    SFBuilding *dwarf_quarry = registrationAPI.registerBuilding(0x2c);
+    registrationAPI.linkBuildingDoneHandler(dwarf_quarry, &multiworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(dwarf_quarry, &quarry_entry_handler);
+    registrationAPI.applyBuildingTag(dwarf_quarry, BuildingTag::QUARRY_BUILDING);
+    registrationAPI.applyBuildingTag(dwarf_quarry, BuildingTag::HABITABLE_BUILDING);
+    dwarf_quarry->race = 2;
+
+    SFBuilding *orc_woodcutter = registrationAPI.registerBuilding(0x3d);
+    registrationAPI.linkBuildingDoneHandler(orc_woodcutter, &multiworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(orc_woodcutter, &woodcutter_entry_handler);
+    registrationAPI.applyBuildingTag(orc_woodcutter, BuildingTag::WOODCUTTER_BUILDING);
+    registrationAPI.applyBuildingTag(orc_woodcutter, BuildingTag::HABITABLE_BUILDING);
+    orc_woodcutter->race = 5;
+
+    SFBuilding *troll_woodcutter = registrationAPI.registerBuilding(0x4d);
+    registrationAPI.linkBuildingDoneHandler(troll_woodcutter, &multiworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(troll_woodcutter, &woodcutter_entry_handler);
+    registrationAPI.applyBuildingTag(troll_woodcutter, BuildingTag::WOODCUTTER_BUILDING);
+    registrationAPI.applyBuildingTag(troll_woodcutter, BuildingTag::HABITABLE_BUILDING);
+    troll_woodcutter->race = 4;
+
+    SFBuilding *troll_quarry = registrationAPI.registerBuilding(0x4e);
+    registrationAPI.linkBuildingDoneHandler(troll_quarry, &multiworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(troll_quarry, &quarry_entry_handler);
+    registrationAPI.applyBuildingTag(troll_quarry, BuildingTag::QUARRY_BUILDING);
+    registrationAPI.applyBuildingTag(troll_quarry, BuildingTag::HABITABLE_BUILDING);
+    troll_quarry->race = 4;
+
+    SFBuilding *norcaine_quarry = registrationAPI.registerBuilding(0x58);
+    registrationAPI.linkBuildingDoneHandler(norcaine_quarry, &multiworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(norcaine_quarry, &quarry_entry_handler);
+    registrationAPI.applyBuildingTag(norcaine_quarry, BuildingTag::QUARRY_BUILDING);
+    registrationAPI.applyBuildingTag(norcaine_quarry, BuildingTag::HABITABLE_BUILDING);
+    norcaine_quarry->race = 6;
+
+    SFBuilding *norcaine_farm = registrationAPI.registerBuilding(0x5c);
+    registrationAPI.linkBuildingDoneHandler(norcaine_farm, &multiworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(norcaine_farm, &farmer_entry_handler);
+    registrationAPI.applyBuildingTag(norcaine_farm, BuildingTag::FARM_BUILDING);
+    registrationAPI.applyBuildingTag(norcaine_farm, BuildingTag::HABITABLE_BUILDING);
+    norcaine_farm->race = 6;
+
+
+    SFBuilding *human_sawmill = registrationAPI.registerBuilding(0x05);
+    registrationAPI.linkBuildingDoneHandler(human_sawmill, &singleworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(human_sawmill, &sawmill_entry_handler);
+    registrationAPI.applyBuildingTag(human_sawmill, BuildingTag::SAWMILL_BUILDING);
+    registrationAPI.applyBuildingTag(human_sawmill, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(human_sawmill, BuildingTag::HABITABLE_SINGLE_BUILDING);
+    human_sawmill->race = 1;
+
+    SFBuilding *human_foodstore = registrationAPI.registerBuilding(0x08);
+    registrationAPI.linkBuildingDoneHandler(human_foodstore, &singleworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(human_foodstore, &foodstore_entry_handler);
+    registrationAPI.applyBuildingTag(human_foodstore, BuildingTag::FOODSTORE_BUILDING);
+    registrationAPI.applyBuildingTag(human_foodstore, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(human_foodstore, BuildingTag::HABITABLE_SINGLE_BUILDING);
+    human_foodstore->race = 1;
+
+    SFBuilding *human_smelter = registrationAPI.registerBuilding(0x0f);
+    registrationAPI.linkBuildingDoneHandler(human_smelter, &singleworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(human_smelter, &smelter_entry_handler);
+    registrationAPI.applyBuildingTag(human_smelter, BuildingTag::SMELTER_BUILDING);
+    registrationAPI.applyBuildingTag(human_smelter, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(human_smelter, BuildingTag::HABITABLE_SINGLE_BUILDING);
+    human_smelter->race = 1;
+
+    SFBuilding *elf_food_store = registrationAPI.registerBuilding(0x1a);
+    registrationAPI.linkBuildingDoneHandler(elf_food_store, &singleworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(elf_food_store, &foodstore_entry_handler);
+    registrationAPI.applyBuildingTag(elf_food_store, BuildingTag::FOODSTORE_BUILDING);
+    registrationAPI.applyBuildingTag(elf_food_store, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(elf_food_store, BuildingTag::HABITABLE_SINGLE_BUILDING);
+    elf_food_store->race = 3;
+
+    SFBuilding *dwarf_stonecutter = registrationAPI.registerBuilding(0x2e);
+    registrationAPI.linkBuildingDoneHandler(dwarf_stonecutter, &singleworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(dwarf_stonecutter, &sawmill_entry_handler);
+    registrationAPI.applyBuildingTag(dwarf_stonecutter, BuildingTag::STONEMASON_BUILDING);
+    registrationAPI.applyBuildingTag(dwarf_stonecutter, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(dwarf_stonecutter, BuildingTag::HABITABLE_SINGLE_BUILDING);
+    dwarf_stonecutter->race = 2;
+
+    SFBuilding *dwarf_food_store = registrationAPI.registerBuilding(0x2f);
+    registrationAPI.linkBuildingDoneHandler(dwarf_food_store, &singleworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(dwarf_food_store, &foodstore_entry_handler);
+    registrationAPI.applyBuildingTag(dwarf_food_store, BuildingTag::FOODSTORE_BUILDING);
+    registrationAPI.applyBuildingTag(dwarf_food_store, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(dwarf_food_store, BuildingTag::HABITABLE_SINGLE_BUILDING);
+    dwarf_food_store->race = 2;
+
+    SFBuilding *dwarf_smelter = registrationAPI.registerBuilding(0x34);
+    registrationAPI.linkBuildingDoneHandler(dwarf_smelter, &singleworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(dwarf_smelter, &smelter_entry_handler);
+    registrationAPI.applyBuildingTag(dwarf_smelter, BuildingTag::SMELTER_BUILDING);
+    registrationAPI.applyBuildingTag(dwarf_smelter, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(dwarf_smelter, BuildingTag::HABITABLE_SINGLE_BUILDING);
+    dwarf_smelter->race = 2;
+
+    SFBuilding *elf_sawmill = registrationAPI.registerBuilding(0x37);
+    registrationAPI.linkBuildingDoneHandler(elf_sawmill, &singleworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(elf_sawmill, &sawmill_entry_handler);
+    registrationAPI.applyBuildingTag(elf_sawmill, BuildingTag::SAWMILL_BUILDING);
+    registrationAPI.applyBuildingTag(elf_sawmill, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(elf_sawmill, BuildingTag::HABITABLE_SINGLE_BUILDING);
+    elf_sawmill->race = 3;
+
+    SFBuilding *orc_smelter = registrationAPI.registerBuilding(0x3e);
+    registrationAPI.linkBuildingDoneHandler(orc_smelter, &singleworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(orc_smelter, &smelter_entry_handler);
+    registrationAPI.applyBuildingTag(orc_smelter, BuildingTag::SMELTER_BUILDING);
+    registrationAPI.applyBuildingTag(orc_smelter, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(orc_smelter, BuildingTag::HABITABLE_SINGLE_BUILDING);
+    orc_smelter->race = 5;
+
+    SFBuilding *orc_food_store = registrationAPI.registerBuilding(0x3f);
+    registrationAPI.linkBuildingDoneHandler(orc_food_store, &singleworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(orc_food_store, &foodstore_entry_handler);
+    registrationAPI.applyBuildingTag(orc_food_store, BuildingTag::FOODSTORE_BUILDING);
+    registrationAPI.applyBuildingTag(orc_food_store, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(orc_food_store, BuildingTag::HABITABLE_SINGLE_BUILDING);
+    orc_food_store->race = 5;
+
+    SFBuilding *troll_food_store = registrationAPI.registerBuilding(0x4f);
+    registrationAPI.linkBuildingDoneHandler(troll_food_store, &singleworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(troll_food_store, &foodstore_entry_handler);
+    registrationAPI.applyBuildingTag(troll_food_store, BuildingTag::FOODSTORE_BUILDING);
+    registrationAPI.applyBuildingTag(troll_food_store, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(troll_food_store, BuildingTag::HABITABLE_SINGLE_BUILDING);
+    troll_food_store->race = 4;
+
+    SFBuilding *norcaine_stonecutter = registrationAPI.registerBuilding(0x5a);
+    registrationAPI.linkBuildingDoneHandler(norcaine_stonecutter, &singleworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(norcaine_stonecutter, &sawmill_entry_handler);
+    registrationAPI.applyBuildingTag(norcaine_stonecutter, BuildingTag::STONEMASON_BUILDING);
+    registrationAPI.applyBuildingTag(norcaine_stonecutter, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(norcaine_stonecutter, BuildingTag::HABITABLE_SINGLE_BUILDING);
+    norcaine_stonecutter->race = 6;
+
+    SFBuilding *norcaine_food_store = registrationAPI.registerBuilding(0x5b);
+    registrationAPI.linkBuildingDoneHandler(norcaine_food_store, &singleworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(norcaine_food_store, &foodstore_entry_handler);
+    registrationAPI.applyBuildingTag(norcaine_food_store, BuildingTag::FOODSTORE_BUILDING);
+    registrationAPI.applyBuildingTag(norcaine_food_store, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(norcaine_food_store, BuildingTag::HABITABLE_SINGLE_BUILDING);
+    norcaine_food_store->race = 6;
+
+    SFBuilding *norcaine_smelter = registrationAPI.registerBuilding(0x5e);
+    registrationAPI.linkBuildingDoneHandler(norcaine_smelter, &singleworker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(norcaine_smelter, &smelter_entry_handler);
+    registrationAPI.applyBuildingTag(norcaine_smelter, BuildingTag::SMELTER_BUILDING);
+    registrationAPI.applyBuildingTag(norcaine_smelter, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(norcaine_smelter, BuildingTag::HABITABLE_SINGLE_BUILDING);
+    norcaine_smelter->race = 6;
+
+
+    SFBuilding *human_breeder = registrationAPI.registerBuilding(0x06);
+    registrationAPI.linkBuildingDoneHandler(human_breeder, &breeder_done_handler);
+    registrationAPI.linkBuildingEntryHandler(human_breeder, &cattle_breeder_entry_handler);
+    registrationAPI.applyBuildingTag(human_breeder, BuildingTag::BREEDER_BUILDING);
+    registrationAPI.applyBuildingTag(human_breeder, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(human_breeder, BuildingTag::HABITABLE_SINGLE_BUILDING);
+    human_breeder->race = 1;
+
+    SFBuilding *dwarf_breeder = registrationAPI.registerBuilding(0x30);
+    registrationAPI.linkBuildingDoneHandler(dwarf_breeder, &breeder_done_handler);
+    registrationAPI.linkBuildingEntryHandler(dwarf_breeder, &cattle_breeder_entry_handler);
+    registrationAPI.applyBuildingTag(dwarf_breeder, BuildingTag::BREEDER_BUILDING);
+    registrationAPI.applyBuildingTag(dwarf_breeder, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(dwarf_breeder, BuildingTag::HABITABLE_SINGLE_BUILDING);
+    dwarf_breeder->race = 2;
+
+    SFBuilding *orc_breeder = registrationAPI.registerBuilding(0x42);
+    registrationAPI.linkBuildingDoneHandler(orc_breeder, &breeder_done_handler);
+    registrationAPI.linkBuildingEntryHandler(orc_breeder, &cattle_breeder_entry_handler);
+    registrationAPI.applyBuildingTag(orc_breeder, BuildingTag::BREEDER_BUILDING);
+    registrationAPI.applyBuildingTag(orc_breeder, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(orc_breeder, BuildingTag::HABITABLE_SINGLE_BUILDING);
+    orc_breeder->race = 5;
+
+    SFBuilding *norcaine_breeder = registrationAPI.registerBuilding(0x5d);
+    registrationAPI.linkBuildingDoneHandler(norcaine_breeder, &breeder_done_handler);
+    registrationAPI.linkBuildingEntryHandler(norcaine_breeder, &cattle_breeder_entry_handler);
+    registrationAPI.applyBuildingTag(norcaine_breeder, BuildingTag::BREEDER_BUILDING);
+    registrationAPI.applyBuildingTag(norcaine_breeder, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(norcaine_breeder, BuildingTag::HABITABLE_SINGLE_BUILDING);
+    norcaine_breeder->race = 6;
+
+
+    SFBuilding *human_temple = registrationAPI.registerBuilding(0x11);
+    registrationAPI.linkBuildingDoneHandler(human_temple, &army_worker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(human_temple, &temple_entry_handler);
+    registrationAPI.applyBuildingTag(human_temple, BuildingTag::TEMPLE_BUILDING);
+    registrationAPI.applyBuildingTag(human_temple, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(human_temple, BuildingTag::HABITABLE_SINGLE_BUILDING);
+    human_temple->race = 1;
+
+    SFBuilding *elf_armory = registrationAPI.registerBuilding(0x22);
+    registrationAPI.linkBuildingDoneHandler(elf_armory, &army_worker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(elf_armory, &forge_entry_handler);
+    registrationAPI.applyBuildingTag(elf_armory, BuildingTag::FORGE_BUILDING);
+    registrationAPI.applyBuildingTag(elf_armory, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(elf_armory, BuildingTag::HABITABLE_SINGLE_BUILDING);
+    elf_armory->race = 3;
+
+    SFBuilding *elf_temple = registrationAPI.registerBuilding(0x24);
+    registrationAPI.linkBuildingDoneHandler(elf_temple, &army_worker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(elf_temple, &temple_entry_handler);
+    registrationAPI.applyBuildingTag(elf_temple, BuildingTag::TEMPLE_BUILDING);
+    registrationAPI.applyBuildingTag(elf_temple, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(elf_temple, BuildingTag::HABITABLE_SINGLE_BUILDING);
+    elf_temple->race = 3;
+
+    SFBuilding *dwarf_forge = registrationAPI.registerBuilding(0x35);
+    registrationAPI.linkBuildingDoneHandler(dwarf_forge, &army_worker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(dwarf_forge, &forge_entry_handler);
+    registrationAPI.applyBuildingTag(dwarf_forge, BuildingTag::FORGE_BUILDING);
+    registrationAPI.applyBuildingTag(dwarf_forge, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(dwarf_forge, BuildingTag::HABITABLE_SINGLE_BUILDING);
+    dwarf_forge->race = 2;
+
+    SFBuilding *orc_forge = registrationAPI.registerBuilding(0x44);
+    registrationAPI.linkBuildingDoneHandler(orc_forge, &army_worker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(orc_forge, &forge_entry_handler);
+    registrationAPI.applyBuildingTag(orc_forge, BuildingTag::FORGE_BUILDING);
+    registrationAPI.applyBuildingTag(orc_forge, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(orc_forge, BuildingTag::HABITABLE_SINGLE_BUILDING);
+    orc_forge->race = 5;
+
+    SFBuilding *orc_temple = registrationAPI.registerBuilding(0x46);
+    registrationAPI.linkBuildingDoneHandler(orc_temple, &army_worker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(orc_temple, &temple_entry_handler);
+    registrationAPI.applyBuildingTag(orc_temple, BuildingTag::TEMPLE_BUILDING);
+    registrationAPI.applyBuildingTag(orc_temple, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(orc_temple, BuildingTag::HABITABLE_SINGLE_BUILDING);
+    orc_temple->race = 5;
+
+    SFBuilding *human_forge = registrationAPI.registerBuilding(0x4b);
+    registrationAPI.linkBuildingDoneHandler(human_forge, &army_worker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(human_forge, &forge_entry_handler);
+    registrationAPI.applyBuildingTag(human_forge, BuildingTag::FORGE_BUILDING);
+    registrationAPI.applyBuildingTag(human_forge, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(human_forge, BuildingTag::HABITABLE_SINGLE_BUILDING);
+    human_forge->race = 1;
+
+    SFBuilding *troll_armory = registrationAPI.registerBuilding(0x53);
+    registrationAPI.linkBuildingDoneHandler(troll_armory, &army_worker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(troll_armory, &forge_entry_handler);
+    registrationAPI.applyBuildingTag(troll_armory, BuildingTag::FORGE_BUILDING);
+    registrationAPI.applyBuildingTag(troll_armory, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(troll_armory, BuildingTag::HABITABLE_SINGLE_BUILDING);
+    troll_armory->race = 4;
+
+    SFBuilding *norcaine_forge = registrationAPI.registerBuilding(0x60);
+    registrationAPI.linkBuildingDoneHandler(norcaine_forge, &army_worker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(norcaine_forge, &forge_entry_handler);
+    registrationAPI.applyBuildingTag(norcaine_forge, BuildingTag::FORGE_BUILDING);
+    registrationAPI.applyBuildingTag(norcaine_forge, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(norcaine_forge, BuildingTag::HABITABLE_SINGLE_BUILDING);
+    norcaine_forge->race = 6;
+
+    SFBuilding *norcaine_temple = registrationAPI.registerBuilding(0x64);
+    registrationAPI.linkBuildingDoneHandler(norcaine_temple, &army_worker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(norcaine_temple, &temple_entry_handler);
+    registrationAPI.applyBuildingTag(norcaine_temple, BuildingTag::TEMPLE_BUILDING);
+    registrationAPI.applyBuildingTag(norcaine_temple, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(norcaine_temple, BuildingTag::HABITABLE_SINGLE_BUILDING);
+    norcaine_temple->race = 6;
+
+    SFBuilding *orc_armory = registrationAPI.registerBuilding(0x89);
+    registrationAPI.linkBuildingDoneHandler(orc_armory, &army_worker_done_handler);
+    registrationAPI.linkBuildingEntryHandler(orc_armory, &mace_carver_entry_handler);
+    registrationAPI.applyBuildingTag(orc_armory, BuildingTag::MACE_CARVER_BUILDING);
+    registrationAPI.applyBuildingTag(orc_armory, BuildingTag::HABITABLE_BUILDING);
+    registrationAPI.applyBuildingTag(orc_armory, BuildingTag::HABITABLE_SINGLE_BUILDING);
+    orc_armory->race = 5;
+
+
+    SFBuilding *human_crossbow_tower = registrationAPI.registerBuilding(0x0d);
+    registrationAPI.linkBuildingDoneHandler(human_crossbow_tower, &human_crossbow_tower_done_handler);
+    registrationAPI.applyBuildingTag(human_crossbow_tower, BuildingTag::TOWER_BUILDING);
+    human_crossbow_tower->race = 1;
+
+    SFBuilding *human_white_hand = registrationAPI.registerBuilding(0x20);
+    registrationAPI.linkBuildingDoneHandler(human_white_hand, &human_white_hand_done_handler);
+    registrationAPI.applyBuildingTag(human_white_hand, BuildingTag::TOWER_BUILDING);
+    human_white_hand->race = 1;
+
+    SFBuilding *elf_archer_tower = registrationAPI.registerBuilding(0x26);
+    registrationAPI.linkBuildingDoneHandler(elf_archer_tower, &elf_archer_tower_done_handler);
+    registrationAPI.applyBuildingTag(elf_archer_tower, BuildingTag::TOWER_BUILDING);
+    elf_archer_tower->race = 3;
+
+    SFBuilding *elf_frostbringer = registrationAPI.registerBuilding(0x27);
+    registrationAPI.linkBuildingDoneHandler(elf_frostbringer, &elf_frostbringer_done_handler);
+    registrationAPI.applyBuildingTag(elf_frostbringer, BuildingTag::TOWER_BUILDING);
+    elf_frostbringer->race = 3;
+
+    SFBuilding *orc_firestarter = registrationAPI.registerBuilding(0x47);
+    registrationAPI.linkBuildingDoneHandler(orc_firestarter, &orc_firestarter_done_handler);
+    registrationAPI.applyBuildingTag(orc_firestarter, BuildingTag::TOWER_BUILDING);
+    orc_firestarter->race = 5;
+
+    SFBuilding *troll_stonethrower = registrationAPI.registerBuilding(0x54);
+    registrationAPI.linkBuildingDoneHandler(troll_stonethrower, &troll_stonethrower_done_handler);
+    registrationAPI.applyBuildingTag(troll_stonethrower, BuildingTag::TOWER_BUILDING);
+    troll_stonethrower->race = 4;
+
+    SFBuilding *norcaine_sorcery_tower = registrationAPI.registerBuilding(0x66);
+    registrationAPI.linkBuildingDoneHandler(norcaine_sorcery_tower, &norcaine_sorcery_tower_done_handler);
+    registrationAPI.applyBuildingTag(norcaine_sorcery_tower, BuildingTag::TOWER_BUILDING);
+    norcaine_sorcery_tower->race = 6;
+
+    SFBuilding *norcaine_mindbreaker = registrationAPI.registerBuilding(0x67);
+    registrationAPI.linkBuildingDoneHandler(norcaine_mindbreaker, &norcaine_mindbreaker_done_handler);
+    registrationAPI.applyBuildingTag(norcaine_mindbreaker, BuildingTag::TOWER_BUILDING);
+    norcaine_mindbreaker->race = 6;
+
+    SFBuilding *npc_stonethrower = registrationAPI.registerBuilding(0x78);
+    registrationAPI.linkBuildingDoneHandler(npc_stonethrower, &npc_stonethrower_done_handler);
+    registrationAPI.applyBuildingTag(npc_stonethrower, BuildingTag::TOWER_BUILDING);
+
+    SFBuilding *npc_crossbow_tower = registrationAPI.registerBuilding(0x7b);
+    registrationAPI.linkBuildingDoneHandler(npc_crossbow_tower, &npc_crossbow_tower_done_handler);
+    registrationAPI.applyBuildingTag(npc_crossbow_tower, BuildingTag::TOWER_BUILDING);
+
+    SFBuilding *wulfgar_crossbow_tower = registrationAPI.registerBuilding(0x7c);
+    registrationAPI.linkBuildingDoneHandler(wulfgar_crossbow_tower, &wulfgar_crossbow_tower_done_handler);
+    registrationAPI.applyBuildingTag(wulfgar_crossbow_tower, BuildingTag::TOWER_BUILDING);
+
+    SFBuilding *wulfgar_crossbow_tower2 = registrationAPI.registerBuilding(0x92);
+    registrationAPI.linkBuildingDoneHandler(wulfgar_crossbow_tower2, &wulfgar_crossbow_tower_done_handler2);
+    registrationAPI.applyBuildingTag(wulfgar_crossbow_tower2, BuildingTag::TOWER_BUILDING);
+
+    SFBuilding *npc_firestarter = registrationAPI.registerBuilding(0x93);
+    registrationAPI.linkBuildingDoneHandler(npc_firestarter, &npc_firestarter_done_handler);
+    registrationAPI.applyBuildingTag(npc_firestarter, BuildingTag::TOWER_BUILDING);
+
+    SFBuilding *undead_bone_tower = registrationAPI.registerBuilding(0x95);
+    registrationAPI.linkBuildingDoneHandler(undead_bone_tower, &undead_bone_tower_done_handler);
+    registrationAPI.applyBuildingTag(undead_bone_tower, BuildingTag::TOWER_BUILDING);
+
+    SFBuilding *npc_white_hand = registrationAPI.registerBuilding(0x97);
+    registrationAPI.linkBuildingDoneHandler(npc_white_hand, &npc_white_hand_done_handler);
+    registrationAPI.applyBuildingTag(npc_white_hand, BuildingTag::TOWER_BUILDING);
+
+    SFBuilding *blade_black_tower = registrationAPI.registerBuilding(0xa0);
+    registrationAPI.linkBuildingDoneHandler(blade_black_tower, &blade_black_tower_done_handler);
+    registrationAPI.applyBuildingTag(blade_black_tower, BuildingTag::TOWER_BUILDING);
+
+    SFBuilding *npc_spitflower = registrationAPI.registerBuilding(0xa1);
+    registrationAPI.linkBuildingDoneHandler(npc_spitflower, &npc_spitflower_done_handler);
+    registrationAPI.applyBuildingTag(npc_spitflower, BuildingTag::TOWER_BUILDING);
+
+    SFBuilding *npc_frostbringer = registrationAPI.registerBuilding(0xa3);
+    registrationAPI.linkBuildingDoneHandler(npc_frostbringer, &npc_frostbringer_done_handler);
+    registrationAPI.applyBuildingTag(npc_frostbringer, BuildingTag::TOWER_BUILDING);
+
+    SFBuilding *blade_black_tower2 = registrationAPI.registerBuilding(0xa4);
+    registrationAPI.linkBuildingDoneHandler(blade_black_tower2, &blade_black_tower_done_handler2);
+    registrationAPI.applyBuildingTag(blade_black_tower2, BuildingTag::TOWER_BUILDING);
+
+    SFBuilding *blade_dark_crystal = registrationAPI.registerBuilding(0xa5);
+    registrationAPI.linkBuildingDoneHandler(blade_dark_crystal, &blade_dark_crystal_done_handler);
+    registrationAPI.applyBuildingTag(blade_dark_crystal, BuildingTag::TOWER_BUILDING);
+
+    SFBuilding *blade_dark_mananode = registrationAPI.registerBuilding(0xa6);
+    registrationAPI.linkBuildingDoneHandler(blade_dark_mananode, &blade_dark_mananode_done_handler);
+    registrationAPI.applyBuildingTag(blade_dark_mananode, BuildingTag::TOWER_BUILDING);
+
+    SFBuilding *npc_mindbreaker = registrationAPI.registerBuilding(0xa7);
+    registrationAPI.linkBuildingDoneHandler(npc_mindbreaker, &npc_mindbreaker_done_handler);
+    registrationAPI.applyBuildingTag(npc_mindbreaker, BuildingTag::TOWER_BUILDING);
+
+    SFBuilding *npc_holy_statue = registrationAPI.registerBuilding(0xa8);
+    registrationAPI.linkBuildingDoneHandler(npc_holy_statue, &npc_holy_statue_done_handler);
+    registrationAPI.applyBuildingTag(npc_holy_statue, BuildingTag::TOWER_BUILDING);
+
+    SFBuilding *npc_sun_tower = registrationAPI.registerBuilding(0xa9);
+    registrationAPI.linkBuildingDoneHandler(npc_sun_tower, &npc_sun_tower_done_handler);
+    registrationAPI.applyBuildingTag(npc_sun_tower, BuildingTag::TOWER_BUILDING);
+
+    SFBuilding *npc_moon_tower = registrationAPI.registerBuilding(0xaa);
+    registrationAPI.linkBuildingDoneHandler(npc_moon_tower, &npc_moon_tower_done_handler);
+    registrationAPI.applyBuildingTag(npc_moon_tower, BuildingTag::TOWER_BUILDING);
+
+    SFBuilding *npc_spitflower2 = registrationAPI.registerBuilding(0xac);
+    registrationAPI.linkBuildingDoneHandler(npc_spitflower2, &npc_spitflower_done_handler2);
+    registrationAPI.applyBuildingTag(npc_spitflower2, BuildingTag::TOWER_BUILDING);
+
+    SFBuilding *npc_sorcery_tower = registrationAPI.registerBuilding(0xb2);
+    registrationAPI.linkBuildingDoneHandler(npc_sorcery_tower, &npc_sorcery_tower_done_handler);
+    registrationAPI.applyBuildingTag(npc_sorcery_tower, BuildingTag::TOWER_BUILDING);
+
+    SFBuilding *npc_sorcery_tower2 = registrationAPI.registerBuilding(0xd1);
+    registrationAPI.linkBuildingDoneHandler(npc_sorcery_tower2, &npc_sorcery_tower_done_handler2);
+    registrationAPI.applyBuildingTag(npc_sorcery_tower2, BuildingTag::TOWER_BUILDING);
+
+    SFBuilding *undead_bone_tower2 = registrationAPI.registerBuilding(0xd2);
+    registrationAPI.linkBuildingDoneHandler(undead_bone_tower2, &undead_bone_tower_done_handler2);
+    registrationAPI.applyBuildingTag(undead_bone_tower2, BuildingTag::TOWER_BUILDING);
+
+    SFBuilding *undead_bone_tower3 = registrationAPI.registerBuilding(0xd3);
+    registrationAPI.linkBuildingDoneHandler(undead_bone_tower3, &undead_bone_tower_done_handler3);
+    registrationAPI.applyBuildingTag(undead_bone_tower3, BuildingTag::TOWER_BUILDING);
+
+    SFBuilding *npc_firestarter2 = registrationAPI.registerBuilding(0xd4);
+    registrationAPI.linkBuildingDoneHandler(npc_firestarter2, &npc_firestarter_done_handler2);
+    registrationAPI.applyBuildingTag(npc_firestarter2, BuildingTag::TOWER_BUILDING);
+
+    SFBuilding *blade_black_tower3 = registrationAPI.registerBuilding(0xd5);
+    registrationAPI.linkBuildingDoneHandler(blade_black_tower3, &blade_black_tower_done_handler3);
+    registrationAPI.applyBuildingTag(blade_black_tower3, BuildingTag::TOWER_BUILDING);
+
+
+}
 
 void initialize_vanilla_spells()
 {
     initialize_vanilla_effect_handler_hooks();
+
+    // TODO Remove me after testing is done
+    //SFBuilding *test_building = registrationAPI.registerBuilding("test_building");
 
     SFSpell *fireburst = registrationAPI.registerSpell(kGdSpellLineFireBurst);
     registrationAPI.linkTypeHandler(fireburst, &fireburst_handler);
@@ -31,26 +646,20 @@ void initialize_vanilla_spells()
     registrationAPI.linkTypeHandler(poison, &poison_handler);
     registrationAPI.linkSingleTargetAIHandler(poison, &fireburst_ai_handler);
 
-    SFSpell *invulnerability =
-        registrationAPI.registerSpell(kGdSpellLineInvulnerability);
+    SFSpell *invulnerability = registrationAPI.registerSpell(kGdSpellLineInvulnerability);
     registrationAPI.linkTypeHandler(invulnerability, &invulnerability_handler);
-    registrationAPI.linkAvoidanceAIHandler(invulnerability,
-                                           &
-                                           sf_ai_avoidance_invulnerability_handler);
+    registrationAPI.linkAvoidanceAIHandler(invulnerability, &sf_ai_avoidance_invulnerability_handler);
 
-    SFSpell *cure_poison =
-        registrationAPI.registerSpell(kGdSpellLineCurePoison);
+    SFSpell *cure_poison = registrationAPI.registerSpell(kGdSpellLineCurePoison);
     registrationAPI.linkTypeHandler(cure_poison, &cure_poison_handler);
-    registrationAPI.linkSingleTargetAIHandler(cure_poison,
-                                              &cure_poison_ai_handler);
+    registrationAPI.linkSingleTargetAIHandler(cure_poison, &cure_poison_ai_handler);
 
     // Empty Spell Type here
 
     SFSpell *freeze = registrationAPI.registerSpell(kGdSpellLineFreeze);
     registrationAPI.linkTypeHandler(freeze, &freeze_handler);
     registrationAPI.linkSingleTargetAIHandler(freeze, &freeze_ai_handler);
-    registrationAPI.linkAvoidanceAIHandler(freeze,
-                                           &sf_ai_avoidance_freeze_handler);
+    registrationAPI.linkAvoidanceAIHandler(freeze, &sf_ai_avoidance_freeze_handler);
 
     SFSpell *fog = registrationAPI.registerSpell(kGdSpellLineFog);
     registrationAPI.linkTypeHandler(fog, &fog_handler);
@@ -64,8 +673,7 @@ void initialize_vanilla_spells()
     SFSpell *fireshield = registrationAPI.registerSpell(kGdSpellLineFireShield);
     registrationAPI.linkTypeHandler(fireshield, &fireshield_handler);
     registrationAPI.linkSingleTargetAIHandler(fireshield, &shields_ai_handler);
-    registrationAPI.linkAvoidanceAIHandler(fireshield,
-                                           &sf_ai_avoidance_shield_handler);
+    registrationAPI.linkAvoidanceAIHandler(fireshield, &sf_ai_avoidance_shield_handler);
 
     SFSpell *fireball = registrationAPI.registerSpell(kGdSpellLineFireBall);
     registrationAPI.linkTypeHandler(fireball, &fireball_handler);
@@ -80,8 +688,7 @@ void initialize_vanilla_spells()
     SFSpell *iceshield = registrationAPI.registerSpell(kGdSpellLineIceShield);
     registrationAPI.linkTypeHandler(iceshield, &iceshield_handler);
     registrationAPI.linkSingleTargetAIHandler(iceshield, &shields_ai_handler);
-    registrationAPI.linkAvoidanceAIHandler(iceshield,
-                                           &sf_ai_avoidance_shield_handler);
+    registrationAPI.linkAvoidanceAIHandler(iceshield, &sf_ai_avoidance_shield_handler);
 
     // next block
 
@@ -108,29 +715,23 @@ void initialize_vanilla_spells()
     SFSpell *hypnotize = registrationAPI.registerSpell(kGdSpellLineHypnotize);
     registrationAPI.linkTypeHandler(hypnotize, &hypnotize_handler);
     registrationAPI.linkSingleTargetAIHandler(hypnotize, &hypnotize_ai_handler);
-    registrationAPI.linkAvoidanceAIHandler(hypnotize,
-                                           &sf_ai_avoidance_hypnotize_handler);
+    registrationAPI.linkAvoidanceAIHandler(hypnotize, &sf_ai_avoidance_hypnotize_handler);
 
-    SFSpell *iceshield2 =
-        registrationAPI.registerSpell(kGdSpellLineIceShieldStun);
+    SFSpell *iceshield2 = registrationAPI.registerSpell(kGdSpellLineIceShieldStun);
     registrationAPI.linkTypeHandler(iceshield2, &iceshield2_handler);
 
     SFSpell *pestilence = registrationAPI.registerSpell(kGdSpellLinePestilence);
     registrationAPI.linkTypeHandler(pestilence, &pestilence_handler);
-    registrationAPI.linkSingleTargetAIHandler(pestilence,
-                                              &fireburst_ai_handler);
+    registrationAPI.linkSingleTargetAIHandler(pestilence, &fireburst_ai_handler);
 
-    SFSpell *cure_disease =
-        registrationAPI.registerSpell(kGdSpellLineCureDisease);
+    SFSpell *cure_disease = registrationAPI.registerSpell(kGdSpellLineCureDisease);
     registrationAPI.linkTypeHandler(cure_disease, &cure_disease_handler);
-    registrationAPI.linkSingleTargetAIHandler(cure_disease,
-                                              &cure_disease_ai_handler);
+    registrationAPI.linkSingleTargetAIHandler(cure_disease, &cure_disease_ai_handler);
 
     SFSpell *petrify = registrationAPI.registerSpell(kGdSpellLinePetrify);
     registrationAPI.linkTypeHandler(petrify, &petrify_handler);
     registrationAPI.linkSingleTargetAIHandler(petrify, &petrify_ai_handler);
-    registrationAPI.linkAvoidanceAIHandler(petrify,
-                                           &sf_ai_avoidance_freeze_handler);
+    registrationAPI.linkAvoidanceAIHandler(petrify, &sf_ai_avoidance_freeze_handler);
 
     // Two unused spells here
 
@@ -139,8 +740,7 @@ void initialize_vanilla_spells()
     registrationAPI.linkAOEAIHandler(area_pain, &area_pain_ai_handler);
     registrationAPI.applySpellTag(area_pain, SpellTag::AOE_SPELL);
 
-    SFSpell *summon_2 =
-        registrationAPI.registerSpell(kGdSpellLineSummonSkeleton);
+    SFSpell *summon_2 = registrationAPI.registerSpell(kGdSpellLineSummonSkeleton);
     registrationAPI.linkTypeHandler(summon_2, &summons_handler);
     registrationAPI.applySpellTag(summon_2, SpellTag::SUMMON_SPELL);
     registrationAPI.applySpellTag(summon_2, SpellTag::STACKABLE_SPELL);
@@ -157,45 +757,35 @@ void initialize_vanilla_spells()
     registrationAPI.applySpellTag(summon_3, SpellTag::STACKABLE_SPELL);
     registrationAPI.linkSingleTargetAIHandler(summon_3, &summon_ai_handler);
 
-    SFSpell *death_grasp =
-        registrationAPI.registerSpell(kGdSpellLineDeathGrasp);
+    SFSpell *death_grasp = registrationAPI.registerSpell(kGdSpellLineDeathGrasp);
     registrationAPI.linkTypeHandler(death_grasp, &death_grasp_handler);
-    registrationAPI.linkSingleTargetAIHandler(death_grasp,
-                                              &death_grasp_ai_handler);
+    registrationAPI.linkSingleTargetAIHandler(death_grasp, &death_grasp_ai_handler);
 
-    SFSpell *summon_4 =
-        registrationAPI.registerSpell(kGdSpellLineSummonChanneler);
+    SFSpell *summon_4 = registrationAPI.registerSpell(kGdSpellLineSummonChanneler);
     registrationAPI.linkTypeHandler(summon_4, &summons_handler);
     registrationAPI.applySpellTag(summon_4, SpellTag::SUMMON_SPELL);
     registrationAPI.applySpellTag(summon_4, SpellTag::STACKABLE_SPELL);
     registrationAPI.linkSingleTargetAIHandler(summon_4, &summon_ai_handler);
 
-    SFSpell *inflexibility =
-        registrationAPI.registerSpell(kGdSpellLineInflexibility);
+    SFSpell *inflexibility = registrationAPI.registerSpell(kGdSpellLineInflexibility);
     registrationAPI.linkTypeHandler(inflexibility, &inflexibility_handler);
 
     SFSpell *weaken = registrationAPI.registerSpell(kGdSpellLineWeaken);
     registrationAPI.linkTypeHandler(weaken, &weaken_handler);
 
-    SFSpell *dark_banishing =
-        registrationAPI.registerSpell(kGdSpellLineDarkBanishing);
+    SFSpell *dark_banishing = registrationAPI.registerSpell(kGdSpellLineDarkBanishing);
     registrationAPI.linkTypeHandler(dark_banishing, &dark_banishing_handler);
 
-    SFSpell *area_slowness =
-        registrationAPI.registerSpell(kGdSpellLineSlownessArea);
+    SFSpell *area_slowness = registrationAPI.registerSpell(kGdSpellLineSlownessArea);
     registrationAPI.linkTypeHandler(area_slowness, &area_slowness_handler);
 
-    SFSpell *area_inflexibility =
-        registrationAPI.registerSpell(kGdSpellLineInflexibilityArea);
-    registrationAPI.linkTypeHandler(area_inflexibility,
-                                    &area_inflexibility_handler);
+    SFSpell *area_inflexibility = registrationAPI.registerSpell(kGdSpellLineInflexibilityArea);
+    registrationAPI.linkTypeHandler(area_inflexibility, &area_inflexibility_handler);
 
-    SFSpell *area_weaken =
-        registrationAPI.registerSpell(kGdSpellLineWeakenArea);
+    SFSpell *area_weaken = registrationAPI.registerSpell(kGdSpellLineWeakenArea);
     registrationAPI.linkTypeHandler(area_weaken, &area_weaken_handler);
 
-    SFSpell *area_plauge =
-        registrationAPI.registerSpell(kGdSpellLinePlagueArea);
+    SFSpell *area_plauge = registrationAPI.registerSpell(kGdSpellLinePlagueArea);
     registrationAPI.linkTypeHandler(area_plauge, &area_plague_handler);
 
     SFSpell *remediless = registrationAPI.registerSpell(kGdSpellLineRemediless);
@@ -203,67 +793,52 @@ void initialize_vanilla_spells()
 
     // Unused Spell here
 
-    SFSpell *area_healing =
-        registrationAPI.registerSpell(kGdSpellLineHealingArea);
+    SFSpell *area_healing = registrationAPI.registerSpell(kGdSpellLineHealingArea);
     registrationAPI.linkTypeHandler(area_healing, &area_healing_handler);
     registrationAPI.linkAOEAIHandler(area_healing, &area_heal_ai_handler);
     registrationAPI.applySpellTag(area_healing, SpellTag::AOE_SPELL);
 
-    SFSpell *sentinel_healing =
-        registrationAPI.registerSpell(kGdSpellLineSentinelHealing);
-    registrationAPI.linkTypeHandler(sentinel_healing,
-                                    &sentinel_healing_handler);
+    SFSpell *sentinel_healing = registrationAPI.registerSpell(kGdSpellLineSentinelHealing);
+    registrationAPI.linkTypeHandler(sentinel_healing, &sentinel_healing_handler);
     registrationAPI.applySpellTag(sentinel_healing, SpellTag::AOE_SPELL);
 
-    SFSpell *healing2 =
-        registrationAPI.registerSpell(kGdSpellLineGreaterHealing);
+    SFSpell *healing2 = registrationAPI.registerSpell(kGdSpellLineGreaterHealing);
     registrationAPI.linkTypeHandler(healing2, &healing_handler);
     registrationAPI.applySpellTag(healing2, STACKABLE_SPELL);
     registrationAPI.linkSingleTargetAIHandler(healing2, &healing_ai_handler);
 
-    SFSpell *charm_animal =
-        registrationAPI.registerSpell(kGdSpellLineCharmAnimal);
+    SFSpell *charm_animal = registrationAPI.registerSpell(kGdSpellLineCharmAnimal);
     registrationAPI.linkTypeHandler(charm_animal, &charm_animal_handler);
     registrationAPI.applySpellTag(charm_animal, SpellTag::DOMINATION_SPELL);
     registrationAPI.linkSingleTargetAIHandler(charm_animal, &charm_ai_handler);
 
-    SFSpell *thorn_shield =
-        registrationAPI.registerSpell(kGdSpellLineThornShield);
+    SFSpell *thorn_shield = registrationAPI.registerSpell(kGdSpellLineThornShield);
     registrationAPI.linkTypeHandler(thorn_shield, &thorn_shield_handler);
-    registrationAPI.linkAvoidanceAIHandler(thorn_shield,
-                                           &sf_ai_avoidance_shield_handler);
-
-    registrationAPI.linkSingleTargetAIHandler(thorn_shield,
-                                              &shields_ai_handler);
+    registrationAPI.linkAvoidanceAIHandler(thorn_shield, &sf_ai_avoidance_shield_handler);
+    registrationAPI.linkSingleTargetAIHandler(thorn_shield, &shields_ai_handler);
 
     SFSpell *quickness = registrationAPI.registerSpell(kGdSpellLineQuickness);
     registrationAPI.linkTypeHandler(quickness, &quickness_handler);
 
-    SFSpell *area_quickness =
-        registrationAPI.registerSpell(kGdSpellLineQuicknessArea);
+    SFSpell *area_quickness = registrationAPI.registerSpell(kGdSpellLineQuicknessArea);
     registrationAPI.linkTypeHandler(area_quickness, &area_quickness_handler);
 
-    SFSpell *flexibility =
-        registrationAPI.registerSpell(kGdSpellLineFlexibility);
+    SFSpell *flexibility = registrationAPI.registerSpell(kGdSpellLineFlexibility);
     registrationAPI.linkTypeHandler(flexibility, &flexibility_handler);
 
-    SFSpell *area_flexibility =
-        registrationAPI.registerSpell(kGdSpellLineFlexibilityArea);
-    registrationAPI.linkTypeHandler(area_flexibility,
-                                    &area_flexibility_handler);
+    SFSpell *area_flexibility = registrationAPI.registerSpell(kGdSpellLineFlexibilityArea);
+    registrationAPI.linkTypeHandler(area_flexibility, &area_flexibility_handler);
 
     SFSpell *strength = registrationAPI.registerSpell(kGdSpellLineStrengthen);
     registrationAPI.linkTypeHandler(strength, &strength_handler);
 
-    SFSpell *area_strength =
-        registrationAPI.registerSpell(kGdSpellLineStrengthenArea);
+    SFSpell *area_strength = registrationAPI.registerSpell(kGdSpellLineStrengthenArea);
     registrationAPI.linkTypeHandler(area_strength, &area_strength_handler);
 
     SFSpell *guard = registrationAPI.registerSpell(kGdSpellLineGuard);
     registrationAPI.linkTypeHandler(guard, &guard_handler);
 
-    SFSpell *remove_curse =
-        registrationAPI.registerSpell(kGdSpellLineRemoveCurse);
+    SFSpell *remove_curse = registrationAPI.registerSpell(kGdSpellLineRemoveCurse);
     registrationAPI.linkTypeHandler(remove_curse, &remove_curse_handler);
 
     SFSpell *regenerate = registrationAPI.registerSpell(kGdSpellLineRegenerate);
@@ -279,19 +854,16 @@ void initialize_vanilla_spells()
 
     // Unused spell here
 
-    SFSpell *fireshield2 =
-        registrationAPI.registerSpell(kGdSpellLineFireShieldDamage);
+    SFSpell *fireshield2 = registrationAPI.registerSpell(kGdSpellLineFireShieldDamage);
     registrationAPI.linkTypeHandler(fireshield2, &fireshield2_handler);
 
-    SFSpell *thorn_shield2 =
-        registrationAPI.registerSpell(kGdSpellLineThornShieldDamage);
+    SFSpell *thorn_shield2 = registrationAPI.registerSpell(kGdSpellLineThornShieldDamage);
     registrationAPI.linkTypeHandler(thorn_shield2, &thorn_shield2_handler);
 
     SFSpell *forget = registrationAPI.registerSpell(kGdSpellLineForget);
     registrationAPI.linkTypeHandler(forget, &forget_handler);
 
-    SFSpell *self_illusion =
-        registrationAPI.registerSpell(kGdSpellLineSelfIllusion);
+    SFSpell *self_illusion = registrationAPI.registerSpell(kGdSpellLineSelfIllusion);
     registrationAPI.linkTypeHandler(self_illusion, &self_illusion_handler);
 
     // Next Block
@@ -302,11 +874,9 @@ void initialize_vanilla_spells()
     SFSpell *brilliance = registrationAPI.registerSpell(kGdSpellLineBrilliance);
     registrationAPI.linkTypeHandler(brilliance, &brilliance_handler);
 
-    SFSpell *sacrifice_mana =
-        registrationAPI.registerSpell(kGdSpellLineSacrificeMana);
+    SFSpell *sacrifice_mana = registrationAPI.registerSpell(kGdSpellLineSacrificeMana);
     registrationAPI.linkTypeHandler(sacrifice_mana, &sacrifice_mana_handler);
-    registrationAPI.linkSingleTargetAIHandler(sacrifice_mana,
-                                              &sacrifice_mana_ai_handler);
+    registrationAPI.linkSingleTargetAIHandler(sacrifice_mana, &sacrifice_mana_ai_handler);
 
     SFSpell *manatap = registrationAPI.registerSpell(kGdSpellLineManaTap);
     registrationAPI.linkTypeHandler(manatap, &manatap_handler);
@@ -327,8 +897,7 @@ void initialize_vanilla_spells()
     registrationAPI.linkTypeHandler(confuse, &confuse_handler);
     registrationAPI.linkSingleTargetAIHandler(confuse, &confuse_ai_handler);
 
-    SFSpell *rain_of_fire =
-        registrationAPI.registerSpell(kGdSpellLineRainOfFire);
+    SFSpell *rain_of_fire = registrationAPI.registerSpell(kGdSpellLineRainOfFire);
     registrationAPI.linkTypeHandler(rain_of_fire, &rain_of_fire_handler);
     registrationAPI.linkAOEAIHandler(rain_of_fire, &rain_ai_handler);
     registrationAPI.applySpellTag(rain_of_fire, SpellTag::AOE_SPELL);
@@ -346,6 +915,7 @@ void initialize_vanilla_spells()
     registrationAPI.linkTypeHandler(stone_rain, &stone_rain_handler);
     registrationAPI.linkAOEAIHandler(stone_rain, &rain_ai_handler);
     registrationAPI.applySpellTag(stone_rain, SpellTag::AOE_SPELL);
+    registrationAPI.linkPhysRainHandler(stone_rain, &stone_rain_phys_handler);
 
     // Unused Spell Here
     // Unused Spell Here
@@ -362,19 +932,16 @@ void initialize_vanilla_spells()
     registrationAPI.linkTypeHandler(extinct, &extinct_handler);
     registrationAPI.linkSingleTargetAIHandler(extinct, &extinct_ai_handler);
 
-    SFSpell *detect_metal =
-        registrationAPI.registerSpell(kGdSpellLineDetectMetal);
+    SFSpell *detect_metal = registrationAPI.registerSpell(kGdSpellLineDetectMetal);
     registrationAPI.linkTypeHandler(detect_metal, &detect_metal_handler);
 
-    SFSpell *detect_magic =
-        registrationAPI.registerSpell(kGdSpellLineDetectMagic);
+    SFSpell *detect_magic = registrationAPI.registerSpell(kGdSpellLineDetectMagic);
     registrationAPI.linkTypeHandler(detect_magic, &detect_magic_handler);
 
     // Unused Spell Here
     // Unused Spell Here
 
-    SFSpell *invisibility =
-        registrationAPI.registerSpell(kGdSpellLineInvisibility);
+    SFSpell *invisibility = registrationAPI.registerSpell(kGdSpellLineInvisibility);
     registrationAPI.linkTypeHandler(invisibility, &invisibility_handler);
 
     SFSpell *stone = registrationAPI.registerSpell(kGdSpellLineStone);
@@ -383,72 +950,58 @@ void initialize_vanilla_spells()
     SFSpell *aura1 = registrationAPI.registerSpell(kGdSpellLineAuraWeakness);
     registrationAPI.linkTypeHandler(aura1, &aura_handler);
     registrationAPI.linkEndHandler(aura1, &aura_end_handler);
-    registrationAPI.linkSingleTargetAIHandler(aura1,
-                                              &offensive_aura_ai_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura1, &offensive_aura_ai_handler);
     registrationAPI.applySpellTag(aura1, SpellTag::AURA_SPELL);
     registrationAPI.applySpellTag(aura1, SpellTag::BLACK_AURA_SPELL);
 
     SFSpell *aura2 = registrationAPI.registerSpell(kGdSpellLineAuraSuffocation);
     registrationAPI.linkTypeHandler(aura2, &aura_handler);
     registrationAPI.linkEndHandler(aura2, &aura_end_handler);
-    registrationAPI.linkSingleTargetAIHandler(aura2,
-                                              &offensive_aura_ai_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura2, &offensive_aura_ai_handler);
     registrationAPI.applySpellTag(aura2, SpellTag::AURA_SPELL);
     registrationAPI.applySpellTag(aura2, SpellTag::BLACK_AURA_SPELL);
 
-    SFSpell *suicide_death =
-        registrationAPI.registerSpell(kGdSpellLineSuicideDeath);
+    SFSpell *suicide_death = registrationAPI.registerSpell(kGdSpellLineSuicideDeath);
     registrationAPI.linkTypeHandler(suicide_death, &suicide_death_handler);
 
     SFSpell *aura3 = registrationAPI.registerSpell(kGdSpellLineAuraLifeTap);
     registrationAPI.linkTypeHandler(aura3, &aura_handler);
-    registrationAPI.linkSingleTargetAIHandler(aura3,
-                                              &offensive_aura_ai_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura3, &offensive_aura_ai_handler);
     registrationAPI.linkEndHandler(aura3, &aura_end_handler);
     registrationAPI.applySpellTag(aura3, SpellTag::AURA_SPELL);
     registrationAPI.applySpellTag(aura3, SpellTag::BLACK_AURA_SPELL);
 
-    SFSpell *summon_5 =
-        registrationAPI.registerSpell(kGdSpellLineSummonSpectre);
+    SFSpell *summon_5 = registrationAPI.registerSpell(kGdSpellLineSummonSpectre);
     registrationAPI.linkTypeHandler(summon_5, &summons_handler);
     registrationAPI.applySpellTag(summon_5, SpellTag::SUMMON_SPELL);
     registrationAPI.applySpellTag(summon_5, SpellTag::STACKABLE_SPELL);
     registrationAPI.linkSingleTargetAIHandler(summon_5, &summon_ai_handler);
 
-    SFSpell *feign_death =
-        registrationAPI.registerSpell(kGdSpellLineFeignDeath);
+    SFSpell *feign_death = registrationAPI.registerSpell(kGdSpellLineFeignDeath);
     registrationAPI.linkTypeHandler(feign_death, &feign_death_handler);
 
-    SFSpell *aura4 =
-        registrationAPI.registerSpell(kGdSpellLineAuraSlowFighting);
+    SFSpell *aura4 = registrationAPI.registerSpell(kGdSpellLineAuraSlowFighting);
     registrationAPI.linkTypeHandler(aura4, &aura_handler);
-    registrationAPI.linkSingleTargetAIHandler(aura4,
-                                              &offensive_aura_ai_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura4, &offensive_aura_ai_handler);
     registrationAPI.linkEndHandler(aura4, &aura_end_handler);
     registrationAPI.applySpellTag(aura4, SpellTag::AURA_SPELL);
     registrationAPI.applySpellTag(aura4, SpellTag::BLACK_AURA_SPELL);
 
-    SFSpell *aura5 =
-        registrationAPI.registerSpell(kGdSpellLineAuraInflexibility);
+    SFSpell *aura5 = registrationAPI.registerSpell(kGdSpellLineAuraInflexibility);
     registrationAPI.linkTypeHandler(aura5, &aura_handler);
-    registrationAPI.linkSingleTargetAIHandler(aura5,
-                                              &offensive_aura_ai_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura5, &offensive_aura_ai_handler);
     registrationAPI.linkEndHandler(aura5, &aura_end_handler);
     registrationAPI.applySpellTag(aura5, SpellTag::AURA_SPELL);
     registrationAPI.applySpellTag(aura5, SpellTag::BLACK_AURA_SPELL);
     // Next Block
 
-    SFSpell *dispel_white_aura =
-        registrationAPI.registerSpell(kGdSpellLineDispelWhiteAura);
-    registrationAPI.linkTypeHandler(dispel_white_aura,
-                                    &dispel_white_aura_handler);
-    registrationAPI.linkSingleTargetAIHandler(dispel_white_aura,
-                                              &dispel_white_aura_ai_handler);
+    SFSpell *dispel_white_aura = registrationAPI.registerSpell(kGdSpellLineDispelWhiteAura);
+    registrationAPI.linkTypeHandler(dispel_white_aura, &dispel_white_aura_handler);
+    registrationAPI.linkSingleTargetAIHandler(dispel_white_aura, &dispel_white_aura_ai_handler);
 
     SFSpell *aura6 = registrationAPI.registerSpell(kGdSpellLineAuraSlowWalking);
     registrationAPI.linkTypeHandler(aura6, &aura_handler);
-    registrationAPI.linkSingleTargetAIHandler(aura6,
-                                              &offensive_aura_ai_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura6, &offensive_aura_ai_handler);
     registrationAPI.linkEndHandler(aura6, &aura_end_handler);
     registrationAPI.applySpellTag(aura6, SpellTag::AURA_SPELL);
     registrationAPI.applySpellTag(aura6, SpellTag::BLACK_AURA_SPELL);
@@ -456,27 +1009,23 @@ void initialize_vanilla_spells()
     SFSpell *aura7 = registrationAPI.registerSpell(kGdSpellLineAuraInability);
     registrationAPI.linkTypeHandler(aura7, &aura_handler);
     registrationAPI.linkEndHandler(aura7, &aura_end_handler);
-    registrationAPI.linkSingleTargetAIHandler(aura7,
-                                              &offensive_aura_ai_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura7, &offensive_aura_ai_handler);
     registrationAPI.applySpellTag(aura7, SpellTag::AURA_SPELL);
     registrationAPI.applySpellTag(aura7, SpellTag::BLACK_AURA_SPELL);
 
-    SFSpell *suffocation =
-        registrationAPI.registerSpell(kGdSpellLineSuffocation);
+    SFSpell *suffocation = registrationAPI.registerSpell(kGdSpellLineSuffocation);
     registrationAPI.linkTypeHandler(suffocation, &suffocation_handler);
 
     SFSpell *inablility = registrationAPI.registerSpell(kGdSpellLineInability);
     registrationAPI.linkTypeHandler(inablility, &inablility_handler);
 
-    SFSpell *slow_fighting =
-        registrationAPI.registerSpell(kGdSpellLineSlowFighting);
+    SFSpell *slow_fighting = registrationAPI.registerSpell(kGdSpellLineSlowFighting);
     registrationAPI.linkTypeHandler(slow_fighting, &slow_fighting_handler);
 
     SFSpell *aura8 = registrationAPI.registerSpell(kGdSpellLineAuraStrength);
     registrationAPI.linkTypeHandler(aura8, &aura_handler);
     registrationAPI.linkEndHandler(aura8, &aura_end_handler);
-    registrationAPI.linkSingleTargetAIHandler(aura8,
-                                              &defensive_aura_ai_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura8, &defensive_aura_ai_handler);
     registrationAPI.applySpellTag(aura8, SpellTag::AURA_SPELL);
     registrationAPI.applySpellTag(aura8, SpellTag::WHITE_AURA_SPELL);
 
@@ -489,14 +1038,12 @@ void initialize_vanilla_spells()
 
     SFSpell *aura10 = registrationAPI.registerSpell(kGdSpellLineAuraEndurance);
     registrationAPI.linkTypeHandler(aura10, &aura_handler);
-    registrationAPI.linkSingleTargetAIHandler(aura10,
-                                              &defensive_aura_ai_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura10, &defensive_aura_ai_handler);
     registrationAPI.linkEndHandler(aura10, &aura_end_handler);
     registrationAPI.applySpellTag(aura10, SpellTag::AURA_SPELL);
     registrationAPI.applySpellTag(aura10, SpellTag::WHITE_AURA_SPELL);
 
-    SFSpell *suicide_heal =
-        registrationAPI.registerSpell(kGdSpellLineSuicideHeal);
+    SFSpell *suicide_heal = registrationAPI.registerSpell(kGdSpellLineSuicideHeal);
     registrationAPI.linkTypeHandler(suicide_heal, &suicide_heal_handler);
 
     SFSpell *summon_6 = registrationAPI.registerSpell(kGdSpellLineSummonWolf);
@@ -505,20 +1052,17 @@ void initialize_vanilla_spells()
     registrationAPI.applySpellTag(summon_6, SpellTag::STACKABLE_SPELL);
     registrationAPI.linkSingleTargetAIHandler(summon_6, &summon_ai_handler);
 
-    SFSpell *aura11 =
-        registrationAPI.registerSpell(kGdSpellLineAuraRegeneration);
+    SFSpell *aura11 = registrationAPI.registerSpell(kGdSpellLineAuraRegeneration);
     registrationAPI.linkTypeHandler(aura11, &aura_handler);
     registrationAPI.linkSingleTargetAIHandler(aura11, &healing_aura_ai_handler);
     registrationAPI.linkEndHandler(aura11, &aura_end_handler);
     registrationAPI.applySpellTag(aura11, SpellTag::AURA_SPELL);
     registrationAPI.applySpellTag(aura11, SpellTag::WHITE_AURA_SPELL);
 
-    SFSpell *dominate_animal =
-        registrationAPI.registerSpell(kGdSpellLineDominateAnimal);
+    SFSpell *dominate_animal = registrationAPI.registerSpell(kGdSpellLineDominateAnimal);
     registrationAPI.linkTypeHandler(dominate_animal, &dominate_animal_handler);
     registrationAPI.applySpellTag(dominate_animal, SpellTag::DOMINATION_SPELL);
-    registrationAPI.linkSingleTargetAIHandler(dominate_animal,
-                                              &dominate_ai_handler);
+    registrationAPI.linkSingleTargetAIHandler(dominate_animal, &dominate_ai_handler);
 
     // Would this defeat Jack Slash?
     SFSpell *summon_7 = registrationAPI.registerSpell(kGdSpellLineSummonBear);
@@ -527,34 +1071,26 @@ void initialize_vanilla_spells()
     registrationAPI.applySpellTag(summon_7, SpellTag::STACKABLE_SPELL);
     registrationAPI.linkSingleTargetAIHandler(summon_7, &summon_ai_handler);
 
-    SFSpell *aura12 =
-        registrationAPI.registerSpell(kGdSpellLineAuraFastFighting);
+    SFSpell *aura12 = registrationAPI.registerSpell(kGdSpellLineAuraFastFighting);
     registrationAPI.linkTypeHandler(aura12, &aura_handler);
-    registrationAPI.linkSingleTargetAIHandler(aura12,
-                                              &defensive_aura_ai_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura12, &defensive_aura_ai_handler);
     registrationAPI.linkEndHandler(aura12, &aura_end_handler);
     registrationAPI.applySpellTag(aura12, SpellTag::AURA_SPELL);
     registrationAPI.applySpellTag(aura12, SpellTag::WHITE_AURA_SPELL);
 
-    SFSpell *aura13 =
-        registrationAPI.registerSpell(kGdSpellLineAuraFlexibility);
+    SFSpell *aura13 = registrationAPI.registerSpell(kGdSpellLineAuraFlexibility);
     registrationAPI.linkTypeHandler(aura13, &aura_handler);
-    registrationAPI.linkSingleTargetAIHandler(aura13,
-                                              &defensive_aura_ai_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura13, &defensive_aura_ai_handler);
     registrationAPI.linkEndHandler(aura13, &aura_end_handler);
     registrationAPI.applySpellTag(aura13, SpellTag::AURA_SPELL);
     registrationAPI.applySpellTag(aura13, SpellTag::WHITE_AURA_SPELL);
 
-    SFSpell *dispel_black_aura =
-        registrationAPI.registerSpell(kGdSpellLineDispelBlackAura);
-    registrationAPI.linkTypeHandler(dispel_black_aura,
-                                    &dispel_black_aura_handler);
+    SFSpell *dispel_black_aura = registrationAPI.registerSpell(kGdSpellLineDispelBlackAura);
+    registrationAPI.linkTypeHandler(dispel_black_aura, &dispel_black_aura_handler);
 
-    SFSpell *aura14 =
-        registrationAPI.registerSpell(kGdSpellLineAuraFastWalking);
+    SFSpell *aura14 = registrationAPI.registerSpell(kGdSpellLineAuraFastWalking);
     registrationAPI.linkTypeHandler(aura14, &aura_handler);
-    registrationAPI.linkSingleTargetAIHandler(aura14,
-                                              &defensive_aura_ai_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura14, &defensive_aura_ai_handler);
     registrationAPI.linkEndHandler(aura14, &aura_end_handler);
     registrationAPI.applySpellTag(aura14, SpellTag::AURA_SPELL);
     registrationAPI.applySpellTag(aura14, SpellTag::WHITE_AURA_SPELL);
@@ -568,8 +1104,7 @@ void initialize_vanilla_spells()
 
     SFSpell *aura16 = registrationAPI.registerSpell(kGdSpellLineAuraDexterity);
     registrationAPI.linkTypeHandler(aura16, &aura_handler);
-    registrationAPI.linkSingleTargetAIHandler(aura16,
-                                              &defensive_aura_ai_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura16, &defensive_aura_ai_handler);
     registrationAPI.linkEndHandler(aura16, &aura_end_handler);
     registrationAPI.applySpellTag(aura16, SpellTag::AURA_SPELL);
     registrationAPI.applySpellTag(aura16, SpellTag::WHITE_AURA_SPELL);
@@ -581,8 +1116,7 @@ void initialize_vanilla_spells()
     SFSpell *endurance = registrationAPI.registerSpell(kGdSpellLineEndurance);
     registrationAPI.linkTypeHandler(endurance, &endurance_handler);
 
-    SFSpell *fast_fighting =
-        registrationAPI.registerSpell(kGdSpellLineFastFighting);
+    SFSpell *fast_fighting = registrationAPI.registerSpell(kGdSpellLineFastFighting);
     registrationAPI.linkTypeHandler(fast_fighting, &fast_fighting_handler);
 
     SFSpell *distract = registrationAPI.registerSpell(kGdSpellLineDistract);
@@ -607,7 +1141,7 @@ void initialize_vanilla_spells()
 
     SFSpell *disenchant = registrationAPI.registerSpell(kGdSpellLineDisenchant);
     registrationAPI.linkTypeHandler(disenchant, &disenchant_handler);
-    registrationAPI.linkSingleTargetAIHandler(disenchant, &befriend_ai_handler);
+    registrationAPI.linkSingleTargetAIHandler(disenchant, &disenchant_ai_handler);
 
     SFSpell *charisma = registrationAPI.registerSpell(kGdSpellLineCharisma);
     registrationAPI.linkTypeHandler(charisma, &charisma_handler);
@@ -616,45 +1150,37 @@ void initialize_vanilla_spells()
     registrationAPI.linkTypeHandler(shockwave, &shockwave_handler);
     registrationAPI.linkSingleTargetAIHandler(shockwave, &wave_ai_handler);
 
-    SFSpell *aura17 =
-        registrationAPI.registerSpell(kGdSpellLineAuraHypnotization);
+    SFSpell *aura17 = registrationAPI.registerSpell(kGdSpellLineAuraHypnotization);
     registrationAPI.linkTypeHandler(aura17, &aura_handler);
-    registrationAPI.linkSingleTargetAIHandler(aura17,
-                                              &offensive_aura_ai_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura17, &offensive_aura_ai_handler);
     registrationAPI.linkEndHandler(aura17, &aura_end_handler);
     registrationAPI.applySpellTag(aura17, SpellTag::AURA_SPELL);
 
     // Next Spell Block
 
-    SFSpell *demoralization =
-        registrationAPI.registerSpell(kGdSpellLineDemoralization);
+    SFSpell *demoralization = registrationAPI.registerSpell(kGdSpellLineDemoralization);
     registrationAPI.linkTypeHandler(demoralization, &demoralization_handler);
-    registrationAPI.linkSingleTargetAIHandler(demoralization,
-                                              &demoralization_ai_handler);
+    registrationAPI.linkSingleTargetAIHandler(demoralization, &demoralization_ai_handler);
 
     SFSpell *aura18 = registrationAPI.registerSpell(kGdSpellLineAuraBrilliance);
     registrationAPI.linkTypeHandler(aura18, &aura_handler);
-    registrationAPI.linkSingleTargetAIHandler(aura18,
-                                              &defensive_aura_ai_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura18, &defensive_aura_ai_handler);
     registrationAPI.linkEndHandler(aura18, &aura_end_handler);
     registrationAPI.applySpellTag(aura18, SpellTag::AURA_SPELL);
 
-    SFSpell *enlightenment =
-        registrationAPI.registerSpell(kGdSpellLineEnlightenment);
+    SFSpell *enlightenment = registrationAPI.registerSpell(kGdSpellLineEnlightenment);
     registrationAPI.linkTypeHandler(enlightenment, &enlightenment_handler);
 
     SFSpell *aura19 = registrationAPI.registerSpell(kGdSpellLineAuraManaTap);
     registrationAPI.linkTypeHandler(aura19, &aura_handler);
-    registrationAPI.linkSingleTargetAIHandler(aura19,
-                                              &offensive_aura_ai_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura19, &offensive_aura_ai_handler);
     registrationAPI.linkEndHandler(aura19, &aura_end_handler);
     registrationAPI.applySpellTag(aura19, SpellTag::AURA_SPELL);
 
     SFSpell *meditation = registrationAPI.registerSpell(kGdSpellLineMeditation);
     registrationAPI.linkTypeHandler(meditation, &meditation_handler);
 
-    SFSpell *summon_8 =
-        registrationAPI.registerSpell(kGdSpellLineFireElemental);
+    SFSpell *summon_8 = registrationAPI.registerSpell(kGdSpellLineFireElemental);
     registrationAPI.linkTypeHandler(summon_8, &summons_handler);
     registrationAPI.applySpellTag(summon_8, SpellTag::SUMMON_SPELL);
     registrationAPI.applySpellTag(summon_8, SpellTag::STACKABLE_SPELL);
@@ -664,8 +1190,7 @@ void initialize_vanilla_spells()
     registrationAPI.linkTypeHandler(wave, &wave_handler);
     registrationAPI.linkSingleTargetAIHandler(wave, &wave_ai_handler);
 
-    SFSpell *melt_resistance =
-        registrationAPI.registerSpell(kGdSpellLineMeltResistance);
+    SFSpell *melt_resistance = registrationAPI.registerSpell(kGdSpellLineMeltResistance);
     registrationAPI.linkTypeHandler(melt_resistance, &melt_resistance_handler);
 
     SFSpell *summon_9 = registrationAPI.registerSpell(kGdSpellLineIceElemental);
@@ -678,25 +1203,18 @@ void initialize_vanilla_spells()
     registrationAPI.linkTypeHandler(wave2, &wave_handler);
     registrationAPI.linkSingleTargetAIHandler(wave2, &wave_ai_handler);
 
-    SFSpell *chill_resistance =
-        registrationAPI.registerSpell(kGdSpellLineChillResistance);
-    registrationAPI.linkTypeHandler(chill_resistance,
-                                    &chill_resistance_handler);
+    SFSpell *chill_resistance = registrationAPI.registerSpell(kGdSpellLineChillResistance);
+    registrationAPI.linkTypeHandler(chill_resistance, &chill_resistance_handler);
 
-    SFSpell *rock_bullet =
-        registrationAPI.registerSpell(kGdSpellLineRockBullet);
+    SFSpell *rock_bullet = registrationAPI.registerSpell(kGdSpellLineRockBullet);
     registrationAPI.linkTypeHandler(rock_bullet, &rock_bullet_handler);
 
-    SFSpell *conservation =
-        registrationAPI.registerSpell(kGdSpellLineConservation);
+    SFSpell *conservation = registrationAPI.registerSpell(kGdSpellLineConservation);
     registrationAPI.linkTypeHandler(conservation, &conservation_handler);
-    registrationAPI.linkSingleTargetAIHandler(conservation,
-                                              &shields_ai_handler);
-    registrationAPI.linkAvoidanceAIHandler(conservation,
-                                           &sf_ai_avoidance_shield_handler);
+    registrationAPI.linkSingleTargetAIHandler(conservation, &shields_ai_handler);
+    registrationAPI.linkAvoidanceAIHandler(conservation, &sf_ai_avoidance_shield_handler);
 
-    SFSpell *summon_10 =
-        registrationAPI.registerSpell(kGdSpellLineEarthElemental);
+    SFSpell *summon_10 = registrationAPI.registerSpell(kGdSpellLineEarthElemental);
     registrationAPI.linkTypeHandler(summon_10, &summons_handler);
     registrationAPI.applySpellTag(summon_10, SpellTag::SUMMON_SPELL);
     registrationAPI.applySpellTag(summon_10, SpellTag::STACKABLE_SPELL);
@@ -706,272 +1224,186 @@ void initialize_vanilla_spells()
     registrationAPI.linkTypeHandler(wave3, &wave_handler);
     registrationAPI.linkSingleTargetAIHandler(wave3, &wave_ai_handler);
 
-    SFSpell *tower_arrow =
-        registrationAPI.registerSpell(kGdSpellLineArrowTower);
+    SFSpell *tower_arrow = registrationAPI.registerSpell(kGdSpellLineArrowTower);
     registrationAPI.linkTypeHandler(tower_arrow, &tower_arrow_handler);
 
     // Next Spell Block
 
-    SFSpell *tower_healing =
-        registrationAPI.registerSpell(kGdSpellLineHealingTower);
+    SFSpell *tower_healing = registrationAPI.registerSpell(kGdSpellLineHealingTower);
     registrationAPI.linkTypeHandler(tower_healing, &tower_healing_handler);
     registrationAPI.applySpellTag(tower_healing, STACKABLE_SPELL);
-    registrationAPI.linkSingleTargetAIHandler(tower_healing,
-                                              &healing_ai_handler);
+    registrationAPI.linkSingleTargetAIHandler(tower_healing, &healing_ai_handler);
 
-    SFSpell *tower_icestrike =
-        registrationAPI.registerSpell(kGdSpellLineIceburstTower);
+    SFSpell *tower_icestrike = registrationAPI.registerSpell(kGdSpellLineIceburstTower);
     registrationAPI.linkTypeHandler(tower_icestrike, &tower_icestrike_handler);
     registrationAPI.applySpellTag(tower_icestrike, SpellTag::STACKABLE_SPELL);
-    registrationAPI.linkSingleTargetAIHandler(tower_icestrike,
-                                              &fireburst_ai_handler);
+    registrationAPI.linkSingleTargetAIHandler(tower_icestrike, &fireburst_ai_handler);
 
-    SFSpell *lifetap_aura =
-        registrationAPI.registerSpell(kGdSpellLineLifeTapAura);
+    SFSpell *lifetap_aura = registrationAPI.registerSpell(kGdSpellLineLifeTapAura);
     registrationAPI.linkTypeHandler(lifetap_aura, &lifetap_aura_handler);
 
-    SFSpell *fireball2 =
-        registrationAPI.registerSpell(kGdSpellLineFireBallEffect);
+    SFSpell *fireball2 = registrationAPI.registerSpell(kGdSpellLineFireBallEffect);
     registrationAPI.linkTypeHandler(fireball2, &fireball2_handler);
 
-    SFSpell *ability_warcry =
-        registrationAPI.registerSpell(kGdSpellLineAbilityWarCry);
-    registrationAPI.linkOnHitHandler(ability_warcry, &warcry_onhit_handler,
-                                     PHASE_0);
+    SFSpell *ability_warcry = registrationAPI.registerSpell(kGdSpellLineAbilityWarCry);
+    registrationAPI.linkOnHitHandler(ability_warcry, &warcry_onhit_handler, PHASE_0);
     registrationAPI.linkTypeHandler(ability_warcry, &ability_warcry_handler);
-    registrationAPI.applySpellTag(ability_warcry, STACKABLE_SPELL);
-    registrationAPI.linkSingleTargetAIHandler(ability_warcry,
-                                              &HCA_ability_ai_handler);
-    registrationAPI.applySpellTag(ability_warcry,
-                                  SpellTag::COMBAT_ABILITY_SPELL);
+    registrationAPI.applySpellTag(ability_warcry, SpellTag::STACKABLE_SPELL);
+    registrationAPI.linkSingleTargetAIHandler(ability_warcry, &HCA_ability_ai_handler);
+    registrationAPI.applySpellTag(ability_warcry, SpellTag::COMBAT_ABILITY_SPELL);
     registrationAPI.applySpellTag(ability_warcry, SpellTag::AOE_SPELL);
 
-    SFSpell *ability_benefactions =
-        registrationAPI.registerSpell(kGdSpellLineAbilityBenefactions);
-    registrationAPI.linkTypeHandler(ability_benefactions,
-                                    &ability_benefactions_handler);
-    registrationAPI.applySpellTag(ability_benefactions, STACKABLE_SPELL);
-    registrationAPI.linkSingleTargetAIHandler(ability_benefactions,
-                                              &benefactions_ai_handler);
-    registrationAPI.applySpellTag(ability_benefactions,
-                                  SpellTag::COMBAT_ABILITY_SPELL);
+    SFSpell *ability_benefactions = registrationAPI.registerSpell(kGdSpellLineAbilityBenefactions);
+    registrationAPI.linkTypeHandler(ability_benefactions, &ability_benefactions_handler);
+    registrationAPI.applySpellTag(ability_benefactions, SpellTag::STACKABLE_SPELL);
+    registrationAPI.linkSingleTargetAIHandler(ability_benefactions, &benefactions_ai_handler);
+    registrationAPI.applySpellTag(ability_benefactions, SpellTag::COMBAT_ABILITY_SPELL);
     registrationAPI.applySpellTag(ability_benefactions, SpellTag::AOE_SPELL);
 
-    SFSpell *ability_patronize =
-        registrationAPI.registerSpell(kGdSpellLineAbilityPatronize);
+    SFSpell *ability_patronize = registrationAPI.registerSpell(kGdSpellLineAbilityPatronize);
     registrationAPI.linkTypeHandler(ability_patronize,
                                     &ability_patronize_handler);
     registrationAPI.applySpellTag(ability_patronize, STACKABLE_SPELL);
-    registrationAPI.linkSingleTargetAIHandler(ability_patronize,
-                                              &HCA_ability_ai_handler);
-    registrationAPI.applySpellTag(ability_patronize,
-                                  SpellTag::COMBAT_ABILITY_SPELL);
+    registrationAPI.linkSingleTargetAIHandler(ability_patronize, &HCA_ability_ai_handler);
+    registrationAPI.applySpellTag(ability_patronize, SpellTag::COMBAT_ABILITY_SPELL);
     registrationAPI.applySpellTag(ability_patronize, SpellTag::AOE_SPELL);
 
-    SFSpell *ability_endurance =
-        registrationAPI.registerSpell(kGdSpellLineAbilityEndurance);
-    registrationAPI.linkTypeHandler(ability_endurance,
-                                    &ability_endurance_handler);
-    registrationAPI.linkOnHitHandler(ability_endurance,
-                                     &endurance_onhit_handler, PHASE_0);
+    SFSpell *ability_endurance = registrationAPI.registerSpell(kGdSpellLineAbilityEndurance);
+    registrationAPI.linkTypeHandler(ability_endurance, &ability_endurance_handler);
+    registrationAPI.linkOnHitHandler(ability_endurance, &endurance_onhit_handler, PHASE_0);
     registrationAPI.applySpellTag(ability_endurance, STACKABLE_SPELL);
-    registrationAPI.linkSingleTargetAIHandler(ability_endurance,
-                                              &HCA_ability_ai_handler);
-    registrationAPI.applySpellTag(ability_endurance,
-                                  SpellTag::COMBAT_ABILITY_SPELL);
+    registrationAPI.linkSingleTargetAIHandler(ability_endurance, &HCA_ability_ai_handler);
+    registrationAPI.applySpellTag(ability_endurance, SpellTag::COMBAT_ABILITY_SPELL);
     registrationAPI.applySpellTag(ability_endurance, SpellTag::AOE_SPELL);
 
-    SFSpell *ability_berserk =
-        registrationAPI.registerSpell(kGdSpellLineAbilityBerserk);
-    registrationAPI.linkOnHitHandler(ability_berserk, &berserk_onhit_handler,
-                                     PHASE_0);
+    SFSpell *ability_berserk = registrationAPI.registerSpell(kGdSpellLineAbilityBerserk);
+    registrationAPI.linkOnHitHandler(ability_berserk, &berserk_onhit_handler, PHASE_0);
     registrationAPI.linkTypeHandler(ability_berserk, &ability_berserk_handler);
-    registrationAPI.linkSingleTargetAIHandler(ability_berserk,
-                                              &berserk_ai_handler);
-    registrationAPI.applySpellTag(ability_berserk,
-                                  SpellTag::COMBAT_ABILITY_SPELL);
+    registrationAPI.linkSingleTargetAIHandler(ability_berserk, &berserk_ai_handler);
+    registrationAPI.applySpellTag(ability_berserk, SpellTag::COMBAT_ABILITY_SPELL);
 
-    SFSpell *ability_boons =
-        registrationAPI.registerSpell(kGdSpellLineAbilityBlessing);
+    SFSpell *ability_boons = registrationAPI.registerSpell(kGdSpellLineAbilityBlessing);
     registrationAPI.linkTypeHandler(ability_boons, &ability_boons_handler);
-    registrationAPI.linkSingleTargetAIHandler(ability_boons,
-                                              &blessing_ai_handler);
-    registrationAPI.applySpellTag(ability_boons,
-                                  SpellTag::COMBAT_ABILITY_SPELL);
+    registrationAPI.linkSingleTargetAIHandler(ability_boons, &blessing_ai_handler);
+    registrationAPI.applySpellTag(ability_boons, SpellTag::COMBAT_ABILITY_SPELL);
 
-    SFSpell *ability_shelter =
-        registrationAPI.registerSpell(kGdSpellLineAbilityShelter);
+    SFSpell *ability_shelter = registrationAPI.registerSpell(kGdSpellLineAbilityShelter);
     registrationAPI.linkTypeHandler(ability_shelter, &ability_shelter_handler);
-    registrationAPI.linkSingleTargetAIHandler(ability_shelter,
-                                              &RCA_ability_ai_handler);
-    registrationAPI.applySpellTag(ability_shelter,
-                                  SpellTag::COMBAT_ABILITY_SPELL);
+    registrationAPI.linkSingleTargetAIHandler(ability_shelter, &RCA_ability_ai_handler);
+    registrationAPI.applySpellTag(ability_shelter, SpellTag::COMBAT_ABILITY_SPELL);
 
-    SFSpell *ability_durability =
-        registrationAPI.registerSpell(kGdSpellLineAbilityDurability);
-    registrationAPI.linkTypeHandler(ability_durability,
-                                    &ability_durability_handler);
-    registrationAPI.linkOnHitHandler(ability_durability,
-                                     &durability_onhit_handler, PHASE_0);
-    registrationAPI.linkSingleTargetAIHandler(ability_durability,
-                                              &riposte_ability_ai_handler);
-    registrationAPI.applySpellTag(ability_durability,
-                                  SpellTag::COMBAT_ABILITY_SPELL);
+    SFSpell *ability_durability = registrationAPI.registerSpell(kGdSpellLineAbilityDurability);
+    registrationAPI.linkTypeHandler(ability_durability, &ability_durability_handler);
+    registrationAPI.linkOnHitHandler(ability_durability, &durability_onhit_handler, PHASE_0);
+    registrationAPI.linkSingleTargetAIHandler(ability_durability, &riposte_ability_ai_handler);
+    registrationAPI.applySpellTag(ability_durability, SpellTag::COMBAT_ABILITY_SPELL);
 
-    SFSpell *ability_trueshot =
-        registrationAPI.registerSpell(kGdSpellLineAbilityTrueShot);
-    registrationAPI.linkTypeHandler(ability_trueshot,
-                                    &ability_trueshot_handler);
-    registrationAPI.linkOnHitHandler(ability_trueshot, &trueshot_onhit_handler,
-                                     PHASE_0);
-    registrationAPI.linkSingleTargetAIHandler(ability_trueshot,
-                                              &RCA_ability_ai_handler);
-    registrationAPI.applySpellTag(ability_trueshot,
-                                  SpellTag::COMBAT_ABILITY_SPELL);
+    SFSpell *ability_trueshot = registrationAPI.registerSpell(kGdSpellLineAbilityTrueShot);
+    registrationAPI.linkTypeHandler(ability_trueshot, &ability_trueshot_handler);
+    registrationAPI.linkOnHitHandler(ability_trueshot, &trueshot_onhit_handler, PHASE_0);
+    registrationAPI.linkSingleTargetAIHandler(ability_trueshot, &RCA_ability_ai_handler);
+    registrationAPI.applySpellTag(ability_trueshot, SpellTag::COMBAT_ABILITY_SPELL);
 
-    SFSpell *ability_steelskin =
-        registrationAPI.registerSpell(kGdSpellLineAbilitySteelSkin);
-    registrationAPI.linkTypeHandler(ability_steelskin,
-                                    &ability_steelskin_handler);
-    registrationAPI.linkSingleTargetAIHandler(ability_steelskin,
-                                              &RCA_ability_ai_handler);
-    registrationAPI.applySpellTag(ability_steelskin,
-                                  SpellTag::COMBAT_ABILITY_SPELL);
+    SFSpell *ability_steelskin = registrationAPI.registerSpell(kGdSpellLineAbilitySteelSkin);
+    registrationAPI.linkTypeHandler(ability_steelskin, &ability_steelskin_handler);
+    registrationAPI.linkSingleTargetAIHandler(ability_steelskin, &RCA_ability_ai_handler);
+    registrationAPI.applySpellTag(ability_steelskin, SpellTag::COMBAT_ABILITY_SPELL);
 
-    SFSpell *ability_salvo =
-        registrationAPI.registerSpell(kGdSpellLineAbilitySalvo);
+    SFSpell *ability_salvo = registrationAPI.registerSpell(kGdSpellLineAbilitySalvo);
     registrationAPI.linkTypeHandler(ability_salvo, &ability_salvo_handler);
-    registrationAPI.linkSingleTargetAIHandler(ability_salvo,
-                                              &RCA_ability_ai_handler);
-    registrationAPI.applySpellTag(ability_salvo,
-                                  SpellTag::COMBAT_ABILITY_SPELL);
+    registrationAPI.linkSingleTargetAIHandler(ability_salvo, &RCA_ability_ai_handler);
+    registrationAPI.applySpellTag(ability_salvo, SpellTag::COMBAT_ABILITY_SPELL);
 
-    SFSpell *fireburst2 =
-        registrationAPI.registerSpell(kGdSpellLineFireBurstTower);
+    SFSpell *fireburst2 = registrationAPI.registerSpell(kGdSpellLineFireBurstTower);
     registrationAPI.linkTypeHandler(fireburst2, &fireburst_handler);
     registrationAPI.applySpellTag(fireburst2, SpellTag::STACKABLE_SPELL);
-    registrationAPI.linkSingleTargetAIHandler(fireburst2,
-                                              &fireburst_ai_handler);
+    registrationAPI.linkSingleTargetAIHandler(fireburst2, &fireburst_ai_handler);
 
     // Next Spell Block
 
     SFSpell *spark = registrationAPI.registerSpell(kGdSpellLineSpark);
     registrationAPI.linkTypeHandler(spark, &spark_handler);
+    registrationAPI.linkPhysEffectHandler(spark, &spark_phys_handler);
 
-    SFSpell *tower_hypnotize =
-        registrationAPI.registerSpell(kGdSpellLineHypnotizeTower);
+    SFSpell *tower_hypnotize = registrationAPI.registerSpell(kGdSpellLineHypnotizeTower);
     registrationAPI.linkTypeHandler(tower_hypnotize, &tower_hypnotize_handler);
-    registrationAPI.linkSingleTargetAIHandler(tower_hypnotize,
-                                              &hypnotize_ai_handler);
-    registrationAPI.linkAvoidanceAIHandler(tower_hypnotize,
-                                           &sf_ai_avoidance_hypnotize_handler);
+    registrationAPI.linkSingleTargetAIHandler(tower_hypnotize, &hypnotize_ai_handler);
+    registrationAPI.linkAvoidanceAIHandler(tower_hypnotize, &sf_ai_avoidance_hypnotize_handler);
 
     SFSpell *tower_pain = registrationAPI.registerSpell(kGdSpellLinePainTower);
     registrationAPI.linkTypeHandler(tower_pain, &tower_pain_handler);
 
-    SFSpell *tower_stone =
-        registrationAPI.registerSpell(kGdSpellLineStoneTower);
+    SFSpell *tower_stone = registrationAPI.registerSpell(kGdSpellLineStoneTower);
     registrationAPI.linkTypeHandler(tower_stone, &tower_stone_handler);
 
-    SFSpell *cloak_of_nor =
-        registrationAPI.registerSpell(kGdSpellLineProtectionBlack);
+    SFSpell *cloak_of_nor = registrationAPI.registerSpell(kGdSpellLineProtectionBlack);
     registrationAPI.linkTypeHandler(cloak_of_nor, &cloak_of_nor_handler);
-    registrationAPI.linkSingleTargetAIHandler(cloak_of_nor,
-                                              &do_not_cast_ai_handler);
+    registrationAPI.linkSingleTargetAIHandler(cloak_of_nor, &do_not_cast_ai_handler);
 
-    SFSpell *unkn_spell2 =
-        registrationAPI.registerSpell(kGdSpellLineDoNotTouchMe);
+    SFSpell *unkn_spell2 = registrationAPI.registerSpell(kGdSpellLineDoNotTouchMe);
     registrationAPI.linkTypeHandler(unkn_spell2, &unkn_spell2_handler);
 
     SFSpell *healing3 = registrationAPI.registerSpell(kGdSpellLineHealingAura);
     registrationAPI.linkTypeHandler(healing3, &healing_handler);
 
-    SFSpell *hypnotize2 =
-        registrationAPI.registerSpell(kGdSpellLineHypnotizeTwo);
+    SFSpell *hypnotize2 = registrationAPI.registerSpell(kGdSpellLineHypnotizeTwo);
     registrationAPI.linkTypeHandler(hypnotize2, &hypnotize_handler);
-    registrationAPI.linkSingleTargetAIHandler(hypnotize2,
-                                              &hypnotize_ai_handler);
-    registrationAPI.linkAvoidanceAIHandler(hypnotize2,
-                                           &sf_ai_avoidance_hypnotize_handler);
+    registrationAPI.linkSingleTargetAIHandler(hypnotize2, &hypnotize_ai_handler);
+    registrationAPI.linkAvoidanceAIHandler(hypnotize2, &sf_ai_avoidance_hypnotize_handler);
 
-    SFSpell *freeze2 =
-        registrationAPI.registerSpell(kGdSpellLineIceArrowEffect);
+    SFSpell *freeze2 = registrationAPI.registerSpell(kGdSpellLineIceArrowEffect);
     registrationAPI.linkTypeHandler(freeze2, &freeze2_handler);
 
-    SFSpell *freeze3 =
-        registrationAPI.registerSpell(kGdSpellLineIceBlockEffect);
+    SFSpell *freeze3 = registrationAPI.registerSpell(kGdSpellLineIceBlockEffect);
     registrationAPI.linkTypeHandler(freeze3, &freeze3_handler);
 
-    SFSpell *lava_bullet =
-        registrationAPI.registerSpell(kGdSpellLineFireBlockEffect);
+    SFSpell *lava_bullet = registrationAPI.registerSpell(kGdSpellLineFireBlockEffect);
     registrationAPI.linkTypeHandler(lava_bullet, &lava_bullet_handler);
 
-    SFSpell *tower_extinct =
-        registrationAPI.registerSpell(kGdSpellLineExtinctTower);
+    SFSpell *tower_extinct = registrationAPI.registerSpell(kGdSpellLineExtinctTower);
     registrationAPI.linkTypeHandler(tower_extinct, &tower_extinct_handler);
-    registrationAPI.linkSingleTargetAIHandler(tower_extinct,
-                                              &tower_extinct_ai_handler);
+    registrationAPI.linkSingleTargetAIHandler(tower_extinct, &tower_extinct_ai_handler);
 
-    SFSpell *manatap_aura =
-        registrationAPI.registerSpell(kGdSpellLineManaTapAura);
+    SFSpell *manatap_aura = registrationAPI.registerSpell(kGdSpellLineManaTapAura);
     registrationAPI.linkTypeHandler(manatap_aura, &manatap_aura_handler);
 
-    SFSpell *firebane =
-        registrationAPI.registerSpell(kGdSpellLineFireResistance);
+    SFSpell *firebane = registrationAPI.registerSpell(kGdSpellLineFireResistance);
     registrationAPI.linkTypeHandler(firebane, &firebane_handler);
 
-    SFSpell *black_essence =
-        registrationAPI.registerSpell(kGdSpellLineEssenceBlack);
+    SFSpell *black_essence = registrationAPI.registerSpell(kGdSpellLineEssenceBlack);
     registrationAPI.linkTypeHandler(black_essence, &black_essence_handler);
 
-    SFSpell *white_essence =
-        registrationAPI.registerSpell(kGdSpellLineEssenceWhite);
+    SFSpell *white_essence = registrationAPI.registerSpell(kGdSpellLineEssenceWhite);
     registrationAPI.linkTypeHandler(white_essence, &white_essence_handler);
 
     // Next Spell Block
 
-    SFSpell *elemental_essence =
-        registrationAPI.registerSpell(kGdSpellLineEssenceElemental);
-    registrationAPI.linkTypeHandler(elemental_essence,
-                                    &elemental_essence_handler);
+    SFSpell *elemental_essence = registrationAPI.registerSpell(kGdSpellLineEssenceElemental);
+    registrationAPI.linkTypeHandler(elemental_essence, &elemental_essence_handler);
 
-    SFSpell *mental_essence =
-        registrationAPI.registerSpell(kGdSpellLineEssenceMental);
+    SFSpell *mental_essence = registrationAPI.registerSpell(kGdSpellLineEssenceMental);
     registrationAPI.linkTypeHandler(mental_essence, &mental_essence_handler);
 
-    SFSpell *black_almightness =
-        registrationAPI.registerSpell(kGdSpellLineAlmightinessBlack);
-    registrationAPI.linkTypeHandler(black_almightness,
-                                    &black_almightness_handler);
+    SFSpell *black_almightness = registrationAPI.registerSpell(kGdSpellLineAlmightinessBlack);
+    registrationAPI.linkTypeHandler(black_almightness, &black_almightness_handler);
 
-    SFSpell *white_almightness =
-        registrationAPI.registerSpell(kGdSpellLineAlmightinessWhite);
-    registrationAPI.linkTypeHandler(white_almightness,
-                                    &white_almightness_handler);
+    SFSpell *white_almightness = registrationAPI.registerSpell(kGdSpellLineAlmightinessWhite);
+    registrationAPI.linkTypeHandler(white_almightness, &white_almightness_handler);
 
-    SFSpell *elemental_almightness =
-        registrationAPI.registerSpell(kGdSpellLineAlmightinessElemental);
-    registrationAPI.linkTypeHandler(elemental_almightness,
-                                    &elemental_almightness_handler);
+    SFSpell *elemental_almightness = registrationAPI.registerSpell(kGdSpellLineAlmightinessElemental);
+    registrationAPI.linkTypeHandler(elemental_almightness, &elemental_almightness_handler);
 
-    SFSpell *mental_almightness =
-        registrationAPI.registerSpell(kGdSpellLineAlmightinessMental);
-    registrationAPI.linkTypeHandler(mental_almightness,
-                                    &mental_almightness_handler);
+    SFSpell *mental_almightness = registrationAPI.registerSpell(kGdSpellLineAlmightinessMental);
+    registrationAPI.linkTypeHandler(mental_almightness, &mental_almightness_handler);
 
-    SFSpell *elemental_almightness2 =
-        registrationAPI.registerSpell(kGdSpellLineAlmightinessElementalEffect);
-    registrationAPI.linkTypeHandler(elemental_almightness2,
-                                    &elemental_almightness2_handler);
+    SFSpell *elemental_almightness2 = registrationAPI.registerSpell(kGdSpellLineAlmightinessElementalEffect);
+    registrationAPI.linkTypeHandler(elemental_almightness2, &elemental_almightness2_handler);
 
-    SFSpell *elemental_essence2 =
-        registrationAPI.registerSpell(kGdSpellLineEssenceElementalEffect);
-    registrationAPI.linkTypeHandler(elemental_essence2,
-                                    &elemental_essence2_handler);
+    SFSpell *elemental_essence2 = registrationAPI.registerSpell(kGdSpellLineEssenceElementalEffect);
+    registrationAPI.linkTypeHandler(elemental_essence2, &elemental_essence2_handler);
 
     SFSpell *assistance = registrationAPI.registerSpell(kGdSpellLineAssistance);
-    registrationAPI.linkOnHitHandler(assistance, &assistance_onhit_handler,
-                                     PHASE_2);
+    registrationAPI.linkOnHitHandler(assistance, &assistance_onhit_handler, PHASE_2);
     registrationAPI.applySpellTag(assistance, TARGET_ONHIT_SPELL);
     registrationAPI.linkTypeHandler(assistance, &assistance_handler);
 
@@ -985,12 +1417,10 @@ void initialize_vanilla_spells()
 
     SFSpell *area_roots = registrationAPI.registerSpell(kGdSpellLineRootsArea);
     registrationAPI.linkTypeHandler(area_roots, &area_roots_handler);
-    registrationAPI.linkAOEAIHandler(area_roots,
-                                     &default_aoe_offensive_ai_handler);
+    registrationAPI.linkAOEAIHandler(area_roots, &default_aoe_offensive_ai_handler);
     registrationAPI.applySpellTag(area_roots, SpellTag::AOE_SPELL);
 
-    SFSpell *summon_11 =
-        registrationAPI.registerSpell(kGdSpellLineSummonTreeWraith);
+    SFSpell *summon_11 = registrationAPI.registerSpell(kGdSpellLineSummonTreeWraith);
     registrationAPI.linkTypeHandler(summon_11, &summons_handler);
     registrationAPI.applySpellTag(summon_11, SpellTag::SUMMON_SPELL);
     registrationAPI.applySpellTag(summon_11, SpellTag::STACKABLE_SPELL);
@@ -1002,8 +1432,7 @@ void initialize_vanilla_spells()
     SFSpell *chain = registrationAPI.registerSpell(kGdSpellLineChainHallow);
     registrationAPI.linkTypeHandler(chain, &chain_handler);
 
-    SFSpell *reinforcement =
-        registrationAPI.registerSpell(kGdSpellLineReinforcement);
+    SFSpell *reinforcement = registrationAPI.registerSpell(kGdSpellLineReinforcement);
     registrationAPI.linkTypeHandler(reinforcement, &reinforcement_handler);
     registrationAPI.applySpellTag(reinforcement, SpellTag::AOE_SPELL);
 
@@ -1011,8 +1440,7 @@ void initialize_vanilla_spells()
 
     SFSpell *aura20 = registrationAPI.registerSpell(kGdSpellLineAuraEternity);
     registrationAPI.linkTypeHandler(aura20, &aura_handler);
-    registrationAPI.linkSingleTargetAIHandler(aura20,
-                                              &defensive_aura_ai_handler);
+    registrationAPI.linkSingleTargetAIHandler(aura20, &defensive_aura_ai_handler);
     registrationAPI.linkEndHandler(aura20, &aura_end_handler);
     registrationAPI.applySpellTag(aura20, SpellTag::AURA_SPELL);
     registrationAPI.applySpellTag(aura20, SpellTag::WHITE_AURA_SPELL);
@@ -1020,8 +1448,7 @@ void initialize_vanilla_spells()
     SFSpell *chain2 = registrationAPI.registerSpell(kGdSpellLineChainPain);
     registrationAPI.linkTypeHandler(chain2, &chain_handler);
 
-    SFSpell *cannibalize =
-        registrationAPI.registerSpell(kGdSpellLineCannibalize);
+    SFSpell *cannibalize = registrationAPI.registerSpell(kGdSpellLineCannibalize);
     registrationAPI.linkTypeHandler(cannibalize, &cannibalize_handler);
 
     SFSpell *torture = registrationAPI.registerSpell(kGdSpellLineTorture);
@@ -1032,9 +1459,9 @@ void initialize_vanilla_spells()
     SFSpell *chain3 = registrationAPI.registerSpell(kGdSpellLineChainLifetap);
     registrationAPI.linkTypeHandler(chain3, &chain_handler);
 
-    SFSpell *dominate_undead =
-        registrationAPI.registerSpell(kGdSpellLineDominateUndead);
+    SFSpell *dominate_undead = registrationAPI.registerSpell(kGdSpellLineDominateUndead);
     registrationAPI.linkTypeHandler(dominate_undead, &dominate_undead_handler);
+    registrationAPI.linkSingleTargetAIHandler(dominate_undead, &dominate_undead_ai_handler);
     registrationAPI.applySpellTag(dominate_undead, SpellTag::DOMINATION_SPELL);
 
     SFSpell *summon_12 = registrationAPI.registerSpell(kGdSpellLineSummonBlade);
@@ -1046,8 +1473,7 @@ void initialize_vanilla_spells()
     SFSpell *mutation = registrationAPI.registerSpell(kGdSpellLineMutation);
     registrationAPI.linkTypeHandler(mutation, &mutation_handler);
 
-    SFSpell *area_darkness =
-        registrationAPI.registerSpell(kGdSpellLineDarknessArea);
+    SFSpell *area_darkness = registrationAPI.registerSpell(kGdSpellLineDarknessArea);
     registrationAPI.linkTypeHandler(area_darkness, &area_darkness_handler);
     registrationAPI.applySpellTag(area_darkness, SpellTag::AOE_SPELL);
 
@@ -1057,8 +1483,7 @@ void initialize_vanilla_spells()
     SFSpell *chain5 = registrationAPI.registerSpell(kGdSpellLineChainFireburst);
     registrationAPI.linkTypeHandler(chain5, &chain_handler);
 
-    SFSpell *summon_13 =
-        registrationAPI.registerSpell(kGdSpellLineSummonFireGolem);
+    SFSpell *summon_13 = registrationAPI.registerSpell(kGdSpellLineSummonFireGolem);
     registrationAPI.linkTypeHandler(summon_13, &summons_handler);
     registrationAPI.applySpellTag(summon_13, SpellTag::SUMMON_SPELL);
     registrationAPI.applySpellTag(summon_13, SpellTag::STACKABLE_SPELL);
@@ -1070,27 +1495,23 @@ void initialize_vanilla_spells()
     SFSpell *chain7 = registrationAPI.registerSpell(kGdSpellLineChainIceburst);
     registrationAPI.linkTypeHandler(chain7, &chain_handler);
 
-    SFSpell *summon_14 =
-        registrationAPI.registerSpell(kGdSpellLineSummonIceGolem);
+    SFSpell *summon_14 = registrationAPI.registerSpell(kGdSpellLineSummonIceGolem);
     registrationAPI.linkTypeHandler(summon_14, &summons_handler);
     registrationAPI.applySpellTag(summon_14, SpellTag::SUMMON_SPELL);
     registrationAPI.applySpellTag(summon_14, SpellTag::STACKABLE_SPELL);
     registrationAPI.linkSingleTargetAIHandler(summon_14, &summon_ai_handler);
 
-    SFSpell *area_freeze =
-        registrationAPI.registerSpell(kGdSpellLineFreezeArea);
+    SFSpell *area_freeze = registrationAPI.registerSpell(kGdSpellLineFreezeArea);
     registrationAPI.linkTypeHandler(area_freeze, &area_freeze_handler);
     registrationAPI.applySpellTag(area_freeze, SpellTag::AOE_SPELL);
     registrationAPI.linkAOEAIHandler(area_freeze, &area_freeze_ai_handler);
 
     // Next Spell Block
 
-    SFSpell *chain8 =
-        registrationAPI.registerSpell(kGdSpellLineChainRockBullet);
+    SFSpell *chain8 = registrationAPI.registerSpell(kGdSpellLineChainRockBullet);
     registrationAPI.linkTypeHandler(chain8, &chain_handler);
 
-    SFSpell *summon_15 =
-        registrationAPI.registerSpell(kGdSpellLineSummonEarthGolem);
+    SFSpell *summon_15 = registrationAPI.registerSpell(kGdSpellLineSummonEarthGolem);
     registrationAPI.linkTypeHandler(summon_15, &summons_handler);
     registrationAPI.applySpellTag(summon_15, SpellTag::SUMMON_SPELL);
     registrationAPI.applySpellTag(summon_15, SpellTag::STACKABLE_SPELL);
@@ -1112,20 +1533,15 @@ void initialize_vanilla_spells()
     SFSpell *chain10 = registrationAPI.registerSpell(kGdSpellLineChainShock);
     registrationAPI.linkTypeHandler(chain10, &chain_handler);
 
-    SFSpell *area_hypnotize =
-        registrationAPI.registerSpell(kGdSpellLineHypnotizeArea);
+    SFSpell *area_hypnotize = registrationAPI.registerSpell(kGdSpellLineHypnotizeArea);
     registrationAPI.linkTypeHandler(area_hypnotize, &area_hypnotize_handler);
-    registrationAPI.linkAOEAIHandler(area_hypnotize,
-                                     &hypnotize_area_ai_handler);
-    registrationAPI.linkAvoidanceAIHandler(area_hypnotize,
-                                           &sf_ai_avoidance_hypnotize_handler);
+    registrationAPI.linkAOEAIHandler(area_hypnotize, &hypnotize_area_ai_handler);
+    registrationAPI.linkAvoidanceAIHandler(area_hypnotize, &sf_ai_avoidance_hypnotize_handler);
     registrationAPI.applySpellTag(area_hypnotize, SpellTag::AOE_SPELL);
 
-    SFSpell *area_confuse =
-        registrationAPI.registerSpell(kGdSpellLineConfuseArea);
+    SFSpell *area_confuse = registrationAPI.registerSpell(kGdSpellLineConfuseArea);
     registrationAPI.linkTypeHandler(area_confuse, &area_confuse_handler);
-    registrationAPI.linkAOEAIHandler(area_confuse,
-                                     &default_aoe_offensive_ai_handler);
+    registrationAPI.linkAOEAIHandler(area_confuse, &default_aoe_offensive_ai_handler);
     registrationAPI.applySpellTag(area_confuse, SpellTag::AOE_SPELL);
 
     SFSpell *chain11 = registrationAPI.registerSpell(kGdSpellLineChainManatap);
@@ -1137,96 +1553,74 @@ void initialize_vanilla_spells()
     SFSpell *shift_mana = registrationAPI.registerSpell(kGdSpellLineShiftMana);
     registrationAPI.linkTypeHandler(shift_mana, &shift_mana_handler);
 
-    SFSpell *ability_shift_life =
-        registrationAPI.registerSpell(kGdSpellLineAbilityShiftLife);
-    registrationAPI.linkTypeHandler(ability_shift_life,
-                                    &ability_shift_life_handler);
-    registrationAPI.linkSingleTargetAIHandler(ability_shift_life,
-                                              &shift_life_ai_handler);
-    registrationAPI.applySpellTag(ability_shift_life,
-                                  SpellTag::COMBAT_ABILITY_SPELL);
+    SFSpell *ability_shift_life = registrationAPI.registerSpell(kGdSpellLineAbilityShiftLife);
+    registrationAPI.linkTypeHandler(ability_shift_life, &ability_shift_life_handler);
+    registrationAPI.linkSingleTargetAIHandler(ability_shift_life, &shift_life_ai_handler);
+    registrationAPI.applySpellTag(ability_shift_life, SpellTag::COMBAT_ABILITY_SPELL);
 
-    SFSpell *ability_riposte =
-        registrationAPI.registerSpell(kGdSpellLineAbilityRiposte);
-    registrationAPI.applySpellTag(ability_riposte,
-                                  SpellTag::TARGET_ONHIT_SPELL);
+    SFSpell *ability_riposte = registrationAPI.registerSpell(kGdSpellLineAbilityRiposte);
+    registrationAPI.applySpellTag(ability_riposte, SpellTag::TARGET_ONHIT_SPELL);
     registrationAPI.linkTypeHandler(ability_riposte, &ability_riposte_handler);
-    registrationAPI.linkOnHitHandler(ability_riposte, &riposte_onhit_handler,
-                                     PHASE_3);
-    registrationAPI.linkSingleTargetAIHandler(ability_riposte,
-                                              &riposte_ability_ai_handler);
-    registrationAPI.applySpellTag(ability_riposte,
-                                  SpellTag::COMBAT_ABILITY_SPELL);
+    registrationAPI.linkOnHitHandler(ability_riposte, &riposte_onhit_handler, PHASE_3);
+    registrationAPI.linkSingleTargetAIHandler(ability_riposte, &riposte_ability_ai_handler);
+    registrationAPI.applySpellTag(ability_riposte, SpellTag::COMBAT_ABILITY_SPELL);
 
-    SFSpell *ability_critical_hits =
-        registrationAPI.registerSpell(kGdSpellLineAbilityCriticalHits);
-    registrationAPI.linkTypeHandler(ability_critical_hits,
-                                    &ability_critical_hits_handler);
-    registrationAPI.linkOnHitHandler(ability_critical_hits,
-                                     &critical_hits_onhit_handler, PHASE_1);
-    registrationAPI.linkSingleTargetAIHandler(ability_riposte,
-                                              &critical_hits_ai_handler);
-    registrationAPI.applySpellTag(ability_riposte,
-                                  SpellTag::COMBAT_ABILITY_SPELL);
+    SFSpell *ability_critical_hits = registrationAPI.registerSpell(kGdSpellLineAbilityCriticalHits);
+    registrationAPI.linkTypeHandler(ability_critical_hits, &ability_critical_hits_handler);
+    registrationAPI.linkOnHitHandler(ability_critical_hits, &critical_hits_onhit_handler, PHASE_1);
+    registrationAPI.linkSingleTargetAIHandler(ability_critical_hits, &critical_hits_ai_handler);
+    registrationAPI.applySpellTag(ability_critical_hits, SpellTag::COMBAT_ABILITY_SPELL);
 
     SFSpell *aura21 = registrationAPI.registerSpell(kGdSpellLineAuraSiegeHuman);
-    registrationAPI.linkTypeHandler(aura21, &aura_handler);
-    registrationAPI.applySpellTag(aura21, SpellTag::SEIGE_AURA_SPELL);
+    registrationAPI.linkTypeHandler(aura21, &siege_aura_handler);
+    registrationAPI.applySpellTag(aura21, SpellTag::SIEGE_AURA_SPELL);
     registrationAPI.linkEndHandler(aura21, &aura_end_handler);
     // Next Spell Block
 
     // Unused Spell Here
 
     SFSpell *aura22 = registrationAPI.registerSpell(kGdSpellLineAuraSiegeElf); // TODO Find Spell Name
-    registrationAPI.linkTypeHandler(aura22, &aura_handler);
-    registrationAPI.applySpellTag(aura22, SpellTag::SEIGE_AURA_SPELL);
+    registrationAPI.linkTypeHandler(aura22, &siege_aura_handler);
+    registrationAPI.applySpellTag(aura22, SpellTag::SIEGE_AURA_SPELL);
     registrationAPI.linkEndHandler(aura22, &aura_end_handler);
 
     SFSpell *aura23 = registrationAPI.registerSpell(kGdSpellLineAuraSiegeOrc); // TODO Find Spell Name
-    registrationAPI.linkTypeHandler(aura23, &aura_handler);
-    registrationAPI.applySpellTag(aura23, SpellTag::SEIGE_AURA_SPELL);
+    registrationAPI.linkTypeHandler(aura23, &siege_aura_handler);
+    registrationAPI.applySpellTag(aura23, SpellTag::SIEGE_AURA_SPELL);
     registrationAPI.linkEndHandler(aura23, &aura_end_handler);
 
     SFSpell *aura24 = registrationAPI.registerSpell(kGdSpellLineAuraSiegeTroll); // TODO Find Spell Name
-    registrationAPI.linkTypeHandler(aura24, &aura_handler);
-    registrationAPI.applySpellTag(aura24, SpellTag::SEIGE_AURA_SPELL);
+    registrationAPI.linkTypeHandler(aura24, &siege_aura_handler);
+    registrationAPI.applySpellTag(aura24, SpellTag::SIEGE_AURA_SPELL);
     registrationAPI.linkEndHandler(aura24, &aura_end_handler);
 
-    SFSpell *aura25 =
-        registrationAPI.registerSpell(kGdSpellLineAuraSiegeDarkElf);               // TODO Find Spell Name
-    registrationAPI.linkTypeHandler(aura25, &aura_handler);
-    registrationAPI.applySpellTag(aura25, SpellTag::SEIGE_AURA_SPELL);
+    SFSpell *aura25 = registrationAPI.registerSpell(kGdSpellLineAuraSiegeDarkElf);               // TODO Find Spell Name
+    registrationAPI.linkTypeHandler(aura25, &siege_aura_handler);
+    registrationAPI.applySpellTag(aura25, SpellTag::SIEGE_AURA_SPELL);
     registrationAPI.linkEndHandler(aura25, &aura_end_handler);
 
-    SFSpell *eternity_aura =
-        registrationAPI.registerSpell(kGdSpellLineEternity);
+    SFSpell *eternity_aura = registrationAPI.registerSpell(kGdSpellLineEternity);
     registrationAPI.linkTypeHandler(eternity_aura, &eternity_aura_handler);
 
     SFSpell *hallow2 = registrationAPI.registerSpell(kGdSpellLineHallowChained);
     registrationAPI.linkTypeHandler(hallow2, &hallow_handler);
 
-    SFSpell *lifetap2 =
-        registrationAPI.registerSpell(kGdSpellLineLifeTapChained);
+    SFSpell *lifetap2 = registrationAPI.registerSpell(kGdSpellLineLifeTapChained);
     registrationAPI.linkTypeHandler(lifetap2, &lifetap_handler);
 
-    SFSpell *manatap2 =
-        registrationAPI.registerSpell(kGdSpellLineManaTapChained);
+    SFSpell *manatap2 = registrationAPI.registerSpell(kGdSpellLineManaTapChained);
     registrationAPI.linkTypeHandler(manatap2, &manatap_handler);
 
-    SFSpell *mutation2 =
-        registrationAPI.registerSpell(kGdSpellLineMutationChained);
+    SFSpell *mutation2 = registrationAPI.registerSpell(kGdSpellLineMutationChained);
     registrationAPI.linkTypeHandler(mutation2, &mutation_handler);
 
-    SFSpell *fireburst3 =
-        registrationAPI.registerSpell(kGdSpellLineFireBurstChained);
+    SFSpell *fireburst3 = registrationAPI.registerSpell(kGdSpellLineFireBurstChained);
     registrationAPI.linkTypeHandler(fireburst3, &fireburst_handler);
 
-    SFSpell *icestrike2 =
-        registrationAPI.registerSpell(kGdSpellLineIceBurstChained);
+    SFSpell *icestrike2 = registrationAPI.registerSpell(kGdSpellLineIceBurstChained);
     registrationAPI.linkTypeHandler(icestrike2, &icestrike_handler);
 
-    SFSpell *rock_bullet2 =
-        registrationAPI.registerSpell(kGdSpellLineRockBulletChained);
+    SFSpell *rock_bullet2 = registrationAPI.registerSpell(kGdSpellLineRockBulletChained);
     registrationAPI.linkTypeHandler(rock_bullet2, &rock_bullet_handler);
 
     SFSpell *charm2 = registrationAPI.registerSpell(kGdSpellLineCharmChained);
@@ -1236,8 +1630,7 @@ void initialize_vanilla_spells()
     SFSpell *shock2 = registrationAPI.registerSpell(kGdSpellLineShockChained);
     registrationAPI.linkTypeHandler(shock2, &shock_handler);
 
-    SFSpell *fireball3 =
-        registrationAPI.registerSpell(kGdSpellLineFireBallChained);
+    SFSpell *fireball3 = registrationAPI.registerSpell(kGdSpellLineFireBallChained);
     registrationAPI.linkTypeHandler(fireball3, &fireball_handler);
 
     // Next Spell Block
@@ -1245,9 +1638,7 @@ void initialize_vanilla_spells()
     SFSpell *pain2 = registrationAPI.registerSpell(kGdSpellLinePainChained);
     registrationAPI.linkTypeHandler(pain2, &pain_handler);
 
-    SFSpell *belial_effect =
-        registrationAPI.registerSpell(kGdSpellLineFakeSpellOneFigure);
+    SFSpell *belial_effect = registrationAPI.registerSpell(kGdSpellLineFakeSpellOneFigure);
     registrationAPI.linkTypeHandler(belial_effect, &belial_effect_handler);
-    registrationAPI.linkSingleTargetAIHandler(belial_effect,
-                                              &do_not_cast_ai_handler);
+    registrationAPI.linkSingleTargetAIHandler(belial_effect, &do_not_cast_ai_handler);
 }

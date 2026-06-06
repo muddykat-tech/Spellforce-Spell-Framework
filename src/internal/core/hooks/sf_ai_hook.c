@@ -22,10 +22,10 @@ void clearAction(SF_SGtFigureAction *_this)
 {
     _this->type = 0xffff;
     _this->subtype = 0;
+    _this->unkn1 = 0;
     _this->unkn2 = 0;
     _this->unkn3 = 0;
     _this->unkn4 = 0;
-    _this->unkn5 = 0;
 }
 
 bool isSpellAction(SF_SGtFigureAction *_this)
@@ -75,10 +75,6 @@ uint32_t __thiscall rank_support_spell_hook(SF_CGdBattleDevelopment *_this,
 {
     bool isStackable = hasSpellTag(spell_line, SpellTag::STACKABLE_SPELL);
 
-    /* char message[256];
-       sprintf(message, "SpellLine: %hd Target: %hd isStackable: %d", spell_line, target_index, isStackable);
-       log_info(message);
-     */
     ai_single_handler_ptr handler = get_single_ai_handler(spell_line);
     uint32_t rank = handler(_this, target_index, spell_line, spell_data);
     if ((toolboxAPI.hasSpellOnIt(_this->battleData.CGdFigureToolBox,
@@ -96,10 +92,6 @@ uint32_t __thiscall rank_offensive_spell_hook(SF_CGdBattleDevelopment *_this,
 {
     bool isStackable = hasSpellTag(spell_line, SpellTag::STACKABLE_SPELL);
 
-    /* char message[256];
-       sprintf(message, "SpellLine: %hd Target: %hd isStackable: %d", spell_line, target_index, isStackable);
-       log_info(message);
-     */
     ai_single_handler_ptr handler = get_single_ai_handler(spell_line);
     if (handler == &default_support_ai_handler)
     {
@@ -142,7 +134,14 @@ uint32_t __thiscall avoidance_penalty_hook(SF_CGdBattleDevelopment *_this,
     return result;
 }
 
+uint32_t __thiscall ai_AOE2_hook(SF_CGdBattleDevelopment *_this,
+                                 SF_Coord *cast_pos, uint16_t spell_line,
+                                 SF_CGdResourceSpell *spell_data)
+{
+    ai_aoe_handler_ptr handler = get_ai_aoe_handler(spell_line);
+    return handler(_this, cast_pos, spell_line, spell_data);
 
+}
 uint32_t __thiscall ai_AOE_hook(SF_CGdBattleDevelopment *_this,
                                 SF_Coord cast_pos, uint16_t spell_line,
                                 SF_CGdResourceSpell *spell_data)

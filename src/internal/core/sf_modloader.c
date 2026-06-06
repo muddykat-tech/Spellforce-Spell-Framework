@@ -15,17 +15,15 @@ int g_error_count = 0;
 
 void cleanup(void *modHandle)
 {
-    // Free resources (unload mod library using FreeLibrary)
     if (modHandle)
     {
         FreeLibrary((HMODULE)modHandle);
     }
 }
 
-// Function to extract filename from the path
 const char *get_filename(const char *path)
 {
-    const char *filename = strrchr(path, '\\'); // Find the last occurrence of '\\' in the path
+    const char *filename = strrchr(path, '\\');
     return (filename) ? (filename + 1) : path;
 }
 
@@ -53,11 +51,7 @@ void load_mod(const char *modPath, void *pFrameworkAPI)
 
     if (!registerMod)
     {
-        char warn[256];
-        snprintf(warn, sizeof(warn),
-                 "| - Failed to Initialize %s has erroneous mod data. (0_0)",
-                 get_filename(modPath));
-        log_warning(warn);
+        log_warning("| - Failed to Initialize %s has erroneous mod data. (0_0)", get_filename(modPath));
         log_error("| - Failed to get address of RegisterMod (X_X)");
         g_error_count += 1;
         return;
@@ -66,10 +60,7 @@ void load_mod(const char *modPath, void *pFrameworkAPI)
     g_current_mod = registerMod(pFrameworkAPI);
     initModule(pFrameworkAPI);
     g_mod_count += 1;
-    char infomsg[256];
-    snprintf(infomsg, sizeof(infomsg), "| - [Initialized Mod: %s (Ver. %s)]",
-             g_current_mod->mod_id, g_current_mod->mod_version);
-    log_info(infomsg);
+    log_info("| - [Initialized Mod: %s (Ver. %s)]", g_current_mod->mod_id, g_current_mod->mod_version);
     return;
 }
 
@@ -100,19 +91,13 @@ void load_all_mods(const char *subfolder, void *pFrameworkAPI)
     }
     else
     {
-        char msgbuf[MAX_PATH];
-        snprintf(msgbuf, sizeof(msgbuf),
-                 "| - Failed to find mods in directory: %s", modDirectory);
-        log_error(msgbuf);
+        log_error("| - Failed to find mods in directory: %s", modDirectory);
     }
 }
 
 void initialize_mods()
 {
+    log_info("| - Core Mod [%s] Initialized", g_current_mod->mod_id);
     load_all_mods("sfsf", &frameworkAPI);
-    static char info_str[256];
-    snprintf(info_str, sizeof(info_str),
-             "| - %d Mods Initialized with %d error(s)", g_mod_count,
-             g_error_count);
-    log_info(info_str);
+    log_info("| - %d Mods Initialized with %d error(s)", g_mod_count, g_error_count);
 }

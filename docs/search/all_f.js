@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['padding_0',['padding',['../struct_auto_class60__data.html#a60838c9ab425de88c90cada2f470372b',1,'AutoClass60_data::padding'],['../struct_auto_class24.html#a32f4f1642adb4e280d1c6a83426d6402',1,'AutoClass24::padding'],['../struct_s_f___c_gd_figure_jobs.html#ac87d99b9f827336a16691a4819da2663',1,'SF_CGdFigureJobs::padding'],['../struct_c_gd_controller_client_data.html#ae133a4060e542400d359b722e3b4f190',1,'CGdControllerClientData::padding']]],
+  ['padding_0',['padding',['../struct_auto_class60__data.html#a60838c9ab425de88c90cada2f470372b',1,'EntityPriorityList_data::padding'],['../struct_auto_class24.html#a32f4f1642adb4e280d1c6a83426d6402',1,'FigureJobData::padding'],['../struct_s_f___c_gd_figure_jobs.html#ac87d99b9f827336a16691a4819da2663',1,'SF_CGdFigureJobs::padding'],['../struct_c_gd_controller_client_data.html#ae133a4060e542400d359b722e3b4f190',1,'CGdControllerClientData::padding']]],
   ['padding1_1',['padding1',['../struct_gd_figure.html#afd5e7550cd150a80c9b3abefd8eb7f3b',1,'GdFigure']]],
-  ['padding2_2',['padding2',['../struct_auto_class24.html#adb0e45c7f9356036df008f8715f5b870',1,'AutoClass24::padding2'],['../struct_gd_figure.html#abf33f5b6fc98afed9c9b2f62956c5d68',1,'GdFigure::padding2'],['../struct_s_f___c_gd_figure_jobs.html#ada1d1a71f00c4f91ea8af9366c77f264',1,'SF_CGdFigureJobs::padding2']]],
+  ['padding2_2',['padding2',['../struct_auto_class24.html#adb0e45c7f9356036df008f8715f5b870',1,'FigureJobData::padding2'],['../struct_gd_figure.html#abf33f5b6fc98afed9c9b2f62956c5d68',1,'GdFigure::padding2'],['../struct_s_f___c_gd_figure_jobs.html#ada1d1a71f00c4f91ea8af9366c77f264',1,'SF_CGdFigureJobs::padding2']]],
   ['padding3_3',['padding3',['../struct_gd_figure.html#af80be0d58bdd1c12cdff6e86f37dd28e',1,'GdFigure::padding3'],['../struct_s_f___c_gd_figure_jobs.html#a4ca54214d0eaf2685a6d334f0e066662',1,'SF_CGdFigureJobs::padding3']]],
   ['padding4_4',['padding4',['../struct_gd_figure.html#aec30b05081eee2c6585a0b3e96dfbab2',1,'GdFigure::padding4'],['../struct_s_f___c_gd_figure_jobs.html#a628fc5effcfe6d4ef4eb04fe6cda0423',1,'SF_CGdFigureJobs::padding4']]],
   ['padding_5fend_5',['padding_end',['../struct_c_mnu_button__data.html#aa437855a5717ce1bfcb16614c2bda5dd',1,'CMnuButton_data']]],
@@ -23,7 +23,7 @@ var searchData=
   ['path_5fbits_20',['path_bits',['../struct_gd_figure.html#a85a00e971f749b63b6ae23fd7a7f08b3',1,'GdFigure']]],
   ['path_5fdir_21',['path_dir',['../struct_gd_figure.html#acfe7df435ebc758916f3a3a53fff7d68',1,'GdFigure']]],
   ['path_5fwish_5fdir_22',['path_wish_dir',['../struct_gd_figure.html#ad30be0a1ef49a580a925cb1a1869c464',1,'GdFigure']]],
-  ['pathing_5fmode_23',['pathing_mode',['../struct_auto_class24.html#a93b2753d626d9e87c245345b9b4a73d7',1,'AutoClass24']]],
+  ['pathing_5fmode_23',['pathing_mode',['../struct_auto_class24.html#a93b2753d626d9e87c245345b9b4a73d7',1,'FigureJobData']]],
   ['patrol_5fmode_24',['PATROL_MODE',['../sf__general__structures_8h.html#a6978b403a7119e4900450f3243eb3571a714e1c712ebb8b1a1e9111a9b8b115fd',1,'sf_general_structures.h']]],
   ['patronize_5fshelter_5frefresh_5fhandler_25',['patronize_shelter_refresh_handler',['../sf__spellrefresh__handlers_8cpp.html#abec40c43f8c7886e5f4aab1598bd1af2',1,'patronize_shelter_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index):&#160;sf_spellrefresh_handlers.cpp'],['../sf__spellrefresh__handlers_8h.html#abec40c43f8c7886e5f4aab1598bd1af2',1,'patronize_shelter_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index):&#160;sf_spellrefresh_handlers.cpp']]],
   ['pestilence_5fend_5fhandler_26',['pestilence_end_handler',['../sf__spellend__handlers_8h.html#a07c77427bd515a67941e3211f650240a',1,'sf_spellend_handlers.h']]],

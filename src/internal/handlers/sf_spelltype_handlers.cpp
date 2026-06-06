@@ -162,7 +162,8 @@ void __thiscall petrify_handler(SF_CGdSpell *_this, uint16_t spell_index)
 
 void __thiscall area_pain_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
-    _this->active_spell_list[spell_index].spell_job = 0x1b;
+    _this->active_spell_list[spell_index].spell_job = kGdSpellJobPainArea;
+    initializeSpellData(_this, spell_index, SPELL_TICK_COUNT_AUX);
 }
 
 void __thiscall raise_dead_handler(SF_CGdSpell *_this, uint16_t spell_index)
@@ -374,7 +375,7 @@ void __thiscall disrupt_handler(SF_CGdSpell *_this, uint16_t spell_index)
 
 void __thiscall confuse_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
-    _this->active_spell_list[spell_index].spell_job = 0x3e;
+    _this->active_spell_list[spell_index].spell_job = kGdSpellLineConfuse;
     initializeSpellData(_this, spell_index, SPELL_TICK_COUNT_AUX);
 }
 
@@ -442,7 +443,14 @@ void __thiscall stone_handler(SF_CGdSpell *_this, uint16_t spell_index)
 
 void __thiscall aura_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
-    _this->active_spell_list[spell_index].spell_job = 0x49;
+    _this->active_spell_list[spell_index].spell_job = kGdSpellJobAura;
+    initializeSpellData(_this, spell_index, SPELL_TICK_COUNT_AUX);
+    initializeSpellData(_this, spell_index, EFFECT_EFFECT_INDEX);
+}
+
+void __thiscall siege_aura_handler(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    _this->active_spell_list[spell_index].spell_job = kGdSpellJobSiegeAura;
     initializeSpellData(_this, spell_index, SPELL_TICK_COUNT_AUX);
     initializeSpellData(_this, spell_index, EFFECT_EFFECT_INDEX);
 }

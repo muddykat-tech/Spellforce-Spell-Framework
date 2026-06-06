@@ -16,12 +16,10 @@ uint16_t __thiscall trueshot_onhit_handler(SF_CGdFigureJobs *_this,
         return damage;
     }
 
-    uint16_t spell_index_of_type =
-        toolboxAPI.getSpellIndexOfType(_this->CGdFigureToolBox, source_index,
-                                       kGdSpellLineAbilityTrueShot, 0);
+    uint16_t spell_index_of_type = toolboxAPI.getSpellIndexOfType(_this->CGdFigureToolBox, source_index,
+                                                                  kGdSpellLineAbilityTrueShot, 0);
     SF_CGdResourceSpell spell_data;
-    uint16_t spell_id = spellAPI.getSpellID(_this->CGdSpell,
-                                            spell_index_of_type);
+    uint16_t spell_id = spellAPI.getSpellID(_this->CGdSpell, spell_index_of_type);
     spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
     uint16_t current_damage = (spell_data.params[1] * damage) / 100;
     return current_damage;
@@ -107,15 +105,13 @@ uint16_t __thiscall critical_hits_onhit_handler(SF_CGdFigureJobs *_this,
         return 0x7fff;
     }
     SF_CGdResourceSpell spell_data;
-    uint16_t spell_index =
-        toolboxAPI.getSpellIndexOfType(_this->CGdFigureToolBox, spell_index,
-                                       kGdSpellLineAbilityCriticalHits, 0);
+    uint16_t spell_index = toolboxAPI.getSpellIndexOfType(_this->CGdFigureToolBox, source_index,
+                                                          kGdSpellLineAbilityCriticalHits, 0);
     uint16_t spell_id = spellAPI.getSpellID(_this->CGdSpell, spell_index);
     spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
 
     uint16_t tmp_damage = damage * spell_data.params[1];
-    uint16_t hp_left = figureAPI.getCurrentHealth(_this->CGdFigure,
-                                                  target_index);
+    uint16_t hp_left = figureAPI.getCurrentStat(_this->CGdFigure, target_index, HEALTH);
     if (tmp_damage < hp_left)
     {
         return damage;
@@ -238,33 +234,34 @@ uint16_t __thiscall assistance_onhit_handler(SF_CGdFigureJobs *_this,
         return damage;
     }
     SF_CGdResourceSpell spell_data;
-    uint16_t spell_index =
-        toolboxAPI.getSpellIndexOfType(_this->CGdFigureToolBox, target_index,
-                                       kGdSpellLineAssistance, 0);
+    uint16_t spell_index = toolboxAPI.getSpellIndexOfType(_this->CGdFigureToolBox, target_index, kGdSpellLineAssistance,
+                                                          0);
     uint16_t spell_id = spellAPI.getSpellID(_this->CGdSpell, spell_index);
     spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
     CGdFigureIterator iter;
     iteratorAPI.figureIteratorInit(&iter, 0, 0, 0x3ff, 0x3ff);
-    iteratorAPI.figureIteratorSetPointers(&iter, _this->CGdFigure,
-                                          _this->AutoClass22, _this->CGdWorld);
-    iteratorAPI.iteratorSetArea(&iter, &_this->CGdFigure->figures->position,
-                                spell_data.params[0]);
+    iteratorAPI.figureIteratorSetPointers(&iter, _this->CGdFigure, _this->AutoClass22, _this->CGdWorld);
+    iteratorAPI.iteratorSetArea(&iter, &_this->CGdFigure->figures[target_index].position, spell_data.params[0]);
     std::list<uint16_t> affected_figures;
     uint16_t figure_id = iteratorAPI.getNextFigure(&iter);
     uint16_t element_count = 0;
     while (figure_id != 0)
     {
-        if (toolboxAPI.figuresCheckFriendly(_this->CGdFigureToolBox,
-                                            target_index, figure_id))
+        if ((figureAPI.isAlive(_this->CGdFigure, figure_id))
+            && (toolboxAPI.isTargetable(_this->CGdFigureToolBox, figure_id)))
         {
-            if (figure_id != target_index)
+            if (toolboxAPI.figuresCheckFriendly(_this->CGdFigureToolBox,target_index, figure_id))
             {
-                affected_figures.push_back(figure_id);
-                element_count++;
-            }
-            if (element_count == spell_data.params[1])
-            {
-                break;
+
+                if (figure_id != target_index)
+                {
+                    affected_figures.push_back(figure_id);
+                    element_count++;
+                }
+                if (element_count == spell_data.params[1])
+                {
+                    break;
+                }
             }
         }
         figure_id = iteratorAPI.getNextFigure(&iter);
@@ -292,13 +289,9 @@ uint16_t __thiscall assistance_onhit_handler(SF_CGdFigureJobs *_this,
             friend_data.entity_index = t;
             friend_pos = friend_pos;
             SF_Rectangle unused = {0, 0};
-            effectAPI.addEffect(_this->CGdEffect,
-                                kGdEffectSpellAssistanceHitFigure, &source_data,
-                                &friend_data,
-                                _this->OpaqueClass->current_step, distance,
-                                &unused);
-            toolboxAPI.dealDamage(_this->CGdFigureToolBox, source_index, t,
-                                  shared_damage, 0, 0, 0);
+            effectAPI.addEffect(_this->CGdEffect, kGdEffectSpellAssistanceHitFigure, &source_data, &friend_data,
+                                _this->OpaqueClass->current_step, distance, &unused);
+            toolboxAPI.dealDamage(_this->CGdFigureToolBox, source_index, t, shared_damage, 0, 0, 0);
         }
         damage = shared_damage + remainder;
     }
