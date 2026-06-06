@@ -418,7 +418,6 @@ int __thiscall interference_patronize_shelter_refresh_handler(SF_CGdSpell *_this
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
 
     uint16_t source_index = spell->source.entity_index;
-    uint8_t scenario = 0;
 
     // we check which spell triggered the refresh handler
     switch (spell->spell_job)
