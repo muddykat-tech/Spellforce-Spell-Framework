@@ -50,7 +50,7 @@ void __thiscall shield_wall_universal_end_handler(SF_CGdSpell *_this, uint16_t s
     // because this value is the same for every target affected, we should do it here instead of doing it within the loop below
     uint16_t recalc_value = spellAPI->getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER);
 
-    for (uint16_t target_index = 0; target_index <= _this->SF_CGdFigure->max_used; target_index++)
+    for (uint16_t target_index = 1; target_index <= _this->SF_CGdFigure->max_used; target_index++)
         {
             // this code reiterates what we're doing at the tick 1 when the spell duration ends
             // we scan for all figures present, and check whether they're affected with Shieldwall spell
@@ -247,7 +247,7 @@ void __thiscall shield_wall_universal_effect_handler(SF_CGdSpell *_this, uint16_
 
             // we check through all figures for the Shieldwall effect
             // we can't use the iterator to determine search area, because targets might move too far away from the source which provided them with the Shieldwall
-            for (uint16_t target_index = 0; target_index <= _this->SF_CGdFigure->max_used; target_index++)
+            for (uint16_t target_index = 1; target_index <= _this->SF_CGdFigure->max_used; target_index++)
                 {
                     // we launch the same check as we did in the tick 0
                     // we want to be sure that the Shieldwall over the target is the same Shieldwall as we're planning to remove
