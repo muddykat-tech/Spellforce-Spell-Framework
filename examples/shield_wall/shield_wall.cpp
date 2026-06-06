@@ -173,6 +173,13 @@ void __thiscall melee_group_ability_effect_handler(SF_CGdSpell *_this, uint16_t 
     spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
 
 
+    // we declare structure for relative position of visual effect
+    SF_CGdTargetData relative_data;
+    figureAPI->getPosition(_this->SF_CGdFigure, &relative_data.position, source_index);
+    relative_data.entity_type = 4;
+    relative_data.entity_index = 0;
+    uint32_t unused;
+    
     // we declare structure to specify the area affected by the AoE effect
     SF_Rectangle hit_area;
 
@@ -181,13 +188,6 @@ void __thiscall melee_group_ability_effect_handler(SF_CGdSpell *_this, uint16_t 
     // we get XY coordinates of the spell center with API function
     // basically, we just center the spell around its spellcaster (source)
     figureAPI->getPosition(_this->SF_CGdFigure, &cast_center, source_index);
-
-    // we declare structure for relative position of visual effect
-    SF_CGdTargetData relative_data;
-    figureAPI->getPosition(_this->SF_CGdFigure, &relative_data.position, source_index);
-    relative_data.entity_type = 4;
-    relative_data.entity_index = 0;
-    uint32_t unused;
 
     // we get coordinates of area affected and record them as a squared circle
     // spell_data.params[0] stands for a spell radius
@@ -262,7 +262,7 @@ void __thiscall melee_group_ability_effect_handler(SF_CGdSpell *_this, uint16_t 
     spellAPI->setEffectDone(_this, spell_index, 0);
 
     // we release the memory which we allocated for iterator
-    iteratorAPI->disposeFigureIterator(figure_iterator);
+    iteratorAPI->disposeFigureIterator(&figure_iterator);
 }
 
 
@@ -273,13 +273,14 @@ void __thiscall melee_group_ability_effect_handler(SF_CGdSpell *_this, uint16_t 
 int __thiscall shield_wall_group_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index) //we casted shieldwall group again before the previous expired
 {
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
+
     // we declare target index with value which we stored into SHIELDWALL GROUP spell above
     uint16_t target_index = spell->target.entity_index;
 
     // we declare spell_data for SHIELDWALL GROUP spell, because we need to pull the spell id of SHIELDWALL spell linked with SHIELDWALL GROUP spell
     SF_CGdResourceSpell spell_data;
-    spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
-
+    spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);  
+    
     // we declare own spell_data for SHIELDWALL spell
     SF_CGdResourceSpell spell_data_2;
     spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data_2, spell_data.params[3]);
@@ -337,6 +338,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     toolboxAPI = sfsf->toolboxAPI;
     figureAPI = sfsf->figureAPI;
     iteratorAPI = sfsf->iteratorAPI;
+    //logger = sfsf->logAPI;
     registrationAPI = sfsf->registrationAPI;
 
 
