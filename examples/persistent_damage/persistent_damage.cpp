@@ -19,7 +19,7 @@ void __thiscall ignite_spelltype_handler(SF_CGdSpell *_this, uint16_t spell_inde
     // Effect ID is the spell_job; Free slots starts from a6. slots 1 to a5 are reserved for vanilla spells
 
     // here we link certain spell with its spell index to its spell_job
-    _this->active_spell_list[spell_index].spell_job = 0xa6;
+    _this->active_spell_list[spell_index].spell_job = 0xa8;
     // our spell affects the target multiple ticks (times),
     // each new tick happens after a delay defined in the spell data in milliseconds.
     // we need to make sure that our spell begins tracking its ticks starting at 0
@@ -190,7 +190,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     // Spell effect handler applies logic of the custom spell type to game world. Effect handler is repeatedly called as long as the spell remains active.
     // Spell end handler is called when the spell ends. This handler's functions can be imitated within spell effect handler.
     registrationAPI->linkTypeHandler(ignite_spell, &ignite_spelltype_handler);
-    registrationAPI->linkEffectHandler(ignite_spell, 0xa6, &ignite_spelleffect_handler); // 0xa6 = 166 = custom spell job value, NOT the same value as Spell Type which you take in GameData.cff
+    registrationAPI->linkEffectHandler(ignite_spell, 0xa8, &ignite_spelleffect_handler); // 0xa8 = 168 = custom spell job value, NOT the same value as Spell Type which you take in GameData.cff
     registrationAPI->linkEndHandler(ignite_spell, &ignite_spellend_handler);
 }
 
