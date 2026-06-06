@@ -12,6 +12,7 @@ SpellFunctions *spellAPI;
 ToolboxFunctions *toolboxAPI;
 FigureFunctions *figureAPI;
 RegistrationFunctions *registrationAPI;
+AiFunctions *aiAPI;
 
 
 void __thiscall template_type_handler(SF_CGdSpell *_this, uint16_t spell_index)
@@ -49,6 +50,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
   toolboxAPI = sfsf->toolboxAPI;
   figureAPI = sfsf->figureAPI;
   registrationAPI = sfsf->registrationAPI;
+  aiAPI = sfsf->aiAPI;
 
   SFSpell *template_spell = registrationAPI->registerSpell(TEMPLATE_LINE);
   registrationAPI->linkTypeHandler(template_spell, &template_type_handler);
