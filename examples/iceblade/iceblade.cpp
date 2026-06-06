@@ -1,4 +1,5 @@
-#include "../../src/api/sfsf.h"
+//#include "../../src/api/sfsf.h"
+#include "api/sfsf.h"
 #include <windows.h>
 #include <stdio.h>
 
@@ -17,6 +18,7 @@ ToolboxFunctions *toolboxAPI;
 FigureFunctions *figureAPI;
 IteratorFunctions *iteratorAPI;
 RegistrationFunctions *registrationAPI;
+AiFunctions *aiAPI;
 SFLog *logger;
 
 // we declare spell type handler for Iceblade, it must initialize ticks and bonus modifier values
@@ -81,7 +83,7 @@ uint16_t __thiscall iceblade_onhit_handler(SF_CGdFigureJobs *_this, uint16_t sou
     SF_SGtFigureAction action;
 
     // we determine spellcaster's action which triggered the On Hit Handler with figureAPI function
-    figureAPI->getTargetAction(_this->CGdFigure, &action, source_index);
+    aiAPI->getTargetAction(_this->CGdFigure, &action, source_index);
 
     // Pass though is WIP, so we inline the function here
     // we initialize boolean value which would save the result of our check
@@ -96,7 +98,7 @@ uint16_t __thiscall iceblade_onhit_handler(SF_CGdFigureJobs *_this, uint16_t sou
     {
         // we learn target's resistance to Ice magic
         // getChanceToResistSpell automatically determines the type of magic using effect info as the reference
-        uint16_t frost_resistance = spellAPI->getChanceToResistSpell(_this->CGdSpell->unkn2, source_index, target_index, effect_info);
+        uint16_t frost_resistance = spellAPI->getChanceToResistSpell(_this->CGdSpell->AutoClass34, source_index, target_index, effect_info);
 
         // we convert the specified percentage into ice damage
         uint16_t ice_damage = uint16_t(damage * spell_data.params[0] / 100);
@@ -170,7 +172,7 @@ void __thiscall iceblade_effect_handler(SF_CGdSpell *_this, uint16_t spell_index
 
             // we activate the flag CHECK_SPELLS_BEFORE_JOB2 for the sake of optimization
             _this->active_spell_list[spell_index].flags |= CHECK_SPELLS_BEFORE_JOB2;
-            
+
             // we disable the spell effect from being triggered until specified amount of time passes
             uint16_t ticks_interval = spell_data.params[1];
             _this->active_spell_list[spell_index].to_do_count = (uint16_t)((ticks_interval * 10) / 1000);
@@ -207,7 +209,7 @@ int __thiscall iceblade_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index
     // if the function returned any spell index, we must prune that instance to make a space for the new one
     if (pruned_spell_index != 0)
     {
-        // first we should clear the flags which the old instance of Iceblade set up 
+        // first we should clear the flags which the old instance of Iceblade set up
         spellAPI->figTryClrCHkSPlBfrJob2(_this, pruned_spell_index);
         spellAPI->figClrChkSplBfrChkBattle(_this, pruned_spell_index, 0);
         // then we should end the previous instance
@@ -232,6 +234,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     figureAPI = sfsf->figureAPI;
     iteratorAPI = sfsf->iteratorAPI;
     registrationAPI = sfsf->registrationAPI;
+    aiAPI = sfsf->aiAPI;
     logger = sfsf->logAPI;
 
     // we register handlers for custom spell
@@ -251,7 +254,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
  ***/
 extern "C" __declspec(dllexport) SFMod *RegisterMod(SpellforceSpellFramework *framework)
 {
-    return framework->createModInfo("Iceblade", "1.0.0", "Teekius", "A mod designed to demonstrate On Hit spell handler. The Iceblade spell converts a percentage of damage dealt with melee attack into ice damage.");
+    return framework->createModInfo("Iceblade", "1.1.0", "Teekius", "A mod designed to demonstrate On Hit spell handler. The Iceblade spell converts a percentage of damage dealt with melee attack into ice damage.");
 }
 
 // Required to be present by, not required for any functionality

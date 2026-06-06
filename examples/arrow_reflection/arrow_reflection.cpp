@@ -20,6 +20,7 @@ FigureFunctions *figureAPI;
 IteratorFunctions *iteratorAPI;
 RegistrationFunctions *registrationAPI;
 EffectFunctions *effectAPI;
+AiFunctions *aiAPI;
 SFLog *logger;
 
 // we declare spell type handler for Arrows Reflection, it must initialize ticks and bonus modifier values
@@ -138,6 +139,11 @@ SF_Rectangle* get_spell_vector(SF_Coord* source_position, SF_Coord* target_posit
 
 uint16_t __thiscall arrows_reflection_onhit_handler(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t damage)
 {
+
+    char message[256];
+    snprintf(message, sizeof(message), "Ranged damage=%d",damage);
+    logger->logInfo(message);
+
     // first of all, we should check for dead-ends such as zero damage or automatical oneshot provided by Critical Strikes spell
 
     // 0x7fff is an amount which Critical Strikes uses to turn damage into oneshot
@@ -145,6 +151,7 @@ uint16_t __thiscall arrows_reflection_onhit_handler(SF_CGdFigureJobs *_this, uin
     // also, in case there would be other oneshotting spells, our algorithm would automatically hook them on without the need to modify it
     if (damage == 0 || damage == 0x7fff)
     {
+        logger->logInfo("ARROW REFLECTION INTERRUPTED");
         return damage;
     }
 
@@ -154,7 +161,12 @@ uint16_t __thiscall arrows_reflection_onhit_handler(SF_CGdFigureJobs *_this, uin
 
     // we determine attacker'a action which triggered the On Hit handler with figureAPI function
     // because the spell is tagged as TARGET_ONHIT_SPELL, the attacker is being the source and the spellcaster is regarded as the target
-    figureAPI->getTargetAction(_this->CGdFigure, &action, source_index);
+    aiAPI->getTargetAction(_this->CGdFigure, &action, source_index);
+
+
+
+    snprintf(message, sizeof(message), "Action: %d",action.type);
+    logger->logInfo(message);
 
     // Pass though is WIP, so we inline the function here
     if ((action.type != 0x2712))
@@ -182,7 +194,7 @@ uint16_t __thiscall arrows_reflection_onhit_handler(SF_CGdFigureJobs *_this, uin
         // we don't need the distance itself, let's translate it into flight time with some numbers
         distance = ((distance & 0xffff) * 0x578) / 3000;
 
-
+        logger->logInfo("COMPLETED DISTANCE CALCULATIONS");
 
         // we'd also need the visual effect offsets for both spellcaster and the attacker
 
@@ -192,6 +204,8 @@ uint16_t __thiscall arrows_reflection_onhit_handler(SF_CGdFigureJobs *_this, uin
         // and source_index = attacker_index
         SF_CGdTargetData source = {1, target_index, {0, 0}};
         SF_CGdTargetData target = {1, source_index, {0, 0}};
+
+
 
         // we spawn the projectile with addEffect command having EffectType set as kGdEffectProjectile
         // please note that it's different command than the command we used to spawn visuals (addVisualEffect)
@@ -212,6 +226,8 @@ uint16_t __thiscall arrows_reflection_onhit_handler(SF_CGdFigureJobs *_this, uin
         // we should set the projectile's physical damage, let's just return full damage the attacker was going to deal
         effectAPI->setEffectXData(_this->CGdEffect, effect_id, EFFECT_PHYSICAL_DAMAGE, damage);
 
+        logger->logInfo("PROJECTILE IS MIRRORED");
+
         // the projectile is ready, but we should also negate damage dealt to the spellcaster
         return 0;
     }
@@ -219,6 +235,7 @@ uint16_t __thiscall arrows_reflection_onhit_handler(SF_CGdFigureJobs *_this, uin
 
 void __thiscall arrows_reflection_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
+    logger->logInfo("ARROWS REFLECTION EFFECT HANDLER INTIALIZED");
     // we pull the pointer for this instance of spell
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
 
@@ -307,6 +324,7 @@ int __thiscall arrows_reflection_refresh_handler(SF_CGdSpell *_this, uint16_t sp
     // if the function returned any spell index, we must prune that instance to make a space for the new one
     if (pruned_spell_index != 0)
     {
+        logger->logInfo("REMOVE OLD ARROW REFLECTION");
         // first we should clear the flags which the old instance of Arrows Reflection set up
         spellAPI->figTryClrCHkSPlBfrJob2(_this, pruned_spell_index);
         spellAPI->figClrChkSplBfrChkBattle(_this, pruned_spell_index, 0);
@@ -333,6 +351,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     iteratorAPI = sfsf->iteratorAPI;
     registrationAPI = sfsf->registrationAPI;
     effectAPI = sfsf->effectAPI;
+    aiAPI = sfsf->aiAPI;
     logger = sfsf->logAPI;
 
     // we register handlers for custom spell
@@ -352,7 +371,7 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
  ***/
 extern "C" __declspec(dllexport) SFMod *RegisterMod(SpellforceSpellFramework *framework)
 {
-    return framework->createModInfo("Arrows Reflection", "1.0.0", "Teekius", "A mod designed to demonstrate defensive using of the On Hit spell handler. The spell will reflect all ranged attacks which hit the spellcaster back towards the attackers.");
+    return framework->createModInfo("Arrows Reflection", "1.1.0", "Teekius", "A mod designed to demonstrate defensive using of the On Hit spell handler. The spell will reflect all ranged attacks which hit the spellcaster back towards the attackers.");
 }
 
 // Required to be present by, not required for any functionality
