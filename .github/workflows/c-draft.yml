@@ -1,4 +1,4 @@
-name: Build and Draft Release Framework
+name: Compile SFSF
 
 on:
   push:
