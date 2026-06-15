@@ -96,7 +96,7 @@ uint32_t __thiscall offensive_aura_ai_handler(SF_CGdBattleDevelopment *_this,
         }
         else
         {
-            uint16_t manacost = (spell_data->mana_cost * 3) / 2;
+            uint16_t manacost = (spell_data->mana_cost * 7) / 2;
             if (figureAPI.getCurrentStat(_this->battleData.CGdFigure, target_index, MANA) < manacost)
             {
                 rank = 0;
@@ -138,7 +138,7 @@ uint32_t __thiscall defensive_aura_ai_handler(SF_CGdBattleDevelopment *_this,
         }
         else
         {
-            uint16_t manacost = (spell_data->mana_cost * 3) / 2;
+            uint16_t manacost = (spell_data->mana_cost * 7) / 2;
             if (figureAPI.getCurrentStat(_this->battleData.CGdFigure, target_index, MANA) < manacost)
             {
                 rank = 0;
@@ -928,7 +928,7 @@ uint32_t __thiscall confuse_ai_handler(SF_CGdBattleDevelopment *_this,
                                        SF_CGdResourceSpell *spell_data)
 {
     uint32_t rank = 2;
-    if (!toolboxAPI.isUnitMelee(_this->battleData.CGdFigureToolBox, target_index))
+    if (toolboxAPI.isUnitMelee(_this->battleData.CGdFigureToolBox, target_index))
     {
         rank = 0;
     }
