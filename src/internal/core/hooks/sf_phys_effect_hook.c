@@ -55,7 +55,7 @@ void __thiscall sf_phys_effect_hook(SF_CGdEffect *_this, uint16_t effect_id)
                     }
 
                 }
-                toolboxAPI.dealDamage(_this->SF_CGdFigureToolBox, source_id, target_id, damage, isMagicDamage, 0, 0);
+                toolboxAPI.dealDamage(_this->SF_CGdFigureToolBox, source_id, target_id, damage, isMagicDamage, 1, 0);
                 //Monument protection handler
                 uint32_t mana_cost = effectAPI.getEffectXData(_this, effect_id, EFFECT_MANA_COST);
                 if (mana_cost != 0)
