@@ -167,7 +167,7 @@ uint32_t __thiscall healing_aura_ai_handler(SF_CGdBattleDevelopment *_this,
     uint32_t rank = 1;
     if (_this->battleData.current_figure == target_index)
     {
-        if ((_this->battleData.enemy_figures.entityCount == 0) ||
+        if ((_this->battleData.enemy_figures.entityCount == 0) &&
             (_this->battleData.ally_figures.entityCount == 0))
         {
             rank = 0;
@@ -180,7 +180,7 @@ uint32_t __thiscall healing_aura_ai_handler(SF_CGdBattleDevelopment *_this,
             }
             else
             {
-                uint16_t manacost = (spell_data->mana_cost * 3) / 2;
+                uint16_t manacost = (spell_data->mana_cost * 7) / 2;
                 if (figureAPI.getCurrentStat(_this->battleData.CGdFigure, target_index, MANA) < manacost)
                 {
                     rank = 0;
@@ -222,7 +222,7 @@ uint32_t __thiscall aura_light_ai_handler(SF_CGdBattleDevelopment *_this,
             }
             if (rank)
             {
-                uint16_t manacost = (spell_data->mana_cost * 3) / 2;
+                uint16_t manacost = (spell_data->mana_cost * 7) / 2;
                 if (figureAPI.getCurrentStat(_this->battleData.CGdFigure, target_index, MANA) < manacost)
                 {
                     rank = 0;
