@@ -418,166 +418,172 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
                 effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_SPELL_ID, spell->spell_id);
             }
         }
-    }
-    uint16_t current_mp = figureAPI.getCurrentStat(_this->SF_CGdFigure, source_index, MANA);
-    uint16_t aura_target_type = spell_data.params[5];
-    uint16_t manacost = spell_data.params[8];
-    if (_this->SF_CGdFigure->figures[source_index].set_type == 7)
-    {
-        manacost -= ((manacost * 33) / 100);
-    }
-    if (current_mp >= manacost)
-    {
-        SF_Coord caster_pos = _this->SF_CGdFigure->figures[source_index].position;
-        CGdFigureIterator iter;
-        iteratorAPI.setupFigureIterator(&iter, _this);
-        iteratorAPI.iteratorSetArea(&iter,  &caster_pos, spell_data.params[2]);
-        std::vector<uint16_t> targets;
-        uint16_t target_index = iteratorAPI.getNextFigure(&iter);
-        while (target_index != 0)
+
+        uint16_t current_mp = figureAPI.getCurrentStat(_this->SF_CGdFigure, source_index, MANA);
+        uint16_t aura_target_type = spell_data.params[5];
+        uint16_t manacost = spell_data.params[8];
+        if (_this->SF_CGdFigure->figures[source_index].set_type == 7)
         {
-            if ((_this->SF_CGdFigure->figures[target_index].owner != (uint16_t)(-1)) &&
-                ((*(uint8_t *)(&_this->SF_CGdFigure->figures[target_index].flags) & 0xa) == 0))
-            {
-                //allied auras
-                if (aura_target_type == 1)
-                {
-                    if (!toolboxAPI.figuresCheckHostile(_this->SF_CGdFigureToolBox, source_index, target_index))
-                    {
-                        if (_this->SF_CGdFigure->figures[target_index].owner ==
-                            _this->SF_CGdFigure->figures[source_index].owner)
-                        {
-                            //special logic here
-                            if (spell->spell_line == kGdSpellLineAuraHealing)
-                            {
-                                uint16_t missing_hp = _this->SF_CGdFigure->figures[target_index].health.missing_val;
-                                if ((missing_hp >sub_spell_data.params[0]) &&
-                                    (!toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index,
-                                                              kGdSpellLineRemediless)))
-                                {
-                                    targets.push_back(target_index);
-                                }
-                                target_index = iteratorAPI.getNextFigure(&iter);
-                                continue;
-                            }
-
-                            if (spell->spell_line == kGdSpellLineAuraRegeneration)
-                            {
-                                uint16_t missing_hp = _this->SF_CGdFigure->figures[target_index].health.missing_val;
-                                if ((missing_hp != 0) &&
-                                    (!toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index,
-                                                              sub_spell_data.spell_line_id)))
-                                {
-                                    targets.push_back(target_index);
-                                }
-                                target_index = iteratorAPI.getNextFigure(&iter);
-                                continue;
-                            }
-
-                            if (!toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index,
-                                                         sub_spell_data.spell_line_id))
-                            {
-                                if (figureAPI.isWarrior(_this->SF_CGdFigure, target_index))
-                                {
-                                    targets.push_back(target_index);
-                                }
-                            }
-                        }
-                    }
-                }
-                //hostile auras
-                if (aura_target_type == 2)
-                {
-                    if (toolboxAPI.figuresCheckHostile(_this->SF_CGdFigureToolBox, source_index, target_index))
-                    {
-                        if (toolboxAPI.isTargetable(_this->SF_CGdFigureToolBox, target_index))
-                        {
-                            if (!toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index,
-                                                         sub_spell_data.spell_line_id))
-                            {
-                                targets.push_back(target_index);
-                            }
-                        }
-                    }
-                }
-
-            }
-            target_index = iteratorAPI.getNextFigure(&iter);
+            manacost -= ((manacost * 33) / 100);
         }
-        if (!targets.empty())
+        if (current_mp >= manacost)
         {
-            uint16_t aura_target = 0;
-            uint16_t prio = 0;
-            if (spell->spell_line == kGdSpellLineAuraHealing)
+            SF_Coord caster_pos = _this->SF_CGdFigure->figures[source_index].position;
+            CGdFigureIterator iter;
+            iteratorAPI.setupFigureIterator(&iter, _this);
+            iteratorAPI.iteratorSetArea(&iter,  &caster_pos, spell_data.params[2]);
+            std::vector<uint16_t> targets;
+            uint16_t target_index = iteratorAPI.getNextFigure(&iter);
+            while (target_index != 0)
             {
-                for (uint32_t j = 0; j < targets.size(); j++)
+                if ((_this->SF_CGdFigure->figures[target_index].owner != (uint16_t)(-1)) &&
+                    ((*(uint8_t *)(&_this->SF_CGdFigure->figures[target_index].flags) & 0xa) == 0))
                 {
-                    target_index = targets.at(j);
-                    SF_Coord target_pos = _this->SF_CGdFigure->figures[target_index].position;
-                    uint16_t dx = 7;
-                    uint16_t sec_prio = 0;
-                    for (int i = 8; i> 0; i--)
+                    //allied auras
+                    if (aura_target_type == 1)
                     {
-                        //some serious bitfuckery
-                        uint16_t near_x = *(uint16_t *)((uint32_t)&_this->SF_CGdWorld->unknown1[0].uknwn1 + dx) +
-                                          target_pos.X;
-                        uint16_t near_y = *(uint16_t *)((uint32_t)&_this->SF_CGdWorld->unknown1[0].uknwn2 + dx) +
-                                          target_pos.Y;
-                        if (((*(uint8_t *)&_this->SF_CGdWorld->cells[near_y*0x400 + near_x].world_cell_flags) & 0x10) !=
-                            0)
+                        if (!toolboxAPI.figuresCheckHostile(_this->SF_CGdFigureToolBox, source_index, target_index))
                         {
-                            uint16_t sec_target = toolboxAPI.getFigureFromWorld(_this->SF_CGdWorldToolBox, near_x,
-                                                                                near_y, 1);
-
-                            if ((sec_target != 0) && (toolboxAPI.figuresCheckHostile(_this->SF_CGdFigureToolBox,
-                                                                                     target_index, sec_target)))
+                            if (_this->SF_CGdFigure->figures[target_index].owner ==
+                                _this->SF_CGdFigure->figures[source_index].owner)
                             {
-                                sec_prio++;
+                                //special logic here
+                                if (spell->spell_line == kGdSpellLineAuraHealing)
+                                {
+                                    uint16_t missing_hp = _this->SF_CGdFigure->figures[target_index].health.missing_val;
+                                    if ((missing_hp >sub_spell_data.params[0]) &&
+                                        (!toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index,
+                                                                  kGdSpellLineRemediless)))
+                                    {
+                                        targets.push_back(target_index);
+                                    }
+                                    target_index = iteratorAPI.getNextFigure(&iter);
+                                    continue;
+                                }
+
+                                if (spell->spell_line == kGdSpellLineAuraRegeneration)
+                                {
+                                    uint16_t missing_hp = _this->SF_CGdFigure->figures[target_index].health.missing_val;
+                                    if ((missing_hp != 0) &&
+                                        (!toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index,
+                                                                  sub_spell_data.spell_line_id)))
+                                    {
+                                        targets.push_back(target_index);
+                                    }
+                                    target_index = iteratorAPI.getNextFigure(&iter);
+                                    continue;
+                                }
+
+                                if (!toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index,
+                                                             sub_spell_data.spell_line_id))
+                                {
+                                    if (figureAPI.isWarrior(_this->SF_CGdFigure, target_index))
+                                    {
+                                        targets.push_back(target_index);
+                                    }
+                                }
                             }
                         }
-                        dx += 7;
                     }
-                    sec_prio *= (100 - figureAPI.getCurrentHealthPercent(_this->SF_CGdFigure, target_index));
-                    if (sec_prio > prio)
+                    //hostile auras
+                    if (aura_target_type == 2)
                     {
-                        prio = sec_prio;
-                        aura_target = targets[j];
+                        if (toolboxAPI.figuresCheckHostile(_this->SF_CGdFigureToolBox, source_index, target_index))
+                        {
+                            if (toolboxAPI.isTargetable(_this->SF_CGdFigureToolBox, target_index))
+                            {
+                                if (!toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index,
+                                                             sub_spell_data.spell_line_id))
+                                {
+                                    targets.push_back(target_index);
+                                }
+                            }
+                        }
                     }
+
                 }
+                target_index = iteratorAPI.getNextFigure(&iter);
             }
-            if (spell->spell_line == kGdSpellLineAuraRegeneration)
+            if (!targets.empty())
             {
-                uint16_t sec_prio = 0;
+                uint16_t aura_target = 0;
                 uint16_t prio = 0;
-
-                for (uint32_t j = 0; j < targets.size(); j++)
+                if (spell->spell_line == kGdSpellLineAuraHealing)
                 {
-                    target_index = targets.at(j);
-                    sec_prio = (100 - figureAPI.getCurrentHealthPercent(_this->SF_CGdFigure, target_index));
-                    if (sec_prio > prio)
+                    for (uint32_t j = 0; j < targets.size(); j++)
                     {
-                        prio = sec_prio;
-                        aura_target = target_index;
+                        target_index = targets.at(j);
+                        SF_Coord target_pos = _this->SF_CGdFigure->figures[target_index].position;
+                        uint16_t dx = 7;
+                        uint16_t sec_prio = 0;
+                        for (int i = 8; i> 0; i--)
+                        {
+                            //some serious bitfuckery
+                            uint16_t near_x = *(uint16_t *)((uint32_t)&_this->SF_CGdWorld->unknown1[0].uknwn1 + dx) +
+                                              target_pos.X;
+                            uint16_t near_y = *(uint16_t *)((uint32_t)&_this->SF_CGdWorld->unknown1[0].uknwn2 + dx) +
+                                              target_pos.Y;
+                            if (((*(uint8_t *)&_this->SF_CGdWorld->cells[near_y*0x400 + near_x].world_cell_flags) &
+                                 0x10) !=
+                                0)
+                            {
+                                uint16_t sec_target = toolboxAPI.getFigureFromWorld(_this->SF_CGdWorldToolBox, near_x,
+                                                                                    near_y, 1);
+
+                                if ((sec_target != 0) && (toolboxAPI.figuresCheckHostile(_this->SF_CGdFigureToolBox,
+                                                                                         target_index, sec_target)))
+                                {
+                                    sec_prio++;
+                                }
+                            }
+                            dx += 7;
+                        }
+                        sec_prio *= (100 - figureAPI.getCurrentHealthPercent(_this->SF_CGdFigure, target_index));
+                        if (sec_prio > prio)
+                        {
+                            prio = sec_prio;
+                            aura_target = targets[j];
+                        }
                     }
                 }
+                if (spell->spell_line == kGdSpellLineAuraRegeneration)
+                {
+                    uint16_t sec_prio = 0;
+                    uint16_t prio = 0;
+
+                    for (uint32_t j = 0; j < targets.size(); j++)
+                    {
+                        target_index = targets.at(j);
+                        sec_prio = (100 - figureAPI.getCurrentHealthPercent(_this->SF_CGdFigure, target_index));
+                        if (sec_prio > prio)
+                        {
+                            prio = sec_prio;
+                            aura_target = target_index;
+                        }
+                    }
+                }
+                if (aura_target == 0)
+                {
+                    uint16_t value = spellAPI.getRandom(_this->OpaqueClass, targets.size()-1);
+                    aura_target = targets.at(value);
+                }
+                apply_aura_effect(_this, spell_index, sub_effect_id, source_index, aura_target);
+                figureAPI.subMana(_this->SF_CGdFigure, source_index, manacost);
             }
-            if (aura_target == 0)
-            {
-                uint16_t value = spellAPI.getRandom(_this->OpaqueClass, targets.size()-1);
-                aura_target = targets.at(value);
-            }
-            apply_aura_effect(_this, spell_index, sub_effect_id, source_index, aura_target);
-            figureAPI.subMana(_this->SF_CGdFigure, source_index, manacost);
+            iteratorAPI.disposeFigureIterator(&iter);
+            return;
         }
-        iteratorAPI.disposeFigureIterator(&iter);
-        return;
+        else
+        {
+            return;
+        }
+        if (source_index != 0)
+        {
+            _this->SF_CGdFigure->figures[source_index].flags &= ~AURA_RUNNING;
+        }
+        uint16_t effect_index = spellAPI.getXData(_this, spell_index, EFFECT_EFFECT_INDEX);
+        effectAPI.tryEndEffect(_this->SF_CGdEffect, effect_index);
     }
-    if (source_index != 0)
-    {
-        _this->SF_CGdFigure->figures[source_index].flags &= ~AURA_RUNNING;
-    }
-    uint16_t effect_index = spellAPI.getXData(_this, spell_index, EFFECT_EFFECT_INDEX);
-    effectAPI.tryEndEffect(_this->SF_CGdEffect, effect_index);
     spellAPI.setXData(_this, spell_index, EFFECT_EFFECT_INDEX, 0);
     spellAPI.setEffectDone(_this, spell_index, 0);
     return;
