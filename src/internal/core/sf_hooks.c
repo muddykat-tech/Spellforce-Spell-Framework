@@ -598,6 +598,19 @@ static void initialize_avoidance_hook()
                                       ASI::AddrOf(0x35d3a3);
     ASI::EndRewrite(ai_avoidance_mreg);
 }
+
+uint32_t g_ranged_return_ok;
+uint32_t g_ranged_return_fail;
+static void __declspec(naked) ranged_exp_beta()
+{
+    asm ("cmpw $0x11, %%ax \n\t"
+         "je 1f            \n\t"
+         "cmpw $0x16, %%ax \n\t"
+         "je 1f            \n\t"
+         "jmp *%1          \n\t"
+         "1: jmp *%0       \n\t" : :
+         "o" (g_ranged_return_ok), "o" (g_ranged_return_fail));
+}
 static void initialize_utility_hooks()
 {
     log_info("Hooking Combat Ability Detection");
@@ -656,6 +669,17 @@ static void initialize_utility_hooks()
     *(int *)(ASI::AddrOf(0x32af61)) = (int)(&is_domination_spellline) - ASI::AddrOf(0x32af65);
     ASI::EndRewrite(is_domination_spellline_mreg);
 
+/*
+   Hook to add new weapon types with proper animations
+    g_ranged_return_ok = ASI::AddrOf(0x3db746);
+    g_ranged_return_fail = ASI::AddrOf(0x3db761);
+    ASI::MemoryRegion ranged_test (ASI::AddrOf(0x3db740), 6);
+    ASI::BeginRewrite(ranged_test);
+ *(unsigned char *)(ASI::AddrOf(0x3db740)) = 0x90;
+ *(unsigned char *)(ASI::AddrOf(0x3db741)) = 0xE9;  // JUMP instruction
+ *(int *)(ASI::AddrOf(0x3db742)) = (int)(&ranged_exp_beta) - ASI::AddrOf(0x3db746);
+    ASI::EndRewrite(ranged_test);
+ */
     // log_info("Temp Storm School Hook");
     // ASI::MemoryRegion storm_test_mreg (ASI::AddrOf(0x7FFD38), 1);
     // ASI::BeginRewrite(storm_test_mreg);
@@ -675,7 +699,7 @@ static void initialize_spell_buttons_hooks()
     ASI::MemoryRegion vfunction208_mreg_2 (ASI::AddrOf(0x5ebb7b), 5);
     ASI::BeginRewrite(vfunction208_mreg_2);
     *(unsigned char *)(ASI::AddrOf(0x5ebb7b)) = 0xE8;   // CALL instruction
-    *(int *)(ASI::AddrOf(0x5ebb7c)) = (int)(&sf_click_vertical_button) - ASI::AddrOf(0x5bb80);
+    *(int *)(ASI::AddrOf(0x5ebb7c)) = (int)(&sf_click_vertical_button) - ASI::AddrOf(0x5ebb80);
     ASI::EndRewrite(vfunction208_mreg_2);
 
     ASI::MemoryRegion  vfunction210_mreg(ASI::AddrOf(0x5ed94a), 5);
