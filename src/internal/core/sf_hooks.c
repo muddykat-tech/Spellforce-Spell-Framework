@@ -699,7 +699,7 @@ static void initialize_spell_buttons_hooks()
     ASI::MemoryRegion vfunction208_mreg_2 (ASI::AddrOf(0x5ebb7b), 5);
     ASI::BeginRewrite(vfunction208_mreg_2);
     *(unsigned char *)(ASI::AddrOf(0x5ebb7b)) = 0xE8;   // CALL instruction
-    *(int *)(ASI::AddrOf(0x5ebb7c)) = (int)(&sf_click_vertical_button) - ASI::AddrOf(0x5bb80);
+    *(int *)(ASI::AddrOf(0x5ebb7c)) = (int)(&sf_click_vertical_button) - ASI::AddrOf(0x5ebb80);
     ASI::EndRewrite(vfunction208_mreg_2);
 
     ASI::MemoryRegion  vfunction210_mreg(ASI::AddrOf(0x5ed94a), 5);
