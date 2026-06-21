@@ -2,14 +2,14 @@ name: Build and Draft Release Framework
 
 on:
   push:
-    branches: [ "master", "indev", "sf_ai" ]
+    branches: [ "master" ]
 
 jobs:
   build:
     permissions:
       contents: write
     runs-on: windows-2025
-    
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
