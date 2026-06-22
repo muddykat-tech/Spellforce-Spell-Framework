@@ -922,6 +922,18 @@ void __thiscall effect_pain_area (SF_CGdSpell *_this, uint16_t spell_index)
         uint16_t damage = spell_data.params[0];
         uint16_t total_area = spell_data.params[1];
         uint16_t area = spellAPI.addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1);
+        if (area == 1)
+        {
+            SF_Rectangle area_rect;
+            uint32_t unused;
+            SF_CGdTargetData target_data;
+            target_data.entity_index = 0;
+            target_data.entity_type = 5;
+            target_data.position =  spell->target.position;
+            spellAPI.getTargetsRectangle(_this, &area_rect, spell_index, total_area, &spell->target.position);
+            spellAPI.addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused,
+                                     &target_data, _this->OpaqueClass->current_step, 0x19, &area_rect);
+        }
         if (area <= total_area)
         {
             spell->to_do_count = 1;
