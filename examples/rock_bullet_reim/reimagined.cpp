@@ -735,6 +735,52 @@ uint16_t __thiscall summonCreature(SF_CGdFigureToolbox *_this, uint16_t master_i
     return summon_index;
 }
 
+void __thiscall thorns_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
+{
+    SF_CGdResourceSpell spell_data;
+    SF_GdSpell *spell = &_this->active_spell_list[spell_index];
+    uint16_t source_index = spell->source.entity_index;
+    uint16_t target_index = spell->target.entity_index;
+    if ((_this->SF_CGdFigure->figures[target_index].owner != (uint16_t)(-1))
+        && ((_this->SF_CGdFigure->figures[target_index].flags & (IS_DEAD|RESESRVED_ONLY) == 0)))
+    {
+        spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+        uint16_t damage = spell_data.params[0];
+        SF_SpellEffectInfo effect_info;
+        effect_info.job_id = spell->spell_job;
+        effect_info.spell_id = spell->spell_id;
+        uint32_t resist = spellAPI->getChanceToResistSpell(_this->AutoClass34, source_index, target_index,
+                                                           &effect_info);
+        uint32_t random = spellAPI->getRandom(_this->OpaqueClass, 100);
+        if (resist < random)
+        {
+            SF_Rectangle some_rect = {0, 0};
+            SF_CGdTargetData target;
+            uint16_t target_index = spell->target.entity_index;
+            target.entity_index = target_index;
+            target.position = {0, 0};
+            target.entity_type = 1;
+            uint32_t unused;
+            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &target,
+                                      _this->OpaqueClass->current_step, 0x19, &some_rect);
+            toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index,target_index, damage, 1, 0, 0);
+        }
+        else
+        {
+            SF_Rectangle some_rect = {0, 0};
+            SF_CGdTargetData target;
+            uint16_t target_index = spell->target.entity_index;
+            target.entity_index = target_index;
+            target.position = {0, 0};
+            target.entity_type = 1;
+            uint32_t unused;
+            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellTargetResisted, &unused, &target,
+                                      _this->OpaqueClass->current_step, 0x19, &some_rect);
+        }
+    }
+}
+
+
 void __thiscall summon_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     SF_CGdResourceSpell spell_data;
