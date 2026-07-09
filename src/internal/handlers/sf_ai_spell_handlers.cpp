@@ -185,6 +185,24 @@ uint32_t __thiscall healing_aura_ai_handler(SF_CGdBattleDevelopment *_this,
                 {
                     rank = 0;
                 }
+                uint16_t best_target = 0;
+                uint16_t subspell_id = spell_data->params[6];
+                SF_CGdResourceSpell sub_spell_data;
+                spellAPI.getResourceSpellData(_this->battleData.CGdResource, &sub_spell_data, subspell_id);
+                uint16_t healing_amount = sub_spell_data.params[0];
+                for (int i = 0; i < _this->battleData.ally_figures.entityCount; i++)
+                {
+                    uint16_t figure_id = _this->battleData.ally_figures.data[i].entity_index;
+                    if (_this->battleData.CGdFigure->figures[figure_id].health.missing_val >= healing_amount)
+                    {
+                        best_target = figure_id;
+                        break;
+                    }
+                }
+                if (best_target == 0)
+                {
+                    rank = 0;
+                }
             }
         }
     }
