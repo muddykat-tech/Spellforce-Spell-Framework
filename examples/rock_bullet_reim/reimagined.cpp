@@ -58,10 +58,7 @@ void __thiscall rock_bullet_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
 {
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
     SF_CGdResourceSpell spell_data;
-    SF_SpellEffectInfo effect_info;
 
-    effect_info.spell_id = spell->spell_id;
-    effect_info.job_id = spell->spell_job;
     spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
 
 
@@ -99,7 +96,7 @@ void __thiscall rock_bullet_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
         }
 
         uint16_t resist_chance = spellAPI->getChanceToResistSpell(_this->AutoClass34, source_index, target_index,
-                                                                  effect_info);
+                                                                  spell->spell_id);
 
         uint16_t random = spellAPI->getRandom(_this->OpaqueClass, 100);
 
@@ -171,28 +168,29 @@ void __thiscall rock_bullet_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
     }
     spellAPI->setEffectDone(_this, spell_index, 0);
 }
-// Thorns Effect Rework
-void __thiscall thorns_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
-{
+/*
+   // Thorns Effect Rework
+   void __thiscall thorns_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
+   {
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
     SF_CGdResourceSpell spell_data;
-//get caster figure index
+   //get caster figure index
     uint16_t source_index = spell->source.entity_index;
-//get target figure index
+   //get target figure index
     uint16_t target_index = spell->target.entity_index;
 
     if ((source_index != 0) && (target_index != 0))
     {
-//mandatory check for target not being reserved or dead
+   //mandatory check for target not being reserved or dead
         if ((_this->SF_CGdFigure->figures[target_index].owner != (uint16_t)(-1)) &&
             ((*(uint8_t *)(&_this->SF_CGdFigure->figures[target_index].flags) & 0xa) == 0))
         {
-//get info from gamedata.cff
+   //get info from gamedata.cff
             spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
             uint16_t base_damage = spell_data.params[0];
-//armor reduction SCRAPPED!!!!
+   //armor reduction SCRAPPED!!!!
             uint32_t damage = base_damage;
-//		uint32_t damage = toolboxAPI->getPhysDamageReduction(_this->SF_CGdFigureToolBox, source_index, target_index, kGdSpellLineThornShieldDamage);
+   //		uint32_t damage = toolboxAPI->getPhysDamageReduction(_this->SF_CGdFigureToolBox, source_index, target_index, kGdSpellLineThornShieldDamage);
             //if caster is alive
             if (figureAPI->isAlive(_this->SF_CGdFigure, source_index))
             {
@@ -212,9 +210,9 @@ void __thiscall thorns_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
             {
                 damage *= 2;
             }
-//multiply by base spell damage and reduce by 10000, so we get sane numbers, scrapped, since no armour factor
-//            damage = (damage * base_damage + 5000) / 10000;
-//setup target_data structure for later use
+   //multiply by base spell damage and reduce by 10000, so we get sane numbers, scrapped, since no armour factor
+   //            damage = (damage * base_damage + 5000) / 10000;
+   //setup target_data structure for later use
             SF_CGdTargetData target_data;
             target_data.entity_index = target_index;
             target_data.entity_type = 1;
@@ -222,25 +220,25 @@ void __thiscall thorns_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
             SF_Rectangle rect = {0,0};
             if (damage == 0)
             {
-//show "resisted sparks" FX if damage is 0
+   //show "resisted sparks" FX if damage is 0
                 spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellTargetResisted, &rect, &target_data,
                                           _this->OpaqueClass->current_step, 10, &rect);
             }
             else
             {
-//show thorns FX if damage is not 0
+   //show thorns FX if damage is not 0
                 spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &rect, &target_data,
                                           _this->OpaqueClass->current_step, 10, &rect);
-//dealing damage. last 3 numbers are flags: isSpellDamage, isRangedDamage, is(I can't remember, but is is 0 here)
+   //dealing damage. last 3 numbers are flags: isSpellDamage, isRangedDamage, is(I can't remember, but is is 0 here)
                 toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index, target_index, damage, 1, 0, 0);
             }
         }
 
     }
-//mark the spell as complete
+   //mark the spell as complete
     spellAPI->setEffectDone(_this, spell_index, 0);
-}
-
+   }
+ */
 /***
  * Applying different proc chance of different type of enchants
  * Tier 1: Basic spells. Have about 30% chance (3000), will scale up fast with attributes (on average 12-14 points per attribute)
@@ -746,11 +744,8 @@ void __thiscall thorns_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
     {
         spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
         uint16_t damage = spell_data.params[0];
-        SF_SpellEffectInfo effect_info;
-        effect_info.job_id = spell->spell_job;
-        effect_info.spell_id = spell->spell_id;
         uint32_t resist = spellAPI->getChanceToResistSpell(_this->AutoClass34, source_index, target_index,
-                                                           &effect_info);
+                                                           spell->spell_id);
         uint32_t random = spellAPI->getRandom(_this->OpaqueClass, 100);
         if (resist < random)
         {
