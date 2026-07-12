@@ -983,9 +983,6 @@ void __thiscall effect_pain_area (SF_CGdSpell *_this, uint16_t spell_index)
                     final_targets.push_back(targets[i]);
                 }
             }
-            SF_SpellEffectInfo effect_info;
-            effect_info.job_id = spell->spell_job;
-            effect_info.spell_id = spell->spell_id;
             for (uint32_t i = 0; i < final_targets.size(); i++)
             {
                 if (((_this->SF_CGdFigure->figures[final_targets[i]].flags & (IS_DEAD | RESESRVED_ONLY)) == 0) &&
@@ -994,7 +991,7 @@ void __thiscall effect_pain_area (SF_CGdSpell *_this, uint16_t spell_index)
                     (toolboxAPI.isTargetable(_this->SF_CGdFigureToolBox, final_targets[i])))
                 {
                     uint32_t chance =  spellAPI.getChanceToResistSpell(_this->AutoClass34, source_index,
-                                                                       final_targets[i], effect_info);
+                                                                       final_targets[i], spell->spell_id);
                     uint32_t random = spellAPI.getRandom(_this->OpaqueClass, 100);
                     if (chance < random)
                     {
