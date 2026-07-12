@@ -21,7 +21,8 @@
 #define CONFIG_FILE "sfsf.ini"
 typedef void (*initializeModule_ptr)(void *);
 typedef SFMod *(*registerMod_ptr)(void *);
-typedef SFMod *(*createModInfo_ptr)(const char *mod_id, char *mod_version,
+typedef SFMod *(*createModInfo_ptr)(const char *mod_id,
+                                    const char *mod_version,
                                     const char *mod_author,
                                     const char *mod_description);
 

@@ -227,25 +227,25 @@ void attach_mod_labels(CMnuContainer *container, int mods_per_page, int page)
                 {
                     mod_struct.title_label =
                         uiAPI.attachLabel(nullptr, container, mod_title,
-                                         6, x_title_pos, absolute_y_pos - 48, title_width,
-                                         y_item_spacing);
+                                          6, x_title_pos, absolute_y_pos - 48, title_width,
+                                          y_item_spacing);
                     uiAPI.setMenuID(mod_struct.title_label, 0x6);
                     uiAPI.setLabelColour(mod_struct.title_label, 0.85, 0.64, 0.12, '\0');
                     uiAPI.setLabelColour(mod_struct.title_label, 0.85, 0.64, 0.12, '\x01');
 
                     mod_struct.desc_label =
                         uiAPI.attachLabel(nullptr, container, wrapped_description,
-                                         11, 48, absolute_y_pos + 24, desc_width, y_item_spacing);
+                                          11, 48, absolute_y_pos + 24, desc_width, y_item_spacing);
                     uiAPI.setMenuID(mod_struct.desc_label, 0x6);
 
                     mod_struct.page_label =
                         uiAPI.attachLabel(nullptr, container, mod_page_info,
-                                         6, 92, absolute_y_pos + 382, 50, y_item_spacing);
+                                          6, 92, absolute_y_pos + 382, 50, y_item_spacing);
                     uiAPI.setMenuID(mod_struct.page_label, 0x6);
 
                     mod_struct.error_label =
                         uiAPI.attachLabel(nullptr, container, wrapped_error_info,
-                                         11, 48, absolute_y_pos + 224, desc_width, y_item_spacing);
+                                          11, 48, absolute_y_pos + 224, desc_width, y_item_spacing);
                     uiAPI.setMenuID(mod_struct.error_label, 0x6);
                     uiAPI.setLabelColour(mod_struct.error_label, 1.0, 0.0, 0.0, '\x01');
 
@@ -293,16 +293,16 @@ void add_navigation_buttons(CMnuContainer *parent)
     char btn_label[1] = "";
 
     right_nav = uiAPI.attachNewButton(parent, btn_default, btn_pressed, btn_load,
-                                  btn_disabled, btn_label, 7, (443 - 96), 619 - 80,
-                                  48, 48, 0, (uint32_t) &navigate_page_right);
+                                      btn_disabled, btn_label, 7, (443 - 96), 619 - 80,
+                                      48, 48, 0, (uint32_t) &navigate_page_right);
 
     char btn_disabled_left[128] = "ui_btn_togglearrow_left_disabled.msh";
     char btn_pressed_left[128] = "ui_btn_togglearrow_left_pressed.msh";
     char btn_default_left[128] = "ui_btn_togglearrow_left_default.msh";
 
     left_nav = uiAPI.attachNewButton(parent, btn_default_left, btn_pressed_left,
-                                 btn_load, btn_disabled_left, btn_label, 7, 48, 619 - 80,
-                                 48, 48, 1, (uint32_t) &navigate_page_left);
+                                     btn_load, btn_disabled_left, btn_label, 7, 48, 619 - 80,
+                                     48, 48, 1, (uint32_t) &navigate_page_left);
 
     attach_mod_labels(parent, 1, 0);
 }
@@ -315,7 +315,7 @@ void __fastcall close_mod_list_callback(CMnuSmpButton *button, int32_t *cui_menu
     is_mod_list_shown = false;
 }
 
-CMnuContainer* __thiscall createContainer(
+CMnuContainer * __thiscall createContainer(
     uint16_t x,
     uint16_t y,
     uint16_t width,
@@ -454,14 +454,14 @@ void __thiscall show_mod_list(CMnuSmpButton *button)
 }
 
 CMnuSmpButton * __thiscall attachNewButton(CMnuContainer *parent,
-                                             char *button_mesh_default,
-                                             char *button_mesh_pressed,
-                                             char *button_initial_load_mesh,
-                                             char *button_mesh_disabled, char *label_char,
-                                             uint8_t font_index, uint16_t x_pos,
-                                             uint16_t y_pos, uint16_t width,
-                                             uint16_t height, int button_index,
-                                             uint32_t callback_func_ptr)
+                                           char *button_mesh_default,
+                                           char *button_mesh_pressed,
+                                           char *button_initial_load_mesh,
+                                           char *button_mesh_disabled, char *label_char,
+                                           uint8_t font_index, uint16_t x_pos,
+                                           uint16_t y_pos, uint16_t width,
+                                           uint16_t height, int button_index,
+                                           uint32_t callback_func_ptr)
 {
     SF_String m_mesh_string_default;
     SF_String m_mesh_string_pressed;
@@ -543,7 +543,7 @@ CMnuSmpButton * __thiscall attachNewButton(CMnuContainer *parent,
     return new_button;
 }
 
-SFMod *createModInfo(const char *mod_id, char *mod_version,
+SFMod *createModInfo(const char *mod_id,const char *mod_version,
                      const char *mod_author, const char *mod_description)
 {
     SFMod *mod = (SFMod *)malloc(sizeof(SFMod));
@@ -564,9 +564,9 @@ SFMod *createModInfo(const char *mod_id, char *mod_version,
 }
 
 /*
-void attachVideo(CAppMenu *CAppMenu_ptr, CMnuContainer *parent,
+   void attachVideo(CAppMenu *CAppMenu_ptr, CMnuContainer *parent,
                  char *video_loc_and_name_chars)
-{
+   {
     SF_CUiVideo *video_ptr = (SF_CUiVideo *) g_new_operator(0x348);
     SF_String m_video_name_string;
     SF_String *video_name_string = g_create_sf_string(&m_video_name_string,
@@ -584,16 +584,16 @@ void attachVideo(CAppMenu *CAppMenu_ptr, CMnuContainer *parent,
 
     //void *_CMnuScreen_ptr, CMnuBase* base, char flag
     //CMnuScreen_attach_control(parent, CAppMenu_ptr->CAppMenu_data.CMnuBase_ptr, '\x01');
-}
-*/
+   }
+ */
 
 CMnuLabel * __thiscall attachMeshedLabel(CMnuLabel *new_label,
-                                               CMnuContainer *parent,
-                                               char *mesh_char,
-                                               char *label_char,
-                                               uint8_t font_index,
-                                               uint16_t x_pos, uint16_t y_pos,
-                                               uint16_t width, uint16_t height)
+                                         CMnuContainer *parent,
+                                         char *mesh_char,
+                                         char *label_char,
+                                         uint8_t font_index,
+                                         uint16_t x_pos, uint16_t y_pos,
+                                         uint16_t width, uint16_t height)
 {
     SF_String m_mesh_string;
     SF_String m_label_string;
@@ -631,12 +631,12 @@ CMnuLabel * __thiscall attachMeshedLabel(CMnuLabel *new_label,
 }
 
 CMnuLabel * __thiscall attachLabel(CMnuLabel *label_ptr,
-                                        CMnuContainer *parent,
-                                        char *label_chars, uint8_t font_index,
-                                        uint16_t x_pos, uint16_t y_pos,
-                                        uint16_t width, uint16_t height)
+                                   CMnuContainer *parent,
+                                   char *label_chars, uint8_t font_index,
+                                   uint16_t x_pos, uint16_t y_pos,
+                                   uint16_t width, uint16_t height)
 {
     char empty[] = "";
     return attachMeshedLabel(label_ptr, parent, empty, label_chars,
-                                   font_index, x_pos, y_pos, width, height);
+                             font_index, x_pos, y_pos, width, height);
 }
