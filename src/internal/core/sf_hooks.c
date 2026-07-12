@@ -189,6 +189,7 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(toolbox, equipArtisanTools, 0x2fd783);
     DEFINE_FUNCTION(toolbox, findClosestMonument, 0x2bb380);
     DEFINE_FUNCTION(toolbox, doMapOutCry, 0x2c3d60);
+    DEFINE_FUNCTION(toolbox, getSightRange, 0x2fe2f4);
 
     log_info("| - BuildingAPI Hooks");
     DEFINE_FUNCTION(building, buildingDealDamage, 0x2d6d80);

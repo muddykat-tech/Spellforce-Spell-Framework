@@ -60,6 +60,7 @@ DECLARE_FUNCTION(void, equipArtisanArmour, SF_CGdFigureToolbox* _this, uint16_t 
 DECLARE_FUNCTION(void, equipArtisanTools, SF_CGdFigureToolbox* _this, uint16_t figure_id, uint32_t param2,
                  uint32_t param3);
 
+DECLARE_FUNCTION(uint8_t, getSightRange, SF_CGdFigureToolbox *_this, uint16_t figure_id);
 // getDistance(SF_Coord *pointA, SF_Coord *pointB)
 DECLARE_FUNCTION(uint32_t, getDistance, SF_Coord *pointA, SF_Coord *pointB);
 
@@ -103,4 +104,5 @@ typedef struct
     equipArtisanTools_ptr equipArtisanTools;
     findClosestMonument_ptr findClosestMonument;
     doMapOutCry_ptr doMapOutCry;
+    getSightRange_ptr getSightRange;
 } ToolboxFunctions;
