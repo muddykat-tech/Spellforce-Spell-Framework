@@ -739,8 +739,9 @@ void __thiscall thorns_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
     uint16_t source_index = spell->source.entity_index;
     uint16_t target_index = spell->target.entity_index;
+
     if ((_this->SF_CGdFigure->figures[target_index].owner != (uint16_t)(-1))
-        && ((_this->SF_CGdFigure->figures[target_index].flags & (IS_DEAD|RESESRVED_ONLY) == 0)))
+        && (((_this->SF_CGdFigure->figures[target_index].flags & (IS_DEAD|RESESRVED_ONLY)) == 0)))
     {
         spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
         uint16_t damage = spell_data.params[0];
@@ -773,6 +774,7 @@ void __thiscall thorns_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
                                       _this->OpaqueClass->current_step, 0x19, &some_rect);
         }
     }
+    spellAPI->setEffectDone(_this, spell_index, 0);
 }
 
 
