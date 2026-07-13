@@ -821,17 +821,23 @@ void __thiscall effect_self_illusion(SF_CGdSpell *_this, uint16_t spell_index)
                         SF_CGdFigureWeaponStats weapon_stats;
 
                         getWeaponStats(_this->SF_CGdFigure, source_index, 0, &weapon_stats);
+                        weapon_stats.min_dmg = 0;
+                        weapon_stats.max_dmg = 0;
                         setWeaponStats(_this->SF_CGdFigure, figure_index, 0, &weapon_stats);
 
                         getWeaponStats(_this->SF_CGdFigure, source_index, 1, &weapon_stats);
+                        weapon_stats.min_dmg = 0;
+                        weapon_stats.max_dmg = 0;
                         setWeaponStats(_this->SF_CGdFigure, figure_index, 1, &weapon_stats);
 
                         for (int j = 0; j < 15; j++)
                         {
                             SF_SGtFigureAction action;
                             aiAPI.getFigureAction(_this->SF_CGdFigure, &action, source_index, j);
-
-                            figureAPI.addAction(_this->SF_CGdFigure, figure_index, &action);
+                            if ((action.type != 0xFFFF) && (action.type < 10000))
+                            {
+                                figureAPI.addAction(_this->SF_CGdFigure, figure_index, &action);
+                            }
                         }
                         for (int j = 0; j < 16; j++)
                         {
