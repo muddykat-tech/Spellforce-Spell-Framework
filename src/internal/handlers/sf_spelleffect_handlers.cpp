@@ -834,7 +834,7 @@ void __thiscall effect_self_illusion(SF_CGdSpell *_this, uint16_t spell_index)
                         {
                             SF_SGtFigureAction action;
                             aiAPI.getFigureAction(_this->SF_CGdFigure, &action, source_index, j);
-                            if ((action.type != 0xFFFF) && (action.type < 10000))
+                            if ((action.type != 0xFFFF) && (action.type >= 10000))
                             {
                                 figureAPI.addAction(_this->SF_CGdFigure, figure_index, &action);
                             }
@@ -844,6 +844,9 @@ void __thiscall effect_self_illusion(SF_CGdSpell *_this, uint16_t spell_index)
                             uint16_t eq_id = _this->SF_CGdFigure->figures[source_index].equipment[j];
                             figure->equipment[j] = eq_id;
                         }
+                        uint16_t armour = figureAPI.getCurrentStat(_this->SF_CGdFigure, source_index, ARMOR);
+                        figure->armor.base_val = (armour * scale_factor) / 100;
+
                         SF_CGdTargetData source;
                         source.entity_index = source_index;
                         source.entity_type = 1;
