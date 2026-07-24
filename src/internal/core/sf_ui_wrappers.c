@@ -64,7 +64,7 @@ void __thiscall updateLabelText(CMnuLabel *label, const char *text)
 
     SF_String string_obj;
     SF_String *sf_string = g_create_sf_string(&string_obj, text);
-    g_menu_label_set_string(label, sf_string);
+    uiAPI.menuLabelSetString(label, sf_string);
     g_destroy_sf_string(sf_string);
 }
 
@@ -329,7 +329,7 @@ CMnuContainer * __thiscall createContainer(
     SF_String s_bg, s_border;
     SF_String *p_bg, *p_border;
 
-    container = (CMnuContainer *)g_new_operator(0x340);
+    container = (CMnuContainer *)uiAPI.newOperator(0x340);
     if (!container)
     {
         log_error("Failed to allocate CMnuContainer");
@@ -419,12 +419,12 @@ void __thiscall show_mod_list(CMnuSmpButton *button)
             "ui_bgr_pregame_border_right.msb", 0.5f
             );
 
-        g_container_add_control(parent, (CMnuBase *)mod_info_page, '\x01', '\x01', 0);
+        uiAPI.containerAddControl(parent, (CMnuBase *)mod_info_page, '\x01', '\x01', 0);
 
-        g_container_add_control(mod_info_page, (CMnuBase *)mod_container, '\x01', '\x01', 0);
+        uiAPI.containerAddControl(mod_info_page, (CMnuBase *)mod_container, '\x01', '\x01', 0);
 
-        g_container_add_control(mod_container, (CMnuBase *)mod_list, '\x01', '\x01', 0);
-        g_container_add_control(mod_container, (CMnuBase *)mod_list_info, '\x01', '\x01', 0);
+        uiAPI.containerAddControl(mod_container, (CMnuBase *)mod_list, '\x01', '\x01', 0);
+        uiAPI.containerAddControl(mod_container, (CMnuBase *)mod_list_info, '\x01', '\x01', 0);
 
         add_close_button(mod_info_page);
         add_navigation_buttons(mod_list);
@@ -472,7 +472,7 @@ CMnuSmpButton * __thiscall attachNewButton(CMnuContainer *parent,
     CMnuSmpButton *new_button;
     //void *new_btn_operation;
 
-    SF_FontStruct *fonts = g_get_smth_fonts();
+    SF_FontStruct *fonts = uiAPI.getFonts();
     SF_String *label_string = g_create_sf_string(&m_label_string, label_char);
 
     // Default
@@ -492,7 +492,7 @@ CMnuSmpButton * __thiscall attachNewButton(CMnuContainer *parent,
         g_create_sf_string(&m_mesh_string_disabled, button_mesh_disabled);
 
     // 0x3b0 seems to corralate to CUiStartMenu, but is directly cast to be a type of CUiFrameStats
-    new_button = (CMnuSmpButton *)g_new_operator(0x428); // 0x368, 0x3b0 and 0x708 are all valid. (I suspect that they're creating objects that have CMnuLabel as an Parent Class).
+    new_button = (CMnuSmpButton *)uiAPI.newOperator(0x428); // 0x368, 0x3b0 and 0x708 are all valid. (I suspect that they're creating objects that have CMnuLabel as an Parent Class).
 
     if (font_index > 32)
     {
@@ -501,7 +501,7 @@ CMnuSmpButton * __thiscall attachNewButton(CMnuContainer *parent,
     }
 
     new_button = uiAPI.initializeSmpButton(new_button);
-    SF_Font *selected_font = g_get_font(fonts, font_index);
+    SF_Font *selected_font = uiAPI.getFont(fonts, font_index);
 
     uiAPI.CMnuBaseSetName((CMnuBase *)new_button, label_string);
 
@@ -532,7 +532,7 @@ CMnuSmpButton * __thiscall attachNewButton(CMnuContainer *parent,
 
     uiAPI.vfunction16AttachCallback(new_button, '\x01');
 
-    g_container_add_control(parent,  (CMnuBase *)new_button, '\x01', '\x01', 0);
+    uiAPI.containerAddControl(parent,  (CMnuBase *)new_button, '\x01', '\x01', 0);
 
     g_destroy_sf_string(mesh_string_default);
     g_destroy_sf_string(mesh_string_pressed);
@@ -567,7 +567,7 @@ SFMod *createModInfo(const char *mod_id,const char *mod_version,
    void attachVideo(CAppMenu *CAppMenu_ptr, CMnuContainer *parent,
                  char *video_loc_and_name_chars)
    {
-    SF_CUiVideo *video_ptr = (SF_CUiVideo *) g_new_operator(0x348);
+    SF_CUiVideo *video_ptr = (SF_CUiVideo *) uiAPI.newOperator(0x348);
     SF_String m_video_name_string;
     SF_String *video_name_string = g_create_sf_string(&m_video_name_string,
                                                       video_loc_and_name_chars);
@@ -598,11 +598,11 @@ CMnuLabel * __thiscall attachMeshedLabel(CMnuLabel *new_label,
     SF_String m_mesh_string;
     SF_String m_label_string;
 
-    SF_FontStruct *fonts = g_get_smth_fonts();
+    SF_FontStruct *fonts = uiAPI.getFonts();
     SF_String *label_string = g_create_sf_string(&m_label_string, label_char);
     SF_String *mesh_string = g_create_sf_string(&m_mesh_string, mesh_char);
 
-    new_label = (CMnuLabel *)g_new_operator(0x3b0);
+    new_label = (CMnuLabel *)uiAPI.newOperator(0x3b0);
 
     if (font_index > 32)
     {
@@ -610,19 +610,19 @@ CMnuLabel * __thiscall attachMeshedLabel(CMnuLabel *new_label,
         font_index = 6;
     }
 
-    SF_Font *selected_font = g_get_font(fonts, font_index);
+    SF_Font *selected_font = uiAPI.getFont(fonts, font_index);
 
-    g_menu_label_constructor(new_label);
+    uiAPI.menuLabelConstructor(new_label);
 
     g_set_label_flags(new_label, 7);
 
-    g_init_menu_element(new_label, x_pos, y_pos, width, height, mesh_string);
+    uiAPI.initMenuElement(new_label, x_pos, y_pos, width, height, mesh_string);
 
-    g_menu_label_set_font(new_label, selected_font);
+    uiAPI.menuLabelSetFont(new_label, selected_font);
 
-    g_container_add_control(parent, (CMnuBase *) new_label, '\x01', '\x01', 0);
+    uiAPI.containerAddControl(parent, (CMnuBase *) new_label, '\x01', '\x01', 0);
 
-    g_menu_label_set_string(new_label, label_string);
+    uiAPI.menuLabelSetString(new_label, label_string);
 
     g_destroy_sf_string(label_string);
     g_destroy_sf_string(mesh_string);

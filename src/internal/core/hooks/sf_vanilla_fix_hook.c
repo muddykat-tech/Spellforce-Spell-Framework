@@ -1,6 +1,7 @@
 #include "../sf_wrappers.h"
 #include "../../../asi/sf_asi.h"
 #include "sf_vanilla_fix_hook.h"
+#include "../sf_screens_loader.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <vector>
@@ -1512,15 +1513,7 @@ typedef D_String *(__thiscall *DStringConstructor_char_ptr)(D_String *_this, cha
 typedef int (__thiscall *FileWrapperOpen_ptr)(FileWrapper *_this, D_String *path, int param_2);
 typedef void (__thiscall *FileWrapperClose_ptr)(FileWrapper *_this);
 typedef void (__thiscall *readMapNameFromSave_ptr)(SF_CGdWorld *_this, void *AC57);
-typedef uint32_t (__thiscall *vfunction187_ptr)(void *_this, SF_String *name);
-typedef void (__thiscall *vfunction175_ptr)(CMnuLabel *_this, uint8_t param_1);
-typedef void (__thiscall *setCanFocus_ptr)(CMnuBase *_this, uint8_t value);
-typedef void (__thiscall *vfunction207_ptr)(void *_this, CMnuBase *param_1, uint8_t param_2);
-typedef void (__thiscall *vfunction12_ptr)(CMnuBase *_this,float param_1, uint8_t param_2);
-typedef void (__thiscall *BringToFront_ptr)(CMnuContainer *_this, void *param_1);
-typedef void *(__cdecl *op_new_ptr)(uint32_t size);
 
-op_new_ptr op_new;
 readMapNameFromSave_ptr readMapNameFromSave;
 
 FileWrapperOpen_ptr FileWrapperOpen;
@@ -1530,39 +1523,22 @@ AC57_Init_ptr AC57_Init;
 AC57_Dispose_ptr AC57_Dispose;
 FileWrapperClose_ptr FileWrapperInit;
 
-vfunction187_ptr vfunction187;
-vfunction207_ptr vfunction207;
-vfunction175_ptr vfunction175;
-vfunction12_ptr vfunction12;
-
-setCanFocus_ptr setCanFocus;
-BringToFront_ptr BringToFront;
-BringToFront_ptr vfunction163;
-
-extern container_add_control_ptr g_container_add_control;
-extern menu_label_constructor_ptr g_menu_label_constructor;
-extern mnu_label_init_data_ptr g_init_menu_element;
-extern get_smth_fonts_ptr g_get_smth_fonts;
-extern menu_label_set_font_ptr g_menu_label_set_font;
-extern menu_label_set_string_ptr g_menu_label_set_string;
-extern get_font_ptr g_get_font;
-
 createSplashScreen_ptr createSplashScreen;
 getSavePath_ptr getSavePath;
 
-void createSplashScreen_helper (CAppMenu *_this, CMnuContainer **param_1, SF_String *param_2, SF_String *map_name)
+void CreateSplashScreenHelper (CAppMenu *_this, CMnuContainer **param_1, SF_String *param_2, SF_String *map_name)
 {
     SF_String screen_name;
     SFStringConstructor_char(&screen_name, "<Cont>Splash");
     SFStringDeepCopy(param_2, &screen_name);
     SFStringDestructor(&screen_name);
-    uint32_t vfun187_result = vfunction187(_this->CAppMenu_data.splash_screen, param_2);
+    uint32_t vfun187_result = uiAPI.vfunction187(_this->CAppMenu_data.splash_screen, param_2);
     if (vfun187_result)
     {
         return;
     }
 
-    CMnuContainer *some_container = (CMnuContainer *)op_new(0x340);
+    CMnuContainer *some_container = (CMnuContainer *)uiAPI.newOperator(0x340);
     if (some_container != NULL)
     {
         uiAPI.initializeMenuContainer(some_container);
@@ -1577,14 +1553,14 @@ void createSplashScreen_helper (CAppMenu *_this, CMnuContainer **param_1, SF_Str
     SFStringDestructor(&c_brdr);
     SFStringDestructor(&c_bgr);
 
-    setCanFocus((CMnuBase *)some_container, 0);
+    uiAPI.setCanFocus((CMnuBase *)some_container, 0);
     //black magic, vfunction 182 equivalent
     *(uint32_t *)(&some_container->CMnuContainer_data[0x78]) = 1;
     //CMnuScreen::AttachControl
-    vfunction207(_this->CAppMenu_data.splash_screen, (CMnuBase *)some_container, 0);
+    uiAPI.vfunction207(_this->CAppMenu_data.splash_screen, (CMnuBase *)some_container, 0);
     *param_1 = some_container;
 
-    CMnuContainer *another_container = (CMnuContainer *)op_new(0x340);
+    CMnuContainer *another_container = (CMnuContainer *)uiAPI.newOperator(0x340);
     if (another_container != NULL)
     {
         uiAPI.initializeMenuContainer(another_container);
@@ -1595,57 +1571,39 @@ void createSplashScreen_helper (CAppMenu *_this, CMnuContainer **param_1, SF_Str
     SFStringDestructor(&another_cont_name);
 
     uint32_t campaign_type = _this->CAppMenu_data.campaign_type;
-/*
+
     char *loading_name = SFStringCMbStr(map_name);
-    for (int i = 0; i<strlen(loading_name); i++)
+    const char *matched_msb = find_screen_for_map(loading_name);
+
+    SFStringConstructor_char(&c_brdr, "");
+    if (matched_msb != NULL)
     {
-        loading_name[i] = (char)tolower(loading_name[i]);
-    }
-    if (strstr(loading_name, "greyfell"))
-    {
-        SFStringConstructor_char(&c_bgr, "ui_mainmenu_bg_loading_greyfell.msb");
-        SFStringConstructor_char(&c_brdr, "");
-        uiAPI.setupMenuContainerData(another_container, 0.0, 0.0, 0.0, 0.0, &c_bgr, &c_brdr);
-        SFStringDestructor(&c_brdr);
-        SFStringDestructor(&c_bgr);
+        SFStringConstructor_char(&c_bgr, matched_msb);
     }
     else
-    {*/
-    if (campaign_type == 0)
     {
-        SFStringConstructor_char(&c_bgr, "ui_mainmenu_bg_loading_sf1.msb");
-        SFStringConstructor_char(&c_brdr, "");
-        uiAPI.setupMenuContainerData(another_container, 0.0, 0.0, 0.0, 0.0, &c_bgr, &c_brdr);
-        SFStringDestructor(&c_brdr);
-        SFStringDestructor(&c_bgr);
+        switch (campaign_type)
+        {
+            case 0: SFStringConstructor_char(&c_bgr, "ui_mainmenu_bg_loading_sf1.msb"); break;
+            case 1: SFStringConstructor_char(&c_bgr, "ui_mainmenu_bg_loading_sf1addon01.msb"); break;
+            case 2: SFStringConstructor_char(&c_bgr, "ui_mainmenu_bg_loading_sf1addon02.msb"); break;
+            default: SFStringConstructor_char(&c_bgr, ""); break;
+        }
     }
-    if (campaign_type == 1)
-    {
-        SFStringConstructor_char(&c_bgr, "ui_mainmenu_bg_loading_sf1addon01.msb");
-        SFStringConstructor_char(&c_brdr, "");
-        uiAPI.setupMenuContainerData(another_container, 0.0, 0.0, 0.0, 0.0, &c_bgr, &c_brdr);
-        SFStringDestructor(&c_brdr);
-        SFStringDestructor(&c_bgr);
-    }
-    if (campaign_type == 2)
-    {
-        SFStringConstructor_char(&c_bgr, "ui_mainmenu_bg_loading_sf1addon02.msb");
-        SFStringConstructor_char(&c_brdr, "");
-        uiAPI.setupMenuContainerData(another_container, 0.0, 0.0, 0.0, 0.0, &c_bgr, &c_brdr);
-        SFStringDestructor(&c_brdr);
-        SFStringDestructor(&c_bgr);
-    }
-    //}
-    setCanFocus((CMnuBase *)another_container, 0);
+    uiAPI.setupMenuContainerData(another_container, 0.0, 0.0, 0.0, 0.0, &c_bgr, &c_brdr);
+    SFStringDestructor(&c_brdr);
+    SFStringDestructor(&c_bgr);
+
+    uiAPI.setCanFocus((CMnuBase *)another_container, 0);
     //black magic, vfunction 182 equivalent
     *(uint32_t *)(&another_container->CMnuContainer_data[0x78]) = 1;
-    g_container_add_control(some_container, (CMnuBase *)another_container, 0, 1, 0);
+    uiAPI.containerAddControl(some_container, (CMnuBase *)another_container, 0, 1, 0);
 
-    CMnuLabel *progress_label = (CMnuLabel *)op_new(0x368);
+    CMnuLabel *progress_label = (CMnuLabel *)uiAPI.newOperator(0x368);
     if (progress_label != NULL)
     {
         log_info ("Running label constructor");
-        g_menu_label_constructor(progress_label);
+        uiAPI.menuLabelConstructor(progress_label);
     }
     log_info ("Label offset 0x%x",
               (uint32_t)(&_this->CAppMenu_data.progress_label) - (uint32_t)(&_this->CAppMenu_data));
@@ -1657,24 +1615,24 @@ void createSplashScreen_helper (CAppMenu *_this, CMnuContainer **param_1, SF_Str
 
     SF_String label_data;
     SFStringConstructor_char(&label_data, "");
-    g_init_menu_element(_this->CAppMenu_data.progress_label, 308.0, 0.0, 0.0, 0.0, &label_data);
+    uiAPI.initMenuElement(_this->CAppMenu_data.progress_label, 308.0, 0.0, 0.0, 0.0, &label_data);
     SFStringDestructor(&label_data);
 
-    SF_FontStruct *fonts = g_get_smth_fonts();
-    SF_Font *font = g_get_font(fonts, 7);
-    g_menu_label_set_font(_this->CAppMenu_data.progress_label, font);
-    vfunction175(_this->CAppMenu_data.progress_label,1);
+    SF_FontStruct *fonts = uiAPI.getFonts();
+    SF_Font *font = uiAPI.getFont(fonts, 7);
+    uiAPI.menuLabelSetFont(_this->CAppMenu_data.progress_label, font);
+    uiAPI.vfunction175(_this->CAppMenu_data.progress_label,1);
 
-    g_container_add_control(another_container, (CMnuBase *)_this->CAppMenu_data.progress_label, 0, 1, 0);
-    vfunction12((CMnuBase *)_this->CAppMenu_data.progress_label, 761.0, 1);
+    uiAPI.containerAddControl(another_container, (CMnuBase *)_this->CAppMenu_data.progress_label, 0, 1, 0);
+    uiAPI.vfunction12((CMnuBase *)_this->CAppMenu_data.progress_label, 761.0, 1);
 
     SF_String label_text;
     SFStringConstructor_char(&label_text, "...");
-    g_menu_label_set_string(_this->CAppMenu_data.progress_label,&label_text );
+    uiAPI.menuLabelSetString(_this->CAppMenu_data.progress_label,&label_text );
     SFStringDestructor(&label_text);
 
-    BringToFront(some_container, 0);
-    vfunction163(some_container, 0);
+    uiAPI.bringToFront(some_container, 0);
+    uiAPI.vfunction163(some_container, 0);
     //some container vfun163
 
     //offset 0x148 =1
@@ -1731,7 +1689,7 @@ void __thiscall CreateSplashScreen(CAppMenu *_this, CMnuContainer **param_1, SF_
         log_info ("Map name from portal change %ls", test_var);
         SF_String map_name;
         SFStringConstructor(&map_name);
-        createSplashScreen_helper(_this, param_1, param_2, &map_name);
+        CreateSplashScreenHelper(_this, param_1, param_2, &map_name);
 
     }
     else
@@ -1739,7 +1697,7 @@ void __thiscall CreateSplashScreen(CAppMenu *_this, CMnuContainer **param_1, SF_
         SF_String *map_name = getMapFromSave(session, save_path, campaign_type);
         if (map_name != NULL)
         {
-            createSplashScreen_helper(_this, param_1, param_2, map_name);
+            CreateSplashScreenHelper(_this, param_1, param_2, map_name);
             //log_info ("Map name from save: %ls", map_name->raw_data);
             SFStringDestructor(map_name);
             free(map_name);
@@ -1809,16 +1767,6 @@ void initialize_vanilla_fix_hooks()
     AC57_Dispose = (AC57_Dispose_ptr)(ASI::AddrOf(0x3865b0));
 
     readMapNameFromSave = (readMapNameFromSave_ptr)(ASI::AddrOf(0x2c1f10));
-    vfunction187 = (vfunction187_ptr)(ASI::AddrOf(0x5083d0));
-    vfunction207 = (vfunction207_ptr)(ASI::AddrOf(0x507240));
-    setCanFocus = (setCanFocus_ptr)(ASI::AddrOf(0x511ac0));
-
-    vfunction175 = (vfunction175_ptr)(ASI::AddrOf(0x52f5f0));
-    vfunction12 = (vfunction12_ptr)(ASI::AddrOf(0x511a00));
-    BringToFront = (BringToFront_ptr)(ASI::AddrOf(0x507c10));
-    vfunction163 = (BringToFront_ptr)(ASI::AddrOf(0x513d90));
-
-    op_new = (op_new_ptr)ASI::AddrOf(0x675A9D);
 
     log_info("| - Vanilla Fix Hooks");
     figure_statistic_hook_current_ac();
@@ -1843,5 +1791,6 @@ void initialize_vanilla_fix_hooks()
     army_size_fix_hook();
     figure_turn_off_battle_mode_hook();
     splash_screen_hook();
+    load_screens_json();
 
 }

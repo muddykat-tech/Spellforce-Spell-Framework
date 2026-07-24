@@ -237,6 +237,21 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(ui, setMenuID, 0x50E660);
     DEFINE_FUNCTION(ui, setContainerVisible, 0x513910);
     DEFINE_FUNCTION(ui, setLabelColour, 0x530330);
+    DEFINE_FUNCTION(ui, containerAddControl, 0x506f30);
+    DEFINE_FUNCTION(ui, menuLabelConstructor, 0x51a180);
+    DEFINE_FUNCTION(ui, initMenuElement, 0x52cfe0);
+    DEFINE_FUNCTION(ui, getFonts, 0x5357b0);
+    DEFINE_FUNCTION(ui, menuLabelSetFont, 0x530e00);
+    DEFINE_FUNCTION(ui, menuLabelSetString, 0x52fab0);
+    DEFINE_FUNCTION(ui, getFont, 0x535180);
+    DEFINE_FUNCTION(ui, newOperator, 0x675A9D);
+    DEFINE_FUNCTION(ui, vfunction187, 0x5083d0);
+    DEFINE_FUNCTION(ui, vfunction175, 0x52f5f0);
+    DEFINE_FUNCTION(ui, setCanFocus, 0x511ac0);
+    DEFINE_FUNCTION(ui, vfunction207, 0x507240);
+    DEFINE_FUNCTION(ui, vfunction12, 0x511a00);
+    DEFINE_FUNCTION(ui, bringToFront, 0x507c10);
+    DEFINE_FUNCTION(ui, vfunction163, 0x513d90);
 
     log_info("| - uiAPI Wrappers");
     INCLUDE_FUNCTION(ui, updateLabelText, &updateLabelText);

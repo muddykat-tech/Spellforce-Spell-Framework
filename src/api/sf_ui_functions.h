@@ -91,6 +91,29 @@ DECLARE_FUNCTION(void, setMenuID, void *container, uint32_t id);
 DECLARE_FUNCTION(void, setContainerVisible, void *container, uint32_t visible, uint8_t _unknown);
 DECLARE_FUNCTION(void, setLabelColour, CMnuLabel *_this, float r, float g, float b, char flag);
 
+DECLARE_FUNCTION(void, containerAddControl, CMnuContainer *_this, CMnuBase *CMnubase, char c1, char c2, uint32_t p4);
+DECLARE_FUNCTION(void, menuLabelConstructor, CMnuLabel *_this);
+DECLARE_FUNCTION(void, initMenuElement, void *_this, float xpos, float ypos, float width, float height, SF_String *string);
+DECLARE_FUNCTION(SF_FontStruct *, getFonts, void);
+DECLARE_FUNCTION(void, menuLabelSetFont, void *_this, SF_Font *font);
+DECLARE_FUNCTION(void, menuLabelSetString, CMnuLabel *_this, SF_String *string);
+DECLARE_FUNCTION(SF_Font *, getFont, SF_FontStruct *_this, uint32_t font_id);
+DECLARE_FUNCTION(uint32_t, vfunction187, void *_this, SF_String *name);
+DECLARE_FUNCTION(void, vfunction175, CMnuLabel *_this, uint8_t param_1);
+DECLARE_FUNCTION(void, setCanFocus, CMnuBase *_this, uint8_t value);
+DECLARE_FUNCTION(void, vfunction207, void *_this, CMnuBase *param_1, uint8_t param_2);
+DECLARE_FUNCTION(void, vfunction12, CMnuBase *_this, float param_1, uint8_t param_2);
+DECLARE_FUNCTION(void, bringToFront, CMnuContainer *_this, void *param_1);
+DECLARE_FUNCTION(void, vfunction163, CMnuContainer *_this, void *param_1);
+
+/**
+ * @brief operator new (global allocator). Declared manually (not via
+ * DECLARE_FUNCTION) because the real symbol is __cdecl - DECLARE_FUNCTION
+ * always generates __thiscall, which would pass the size argument in ECX
+ * instead of on the stack and corrupt every allocation.
+ */
+typedef void *(__cdecl *newOperator_ptr)(uint32_t size);
+
 /**
  * @ingroup API
  * @brief Group of functions related to UI manipulation.
@@ -142,4 +165,19 @@ typedef struct
     CMnuBaseSetName_ptr CMnuBaseSetName;
     setMenuID_ptr setMenuID;
     setContainerVisible_ptr setContainerVisible;
+    containerAddControl_ptr containerAddControl;
+    menuLabelConstructor_ptr menuLabelConstructor;
+    initMenuElement_ptr initMenuElement;
+    getFonts_ptr getFonts;
+    menuLabelSetFont_ptr menuLabelSetFont;
+    menuLabelSetString_ptr menuLabelSetString;
+    getFont_ptr getFont;
+    newOperator_ptr newOperator;
+    vfunction187_ptr vfunction187;
+    vfunction175_ptr vfunction175;
+    setCanFocus_ptr setCanFocus;
+    vfunction207_ptr vfunction207;
+    vfunction12_ptr vfunction12;
+    bringToFront_ptr bringToFront;
+    vfunction163_ptr vfunction163;
 } UiFunctions;

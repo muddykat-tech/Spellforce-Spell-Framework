@@ -30,20 +30,12 @@ static message_box_ptr s_show_message_box;
 cuiVideoSequence_constructor_ptr cuiVideoSequence_constructor;
 CMnuScreen_attach_control_ptr CMnuScreen_attach_control;
 create_option_ptr f_create_menu_option;
-container_add_control_ptr g_container_add_control;
 uint32_t g_menu_return_addr;
 uint32_t g_ui_hook_fix_addr;
 uint32_t g_ui_hook_fix_addr2;
 uint32_t g_sf_enchant_addr;
 uint32_t g_sf_enchant_addr2;
-new_operator_ptr g_new_operator;
-menu_label_constructor_ptr g_menu_label_constructor;
 set_label_flags_ptr g_set_label_flags;
-mnu_label_init_data_ptr g_init_menu_element;
-get_smth_fonts_ptr g_get_smth_fonts;
-menu_label_set_font_ptr g_menu_label_set_font;
-get_font_ptr g_get_font;
-menu_label_set_string_ptr g_menu_label_set_string;
 
 autoclass113_fun_00a27530_ptr fun_00a27530;
 fun_0086dd60_ptr fun_0086dd60;
@@ -79,21 +71,12 @@ void initialize_menu_data_hooks()
     s_show_message_box = (message_box_ptr)(ASI::AddrOf(0x198660));
 
     g_set_label_flags = (set_label_flags_ptr)(ASI::AddrOf(0x52f1d0));
-    g_menu_label_set_string = (menu_label_set_string_ptr)(ASI::AddrOf(0x52fab0));
     g_menu_return_addr = (ASI::AddrOf(0x182799));
     g_ui_hook_fix_addr = (ASI::AddrOf(0x5D119E));
     g_ui_hook_fix_addr2 = (ASI::AddrOf(0x5d0a7e));
 
     g_sf_enchant_addr = (ASI::AddrOf(0x5d0bbd));
     g_sf_enchant_addr2 = (ASI::AddrOf(0x5d12e7));
-
-    g_new_operator = (new_operator_ptr)(ASI::AddrOf(0x675A9D));
-    g_menu_label_constructor = (menu_label_constructor_ptr)(ASI::AddrOf(0x51a180));
-    g_init_menu_element = (mnu_label_init_data_ptr)(ASI::AddrOf(0x52cfe0));
-    g_get_smth_fonts = (get_smth_fonts_ptr)(ASI::AddrOf(0x5357b0));
-    g_menu_label_set_font = (menu_label_set_font_ptr)(ASI::AddrOf(0x530e00));
-    g_get_font = (get_font_ptr)(ASI::AddrOf(0x535180));
-    g_container_add_control = (container_add_control_ptr)(ASI::AddrOf(0x506f30));
 
     f_create_menu_option = (create_option_ptr)(ASI::AddrOf(0x61CF80));
 
@@ -239,13 +222,13 @@ void __thiscall show_campaign_screen(CMnuSmpButton *_this)
             );
 
         log_info("Called Campaign Screen ATTACH Containers");
-        g_container_add_control(parent, (CMnuBase *)custom_campaign_screen, '\x01', '\x01', 0);
+        uiAPI.containerAddControl(parent, (CMnuBase *)custom_campaign_screen, '\x01', '\x01', 0);
         log_info("Called Campaign Screen ATTACH Containers 2");
-        g_container_add_control(custom_campaign_screen, (CMnuBase *)custom_campaign_container, '\x01', '\x01', 0);
+        uiAPI.containerAddControl(custom_campaign_screen, (CMnuBase *)custom_campaign_container, '\x01', '\x01', 0);
         log_info("Called Campaign Screen ATTACH Containers 3");
-        g_container_add_control(custom_campaign_container, (CMnuBase *)campaign_list, '\x01', '\x01', 0);
+        uiAPI.containerAddControl(custom_campaign_container, (CMnuBase *)campaign_list, '\x01', '\x01', 0);
         log_info("Called Campaign Screen ATTACH Containers 3");
-        g_container_add_control(custom_campaign_container, (CMnuBase *)campaign_list_right, '\x01', '\x01', 0);
+        uiAPI.containerAddControl(custom_campaign_container, (CMnuBase *)campaign_list_right, '\x01', '\x01', 0);
 
         log_info("Called Campaign Screen Close Btn Setup");
         char close_btn_default[128] = "ui_btn_nav_back_default.msh";
