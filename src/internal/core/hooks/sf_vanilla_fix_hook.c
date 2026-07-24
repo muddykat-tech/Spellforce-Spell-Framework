@@ -37,6 +37,7 @@ typedef SF_String *(__thiscall *SFStringFromWchar_ptr)(SF_String *_this, wchar_t
 typedef void (__thiscall *SFStringDestructor_ptr)(SF_String *_this);
 typedef SF_String *(__thiscall *SFStringCopy_ptr)(SF_String *destination, SF_String *source);
 typedef char *(__thiscall *SFStringCMbStr_ptr)(SF_String *source);
+typedef SF_String *(__thiscall *SFStringConstructor_wchar_ptr)(SF_String *_this, wchar_t *value);
 
 typedef SF_String *(__thiscall *GetItemInfo_ptr)(SF_CGdResource *_this, CGdResourceWeaponData *stats,
                                                  uint16_t item_id);
@@ -70,6 +71,7 @@ SFStringDestructor_ptr SFStringDestructor;
 SFStringCopy_ptr SFStringCopy;
 SFStringCopy_ptr SFStringDeepCopy;
 SFStringCMbStr_ptr SFStringCMbStr;
+SFStringConstructor_wchar_ptr SFStringConstructor_wchar;
 
 getSpecialDesc_ptr getSpecialDesc;
 GetItemInfo_ptr GetItemInfo;
@@ -1538,6 +1540,8 @@ vfunction12_ptr vfunction12;
 setCanFocus_ptr setCanFocus;
 BringToFront_ptr BringToFront;
 BringToFront_ptr vfunction163;
+createSplashScreen_ptr createSplashScreen;
+getSavePath_ptr getSavePath;
 
 extern container_add_control_ptr g_container_add_control;
 extern menu_label_constructor_ptr g_menu_label_constructor;
@@ -1547,8 +1551,7 @@ extern menu_label_set_font_ptr g_menu_label_set_font;
 extern menu_label_set_string_ptr g_menu_label_set_string;
 extern get_font_ptr g_get_font;
 
-createSplashScreen_ptr createSplashScreen;
-getSavePath_ptr getSavePath;
+
 
 void createSplashScreen_helper (CAppMenu *_this, CMnuContainer **param_1, SF_String *param_2, SF_String *map_name)
 {
@@ -1730,9 +1733,9 @@ void __thiscall CreateSplashScreen(CAppMenu *_this, CMnuContainer **param_1, SF_
     {
         log_info ("Map name from portal change %ls", test_var);
         SF_String map_name;
-        SFStringConstructor(&map_name);
+        SFStringConstructor_wchar(&map_name, test_var);
         createSplashScreen_helper(_this, param_1, param_2, &map_name);
-
+        SFStringDestructor(&map_name);
     }
     else
     {
@@ -1740,7 +1743,7 @@ void __thiscall CreateSplashScreen(CAppMenu *_this, CMnuContainer **param_1, SF_
         if (map_name != NULL)
         {
             createSplashScreen_helper(_this, param_1, param_2, map_name);
-            //log_info ("Map name from save: %ls", map_name->raw_data);
+            log_info ("Map name from save: %ls", map_name->raw_data);
             SFStringDestructor(map_name);
             free(map_name);
         }
@@ -1784,6 +1787,7 @@ void initialize_vanilla_fix_hooks()
     SFStringCopy = (SFStringCopy_ptr)(ASI::AddrOf(0x383720));
     SFStringCMbStr = (SFStringCMbStr_ptr)(ASI::AddrOf(0x383db0));
     SFStringDeepCopy = (SFStringCopy_ptr)(ASI::AddrOf(0x383a20));
+    SFStringConstructor_wchar = (SFStringConstructor_wchar_ptr)(ASI::AddrOf(0x383890));
 
     GetItemInfo = (GetItemInfo_ptr)(ASI::AddrOf(0x269460));
     GetWeaponType = (GetWeaponType_ptr)(ASI::AddrOf(0x269260));
