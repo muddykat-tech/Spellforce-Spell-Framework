@@ -38,6 +38,7 @@ typedef SF_String *(__thiscall *SFStringFromWchar_ptr)(SF_String *_this, wchar_t
 typedef void (__thiscall *SFStringDestructor_ptr)(SF_String *_this);
 typedef SF_String *(__thiscall *SFStringCopy_ptr)(SF_String *destination, SF_String *source);
 typedef char *(__thiscall *SFStringCMbStr_ptr)(SF_String *source);
+typedef SF_String *(__thiscall *SFStringConstructor_wchar_ptr)(SF_String *_this, wchar_t *value);
 
 typedef SF_String *(__thiscall *GetItemInfo_ptr)(SF_CGdResource *_this, CGdResourceWeaponData *stats,
                                                  uint16_t item_id);
@@ -71,6 +72,7 @@ SFStringDestructor_ptr SFStringDestructor;
 SFStringCopy_ptr SFStringCopy;
 SFStringCopy_ptr SFStringDeepCopy;
 SFStringCMbStr_ptr SFStringCMbStr;
+SFStringConstructor_wchar_ptr SFStringConstructor_wchar;
 
 getSpecialDesc_ptr getSpecialDesc;
 GetItemInfo_ptr GetItemInfo;
@@ -1532,7 +1534,9 @@ void CreateSplashScreenHelper (CAppMenu *_this, CMnuContainer **param_1, SF_Stri
     SFStringConstructor_char(&screen_name, "<Cont>Splash");
     SFStringDeepCopy(param_2, &screen_name);
     SFStringDestructor(&screen_name);
-    uint32_t vfun187_result = uiAPI.vfunction187(_this->CAppMenu_data.splash_screen, param_2);
+
+    //187 is likely polymorphed version of setControllerName for different class (screen?)
+    uint32_t vfun187_result = uiAPI.setScreenName(_this->CAppMenu_data.splash_screen, param_2);
     if (vfun187_result)
     {
         return;
@@ -1554,10 +1558,10 @@ void CreateSplashScreenHelper (CAppMenu *_this, CMnuContainer **param_1, SF_Stri
     SFStringDestructor(&c_bgr);
 
     uiAPI.setCanFocus((CMnuBase *)some_container, 0);
-    //black magic, vfunction 182 equivalent
+    //black magic, vfunction 182 equivalent pass through using 0x512ef0
     *(uint32_t *)(&some_container->CMnuContainer_data[0x78]) = 1;
     //CMnuScreen::AttachControl
-    uiAPI.vfunction207(_this->CAppMenu_data.splash_screen, (CMnuBase *)some_container, 0);
+    uiAPI.attachControlToScreen(_this->CAppMenu_data.splash_screen, (CMnuBase *)some_container, 0);
     *param_1 = some_container;
 
     CMnuContainer *another_container = (CMnuContainer *)uiAPI.newOperator(0x340);
@@ -1572,7 +1576,9 @@ void CreateSplashScreenHelper (CAppMenu *_this, CMnuContainer **param_1, SF_Stri
 
     uint32_t campaign_type = _this->CAppMenu_data.campaign_type;
 
+    log_info("Splash Map Name %ls", map_name->raw_data);
     char *loading_name = SFStringCMbStr(map_name);
+    log_info("Splash Loading Name %s", loading_name);
     const char *matched_msb = find_screen_for_map(loading_name);
 
     SFStringConstructor_char(&c_brdr, "");
@@ -1595,7 +1601,7 @@ void CreateSplashScreenHelper (CAppMenu *_this, CMnuContainer **param_1, SF_Stri
     SFStringDestructor(&c_bgr);
 
     uiAPI.setCanFocus((CMnuBase *)another_container, 0);
-    //black magic, vfunction 182 equivalent
+    //black magic, vfunction 182 equivalent 0x512ef0
     *(uint32_t *)(&another_container->CMnuContainer_data[0x78]) = 1;
     uiAPI.containerAddControl(some_container, (CMnuBase *)another_container, 0, 1, 0);
 
@@ -1686,11 +1692,12 @@ void __thiscall CreateSplashScreen(CAppMenu *_this, CMnuContainer **param_1, SF_
     wchar_t *test_var = (wchar_t *)(*(uint32_t *)(&session->data.unknwn_data[0xa0]));
     if (test_var != NULL)
     {
-        log_info ("Map name from portal change %ls", test_var);
         SF_String map_name;
-        SFStringConstructor(&map_name);
+        SFStringConstructor_wchar(&map_name, test_var);
+        log_info ("1 Map name from portal change %ls", map_name.raw_data);
         CreateSplashScreenHelper(_this, param_1, param_2, &map_name);
-
+        log_info ("2 Map name from portal change %ls", map_name.raw_data);
+        SFStringDestructor(&map_name);
     }
     else
     {
@@ -1698,7 +1705,7 @@ void __thiscall CreateSplashScreen(CAppMenu *_this, CMnuContainer **param_1, SF_
         if (map_name != NULL)
         {
             CreateSplashScreenHelper(_this, param_1, param_2, map_name);
-            //log_info ("Map name from save: %ls", map_name->raw_data);
+            log_info ("Map name from save: %ls", map_name->raw_data);
             SFStringDestructor(map_name);
             free(map_name);
         }
@@ -1742,6 +1749,7 @@ void initialize_vanilla_fix_hooks()
     SFStringCopy = (SFStringCopy_ptr)(ASI::AddrOf(0x383720));
     SFStringCMbStr = (SFStringCMbStr_ptr)(ASI::AddrOf(0x383db0));
     SFStringDeepCopy = (SFStringCopy_ptr)(ASI::AddrOf(0x383a20));
+    SFStringConstructor_wchar = (SFStringConstructor_wchar_ptr)(ASI::AddrOf(0x383890));
 
     GetItemInfo = (GetItemInfo_ptr)(ASI::AddrOf(0x269460));
     GetWeaponType = (GetWeaponType_ptr)(ASI::AddrOf(0x269260));

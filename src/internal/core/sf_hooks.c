@@ -245,10 +245,10 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(ui, menuLabelSetString, 0x52fab0);
     DEFINE_FUNCTION(ui, getFont, 0x535180);
     DEFINE_FUNCTION(ui, newOperator, 0x675A9D);
-    DEFINE_FUNCTION(ui, vfunction187, 0x5083d0);
+    DEFINE_FUNCTION(ui, setScreenName, 0x5083d0);
     DEFINE_FUNCTION(ui, vfunction175, 0x52f5f0);
     DEFINE_FUNCTION(ui, setCanFocus, 0x511ac0);
-    DEFINE_FUNCTION(ui, vfunction207, 0x507240);
+    DEFINE_FUNCTION(ui, attachControlToScreen, 0x507240);
     DEFINE_FUNCTION(ui, vfunction12, 0x511a00);
     DEFINE_FUNCTION(ui, bringToFront, 0x507c10);
     DEFINE_FUNCTION(ui, vfunction163, 0x513d90);

@@ -127,13 +127,33 @@ const char *find_screen_for_map(const char *map_name)
     size_t len = strlen(map_name);
     if (len >= sizeof(lowered))
         len = sizeof(lowered) - 1;
+
     strncpy(lowered, map_name, len);
     lowered[len] = '\0';
     str_to_lower(lowered);
 
+    const char *last_bs = strrchr(lowered, '\\');
+    const char *filename = (last_bs ? last_bs + 1 : lowered);
+
+    const char *dot = strrchr(filename, '.');
+    size_t name_len = dot ? (size_t)(dot - filename) : strlen(filename);
+
+    if (name_len < 4)
+        return NULL;
+
+    const char *start = filename + 4;
+    size_t out_len = name_len - 4;
+
+    char extracted[SCREEN_MAP_NAME_LEN];
+    if (out_len >= sizeof(extracted))
+        out_len = sizeof(extracted) - 1;
+
+    memcpy(extracted, start, out_len);
+    extracted[out_len] = '\0';
+    log_debug(DEBUG_LOW, "Checking for Custom Splashscreen for %s", extracted);
     for (int i = 0; i < g_screen_entry_count; i++)
     {
-        if (strcmp(g_screen_entries[i].map_name, lowered) == 0)
+        if (strcmp(g_screen_entries[i].map_name, extracted) == 0)
         {
             return g_screen_entries[i].msb_file;
         }
