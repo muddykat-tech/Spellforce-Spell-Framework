@@ -1346,12 +1346,124 @@ typedef struct __attribute__((packed))
 
 typedef struct __attribute__((packed))
 {
-    uint8_t data[0x28];
+    void *CGdDecals;
+    void *CGdBattleDevelopment;
+    void *CGdAiMain;
+    void *CGdAStar;
+    AutoClass14 *OpaqueClass;
+    SF_CGdBuilding *CGdBuilding;
+    SF_CGdBuildingToolbox *CGdBuildingToolbox;
+    void *CGdDoubleLinkedList;
+    void *AutoClass38;
+    SF_CGdEffect *CGdEffect;
+    void *AutoClass30;
+    SF_CGdFigure *CGdFigure;
+    SF_CGdFigureJobs *CGdFigureJobs;
+    SF_CGdFigureToolbox *CGdFigureToolbox;
+    void *CGdFormation;
+    void *AutoClass34;
+    void *CGdInfluenceMap;
+    void *AutoClass36;
+    SF_CGdObject *CGdObject;
+    void *CGdObjectToolBox;
+    void *AutoClass44;
+    SF_CGdPlayer *CGdPlayer;
+    AutoClass46 *AutoClass46;
+    void *AutClass47;
+    SF_CGdResource *CGdResource;
+    void *CGdSetup;
+    SF_CGdSpell *CGdSpell;
+    void *AutoClass48;
+    void *CGdTile;
+    void *AutoClass50;
+    void *CGdVisibility;
+    void *CGdLakes;
+    void *CGdWeather;
+    SF_CGdWorld *CGdWorld;
+    SF_CGdWorldToolBox *SF_CGdWorldToolBox;
+    void *CGdXDataList;
+    uint8_t unknown_data[0x418];
+} CGdMain_data;
+
+typedef struct __attribute__((packed))
+{
+    void *vtable_ptr;
+    CGdMain_data data;
+} SF_CGdMain;
+
+typedef struct __attribute__((packed))
+{
+    uint8_t unknwn_data[0x7c];
+    SF_CGdMain *CGdMain;
+    uint8_t unknwn_data2[0xa4];
+} CAppSession_data;
+
+typedef struct __attribute__((packed))
+{
+    void *vtable_ptr;
+    CAppSession_data data;
+} CAppSession;
+
+
+typedef struct __attribute__((packed))
+{
+    uint8_t AC82[0xf0];
+    uint32_t unknown[2];
+    SF_String filename;
+    SF_String template_name;
+    uint32_t unknown1;
+    SF_String starter_kit_name;
+    uint8_t AC82_1[0xf0];
+    uint32_t unknown2;
+    uint8_t kit_index;
+    uint8_t padding[3];
+    uint32_t unknown3[3];
+    uint32_t is_coop;
+    uint32_t unknown4;
+} SF_GameInfo;
+
+typedef struct __attribute__((packed))
+{
+    void *Unknown0;
+    void *Unknown1;
+    void *Unknown2;
+    uint32_t Callback0[3];
+    uint32_t Callback2[3];
+    void *Unknown3;
     SF_CUiVideoSequence *CUiVideoSequence_ptr;
-    CMnuBase *CMnuBase_ptr;
-    uint32_t more_data[17];
+    SF_CUiVideo *CUiVideo_ptr;
+    void *CMnuMain;
+    void *Unknown4;
+    CAppSession *CAppSession;
+    void *Unknown5;
+    void *Unknown6;
+    void *CNetMain;
+    void *UiDbProxy;
+    SF_CUiMain *CUiMain;
+    void *Unknown7;
+    CMnuContainer *some_container;
+    void *CUiMenuPreload;
+    void *Unknown8;
+    void *Unknown9;
+    void *Unknown10;
+    void *splash_screen;
+    void *Unknown11;
+    void *Unknown12;
     void *AC95;
-    uint8_t more_data2[0x60C];
+    void *AC101;
+    void *ScrConsole;
+    void *Unknown13;
+    CMnuContainer *loadFileContainer;
+    void *Unknown14;
+    void *VideoSecData;
+    void *Unknown15;
+    CMnuLabel *progress_label;
+    uint8_t more_data2[0x1C4];
+    SF_GameInfo game_info;
+    void *Unknown16;
+    uint32_t campaign_type;
+    uint8_t more_data3[0x1F0];
+
 } CAppMenu_data;
 
 typedef struct __attribute__((packed))
@@ -1431,7 +1543,7 @@ typedef void (__thiscall *menu_label_set_data_ptr)(CMnuLabel *_this,
                                                    uint8_t unknchar);
 typedef void (__thiscall *get_sf_color_ptr)(SF_String *_this,
                                             uint32_t color_id);
-typedef SF_FontStruct *(__thiscall *get_smth_fonts_ptr)(void);
+typedef SF_FontStruct *(*get_smth_fonts_ptr)(void);
 typedef SF_Font *(__thiscall *get_font_ptr)(SF_FontStruct *_this,
                                             uint32_t font_id);
 typedef void (__thiscall *menu_label_set_font_ptr)(void *_this, SF_Font *font);

@@ -10,7 +10,6 @@ typedef uint16_t (__thiscall *XDataListExists_ptr)(void *SF_CGdXDataList, uint16
 typedef uint16_t (__thiscall *XDataListZero_ptr)(void *SF_CGdXDataList, uint16_t xdata_key, uint8_t xdata_type);
 typedef void (__thiscall *fun006c3ca0_ptr)(void *autoclass30, uint16_t param_1, uint16_t owner,
                                            SF_CGdTargetData *source, SF_CGdTargetData *target);
-typedef void *(__cdecl *op_new_ptr)(uint32_t size);
 typedef uint32_t *(*getGlobalAC65_ptr)(void);
 
 AC65_init_ptr l_AC65_init;
@@ -18,7 +17,6 @@ fun006c3650_ptr l_fun006c3650;
 fun0074ca30_ptr l_fun0074ca30;
 XDataListZero_ptr XDataListZero;
 XDataListExists_ptr XDataListExists;
-op_new_ptr op_new;
 fun006c3ca0_ptr fun006c3ca0;
 getGlobalAC65_ptr getGlobalAC65;
 
@@ -29,7 +27,6 @@ void initialize_building_done_hooks()
     l_fun0074ca30 = (fun0074ca30_ptr)ASI::AddrOf(0x34ca30);
     XDataListZero = (XDataListZero_ptr) ASI::AddrOf(0x353ef0);
     XDataListExists = (XDataListExists_ptr) ASI::AddrOf(0x3549d0);
-    op_new = (op_new_ptr)ASI::AddrOf(0x675A9D);
     fun006c3ca0 = (fun006c3ca0_ptr)ASI::AddrOf(0x2c3ca0);
     getGlobalAC65 = (getGlobalAC65_ptr)(ASI::AddrOf(0x277330));
 

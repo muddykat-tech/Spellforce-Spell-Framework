@@ -16,6 +16,7 @@ extern IteratorFunctions iteratorAPI;
 extern RegistrationFunctions registrationAPI;
 extern EffectFunctions effectAPI;
 extern AiFunctions aiAPI;
+extern UiFunctions uiAPI;
 
 typedef void (__thiscall *add_item_ptr)(ushort_list_node *_this,uint16_t *item);
 add_item_ptr add_item;
@@ -35,6 +36,8 @@ typedef void (__thiscall *SFStringSetLength_ptr)(SF_String *_this, uint32_t leng
 typedef SF_String *(__thiscall *SFStringFromWchar_ptr)(SF_String *_this, wchar_t value, uint32_t length);
 typedef void (__thiscall *SFStringDestructor_ptr)(SF_String *_this);
 typedef SF_String *(__thiscall *SFStringCopy_ptr)(SF_String *destination, SF_String *source);
+typedef char *(__thiscall *SFStringCMbStr_ptr)(SF_String *source);
+
 typedef SF_String *(__thiscall *GetItemInfo_ptr)(SF_CGdResource *_this, CGdResourceWeaponData *stats,
                                                  uint16_t item_id);
 typedef uint8_t (__thiscall *GetWeaponType_ptr)(SF_CGdResource *_this, uint16_t item_id);
@@ -65,6 +68,8 @@ SFStringSetLength_ptr SFStringSetLength;
 SFStringFromWchar_ptr SFStringFromWchar;
 SFStringDestructor_ptr SFStringDestructor;
 SFStringCopy_ptr SFStringCopy;
+SFStringCopy_ptr SFStringDeepCopy;
+SFStringCMbStr_ptr SFStringCMbStr;
 
 getSpecialDesc_ptr getSpecialDesc;
 GetItemInfo_ptr GetItemInfo;
@@ -835,7 +840,7 @@ static SF_CGdFigure * getFigurePtr(void *CGdMain)
     return (SF_CGdFigure *)(*(uint32_t *)((uint32_t)CGdMain + 0x30));
 }
 
-void __thiscall SFStringConstructor(SF_String *_this)
+void SFStringConstructor(SF_String *_this)
 {
     _this->raw_data = nullptr;
     _this->char_data = nullptr;
@@ -843,7 +848,7 @@ void __thiscall SFStringConstructor(SF_String *_this)
     _this->str_length_char = 0x0;
 }
 
-SF_String * __thiscall SFStringConstructor_char(SF_String *_this, const char *char_string)
+SF_String * SFStringConstructor_char(SF_String *_this, const char *char_string)
 {
     SFStringConstructor(_this);
     uint32_t length = 0;
@@ -861,8 +866,8 @@ SF_String * __thiscall SFStringConstructor_char(SF_String *_this, const char *ch
     return _this;
 }
 
-void __thiscall prepareDamageString(AutoClass101 *_this, SF_CGdFigure *figures, uint16_t figure_id,
-                                    CGdResourceWeaponData *weapon_data, SF_String *out_string)
+void  prepareDamageString(AutoClass101 *_this, SF_CGdFigure *figures, uint16_t figure_id,
+                          CGdResourceWeaponData *weapon_data, SF_String *out_string)
 {
     uint32_t lvl_mult = 0;
     SF_String description;
@@ -1476,6 +1481,292 @@ SF_String * __thiscall getSpecialFigureName(SF_CGdFigureToolbox *_this, SF_Strin
     return in_string;
 }
 
+typedef struct __attribute__((packed))
+{
+    wchar_t *filename;
+    uint32_t length;
+    uint32_t ukn1;
+    uint32_t ukn2;
+} D_String;
+
+typedef struct __attribute__((packed))
+{
+    void *FILE;
+    void *MOS_FILE;
+} FileWrapper;
+
+
+
+void dump_offsets (CAppSession *_this)
+{
+    SF_CGdMain *main = _this->data.CGdMain;
+    SF_CGdWorld *world = main->data.CGdWorld;
+    log_info("Map name %ls", world->map_name.raw_data);
+}
+
+typedef SF_String *(__thiscall *getSavePath_ptr)(void *_this, SF_String *input,int campaign_type);
+typedef void (__thiscall *createSplashScreen_ptr)(CAppMenu *_this, CMnuContainer **param_1, SF_String *param_2);
+typedef void *(__thiscall *AC57_Init_ptr)(void *_this, FileWrapper *fileWrapper);
+typedef void (__thiscall *AC57_Dispose_ptr)(void *_this);
+typedef D_String *(__thiscall *DStringConstructor_char_ptr)(D_String *_this, char *source);
+typedef int (__thiscall *FileWrapperOpen_ptr)(FileWrapper *_this, D_String *path, int param_2);
+typedef void (__thiscall *FileWrapperClose_ptr)(FileWrapper *_this);
+typedef void (__thiscall *readMapNameFromSave_ptr)(SF_CGdWorld *_this, void *AC57);
+typedef uint32_t (__thiscall *vfunction187_ptr)(void *_this, SF_String *name);
+typedef void (__thiscall *vfunction175_ptr)(CMnuLabel *_this, uint8_t param_1);
+typedef void (__thiscall *setCanFocus_ptr)(CMnuBase *_this, uint8_t value);
+typedef void (__thiscall *vfunction207_ptr)(void *_this, CMnuBase *param_1, uint8_t param_2);
+typedef void (__thiscall *vfunction12_ptr)(CMnuBase *_this,float param_1, uint8_t param_2);
+typedef void (__thiscall *BringToFront_ptr)(CMnuContainer *_this, void *param_1);
+typedef void *(__cdecl *op_new_ptr)(uint32_t size);
+
+op_new_ptr op_new;
+readMapNameFromSave_ptr readMapNameFromSave;
+
+FileWrapperOpen_ptr FileWrapperOpen;
+FileWrapperClose_ptr FileWrapperClose;
+DStringConstructor_char_ptr DStringConstructor_char;
+AC57_Init_ptr AC57_Init;
+AC57_Dispose_ptr AC57_Dispose;
+FileWrapperClose_ptr FileWrapperInit;
+
+vfunction187_ptr vfunction187;
+vfunction207_ptr vfunction207;
+vfunction175_ptr vfunction175;
+vfunction12_ptr vfunction12;
+
+setCanFocus_ptr setCanFocus;
+BringToFront_ptr BringToFront;
+BringToFront_ptr vfunction163;
+
+extern container_add_control_ptr g_container_add_control;
+extern menu_label_constructor_ptr g_menu_label_constructor;
+extern mnu_label_init_data_ptr g_init_menu_element;
+extern get_smth_fonts_ptr g_get_smth_fonts;
+extern menu_label_set_font_ptr g_menu_label_set_font;
+extern menu_label_set_string_ptr g_menu_label_set_string;
+extern get_font_ptr g_get_font;
+
+createSplashScreen_ptr createSplashScreen;
+getSavePath_ptr getSavePath;
+
+void createSplashScreen_helper (CAppMenu *_this, CMnuContainer **param_1, SF_String *param_2, SF_String *map_name)
+{
+    SF_String screen_name;
+    SFStringConstructor_char(&screen_name, "<Cont>Splash");
+    SFStringDeepCopy(param_2, &screen_name);
+    SFStringDestructor(&screen_name);
+    uint32_t vfun187_result = vfunction187(_this->CAppMenu_data.splash_screen, param_2);
+    if (vfun187_result)
+    {
+        return;
+    }
+
+    CMnuContainer *some_container = (CMnuContainer *)op_new(0x340);
+    if (some_container != NULL)
+    {
+        uiAPI.initializeMenuContainer(some_container);
+    }
+    uiAPI.CMnuBaseSetName((CMnuBase *)some_container, param_2);
+
+    SF_String c_bgr;
+    SF_String c_brdr;
+    SFStringConstructor_char(&c_bgr, "");
+    SFStringConstructor_char(&c_brdr, "");
+    uiAPI.setupMenuContainerData(some_container, 0.0, 0.0, 0.0, 0.0, &c_bgr, &c_brdr);
+    SFStringDestructor(&c_brdr);
+    SFStringDestructor(&c_bgr);
+
+    setCanFocus((CMnuBase *)some_container, 0);
+    //black magic, vfunction 182 equivalent
+    *(uint32_t *)(&some_container->CMnuContainer_data[0x78]) = 1;
+    //CMnuScreen::AttachControl
+    vfunction207(_this->CAppMenu_data.splash_screen, (CMnuBase *)some_container, 0);
+    *param_1 = some_container;
+
+    CMnuContainer *another_container = (CMnuContainer *)op_new(0x340);
+    if (another_container != NULL)
+    {
+        uiAPI.initializeMenuContainer(another_container);
+    }
+    SF_String another_cont_name;
+    SFStringConstructor_char(&another_cont_name,"<Cont>IndDisp");
+    uiAPI.CMnuBaseSetName((CMnuBase *)another_container, &another_cont_name);
+    SFStringDestructor(&another_cont_name);
+
+    uint32_t campaign_type = _this->CAppMenu_data.campaign_type;
+/*
+    char *loading_name = SFStringCMbStr(map_name);
+    for (int i = 0; i<strlen(loading_name); i++)
+    {
+        loading_name[i] = (char)tolower(loading_name[i]);
+    }
+    if (strstr(loading_name, "greyfell"))
+    {
+        SFStringConstructor_char(&c_bgr, "ui_mainmenu_bg_loading_greyfell.msb");
+        SFStringConstructor_char(&c_brdr, "");
+        uiAPI.setupMenuContainerData(another_container, 0.0, 0.0, 0.0, 0.0, &c_bgr, &c_brdr);
+        SFStringDestructor(&c_brdr);
+        SFStringDestructor(&c_bgr);
+    }
+    else
+    {*/
+    if (campaign_type == 0)
+    {
+        SFStringConstructor_char(&c_bgr, "ui_mainmenu_bg_loading_sf1.msb");
+        SFStringConstructor_char(&c_brdr, "");
+        uiAPI.setupMenuContainerData(another_container, 0.0, 0.0, 0.0, 0.0, &c_bgr, &c_brdr);
+        SFStringDestructor(&c_brdr);
+        SFStringDestructor(&c_bgr);
+    }
+    if (campaign_type == 1)
+    {
+        SFStringConstructor_char(&c_bgr, "ui_mainmenu_bg_loading_sf1addon01.msb");
+        SFStringConstructor_char(&c_brdr, "");
+        uiAPI.setupMenuContainerData(another_container, 0.0, 0.0, 0.0, 0.0, &c_bgr, &c_brdr);
+        SFStringDestructor(&c_brdr);
+        SFStringDestructor(&c_bgr);
+    }
+    if (campaign_type == 2)
+    {
+        SFStringConstructor_char(&c_bgr, "ui_mainmenu_bg_loading_sf1addon02.msb");
+        SFStringConstructor_char(&c_brdr, "");
+        uiAPI.setupMenuContainerData(another_container, 0.0, 0.0, 0.0, 0.0, &c_bgr, &c_brdr);
+        SFStringDestructor(&c_brdr);
+        SFStringDestructor(&c_bgr);
+    }
+    //}
+    setCanFocus((CMnuBase *)another_container, 0);
+    //black magic, vfunction 182 equivalent
+    *(uint32_t *)(&another_container->CMnuContainer_data[0x78]) = 1;
+    g_container_add_control(some_container, (CMnuBase *)another_container, 0, 1, 0);
+
+    CMnuLabel *progress_label = (CMnuLabel *)op_new(0x368);
+    if (progress_label != NULL)
+    {
+        log_info ("Running label constructor");
+        g_menu_label_constructor(progress_label);
+    }
+    log_info ("Label offset 0x%x",
+              (uint32_t)(&_this->CAppMenu_data.progress_label) - (uint32_t)(&_this->CAppMenu_data));
+    _this->CAppMenu_data.progress_label = progress_label;
+    SF_String label_name;
+    SFStringConstructor_char(&label_name, "<Ctrl>lbSplash");
+    uiAPI.CMnuBaseSetName((CMnuBase *)_this->CAppMenu_data.progress_label, &label_name);
+    SFStringDestructor(&label_name);
+
+    SF_String label_data;
+    SFStringConstructor_char(&label_data, "");
+    g_init_menu_element(_this->CAppMenu_data.progress_label, 308.0, 0.0, 0.0, 0.0, &label_data);
+    SFStringDestructor(&label_data);
+
+    SF_FontStruct *fonts = g_get_smth_fonts();
+    SF_Font *font = g_get_font(fonts, 7);
+    g_menu_label_set_font(_this->CAppMenu_data.progress_label, font);
+    vfunction175(_this->CAppMenu_data.progress_label,1);
+
+    g_container_add_control(another_container, (CMnuBase *)_this->CAppMenu_data.progress_label, 0, 1, 0);
+    vfunction12((CMnuBase *)_this->CAppMenu_data.progress_label, 761.0, 1);
+
+    SF_String label_text;
+    SFStringConstructor_char(&label_text, "...");
+    g_menu_label_set_string(_this->CAppMenu_data.progress_label,&label_text );
+    SFStringDestructor(&label_text);
+
+    BringToFront(some_container, 0);
+    vfunction163(some_container, 0);
+    //some container vfun163
+
+    //offset 0x148 =1
+    _this->CAppMenu_data.more_data2[0xB0] = 1;
+
+}
+
+
+SF_String * getMapFromSave(CAppSession *_this,  char *param_1, int campaign_type)
+{
+    FileWrapper Wrapper;
+    D_String filename;
+    SF_String base_name;
+    SF_String save_path;
+
+    SFStringConstructor_char(&base_name, param_1);
+    //getSavePath(_this,&save_path,campaign_type);
+    //SFStringConcat(&save_path, &base_name);
+    //SFStringDestructor(&base_name);
+    char *path = SFStringCMbStr(&base_name);
+
+    DStringConstructor_char (&filename, path);
+
+    SFStringDestructor(&base_name);
+    FileWrapperInit(&Wrapper);
+
+    if (FileWrapperOpen(&Wrapper, &filename, 0) != 0)
+    {
+        uint8_t AC57[0x2803c];
+        AC57_Init(AC57, &Wrapper);
+        SF_CGdWorld *temp_world = (SF_CGdWorld *)calloc(0x832341, 1);
+        SF_String *output = (SF_String *)calloc(0x10, 1);
+        SFStringConstructor(output);
+        readMapNameFromSave(temp_world, AC57);
+        SFStringCopy(output, &temp_world->map_name);
+        free(temp_world);
+        FileWrapperClose(&Wrapper);
+        AC57_Dispose(AC57);
+        return output;
+    }
+
+    return NULL;
+}
+
+
+void __thiscall CreateSplashScreen(CAppMenu *_this, CMnuContainer **param_1, SF_String *param_2)
+{
+    CAppSession *session = _this->CAppMenu_data.CAppSession;
+    char *save_path = SFStringCMbStr(&_this->CAppMenu_data.game_info.filename);
+    int campaign_type = _this->CAppMenu_data.campaign_type;
+    wchar_t *test_var = (wchar_t *)(*(uint32_t *)(&session->data.unknwn_data[0xa0]));
+    if (test_var != NULL)
+    {
+        log_info ("Map name from portal change %ls", test_var);
+        SF_String map_name;
+        SFStringConstructor(&map_name);
+        createSplashScreen_helper(_this, param_1, param_2, &map_name);
+
+    }
+    else
+    {
+        SF_String *map_name = getMapFromSave(session, save_path, campaign_type);
+        if (map_name != NULL)
+        {
+            createSplashScreen_helper(_this, param_1, param_2, map_name);
+            //log_info ("Map name from save: %ls", map_name->raw_data);
+            SFStringDestructor(map_name);
+            free(map_name);
+        }
+    }
+
+    //createSplashScreen(_this, param_1, param_2);
+
+}
+
+
+static void splash_screen_hook()
+{
+    ASI::MemoryRegion mreg(ASI::AddrOf(0x18359f), 5);
+    ASI::BeginRewrite(mreg);
+    *(unsigned char *)(ASI::AddrOf(0x18359f)) = 0xE8;
+    *(int *)(ASI::AddrOf(0x1835a0)) = (int)(&CreateSplashScreen)- ASI::AddrOf((0x1835a4));
+    ASI::EndRewrite(mreg);
+
+    ASI::MemoryRegion mreg2(ASI::AddrOf(0x1856fe), 5);
+    ASI::BeginRewrite(mreg2);
+    *(unsigned char *)(ASI::AddrOf(0x1856fe)) = 0xE8;
+    *(int *)(ASI::AddrOf(0x1856ff)) = (int)(&CreateSplashScreen)- ASI::AddrOf((0x185703));
+    ASI::EndRewrite(mreg2);
+
+}
+
 void initialize_vanilla_fix_hooks()
 {
     add_item = (add_item_ptr)(ASI::AddrOf(0x260d70));
@@ -1491,6 +1782,8 @@ void initialize_vanilla_fix_hooks()
     SFStringFromWchar = (SFStringFromWchar_ptr)(ASI::AddrOf(0x383920));
     SFStringDestructor = (SFStringDestructor_ptr)(ASI::AddrOf(0x3839c0));
     SFStringCopy = (SFStringCopy_ptr)(ASI::AddrOf(0x383720));
+    SFStringCMbStr = (SFStringCMbStr_ptr)(ASI::AddrOf(0x383db0));
+    SFStringDeepCopy = (SFStringCopy_ptr)(ASI::AddrOf(0x383a20));
 
     GetItemInfo = (GetItemInfo_ptr)(ASI::AddrOf(0x269460));
     GetWeaponType = (GetWeaponType_ptr)(ASI::AddrOf(0x269260));
@@ -1505,6 +1798,27 @@ void initialize_vanilla_fix_hooks()
     getTextString = (getTextString_ptr)(ASI::AddrOf(0x26e510));
 
     onFigureBattleEnd = (onFigureBattleEnd_ptr)(ASI::AddrOf(0x2f471a));
+
+    createSplashScreen = (createSplashScreen_ptr)(ASI::AddrOf(0x18e440));
+    getSavePath = (getSavePath_ptr)(ASI::AddrOf(0x1b89d0));
+    DStringConstructor_char = (DStringConstructor_char_ptr)(ASI::AddrOf(0x176920));
+    FileWrapperOpen = (FileWrapperOpen_ptr)(ASI::AddrOf(0x1e3920));
+    FileWrapperClose = (FileWrapperClose_ptr)(ASI::AddrOf(0x1e2dc0));
+    FileWrapperInit = (FileWrapperClose_ptr)(ASI::AddrOf(0x1e2990));
+    AC57_Init = (AC57_Init_ptr)(ASI::AddrOf(0x386460));
+    AC57_Dispose = (AC57_Dispose_ptr)(ASI::AddrOf(0x3865b0));
+
+    readMapNameFromSave = (readMapNameFromSave_ptr)(ASI::AddrOf(0x2c1f10));
+    vfunction187 = (vfunction187_ptr)(ASI::AddrOf(0x5083d0));
+    vfunction207 = (vfunction207_ptr)(ASI::AddrOf(0x507240));
+    setCanFocus = (setCanFocus_ptr)(ASI::AddrOf(0x511ac0));
+
+    vfunction175 = (vfunction175_ptr)(ASI::AddrOf(0x52f5f0));
+    vfunction12 = (vfunction12_ptr)(ASI::AddrOf(0x511a00));
+    BringToFront = (BringToFront_ptr)(ASI::AddrOf(0x507c10));
+    vfunction163 = (BringToFront_ptr)(ASI::AddrOf(0x513d90));
+
+    op_new = (op_new_ptr)ASI::AddrOf(0x675A9D);
 
     log_info("| - Vanilla Fix Hooks");
     figure_statistic_hook_current_ac();
@@ -1528,5 +1842,6 @@ void initialize_vanilla_fix_hooks()
     get_race_fix_hook();
     army_size_fix_hook();
     figure_turn_off_battle_mode_hook();
+    splash_screen_hook();
 
 }
