@@ -11,6 +11,7 @@
 #include "../sf_ui_wrappers.h"
 #include "sf_menu_hook.h"
 #include "../sf_hooks.h"
+#include "sf_campaign_hook.h"
 #include "../sf_modloader.h"
 #include "../../registry/sf_mod_registry.h"
 
@@ -123,6 +124,8 @@ sf_menu_hook(uint32_t _CAppMenu)
 {
     log_info("Starting Menu Hook");
 
+    campaign_hook_on_main_menu((CAppMenu *)_CAppMenu);
+
     char sfsf_info[256];
     snprintf(sfsf_info, sizeof(sfsf_info),
              "Spell Framework %s\n%d Mod(s) Loaded with %d Error(s)",
@@ -165,21 +168,24 @@ sf_menu_hook(uint32_t _CAppMenu)
                                                  BUTTON_INDEX,
                                                  (uint32_t)&show_mod_list);
 
+    if (g_campaign_count > 0)
+    {
+        char campaign_label[32] = "CUSTOM CAMPAIGNS";
+        open_campaign_screen = uiAPI.attachNewButton(container,
+                                                     button_default,
+                                                     button_pressed,
+                                                     button_highlight,
+                                                     button_disabled,
+                                                     campaign_label,
+                                                     BUTTON_FONT_INDEX,
+                                                     BUTTON_X,
+                                                     BUTTON_Y - 44,   // one slot above mod list
+                                                     BUTTON_WIDTH,
+                                                     BUTTON_HEIGHT,
+                                                     16,
+                                                     (uint32_t)&show_custom_campaign_screen);
+    }
 
-    /*  char campaign_label[32]       = "Custom Campaign";
-       open_campaign_screen = uiAPI.attachNewButton(container, button_default,
-                                                   button_pressed,
-                                                   button_highlight,
-                                                   button_disabled,
-                                                   campaign_label,
-                                                   BUTTON_FONT_INDEX,
-                                                   BUTTON_X,
-                                                   32,
-                                                   BUTTON_WIDTH,
-                                                   BUTTON_HEIGHT,
-                                                   16,
-                                                   (uint32_t)&show_campaign_screen);
-     */
     log_info ("CAppMenu addr %x", _CAppMenu);
     s_menu_func(_CAppMenu);
 }

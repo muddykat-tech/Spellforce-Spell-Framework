@@ -1408,16 +1408,18 @@ typedef struct __attribute__((packed))
 typedef struct __attribute__((packed))
 {
     uint8_t AC82[0xf0];
-    uint32_t unknown[2];
+    uint32_t unknown_0xf0;      /* = 1 in initFirstMap, both branches */
+    uint32_t unknown_0xf4;      /* = 3 in initFirstMap, both branches */
     SF_String filename;
     SF_String template_name;
-    uint32_t unknown1;
+    uint32_t start_mode;        /* 0x118: 1 = tutorial, 2 = direct start */
     SF_String starter_kit_name;
-    uint8_t AC82_1[0xf0];
+    uint8_t AC82_1[0xf0];       /* avatar snapshot (copied from AC82 in initFirstMap) */
     uint32_t unknown2;
     uint8_t kit_index;
     uint8_t padding[3];
-    uint32_t unknown3[3];
+    uint32_t is_tutorial;       /* 0x224: 1 = tutorial active, 0 = not active */
+    uint32_t unknown3[2];
     uint32_t is_coop;
     uint32_t unknown4;
 } SF_GameInfo;
@@ -1463,7 +1465,6 @@ typedef struct __attribute__((packed))
     void *Unknown16;
     uint32_t campaign_type;
     uint8_t more_data3[0x1F0];
-
 } CAppMenu_data;
 
 typedef struct __attribute__((packed))

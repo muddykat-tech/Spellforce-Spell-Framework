@@ -49,6 +49,44 @@ void wrap_text(const char *input, char *output, size_t max_width)
 
 static bool is_init_finished = false;
 
+
+
+/**
+ * @brief Zero-initializes an SF_String (no allocation).
+ * Moved here from sf_vanilla_fix_hook.c; exposed as uiAPI.SFStringConstructor.
+ */
+void __thiscall SFStringConstructor(SF_String *_this)
+{
+    _this->raw_data = nullptr;
+    _this->char_data = nullptr;
+    _this->str_length = 0x0;
+    _this->str_length_char = 0x0;
+}
+
+/**
+ * @brief Constructs an SF_String from a null-terminated char string.
+ * Moved here from sf_vanilla_fix_hook.c; exposed as uiAPI.SFStringConstructor_char.
+ * @note Relies on uiAPI.SFStringSetLength, which is registered at the very top
+ * of initialize_data_hooks() before any code path that can call this.
+ */
+SF_String * __thiscall SFStringConstructor_char(SF_String *_this, const char *char_string)
+{
+    SFStringConstructor(_this);
+    uint32_t length = 0;
+    if (char_string != 0)
+    {
+        //not sure here, might need to use internal implementation?
+        length = strlen(char_string);
+    }
+    uiAPI.SFStringSetLength(_this, length);
+    if (length != 0)
+    {
+        mbstowcs(_this->raw_data, char_string, length);
+    }
+    _this->str_length = length;
+    return _this;
+}
+
 /**
  * Helper function to update label text using SF_String
  *

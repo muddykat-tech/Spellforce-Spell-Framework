@@ -26,8 +26,6 @@
 typedef uint32_t (__thiscall *XDataGet_ptr)(void *_this,uint16_t key,uint8_t keyType);
 typedef uint32_t (__thiscall *CGdXDataExists_ptr)(void *_this, uint16_t key, uint8_t keyType);
 
-
-
 SF_String_ctor_ptr g_create_sf_string;
 SF_String_dtor_ptr g_destroy_sf_string;
 has_spell_effect_ptr has_spell_effect;

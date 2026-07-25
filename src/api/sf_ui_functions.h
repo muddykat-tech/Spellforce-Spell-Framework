@@ -115,6 +115,40 @@ DECLARE_FUNCTION(void, vfunction163, CMnuContainer *_this, void *param_1);
 typedef void *(__cdecl *newOperator_ptr)(uint32_t size);
 
 /**
+ * @brief printf-style formatting into an SF_String. Declared manually (not via
+ * DECLARE_FUNCTION) because the real symbol is variadic and therefore __cdecl -
+ * DECLARE_FUNCTION always generates __thiscall and
+ * would corrupt the stack.
+ * @note Format string is wide (L"..."). %s expects wchar_t data (raw_data).
+ */
+typedef uint32_t (__cdecl *SFprintf_ptr)(SF_String *_this, const wchar_t *format, ...);
+
+// TODO move breifs down to struct so Doxygen picks them up
+/** @brief Appends source to destination. */
+DECLARE_FUNCTION(SF_String *, SFStringConcat, SF_String *destination, SF_String *source);
+/** @brief (Re)allocates the string buffer to hold the given length. */
+DECLARE_FUNCTION(void, SFStringSetLength, SF_String *_this, uint32_t length);
+/** @brief Fills the string with `length` repetitions of the given wide char. */
+DECLARE_FUNCTION(SF_String *, SFStringFromWchar, SF_String *_this, wchar_t value, uint32_t length);
+/** @brief Frees the string's buffers. Call on every SF_String you constructed. */
+DECLARE_FUNCTION(void, SFStringDestructor, SF_String *_this);
+/** @brief Shallow copy of source into destination. */
+DECLARE_FUNCTION(SF_String *, SFStringCopy, SF_String *destination, SF_String *source);
+/** @brief Deep copy of source into destination (duplicates the buffer). */
+DECLARE_FUNCTION(SF_String *, SFStringDeepCopy, SF_String *destination, SF_String *source);
+/** @brief Returns the multibyte (char) representation of the string. */
+DECLARE_FUNCTION(char *, SFStringCMbStr, SF_String *source);
+/** @brief zero-initializes an SF_String (no allocation). */
+DECLARE_FUNCTION(void, SFStringConstructor, SF_String *_this);
+/** @brief constructs an SF_String from a null-terminated char string. */
+DECLARE_FUNCTION(SF_String *, SFStringConstructor_char, SF_String *_this, const char *char_string);
+DECLARE_FUNCTION(SF_String *, SFStringConstructor_wchar, SF_String *_this, wchar_t *value);
+
+DECLARE_FUNCTION(uint32_t, vfunction187, void *_this, SF_String *name);
+
+DECLARE_FUNCTION(void, vfunction207, void *_this, CMnuBase *param_1, uint8_t param_2);
+
+/**
  * @ingroup API
  * @brief Group of functions related to UI manipulation.
  */
@@ -174,10 +208,25 @@ typedef struct
     getFont_ptr getFont;
     newOperator_ptr newOperator;
     setScreenName_ptr setScreenName;
+
+    /* SF_String API? */
+    SFprintf_ptr SFprintf;
+    SFStringConcat_ptr SFStringConcat;
+    SFStringSetLength_ptr SFStringSetLength;
+    SFStringFromWchar_ptr SFStringFromWchar;
+    SFStringDestructor_ptr SFStringDestructor;
+    SFStringCopy_ptr SFStringCopy;
+    SFStringDeepCopy_ptr SFStringDeepCopy;
+    SFStringCMbStr_ptr SFStringCMbStr;
+    SFStringConstructor_ptr SFStringConstructor;
+    SFStringConstructor_char_ptr SFStringConstructor_char;
+    SFStringConstructor_wchar_ptr SFStringConstructor_wchar;
+    vfunction187_ptr vfunction187;
     vfunction175_ptr vfunction175;
     setCanFocus_ptr setCanFocus;
-    attachControlToScreen_ptr attachControlToScreen;
+    vfunction207_ptr vfunction207;
     vfunction12_ptr vfunction12;
+    attachControlToScreen_ptr attachControlToScreen;
     bringToFront_ptr bringToFront;
     vfunction163_ptr vfunction163;
 } UiFunctions;

@@ -30,16 +30,6 @@ typedef void (__thiscall *GetTextById_ptr)(void *_this,uint16_t text_id,SF_Strin
 typedef SF_String *(__thiscall *ExpandSpellDescription_ptr)(AutoClass101 *_this, SF_String *out_string,
                                                             SF_String *in_string, SF_CGdResourceSpell *param_3);
 
-
-typedef uint32_t (__cdecl *SFprintf_ptr)(SF_String *_this, const wchar_t *format, ...);
-typedef SF_String *(__thiscall *SFStringConcat_ptr)(SF_String *destination, SF_String *source);
-typedef void (__thiscall *SFStringSetLength_ptr)(SF_String *_this, uint32_t length);
-typedef SF_String *(__thiscall *SFStringFromWchar_ptr)(SF_String *_this, wchar_t value, uint32_t length);
-typedef void (__thiscall *SFStringDestructor_ptr)(SF_String *_this);
-typedef SF_String *(__thiscall *SFStringCopy_ptr)(SF_String *destination, SF_String *source);
-typedef char *(__thiscall *SFStringCMbStr_ptr)(SF_String *source);
-typedef SF_String *(__thiscall *SFStringConstructor_wchar_ptr)(SF_String *_this, wchar_t *value);
-
 typedef SF_String *(__thiscall *GetItemInfo_ptr)(SF_CGdResource *_this, CGdResourceWeaponData *stats,
                                                  uint16_t item_id);
 typedef uint8_t (__thiscall *GetWeaponType_ptr)(SF_CGdResource *_this, uint16_t item_id);
@@ -64,15 +54,6 @@ typedef void (__thiscall *onFigureBattleEnd_ptr)(SF_CGdFigureToolbox *_this, uin
 AC95_get_figure_name_ptr AC95_get_figure_name;
 GetColoredText_ptr GetColoredText;
 GetDescriptionText_ptr GetDescriptionText;
-SFprintf_ptr SFprintf;
-SFStringConcat_ptr SFStringConcat;
-SFStringSetLength_ptr SFStringSetLength;
-SFStringFromWchar_ptr SFStringFromWchar;
-SFStringDestructor_ptr SFStringDestructor;
-SFStringCopy_ptr SFStringCopy;
-SFStringCopy_ptr SFStringDeepCopy;
-SFStringCMbStr_ptr SFStringCMbStr;
-SFStringConstructor_wchar_ptr SFStringConstructor_wchar;
 
 getSpecialDesc_ptr getSpecialDesc;
 GetItemInfo_ptr GetItemInfo;
@@ -843,38 +824,13 @@ static SF_CGdFigure * getFigurePtr(void *CGdMain)
     return (SF_CGdFigure *)(*(uint32_t *)((uint32_t)CGdMain + 0x30));
 }
 
-void SFStringConstructor(SF_String *_this)
-{
-    _this->raw_data = nullptr;
-    _this->char_data = nullptr;
-    _this->str_length = 0x0;
-    _this->str_length_char = 0x0;
-}
-
-SF_String * SFStringConstructor_char(SF_String *_this, const char *char_string)
-{
-    SFStringConstructor(_this);
-    uint32_t length = 0;
-    if (char_string != 0)
-    {
-        //not sure here, might need to use internal implementation?
-        length = strlen(char_string);
-    }
-    SFStringSetLength(_this, length);
-    if (length != 0)
-    {
-        mbstowcs(_this->raw_data, char_string, length);
-    }
-    _this->str_length = length;
-    return _this;
-}
 
 void  prepareDamageString(AutoClass101 *_this, SF_CGdFigure *figures, uint16_t figure_id,
                           CGdResourceWeaponData *weapon_data, SF_String *out_string)
 {
     uint32_t lvl_mult = 0;
     SF_String description;
-    SFStringConstructor(&description);
+    uiAPI.SFStringConstructor(&description);
 
     //TASK_MAIN_CHAR or TASK_HERO
     if ((figures->figures[figure_id].current_job.task == 0xa) ||
@@ -892,15 +848,15 @@ void  prepareDamageString(AutoClass101 *_this, SF_CGdFigure *figures, uint16_t f
     if (weapon_data->min_dmg == weapon_data->max_dmg)
     {
         uint32_t damage = (weapon_data->max_dmg * str_mult * lvl_mult + 50000) / 100000;
-        SFprintf(out_string,L"%s %i ", description.raw_data, damage);
+        uiAPI.SFprintf(out_string,L"%s %i ", description.raw_data, damage);
     }
     else
     {
         uint32_t max_damage = (weapon_data->max_dmg * str_mult * lvl_mult + 50000) / 100000;
         uint32_t min_damage = (weapon_data->min_dmg * str_mult * lvl_mult + 50000) / 100000;
-        SFprintf(out_string,L"%s %i-%i ", description.raw_data, min_damage,max_damage);
+        uiAPI.SFprintf(out_string,L"%s %i-%i ", description.raw_data, min_damage,max_damage);
     }
-    SFStringDestructor(&description);
+    uiAPI.SFStringDestructor(&description);
 }
 
 
@@ -909,18 +865,18 @@ void prepareHPString(AutoClass101 *_this, SF_CGdFigure *figures, uint16_t figure
     SF_String full_desc;
     SF_String description;
 
-    SFStringConstructor(&full_desc);
-    SFStringConstructor(&description);
+    uiAPI.SFStringConstructor(&full_desc);
+    uiAPI.SFStringConstructor(&description);
 
     uint32_t max_hp = figureAPI.getMaxStat(figures, figure_id, HEALTH);
     uint32_t hp = figureAPI.getCurrentStat(figures, figure_id, HEALTH);
-    SFprintf(&full_desc, L"%i/%i", hp, max_hp);
+    uiAPI.SFprintf(&full_desc, L"%i/%i", hp, max_hp);
     GetColoredText(&full_desc, 280);
     GetDescriptionText(_this->UiDbProxy, 4407, &description);
-    SFprintf(out_string, L"%s: %s", description.raw_data, full_desc.raw_data);
+    uiAPI.SFprintf(out_string, L"%s: %s", description.raw_data, full_desc.raw_data);
 
-    SFStringDestructor(&description);
-    SFStringDestructor(&full_desc);
+    uiAPI.SFStringDestructor(&description);
+    uiAPI.SFStringDestructor(&full_desc);
 }
 
 void prepareMPString(AutoClass101 *_this, SF_CGdFigure *figures, uint16_t figure_id, SF_String *out_string)
@@ -928,18 +884,18 @@ void prepareMPString(AutoClass101 *_this, SF_CGdFigure *figures, uint16_t figure
     SF_String full_desc;
     SF_String description;
 
-    SFStringConstructor(&full_desc);
-    SFStringConstructor(&description);
+    uiAPI.SFStringConstructor(&full_desc);
+    uiAPI.SFStringConstructor(&description);
 
     uint32_t max_mp = figureAPI.getMaxStat(figures, figure_id, MANA);
     uint32_t mp = figureAPI.getCurrentStat(figures, figure_id, MANA);
-    SFprintf(&full_desc, L"%i/%i", mp, max_mp);
+    uiAPI.SFprintf(&full_desc, L"%i/%i", mp, max_mp);
     GetColoredText(&full_desc, 280);
     GetDescriptionText(_this->UiDbProxy, 4408, &description);
-    SFprintf(out_string, L"%s: %s", description.raw_data, full_desc.raw_data);
+    uiAPI.SFprintf(out_string, L"%s: %s", description.raw_data, full_desc.raw_data);
 
-    SFStringDestructor(&description);
-    SFStringDestructor(&full_desc);
+    uiAPI.SFStringDestructor(&description);
+    uiAPI.SFStringDestructor(&full_desc);
 }
 
 void prepareSpellsHeaderString(AutoClass101 *_this, SF_String *out_string)
@@ -949,23 +905,23 @@ void prepareSpellsHeaderString(AutoClass101 *_this, SF_String *out_string)
     SF_String desc_str2;
     SF_String newline;
 
-    SFStringFromWchar(&header_string, L'\n', 1);
-    SFStringFromWchar(&newline, L'\n', 1);
-    SFStringConstructor(&desc_str1);
-    SFStringConstructor(&desc_str2);
+    uiAPI.SFStringFromWchar(&header_string, L'\n', 1);
+    uiAPI.SFStringFromWchar(&newline, L'\n', 1);
+    uiAPI.SFStringConstructor(&desc_str1);
+    uiAPI.SFStringConstructor(&desc_str2);
 
     GetDescriptionText(_this->UiDbProxy, 4802, &desc_str1);
-    SFprintf(&desc_str2, L"%s ", desc_str1);
-    SFStringConcat(&header_string, &desc_str2);
-    SFprintf(&header_string, L"%%c%x%s%%d",0xc0d0ff,header_string.raw_data);
-//    SFStringConcat(&header_string, &newline);
+    uiAPI.SFprintf(&desc_str2, L"%s ", desc_str1);
+    uiAPI.SFStringConcat(&header_string, &desc_str2);
+    uiAPI.SFprintf(&header_string, L"%%c%x%s%%d",0xc0d0ff,header_string.raw_data);
+//    uiAPI.SFStringConcat(&header_string, &newline);
 
-    SFStringCopy(out_string, &header_string);
+    uiAPI.SFStringCopy(out_string, &header_string);
 
-    SFStringDestructor(&newline);
-    SFStringDestructor(&header_string);
-    SFStringDestructor(&desc_str1);
-    SFStringDestructor(&desc_str2);
+    uiAPI.SFStringDestructor(&newline);
+    uiAPI.SFStringDestructor(&header_string);
+    uiAPI.SFStringDestructor(&desc_str1);
+    uiAPI.SFStringDestructor(&desc_str2);
 }
 
 void prepareSpellString(AutoClass101 *_this, SF_String *out_string, uint16_t spell_id)
@@ -979,10 +935,10 @@ void prepareSpellString(AutoClass101 *_this, SF_String *out_string, uint16_t spe
     SF_String desc_str2;
     SF_String full_desc;
 
-    SFStringConstructor(&desc_str1);
-    SFStringConstructor(&desc_str2);
-    SFStringFromWchar(&spell_string, L'\n', 1);
-    SFStringFromWchar(&newline, L'\n', 1);
+    uiAPI.SFStringConstructor(&desc_str1);
+    uiAPI.SFStringConstructor(&desc_str2);
+    uiAPI.SFStringFromWchar(&spell_string, L'\n', 1);
+    uiAPI.SFStringFromWchar(&newline, L'\n', 1);
 
     spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, spell_id);
     if ((GetResourceSpellLine(_this->SF_CGdResource, spell_data.spell_line_id,
@@ -990,24 +946,24 @@ void prepareSpellString(AutoClass101 *_this, SF_String *out_string, uint16_t spe
     {
         GetTextById(_this->UiDbProxy, spell_line_data.text_id, &desc_str1);
         GetColoredText(&desc_str1, 278);
-        SFStringConcat(&spell_string, &desc_str1);
-        SFStringConcat(&spell_string, &newline);
+        uiAPI.SFStringConcat(&spell_string, &desc_str1);
+        uiAPI.SFStringConcat(&spell_string, &newline);
 
         GetDescriptionText(_this->UiDbProxy, spell_line_data.description_id, &desc_str2);
         ExpandSpellDescription(_this,&full_desc, &desc_str2, &spell_data);
-        SFStringConcat(&spell_string, &full_desc);
+        uiAPI.SFStringConcat(&spell_string, &full_desc);
     }
     if (spell_string.str_length > 1)
     {
-        SFStringCopy(out_string, &spell_string);
+        uiAPI.SFStringCopy(out_string, &spell_string);
     }
 
-    SFStringDestructor(&desc_str1);
-    SFStringDestructor(&desc_str2);
+    uiAPI.SFStringDestructor(&desc_str1);
+    uiAPI.SFStringDestructor(&desc_str2);
 
-    SFStringDestructor(&full_desc);
-    SFStringDestructor(&spell_string);
-    SFStringDestructor(&newline);
+    uiAPI.SFStringDestructor(&full_desc);
+    uiAPI.SFStringDestructor(&spell_string);
+    uiAPI.SFStringDestructor(&newline);
 }
 
 void prepareEffectString(AutoClass101 *_this, SF_CGdFigure *figures, uint16_t figure_id, uint16_t effect_id,
@@ -1019,11 +975,11 @@ void prepareEffectString(AutoClass101 *_this, SF_CGdFigure *figures, uint16_t fi
     SF_String newline;
     SF_String chance_string;
 
-    SFStringConstructor(&chance_string);
-    SFStringConstructor(&desc_str1);
-    SFStringConstructor(&desc_str2);
-    SFStringConstructor(&description);
-    SFStringFromWchar(&newline, L'\n', 1);
+    uiAPI.SFStringConstructor(&chance_string);
+    uiAPI.SFStringConstructor(&desc_str1);
+    uiAPI.SFStringConstructor(&desc_str2);
+    uiAPI.SFStringConstructor(&description);
+    uiAPI.SFStringFromWchar(&newline, L'\n', 1);
 
     SF_CGdResourceSpell spell_data;
     spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, effect_id);
@@ -1032,29 +988,29 @@ void prepareEffectString(AutoClass101 *_this, SF_CGdFigure *figures, uint16_t fi
     if (spell_data.spell_line_id != 0 && spell_line_data.description_id != 0)
     {
         GetDescriptionText(_this->UiDbProxy, 6550, &desc_str1);
-        SFprintf(out_string,L"%%c%x%s:%%d ",0xc0d0ff,desc_str1.raw_data);
+        uiAPI.SFprintf(out_string,L"%%c%x%s:%%d ",0xc0d0ff,desc_str1.raw_data);
         GetTextById(_this->UiDbProxy, spell_line_data.text_id, &description);
         GetColoredText(&description, 278);
-        SFStringConcat(out_string, &description);
+        uiAPI.SFStringConcat(out_string, &description);
         enchant_handler_ptr handler = get_enchant_handler(spell_data.spell_line_id);
         uint16_t chance = handler(figures, figure_id);
-        SFprintf(&chance_string,L" (%.1f%%%%)", (double)((float)chance / 100.0));
-        SFStringConcat(out_string, &chance_string);
+        uiAPI.SFprintf(&chance_string,L" (%.1f%%%%)", (double)((float)chance / 100.0));
+        uiAPI.SFStringConcat(out_string, &chance_string);
 
         GetDescriptionText(_this->UiDbProxy, spell_line_data.description_id, &desc_str2);
         SF_String temp_str;
         ExpandSpellDescription(_this, &temp_str, &desc_str2, &spell_data);
-        SFStringConcat(&newline, &temp_str);
-        SFStringConcat(out_string, &newline);
+        uiAPI.SFStringConcat(&newline, &temp_str);
+        uiAPI.SFStringConcat(out_string, &newline);
 
-        SFStringDestructor(&temp_str);
+        uiAPI.SFStringDestructor(&temp_str);
     }
-    SFStringDestructor(&desc_str1);
-    SFStringDestructor(&desc_str2);
+    uiAPI.SFStringDestructor(&desc_str1);
+    uiAPI.SFStringDestructor(&desc_str2);
 
-    SFStringDestructor(&description);
-    SFStringDestructor(&chance_string);
-    SFStringDestructor(&newline);
+    uiAPI.SFStringDestructor(&description);
+    uiAPI.SFStringDestructor(&chance_string);
+    uiAPI.SFStringDestructor(&newline);
 }
 
 SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *param_1, uint16_t figure_id,
@@ -1069,13 +1025,13 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
     SF_String newline;
     SF_String aspd_string;
 
-    SFStringConstructor(&full_desc);
-    SFStringConstructor(&description);
-    SFStringConstructor(&aspd_string);
-    SFStringConstructor(&figure_name);
+    uiAPI.SFStringConstructor(&full_desc);
+    uiAPI.SFStringConstructor(&description);
+    uiAPI.SFStringConstructor(&aspd_string);
+    uiAPI.SFStringConstructor(&figure_name);
 
-    SFStringConstructor_char(&result_string, "");
-    SFStringFromWchar(&newline, L'\n', 1);
+    uiAPI.SFStringConstructor_char(&result_string, "");
+    uiAPI.SFStringFromWchar(&newline, L'\n', 1);
 
 
     SF_CGdFigure *SF_Figures = getFigurePtr(_this->CGdMain);
@@ -1087,31 +1043,31 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
         GetDescriptionText(_this->UiDbProxy, 4425, &description);
         if (param3 == 0)
         {
-            SFprintf(&full_desc, L"%s", figure_name.raw_data);
+            uiAPI.SFprintf(&full_desc, L"%s", figure_name.raw_data);
         }
         else
         {
             uint8_t level = SF_Figures->figures[figure_id].level;
-            SFprintf(&full_desc, L"%s (%s %i)", figure_name.raw_data, description.raw_data, level);
+            uiAPI.SFprintf(&full_desc, L"%s (%s %i)", figure_name.raw_data, description.raw_data, level);
         }
-        SFStringConcat(&result_string, &full_desc);
+        uiAPI.SFStringConcat(&result_string, &full_desc);
         if (param3 != 0)
         {
-            SFStringConcat(&result_string, &newline);             //concatenate newline
+            uiAPI.SFStringConcat(&result_string, &newline);             //concatenate newline
             SF_String hp_string;
-            SFStringConstructor(&hp_string);
+            uiAPI.SFStringConstructor(&hp_string);
             prepareHPString(_this, SF_Figures, figure_id, &hp_string);
-            SFStringConcat(&result_string, &hp_string);
-            SFStringDestructor(&hp_string);
+            uiAPI.SFStringConcat(&result_string, &hp_string);
+            uiAPI.SFStringDestructor(&hp_string);
         }
         if (param4 != 0)
         {
             SF_String mp_string;
-            SFStringConstructor(&mp_string);
-            SFStringConcat(&result_string, &newline);              //concatenate newline
+            uiAPI.SFStringConstructor(&mp_string);
+            uiAPI.SFStringConcat(&result_string, &newline);              //concatenate newline
             prepareMPString(_this, SF_Figures, figure_id, &mp_string);
-            SFStringConcat(&result_string, &mp_string);
-            SFStringDestructor(&mp_string);
+            uiAPI.SFStringConcat(&result_string, &mp_string);
+            uiAPI.SFStringDestructor(&mp_string);
         }
         if (param5 != 0)
         {
@@ -1123,8 +1079,8 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
             SF_String desc_str1;
             SF_String desc_str2;
 
-            SFStringConstructor(&desc_str1);
-            SFStringConstructor(&desc_str2);
+            uiAPI.SFStringConstructor(&desc_str1);
+            uiAPI.SFStringConstructor(&desc_str2);
 
             uint8_t r_type;
             uint8_t l_type;
@@ -1163,22 +1119,22 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
             if (active_hand_info != nullptr)
             {
                 SF_String damage_string;
-                SFStringConstructor(&damage_string);
+                uiAPI.SFStringConstructor(&damage_string);
 
-                SFStringConcat(&result_string, &newline);
-                SFStringSetLength(&full_desc, 0);
+                uiAPI.SFStringConcat(&result_string, &newline);
+                uiAPI.SFStringSetLength(&full_desc, 0);
                 if (both_hands)
                 {
-                    SFprintf(&full_desc, L"%s: ", desc_str2.raw_data);
+                    uiAPI.SFprintf(&full_desc, L"%s: ", desc_str2.raw_data);
                 }
                 prepareDamageString(_this, SF_Figures, figure_id, active_hand_info, &damage_string);
                 GetColoredText(&damage_string, 280);
-                SFStringConcat(&full_desc, &damage_string);
-                SFStringDestructor(&damage_string);
+                uiAPI.SFStringConcat(&full_desc, &damage_string);
+                uiAPI.SFStringDestructor(&damage_string);
 
 
                 GetDescriptionText(_this->UiDbProxy, 4803, &aspd_string);
-                SFprintf(&description, L"%s, ", aspd_string.raw_data);
+                uiAPI.SFprintf(&description, L"%s, ", aspd_string.raw_data);
 
                 uint8_t race = SF_Figures->figures[figure_id].race;
                 uint32_t aspd = figureAPI.getCurrentStat(SF_Figures, figure_id, FIGHT_SPEED);
@@ -1186,8 +1142,8 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
                 aspd = AC34calculateWeaponSpeed(AC34, aspd, race, r_item_id, dual_wield, (r_type == 12));
 
                 double disp_aspd = static_cast<double>(aspd) / 1000.0;
-                SFprintf(&description, description.raw_data, disp_aspd);
-                SFStringConcat(&full_desc, &description);
+                uiAPI.SFprintf(&description, description.raw_data, disp_aspd);
+                uiAPI.SFStringConcat(&full_desc, &description);
 
                 GetDescriptionText(_this->UiDbProxy, 4532, &description);
                 GetColoredText(&description, 280);
@@ -1195,17 +1151,17 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
                 if (active_hand_info->min_rng ==  active_hand_info->max_rng)
                 {
                     SF_String temp_str;
-                    SFStringConstructor(&temp_str);
+                    uiAPI.SFStringConstructor(&temp_str);
 
                     if (active_hand_info->min_rng != 0)
                     {
                         getSpecialDesc(&figure_name, 280);
-                        SFprintf(&temp_str, L"%s_%s%i%s%c ", description.raw_data, figure_name.raw_data,
+                        uiAPI.SFprintf(&temp_str, L"%s_%s%i%s%c ", description.raw_data, figure_name.raw_data,
                                  active_hand_info->min_rng, L"%d", L',');
-                        SFStringDestructor(&figure_name);
+                        uiAPI.SFStringDestructor(&figure_name);
                     }
-                    SFStringConcat(&full_desc, &temp_str);
-                    SFStringDestructor(&temp_str);
+                    uiAPI.SFStringConcat(&full_desc, &temp_str);
+                    uiAPI.SFStringDestructor(&temp_str);
                 }
                 else
                 {
@@ -1214,21 +1170,21 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
                 }
                 if (full_desc.str_length != 0)
                 {
-                    SFStringConcat(&result_string, &full_desc);
+                    uiAPI.SFStringConcat(&result_string, &full_desc);
                 }
 
-                SFStringDestructor(&full_desc);
-                SFStringDestructor(&description);
+                uiAPI.SFStringDestructor(&full_desc);
+                uiAPI.SFStringDestructor(&description);
 
-                SFStringConstructor(&full_desc);
-                SFStringConstructor(&description);
+                uiAPI.SFStringConstructor(&full_desc);
+                uiAPI.SFStringConstructor(&description);
 
                 uint16_t effects[4];
                 GetWeaponEffects(_this->SF_CGdResource, effects, r_item_id);
                 for (int i = 1; i < 4; i++)
                 {
                     SF_String effect_string;
-                    SFStringConstructor(&effect_string);
+                    uiAPI.SFStringConstructor(&effect_string);
 
                     if (effects[i] == 0)
                     {
@@ -1243,32 +1199,32 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
                                                                    SF_Figures->figures[figure_id].level);
                         }
                     }
-                    SFStringConcat(&full_desc, &newline);
+                    uiAPI.SFStringConcat(&full_desc, &newline);
                     prepareEffectString(_this, SF_Figures, figure_id, effect_id, &effect_string);
-                    SFStringConcat(&full_desc, &effect_string);
+                    uiAPI.SFStringConcat(&full_desc, &effect_string);
                 }
                 if (full_desc.str_length != 0)
                 {
-                    SFStringConcat(&result_string, &full_desc);
+                    uiAPI.SFStringConcat(&result_string, &full_desc);
                 }
                 if (both_hands)
                 {
                     SF_String damage_string;
-                    SFStringConstructor(&damage_string);
+                    uiAPI.SFStringConstructor(&damage_string);
 
-                    SFStringConcat(&result_string, &newline);
-                    SFStringSetLength(&full_desc, 0);
+                    uiAPI.SFStringConcat(&result_string, &newline);
+                    uiAPI.SFStringSetLength(&full_desc, 0);
                     if (both_hands)
                     {
-                        SFprintf(&full_desc, L"%s: ", desc_str1.raw_data);
+                        uiAPI.SFprintf(&full_desc, L"%s: ", desc_str1.raw_data);
                     }
                     prepareDamageString(_this, SF_Figures, figure_id, &l_item_info, &damage_string);
                     GetColoredText(&damage_string, 280);
-                    SFStringConcat(&full_desc, &damage_string);
-                    SFStringDestructor(&damage_string);
+                    uiAPI.SFStringConcat(&full_desc, &damage_string);
+                    uiAPI.SFStringDestructor(&damage_string);
 
                     GetDescriptionText(_this->UiDbProxy, 4803, &aspd_string);
-                    SFprintf(&description, L"%s, ", aspd_string.raw_data);
+                    uiAPI.SFprintf(&description, L"%s, ", aspd_string.raw_data);
 
                     uint8_t race = SF_Figures->figures[figure_id].race;
                     uint32_t aspd = figureAPI.getCurrentStat(SF_Figures, figure_id, FIGHT_SPEED);
@@ -1276,8 +1232,8 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
                     aspd = AC34calculateWeaponSpeed(AC34, aspd, race, l_item_id, dual_wield, (r_type == 12));
 
                     double disp_aspd = static_cast<double>(aspd) / 1000.0;
-                    SFprintf(&description, description.raw_data, disp_aspd);
-                    SFStringConcat(&full_desc, &description);
+                    uiAPI.SFprintf(&description, description.raw_data, disp_aspd);
+                    uiAPI.SFStringConcat(&full_desc, &description);
 
                     GetDescriptionText(_this->UiDbProxy, 4532, &description);
                     GetColoredText(&description, 280);
@@ -1285,17 +1241,17 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
                     if (l_item_info.min_rng == l_item_info.max_rng)
                     {
                         SF_String temp_str;
-                        SFStringConstructor(&temp_str);
+                        uiAPI.SFStringConstructor(&temp_str);
 
                         if (l_item_info.min_rng != 0)
                         {
                             getSpecialDesc(&figure_name, 280);
-                            SFprintf(&temp_str, L"%s_%s%i%s%c ", description.raw_data, figure_name.raw_data,
+                            uiAPI.SFprintf(&temp_str, L"%s_%s%i%s%c ", description.raw_data, figure_name.raw_data,
                                      l_item_info.min_rng, L"%d", L',');
-                            SFStringDestructor(&figure_name);
+                            uiAPI.SFStringDestructor(&figure_name);
                         }
-                        SFStringConcat(&full_desc, &temp_str);
-                        SFStringDestructor(&temp_str);
+                        uiAPI.SFStringConcat(&full_desc, &temp_str);
+                        uiAPI.SFStringDestructor(&temp_str);
                     }
                     else
                     {
@@ -1304,21 +1260,21 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
                     }
                     if (full_desc.str_length != 0)
                     {
-                        SFStringConcat(&result_string, &full_desc);
+                        uiAPI.SFStringConcat(&result_string, &full_desc);
                     }
 
-                    SFStringDestructor(&full_desc);
-                    SFStringDestructor(&description);
+                    uiAPI.SFStringDestructor(&full_desc);
+                    uiAPI.SFStringDestructor(&description);
 
-                    SFStringConstructor(&full_desc);
-                    SFStringConstructor(&description);
+                    uiAPI.SFStringConstructor(&full_desc);
+                    uiAPI.SFStringConstructor(&description);
 
                     uint16_t effects[4];
                     GetWeaponEffects(_this->SF_CGdResource, effects, l_item_id);
                     for (int i = 1; i < 4; i++)
                     {
                         SF_String effect_string;
-                        SFStringConstructor(&effect_string);
+                        uiAPI.SFStringConstructor(&effect_string);
 
                         if (effects[i] == 0)
                         {
@@ -1333,13 +1289,13 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
                                                                        SF_Figures->figures[figure_id].level);
                             }
                         }
-                        SFStringConcat(&full_desc, &newline);
+                        uiAPI.SFStringConcat(&full_desc, &newline);
                         prepareEffectString(_this, SF_Figures, figure_id, effect_id, &effect_string);
-                        SFStringConcat(&full_desc, &effect_string);
+                        uiAPI.SFStringConcat(&full_desc, &effect_string);
                     }
                     if (full_desc.str_length != 0)
                     {
-                        SFStringConcat(&result_string, &full_desc);
+                        uiAPI.SFStringConcat(&result_string, &full_desc);
                     }
                 }
             }
@@ -1361,7 +1317,7 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
             if (spells_count != 0)
             {
                 SF_String header_string;
-                SFStringConstructor(&header_string);
+                uiAPI.SFStringConstructor(&header_string);
                 prepareSpellsHeaderString(_this, &header_string);
                 for (int i = 0; i < 15; i++)
                 {
@@ -1384,26 +1340,26 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
                                                                       SF_Figures->figures[figure_id].level);
                             }
                         }
-                        SFStringConstructor(&spell_string);
+                        uiAPI.SFStringConstructor(&spell_string);
                         prepareSpellString(_this, &spell_string, spell_id);
                         if (spell_string.str_length != 0)
                         {
-                            SFStringConcat(&header_string, &spell_string);
+                            uiAPI.SFStringConcat(&header_string, &spell_string);
                         }
-                        SFStringDestructor(&spell_string);
+                        uiAPI.SFStringDestructor(&spell_string);
                     }
                 }
-                SFStringConcat(&result_string, &header_string);
-                SFStringDestructor(&header_string);
+                uiAPI.SFStringConcat(&result_string, &header_string);
+                uiAPI.SFStringDestructor(&header_string);
             }
         }
     }
-    SFStringCopy(param_1, &result_string);
-    SFStringDestructor(&result_string);
-    SFStringDestructor(&figure_name);
-    SFStringDestructor(&full_desc);
-    SFStringDestructor(&description);
-    SFStringDestructor(&newline);
+    uiAPI.SFStringCopy(param_1, &result_string);
+    uiAPI.SFStringDestructor(&result_string);
+    uiAPI.SFStringDestructor(&figure_name);
+    uiAPI.SFStringDestructor(&full_desc);
+    uiAPI.SFStringDestructor(&description);
+    uiAPI.SFStringDestructor(&newline);
     return param_1;
 }
 
@@ -1411,7 +1367,7 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
 SF_String * __thiscall getSpecialFigureName(SF_CGdFigureToolbox *_this, SF_String *in_string, uint16_t figure_id)
 {
     SF_String out_string;
-    SFStringConstructor(&out_string);
+    uiAPI.SFStringConstructor(&out_string);
     uint8_t figure_task = _this->CGdFigure->figures[figure_id].current_job.task;
     switch (figure_task)
     {
@@ -1429,7 +1385,7 @@ SF_String * __thiscall getSpecialFigureName(SF_CGdFigureToolbox *_this, SF_Strin
             }
             if (hero_index != 0xff)
             {
-                SFStringCopy(&out_string, &_this->CGdPlayer->players[owner].hero_names[hero_index]);
+                uiAPI.SFStringCopy(&out_string, &_this->CGdPlayer->players[owner].hero_names[hero_index]);
             }
             break;
         }
@@ -1439,7 +1395,7 @@ SF_String * __thiscall getSpecialFigureName(SF_CGdFigureToolbox *_this, SF_Strin
             uint16_t avatar_id = _this->CGdPlayer->players[owner].avatar_figure_index;
             if (avatar_id != 0)
             {
-                SFStringCopy(&out_string, &_this->CGdPlayer->players[owner].avatar_name);
+                uiAPI.SFStringCopy(&out_string, &_this->CGdPlayer->players[owner].avatar_name);
             }
             break;
         }
@@ -1449,11 +1405,11 @@ SF_String * __thiscall getSpecialFigureName(SF_CGdFigureToolbox *_this, SF_Strin
             {
                 uint16_t master_id = _this->CGdFigure->figures[figure_id].master_figure;
                 SF_String master_name;
-                SFStringConstructor(&master_name);
+                uiAPI.SFStringConstructor(&master_name);
 
                 getSpecialFigureName(_this, &master_name, master_id);
-                SFStringCopy(&out_string, &master_name);
-                SFStringDestructor(&master_name);
+                uiAPI.SFStringCopy(&out_string, &master_name);
+                uiAPI.SFStringDestructor(&master_name);
             }
             else
             {
@@ -1461,9 +1417,9 @@ SF_String * __thiscall getSpecialFigureName(SF_CGdFigureToolbox *_this, SF_Strin
                 if (data_id == 0)
                 {
                     SF_String empty;
-                    SFStringConstructor_char(&empty, "");
-                    SFStringCopy(&out_string, &empty);
-                    SFStringDestructor(&empty);
+                    uiAPI.SFStringConstructor_char(&empty, "");
+                    uiAPI.SFStringCopy(&out_string, &empty);
+                    uiAPI.SFStringDestructor(&empty);
                 }
                 else
                 {
@@ -1471,16 +1427,16 @@ SF_String * __thiscall getSpecialFigureName(SF_CGdFigureToolbox *_this, SF_Strin
                     char resource_str[512];
                     getTextString(_this->CGdResource, unit_str_id, resource_str);
                     SF_String sf_resource_str;
-                    SFStringConstructor_char(&sf_resource_str, resource_str);
-                    SFStringCopy(&out_string, &sf_resource_str);
-                    SFStringDestructor(&sf_resource_str);
+                    uiAPI.SFStringConstructor_char(&sf_resource_str, resource_str);
+                    uiAPI.SFStringCopy(&out_string, &sf_resource_str);
+                    uiAPI.SFStringDestructor(&sf_resource_str);
                 }
             }
             break;
         }
     }
 
-    SFStringCopy(in_string, &out_string);
+    uiAPI.SFStringCopy(in_string, &out_string);
     return in_string;
 }
 
@@ -1531,9 +1487,9 @@ getSavePath_ptr getSavePath;
 void CreateSplashScreenHelper (CAppMenu *_this, CMnuContainer **param_1, SF_String *param_2, SF_String *map_name)
 {
     SF_String screen_name;
-    SFStringConstructor_char(&screen_name, "<Cont>Splash");
-    SFStringDeepCopy(param_2, &screen_name);
-    SFStringDestructor(&screen_name);
+    uiAPI.SFStringConstructor_char(&screen_name, "<Cont>Splash");
+    uiAPI.SFStringDeepCopy(param_2, &screen_name);
+    uiAPI.SFStringDestructor(&screen_name);
 
     //187 is likely polymorphed version of setControllerName for different class (screen?)
     uint32_t vfun187_result = uiAPI.setScreenName(_this->CAppMenu_data.splash_screen, param_2);
@@ -1551,11 +1507,11 @@ void CreateSplashScreenHelper (CAppMenu *_this, CMnuContainer **param_1, SF_Stri
 
     SF_String c_bgr;
     SF_String c_brdr;
-    SFStringConstructor_char(&c_bgr, "");
-    SFStringConstructor_char(&c_brdr, "");
+    uiAPI.SFStringConstructor_char(&c_bgr, "");
+    uiAPI.SFStringConstructor_char(&c_brdr, "");
     uiAPI.setupMenuContainerData(some_container, 0.0, 0.0, 0.0, 0.0, &c_bgr, &c_brdr);
-    SFStringDestructor(&c_brdr);
-    SFStringDestructor(&c_bgr);
+    uiAPI.SFStringDestructor(&c_brdr);
+    uiAPI.SFStringDestructor(&c_bgr);
 
     uiAPI.setCanFocus((CMnuBase *)some_container, 0);
     //black magic, vfunction 182 equivalent pass through using 0x512ef0
@@ -1570,35 +1526,35 @@ void CreateSplashScreenHelper (CAppMenu *_this, CMnuContainer **param_1, SF_Stri
         uiAPI.initializeMenuContainer(another_container);
     }
     SF_String another_cont_name;
-    SFStringConstructor_char(&another_cont_name,"<Cont>IndDisp");
+    uiAPI.SFStringConstructor_char(&another_cont_name,"<Cont>IndDisp");
     uiAPI.CMnuBaseSetName((CMnuBase *)another_container, &another_cont_name);
-    SFStringDestructor(&another_cont_name);
+    uiAPI.SFStringDestructor(&another_cont_name);
 
     uint32_t campaign_type = _this->CAppMenu_data.campaign_type;
 
     log_info("Splash Map Name %ls", map_name->raw_data);
-    char *loading_name = SFStringCMbStr(map_name);
+    char *loading_name = uiAPI.SFStringCMbStr(map_name);
     log_info("Splash Loading Name %s", loading_name);
     const char *matched_msb = find_screen_for_map(loading_name);
 
-    SFStringConstructor_char(&c_brdr, "");
+    uiAPI.SFStringConstructor_char(&c_brdr, "");
     if (matched_msb != NULL)
     {
-        SFStringConstructor_char(&c_bgr, matched_msb);
+        uiAPI.SFStringConstructor_char(&c_bgr, matched_msb);
     }
     else
     {
         switch (campaign_type)
         {
-            case 0: SFStringConstructor_char(&c_bgr, "ui_mainmenu_bg_loading_sf1.msb"); break;
-            case 1: SFStringConstructor_char(&c_bgr, "ui_mainmenu_bg_loading_sf1addon01.msb"); break;
-            case 2: SFStringConstructor_char(&c_bgr, "ui_mainmenu_bg_loading_sf1addon02.msb"); break;
-            default: SFStringConstructor_char(&c_bgr, ""); break;
+            case 0: uiAPI.SFStringConstructor_char(&c_bgr, "ui_mainmenu_bg_loading_sf1.msb"); break;
+            case 1: uiAPI.SFStringConstructor_char(&c_bgr, "ui_mainmenu_bg_loading_sf1addon01.msb"); break;
+            case 2: uiAPI.SFStringConstructor_char(&c_bgr, "ui_mainmenu_bg_loading_sf1addon02.msb"); break;
+            default: uiAPI.SFStringConstructor_char(&c_bgr, ""); break;
         }
     }
     uiAPI.setupMenuContainerData(another_container, 0.0, 0.0, 0.0, 0.0, &c_bgr, &c_brdr);
-    SFStringDestructor(&c_brdr);
-    SFStringDestructor(&c_bgr);
+    uiAPI.SFStringDestructor(&c_brdr);
+    uiAPI.SFStringDestructor(&c_bgr);
 
     uiAPI.setCanFocus((CMnuBase *)another_container, 0);
     //black magic, vfunction 182 equivalent 0x512ef0
@@ -1615,14 +1571,14 @@ void CreateSplashScreenHelper (CAppMenu *_this, CMnuContainer **param_1, SF_Stri
               (uint32_t)(&_this->CAppMenu_data.progress_label) - (uint32_t)(&_this->CAppMenu_data));
     _this->CAppMenu_data.progress_label = progress_label;
     SF_String label_name;
-    SFStringConstructor_char(&label_name, "<Ctrl>lbSplash");
+    uiAPI.SFStringConstructor_char(&label_name, "<Ctrl>lbSplash");
     uiAPI.CMnuBaseSetName((CMnuBase *)_this->CAppMenu_data.progress_label, &label_name);
-    SFStringDestructor(&label_name);
+    uiAPI.SFStringDestructor(&label_name);
 
     SF_String label_data;
-    SFStringConstructor_char(&label_data, "");
+    uiAPI.SFStringConstructor_char(&label_data, "");
     uiAPI.initMenuElement(_this->CAppMenu_data.progress_label, 308.0, 0.0, 0.0, 0.0, &label_data);
-    SFStringDestructor(&label_data);
+    uiAPI.SFStringDestructor(&label_data);
 
     SF_FontStruct *fonts = uiAPI.getFonts();
     SF_Font *font = uiAPI.getFont(fonts, 7);
@@ -1633,9 +1589,9 @@ void CreateSplashScreenHelper (CAppMenu *_this, CMnuContainer **param_1, SF_Stri
     uiAPI.vfunction12((CMnuBase *)_this->CAppMenu_data.progress_label, 761.0, 1);
 
     SF_String label_text;
-    SFStringConstructor_char(&label_text, "...");
+    uiAPI.SFStringConstructor_char(&label_text, "...");
     uiAPI.menuLabelSetString(_this->CAppMenu_data.progress_label,&label_text );
-    SFStringDestructor(&label_text);
+    uiAPI.SFStringDestructor(&label_text);
 
     uiAPI.bringToFront(some_container, 0);
     uiAPI.vfunction163(some_container, 0);
@@ -1654,15 +1610,15 @@ SF_String * getMapFromSave(CAppSession *_this,  char *param_1, int campaign_type
     SF_String base_name;
     SF_String save_path;
 
-    SFStringConstructor_char(&base_name, param_1);
+    uiAPI.SFStringConstructor_char(&base_name, param_1);
     //getSavePath(_this,&save_path,campaign_type);
-    //SFStringConcat(&save_path, &base_name);
-    //SFStringDestructor(&base_name);
-    char *path = SFStringCMbStr(&base_name);
+    //uiAPI.SFStringConcat(&save_path, &base_name);
+    //uiAPI.SFStringDestructor(&base_name);
+    char *path = uiAPI.SFStringCMbStr(&base_name);
 
     DStringConstructor_char (&filename, path);
 
-    SFStringDestructor(&base_name);
+    uiAPI.SFStringDestructor(&base_name);
     FileWrapperInit(&Wrapper);
 
     if (FileWrapperOpen(&Wrapper, &filename, 0) != 0)
@@ -1671,9 +1627,9 @@ SF_String * getMapFromSave(CAppSession *_this,  char *param_1, int campaign_type
         AC57_Init(AC57, &Wrapper);
         SF_CGdWorld *temp_world = (SF_CGdWorld *)calloc(0x832341, 1);
         SF_String *output = (SF_String *)calloc(0x10, 1);
-        SFStringConstructor(output);
+        uiAPI.SFStringConstructor(output);
         readMapNameFromSave(temp_world, AC57);
-        SFStringCopy(output, &temp_world->map_name);
+        uiAPI.SFStringCopy(output, &temp_world->map_name);
         free(temp_world);
         FileWrapperClose(&Wrapper);
         AC57_Dispose(AC57);
@@ -1687,17 +1643,17 @@ SF_String * getMapFromSave(CAppSession *_this,  char *param_1, int campaign_type
 void __thiscall CreateSplashScreen(CAppMenu *_this, CMnuContainer **param_1, SF_String *param_2)
 {
     CAppSession *session = _this->CAppMenu_data.CAppSession;
-    char *save_path = SFStringCMbStr(&_this->CAppMenu_data.game_info.filename);
+    char *save_path = uiAPI.SFStringCMbStr(&_this->CAppMenu_data.game_info.filename);
     int campaign_type = _this->CAppMenu_data.campaign_type;
     wchar_t *test_var = (wchar_t *)(*(uint32_t *)(&session->data.unknwn_data[0xa0]));
     if (test_var != NULL)
     {
         SF_String map_name;
-        SFStringConstructor_wchar(&map_name, test_var);
+        uiAPI.SFStringConstructor_wchar(&map_name, test_var);
         log_info ("1 Map name from portal change %ls", map_name.raw_data);
         CreateSplashScreenHelper(_this, param_1, param_2, &map_name);
         log_info ("2 Map name from portal change %ls", map_name.raw_data);
-        SFStringDestructor(&map_name);
+        uiAPI.SFStringDestructor(&map_name);
     }
     else
     {
@@ -1706,7 +1662,7 @@ void __thiscall CreateSplashScreen(CAppMenu *_this, CMnuContainer **param_1, SF_
         {
             CreateSplashScreenHelper(_this, param_1, param_2, map_name);
             log_info ("Map name from save: %ls", map_name->raw_data);
-            SFStringDestructor(map_name);
+            uiAPI.SFStringDestructor(map_name);
             free(map_name);
         }
     }
@@ -1741,15 +1697,6 @@ void initialize_vanilla_fix_hooks()
     GetDescriptionText = (GetDescriptionText_ptr)(ASI::AddrOf(0x575cd0));
     GetTextById = (GetTextById_ptr)(ASI::AddrOf(0x575740));
     ExpandSpellDescription = (ExpandSpellDescription_ptr)(ASI::AddrOf(0x5d7c20));
-    SFprintf = (SFprintf_ptr)(ASI::AddrOf(0x384170));
-    SFStringConcat = (SFStringConcat_ptr)(ASI::AddrOf(0x383d00));
-    SFStringSetLength = (SFStringSetLength_ptr)(ASI::AddrOf(0x3846d0));
-    SFStringFromWchar = (SFStringFromWchar_ptr)(ASI::AddrOf(0x383920));
-    SFStringDestructor = (SFStringDestructor_ptr)(ASI::AddrOf(0x3839c0));
-    SFStringCopy = (SFStringCopy_ptr)(ASI::AddrOf(0x383720));
-    SFStringCMbStr = (SFStringCMbStr_ptr)(ASI::AddrOf(0x383db0));
-    SFStringDeepCopy = (SFStringCopy_ptr)(ASI::AddrOf(0x383a20));
-    SFStringConstructor_wchar = (SFStringConstructor_wchar_ptr)(ASI::AddrOf(0x383890));
 
     GetItemInfo = (GetItemInfo_ptr)(ASI::AddrOf(0x269460));
     GetWeaponType = (GetWeaponType_ptr)(ASI::AddrOf(0x269260));

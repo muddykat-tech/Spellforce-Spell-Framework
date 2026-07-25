@@ -10,6 +10,8 @@
 #include "../../api/sfsf.h"
 #include "../../asi/sf_asi.h"
 
+void __thiscall SFStringConstructor(SF_String *_this);
+SF_String * __thiscall SFStringConstructor_char(SF_String *_this, const char *char_string);
 void __thiscall updateLabelText(CMnuLabel *label, const char *text);
 void __thiscall show_mod_list(CMnuSmpButton *button);
 CMnuLabel* __thiscall attachLabel(CMnuLabel *label_ptr, CMnuContainer *parent,
