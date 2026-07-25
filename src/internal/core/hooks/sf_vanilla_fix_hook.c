@@ -1532,13 +1532,7 @@ void CreateSplashScreenHelper (CAppMenu *_this, CMnuContainer **param_1, SF_Stri
 
     uint32_t campaign_type = _this->CAppMenu_data.campaign_type;
 
-<<<<<<< HEAD
-    log_info("Splash Map Name %ls", map_name->raw_data);
     char *loading_name = uiAPI.SFStringCMbStr(map_name);
-    log_info("Splash Loading Name %s", loading_name);
-=======
-    char *loading_name = SFStringCMbStr(map_name);
->>>>>>> 649fe57f6a93e6f3c5e6986bb99c2a62a9ef4589
     const char *matched_msb = find_screen_for_map(loading_name);
 
     uiAPI.SFStringConstructor_char(&c_brdr, "");
