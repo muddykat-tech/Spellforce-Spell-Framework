@@ -1576,9 +1576,7 @@ void CreateSplashScreenHelper (CAppMenu *_this, CMnuContainer **param_1, SF_Stri
 
     uint32_t campaign_type = _this->CAppMenu_data.campaign_type;
 
-    log_info("Splash Map Name %ls", map_name->raw_data);
     char *loading_name = SFStringCMbStr(map_name);
-    log_info("Splash Loading Name %s", loading_name);
     const char *matched_msb = find_screen_for_map(loading_name);
 
     SFStringConstructor_char(&c_brdr, "");
@@ -1608,11 +1606,8 @@ void CreateSplashScreenHelper (CAppMenu *_this, CMnuContainer **param_1, SF_Stri
     CMnuLabel *progress_label = (CMnuLabel *)uiAPI.newOperator(0x368);
     if (progress_label != NULL)
     {
-        log_info ("Running label constructor");
         uiAPI.menuLabelConstructor(progress_label);
     }
-    log_info ("Label offset 0x%x",
-              (uint32_t)(&_this->CAppMenu_data.progress_label) - (uint32_t)(&_this->CAppMenu_data));
     _this->CAppMenu_data.progress_label = progress_label;
     SF_String label_name;
     SFStringConstructor_char(&label_name, "<Ctrl>lbSplash");
@@ -1631,11 +1626,6 @@ void CreateSplashScreenHelper (CAppMenu *_this, CMnuContainer **param_1, SF_Stri
 
     uiAPI.containerAddControl(another_container, (CMnuBase *)_this->CAppMenu_data.progress_label, 0, 1, 0);
     uiAPI.vfunction12((CMnuBase *)_this->CAppMenu_data.progress_label, 761.0, 1);
-
-    SF_String label_text;
-    SFStringConstructor_char(&label_text, "...");
-    uiAPI.menuLabelSetString(_this->CAppMenu_data.progress_label,&label_text );
-    SFStringDestructor(&label_text);
 
     uiAPI.bringToFront(some_container, 0);
     uiAPI.vfunction163(some_container, 0);
@@ -1694,9 +1684,7 @@ void __thiscall CreateSplashScreen(CAppMenu *_this, CMnuContainer **param_1, SF_
     {
         SF_String map_name;
         SFStringConstructor_wchar(&map_name, test_var);
-        log_info ("1 Map name from portal change %ls", map_name.raw_data);
         CreateSplashScreenHelper(_this, param_1, param_2, &map_name);
-        log_info ("2 Map name from portal change %ls", map_name.raw_data);
         SFStringDestructor(&map_name);
     }
     else
@@ -1705,7 +1693,6 @@ void __thiscall CreateSplashScreen(CAppMenu *_this, CMnuContainer **param_1, SF_
         if (map_name != NULL)
         {
             CreateSplashScreenHelper(_this, param_1, param_2, map_name);
-            log_info ("Map name from save: %ls", map_name->raw_data);
             SFStringDestructor(map_name);
             free(map_name);
         }

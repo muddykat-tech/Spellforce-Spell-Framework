@@ -150,7 +150,6 @@ const char *find_screen_for_map(const char *map_name)
 
     memcpy(extracted, start, out_len);
     extracted[out_len] = '\0';
-    log_debug(DEBUG_LOW, "Checking for Custom Splashscreen for %s", extracted);
     for (int i = 0; i < g_screen_entry_count; i++)
     {
         if (strcmp(g_screen_entries[i].map_name, extracted) == 0)
