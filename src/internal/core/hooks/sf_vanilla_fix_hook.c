@@ -1532,9 +1532,13 @@ void CreateSplashScreenHelper (CAppMenu *_this, CMnuContainer **param_1, SF_Stri
 
     uint32_t campaign_type = _this->CAppMenu_data.campaign_type;
 
+<<<<<<< HEAD
     log_info("Splash Map Name %ls", map_name->raw_data);
     char *loading_name = uiAPI.SFStringCMbStr(map_name);
     log_info("Splash Loading Name %s", loading_name);
+=======
+    char *loading_name = SFStringCMbStr(map_name);
+>>>>>>> 649fe57f6a93e6f3c5e6986bb99c2a62a9ef4589
     const char *matched_msb = find_screen_for_map(loading_name);
 
     uiAPI.SFStringConstructor_char(&c_brdr, "");
@@ -1564,11 +1568,8 @@ void CreateSplashScreenHelper (CAppMenu *_this, CMnuContainer **param_1, SF_Stri
     CMnuLabel *progress_label = (CMnuLabel *)uiAPI.newOperator(0x368);
     if (progress_label != NULL)
     {
-        log_info ("Running label constructor");
         uiAPI.menuLabelConstructor(progress_label);
     }
-    log_info ("Label offset 0x%x",
-              (uint32_t)(&_this->CAppMenu_data.progress_label) - (uint32_t)(&_this->CAppMenu_data));
     _this->CAppMenu_data.progress_label = progress_label;
     SF_String label_name;
     uiAPI.SFStringConstructor_char(&label_name, "<Ctrl>lbSplash");
@@ -1588,11 +1589,14 @@ void CreateSplashScreenHelper (CAppMenu *_this, CMnuContainer **param_1, SF_Stri
     uiAPI.containerAddControl(another_container, (CMnuBase *)_this->CAppMenu_data.progress_label, 0, 1, 0);
     uiAPI.vfunction12((CMnuBase *)_this->CAppMenu_data.progress_label, 761.0, 1);
 
+<<<<<<< HEAD
     SF_String label_text;
     uiAPI.SFStringConstructor_char(&label_text, "...");
     uiAPI.menuLabelSetString(_this->CAppMenu_data.progress_label,&label_text );
     uiAPI.SFStringDestructor(&label_text);
 
+=======
+>>>>>>> 649fe57f6a93e6f3c5e6986bb99c2a62a9ef4589
     uiAPI.bringToFront(some_container, 0);
     uiAPI.vfunction163(some_container, 0);
     //some container vfun163
