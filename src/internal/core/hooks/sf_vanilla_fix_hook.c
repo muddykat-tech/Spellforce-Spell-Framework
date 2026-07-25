@@ -1589,14 +1589,6 @@ void CreateSplashScreenHelper (CAppMenu *_this, CMnuContainer **param_1, SF_Stri
     uiAPI.containerAddControl(another_container, (CMnuBase *)_this->CAppMenu_data.progress_label, 0, 1, 0);
     uiAPI.vfunction12((CMnuBase *)_this->CAppMenu_data.progress_label, 761.0, 1);
 
-<<<<<<< HEAD
-    SF_String label_text;
-    uiAPI.SFStringConstructor_char(&label_text, "...");
-    uiAPI.menuLabelSetString(_this->CAppMenu_data.progress_label,&label_text );
-    uiAPI.SFStringDestructor(&label_text);
-
-=======
->>>>>>> 649fe57f6a93e6f3c5e6986bb99c2a62a9ef4589
     uiAPI.bringToFront(some_container, 0);
     uiAPI.vfunction163(some_container, 0);
     //some container vfun163
