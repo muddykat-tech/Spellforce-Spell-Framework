@@ -16,13 +16,13 @@
 #include <string.h>
 #include <direct.h>
 
-static gameInfoSetAvatarType_ptr    s_gameinfo_set_avatar_type;
-static gameInfoSetMapPathFull_ptr   s_gameinfo_set_map_path;
+static gameInfoSetAvatarType_ptr s_gameinfo_set_avatar_type;
+static gameInfoSetMapPathFull_ptr s_gameinfo_set_map_path;
 static appMenuEnterCampaignFlow_ptr s_enter_campaign_flow;
-static playCampaignIntro_ptr        s_play_campaign_intro;
-static videoSequenceStop_ptr        s_video_sequence_stop;
-static startGame_ptr                s_start_game;
-static getBasePathString_ptr        s_get_base_path_string;
+static playCampaignIntro_ptr s_play_campaign_intro;
+static videoSequenceStop_ptr s_video_sequence_stop;
+static startGame_ptr s_start_game;
+static getBasePathString_ptr s_get_base_path_string;
 
 static SF_String *s_g_save_campaign2; /* "save\campaign2\" global */
 static SF_String *s_g_save_campaign3; /* "save\campaign3\" global */
@@ -83,6 +83,129 @@ int32_t register_campaign(const SFSF_CampaignDef *def)
              def->save_folder, def->engine_type);
     return (int32_t)g_campaign_count++;
 }
+
+/* Un'Schtalch's code block */
+
+
+/**
+ * @brief Proper map selection code for the future
+ * @param _this Pointer to the game info structure that holds most of the info we need
+ * @param skip_tutorial Totu
+ * @param skill Primary skill for the newly created avatar
+ * @param subskill Secondary skill for the newly created avatar
+ * @param campaign_id Campaign ID we're loading. (0 - Order, 1 - Aryn, 2 - Phoenix)
+ * @param is_shadowblade SotP side flag, used only for the third vanilla campaign
+ */
+void __thiscall initFirstMap (SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t skill, uint8_t subskill,
+                              uint32_t campaign_id, bool is_shadowblade)
+{
+    SF_String default_template;
+    SF_String template_path;
+    SF_String full_template;
+
+    SF_String dot_map;
+    SF_String campagn_path;
+    SF_String intial_map_name;
+
+    uiAPI.SFStringConstructor_char(&dot_map, ".map");
+    uiAPI.SFStringConstructor(&full_template);
+    uiAPI.SFStringConstructor(&default_template);
+    uiAPI.SFprintf(&default_template, L"SK_%02d%02d.des", skill, subskill);
+
+    uiAPI.SFStringConstructor_char(&template_path, "figure_template\\starterkit\\");
+
+    uiAPI.SFStringConcat(&full_template, &template_path);
+    uiAPI.SFStringConcat(&full_template, &default_template);
+
+
+    uiAPI.SFStringDeepCopy(&_this->starter_kit_name, &full_template);
+    _this->AC82_1.unknown1 = _this->AC82.unknown1;
+    _this->AC82_1.unknown2 = _this->AC82.unknown2;
+    _this->AC82_1.unknown3 = _this->AC82.unknown3;
+    _this->AC82_1.kit_index = _this->AC82.kit_index;
+
+    //ASI::AddrOf(0x1759e0)
+    //GdAvatarCopyInternal(&_this->AC82_1.avatarData.internal, &_this->AC82.avatarData.internal);
+    //ASI::AddrOf(0x175860)
+    //AC82CopyVectors(_this->AC82_1.avatarData.begin, _this->AC82.avatarData.begin);
+
+    if (skip_tutorial)
+    {
+        switch (campaign_id)
+        {
+            case 0:
+            {
+                uiAPI.SFStringConstructor_char(&campagn_path, "map\\Campaign\\");
+                uiAPI.SFStringConstructor_wchar(&intial_map_name,L"000_Greyfell");
+                break;
+            }
+            case 1:
+            {
+                uiAPI.SFStringConstructor_char(&campagn_path, "map\\Campaign2\\");
+                uiAPI.SFStringConstructor_wchar(&intial_map_name, L"P101_Mirraw_Thur");
+                break;
+            }
+            case 2:
+            {
+                uiAPI.SFStringConstructor_char(&campagn_path, "map\\Campaign3\\");
+                if (is_shadowblade)
+                {
+                    uiAPI.SFStringConstructor_wchar(&intial_map_name, L"P202_City_Of_Souls");
+                }
+                else
+                {
+                    uiAPI.SFStringConstructor_wchar(&intial_map_name, L"P201_Blackwater_Coast");
+                }
+                break;
+            }
+            default:
+                //insert campaign type selecton code here
+                break;
+        }
+        uiAPI.SFStringDeepCopy(&_this->template_name, &_this->starter_kit_name);
+
+        _this->start_mode = 2;
+        _this->is_tutorial = 0;
+    }
+    else
+    {
+        uiAPI.SFStringConstructor_char(&campagn_path, "map\\Campaign\\");
+        uiAPI.SFStringConstructor_wchar(&intial_map_name, L"tutorial");
+        SF_String tutorial_template;
+        SF_String tutorial_kit_name;
+        SF_String tutorial_template_path;
+        uiAPI.SFStringConstructor_wchar(&tutorial_template, L"FT_Tutorial.des");
+        uiAPI.SFStringConstructor_char(&tutorial_template_path, "figure_template\\");
+
+
+        uiAPI.SFStringConstructor(&tutorial_kit_name);
+        uiAPI.SFStringConcat(&tutorial_kit_name, &tutorial_template_path);
+        uiAPI.SFStringConcat(&tutorial_kit_name, &tutorial_template);
+
+        uiAPI.SFStringDeepCopy(&_this->template_name, &tutorial_kit_name);
+
+        uiAPI.SFStringDestructor(&tutorial_kit_name);
+        uiAPI.SFStringDestructor(&tutorial_template);
+        uiAPI.SFStringDestructor(&tutorial_template_path);
+        _this->start_mode = 1;
+        _this->is_tutorial = 1;
+    }
+
+    uiAPI.SFStringConcat(&campagn_path, &intial_map_name);
+    uiAPI.SFStringConcat(&campagn_path, &dot_map);
+    uiAPI.SFStringDeepCopy(&_this->filename, &campagn_path);
+    _this->unknown_0xf0 = 1;
+    _this->unknown_0xf4 = 3;
+
+    uiAPI.SFStringDestructor(&default_template);
+    uiAPI.SFStringDestructor(&template_path);
+    uiAPI.SFStringDestructor(&full_template);
+    uiAPI.SFStringDestructor(&dot_map);
+    uiAPI.SFStringDestructor(&campagn_path);
+    uiAPI.SFStringDestructor(&intial_map_name);
+
+}
+
 
 /* Originals captured before the first swap so they can be restored verbatim. */
 static SF_String s_orig_campaign2;
@@ -255,7 +378,7 @@ void __fastcall hooked_play_campaign_intro(CAppMenu *_this)
              * configuration from initFirstMap's else-branch. */
             log_info("Campaign '%s': start map '%s' (direct start)",
                      def->name, def->start_map);
-            snprintf(map_path, sizeof(map_path), "map\\%s.map", def->start_map);
+            snprintf(map_path, sizeof(map_path), "map\\%s\\%s.map", def->name, def->start_map);
             uiAPI.SFStringConstructor_char(&sf_map_path, map_path);
             uiAPI.SFStringCopy(&gi->filename, &sf_map_path);
             uiAPI.SFStringDestructor(&sf_map_path);

@@ -1404,17 +1404,83 @@ typedef struct __attribute__((packed))
     CAppSession_data data;
 } CAppSession;
 
+typedef struct __attribute__((packed))
+{
+    uint32_t unknown;
+    uint8_t level;
+    wchar_t name[40];
+    uint16_t unknown2[3];
+
+    SF_Coord bind_pos;
+    SF_Coord avatar_pos;
+
+    uint16_t agility;
+    uint16_t charisma;
+    uint16_t dexterity;
+    uint16_t intelligence;
+    uint16_t stamina;
+    uint16_t strength;
+    uint16_t wisdom;
+
+    uint16_t fire_res;
+    uint16_t ice_res;
+    uint16_t black_res;
+    uint16_t mind_res;
+
+    uint16_t walk_speed;
+    uint16_t fight_speed;
+    uint16_t cast_speed;
+
+    GdFigureAbility abilities[10];
+    uint16_t head;
+    uint32_t copper;
+    uint32_t silver;
+    uint32_t gold;
+
+    uint8_t unknown3[12];
+
+    uint32_t xp;
+    uint16_t skill_points_total;
+    uint16_t stat_points_total;
+
+    uint32_t unknown4;
+
+    uint32_t is_female;
+
+    uint8_t unknown5[11];
+
+} GdAvatarInternal;
 
 typedef struct __attribute__((packed))
 {
-    uint8_t AC82[0xf0];
+    GdAvatarInternal internal;
+    void *begin;
+    void *data;
+    void *rend;
+} GdAvatarData;
+
+typedef struct __attribute__((packed))
+{
+    uint16_t unknown1;
+    uint8_t unknown2;
+    uint8_t unknown3;
+    void *unknown4;
+    void *unknown5;
+    uint8_t kit_index;
+    uint8_t padding[3];
+    GdAvatarData avatarData;
+} AutoClass81;
+
+typedef struct __attribute__((packed))
+{
+    AutoClass81 AC82;
     uint32_t unknown_0xf0;      /* = 1 in initFirstMap, both branches */
     uint32_t unknown_0xf4;      /* = 3 in initFirstMap, both branches */
     SF_String filename;
     SF_String template_name;
     uint32_t start_mode;        /* 0x118: 1 = tutorial, 2 = direct start */
     SF_String starter_kit_name;
-    uint8_t AC82_1[0xf0];       /* avatar snapshot (copied from AC82 in initFirstMap) */
+    AutoClass81 AC82_1;       /* avatar snapshot (copied from AC82 in initFirstMap) */
     uint32_t unknown2;
     uint8_t kit_index;
     uint8_t padding[3];
@@ -1464,7 +1530,10 @@ typedef struct __attribute__((packed))
     SF_GameInfo game_info;
     void *Unknown16;
     uint32_t campaign_type;
-    uint8_t more_data3[0x1F0];
+    void *Unknown17;
+    void *Unknown18;
+    SF_Coord bind_position;
+    uint8_t more_data3[0x1E4];
 } CAppMenu_data;
 
 typedef struct __attribute__((packed))
