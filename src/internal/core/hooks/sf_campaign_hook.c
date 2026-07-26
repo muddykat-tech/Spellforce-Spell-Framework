@@ -31,6 +31,10 @@ static SF_String *s_g_save_base;      /* "save\" global @ 0x923f60 */
 static void getsavepath_hook();
 static void install_intro_callsite_patch();
 
+static avatarInternalCopy_ptr s_avatar_internal_copy;
+static avatarVectorsCopy_ptr  s_avatar_vectors_copy;
+static void install_initfirstmap_hook();
+
 void initialize_campaign_hooks()
 {
     s_gameinfo_set_map_path = (gameInfoSetMapPathFull_ptr)(ASI::AddrOf(0x1762d0));
@@ -46,16 +50,21 @@ void initialize_campaign_hooks()
 
     s_gameinfo_set_avatar_type = (gameInfoSetAvatarType_ptr)(ASI::AddrOf(0x1a1a80));
 
+    s_avatar_internal_copy = (avatarInternalCopy_ptr)(ASI::AddrOf(0x1759e0));
+    s_avatar_vectors_copy  = (avatarVectorsCopy_ptr)(ASI::AddrOf(0x175860));
+
+    install_initfirstmap_hook();
     install_intro_callsite_patch();
     getsavepath_hook();
 
     // TEST CAMPAIGN - remove once registration comes from the mod registry
     SFSF_CampaignDef test_campaign = {};
-    strncpy(test_campaign.name,        "testcampaign",  sizeof(test_campaign.name) - 1);
-    strncpy(test_campaign.description, "Hook test",      sizeof(test_campaign.description) - 1);
-    strncpy(test_campaign.start_map,   "000_liannon",     sizeof(test_campaign.start_map) - 1);
-    strncpy(test_campaign.save_folder, "testcampaign",   sizeof(test_campaign.save_folder) - 1);
-    test_campaign.engine_type = 0;   // masquerade as SF1 // If we want custom campaign type we change this value.
+    strncpy(test_campaign.name,        "testcampaign",      sizeof(test_campaign.name) - 1);
+    strncpy(test_campaign.description, "Hook test",         sizeof(test_campaign.description) - 1);
+    strncpy(test_campaign.start_map,   "000_liannon",   sizeof(test_campaign.start_map) - 1);
+    strncpy(test_campaign.campaign_folder, "testcampaign",      sizeof(test_campaign.campaign_folder) - 1);
+    strncpy(test_campaign.tutorial_map, "",                 sizeof(test_campaign.tutorial_map) - 1);
+    test_campaign.engine_type = 0;   // masquerade as SF1. If we want custom campaign type we change this value.
     test_campaign.avatar_type = 8;   // 8 + campaign_index convention
     register_campaign(&test_campaign);
 }
@@ -80,11 +89,11 @@ int32_t register_campaign(const SFSF_CampaignDef *def)
     g_campaigns[g_campaign_count] = *def;
     log_info("Registered campaign %u: %s (map: %s, saves: %s, engine_type: %u)",
              g_campaign_count, def->name, def->start_map,
-             def->save_folder, def->engine_type);
+             def->campaign_folder, def->engine_type);
     return (int32_t)g_campaign_count++;
 }
 
-/* Un'Schtalch's code block */
+/* Un'Schtalch's code block - updated and reworked a bit for you ~Muddykat*/
 
 
 /**
@@ -96,58 +105,84 @@ int32_t register_campaign(const SFSF_CampaignDef *def)
  * @param campaign_id Campaign ID we're loading. (0 - Order, 1 - Aryn, 2 - Phoenix)
  * @param is_shadowblade SotP side flag, used only for the third vanilla campaign
  */
-void __thiscall initFirstMap (SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t skill, uint8_t subskill,
-                              uint32_t campaign_id, bool is_shadowblade)
+void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t skill,
+                             uint8_t subskill, uint32_t campaign_id, bool is_shadowblade)
 {
     SF_String default_template;
     SF_String template_path;
     SF_String full_template;
-
     SF_String dot_map;
     SF_String campagn_path;
     SF_String intial_map_name;
-
+    log_info("initFirstMap Hook: Starter Kit Start ");
+    /* -- starter kit: figure_template\starterkit\SK_<skill><subskill>.des -- */
     uiAPI.SFStringConstructor_char(&dot_map, ".map");
     uiAPI.SFStringConstructor(&full_template);
     uiAPI.SFStringConstructor(&default_template);
     uiAPI.SFprintf(&default_template, L"SK_%02d%02d.des", skill, subskill);
-
     uiAPI.SFStringConstructor_char(&template_path, "figure_template\\starterkit\\");
-
     uiAPI.SFStringConcat(&full_template, &template_path);
     uiAPI.SFStringConcat(&full_template, &default_template);
-
-
     uiAPI.SFStringDeepCopy(&_this->starter_kit_name, &full_template);
-    _this->AC82_1.unknown1 = _this->AC82.unknown1;
-    _this->AC82_1.unknown2 = _this->AC82.unknown2;
-    _this->AC82_1.unknown3 = _this->AC82.unknown3;
+
+    log_info("initFirstMap Hook: Avatar Snapshot to deep Copy");
+    /* -- avatar snapshot AC82 -> AC82_1: FULL deep copy (vanilla parity).
+     *    Downstream flows (restart map, PrepareNewGame) read AC82_1;
+     *    the shallow field copies alone are NOT sufficient. -- */
+    _this->AC82_1.unknown1  = _this->AC82.unknown1;
+    log_info("initFirstMap Hook: Avatar Snapshot Ran: _this->AC82_1.unknown1  = _this->AC82.unknown1;");
+    _this->AC82_1.unknown2  = _this->AC82.unknown2;
+    log_info("initFirstMap Hook: Avatar Snapshot Ran: _this->AC82_1.unknown2  = _this->AC82.unknown2;");
+    _this->AC82_1.unknown3  = _this->AC82.unknown3;
+    log_info("initFirstMap Hook: Avatar Snapshot Ran: _this->AC82_1.unknown3  = _this->AC82.unknown3;");
     _this->AC82_1.kit_index = _this->AC82.kit_index;
+    log_info("initFirstMap Hook: Avatar Snapshot Ran: _this->AC82_1.kit_index = _this->AC82.kit_index;");
+    s_avatar_internal_copy(&_this->AC82_1.avatarData.internal, &_this->AC82.avatarData.internal);
+    log_info("initFirstMap Hook: Avatar Snapshot Ran: s_avatar_internal_copy(&_this->AC82_1.avatarData.internal, &_this->AC82.avatarData.internal);");
+    s_avatar_vectors_copy(&_this->AC82_1.avatarData.begin, &_this->AC82.avatarData.begin);
+    log_info("initFirstMap Hook: Avatar Snapshot Ran: s_avatar_vectors_copy(&_this->AC82_1.avatarData.begin, &_this->AC82.avatarData.begin);");
 
-    //ASI::AddrOf(0x1759e0)
-    //GdAvatarCopyInternal(&_this->AC82_1.avatarData.internal, &_this->AC82.avatarData.internal);
-    //ASI::AddrOf(0x175860)
-    //AC82CopyVectors(_this->AC82_1.avatarData.begin, _this->AC82.avatarData.begin);
-
-    if (skip_tutorial)
+    log_info("initFirstMap Hook: Check for Custom Campaign");
+    /* -- active custom campaign? -- */
+    const SFSF_CampaignDef *custom = NULL;
+    if (g_active_custom_campaign >= 0 &&
+        g_active_custom_campaign < (int32_t)g_campaign_count)
     {
+        custom = &g_campaigns[g_active_custom_campaign];
+    }
+
+     /* -- folder + start map: selected FIRST, tutorial branch only overrides
+     *    the map NAME (vanilla order - vanilla tutorials live in their own
+     *    campaign's folder, e.g. map\Campaign2\tutorial.map). -- */
+    if (custom != NULL)
+    {
+        log_info("initFirstMap Hook: Attempting to load Custom Campaign");
+        char folder[160];
+        snprintf(folder, sizeof(folder), "map\\%s\\", custom->campaign_folder);
+        uiAPI.SFStringConstructor_char(&campagn_path, folder);
+        uiAPI.SFStringConstructor_char(&intial_map_name, custom->start_map);
+
+        /* No tutorial map defined: force a direct start even if the player
+         * left the tutorial checkbox on. */
+        if (!skip_tutorial && custom->tutorial_map[0] == '\0')
+        {
+            skip_tutorial = 1;
+        }
+        log_info("Campaign '%s': maps from %s", custom->name, folder);
+    }
+    else
+    {
+        log_info("initFirstMap Hook: Not Custom - Deverting to Vanilla Flow");
         switch (campaign_id)
         {
-            case 0:
-            {
-                uiAPI.SFStringConstructor_char(&campagn_path, "map\\Campaign\\");
-                uiAPI.SFStringConstructor_wchar(&intial_map_name,L"000_Greyfell");
-                break;
-            }
             case 1:
-            {
-                uiAPI.SFStringConstructor_char(&campagn_path, "map\\Campaign2\\");
+                log_info("initFirstMap Hook: Engine Type 1");
+                uiAPI.SFStringConstructor_char(&campagn_path, "map\\campaign2\\");
                 uiAPI.SFStringConstructor_wchar(&intial_map_name, L"P101_Mirraw_Thur");
                 break;
-            }
             case 2:
-            {
-                uiAPI.SFStringConstructor_char(&campagn_path, "map\\Campaign3\\");
+                log_info("initFirstMap Hook: Engine Type 2");
+                uiAPI.SFStringConstructor_char(&campagn_path, "map\\campaign3\\");
                 if (is_shadowblade)
                 {
                     uiAPI.SFStringConstructor_wchar(&intial_map_name, L"P202_City_Of_Souls");
@@ -157,55 +192,93 @@ void __thiscall initFirstMap (SF_GameInfo *_this, uint32_t skip_tutorial, uint8_
                     uiAPI.SFStringConstructor_wchar(&intial_map_name, L"P201_Blackwater_Coast");
                 }
                 break;
-            }
+            case 0:
             default:
-                //insert campaign type selecton code here
+                log_info("initFirstMap Hook: Engine Type 0");
+                /* default falls back to Order so the strings are ALWAYS
+                 * constructed - the epilogue destructors depend on it. */
+                if (campaign_id > 2)
+                {
+                    log_error("initFirstMap: unexpected campaign_id %u, falling back to Order",
+                              campaign_id);
+                }
+                uiAPI.SFStringConstructor_char(&campagn_path, "map\\campaign\\");
+                uiAPI.SFStringConstructor_wchar(&intial_map_name, L"000_Greyfell");
                 break;
         }
-        uiAPI.SFStringDeepCopy(&_this->template_name, &_this->starter_kit_name);
+    }
 
-        _this->start_mode = 2;
+    log_info("initFirstMap Hook: Check Tutorial");
+    if (skip_tutorial)
+    {
+        log_info("initFirstMap Hook: Skipping Tutorial");
+        /* Direct start: Assign player their skill-derived starter kit (armor equipment ect). */
+        uiAPI.SFStringDeepCopy(&_this->template_name, &_this->starter_kit_name);
+        log_info("initFirstMap Hook; setting GameInfo");
+        _this->start_mode  = 2;
         _this->is_tutorial = 0;
     }
     else
     {
-        uiAPI.SFStringConstructor_char(&campagn_path, "map\\Campaign\\");
-        uiAPI.SFStringConstructor_wchar(&intial_map_name, L"tutorial");
+        log_info("initFirstMap Hook: Loading Tutorial");
+        /* Tutorial: swap the map NAME (folder already selected above),
+         * fixed tutorial figure template. */
+        uiAPI.SFStringDestructor(&intial_map_name);
+        if (custom != NULL)
+        {
+            uiAPI.SFStringConstructor_char(&intial_map_name, custom->tutorial_map);
+        }
+        else
+        {
+            uiAPI.SFStringConstructor_wchar(&intial_map_name, L"tutorial");
+        }
+
+        log_info("initFirstMap Hook: Tutorial Kit Load");
         SF_String tutorial_template;
         SF_String tutorial_kit_name;
         SF_String tutorial_template_path;
         uiAPI.SFStringConstructor_wchar(&tutorial_template, L"FT_Tutorial.des");
         uiAPI.SFStringConstructor_char(&tutorial_template_path, "figure_template\\");
-
-
         uiAPI.SFStringConstructor(&tutorial_kit_name);
         uiAPI.SFStringConcat(&tutorial_kit_name, &tutorial_template_path);
         uiAPI.SFStringConcat(&tutorial_kit_name, &tutorial_template);
-
         uiAPI.SFStringDeepCopy(&_this->template_name, &tutorial_kit_name);
-
         uiAPI.SFStringDestructor(&tutorial_kit_name);
         uiAPI.SFStringDestructor(&tutorial_template);
         uiAPI.SFStringDestructor(&tutorial_template_path);
-        _this->start_mode = 1;
+
+        log_info("initFirstMap Hook: Updating GameInfo");
+        _this->start_mode  = 1;
         _this->is_tutorial = 1;
     }
 
+    log_info("initFirstMap Hook: File Name Settings");
+    /* -- filename = <folder><map>.map + branch-invariant state -- */
     uiAPI.SFStringConcat(&campagn_path, &intial_map_name);
     uiAPI.SFStringConcat(&campagn_path, &dot_map);
     uiAPI.SFStringDeepCopy(&_this->filename, &campagn_path);
     _this->unknown_0xf0 = 1;
     _this->unknown_0xf4 = 3;
 
+    log_info("initFirstMap Hook: Cleanup");
     uiAPI.SFStringDestructor(&default_template);
     uiAPI.SFStringDestructor(&template_path);
     uiAPI.SFStringDestructor(&full_template);
     uiAPI.SFStringDestructor(&dot_map);
     uiAPI.SFStringDestructor(&campagn_path);
     uiAPI.SFStringDestructor(&intial_map_name);
-
 }
 
+static void install_initfirstmap_hook()
+{
+    uint32_t entry = ASI::AddrOf(0x176040);
+    ASI::MemoryRegion mreg(entry, 5);
+    ASI::BeginRewrite(mreg);
+    *(unsigned char *)entry = 0xE9;
+    *(int *)(entry + 1) = (int)(&initFirstMap) - (int)(entry + 5);
+    ASI::EndRewrite(mreg);
+    log_info("initFirstMap replacement hooked (entry JMP)");
+}
 
 /* Originals captured before the first swap so they can be restored verbatim. */
 static SF_String s_orig_campaign2;
@@ -239,13 +312,17 @@ static void swap_save_globals(const SFSF_CampaignDef *def)
     capture_save_globals();
 
     char dir[192];
-    snprintf(dir, sizeof(dir), "save\\campaigns\\%s\\", def->save_folder);
+    snprintf(dir, sizeof(dir), "save\\campaigns\\%s\\", def->campaign_folder);
 
     SF_String sf_dir;
     uiAPI.SFStringConstructor_char(&sf_dir, dir);
 
     /* All three constants point at the SAME folder while a custom campaign is
-     * active e.g it means things should be redirected regardless of which constant it reads. */
+     * active e.g it means things should be redirected regardless of which constant it reads.
+
+     System may need to be changed if we figure out proper custom campaign type (engine_type atm) but we'd need to
+     call the same setup functions that the other camapgins do for the menu / ui systems
+     */
     uiAPI.SFStringCopy(s_g_save_campaign2, &sf_dir);
     uiAPI.SFStringCopy(s_g_save_campaign3, &sf_dir);
     uiAPI.SFStringCopy(s_g_save_base, &sf_dir);
@@ -255,7 +332,7 @@ static void swap_save_globals(const SFSF_CampaignDef *def)
     _mkdir("save");
     _mkdir("save\\campaigns");
     char full[256];
-    snprintf(full, sizeof(full), "save\\campaigns\\%s", def->save_folder);
+    snprintf(full, sizeof(full), "save\\campaigns\\%s", def->campaign_folder);
     _mkdir(full);
 
     log_info("Save dirs redirected to %s", dir);
@@ -309,7 +386,7 @@ SF_String * __stdcall hooked_getSavePath(SF_String *out, int campaign_type)
         g_active_custom_campaign < (int32_t)g_campaign_count)
     {
         snprintf(custom_suffix, sizeof(custom_suffix), "save\\campaigns\\%s\\",
-                 g_campaigns[g_active_custom_campaign].save_folder);
+                 g_campaigns[g_active_custom_campaign].campaign_folder);
         suffix = custom_suffix;
     }
     else if (campaign_type == 1)
@@ -344,51 +421,12 @@ static void getsavepath_hook()
 }
 
 /**
- * Replaces CALL PlayCampaignIntroVideo at the end of PrepareNewGame's
- * new-game path (result codes 0/2). quick hacky way to see if we can override map directly.
+ * Replaces CALL PlayCampaignIntroVideo at the end of PrepareNewGame
  */
 void __fastcall hooked_play_campaign_intro(CAppMenu *_this)
 {
-    if (g_active_custom_campaign >= 0 &&
-        g_active_custom_campaign < (int32_t)g_campaign_count)
-    {
-        const SFSF_CampaignDef *def = &g_campaigns[g_active_custom_campaign];
-        SF_GameInfo *gi = &_this->CAppMenu_data.game_info;
-
-        int tutorial_chosen = (gi->start_mode == 1);
-
-        char map_path[128];
-        SF_String sf_map_path;
-
-        if (tutorial_chosen && def->tutorial_map[0] != '\0')
-        {
-            /* Campaign provides a tutorial: swap only the map, keep the
-             * vanilla tutorial state (FT_Tutorial.des, start_mode 1,
-             * is_tutorial 1). */
-            log_info("Campaign '%s': custom tutorial map '%s'",
-                     def->name, def->tutorial_map);
-            snprintf(map_path, sizeof(map_path), "map\\%s.map", def->tutorial_map);
-            uiAPI.SFStringConstructor_char(&sf_map_path, map_path);
-            uiAPI.SFStringCopy(&gi->filename, &sf_map_path);
-            uiAPI.SFStringDestructor(&sf_map_path);
-        }
-        else
-        {
-            /* No tutorial (or checkbox off): force the complete direct-start
-             * configuration from initFirstMap's else-branch. */
-            log_info("Campaign '%s': start map '%s' (direct start)",
-                     def->name, def->start_map);
-            snprintf(map_path, sizeof(map_path), "map\\%s\\%s.map", def->name, def->start_map);
-            uiAPI.SFStringConstructor_char(&sf_map_path, map_path);
-            uiAPI.SFStringCopy(&gi->filename, &sf_map_path);
-            uiAPI.SFStringDestructor(&sf_map_path);
-            //bind position missing TODO
-            gi->start_mode = 2;
-            uiAPI.SFStringCopy(&gi->template_name, &gi->starter_kit_name);
-            gi->is_tutorial = 0;
-        }
-    }
-
+    // keeping it hooked, but we just essentially jump right back for now
+    // Might be useful for custom videos, or may not be needed at all
     s_play_campaign_intro(_this);
 }
 
@@ -440,8 +478,6 @@ static void campaign_launch_flow(int32_t campaign_index)
     s_enter_campaign_flow(app_menu, 1);
 }
 
-/* |-========== Campaign screen ==========-| */
-
 static bool s_screen_exists = false;
 static bool s_screen_visible = false;
 static CMnuContainer *s_campaign_screen = NULL;
@@ -465,6 +501,9 @@ static void close_campaign_screen_callback(CMnuSmpButton *button)
     uiAPI.setContainerVisible(s_campaign_screen, false, 0);
     s_screen_visible = false;
 }
+
+// Has same issues as mod menu, it works fine on cold boot, but once in game then back out, causes crash
+// likely bad methodology on how we initalize the data
 
 void __thiscall show_custom_campaign_screen(CMnuSmpButton *_this)
 {

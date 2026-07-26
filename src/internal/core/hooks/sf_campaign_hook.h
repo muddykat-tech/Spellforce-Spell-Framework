@@ -17,18 +17,18 @@
 
 typedef struct __attribute__((packed))
 {
-    char name[64];          /**< Shown on the campaign button */
-    char description[256];  /**< For the right-hand detail panel */
-    char start_map[64];     /**< Map name WITHOUT path/extension, e.g. "mycampaign" */
-    char tutorial_map[64];  /**< Optional tutorial map. */
-    char save_folder[64];   /**< Folder for save separation and map loading, may need rename, e.g. "mycampaign" */
-    char intro_video[64];   /**< Optional: "videos\\myintro" - empty = engine_type
+    char name[64];            /**< Shown on the campaign button */
+    char description[256];    /**< For the right-hand detail panel */
+    char start_map[64];       /**< Map name WITHOUT path/extension, e.g. "mycampaign" */
+    char tutorial_map[64];    /**< Optional tutorial map. */
+    char campaign_folder[64]; /**< Folder for save separation and map loading, may need rename, e.g. "mycampaign" */
+    char intro_video[64];     /**< Optional: "videos\\myintro" - empty = engine_type
                                  default. NOT implemented yet (needs CUiVideo replication of PlayCampaignIntroVideo). */
-    uint32_t engine_type;   /**< 0/1/2 - vanilla campaign to masquerade as.
+    uint32_t engine_type;     /**< 0/1/2 - vanilla campaign to masquerade as.
                                  Avoid 2 unless SotP avatar rules are wanted.
                                  it exposes result case 9 (BoW import with
                                  hardcoded P201/P202 maps so we'd need rewrite to fix). */
-    uint32_t avatar_type;   /**< GdAvatar field should continue past a GameInfo reset in PrepareNewGame and is
+    uint32_t avatar_type;     /**< GdAvatar field should continue past a GameInfo reset in PrepareNewGame and is
                                  serialized into saves). Vanilla: 3 = SF1,
                                  4 = AddOn1, 7 = AddOn2, 1/5 = multiplayer.
                                  Custom campaigns: Currently setup to use 8 + campaign_index so
@@ -37,6 +37,10 @@ typedef struct __attribute__((packed))
                                  */
 } SFSF_CampaignDef;
 
+typedef GdAvatarInternal *(__thiscall *avatarInternalCopy_ptr)(GdAvatarInternal *dest,
+                                                               GdAvatarInternal *src);
+
+typedef void (__thiscall *avatarVectorsCopy_ptr)(void *dest_vectors, void *src_vectors);
 typedef void (__thiscall *gameInfoSetAvatarType_ptr)(SF_GameInfo *_this, uint16_t avatar_type);
 typedef void (__thiscall *gameInfoSetMapPathFull_ptr)(SF_GameInfo *_this, SF_String *map_path);
 typedef void (__thiscall *appMenuEnterCampaignFlow_ptr)(CAppMenu *_this, uint32_t param_1);

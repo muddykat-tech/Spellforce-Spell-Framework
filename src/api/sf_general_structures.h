@@ -1409,7 +1409,8 @@ typedef struct __attribute__((packed))
     uint32_t unknown;
     uint8_t level;
     wchar_t name[40];
-    uint16_t unknown2[3];
+    uint32_t unknown_0x55;
+    uint16_t unknown2[2];
 
     SF_Coord bind_pos;
     SF_Coord avatar_pos;
