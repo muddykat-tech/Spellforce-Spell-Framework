@@ -41,7 +41,6 @@ static screenSetHint_ptr        pn_screen_set_hint;
 static cfgCtor_ptr              pn_cfg_ctor;
 static cfgDtor_ptr              pn_cfg_dtor;
 static cfgSetString_ptr         pn_cfg_set_string;
-static preloadGetU32_ptr        pn_preload_get_kit;
 static preloadGetU32_ptr        pn_preload_get_kit_index;
 
 /* last-played globals best guesses */

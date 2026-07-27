@@ -1462,7 +1462,6 @@ void dump_offsets (CAppSession *_this)
     log_info("Map name %ls", world->map_name.raw_data);
 }
 
-typedef SF_String *(__thiscall *getSavePath_ptr)(void *_this, SF_String *input,int campaign_type);
 typedef void (__thiscall *createSplashScreen_ptr)(CAppMenu *_this, CMnuContainer **param_1, SF_String *param_2);
 typedef void *(__thiscall *AC57_Init_ptr)(void *_this, FileWrapper *fileWrapper);
 typedef void (__thiscall *AC57_Dispose_ptr)(void *_this);
@@ -1481,7 +1480,6 @@ AC57_Dispose_ptr AC57_Dispose;
 FileWrapperClose_ptr FileWrapperInit;
 
 createSplashScreen_ptr createSplashScreen;
-getSavePath_ptr getSavePath;
 
 void CreateSplashScreenHelper (CAppMenu *_this, CMnuContainer **param_1, SF_String *param_2, SF_String *map_name)
 {
@@ -1703,7 +1701,6 @@ void initialize_vanilla_fix_hooks()
     onFigureBattleEnd = (onFigureBattleEnd_ptr)(ASI::AddrOf(0x2f471a));
 
     createSplashScreen = (createSplashScreen_ptr)(ASI::AddrOf(0x18e440));
-    getSavePath = (getSavePath_ptr)(ASI::AddrOf(0x1b89d0));
     DStringConstructor_char = (DStringConstructor_char_ptr)(ASI::AddrOf(0x176920));
     FileWrapperOpen = (FileWrapperOpen_ptr)(ASI::AddrOf(0x1e3920));
     FileWrapperClose = (FileWrapperClose_ptr)(ASI::AddrOf(0x1e2dc0));

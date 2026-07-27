@@ -149,7 +149,9 @@ SF_String * getSavePath(SF_String *output, uint32_t campaign_type)
                 custom = &g_campaigns[custom_idx];
             }
             SF_String campaign_path;
-            uiAPI.SFStringConstructor_char(&campaign_path, custom->campaign_folder);
+            char path[1024]; //TODO replace with sfstring for better compatabilty with long desktop paths
+            snprintf(path, sizeof(path), "%s\\", custom->campaign_folder);
+            uiAPI.SFStringConstructor_char(&campaign_path, path);
             uiAPI.SFStringConcat(output, &campaign_path);
             uiAPI.SFStringDestructor(&campaign_path);
             break;
@@ -324,7 +326,7 @@ void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t
                  * constructed - the epilogue destructors depend on it. */
                 if (campaign_id > 2)
                 {
-                    log_error("initFirstMap: Located Custom Campaign ID", campaign_id);
+                    log_info("initFirstMap: Located Custom Campaign ID %d", campaign_id);
                     char path[128];
                     snprintf(path, sizeof(path), "map\\CustomCampaigns\\%s", custom->campaign_folder);
                     uiAPI.SFStringConstructor_char(&campagn_path, path);
