@@ -104,7 +104,7 @@ int32_t register_campaign(const SFSF_CampaignDef *def)
 
 /* Un'Schtalch's code block - updated and reworked a bit for you ~Muddykat*/
 //TODO -- rename into getSavePath later on.
-SF_String * getSavePath(SF_String *output, uint32_t campaign_type)
+SF_String * __thiscall getSavePath(CAppSession *_this, SF_String *output, uint32_t campaign_type)
 {
     char *paths[3];
     SF_String base_save;
@@ -188,7 +188,7 @@ void __thiscall loadQuickSave(CAppMenu *_this, uint32_t unknown)
     uiAPI.SFStringConstructor_wchar(&quicksave, L"QUICKSAVE.SAV");
     uiAPI.SFStringConcat(&avatar_name, &tilda);
     uiAPI.SFStringConcat(&avatar_name, &quicksave);
-    getSavePath(&base_path, _this->CAppMenu_data.campaign_type);
+    getSavePath(session, &base_path, _this->CAppMenu_data.campaign_type);
     log_info("Base path %ls", base_path.raw_data);
 
     uiAPI.SFStringConcat(&base_path, &avatar_name);

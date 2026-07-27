@@ -176,6 +176,8 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, void *preload)
 {
     log_info("Prepare new game");
     SF_GameInfo *gi = &_this->CAppMenu_data.game_info;
+
+    log_info("Start Pointer walk");
     // some cursed pointer walking for now
     uint32_t result = pn_get_result_code(preload);
     *(uint32_t *)((uint8_t *)&_this->CAppMenu_data + 0x158) = result;
@@ -185,8 +187,12 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, void *preload)
      * +0x10+0xd2 offset asm-verified. */
     uint16_t avatar_type = *(uint16_t *)((uint8_t *)gi + 0x10 + 0xd2);
     pn_gi_reset(gi, 0);
+
+    log_info("Shovel out the avatar type");
     uint8_t av_buf1[0x100]; uint8_t av_buf2[0x100];
     GdAvatarData *av1 = pn_preload_get_avatar(preload, av_buf1);
+
+    log_info("get av2 and vec data");
     /* first u16 of the vector's first element -> lands in AC82+0 via setAvatar
      * (asm-confirmed destination). Null-guarded: vanilla derefs blindly. */
     void *vec_data = *(void **)((uint8_t *)av1 + 0xD4);
@@ -195,10 +201,13 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, void *preload)
     pn_gi_set_avatar(gi, av2, first_elem_u16);
     s_gameinfo_set_avatar_type(gi, avatar_type);
 
+
+    log_info("skills?");
     uint8_t skill    = pn_gi_get_skill(gi);
     uint8_t subskill = pn_gi_get_subskill(gi);
 
-    /* splash hint cleanup (cosmetic; conventions inferred) */
+
+    log_info("Splash screen");
     void *splash = _this->CAppMenu_data.splash_screen;
     int hint = pn_screen_get_hint(splash);
     if (hint != 0)
@@ -206,8 +215,12 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, void *preload)
         pn_screen_delete_control(splash, pn_hint_resolve(pn_screen_get_hint(splash)));
         pn_screen_set_hint(splash, 0);
     }
+
+    log_info("menu hint");
     CreateMnuHintExt(_this);
 
+
+    log_info("custom campaign type");
     int ct = _this->CAppMenu_data.campaign_type;   /* REAL type; asm: CAppMenu+0x49C */
     int custom_idx = ct - SFSF_CAMPAIGN_TYPE_BASE;
     bool is_custom = (custom_idx >= 0 && custom_idx < (int32_t)g_campaign_count);
@@ -216,16 +229,20 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, void *preload)
     SF_String dot_map;
     uiAPI.SFStringConstructor_char(&dot_map, ".map");
 
+    log_info("Switch game type now");
     switch (result)
     {
     case 0: /* new game, created avatar */
     case 2: /* new game, premade avatar */
     {
+        log_info("case 0 or 2");
         uint32_t skip_tut  = pn_preload_get_skip_tutorial(preload); /* engine forces skip for coop / campaign!=0 */
         uint8_t  kit_index = (uint8_t)pn_preload_get_kit_index(preload);
 
         if (!is_custom && ct == 2)
         {
+
+            log_info("Campaign Type 2");
             uint32_t side = pn_preload_get_sotp_side(preload);
             initFirstMap(gi, skip_tut & 0xff, skill, subskill,
                          pn_preload_get_campaign_type(preload), (bool)(uint8_t)side);
@@ -243,13 +260,16 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, void *preload)
         }
         else
         {
+
+            log_info("Campaign Type 0");
             initFirstMap(gi, skip_tut & 0xff, skill, subskill,
                          pn_preload_get_campaign_type(preload), false);
             pn_gi_set_premade_kit(gi, result == 2, kit_index);
             pn_gi_apply_premade_kit(gi, result == 2, kit_index);
         }
+
+        log_info("Final load");
         uiAPI.SFStringCopy((SF_String *)((uint8_t *)&_this->CAppMenu_data + 0xac), &dot_map);
-        /* intro seam lives here now (custom intro_video hooks in later) */
         s_play_campaign_intro(_this);
         break;
     }
@@ -257,6 +277,8 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, void *preload)
     case 1: /* name conflict paths - reset to starter kit + feedback dialog */
     case 3:
     {
+
+        log_info("case 1 || 3");
         pn_gi_starterkit_reset(gi, skill, subskill);
         uint8_t kit_index = (uint8_t)pn_preload_get_kit_index(preload);
         pn_gi_set_premade_kit(gi, result == 3, kit_index);
@@ -269,6 +291,8 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, void *preload)
 
     case 6: /* load selected save */
     {
+
+        log_info("Build Load Path");
         SF_String path;
         build_load_path(_this, preload, &path);
         log_info("Loading save: %ls", path.raw_data);
@@ -283,6 +307,7 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, void *preload)
 
     case 7: /* delete save */
     {
+        log_info("delete save");
         SF_String slot, dot_sav;
         uiAPI.SFStringConstructor(&slot);
         pn_preload_get_slot_name(preload, &slot);
@@ -299,6 +324,7 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, void *preload)
 
     case 8: /* free game with template */
     {
+        log_info("free game");
         pn_gi_set_flag_a(gi, 1);
         pn_gi_set_flag_b(gi, 1);
         pn_gi_set_game_mode(gi, 3);
@@ -332,6 +358,32 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, void *preload)
         break;
 
     default:
+        log_info("default campaign type? %d", result);
+        log_info("Do it anyway");
+            uint32_t skip_tut  = pn_preload_get_skip_tutorial(preload);
+            uint8_t  kit_index = (uint8_t)pn_preload_get_kit_index(preload);
+            uint32_t side = pn_preload_get_sotp_side(preload);
+
+             log_info("Do it anyway 2");
+            initFirstMap(gi, skip_tut & 0xff, skill, subskill,
+                         pn_preload_get_campaign_type(preload), (bool)(uint8_t)side);
+                          log_info("Do it anyway3 ");
+            pn_gi_set_premade_kit(gi, result == 2, kit_index);
+            /* PDC3_<kit+1><p|s>.des predefined template */
+            char t[80];
+            uint8_t kit = pn_gi_get_kit_index(gi);
+            snprintf(t, sizeof(t), "figure_template\\predefined\\PDC3_%02d%s.des",
+                     (kit & 0xff) + 1, side == 0 ? "p" : "s");
+            SF_String tmpl;
+             log_info("Do it anyway 4");
+            uiAPI.SFStringConstructor_char(&tmpl, t);
+             log_info("Do it anyway 5");
+            pn_gi_set_start_mode2(gi, 2);
+             log_info("Do it anyway 6");
+            pn_gi_set_template_name(gi, &tmpl);
+             log_info("Do it anyway 7");
+            uiAPI.SFStringDestructor(&tmpl);
+
         handled = false;
         break;
     }
