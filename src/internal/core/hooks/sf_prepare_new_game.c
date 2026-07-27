@@ -103,7 +103,7 @@ void initialize_preparenewgame_rewrite()
 }
 
 /* "<base><dir><avatar>~<slot>.sav" for case 6. */
-static void build_load_path(CAppMenu *_this, void *preload, SF_String *out)
+void build_load_path(CAppMenu *_this, void *preload, SF_String *out)
 {
     SF_String base;
     s_get_base_path_string(&base);
@@ -145,7 +145,7 @@ static void build_load_path(CAppMenu *_this, void *preload, SF_String *out)
 }
 
 /* "last played" epilogue - vanilla types; custom campaigns skip this for now */
-static void write_last_played(CAppMenu *_this, void *preload, bool is_custom)
+void write_last_played(CAppMenu *_this, void *preload, bool is_custom)
 {
     if (is_custom) { return; }
 
@@ -351,7 +351,7 @@ void install_preparenewgame_hook()
     *(unsigned char *)(ASI::AddrOf(0x195e10)) = 0xE9;
     *(int *)(ASI::AddrOf(0x195e11)) = (int)(&hooked_prepare_new_game) - (int)(ASI::AddrOf(0x195e15));
     ASI::EndRewrite(mreg);
-    log_info("PrepareNewGame replacement hooked (entry JMP @ 0x195e10)");
+    log_info("PrepareNewGame replacement hooked (entry JMP @ 0x595e10)");
 }
 
 /** @} */

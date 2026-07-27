@@ -26,7 +26,6 @@ static void hook_getsavepath();
 static avatarInternalCopy_ptr s_avatar_internal_copy;
 static avatarVectorsCopy_ptr s_avatar_vectors_copy;
 static void hook_initfirstmap();
-static SF_String g_sfsf_load_dir;   /* "save\" when idle; "save\campaigns\<x>\" when active */
 static void set_load_dir_for_campaign(const SFSF_CampaignDef *);
 
 // used in prepare new game
@@ -63,7 +62,6 @@ void initialize_campaign_hooks()
     s_avatar_internal_copy = (avatarInternalCopy_ptr)(ASI::AddrOf(0x1759e0));
     s_avatar_vectors_copy  = (avatarVectorsCopy_ptr)(ASI::AddrOf(0x175860));
 
-    uiAPI.SFStringConstructor_char(&g_sfsf_load_dir, "save\\");
     hook_initfirstmap();
     hook_getsavepath();
 
@@ -403,7 +401,7 @@ void hook_qs_load()
     log_info("QuickSave Load replacement hooked (entry JMP)");
 }
 
-static void hook_initfirstmap()
+void hook_initfirstmap()
 {
     ASI::MemoryRegion mreg(ASI::AddrOf(0x176040), 5);
     ASI::BeginRewrite(mreg);
@@ -476,13 +474,12 @@ static void hook_getsavepath()
     ASI::MemoryRegion mreg(ASI::AddrOf(0x1b89d0), 5);
     ASI::BeginRewrite(mreg);
     *(unsigned char *)(ASI::AddrOf(0x1b89d0)) = 0xE9; /* JMP */
-    *(int *)(ASI::AddrOf(0x1b89d1)) =
-        (int)(&getSavePath) - ASI::AddrOf(0x1b89d5);
+    *(int *)(ASI::AddrOf(0x1b89d1)) = (int)(&getSavePath) - ASI::AddrOf(0x1b89d5);
     ASI::EndRewrite(mreg);
     log_info("getSavePath replacement hooked");
 }
 
-static void stop_intro_video(CAppMenu *app_menu)
+void stop_intro_video(CAppMenu *app_menu)
 {
     SF_CUiVideoSequence *seq =
         (SF_CUiVideoSequence *)app_menu->CAppMenu_data.CUiVideoSequence_ptr;
@@ -493,7 +490,7 @@ static void stop_intro_video(CAppMenu *app_menu)
     }
 }
 
-static void ensure_campaign_dirs(const SFSF_CampaignDef *def)
+void ensure_campaign_dirs(const SFSF_CampaignDef *def)
 {
     SF_String base;
     s_get_base_path_string(&base);          /* Documents\<GameFolder>\ */
@@ -518,18 +515,9 @@ static void ensure_campaign_dirs(const SFSF_CampaignDef *def)
 
 static bool s_load_dir_constructed = false;
 
-static void set_load_dir(const char *dir)
+void set_load_dir(const char *dir)
 {
-    SF_String *tmp;
-    uiAPI.SFStringConstructor_char(tmp, dir);
-    if (!s_load_dir_constructed)
-    {
-        uiAPI.SFStringConstructor(&g_sfsf_load_dir);
-        s_load_dir_constructed = true;
-    }
 
-    uiAPI.SFStringCopy(&g_sfsf_load_dir, tmp);
-    uiAPI.SFStringDestructor(tmp);
 }
 
 /** Point the patched load-dir at a campaign's save folder, or back at
@@ -547,7 +535,7 @@ void set_load_dir_for_campaign(const SFSF_CampaignDef *def)
     log_info("Quickload dir -> %s", dir);
 }
 
-static void campaign_launch_flow(int32_t campaign_index)
+void campaign_launch_flow(int32_t campaign_index)
 {
     CAppMenu *app_menu = g_campaign_app_menu;
     const SFSF_CampaignDef *def = &g_campaigns[campaign_index];
@@ -590,7 +578,7 @@ void __thiscall on_campaign_selected(CMnuSmpButton *_this)
     log_error("Campaign button not found in registry");
 }
 
-static void close_campaign_screen_callback(CMnuSmpButton *button)
+void close_campaign_screen_callback(CMnuSmpButton *button)
 {
     uiAPI.setContainerVisible(s_campaign_screen, false, 0);
     s_screen_visible = false;
