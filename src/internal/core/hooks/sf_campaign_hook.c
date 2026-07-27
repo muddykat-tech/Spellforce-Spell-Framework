@@ -28,7 +28,6 @@ static avatarVectorsCopy_ptr s_avatar_vectors_copy;
 static void hook_initfirstmap();
 static SF_String g_sfsf_load_dir;   /* "save\" when idle; "save\campaigns\<x>\" when active */
 static void set_load_dir_for_campaign(const SFSF_CampaignDef *);
-static void patch_load_dir_ref();
 
 // used in prepare new game
 startGame_ptr s_start_game;
@@ -70,9 +69,6 @@ void initialize_campaign_hooks()
 
     initialize_preparenewgame_rewrite();
 
-    set_load_dir_for_campaign(NULL); //ensures default vanilla behavior - Replacement with actual rewrite
-    patch_load_dir_ref(); // Same here
-
     // TEST CAMPAIGN - remove once registration comes from the mod registry
     SFSF_CampaignDef test_campaign = {};
     strncpy(test_campaign.name,        "testcampaign",      sizeof(test_campaign.name) - 1);
@@ -109,8 +105,6 @@ int32_t register_campaign(const SFSF_CampaignDef *def)
 }
 
 /* Un'Schtalch's code block - updated and reworked a bit for you ~Muddykat*/
-
-
 //TODO -- rename into getSavePath later on.
 SF_String * getSavePath_1(SF_String *output, uint32_t campaign_type)
 {
@@ -411,31 +405,12 @@ void hook_qs_load()
 
 static void hook_initfirstmap()
 {
-    //FIXME
-    //Mate, optimizaton MIGHT kill this code. We have tried this already for stats overflow fix, please, DONT ~Un'Schtalch
-    uint32_t entry = ASI::AddrOf(0x176040);
-    ASI::MemoryRegion mreg(entry, 5);
+    ASI::MemoryRegion mreg(ASI::AddrOf(0x176040), 5);
     ASI::BeginRewrite(mreg);
-    *(unsigned char *)entry = 0xE9;
-    *(int *)(entry + 1) = (int)(&initFirstMap) - (int)(entry + 5);
+    *(unsigned char *)(ASI::AddrOf(0x176040)) = 0xE9;
+    *(int *)(ASI::AddrOf(0x176041)) = (int)(&initFirstMap) - (int)(ASI::AddrOf(0x176045));
     ASI::EndRewrite(mreg);
     log_info("initFirstMap replacement hooked (entry JMP)");
-}
-
-// basically hacky way to "override" quick save location.
-// because campaign switch is checking for type == 1 {} else {if(type == 2){} basic behavior here }
-// we override the string pointer to ours.
-// e.g PUSH SF_String_save is now PUSH SFSF_Load_dir
-// will this work... maybe
-static void patch_load_dir_ref()
-{
-    // uint32_t site = ASI::AddrOf(0x185d3e);
-    // ASI::MemoryRegion mreg(site, 5);
-    // ASI::BeginRewrite(mreg);
-    // *(unsigned char *)site = 0x68; //push should be unchanged essentially
-    // *(int *)(site + 1) = (int)(&g_sfsf_load_dir) - (int) (site+5);
-    // ASI::EndRewrite(mreg);
-    // log_info("Hacky Patch for save location");
 }
 
 void campaign_hook_on_main_menu(CAppMenu *app_menu)
@@ -545,16 +520,16 @@ static bool s_load_dir_constructed = false;
 
 static void set_load_dir(const char *dir)
 {
-    SF_String tmp;
-    uiAPI.SFStringConstructor_char(&tmp, dir);
+    SF_String *tmp;
+    uiAPI.SFStringConstructor_char(tmp, dir);
     if (!s_load_dir_constructed)
     {
         uiAPI.SFStringConstructor(&g_sfsf_load_dir);
         s_load_dir_constructed = true;
     }
 
-    uiAPI.SFStringCopy(&g_sfsf_load_dir, &tmp);
-    uiAPI.SFStringDestructor(&tmp);
+    uiAPI.SFStringCopy(&g_sfsf_load_dir, tmp);
+    uiAPI.SFStringDestructor(tmp);
 }
 
 /** Point the patched load-dir at a campaign's save folder, or back at

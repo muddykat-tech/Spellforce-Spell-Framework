@@ -68,7 +68,7 @@ void initialize_data_hooks()
 
     log_debug (DEBUG_HIGH, "| - Custom Campaign Hooks");
 
-    //initialize_campaign_hooks();// uncomment me to cause issue attaching
+    initialize_campaign_hooks();// uncomment me to cause issue attaching
     // I have officially fucked around and found out, I've no clue why it's doing this
     // I've probably fucked the heap or stack or some shit
     // I've triple checked my typedefs they SHOULD be fine, but if I'm suspect on these I've left some comments

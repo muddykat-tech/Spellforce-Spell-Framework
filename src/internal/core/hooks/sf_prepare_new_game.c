@@ -346,11 +346,10 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, void *preload)
 
 void install_preparenewgame_hook()
 {
-    uint32_t entry = ASI::AddrOf(0x195e10);
-    ASI::MemoryRegion mreg(entry, 5);
+    ASI::MemoryRegion mreg(ASI::AddrOf(0x195e10), 5);
     ASI::BeginRewrite(mreg);
-    *(unsigned char *)entry = 0xE9;
-    *(int *)(entry + 1) = (int)(&hooked_prepare_new_game) - (int)(entry + 5);
+    *(unsigned char *)(ASI::AddrOf(0x195e10)) = 0xE9;
+    *(int *)(ASI::AddrOf(0x195e11)) = (int)(&hooked_prepare_new_game) - (int)(ASI::AddrOf(0x195e15));
     ASI::EndRewrite(mreg);
     log_info("PrepareNewGame replacement hooked (entry JMP @ 0x195e10)");
 }
