@@ -8,7 +8,7 @@
 #include "sf_campaign_hook.h"
 #include "../sf_hooks.h"
 
-#include "sf_vanilla_fix_hook.h" // This is a dirty way to nab a few things from it without paying our dues
+#include "sf_prepare_new_game.h"
 
 #include <stdint.h>
 #include <stdio.h>
@@ -16,24 +16,25 @@
 #include <string.h>
 #include <direct.h>
 
-static gameInfoSetAvatarType_ptr s_gameinfo_set_avatar_type;
-static gameInfoSetMapPathFull_ptr s_gameinfo_set_map_path;
+static gameInfoSetMapPathFull_ptr s_gameinfo_set_map_path; // deprecated I think
 static appMenuEnterCampaignFlow_ptr s_enter_campaign_flow;
-static playCampaignIntro_ptr s_play_campaign_intro;
+
 static videoSequenceStop_ptr s_video_sequence_stop;
-static startGame_ptr s_start_game;
-static getBasePathString_ptr s_get_base_path_string;
 
-static SF_String *s_g_save_campaign2; /* "save\campaign2\" global */
-static SF_String *s_g_save_campaign3; /* "save\campaign3\" global */
-static SF_String *s_g_save_base;      /* "save\" global @ 0x923f60 */
-
-static void getsavepath_hook();
-static void install_intro_callsite_patch();
+static void hook_getsavepath();
 
 static avatarInternalCopy_ptr s_avatar_internal_copy;
 static avatarVectorsCopy_ptr  s_avatar_vectors_copy;
-static void install_initfirstmap_hook();
+static void hook_initfirstmap();
+static SF_String g_sfsf_load_dir;   /* "save\" when idle; "save\campaigns\<x>\" when active */
+static void set_load_dir_for_campaign(const SFSF_CampaignDef*);
+static void patch_load_dir_ref();
+
+// used in prepare new game
+startGame_ptr s_start_game;
+playCampaignIntro_ptr s_play_campaign_intro;
+getBasePathString_ptr s_get_base_path_string;
+gameInfoSetAvatarType_ptr s_gameinfo_set_avatar_type;
 
 void initialize_campaign_hooks()
 {
@@ -44,18 +45,19 @@ void initialize_campaign_hooks()
     s_start_game            = (startGame_ptr)(ASI::AddrOf(0x183560));
     s_get_base_path_string  = (getBasePathString_ptr)(ASI::AddrOf(0x61a700));
 
-    s_g_save_campaign2 = (SF_String *)(ASI::AddrOf(0x9242f0));
-    s_g_save_campaign3 = (SF_String *)(ASI::AddrOf(0x924580));
-    s_g_save_base      = (SF_String *)(ASI::AddrOf(0x923f60));
-
     s_gameinfo_set_avatar_type = (gameInfoSetAvatarType_ptr)(ASI::AddrOf(0x1a1a80));
 
     s_avatar_internal_copy = (avatarInternalCopy_ptr)(ASI::AddrOf(0x1759e0));
     s_avatar_vectors_copy  = (avatarVectorsCopy_ptr)(ASI::AddrOf(0x175860));
 
-    install_initfirstmap_hook();
-    install_intro_callsite_patch();
-    getsavepath_hook();
+    uiAPI.SFStringConstructor_char(&g_sfsf_load_dir, "save\\");
+    hook_initfirstmap();
+    hook_getsavepath();
+
+    initialize_preparenewgame_rewrite();
+
+    set_load_dir_for_campaign(NULL); //ensures default vanilla behavior - Replacement with actual rewrite
+    patch_load_dir_ref(); // Same here
 
     // TEST CAMPAIGN - remove once registration comes from the mod registry
     SFSF_CampaignDef test_campaign = {};
@@ -64,7 +66,6 @@ void initialize_campaign_hooks()
     strncpy(test_campaign.start_map,   "000_liannon",   sizeof(test_campaign.start_map) - 1);
     strncpy(test_campaign.campaign_folder, "testcampaign",      sizeof(test_campaign.campaign_folder) - 1);
     strncpy(test_campaign.tutorial_map, "",                 sizeof(test_campaign.tutorial_map) - 1);
-    test_campaign.engine_type = 0;   // masquerade as SF1. If we want custom campaign type we change this value.
     test_campaign.avatar_type = 8;   // 8 + campaign_index convention
     register_campaign(&test_campaign);
 }
@@ -81,15 +82,15 @@ int32_t register_campaign(const SFSF_CampaignDef *def)
         log_error("Campaign registry full or NULL definition");
         return -1;
     }
-    if (def->engine_type > 2)
-    {
-        log_error("Campaign '%s': engine_type must be 0..2 (vanilla masquerade)", def->name);
-        return -1;
-    }
+
     g_campaigns[g_campaign_count] = *def;
-    log_info("Registered campaign %u: %s (map: %s, saves: %s, engine_type: %u)",
-             g_campaign_count, def->name, def->start_map,
-             def->campaign_folder, def->engine_type);
+    if (g_campaigns[g_campaign_count].avatar_type == 0)
+        g_campaigns[g_campaign_count].avatar_type = 8 + g_campaign_count;
+
+    log_info("Registered campaign %u: %s (type %u, map: %s, saves: %s)",
+             g_campaign_count, def->name,
+             SFSF_CAMPAIGN_TYPE_BASE + g_campaign_count,
+             def->start_map, def->campaign_folder);
     return (int32_t)g_campaign_count++;
 }
 
@@ -145,10 +146,10 @@ void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t
     log_info("initFirstMap Hook: Check for Custom Campaign");
     /* -- active custom campaign? -- */
     const SFSF_CampaignDef *custom = NULL;
-    if (g_active_custom_campaign >= 0 &&
-        g_active_custom_campaign < (int32_t)g_campaign_count)
+    int custom_idx = (int)campaign_id - SFSF_CAMPAIGN_TYPE_BASE;
+    if (custom_idx >= 0 && custom_idx < (int32_t)g_campaign_count)
     {
-        custom = &g_campaigns[g_active_custom_campaign];
+        custom = &g_campaigns[custom_idx];
     }
 
      /* -- folder + start map: selected FIRST, tutorial branch only overrides
@@ -177,12 +178,12 @@ void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t
         {
             case 1:
                 log_info("initFirstMap Hook: Engine Type 1");
-                uiAPI.SFStringConstructor_char(&campagn_path, "map\\campaign2\\");
+                uiAPI.SFStringConstructor_char(&campagn_path, "map\\Campaign2\\");
                 uiAPI.SFStringConstructor_wchar(&intial_map_name, L"P101_Mirraw_Thur");
                 break;
             case 2:
                 log_info("initFirstMap Hook: Engine Type 2");
-                uiAPI.SFStringConstructor_char(&campagn_path, "map\\campaign3\\");
+                uiAPI.SFStringConstructor_char(&campagn_path, "map\\Campaign3\\");
                 if (is_shadowblade)
                 {
                     uiAPI.SFStringConstructor_wchar(&intial_map_name, L"P202_City_Of_Souls");
@@ -202,7 +203,7 @@ void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t
                     log_error("initFirstMap: unexpected campaign_id %u, falling back to Order",
                               campaign_id);
                 }
-                uiAPI.SFStringConstructor_char(&campagn_path, "map\\campaign\\");
+                uiAPI.SFStringConstructor_char(&campagn_path, "map\\Campaign\\");
                 uiAPI.SFStringConstructor_wchar(&intial_map_name, L"000_Greyfell");
                 break;
         }
@@ -269,7 +270,7 @@ void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t
     uiAPI.SFStringDestructor(&intial_map_name);
 }
 
-static void install_initfirstmap_hook()
+static void hook_initfirstmap()
 {
     uint32_t entry = ASI::AddrOf(0x176040);
     ASI::MemoryRegion mreg(entry, 5);
@@ -280,88 +281,33 @@ static void install_initfirstmap_hook()
     log_info("initFirstMap replacement hooked (entry JMP)");
 }
 
-/* Originals captured before the first swap so they can be restored verbatim. */
-static SF_String s_orig_campaign2;
-static SF_String s_orig_campaign3;
-static SF_String s_orig_base;
-static bool s_originals_captured = false;
-static bool s_globals_swapped = false;
-
-static void capture_save_globals()
+// basically hacky way to "override" quick save location.
+// because campaign switch is checking for type == 1 {} else {if(type == 2){} basic behavior here }
+// we override the string pointer to ours.
+// e.g PUSH SF_String_save is now PUSH SFSF_Load_dir
+// will this work... maybe
+static void patch_load_dir_ref()
 {
-    if (s_originals_captured || s_g_save_base == NULL)
-    {
-        return;
-    }
-    uiAPI.SFStringConstructor(&s_orig_campaign2);
-    uiAPI.SFStringConstructor(&s_orig_campaign3);
-    uiAPI.SFStringConstructor(&s_orig_base);
-    uiAPI.SFStringCopy(&s_orig_campaign2, s_g_save_campaign2);
-    uiAPI.SFStringCopy(&s_orig_campaign3, s_g_save_campaign3);
-    uiAPI.SFStringCopy(&s_orig_base, s_g_save_base);
-    s_originals_captured = true;
-}
-
-static void swap_save_globals(const SFSF_CampaignDef *def)
-{
-    if (s_g_save_base == NULL)
-    {
-        log_warning("SF_String_save address not set - save separation incomplete");
-        return;
-    }
-    capture_save_globals();
-
-    char dir[192];
-    snprintf(dir, sizeof(dir), "save\\campaigns\\%s\\", def->campaign_folder);
-
-    SF_String sf_dir;
-    uiAPI.SFStringConstructor_char(&sf_dir, dir);
-
-    /* All three constants point at the SAME folder while a custom campaign is
-     * active e.g it means things should be redirected regardless of which constant it reads.
-
-     System may need to be changed if we figure out proper custom campaign type (engine_type atm) but we'd need to
-     call the same setup functions that the other camapgins do for the menu / ui systems
-     */
-    uiAPI.SFStringCopy(s_g_save_campaign2, &sf_dir);
-    uiAPI.SFStringCopy(s_g_save_campaign3, &sf_dir);
-    uiAPI.SFStringCopy(s_g_save_base, &sf_dir);
-    uiAPI.SFStringDestructor(&sf_dir);
-    s_globals_swapped = true;
-
-    _mkdir("save");
-    _mkdir("save\\campaigns");
-    char full[256];
-    snprintf(full, sizeof(full), "save\\campaigns\\%s", def->campaign_folder);
-    _mkdir(full);
-
-    log_info("Save dirs redirected to %s", dir);
-}
-
-static void restore_save_globals()
-{
-    if (!s_globals_swapped || !s_originals_captured)
-    {
-        return;
-    }
-    uiAPI.SFStringCopy(s_g_save_campaign2, &s_orig_campaign2);
-    uiAPI.SFStringCopy(s_g_save_campaign3, &s_orig_campaign3);
-    uiAPI.SFStringCopy(s_g_save_base, &s_orig_base);
-    s_globals_swapped = false;
-    log_info("Save dirs restored to vanilla");
+    // uint32_t site = ASI::AddrOf(0x185d3e);
+    // ASI::MemoryRegion mreg(site, 5);
+    // ASI::BeginRewrite(mreg);
+    // *(unsigned char *)site = 0x68; //push should be unchanged essentially
+    // *(int *)(site + 1) = (int)(&g_sfsf_load_dir) - (int) (site+5);
+    // ASI::EndRewrite(mreg);
+    // log_info("Hacky Patch for save location");
 }
 
 void campaign_hook_on_main_menu(CAppMenu *app_menu)
 {
     g_campaign_app_menu = app_menu;
-    restore_save_globals();
     g_active_custom_campaign = -1;
+    set_load_dir_for_campaign(NULL);
 }
 
 /**
  * reimplementation of 0x1b89d0 + custom branch for custom campaigns ^_^
  */
-SF_String * __stdcall hooked_getSavePath(SF_String *out, int campaign_type)
+SF_String * __stdcall getSavePath(SF_String *out, int campaign_type)
 {
     SF_String base;
     s_get_base_path_string(&base);
@@ -382,25 +328,16 @@ SF_String * __stdcall hooked_getSavePath(SF_String *out, int campaign_type)
 
     const char *suffix;
     char custom_suffix[192];
-    if (g_active_custom_campaign >= 0 &&
-        g_active_custom_campaign < (int32_t)g_campaign_count)
+    int idx = campaign_type - SFSF_CAMPAIGN_TYPE_BASE;
+    if (idx >= 0 && idx < (int32_t)g_campaign_count)
     {
         snprintf(custom_suffix, sizeof(custom_suffix), "save\\campaigns\\%s\\",
-                 g_campaigns[g_active_custom_campaign].campaign_folder);
+                 g_campaigns[idx].campaign_folder);
         suffix = custom_suffix;
     }
-    else if (campaign_type == 1)
-    {
-        suffix = "save\\campaign2\\";
-    }
-    else if (campaign_type == 2)
-    {
-        suffix = "save\\campaign3\\";
-    }
-    else
-    {
-        suffix = "save\\";
-    }
+    else if (campaign_type == 1) { suffix = "save\\campaign2\\"; }
+    else if (campaign_type == 2) { suffix = "save\\campaign3\\"; }
+    else                          { suffix = "save\\"; }
 
     char full[768];
     snprintf(full, sizeof(full), "%s%s", narrow, suffix);
@@ -409,37 +346,15 @@ SF_String * __stdcall hooked_getSavePath(SF_String *out, int campaign_type)
     return out;
 }
 
-static void getsavepath_hook()
+static void hook_getsavepath()
 {
     ASI::MemoryRegion mreg(ASI::AddrOf(0x1b89d0), 5);
     ASI::BeginRewrite(mreg);
     *(unsigned char *)(ASI::AddrOf(0x1b89d0)) = 0xE9; /* JMP */
     *(int *)(ASI::AddrOf(0x1b89d1)) =
-        (int)(&hooked_getSavePath) - ASI::AddrOf(0x1b89d5);
+        (int)(&getSavePath) - ASI::AddrOf(0x1b89d5);
     ASI::EndRewrite(mreg);
     log_info("getSavePath replacement hooked");
-}
-
-/**
- * Replaces CALL PlayCampaignIntroVideo at the end of PrepareNewGame
- */
-void __fastcall hooked_play_campaign_intro(CAppMenu *_this)
-{
-    // keeping it hooked, but we just essentially jump right back for now
-    // Might be useful for custom videos, or may not be needed at all
-    s_play_campaign_intro(_this);
-}
-
-static void install_intro_callsite_patch()
-{
-    /* CALL rel32 at 0x1960ac */
-    ASI::MemoryRegion mreg(ASI::AddrOf(0x1960ac), 5);
-    ASI::BeginRewrite(mreg);
-    *(unsigned char *)(ASI::AddrOf(0x1960ac)) = 0xE8; /* CALL hijack*/
-    *(int *)(ASI::AddrOf(0x1960ad)) =
-        (int)(&hooked_play_campaign_intro) - ASI::AddrOf(0x1960b1);
-    ASI::EndRewrite(mreg);
-    log_info("Intro call-site patch installed (start-map override)");
 }
 
 static void stop_intro_video(CAppMenu *app_menu)
@@ -453,6 +368,59 @@ static void stop_intro_video(CAppMenu *app_menu)
     }
 }
 
+static void ensure_campaign_dirs(const SFSF_CampaignDef *def)
+{
+    SF_String base;
+    s_get_base_path_string(&base);          /* Documents\<GameFolder>\ */
+    char narrow[512];
+    int len = 0;
+    if (base.raw_data && base.str_length > 0)
+        len = WideCharToMultiByte(CP_ACP, 0, base.raw_data, base.str_length,
+                                  narrow, sizeof(narrow) - 1, NULL, NULL);
+    if (len < 0) len = 0;
+    narrow[len] = '\0';
+    uiAPI.SFStringDestructor(&base);
+
+    char path[768];
+    snprintf(path, sizeof(path), "%ssave", narrow);
+    CreateDirectoryA(path, NULL);
+    snprintf(path, sizeof(path), "%ssave\\campaigns", narrow);
+    CreateDirectoryA(path, NULL);
+    snprintf(path, sizeof(path), "%ssave\\campaigns\\%s", narrow, def->campaign_folder);
+    CreateDirectoryA(path, NULL);
+}
+
+static bool s_load_dir_constructed = false;
+
+static void set_load_dir(const char *dir)
+{
+    SF_String tmp;
+    uiAPI.SFStringConstructor_char(&tmp, dir);
+    if (!s_load_dir_constructed)
+    {
+        uiAPI.SFStringConstructor(&g_sfsf_load_dir);
+        s_load_dir_constructed = true;
+    }
+
+    uiAPI.SFStringCopy(&g_sfsf_load_dir, &tmp);
+    uiAPI.SFStringDestructor(&tmp);
+}
+
+/** Point the patched load-dir at a campaign's save folder, or back at
+ *  vanilla ("save\") when def == NULL. */
+void set_load_dir_for_campaign(const SFSF_CampaignDef *def)
+{
+    if (def == NULL)
+    {
+        set_load_dir("save\\");
+        return;
+    }
+    char dir[192];
+    snprintf(dir, sizeof(dir), "save\\campaigns\\%s\\", def->campaign_folder);
+    set_load_dir(dir);
+    log_info("Quickload dir -> %s", dir);
+}
+
 static void campaign_launch_flow(int32_t campaign_index)
 {
     CAppMenu *app_menu = g_campaign_app_menu;
@@ -463,18 +431,18 @@ static void campaign_launch_flow(int32_t campaign_index)
         log_error("Campaign launch unavailable: missing CAppMenu or engine addresses");
         return;
     }
+    stop_intro_video(app_menu);
+    g_active_custom_campaign = campaign_index;              /* UI state only */
 
     log_info("Launching campaign '%s' (flow, engine_type %u, avatar %u)",
-             def->name, def->engine_type, def->avatar_type);
+             def->name, g_active_custom_campaign, def->avatar_type);
 
-    stop_intro_video(app_menu);
+    ensure_campaign_dirs(def);
+    set_load_dir_for_campaign(def);                         /* g_sfsf_load_dir -> save\campaigns\<folder>\ */
 
-    g_active_custom_campaign = campaign_index;
-    swap_save_globals(def);
-
-    app_menu->CAppMenu_data.campaign_type = def->engine_type; //current method is we pretend to be vanilla campaign, may not fly
-    s_gameinfo_set_avatar_type(&app_menu->CAppMenu_data.game_info, (uint16_t)def->avatar_type);
-
+    app_menu->CAppMenu_data.campaign_type = SFSF_CAMPAIGN_TYPE_BASE + campaign_index;
+    s_gameinfo_set_avatar_type(&app_menu->CAppMenu_data.game_info,
+                               (uint16_t)def->avatar_type);
     s_enter_campaign_flow(app_menu, 1);
 }
 

@@ -22,7 +22,6 @@ extern UiFunctions uiAPI;
 typedef void (__thiscall *add_item_ptr)(ushort_list_node *_this,uint16_t *item);
 add_item_ptr add_item;
 
-
 typedef SF_String *(__thiscall *AC95_get_figure_name_ptr)(void *AC95, SF_String *name_buffer, uint32_t figure_id);
 typedef void (__cdecl *GetColoredText_ptr)(SF_String *param_1, uint32_t param_2);
 typedef void (__thiscall *GetDescriptionText_ptr)(void *_this,uint32_t param_1,SF_String *name_buffer);

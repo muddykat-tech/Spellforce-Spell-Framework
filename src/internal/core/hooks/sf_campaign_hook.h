@@ -14,6 +14,7 @@
 #include "../../../asi/sf_asi.h"
 
 #define SFSF_MAX_CAMPAIGNS 2
+#define SFSF_CAMPAIGN_TYPE_BASE 3
 
 typedef struct __attribute__((packed))
 {
@@ -24,10 +25,6 @@ typedef struct __attribute__((packed))
     char campaign_folder[64]; /**< Folder for save separation and map loading, may need rename, e.g. "mycampaign" */
     char intro_video[64];     /**< Optional: "videos\\myintro" - empty = engine_type
                                  default. NOT implemented yet (needs CUiVideo replication of PlayCampaignIntroVideo). */
-    uint32_t engine_type;     /**< 0/1/2 - vanilla campaign to masquerade as.
-                                 Avoid 2 unless SotP avatar rules are wanted.
-                                 it exposes result case 9 (BoW import with
-                                 hardcoded P201/P202 maps so we'd need rewrite to fix). */
     uint32_t avatar_type;     /**< GdAvatar field should continue past a GameInfo reset in PrepareNewGame and is
                                  serialized into saves). Vanilla: 3 = SF1,
                                  4 = AddOn1, 7 = AddOn2, 1/5 = multiplayer.
@@ -62,14 +59,11 @@ extern CAppMenu *g_campaign_app_menu;    /**< Stashed by sf_menu_hook on menu bu
 
 void initialize_campaign_hooks();
 
+extern void initialize_preparenewgame_rewrite();
+
 /** Registers a campaign definition. Returns campaign index or -1. */
 int32_t register_campaign(const SFSF_CampaignDef *def);
 
-/**
- * Lifecycle reset - MUST be called from sf_menu_hook every time the main menu
- * as this restores the swapped save-dir globals and clears the active
- * campaign.
- */
 void campaign_hook_on_main_menu(CAppMenu *app_menu);
 
 /** Main-menu button callback - builds and toggles the campaign screen. */
@@ -78,5 +72,13 @@ void __thiscall show_custom_campaign_screen(CMnuSmpButton *_this);
 /** Per-campaign button callback. */
 void __thiscall on_campaign_selected(CMnuSmpButton *_this);
 
+extern void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial,
+                                    uint8_t skill, uint8_t subskill,
+                                    uint32_t campaign_id, bool is_shadowblade);
+
+extern startGame_ptr s_start_game;
+extern playCampaignIntro_ptr s_play_campaign_intro;
+extern getBasePathString_ptr s_get_base_path_string;
+extern gameInfoSetAvatarType_ptr s_gameinfo_set_avatar_type;
 /** @} */
 #endif // SF_CAMPAIGN_HOOK_H
