@@ -175,6 +175,7 @@ void write_last_played(CAppMenu *_this, void *preload, bool is_custom)
 
 void __thiscall hooked_prepare_new_game(CAppMenu *_this, void *preload)
 {
+    log_info("Prepare new game");
     SF_GameInfo *gi = &_this->CAppMenu_data.game_info;
     // some cursed pointer walking for now
     uint32_t result = pn_get_result_code(preload);
@@ -257,7 +258,7 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, void *preload)
     case 1: /* name conflict paths - reset to starter kit + feedback dialog */
     case 3:
     {
-        pn_gi_starterkit_reset(gi, 0, skill, subskill);
+        pn_gi_starterkit_reset(gi, skill, subskill);
         uint8_t kit_index = (uint8_t)pn_preload_get_kit_index(preload);
         pn_gi_set_premade_kit(gi, result == 3, kit_index);
         pn_gi_apply_premade_kit(gi, result == 3, kit_index);

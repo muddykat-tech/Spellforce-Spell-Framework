@@ -16,8 +16,7 @@ typedef void     (__thiscall *giSetU32_ptr)(SF_GameInfo *gi, uint32_t v);       
 typedef void     (__thiscall *giSetStr_ptr)(SF_GameInfo *gi, SF_String *s);          /* savepath 0x576320 / savename 0x576700  */
 typedef SF_String* (__thiscall *giSetTemplateName_ptr)(SF_GameInfo *gi, SF_String *s); // 0x576790 setTemplateName
 typedef void     (__thiscall *giVoid_ptr)(SF_GameInfo *gi);                          /* 0x576480 */
-typedef void     (__fastcall *giStarterKitReset_ptr)(SF_GameInfo *gi, uint32_t edx_unused,
-                                                     uint32_t skill, uint32_t subskill); /* 0x5763c0 needs double check*/
+typedef void     (__thiscall *giStarterKitReset_ptr)(SF_GameInfo *gi, uint32_t skill, uint32_t subskill); /* 0x5763c0 needs double check*/
 typedef SF_String *(__thiscall *preloadGetStr_ptr)(void *preload, SF_String *out);   /* 0xa09520 slot / 0xa09600 avatar / 0xa0a3e0 fg map / 0xa0a410 fg tmpl */
 typedef void     (__thiscall *appMenuDeleteSave_ptr)(CAppMenu *m, SF_String *s);     /* 0x586520 */
 /* custom splash hints? */
@@ -28,7 +27,7 @@ typedef void     (__thiscall *screenSetHint_ptr)(void *screen, int v);          
 typedef void*     (__thiscall   *cfgCtor_ptr)(void *cfg, const char *p);                /* 0x789050 */
 typedef void     (__thiscall    *cfgDtor_ptr)(void *cfg);                               /* 0x787e20 */
 typedef void     (__thiscall *cfgSetString_ptr)(void *cfg, char *section, char *key,
-                                                SF_String *value, SF_String *dflt);
+                                                SF_String *value, SF_String *dflt);  /* 007897b0 */
 
 typedef void (__thiscall *CreateMnuHintExt_ptr)(CAppMenu *_this);
 
