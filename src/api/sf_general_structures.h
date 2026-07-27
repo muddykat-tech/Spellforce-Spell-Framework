@@ -1261,11 +1261,11 @@ typedef struct __attribute__((packed))
 
 typedef struct __attribute__((packed))
 {
-    void *unkn_ptr1;
+    void *CNetMain;
     uint32_t AutoClass72[5];
     uint32_t CGdEventIterator[5];
     void *unkn_ptr2;
-    uint16_t unkn_value;
+    uint16_t current_player;
     uint8_t padding[0x19a];
 } CGdControllerClientData;
 
@@ -1393,7 +1393,8 @@ typedef struct __attribute__((packed))
 
 typedef struct __attribute__((packed))
 {
-    uint8_t unknwn_data[0x7c];
+    uint8_t unknwn_data[0x78];
+    CGdControllerClient *controllerClient;
     SF_CGdMain *CGdMain;
     uint8_t unknwn_data2[0xa4];
 } CAppSession_data;
@@ -1470,18 +1471,18 @@ typedef struct __attribute__((packed))
     uint8_t kit_index;
     uint8_t padding[3];
     GdAvatarData avatarData;
-} AutoClass81;
+} AutoClass82;
 
 typedef struct __attribute__((packed))
 {
-    AutoClass81 AC82;
+    AutoClass82 AC82;
     uint32_t unknown_0xf0;      /* = 1 in initFirstMap, both branches */
     uint32_t unknown_0xf4;      /* = 3 in initFirstMap, both branches */
     SF_String filename;
     SF_String template_name;
     uint32_t start_mode;        /* 0x118: 1 = tutorial, 2 = direct start */
     SF_String starter_kit_name;
-    AutoClass81 AC82_1;       /* avatar snapshot (copied from AC82 in initFirstMap) */
+    AutoClass82 AC82_1;       /* avatar snapshot (copied from AC82 in initFirstMap) */
     uint32_t unknown2;
     uint8_t kit_index;
     uint8_t padding[3];
@@ -1547,7 +1548,7 @@ typedef struct __attribute__((packed))
 typedef struct __attribute__((packed))
 {
     CAppMenu *CAppMenu;
-    void *CAppSession;
+    CAppSession *CAppSession;
     void *CAppSound;
     void *CNetMain;
     void *unknownBitSet;

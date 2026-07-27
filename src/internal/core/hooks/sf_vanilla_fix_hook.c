@@ -1156,7 +1156,7 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
                     {
                         getSpecialDesc(&figure_name, 280);
                         uiAPI.SFprintf(&temp_str, L"%s_%s%i%s%c ", description.raw_data, figure_name.raw_data,
-                                 active_hand_info->min_rng, L"%d", L',');
+                                       active_hand_info->min_rng, L"%d", L',');
                         uiAPI.SFStringDestructor(&figure_name);
                     }
                     uiAPI.SFStringConcat(&full_desc, &temp_str);
@@ -1246,7 +1246,7 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
                         {
                             getSpecialDesc(&figure_name, 280);
                             uiAPI.SFprintf(&temp_str, L"%s_%s%i%s%c ", description.raw_data, figure_name.raw_data,
-                                     l_item_info.min_rng, L"%d", L',');
+                                           l_item_info.min_rng, L"%d", L',');
                             uiAPI.SFStringDestructor(&figure_name);
                         }
                         uiAPI.SFStringConcat(&full_desc, &temp_str);
@@ -1597,7 +1597,6 @@ SF_String * getMapFromSave(CAppSession *_this,  char *param_1, int campaign_type
     FileWrapper Wrapper;
     D_String filename;
     SF_String base_name;
-    SF_String save_path;
 
     uiAPI.SFStringConstructor_char(&base_name, param_1);
     //getSavePath(_this,&save_path,campaign_type);

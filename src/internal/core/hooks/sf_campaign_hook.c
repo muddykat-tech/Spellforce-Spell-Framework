@@ -24,10 +24,10 @@ static videoSequenceStop_ptr s_video_sequence_stop;
 static void hook_getsavepath();
 
 static avatarInternalCopy_ptr s_avatar_internal_copy;
-static avatarVectorsCopy_ptr  s_avatar_vectors_copy;
+static avatarVectorsCopy_ptr s_avatar_vectors_copy;
 static void hook_initfirstmap();
 static SF_String g_sfsf_load_dir;   /* "save\" when idle; "save\campaigns\<x>\" when active */
-static void set_load_dir_for_campaign(const SFSF_CampaignDef*);
+static void set_load_dir_for_campaign(const SFSF_CampaignDef *);
 static void patch_load_dir_ref();
 
 // used in prepare new game
@@ -36,8 +36,23 @@ playCampaignIntro_ptr s_play_campaign_intro;
 getBasePathString_ptr s_get_base_path_string;
 gameInfoSetAvatarType_ptr s_gameinfo_set_avatar_type;
 
+typedef LPCSTR *(__cdecl *GetDataStorageLocation_ptr)(char **param_1, uint32_t type);
+typedef uint32_t (__cdecl *checkFileExists_ptr)(SF_String *name);
+typedef void (__thiscall *prepareTransition_ptr)(CAppMenu *_this,uint32_t param_1,uint32_t param_2);
+typedef SF_GameInfo *(__thiscall *initDefaultInfo_ptr)(SF_GameInfo *_this);
+typedef void (__thiscall *AC82_Zero_ptr)(AutoClass82 *_this);
+static GetDataStorageLocation_ptr s_getDataStorageLocation;
+prepareTransition_ptr prepareTransition;
+initDefaultInfo_ptr initDefaultInfo;
+AC82_Zero_ptr AC82_Zero;
+
+//TODO -- make this function available for framework. Will need for proper loading screens and maps later on!!!
+checkFileExists_ptr checkFileExists;
+
 void initialize_campaign_hooks()
 {
+
+    s_getDataStorageLocation = (GetDataStorageLocation_ptr)(ASI::AddrOf(0x1ee9f0));
     s_gameinfo_set_map_path = (gameInfoSetMapPathFull_ptr)(ASI::AddrOf(0x1762d0));
     s_enter_campaign_flow   = (appMenuEnterCampaignFlow_ptr)(ASI::AddrOf(0x1936a0));
     s_play_campaign_intro   = (playCampaignIntro_ptr)(ASI::AddrOf(0x181e20));
@@ -49,6 +64,10 @@ void initialize_campaign_hooks()
 
     s_avatar_internal_copy = (avatarInternalCopy_ptr)(ASI::AddrOf(0x1759e0));
     s_avatar_vectors_copy  = (avatarVectorsCopy_ptr)(ASI::AddrOf(0x175860));
+    checkFileExists = (checkFileExists_ptr)(ASI::AddrOf(0x4f7d50));
+    prepareTransition = (prepareTransition_ptr)(ASI::AddrOf(0x199db0));
+    initDefaultInfo = (initDefaultInfo_ptr)(ASI::AddrOf(0x175760));
+    AC82_Zero = (AC82_Zero_ptr)(ASI::AddrOf(0x19e730));
 
     uiAPI.SFStringConstructor_char(&g_sfsf_load_dir, "save\\");
     hook_initfirstmap();
@@ -97,6 +116,104 @@ int32_t register_campaign(const SFSF_CampaignDef *def)
 /* Un'Schtalch's code block - updated and reworked a bit for you ~Muddykat*/
 
 
+//TODO -- rename into getSavePath later on.
+SF_String * getSavePath_1(SF_String *output, uint32_t campaign_type)
+{
+    char *paths[3];
+    SF_String base_save;
+    s_getDataStorageLocation(paths, 0);
+    uiAPI.SFStringConstructor_char(output, paths[0]);
+    uiAPI.SFStringConstructor_wchar(&base_save, L"save\\");
+    uiAPI.SFStringConcat(output, &base_save);
+    uiAPI.SFStringDestructor(&base_save);
+
+    switch (campaign_type)
+    {
+        case 0:
+        {
+            //don't need to do anything
+            break;
+        }
+        case 1:
+        {
+            SF_String campaign_path;
+            uiAPI.SFStringConstructor_wchar(&campaign_path, L"campaign2\\");
+            uiAPI.SFStringConcat(output, &campaign_path);
+            uiAPI.SFStringDestructor(&campaign_path);
+
+            break;
+        }
+        case 2:
+        {
+            SF_String campaign_path;
+            uiAPI.SFStringConstructor_wchar(&campaign_path, L"campaign3\\");
+            uiAPI.SFStringConcat(output, &campaign_path);
+            uiAPI.SFStringDestructor(&campaign_path);
+            break;
+        }
+        default:
+        {
+            //place to add for custom campaign stuff
+            break;
+        }
+    }
+    return output;
+}
+typedef SF_String *(__thiscall *AC95_get_figure_name_ptr)(void *AC95, SF_String *name_buffer, uint32_t figure_id);
+
+extern AC95_get_figure_name_ptr AC95_get_figure_name;
+
+
+void __thiscall loadQuickSave(CAppMenu *_this)
+{
+    log_info("QuickSave Load run!");
+    uint16_t player = _this->CAppMenu_data.CAppSession->data.controllerClient->data.current_player;
+
+    bool inUse = (_this->CAppMenu_data.CAppSession->data.CGdMain->data.CGdPlayer->players[player].use != 0);
+    uint16_t figure_id =
+        _this->CAppMenu_data.CAppSession->data.CGdMain->data.CGdPlayer->players[player].avatar_figure_index;
+    if (!inUse)
+    {
+        return;
+    }
+    SF_String avatar_name;
+    SF_String tilda;
+    SF_String quicksave;
+    SF_String base_path;
+    AC95_get_figure_name(_this->CAppMenu_data.AC95, &avatar_name, figure_id);
+    uiAPI.SFStringFromWchar(&tilda, L'~', 1);
+    uiAPI.SFStringConstructor_wchar(&quicksave, L"QUICKSAVE.SAV");
+    uiAPI.SFStringConcat(&avatar_name, &tilda);
+    uiAPI.SFStringConcat(&avatar_name, &quicksave);
+    getSavePath_1(&base_path, _this->CAppMenu_data.campaign_type);
+    uiAPI.SFStringConcat(&base_path, &avatar_name);
+    if (checkFileExists(&base_path))
+    {
+        prepareTransition(_this, 1, 1);
+        SF_GameInfo newInfo;
+        initDefaultInfo(&newInfo);
+        newInfo.unknown_0xf0 = _this->CAppMenu_data.game_info.unknown_0xf0;
+        uiAPI.SFStringDeepCopy(&newInfo.filename, &avatar_name);
+        newInfo.is_tutorial = 0;
+        newInfo.unknown_0xf4 = 2;
+        newInfo.start_mode = 0;
+        SF_String dummy;
+        uiAPI.SFStringConstructor(&dummy);
+        s_start_game(_this, &newInfo, 100, 0, 0, 0, &dummy);
+        uiAPI.SFStringDestructor(&dummy);
+
+        AC82_Zero(&newInfo.AC82_1);
+        uiAPI.SFStringDestructor(&newInfo.starter_kit_name);
+        uiAPI.SFStringDestructor(&newInfo.template_name);
+        uiAPI.SFStringDestructor(&newInfo.filename);
+        AC82_Zero(&newInfo.AC82);
+    }
+    uiAPI.SFStringDestructor(&avatar_name);
+    uiAPI.SFStringDestructor(&tilda);
+    uiAPI.SFStringDestructor(&quicksave);
+    uiAPI.SFStringDestructor(&base_path);
+}
+
 /**
  * @brief Proper map selection code for the future
  * @param _this Pointer to the game info structure that holds most of the info we need
@@ -139,9 +256,11 @@ void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t
     _this->AC82_1.kit_index = _this->AC82.kit_index;
     log_info("initFirstMap Hook: Avatar Snapshot Ran: _this->AC82_1.kit_index = _this->AC82.kit_index;");
     s_avatar_internal_copy(&_this->AC82_1.avatarData.internal, &_this->AC82.avatarData.internal);
-    log_info("initFirstMap Hook: Avatar Snapshot Ran: s_avatar_internal_copy(&_this->AC82_1.avatarData.internal, &_this->AC82.avatarData.internal);");
+    log_info(
+        "initFirstMap Hook: Avatar Snapshot Ran: s_avatar_internal_copy(&_this->AC82_1.avatarData.internal, &_this->AC82.avatarData.internal);");
     s_avatar_vectors_copy(&_this->AC82_1.avatarData.begin, &_this->AC82.avatarData.begin);
-    log_info("initFirstMap Hook: Avatar Snapshot Ran: s_avatar_vectors_copy(&_this->AC82_1.avatarData.begin, &_this->AC82.avatarData.begin);");
+    log_info(
+        "initFirstMap Hook: Avatar Snapshot Ran: s_avatar_vectors_copy(&_this->AC82_1.avatarData.begin, &_this->AC82.avatarData.begin);");
 
     log_info("initFirstMap Hook: Check for Custom Campaign");
     /* -- active custom campaign? -- */
@@ -152,7 +271,7 @@ void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t
         custom = &g_campaigns[custom_idx];
     }
 
-     /* -- folder + start map: selected FIRST, tutorial branch only overrides
+    /* -- folder + start map: selected FIRST, tutorial branch only overrides
      *    the map NAME (vanilla order - vanilla tutorials live in their own
      *    campaign's folder, e.g. map\Campaign2\tutorial.map). -- */
     if (custom != NULL)
@@ -270,8 +389,20 @@ void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t
     uiAPI.SFStringDestructor(&intial_map_name);
 }
 
+static void hook_qs_load()
+{
+    ASI::MemoryRegion mreg_qs(ASI::AddrOf(0x185c00), 5);
+    ASI::BeginRewrite(mreg_qs);
+    *(unsigned char *)(ASI::AddrOf(0x185c00)) = 0xE9; // JMP instruction
+    *(int *)(ASI::AddrOf(0x185c01)) = (int)(&loadQuickSave) - ASI::AddrOf(0x185c05);
+    ASI::EndRewrite(mreg_qs);
+    log_info("QuickSave Load replacement hooked (entry JMP)");
+}
+
 static void hook_initfirstmap()
 {
+    //FIXME
+    //Mate, optimizaton MIGHT kill this code. We have tried this already for stats overflow fix, please, DONT ~Un'Schtalch
     uint32_t entry = ASI::AddrOf(0x176040);
     ASI::MemoryRegion mreg(entry, 5);
     ASI::BeginRewrite(mreg);
@@ -335,9 +466,18 @@ SF_String * __stdcall getSavePath(SF_String *out, int campaign_type)
                  g_campaigns[idx].campaign_folder);
         suffix = custom_suffix;
     }
-    else if (campaign_type == 1) { suffix = "save\\campaign2\\"; }
-    else if (campaign_type == 2) { suffix = "save\\campaign3\\"; }
-    else                          { suffix = "save\\"; }
+    else if (campaign_type == 1)
+    {
+        suffix = "save\\campaign2\\";
+    }
+    else if (campaign_type == 2)
+    {
+        suffix = "save\\campaign3\\";
+    }
+    else
+    {
+        suffix = "save\\";
+    }
 
     char full[768];
     snprintf(full, sizeof(full), "%s%s", narrow, suffix);
@@ -377,7 +517,8 @@ static void ensure_campaign_dirs(const SFSF_CampaignDef *def)
     if (base.raw_data && base.str_length > 0)
         len = WideCharToMultiByte(CP_ACP, 0, base.raw_data, base.str_length,
                                   narrow, sizeof(narrow) - 1, NULL, NULL);
-    if (len < 0) len = 0;
+    if (len < 0)
+        len = 0;
     narrow[len] = '\0';
     uiAPI.SFStringDestructor(&base);
 
