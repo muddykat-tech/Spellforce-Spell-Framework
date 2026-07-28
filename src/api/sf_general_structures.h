@@ -1262,8 +1262,8 @@ typedef struct __attribute__((packed))
 typedef struct __attribute__((packed))
 {
     void *CNetMain;
-    uint32_t AutoClass72[5];
-    uint32_t CGdEventIterator[5];
+    uint32_t AutoClass72[8];
+    uint32_t CGdEventIterator[8];
     void *unkn_ptr2;
     uint16_t current_player;
     uint8_t padding[0x19a];

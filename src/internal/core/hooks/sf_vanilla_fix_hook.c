@@ -1676,6 +1676,8 @@ static void splash_screen_hook()
 
 }
 
+extern void hook_qs_load();
+
 void initialize_vanilla_fix_hooks()
 {
     add_item = (add_item_ptr)(ASI::AddrOf(0x260d70));
@@ -1710,6 +1712,7 @@ void initialize_vanilla_fix_hooks()
     AC57_Dispose = (AC57_Dispose_ptr)(ASI::AddrOf(0x3865b0));
 
     readMapNameFromSave = (readMapNameFromSave_ptr)(ASI::AddrOf(0x2c1f10));
+    hook_qs_load();
 
     log_info("| - Vanilla Fix Hooks");
     figure_statistic_hook_current_ac();

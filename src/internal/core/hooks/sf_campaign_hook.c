@@ -57,17 +57,12 @@ void initialize_campaign_hooks()
     s_enter_campaign_flow   = (appMenuEnterCampaignFlow_ptr)(ASI::AddrOf(0x1936a0));
     s_play_campaign_intro   = (playCampaignIntro_ptr)(ASI::AddrOf(0x181e20));
     s_video_sequence_stop   = (videoSequenceStop_ptr)(ASI::AddrOf(0x3d7b90));
-    s_start_game            = (startGame_ptr)(ASI::AddrOf(0x183560));
     s_get_base_path_string  = (getBasePathString_ptr)(ASI::AddrOf(0x61a700));
 
     s_gameinfo_set_avatar_type = (gameInfoSetAvatarType_ptr)(ASI::AddrOf(0x1a1a80));
 
     s_avatar_internal_copy = (avatarInternalCopy_ptr)(ASI::AddrOf(0x1759e0));
     s_avatar_vectors_copy  = (avatarVectorsCopy_ptr)(ASI::AddrOf(0x175860));
-    checkFileExists = (checkFileExists_ptr)(ASI::AddrOf(0x4f7d50));
-    prepareTransition = (prepareTransition_ptr)(ASI::AddrOf(0x199db0));
-    initDefaultInfo = (initDefaultInfo_ptr)(ASI::AddrOf(0x175760));
-    AC82_Zero = (AC82_Zero_ptr)(ASI::AddrOf(0x19e730));
 
     uiAPI.SFStringConstructor_char(&g_sfsf_load_dir, "save\\");
     hook_initfirstmap();
@@ -166,12 +161,19 @@ extern AC95_get_figure_name_ptr AC95_get_figure_name;
 
 void __thiscall loadQuickSave(CAppMenu *_this)
 {
-    log_info("QuickSave Load run!");
-    uint16_t player = _this->CAppMenu_data.CAppSession->data.controllerClient->data.current_player;
+    CAppSession *session = _this->CAppMenu_data.CAppSession;
+    SF_CGdMain *main = session->data.CGdMain;
+    CGdControllerClient *client = session->data.controllerClient;
+    SF_CGdPlayer *player = main->data.CGdPlayer;
+    uint16_t player_id = client->data.current_player;
 
-    bool inUse = (_this->CAppMenu_data.CAppSession->data.CGdMain->data.CGdPlayer->players[player].use != 0);
-    uint16_t figure_id =
-        _this->CAppMenu_data.CAppSession->data.CGdMain->data.CGdPlayer->players[player].avatar_figure_index;
+    bool inUse = (player->players[player_id].use != 0);
+    log_info("In use offset 0x%x", (uint32_t)&player->players[player_id].use - (uint32_t)&player->players[player_id]);
+    uint16_t figure_id = player->players[player_id].avatar_figure_index;
+
+    log_info("Player ID 0x%x", player_id);
+    log_info("Player in use 0x%x", player_id);
+    log_info("Avatar ID 0x%x", figure_id);
     if (!inUse)
     {
         return;
@@ -186,9 +188,13 @@ void __thiscall loadQuickSave(CAppMenu *_this)
     uiAPI.SFStringConcat(&avatar_name, &tilda);
     uiAPI.SFStringConcat(&avatar_name, &quicksave);
     getSavePath_1(&base_path, _this->CAppMenu_data.campaign_type);
+    log_info("Base path %ls", base_path.raw_data);
+
     uiAPI.SFStringConcat(&base_path, &avatar_name);
     if (checkFileExists(&base_path))
     {
+        log_info("Full save path %ls", base_path.raw_data);
+
         prepareTransition(_this, 1, 1);
         SF_GameInfo newInfo;
         initDefaultInfo(&newInfo);
@@ -389,8 +395,16 @@ void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t
     uiAPI.SFStringDestructor(&intial_map_name);
 }
 
-static void hook_qs_load()
+void hook_qs_load()
 {
+    checkFileExists = (checkFileExists_ptr)(ASI::AddrOf(0x4f7d50));
+    prepareTransition = (prepareTransition_ptr)(ASI::AddrOf(0x199db0));
+    initDefaultInfo = (initDefaultInfo_ptr)(ASI::AddrOf(0x175760));
+    AC82_Zero = (AC82_Zero_ptr)(ASI::AddrOf(0x19e730));
+    s_getDataStorageLocation = (GetDataStorageLocation_ptr)(ASI::AddrOf(0x1ee9f0));
+    s_start_game = (startGame_ptr)(ASI::AddrOf(0x183560));
+
+
     ASI::MemoryRegion mreg_qs(ASI::AddrOf(0x185c00), 5);
     ASI::BeginRewrite(mreg_qs);
     *(unsigned char *)(ASI::AddrOf(0x185c00)) = 0xE9; // JMP instruction
