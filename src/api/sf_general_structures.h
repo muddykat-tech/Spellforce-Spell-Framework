@@ -30,7 +30,6 @@ typedef struct SF_CGdObject SF_CGdObject;
 typedef struct CMnuLabel CMnuLabel;
 typedef struct CGdControllerClient CGdControllerClient;
 
-
 /* |-========== Enums ==========-| */
 
 typedef enum
@@ -1449,17 +1448,23 @@ typedef struct __attribute__((packed))
 
     uint32_t is_female;
 
-    uint8_t unknown5[11];
-
+    uint8_t unknown5[9];
+    uint16_t avatar_type;
 } GdAvatarInternal;
 
 typedef struct __attribute__((packed))
 {
     GdAvatarInternal internal;
-    void *begin;
-    void *data;
-    void *rend;
+    uint8_t some_vector[12];
 } GdAvatarData;
+
+
+typedef struct __attribute__((packed))
+{
+    GdAvatarInternal internal;
+    uint16_t         type;
+    uint16_t         unknown;
+} GdAvatar;
 
 typedef struct __attribute__((packed))
 {
@@ -1494,6 +1499,15 @@ typedef struct __attribute__((packed))
 
 typedef struct __attribute__((packed))
 {
+    uint32_t        vftable_ptr;
+    CMnuBase_data   CMnuBase_data;
+    uint8_t         CMnuVisControl_data[0x9c];
+    uint8_t         CMnuContainer_data[0x98];
+    uint8_t         CMnuScreen_data[0x4c8];
+} CMnuScreen;
+
+typedef struct __attribute__((packed))
+{
     void *Unknown0;
     void *Unknown1;
     void *Unknown2;
@@ -1516,7 +1530,7 @@ typedef struct __attribute__((packed))
     void *Unknown8;
     void *Unknown9;
     void *Unknown10;
-    void *splash_screen;
+    CMnuScreen *splash_screen;
     void *Unknown11;
     void *Unknown12;
     void *AC95;
@@ -1528,7 +1542,20 @@ typedef struct __attribute__((packed))
     void *VideoSecData;
     void *Unknown15;
     CMnuLabel *progress_label;
-    uint8_t more_data2[0x1C4];
+    uint32_t unknown_0x98;
+    SF_String unknown_string_0x9c;
+    SF_String pregrame_dotmap_string;
+    void *unknown_0xbc;
+    uint32_t unknown_datablock[3];
+    CMnuContainer* someContainer_0xcc;
+    void*   some_building_0xd0;
+    SF_String* some_string_0xd4;
+    uint8_t more_data2[0x7c];
+    uint32_t pregame_load_result;
+    uint32_t unknown_0x15c;
+    SF_String some_string_0x160;
+    SF_String someString_0x170;
+    uint8_t AC77[0xdc];
     SF_GameInfo game_info;
     void *Unknown16;
     uint32_t campaign_type;
@@ -1564,6 +1591,13 @@ typedef struct __attribute__((packed))
     uint32_t vftable_ptr;
     CAppMain_data CAppMain_data;
 } CAppMain;
+
+typedef struct __attribute__((packed))
+{
+    uint8_t lua_data[0x1c]; //is struct itself
+    SF_String name_maybe;
+} CUtlConfigFile;
+
 
 /* |-========== Internal Functions ==========-| */
 // These functions are used in SFSF internally, and WILL be moved.

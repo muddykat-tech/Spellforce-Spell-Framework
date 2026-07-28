@@ -265,7 +265,7 @@ void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t
     s_avatar_internal_copy(&_this->AC82_1.avatarData.internal, &_this->AC82.avatarData.internal);
     log_info(
         "initFirstMap Hook: Avatar Snapshot Ran: s_avatar_internal_copy(&_this->AC82_1.avatarData.internal, &_this->AC82.avatarData.internal);");
-    s_avatar_vectors_copy(&_this->AC82_1.avatarData.begin, &_this->AC82.avatarData.begin);
+    s_avatar_vectors_copy(&_this->AC82_1.avatarData.some_vector, &_this->AC82.avatarData.some_vector);
     log_info(
         "initFirstMap Hook: Avatar Snapshot Ran: s_avatar_vectors_copy(&_this->AC82_1.avatarData.begin, &_this->AC82.avatarData.begin);");
 
