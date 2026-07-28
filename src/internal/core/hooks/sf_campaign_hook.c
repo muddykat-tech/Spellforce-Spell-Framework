@@ -159,7 +159,7 @@ typedef SF_String *(__thiscall *AC95_get_figure_name_ptr)(void *AC95, SF_String 
 extern AC95_get_figure_name_ptr AC95_get_figure_name;
 
 
-void __thiscall loadQuickSave(CAppMenu *_this)
+void __thiscall loadQuickSave(CAppMenu *_this, uint32_t unknown)
 {
     CAppSession *session = _this->CAppMenu_data.CAppSession;
     SF_CGdMain *main = session->data.CGdMain;
@@ -168,12 +168,8 @@ void __thiscall loadQuickSave(CAppMenu *_this)
     uint16_t player_id = client->data.current_player;
 
     bool inUse = (player->players[player_id].use != 0);
-    log_info("In use offset 0x%x", (uint32_t)&player->players[player_id].use - (uint32_t)&player->players[player_id]);
     uint16_t figure_id = player->players[player_id].avatar_figure_index;
 
-    log_info("Player ID 0x%x", player_id);
-    log_info("Player in use 0x%x", player_id);
-    log_info("Avatar ID 0x%x", figure_id);
     if (!inUse)
     {
         return;
