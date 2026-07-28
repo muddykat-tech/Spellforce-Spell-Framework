@@ -1462,8 +1462,8 @@ typedef struct __attribute__((packed))
 typedef struct __attribute__((packed))
 {
     GdAvatarInternal internal;
-    uint16_t         type;
-    uint16_t         unknown;
+    uint16_t type;
+    uint16_t unknown;
 } GdAvatar;
 
 typedef struct __attribute__((packed))
@@ -1499,11 +1499,11 @@ typedef struct __attribute__((packed))
 
 typedef struct __attribute__((packed))
 {
-    uint32_t        vftable_ptr;
-    CMnuBase_data   CMnuBase_data;
-    uint8_t         CMnuVisControl_data[0x9c];
-    uint8_t         CMnuContainer_data[0x98];
-    uint8_t         CMnuScreen_data[0x4c8];
+    uint32_t vftable_ptr;
+    CMnuBase_data CMnuBase_data;
+    uint8_t CMnuVisControl_data[0x9c];
+    uint8_t CMnuContainer_data[0x98];
+    uint8_t CMnuScreen_data[0x4c8];
 } CMnuScreen;
 
 typedef struct __attribute__((packed))
@@ -1547,10 +1547,10 @@ typedef struct __attribute__((packed))
     SF_String pregrame_dotmap_string;
     void *unknown_0xbc;
     uint32_t unknown_datablock[3];
-    CMnuContainer* someContainer_0xcc;
-    void*   some_building_0xd0;
-    SF_String* some_string_0xd4;
-    uint8_t more_data2[0x7c];
+    CMnuContainer *someContainer_0xcc;
+    void *some_building_0xd0;
+    SF_String *some_string_0xd4;
+    uint8_t more_data2[0x80];
     uint32_t pregame_load_result;
     uint32_t unknown_0x15c;
     SF_String some_string_0x160;
