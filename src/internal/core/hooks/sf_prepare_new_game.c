@@ -23,7 +23,7 @@ static preloadGetAvatar_ptr pn_preload_get_avatar;
 static gameInfoSetAvatar_ptr pn_gi_set_avatar_equipdata;
 static gameInfoGetU8_ptr pn_gi_get_skill, pn_gi_get_subskill, pn_gi_get_kit_index;
 
-static preloadGetU8_ptr pn_preload_get_skip_tutorial, pn_preload_get_kit_index;
+static preloadGetU8_ptr pn_preload_get_kit_index;
 static preloadGetU32_ptr pn_preload_get_sotp_side, pn_preload_get_campaign_type;
 
 
@@ -72,7 +72,6 @@ void initialize_preparenewgame_rewrite()
     pn_preload_get_sotp_side = (preloadGetU32_ptr)(ASI::AddrOf(0x60a3d0));
     pn_preload_get_campaign_type  = (preloadGetU32_ptr)(ASI::AddrOf(0x5faa10));
 
-    pn_preload_get_skip_tutorial  = (preloadGetU8_ptr)(ASI::AddrOf(0x609780));
     pn_preload_get_kit_index      = (preloadGetU8_ptr)(ASI::AddrOf(0x5fae20));
 
     pn_gi_set_premade_kit    = (giSetBoolU8_ptr)(ASI::AddrOf(0x176760));
@@ -113,13 +112,27 @@ void initialize_preparenewgame_rewrite()
     install_preparenewgame_hook();
 }
 
-void __thiscall hooked_prepare_new_game(CAppMenu *_this, void *preload)
+uint8_t __thiscall pn_preload_get_skip_tutorial(CUiMenuPreLoad *_this, SF_GameInfo* game_info)
+{
+    log_info("check coop");
+    uint8_t is_coop = game_info->is_coop;
+    log_info("got it?");
+    if(is_coop == 0 && (_this->CUiMenuPreLoad_data).campaign_type == 0)
+    {
+        log_info("return skip tut in preload data");
+        return (_this->CUiMenuPreLoad_data).skip_tutorial;
+    }
+    log_info("return 1");
+    return 1;
+}
+
+void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload)
 {
     log_info("Preparing New Game");
     CUtlConfigFile configFile;
 
-
-    log_info("Check 1");
+    log_info("Check 1 loc: %x vs %x", (uint32_t)(_this->CAppMenu_data.CUiMenuPreload), (uint32_t)(preload));
+    log_info("Check 2 loc: %x vs %x", (uint32_t)(&_this->CAppMenu_data.game_info), (uint32_t)(preload->CUiMenuPreLoad_data.game_info));
     pn_cfg_ctor(&configFile, (char*)0x0);
     log_info("Check 2");
     uint32_t result_code = pn_get_result_code(preload);
@@ -173,7 +186,7 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, void *preload)
                 log_info("Check 13 type 2");
                 uint32_t SotPSide = pn_preload_get_sotp_side(preload);
                 uint32_t campaign_type = pn_preload_get_campaign_type(preload);
-                uint32_t skip_tutorial = pn_preload_get_skip_tutorial(preload);
+                uint32_t skip_tutorial = pn_preload_get_skip_tutorial(preload, game_info);
                 initFirstMap(game_info, skip_tutorial, skill_id, subskill_spec, campaign_type, SotPSide);
                 SF_String template_predefined;
                 uiAPI.SFStringConstructor(&template_predefined);
@@ -185,7 +198,7 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, void *preload)
                 if((_this->CAppMenu_data).campaign_type == 0)
                 {
                     uint32_t campaign_type = pn_preload_get_campaign_type(preload);
-                    uint32_t skip_tutorial = pn_preload_get_skip_tutorial(preload);
+                    uint32_t skip_tutorial = pn_preload_get_skip_tutorial(preload, game_info);
                     initFirstMap(game_info, skip_tutorial, skill_id, subskill_spec, campaign_type, false);
                     uint8_t premade_kit_index = pn_preload_get_kit_index(preload);
                     pn_update_kit(game_info, (_this->CAppMenu_data).pregame_load_result == 2, premade_kit_index);
@@ -199,9 +212,19 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, void *preload)
                 else
                 {
                     log_info("Load Custom Campaign");
-                    log_info("String Dot Map, map dirs? %hs", pn_string_dot_map->raw_data);
+                    log_info("String Dot Map, map dirs? %s", pn_string_dot_map->char_data);
                     uint32_t campaign_type = pn_preload_get_campaign_type(preload);
-                    uint32_t skip_tutorial = pn_preload_get_skip_tutorial(preload);
+
+                    log_info("Skip Function?");
+
+                    log_info ("GameInfo offset 0x%x",
+                            (uint32_t)&preload->CUiMenuPreLoad_data.game_info-(uint32_t)&preload->CUiMenuPreLoad_data);
+                    log_info ("Preload size 0x%x", sizeof(CUiMenuPreLoad));
+                    log_info ("Preload Data size 0x%x", sizeof(CUiMenuPreLoad_data));
+
+                    uint32_t skip_tutorial = pn_preload_get_skip_tutorial(preload, game_info);
+
+                    log_info("init First Map Test?");
                     initFirstMap(game_info, skip_tutorial, skill_id, subskill_spec, campaign_type, false);
                     uint8_t premade_kit_index = pn_preload_get_kit_index(preload);
                     pn_update_kit(game_info, (_this->CAppMenu_data).pregame_load_result == 2, premade_kit_index);
@@ -237,6 +260,7 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, void *preload)
         default:
             break;
     }
+
 }
 
 void install_preparenewgame_hook()

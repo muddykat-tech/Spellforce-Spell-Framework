@@ -1571,7 +1571,6 @@ typedef struct __attribute__((packed))
     CAppMenu_data CAppMenu_data;
 } CAppMenu;
 
-
 typedef struct __attribute__((packed))
 {
     CAppMenu *CAppMenu;
@@ -1597,6 +1596,82 @@ typedef struct __attribute__((packed))
     uint8_t lua_data[0x1c]; //is struct itself
     SF_String name_maybe;
 } CUtlConfigFile;
+
+typedef struct __attribute__((packed)) {
+    uint8_t unknown_datablock[0x6c];
+    CMnuContainer *some_container_label;
+    void *some_unknown_pointer;
+    void *SF_CGdMain;
+    SF_GameInfo *game_info;
+    CAppMenu *SF_CAppMenu;
+    uint32_t offset_0x80;
+    uint32_t campaign_type;
+    uint32_t offset_0x88;
+    uint32_t offset_0x8c;
+    uint32_t offset_0x90;
+    SF_String offset_0x94;
+    SF_String offset_0xa4;
+    uint16_t field69_0xb4;
+    uint8_t premade_kit_index; /* Created by retype action */
+    uint8_t unknown_datablock_2[0x5];
+    SF_String offset_0xbc;
+    uint8_t unknown_datablock_3[0xbc];
+    uint8_t skip_tutorial; /* Created by retype action */
+    uint8_t unknown_datablock_4[0xb];
+    CMnuContainer *new_character_container_maybe;
+    CMnuContainer *base_campaign_new_character_container;
+    uint8_t unknown_datablock_5[0x1c];
+    void *some_button;
+    CMnuLabel *some_label;
+    CMnuBase *unkn_control;
+    CMnuContainer *some_container7;
+    void *vis_control5;
+    CMnuBase *unkn_control2;
+    CMnuLabel *vis_control;
+    void *some_button2;
+    uint8_t unknown_datablock_6[0xc];
+    GdAvatarData Avatar_data;
+    void *vis_control2;
+    void *vis_control3;
+    void *ext_button;
+    void *smp_ext_button;
+    void *smp_ext_button2;
+    void *smp_ext_button3;
+    void *vis_control4;
+    CMnuContainer *campaign_level_load_container_maybe;
+    uint8_t unknown_datablock_7[0x24];
+    CMnuContainer *base_campaign_predefined_character_selection;
+    uint8_t unknown_datablock_8[0x38];
+    CMnuLabel *field408_0x344;
+    uint8_t unknown_datablock_9[0X58];
+    CMnuLabel *some_label_2;
+    uint8_t unknown_datablock_a[0x18];
+    uint8_t primary_skill; /* Created by retype action */
+    uint8_t subskill; /* Created by retype action */
+    uint8_t unknown_datablock_b[0xe];
+    CMnuContainer *base_campaign_predefined_character_base_container;
+    uint8_t unknown_datablock_c[0x94];
+    void *smp_ext_button4;
+    void *smp_button_sotp;
+    uint8_t unknown_datablock_d[0x4];
+    SF_String *offset_0x470;
+    SF_String *offset_0x474;
+    uint8_t unknown_datablock_e[0x30];
+    CMnuContainer *some_container6;
+    void *some_scrollbar;
+    uint8_t unknown_datablock_f[0x14];
+    CMnuLabel *field713_0x4c4;
+    uint32_t field714_0x4c8;
+    uint32_t field715_0x4cc;
+} CUiMenuPreLoad_data;
+
+typedef struct  __attribute__((packed)){ /* class CUiMenuPreLoad : CMnuContainer */
+    uint32_t vftable_ptr;
+    CMnuBase_data CMnuBase_data;
+    uint8_t CMnuVisControl_data[0x9c];
+    uint8_t CMnuContainer_data[0x98];
+    CUiMenuPreLoad_data CUiMenuPreLoad_data;
+}  CUiMenuPreLoad;
 
 
 /* |-========== Internal Functions ==========-| */
