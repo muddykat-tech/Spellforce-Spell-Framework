@@ -108,7 +108,7 @@ void initialize_preparenewgame_rewrite()
     install_preparenewgame_hook();
 }
 
-uint8_t __thiscall pn_preload_get_skip_tutorial(CUiMenuPreLoad *_this, SF_GameInfo* game_info)
+uint8_t __thiscall pn_preload_get_skip_tutorial(CUiMenuPreLoad *_this, SF_GameInfo *game_info)
 {
     log_info("check coop");
     uint8_t is_coop = (_this->CUiMenuPreLoad_data.game_info)->is_coop;
@@ -122,21 +122,27 @@ uint8_t __thiscall pn_preload_get_skip_tutorial(CUiMenuPreLoad *_this, SF_GameIn
     return 1;
 }
 
-void write_last_played(CAppMenu *_this, CUiMenuPreLoad *preload,  CUtlConfigFile* cfg, bool is_custom)
+void write_last_played(CAppMenu *_this, CUiMenuPreLoad *preload,  CUtlConfigFile *cfg, bool is_custom)
 {
     //if (is_custom) { return; }
     log_info("Starting Write Chain");
     SF_String name;
     uiAPI.SFStringConstructor(&name);
     SF_String *name_ptr = pn_preload_get_avatar_name(preload, &name);
-    if (name_ptr->str_length == 0) { uiAPI.SFStringDestructor(name_ptr); return; }
+    if (name_ptr->str_length == 0)
+    {
+        uiAPI.SFStringDestructor(name_ptr); return;
+    }
 
     log_info("Getting Config Data");
     SF_String *key_str;
     int ct = _this->CAppMenu_data.campaign_type;
-    if (ct == 1)      key_str = pn_s_last_addon;
-    else if (ct == 2) key_str = pn_s_last_sotp;
-    else key_str = (_this->CAppMenu_data.game_info.is_coop != 0) ? pn_s_last_coop
+    if (ct == 1)
+        key_str = pn_s_last_addon;
+    else if (ct == 2)
+        key_str = pn_s_last_sotp;
+    else
+        key_str = (_this->CAppMenu_data.game_info.is_coop != 0) ? pn_s_last_coop
                                                                  : pn_s_last_sf1;
     SF_String empty;
     uiAPI.SFStringConstructor(&empty);
@@ -158,8 +164,8 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
     CUtlConfigFile configFile;
 
     log_info("Check 1 loc: %x vs %x", (uint32_t)(_this->CAppMenu_data.CUiMenuPreload), (uint32_t)(preload));
-    log_info("Check 2 loc: %x vs %x", (uint32_t)(&_this->CAppMenu_data.game_info), (uint32_t)(preload->CUiMenuPreLoad_data.game_info));
-    pn_cfg_ctor(&configFile, (char*)0x0);
+    log_info("Check 2 loc: %x vs %x", (uint32_t)(&_this->CAppMenu_data.game_info),
+             (uint32_t)(preload->CUiMenuPreLoad_data.game_info));
     log_info("Check 2");
     uint32_t result_code = pn_get_result_code(preload);
     SF_GameInfo *game_info = &(_this->CAppMenu_data).game_info;
@@ -182,6 +188,7 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
     uint8_t subskill_spec = pn_gi_get_subskill(game_info);
 
     SF_String *screen_name;
+    SF_String name_allocated;
     CMnuScreen *pregame_screen = pn_get_pregame_screen((_this->CAppMenu_data).splash_screen);
     log_info("Check 6");
     if(pregame_screen != (CMnuScreen *)0x0)
@@ -265,15 +272,15 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
 
         case 7:
         {
-        log_info("Entered Case 7");
+            log_info("Entered Case 7");
         }
         case 8:
         {
-        log_info("Entered Case 8");
+            log_info("Entered Case 8");
         }
         case 9:
         {
-        log_info("Entered Case 9");
+            log_info("Entered Case 9");
         }
         case 1:
         case 3:
@@ -296,27 +303,27 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
     uiAPI.SFStringDestructor(&dot_map);
     log_info("write to config");
 
-    screen_name = pn_preload_get_avatar_name(preload, screen_name);
-    bool is_screen_empty = screen_name->str_length == 0;
+    screen_name = pn_preload_get_avatar_name(preload, &name_allocated);
+    bool is_screen_empty = (screen_name->str_length == 0);
     char screen_flag = '\0';
-    if(is_screen_empty)
+    if(!is_screen_empty)
     {
         screen_flag = '\x01';
     }
+    pn_cfg_ctor(&configFile, (char *)0x0);
 
     if(screen_flag != '\0')
     {
+        SF_String extra;
         uint32_t campaign_type = (_this->CAppMenu_data).campaign_type;
-        if(is_screen_empty)
-        {
-            uiAPI.SFStringConstructor_char(screen_name, "");
-            screen_name = pn_preload_get_avatar_name(preload, screen_name);
-        }
-        char* section = uiAPI.SFStringCMbStr(pn_s_cfg_key);
-        char* key = uiAPI.SFStringCMbStr(pn_s_last_sf1);
+        uiAPI.SFStringConstructor_char(&extra, "");
+        screen_name = pn_preload_get_avatar_name(preload, &name_allocated);
+        const char *section = "Stored";//uiAPI.SFStringCMbStr(pn_s_cfg_key);
+        const char *key = "LastPlayedAddon";//uiAPI.SFStringCMbStr(pn_s_last_sf1);
         // idk much about this area, I suspect this will cause issues
         log_info("set string");
-        pn_cfg_set_string(&configFile, section, key, screen_name, screen_name);
+        pn_cfg_set_string(&configFile, section, key, screen_name, &extra);
+        uiAPI.SFStringDestructor(&extra);
     }
 
     log_info("cleanup");
