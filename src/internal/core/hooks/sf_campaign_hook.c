@@ -264,6 +264,9 @@ void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t
     SF_String campagn_path;
     SF_String intial_map_name;
     log_info("initFirstMap Hook: Starter Kit Start ");
+
+    log_info("Values: %x %d %d %d %d", (uint32_t)_this, skip_tutorial, skill, subskill, campaign_id, is_shadowblade);
+
     /* -- starter kit: figure_template\starterkit\SK_<skill><subskill>.des -- */
     uiAPI.SFStringConstructor_char(&dot_map, ".map");
     uiAPI.SFStringConstructor(&full_template);
@@ -289,7 +292,7 @@ void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t
     s_avatar_internal_copy(&_this->AC82_1.avatarData.internal, &_this->AC82.avatarData.internal);
     log_info(
         "initFirstMap Hook: Avatar Snapshot Ran: s_avatar_internal_copy(&_this->AC82_1.avatarData.internal, &_this->AC82.avatarData.internal);");
-    s_avatar_vectors_copy(&_this->AC82_1.avatarData.some_vector, &_this->AC82.avatarData.some_vector);
+    s_avatar_vectors_copy(_this->AC82_1.avatarData.begin, _this->AC82.avatarData.begin);
     log_info(
         "initFirstMap Hook: Avatar Snapshot Ran: s_avatar_vectors_copy(&_this->AC82_1.avatarData.begin, &_this->AC82.avatarData.begin);");
 
@@ -416,13 +419,19 @@ void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t
     _this->unknown_0xf0 = 1;
     _this->unknown_0xf4 = 3;
 
-    log_info("initFirstMap Hook: Cleanup");
+    log_info("initFirstMap Hook: default_template");
     uiAPI.SFStringDestructor(&default_template);
+    log_info("initFirstMap Hook: template_path");
     uiAPI.SFStringDestructor(&template_path);
+    log_info("initFirstMap Hook: full_template");
     uiAPI.SFStringDestructor(&full_template);
+    log_info("initFirstMap Hook: dot_map");
     uiAPI.SFStringDestructor(&dot_map);
+    log_info("initFirstMap Hook: campagn_path");
     uiAPI.SFStringDestructor(&campagn_path);
+    log_info("initFirstMap Hook: intial_map_name");
     uiAPI.SFStringDestructor(&intial_map_name);
+    log_info("initFirstMap Hook: return");
 }
 
 void hook_initfirstmap()

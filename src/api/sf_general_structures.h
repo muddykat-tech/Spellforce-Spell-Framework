@@ -1455,7 +1455,9 @@ typedef struct __attribute__((packed))
 typedef struct __attribute__((packed))
 {
     GdAvatarInternal internal;
-    uint8_t some_vector[12];
+    uint32_t *begin;
+    uint32_t *data;
+    uint32_t *end;
 } GdAvatarData;
 
 

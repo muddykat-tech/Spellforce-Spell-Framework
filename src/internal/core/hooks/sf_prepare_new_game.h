@@ -27,9 +27,9 @@ typedef CMnuScreen*      (__thiscall *getPregameScreen_ptr)(CMnuScreen *_this); 
 typedef SF_String*      (__thiscall *getScreenName_ptr)(CMnuScreen *_this);                            /* 0x910cf0 */
 typedef uint8_t     (__thiscall *screenDeleteControl_ptr)(CMnuScreen *screen, SF_String* ctl);       /* 0x908560 */
 typedef void     (__thiscall *screenSetActive_ptr)(CMnuScreen *screen, CMnuScreen* v);               /* 0x912180 */
-typedef void*     (__thiscall   *cfgCtor_ptr)(void *cfg, const char *p);                /* 0x789050 */
-typedef void     (__thiscall    *cfgDtor_ptr)(void *cfg);                               /* 0x787e20 */
-typedef void     (__thiscall *cfgSetString_ptr)(void *cfg, char *section, char *key,
+typedef void*     (__thiscall   *cfgCtor_ptr)(CUtlConfigFile*cfg, const char *p);                /* 0x789050 */
+typedef void     (__thiscall    *cfgDtor_ptr)(CUtlConfigFile *cfg);                               /* 0x787e20 */
+typedef void     (__thiscall *cfgSetString_ptr)(CUtlConfigFile *cfg, char *section, char *key,
                                                 SF_String *value, SF_String *dflt);  /* 007897b0 */
 
 typedef void (__thiscall *CreateMnuHintExt_ptr)(CAppMenu *_this);
