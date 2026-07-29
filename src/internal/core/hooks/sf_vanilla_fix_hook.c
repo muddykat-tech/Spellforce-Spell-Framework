@@ -1657,7 +1657,6 @@ void __thiscall CreateSplashScreen(CAppMenu *_this, CMnuContainer **param_1, SF_
 
 }
 
-
 static void splash_screen_hook()
 {
     ASI::MemoryRegion mreg(ASI::AddrOf(0x18359f), 5);
@@ -1673,8 +1672,6 @@ static void splash_screen_hook()
     ASI::EndRewrite(mreg2);
 
 }
-
-extern void hook_qs_load();
 
 void initialize_vanilla_fix_hooks()
 {
@@ -1709,7 +1706,6 @@ void initialize_vanilla_fix_hooks()
     AC57_Dispose = (AC57_Dispose_ptr)(ASI::AddrOf(0x3865b0));
 
     readMapNameFromSave = (readMapNameFromSave_ptr)(ASI::AddrOf(0x2c1f10));
-    hook_qs_load();
 
     log_info("| - Vanilla Fix Hooks");
     figure_statistic_hook_current_ac();

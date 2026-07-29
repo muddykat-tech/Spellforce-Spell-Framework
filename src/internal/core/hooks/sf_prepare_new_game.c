@@ -18,34 +18,34 @@
 #include <windows.h>
 
 static preloadGetResultCode_ptr pn_get_result_code;
-static gameInfoReset_ptr        pn_gi_reset_avatar;
-static preloadGetAvatar_ptr     pn_preload_get_avatar;
-static gameInfoSetAvatar_ptr    pn_gi_set_avatar_equipdata;
-static gameInfoGetU8_ptr        pn_gi_get_skill, pn_gi_get_subskill, pn_gi_get_kit_index;
+static gameInfoReset_ptr pn_gi_reset_avatar;
+static preloadGetAvatar_ptr pn_preload_get_avatar;
+static gameInfoSetAvatar_ptr pn_gi_set_avatar_equipdata;
+static gameInfoGetU8_ptr pn_gi_get_skill, pn_gi_get_subskill, pn_gi_get_kit_index;
 
-static preloadGetU8_ptr         pn_preload_get_skip_tutorial, pn_preload_get_kit_index;
-static preloadGetU32_ptr        pn_preload_get_sotp_side, pn_preload_get_campaign_type;
+static preloadGetU8_ptr pn_preload_get_skip_tutorial, pn_preload_get_kit_index;
+static preloadGetU32_ptr pn_preload_get_sotp_side, pn_preload_get_campaign_type;
 
 
-static giSetBoolU8_ptr          pn_gi_set_premade_kit, pn_gi_apply_premade_kit;
-static giSetU32_ptr             pn_gi_set_start_mode2, pn_gi_set_game_mode,
-                                pn_gi_set_flag_a, pn_gi_set_flag_b;
-static giSetStr_ptr             pn_gi_set_save_file_path, pn_gi_set_save_file_name;
-static giSetTemplateName_ptr    pn_gi_set_template_name;
-static giVoid_ptr               pn_gi_refresh_case7;
-static giStarterKitReset_ptr    pn_gi_starterkit_reset;
-static preloadGetStr_ptr        pn_preload_get_slot_name, pn_preload_get_avatar_name,
-                                pn_preload_get_freegame_map, pn_preload_get_freegame_template;
-static appMenuDeleteSave_ptr    pn_delete_save;
-static getPregameScreen_ptr     pn_get_pregame_screen;
-static getScreenName_ptr        pn_screen_get_name;
-static screenDeleteControl_ptr  pn_screen_delete_control;
-static screenSetActive_ptr      pn_screen_set_active;
-static cfgCtor_ptr              pn_cfg_ctor;
-static cfgDtor_ptr              pn_cfg_dtor;
-static cfgSetString_ptr         pn_cfg_set_string;
-static preloadUpdateKit_ptr     pn_update_kit;
-static preloadUpdateKit2_ptr    pn_update_kit_2;
+static giSetBoolU8_ptr pn_gi_set_premade_kit, pn_gi_apply_premade_kit;
+static giSetU32_ptr pn_gi_set_start_mode2, pn_gi_set_game_mode,
+                    pn_gi_set_flag_a, pn_gi_set_flag_b;
+static giSetStr_ptr pn_gi_set_save_file_path, pn_gi_set_save_file_name;
+static giSetTemplateName_ptr pn_gi_set_template_name;
+static giVoid_ptr pn_gi_refresh_case7;
+static giStarterKitReset_ptr pn_gi_starterkit_reset;
+static preloadGetStr_ptr pn_preload_get_slot_name, pn_preload_get_avatar_name,
+                         pn_preload_get_freegame_map, pn_preload_get_freegame_template;
+static appMenuDeleteSave_ptr pn_delete_save;
+static getPregameScreen_ptr pn_get_pregame_screen;
+static getScreenName_ptr pn_screen_get_name;
+static screenDeleteControl_ptr pn_screen_delete_control;
+static screenSetActive_ptr pn_screen_set_active;
+static cfgCtor_ptr pn_cfg_ctor;
+static cfgDtor_ptr pn_cfg_dtor;
+static cfgSetString_ptr pn_cfg_set_string;
+static preloadUpdateKit_ptr pn_update_kit;
+static preloadUpdateKit2_ptr pn_update_kit_2;
 
 /* last-played globals best guesses */
 static SF_String *pn_s_cfg_key;          /* DAT_00d24120 @ 0xd24120 (section?)   */
@@ -143,7 +143,7 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, void *preload)
     uint8_t subskill_spec = pn_gi_get_subskill(game_info);
 
     SF_String *screen_name;
-    CMnuScreen* pregame_screen = pn_get_pregame_screen((_this->CAppMenu_data).splash_screen);
+    CMnuScreen *pregame_screen = pn_get_pregame_screen((_this->CAppMenu_data).splash_screen);
     log_info("Check 6");
     if(pregame_screen != (CMnuScreen *)0x0)
     {
@@ -177,9 +177,10 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, void *preload)
                 initFirstMap(game_info, skip_tutorial, skill_id, subskill_spec, campaign_type, SotPSide);
                 SF_String template_predefined;
                 uiAPI.SFStringConstructor(&template_predefined);
-            //sotp_side =
+                //sotp_side =
             }
-            else {
+            else
+            {
                 log_info("Check 14 type: %d", (_this->CAppMenu_data).campaign_type);
                 if((_this->CAppMenu_data).campaign_type == 0)
                 {
@@ -194,7 +195,8 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, void *preload)
                     s_play_campaign_intro(_this);
                     uiAPI.SFStringDestructor(screen_name);
                     break;
-                } else
+                }
+                else
                 {
                     log_info("Load Custom Campaign");
                     log_info("String Dot Map, map dirs? %hs", pn_string_dot_map->raw_data);
@@ -233,7 +235,7 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, void *preload)
         }
         case 3:
         default:
-        break;
+            break;
     }
 }
 

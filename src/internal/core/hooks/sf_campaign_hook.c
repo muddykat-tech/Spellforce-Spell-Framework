@@ -47,6 +47,9 @@ AC82_Zero_ptr AC82_Zero;
 //TODO -- make this function available for framework. Will need for proper loading screens and maps later on!!!
 checkFileExists_ptr checkFileExists;
 
+static void hook_qs_load();
+
+
 void initialize_campaign_hooks()
 {
 
@@ -62,8 +65,16 @@ void initialize_campaign_hooks()
     s_avatar_internal_copy = (avatarInternalCopy_ptr)(ASI::AddrOf(0x1759e0));
     s_avatar_vectors_copy  = (avatarVectorsCopy_ptr)(ASI::AddrOf(0x175860));
 
+    checkFileExists = (checkFileExists_ptr)(ASI::AddrOf(0x4f7d50));
+    prepareTransition = (prepareTransition_ptr)(ASI::AddrOf(0x199db0));
+    initDefaultInfo = (initDefaultInfo_ptr)(ASI::AddrOf(0x175760));
+    AC82_Zero = (AC82_Zero_ptr)(ASI::AddrOf(0x19e730));
+    s_getDataStorageLocation = (GetDataStorageLocation_ptr)(ASI::AddrOf(0x1ee9f0));
+    s_start_game = (startGame_ptr)(ASI::AddrOf(0x183560));
+
     hook_initfirstmap();
     hook_getsavepath();
+    hook_qs_load();
 
     initialize_preparenewgame_rewrite();
 
@@ -149,11 +160,14 @@ SF_String * __thiscall getSavePath(CAppSession *_this, SF_String *output, uint32
                 custom = &g_campaigns[custom_idx];
             }
             SF_String campaign_path;
-            char path[1024]; //TODO replace with sfstring for better compatabilty with long desktop paths
-            snprintf(path, sizeof(path), "%s\\", custom->campaign_folder);
-            uiAPI.SFStringConstructor_char(&campaign_path, path);
+            SF_String back_slash;
+
+            uiAPI.SFStringConstructor_char(&campaign_path, custom->campaign_folder);
+            uiAPI.SFStringConstructor_char(&back_slash, "\\");
             uiAPI.SFStringConcat(output, &campaign_path);
+            uiAPI.SFStringConcat(output, &back_slash);
             uiAPI.SFStringDestructor(&campaign_path);
+            uiAPI.SFStringDestructor(&back_slash);
             break;
         }
     }
@@ -219,6 +233,16 @@ void __thiscall loadQuickSave(CAppMenu *_this, uint32_t unknown)
     uiAPI.SFStringDestructor(&tilda);
     uiAPI.SFStringDestructor(&quicksave);
     uiAPI.SFStringDestructor(&base_path);
+}
+
+void hook_qs_load()
+{
+    ASI::MemoryRegion mreg_qs(ASI::AddrOf(0x185c00), 5);
+    ASI::BeginRewrite(mreg_qs);
+    *(unsigned char *)(ASI::AddrOf(0x185c00)) = 0xE9; // JMP instruction
+    *(int *)(ASI::AddrOf(0x185c01)) = (int)(&loadQuickSave) - ASI::AddrOf(0x185c05);
+    ASI::EndRewrite(mreg_qs);
+    log_info("QuickSave Load replacement hooked (entry JMP)");
 }
 
 /**
@@ -401,24 +425,6 @@ void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t
     uiAPI.SFStringDestructor(&intial_map_name);
 }
 
-void hook_qs_load()
-{
-    checkFileExists = (checkFileExists_ptr)(ASI::AddrOf(0x4f7d50));
-    prepareTransition = (prepareTransition_ptr)(ASI::AddrOf(0x199db0));
-    initDefaultInfo = (initDefaultInfo_ptr)(ASI::AddrOf(0x175760));
-    AC82_Zero = (AC82_Zero_ptr)(ASI::AddrOf(0x19e730));
-    s_getDataStorageLocation = (GetDataStorageLocation_ptr)(ASI::AddrOf(0x1ee9f0));
-    s_start_game = (startGame_ptr)(ASI::AddrOf(0x183560));
-
-
-    ASI::MemoryRegion mreg_qs(ASI::AddrOf(0x185c00), 5);
-    ASI::BeginRewrite(mreg_qs);
-    *(unsigned char *)(ASI::AddrOf(0x185c00)) = 0xE9; // JMP instruction
-    *(int *)(ASI::AddrOf(0x185c01)) = (int)(&loadQuickSave) - ASI::AddrOf(0x185c05);
-    ASI::EndRewrite(mreg_qs);
-    log_info("QuickSave Load replacement hooked (entry JMP)");
-}
-
 void hook_initfirstmap()
 {
     ASI::MemoryRegion mreg(ASI::AddrOf(0x176040), 5);
@@ -470,12 +476,16 @@ void campaign_launch_flow(int32_t campaign_index)
     stop_intro_video(app_menu);
     g_active_custom_campaign = campaign_index;              /* UI state only */
 
-    log_info("Launching campaign '%s' (flow, engine_type %u, avatar %u)",
-             def->name, (SFSF_CAMPAIGN_TYPE_BASE + campaign_index), def->avatar_type);
-
     app_menu->CAppMenu_data.campaign_type = SFSF_CAMPAIGN_TYPE_BASE + campaign_index;
     s_gameinfo_set_avatar_type(&app_menu->CAppMenu_data.game_info, (uint16_t)def->avatar_type);
-    s_enter_campaign_flow(app_menu, 1); // builds menu type I think
+    log_info ("Campaign type offset 0x%x",
+              (uint32_t)&app_menu->CAppMenu_data.campaign_type-(uint32_t)&app_menu->CAppMenu_data);
+    log_info ("Game info offset 0x%x",
+              (uint32_t)&app_menu->CAppMenu_data.game_info-(uint32_t)&app_menu->CAppMenu_data);
+    log_info ("Game info size 0x%x", sizeof(SF_GameInfo));
+    log_info("Launching campaign '%s' (flow, engine_type %u, avatar %u)",
+             def->name, app_menu->CAppMenu_data.campaign_type, def->avatar_type);
+    s_enter_campaign_flow(app_menu, 1);
 }
 
 static bool s_screen_exists = false;
