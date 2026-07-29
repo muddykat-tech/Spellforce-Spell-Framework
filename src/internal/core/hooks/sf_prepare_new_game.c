@@ -115,13 +115,13 @@ void initialize_preparenewgame_rewrite()
 
 void __thiscall hooked_prepare_new_game(CAppMenu *_this, void *preload)
 {
-    log_info("Prepare new game");
+    log_info("Preparing New Game");
     CUtlConfigFile configFile;
 
 
     log_info("Check 1");
     pn_cfg_ctor(&configFile, (char*)0x0);
-    log_info("Check 1");
+    log_info("Check 2");
     uint32_t result_code = pn_get_result_code(preload);
     SF_GameInfo *game_info = &(_this->CAppMenu_data).game_info;
     (_this->CAppMenu_data).pregame_load_result = result_code;
@@ -185,7 +185,7 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, void *preload)
                 {
                     uint32_t campaign_type = pn_preload_get_campaign_type(preload);
                     uint32_t skip_tutorial = pn_preload_get_skip_tutorial(preload);
-                    initFirstMap(game_info, skip_tutorial, skill_id, subskill_spec, campaign_type, 0);
+                    initFirstMap(game_info, skip_tutorial, skill_id, subskill_spec, campaign_type, false);
                     uint8_t premade_kit_index = pn_preload_get_kit_index(preload);
                     pn_update_kit(game_info, (_this->CAppMenu_data).pregame_load_result == 2, premade_kit_index);
                     premade_kit_index = pn_preload_get_kit_index(preload);
@@ -196,9 +196,11 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, void *preload)
                     break;
                 } else
                 {
+                    log_info("Load Custom Campaign");
+                    log_info("String Dot Map, map dirs? %hs", pn_string_dot_map->raw_data);
                     uint32_t campaign_type = pn_preload_get_campaign_type(preload);
                     uint32_t skip_tutorial = pn_preload_get_skip_tutorial(preload);
-                    initFirstMap(game_info, skip_tutorial, skill_id, subskill_spec, campaign_type, 0);
+                    initFirstMap(game_info, skip_tutorial, skill_id, subskill_spec, campaign_type, false);
                     uint8_t premade_kit_index = pn_preload_get_kit_index(preload);
                     pn_update_kit(game_info, (_this->CAppMenu_data).pregame_load_result == 2, premade_kit_index);
                     premade_kit_index = pn_preload_get_kit_index(preload);
@@ -208,7 +210,6 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, void *preload)
                     uiAPI.SFStringDestructor(screen_name);
                     break;
                 }
-                //custom campaign load here
             }
             break;
         }

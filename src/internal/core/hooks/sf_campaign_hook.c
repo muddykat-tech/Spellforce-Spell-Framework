@@ -474,9 +474,8 @@ void campaign_launch_flow(int32_t campaign_index)
              def->name, (SFSF_CAMPAIGN_TYPE_BASE + campaign_index), def->avatar_type);
 
     app_menu->CAppMenu_data.campaign_type = SFSF_CAMPAIGN_TYPE_BASE + campaign_index;
-    s_gameinfo_set_avatar_type(&app_menu->CAppMenu_data.game_info,
-                               (uint16_t)def->avatar_type);
-    s_enter_campaign_flow(app_menu, 1);
+    s_gameinfo_set_avatar_type(&app_menu->CAppMenu_data.game_info, (uint16_t)def->avatar_type);
+    s_enter_campaign_flow(app_menu, 1); // builds menu type I think
 }
 
 static bool s_screen_exists = false;
