@@ -282,19 +282,11 @@ void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t
      *    Downstream flows (restart map, PrepareNewGame) read AC82_1;
      *    the shallow field copies alone are NOT sufficient. -- */
     _this->AC82_1.unknown1  = _this->AC82.unknown1;
-    log_info("initFirstMap Hook: Avatar Snapshot Ran: _this->AC82_1.unknown1  = _this->AC82.unknown1;");
     _this->AC82_1.unknown2  = _this->AC82.unknown2;
-    log_info("initFirstMap Hook: Avatar Snapshot Ran: _this->AC82_1.unknown2  = _this->AC82.unknown2;");
     _this->AC82_1.unknown3  = _this->AC82.unknown3;
-    log_info("initFirstMap Hook: Avatar Snapshot Ran: _this->AC82_1.unknown3  = _this->AC82.unknown3;");
     _this->AC82_1.kit_index = _this->AC82.kit_index;
-    log_info("initFirstMap Hook: Avatar Snapshot Ran: _this->AC82_1.kit_index = _this->AC82.kit_index;");
     s_avatar_internal_copy(&_this->AC82_1.avatarData.internal, &_this->AC82.avatarData.internal);
-    log_info(
-        "initFirstMap Hook: Avatar Snapshot Ran: s_avatar_internal_copy(&_this->AC82_1.avatarData.internal, &_this->AC82.avatarData.internal);");
     s_avatar_vectors_copy(_this->AC82_1.avatarData.begin, _this->AC82.avatarData.begin);
-    log_info(
-        "initFirstMap Hook: Avatar Snapshot Ran: s_avatar_vectors_copy(&_this->AC82_1.avatarData.begin, &_this->AC82.avatarData.begin);");
 
     log_info("initFirstMap Hook: Check for Custom Campaign");
     /* -- active custom campaign? -- */
@@ -348,13 +340,13 @@ void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t
                 break;
             case 0:
             default:
-                log_info("initFirstMap Hook: Engine Type != (1||2)");
+                log_info("initFirstMap Hook: Campaign Type != (1||2)");
                 /* default falls back to Order so the strings are ALWAYS
                  * constructed - the epilogue destructors depend on it. */
                 if (campaign_id > 2)
                 {
                     log_info("initFirstMap: Located Custom Campaign ID %d", campaign_id);
-                    char path[128];
+                    char path[512];
                     snprintf(path, sizeof(path), "map\\CustomCampaigns\\%s", custom->campaign_folder);
                     uiAPI.SFStringConstructor_char(&campagn_path, path);
                     uiAPI.SFStringConstructor_char(&intial_map_name, custom->start_map);
@@ -411,7 +403,6 @@ void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t
         _this->is_tutorial = 1;
     }
 
-    log_info("initFirstMap Hook: File Name Settings");
     /* -- filename = <folder><map>.map + branch-invariant state -- */
     uiAPI.SFStringConcat(&campagn_path, &intial_map_name);
     uiAPI.SFStringConcat(&campagn_path, &dot_map);
@@ -419,19 +410,12 @@ void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t
     _this->unknown_0xf0 = 1;
     _this->unknown_0xf4 = 3;
 
-    log_info("initFirstMap Hook: default_template");
     uiAPI.SFStringDestructor(&default_template);
-    log_info("initFirstMap Hook: template_path");
     uiAPI.SFStringDestructor(&template_path);
-    log_info("initFirstMap Hook: full_template");
     uiAPI.SFStringDestructor(&full_template);
-    log_info("initFirstMap Hook: dot_map");
     uiAPI.SFStringDestructor(&dot_map);
-    log_info("initFirstMap Hook: campagn_path");
     uiAPI.SFStringDestructor(&campagn_path);
-    log_info("initFirstMap Hook: intial_map_name");
     uiAPI.SFStringDestructor(&intial_map_name);
-    log_info("initFirstMap Hook: return");
 }
 
 void hook_initfirstmap()

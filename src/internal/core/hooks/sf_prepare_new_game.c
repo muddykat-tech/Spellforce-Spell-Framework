@@ -100,7 +100,6 @@ void initialize_preparenewgame_rewrite()
     CreateMnuHintExt         = (CreateMnuHintExt_ptr)(ASI::AddrOf(0x18eca0));
 
     pn_s_cfg_key    = (SF_String *)(ASI::AddrOf(0x924120));
-    pn_s_last_sf1   = (SF_String *)(ASI::AddrOf(0x924320));
     pn_s_last_addon = (SF_String *)(ASI::AddrOf(0x9243d0));
     pn_s_last_sotp  = (SF_String *)(ASI::AddrOf(0x924480));
     pn_s_last_coop  = (SF_String *)(ASI::AddrOf(0x923c90));
@@ -122,67 +121,28 @@ uint8_t __thiscall pn_preload_get_skip_tutorial(CUiMenuPreLoad *_this, SF_GameIn
     return 1;
 }
 
-void write_last_played(CAppMenu *_this, CUiMenuPreLoad *preload,  CUtlConfigFile *cfg, bool is_custom)
-{
-    //if (is_custom) { return; }
-    log_info("Starting Write Chain");
-    SF_String name;
-    uiAPI.SFStringConstructor(&name);
-    SF_String *name_ptr = pn_preload_get_avatar_name(preload, &name);
-    if (name_ptr->str_length == 0)
-    {
-        uiAPI.SFStringDestructor(name_ptr); return;
-    }
-
-    log_info("Getting Config Data");
-    SF_String *key_str;
-    int ct = _this->CAppMenu_data.campaign_type;
-    if (ct == 1)
-        key_str = pn_s_last_addon;
-    else if (ct == 2)
-        key_str = pn_s_last_sotp;
-    else
-        key_str = (_this->CAppMenu_data.game_info.is_coop != 0) ? pn_s_last_coop
-                                                                 : pn_s_last_sf1;
-    SF_String empty;
-    uiAPI.SFStringConstructor(&empty);
-
-    log_info("Set String - Fails missing control or some such from what I can trace");
-    pn_cfg_set_string(cfg, uiAPI.SFStringCMbStr(pn_s_cfg_key), uiAPI.SFStringCMbStr(key_str), &empty, name_ptr);
-
-    log_info("Cleaning up");
-    uiAPI.SFStringDestructor(&cfg->name_maybe);
-    pn_cfg_dtor(cfg);
-    uiAPI.SFStringDestructor(&empty);
-    uiAPI.SFStringDestructor(name_ptr);
-    log_info("Returning");
-}
-
 void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload)
 {
     log_info("Preparing New Game");
     CUtlConfigFile configFile;
 
-    uint8_t anotherAvatarstuct[220];
+    uint8_t avatar_buf_a[220];   // Ghidra's local_1f8
+    uint8_t avatar_buf_b[220];   // Ghidra's auStack_11c
     uint32_t result_code = preload->CUiMenuPreLoad_data.offset_0x8c;
     SF_GameInfo *game_info = &(_this->CAppMenu_data).game_info;
     (_this->CAppMenu_data).pregame_load_result = result_code;
 
     GdAvatarData *avatar_data = &(game_info->AC82).avatarData;
     GdAvatarInternal *internal_avatar = &avatar_data->internal;
+    uint16_t saved_avatar_type = internal_avatar->avatar_type;
 
-    uint16_t avatar_type = internal_avatar->avatar_type;
-    log_info("Check 2");
     pn_gi_reset_avatar(game_info, 0); // might be internal_avatar init
-    avatar_data = pn_preload_get_avatar(preload, anotherAvatarstuct);
+    GdAvatarData *a = pn_preload_get_avatar(preload, (GdAvatarData *)avatar_buf_a);
+    uint16_t equip_word = *(uint16_t *)((uint8_t *)a + 0xd4);   // read BEFORE 2nd call
+    GdAvatarData *b = pn_preload_get_avatar(preload, (GdAvatarData *)avatar_buf_b);
 
-    log_info("Check 4");
-    //There are three structures that uses avatarInternal. This is the 3rd one
-    pn_gi_set_avatar_equipdata(game_info, internal_avatar,  *(uint16_t *)&avatar_data->begin);
-
-    game_info->AC82.avatarData.internal.avatar_type = avatar_type;
-    // Stack corruption section start
-    log_info("Check 5");
+    pn_gi_set_avatar_equipdata(game_info, (GdAvatar *)b, equip_word);
+    game_info->AC82.avatarData.internal.avatar_type = saved_avatar_type;
 
     //IDK, seems annotations are wrong somewhhat
     uint8_t skill_id = game_info->AC82.avatarData.internal.abilities[0].id;
@@ -324,19 +284,17 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
         uint32_t campaign_type = (_this->CAppMenu_data).campaign_type;
         uiAPI.SFStringConstructor_char(&extra, "");
         screen_name = pn_preload_get_avatar_name(preload, &name_allocated);
-        const char *section = "Stored";//uiAPI.SFStringCMbStr(pn_s_cfg_key);
-        const char *key = "LastPlayedAddon";//uiAPI.SFStringCMbStr(pn_s_last_sf1);
-        // idk much about this area, I suspect this will cause issues
+        const char *section = "Stored";
+        const char *key = "LastPlayedAddon";
         log_info("set string");
         pn_cfg_set_string(&configFile, section, key, screen_name, &extra);
         uiAPI.SFStringDestructor(&extra);
     }
 
     log_info("cleanup");
-
-    write_last_played(_this, preload, &configFile, false);
     uiAPI.SFStringDestructor(&configFile.name_maybe);
     pn_cfg_dtor(&configFile);
+
     log_info("done");
 }
 
