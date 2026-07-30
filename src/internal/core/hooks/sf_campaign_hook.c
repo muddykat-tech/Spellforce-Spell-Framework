@@ -286,7 +286,8 @@ void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t
     _this->AC82_1.unknown3  = _this->AC82.unknown3;
     _this->AC82_1.kit_index = _this->AC82.kit_index;
     s_avatar_internal_copy(&_this->AC82_1.avatarData.internal, &_this->AC82.avatarData.internal);
-    s_avatar_vectors_copy(_this->AC82_1.avatarData.begin, _this->AC82.avatarData.begin);
+    uint32_t proper_offset = (uint32_t)(&_this->AC82.avatarData.begin) - 0x10;
+    s_avatar_vectors_copy(&_this->AC82_1.avatarData.begin, proper_offset);
 
     log_info("initFirstMap Hook: Check for Custom Campaign");
     /* -- active custom campaign? -- */
