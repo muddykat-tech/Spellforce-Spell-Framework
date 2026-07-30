@@ -127,6 +127,7 @@ typedef uint32_t (__cdecl *SFprintf_ptr)(SF_String *_this, const wchar_t *format
 // TODO move breifs down to struct so Doxygen picks them up
 /** @brief Appends source to destination. */
 DECLARE_FUNCTION(SF_String *, SFStringConcat, SF_String *destination, SF_String *source);
+DECLARE_FUNCTION(SF_String *, SFStringConcatMulti, SF_String *_this, SF_String *destination, SF_String *source);
 /** @brief (Re)allocates the string buffer to hold the given length. */
 DECLARE_FUNCTION(void, SFStringSetLength, SF_String *_this, uint32_t length);
 /** @brief Fills the string with `length` repetitions of the given wide char. */
@@ -213,6 +214,7 @@ typedef struct
     /* SF_String API? */
     SFprintf_ptr SFprintf;
     SFStringConcat_ptr SFStringConcat;
+    SFStringConcatMulti_ptr SFStringConcatMulti;
     SFStringSetLength_ptr SFStringSetLength;
     SFStringFromWchar_ptr SFStringFromWchar;
     SFStringDestructor_ptr SFStringDestructor;

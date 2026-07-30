@@ -403,6 +403,7 @@ void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t
         _this->is_tutorial = 1;
     }
 
+    log_info("initFirstMap Hook: prepping map file for loading");
     /* -- filename = <folder><map>.map + branch-invariant state -- */
     uiAPI.SFStringConcat(&campagn_path, &intial_map_name);
     uiAPI.SFStringConcat(&campagn_path, &dot_map);
@@ -410,12 +411,14 @@ void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t
     _this->unknown_0xf0 = 1;
     _this->unknown_0xf4 = 3;
 
+    log_info("initFirstMap Hook; Cleanup");
     uiAPI.SFStringDestructor(&default_template);
     uiAPI.SFStringDestructor(&template_path);
     uiAPI.SFStringDestructor(&full_template);
     uiAPI.SFStringDestructor(&dot_map);
     uiAPI.SFStringDestructor(&campagn_path);
     uiAPI.SFStringDestructor(&intial_map_name);
+    log_info("initFirstMap Hook; Complete Returning");
 }
 
 void hook_initfirstmap()

@@ -1729,7 +1729,7 @@ void initialize_vanilla_fix_hooks()
     get_race_fix_hook();
     army_size_fix_hook();
     figure_turn_off_battle_mode_hook();
-    splash_screen_hook();
-    load_screens_json();
+    //splash_screen_hook();
+    //load_screens_json();
 
 }

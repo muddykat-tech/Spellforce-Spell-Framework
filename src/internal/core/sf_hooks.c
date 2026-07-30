@@ -273,6 +273,7 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(ui, SFStringDeepCopy, 0x383a20);
     DEFINE_FUNCTION(ui, SFStringCMbStr, 0x383db0);
     DEFINE_FUNCTION(ui, SFStringConstructor_wchar, 0x383890);
+    DEFINE_FUNCTION(ui, SFStringConcatMulti, 0x383b10);
     INCLUDE_FUNCTION(ui, SFStringConstructor, &SFStringConstructor);
     INCLUDE_FUNCTION(ui, SFStringConstructor_char, &SFStringConstructor_char);
 

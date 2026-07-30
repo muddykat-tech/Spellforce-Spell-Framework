@@ -107,7 +107,7 @@ void initialize_preparenewgame_rewrite()
     install_preparenewgame_hook();
 }
 
-uint8_t __thiscall pn_preload_get_skip_tutorial(CUiMenuPreLoad *_this, SF_GameInfo *game_info)
+uint8_t __thiscall pn_preload_get_skip_tutorial(CUiMenuPreLoad *_this)
 {
     log_info("check coop");
     uint8_t is_coop = (_this->CUiMenuPreLoad_data.game_info)->is_coop;
@@ -125,6 +125,7 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
 {
     log_info("Preparing New Game");
     CUtlConfigFile configFile;
+    pn_cfg_ctor(&configFile, (char *)0x0);
 
     uint8_t avatar_buf_a[220];   // Ghidra's local_1f8
     uint8_t avatar_buf_b[220];   // Ghidra's auStack_11c
@@ -152,150 +153,161 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
     SF_String name_allocated;
 
     CMnuScreen *pregame_screen = pn_get_pregame_screen((_this->CAppMenu_data).splash_screen);
-    log_info("Check 6");
 
-    if(pregame_screen != (CMnuScreen *)0x0)
+    if (pregame_screen != (CMnuScreen *)0)
     {
-        log_info("Check 7");
-        screen_name = pn_screen_get_name(pregame_screen);
-        log_info("Check 8");
-        pn_screen_delete_control((_this->CAppMenu_data).splash_screen, screen_name);
-        log_info("Check 9");
-        pn_screen_set_active((_this->CAppMenu_data).splash_screen, 0);
+        /* owned by the control - borrow only, never destruct */
+        SF_String *ctrl_name = pn_screen_get_name(pregame_screen);
+        pn_screen_delete_control((_this->CAppMenu_data).splash_screen, ctrl_name);
+        pn_screen_set_active((_this->CAppMenu_data).splash_screen, (CMnuScreen *)0);
     }
 
-    log_info("Check 10");
     CreateMnuHintExt(_this);
+
     log_info("Check 11");
+    char store_last_played = 0;      /* local_1fd */
+    int  did_name_lookup   = 0;      /* local_23c */
 
-
-    SF_String dot_map;
+    SF_String dot_map, predefined_template;
+    uiAPI.SFStringConstructor_char(&predefined_template, "figure_template\\predefined\\");
     uiAPI.SFStringConstructor_char(&dot_map, ".map");
     //stack corruption section end
-
+    SF_String *nm = NULL;
     switch((_this->CAppMenu_data).pregame_load_result)
     {
         case 0:
         case 2:
         {
-            log_info("Case 0 || 2");
-            if((_this->CAppMenu_data).campaign_type == 2)
+            log_info("Loading into Create New Game via Premade / Created Avatar");
+            if ((_this->CAppMenu_data).campaign_type == 2)
             {
-                log_info("Load Vanillia Campaign 2");
-                uint32_t SotPSide = pn_preload_get_sotp_side(preload);
+                uint32_t sotp_side     = pn_preload_get_sotp_side(preload);
                 uint32_t campaign_type = pn_preload_get_campaign_type(preload);
-                uint32_t skip_tutorial = pn_preload_get_skip_tutorial(preload, game_info);
-                initFirstMap(game_info, skip_tutorial, skill_id, subskill_spec, campaign_type, SotPSide);
-                SF_String template_predefined;
-                uiAPI.SFStringConstructor(&template_predefined);
-                //sotp_side =
+                uint32_t skip_tutorial = pn_preload_get_skip_tutorial(preload);
+
+                initFirstMap(game_info, skip_tutorial & 0xff, skill_id, subskill_spec,
+                            campaign_type, (uint8_t)sotp_side != 0);
+
+                uint8_t kit = pn_preload_get_kit_index(preload);
+                pn_update_kit(game_info,
+                            (_this->CAppMenu_data).pregame_load_result == 2, kit);
+
+                SF_String des_name;
+                uiAPI.SFStringConstructor(&des_name);                 /* 0x00783900 */
+
+                uint32_t side_again = pn_preload_get_sotp_side(preload);
+                uint8_t  kit_idx    = pn_gi_get_kit_index(game_info); /* 0x00575F00 */
+
+                uiAPI.SFprintf(&des_name,
+                            (side_again == 0) ? L"PDC3_%02dp.des"
+                                                : L"PDC3_%02ds.des",
+                            (kit_idx & 0xff) + 1);                 /* 0x00784170 */
+
+                game_info->start_mode = 2;
+
+                SF_String tmpl;
+                SF_String *full = uiAPI.SFStringConcatMulti(&predefined_template, &tmpl, &des_name);
+                pn_gi_set_template_name(game_info, full);             /* 0x00576790 */
+
+                uiAPI.SFStringDestructor(&tmpl);
+                uiAPI.SFStringDestructor(&des_name);
             }
             else
             {
-                log_info("Confirming Campaign Type: %d", (_this->CAppMenu_data).campaign_type);
-                if((_this->CAppMenu_data).campaign_type == 0)
-                {
-                    log_info("Loading Vanillia Campaign 0");
-                    uint32_t campaign_type = pn_preload_get_campaign_type(preload);
-                    uint32_t skip_tutorial = pn_preload_get_skip_tutorial(preload, game_info);
-                    initFirstMap(game_info, skip_tutorial, skill_id, subskill_spec, campaign_type, false);
-                    uint8_t premade_kit_index = pn_preload_get_kit_index(preload);
-                    pn_update_kit(game_info, (_this->CAppMenu_data).pregame_load_result == 2, premade_kit_index);
-                    premade_kit_index = pn_preload_get_kit_index(preload);
-                    pn_update_kit_2(game_info, ((_this->CAppMenu_data).pregame_load_result == 2), premade_kit_index);
-                    uiAPI.SFStringCopy(&(_this->CAppMenu_data).pregrame_dotmap_string, &dot_map);
-                    s_play_campaign_intro(_this);
-                    uiAPI.SFStringDestructor(screen_name);
-                    break;
-                }
-                else
-                {
-                    log_info("Load Custom Campaign");
-                    uint32_t campaign_type = pn_preload_get_campaign_type(preload);
-                    uint32_t skip_tutorial = pn_preload_get_skip_tutorial(preload, game_info);
+                /* vanilla / custom */
+                uint32_t campaign_id   = pn_preload_get_campaign_type(preload);
+                uint32_t skip_tutorial = pn_preload_get_skip_tutorial(preload);
 
-                    log_info("init First Map Test?");
-                    initFirstMap(game_info, skip_tutorial, skill_id, subskill_spec, campaign_type, false);
-                    log_info("Get kit index?");
-                    uint8_t premade_kit_index = (preload->CUiMenuPreLoad_data).premade_kit_index;
-                    log_info("update kit index?");
-                    pn_update_kit(game_info, (_this->CAppMenu_data).pregame_load_result == 2, premade_kit_index);
-                    log_info("refresh kit index");
-                    premade_kit_index = (preload->CUiMenuPreLoad_data).premade_kit_index;
-                    log_info("update kit index 2");
-                    pn_update_kit_2(game_info, ((_this->CAppMenu_data).pregame_load_result == 2), premade_kit_index);
+                initFirstMap(game_info, skip_tutorial & 0xff, skill_id, subskill_spec,
+                            campaign_id, false);
 
-                    log_info("copy dotmap?");
-                    uiAPI.SFStringCopy(&(_this->CAppMenu_data).pregrame_dotmap_string, &dot_map);
-                    log_info("play intro");
-                    s_play_campaign_intro(_this);
-                    break;
-                }
+                uint8_t kit = pn_preload_get_kit_index(preload);
+                pn_update_kit(game_info,
+                            (_this->CAppMenu_data).pregame_load_result == 2, kit);
+
+                kit = pn_preload_get_kit_index(preload);
+                pn_update_kit_2(game_info,
+                    (uint32_t)((_this->CAppMenu_data).pregame_load_result == 2), kit);
             }
+
+            uiAPI.SFStringCopy(&(_this->CAppMenu_data).pregrame_dotmap_string, &dot_map);
+            s_play_campaign_intro(_this);
             break;
         }
 
         case 7:
         {
-            log_info("Entered Case 7");
+            log_info("Delete Save");
         }
         case 8:
         {
-            log_info("Entered Case 8");
+            log_info("Entered Free Game with Template");
         }
         case 9:
         {
-            log_info("Entered Case 9");
+            log_info("Load Campaign SotP");
         }
         case 1:
         case 3:
         {
-            log_info("Entered Case 3");
+            log_info("Name Conflicts with Path - Reset to starter Kit + feedback Dialog");
             break;
         }
         case 6:
         {
-            log_info("Entered Case 1 || 6");
-
-            uiAPI.SFStringDestructor(screen_name);
+            log_info("Load Selected Save");
             break;
         }
         default:
-            break;
+            goto skip_name_lookup;
+        break;
     }
 
-    log_info("clean up dotmap");
-    uiAPI.SFStringDestructor(&dot_map);
-    log_info("write to config");
+    // Scope this code to avoid error from label crossing initialization
+    log_info("Name Lookup");
+    SF_String avatar_name;
+    nm = pn_preload_get_avatar_name(preload, &avatar_name);
+    did_name_lookup  = 1;
+    log_info("Name Lookup checking if last played exists");
+    store_last_played = (nm->str_length == 0) ? 0 : 1;
+    uiAPI.SFStringDestructor(&avatar_name);
 
-    screen_name = pn_preload_get_avatar_name(preload, &name_allocated);
-    bool is_screen_empty = (screen_name->str_length == 0);
-    char screen_flag = '\0';
-    if(!is_screen_empty)
+    skip_name_lookup:
+    if (store_last_played != 0)
     {
-        screen_flag = '\x01';
+        log_info("Write Last Played");
+        SF_String empty;
+        SF_String name;
+
+        int ct = (_this->CAppMenu_data).campaign_type;
+
+        char key_buf[64];
+        if (ct == 1)
+            strncpy(key_buf, "LastPlayedAddon", sizeof(key_buf));
+        else if (ct == 2)
+            strncpy(key_buf, "LastPlayedAddOn", sizeof(key_buf));
+        else if (game_info->is_coop == 1)
+            strncpy(key_buf, "LastPlayedFree", sizeof(key_buf));
+        else
+            strncpy(key_buf, "LastPlayed", sizeof(key_buf));
+        key_buf[sizeof(key_buf) - 1] = '\0';
+
+        uiAPI.SFStringConstructor_char(&empty, "");
+        pn_preload_get_avatar_name(preload, &name);
+
+        char stored_buf[32];
+        strncpy(stored_buf, "Stored", sizeof(stored_buf));
+        stored_buf[sizeof(stored_buf) - 1] = '\0';
+        log_info("Set Config File");
+        pn_cfg_set_string(&configFile, stored_buf, key_buf, &name, &empty);
+        log_info("Clean up");
+        uiAPI.SFStringDestructor(&name);
+        uiAPI.SFStringDestructor(&empty);
     }
-
-    pn_cfg_ctor(&configFile, (char *)0x0);
-
-    if(screen_flag != '\0')
-    {
-        SF_String extra;
-        uint32_t campaign_type = (_this->CAppMenu_data).campaign_type;
-        uiAPI.SFStringConstructor_char(&extra, "");
-        screen_name = pn_preload_get_avatar_name(preload, &name_allocated);
-        const char *section = "Stored";
-        const char *key = "LastPlayedAddon";
-        log_info("set string");
-        pn_cfg_set_string(&configFile, section, key, screen_name, &extra);
-        uiAPI.SFStringDestructor(&extra);
-    }
-
-    log_info("cleanup");
+    log_info("Close Config File");
     uiAPI.SFStringDestructor(&configFile.name_maybe);
     pn_cfg_dtor(&configFile);
-
-    log_info("done");
+    log_info("Return");
 }
 
 void install_preparenewgame_hook()
