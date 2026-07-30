@@ -163,50 +163,55 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
     log_info("Preparing New Game");
     CUtlConfigFile configFile;
 
-    log_info("Check 1 loc: %x vs %x", (uint32_t)(_this->CAppMenu_data.CUiMenuPreload), (uint32_t)(preload));
-    log_info("Check 2 loc: %x vs %x", (uint32_t)(&_this->CAppMenu_data.game_info),
-             (uint32_t)(preload->CUiMenuPreLoad_data.game_info));
-    log_info("Check 2");
-    uint32_t result_code = pn_get_result_code(preload);
+    uint8_t anotherAvatarstuct[220];
+    uint32_t result_code = preload->CUiMenuPreLoad_data.offset_0x8c;
     SF_GameInfo *game_info = &(_this->CAppMenu_data).game_info;
     (_this->CAppMenu_data).pregame_load_result = result_code;
+
     GdAvatarData *avatar_data = &(game_info->AC82).avatarData;
     GdAvatarInternal *internal_avatar = &avatar_data->internal;
+
     uint16_t avatar_type = internal_avatar->avatar_type;
     log_info("Check 2");
     pn_gi_reset_avatar(game_info, 0); // might be internal_avatar init
-    avatar_data = pn_preload_get_avatar(preload, avatar_data);
-    log_info("Check 3");
-    //uint16_t avatar_equipment_data_maybe =;
-    avatar_data = pn_preload_get_avatar(preload, avatar_data);
-    log_info("Check 4");
-    pn_gi_set_avatar_equipdata(game_info, internal_avatar,  avatar_data->begin);
-    s_gameinfo_set_avatar_type(game_info, avatar_type);
+    avatar_data = pn_preload_get_avatar(preload, anotherAvatarstuct);
 
+    log_info("Check 4");
+    //There are three structures that uses avatarInternal. This is the 3rd one
+    pn_gi_set_avatar_equipdata(game_info, internal_avatar,  *(uint16_t *)&avatar_data->begin);
+
+    game_info->AC82.avatarData.internal.avatar_type = avatar_type;
+    // Stack corruption section start
     log_info("Check 5");
-    uint8_t skill_id = pn_gi_get_skill(game_info);
-    uint8_t subskill_spec = pn_gi_get_subskill(game_info);
+
+    //IDK, seems annotations are wrong somewhhat
+    uint8_t skill_id = game_info->AC82.avatarData.internal.abilities[0].id;
+    uint8_t subskill_spec = game_info->AC82.avatarData.internal.abilities[1].spec;
 
     SF_String *screen_name;
     SF_String name_allocated;
+
     CMnuScreen *pregame_screen = pn_get_pregame_screen((_this->CAppMenu_data).splash_screen);
     log_info("Check 6");
+
     if(pregame_screen != (CMnuScreen *)0x0)
     {
         log_info("Check 7");
-        pregame_screen = pn_get_pregame_screen((_this->CAppMenu_data).splash_screen);
         screen_name = pn_screen_get_name(pregame_screen);
-
         log_info("Check 8");
         pn_screen_delete_control((_this->CAppMenu_data).splash_screen, screen_name);
         log_info("Check 9");
-        pn_screen_set_active((_this->CAppMenu_data).splash_screen, (CMnuScreen *)0x0);
+        pn_screen_set_active((_this->CAppMenu_data).splash_screen, 0);
     }
+
     log_info("Check 10");
     CreateMnuHintExt(_this);
     log_info("Check 11");
+
+
     SF_String dot_map;
     uiAPI.SFStringConstructor_char(&dot_map, ".map");
+    //stack corruption section end
 
     switch((_this->CAppMenu_data).pregame_load_result)
     {
@@ -310,6 +315,7 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
     {
         screen_flag = '\x01';
     }
+
     pn_cfg_ctor(&configFile, (char *)0x0);
 
     if(screen_flag != '\0')
@@ -328,11 +334,9 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
 
     log_info("cleanup");
 
-
     write_last_played(_this, preload, &configFile, false);
     uiAPI.SFStringDestructor(&configFile.name_maybe);
     pn_cfg_dtor(&configFile);
-
     log_info("done");
 }
 
