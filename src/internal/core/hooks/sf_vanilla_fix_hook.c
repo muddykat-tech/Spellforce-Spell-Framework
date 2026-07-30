@@ -1544,7 +1544,7 @@ void CreateSplashScreenHelper (CAppMenu *_this, CMnuContainer **param_1, SF_Stri
             case 0: uiAPI.SFStringConstructor_char(&c_bgr, "ui_mainmenu_bg_loading_sf1.msb"); break;
             case 1: uiAPI.SFStringConstructor_char(&c_bgr, "ui_mainmenu_bg_loading_sf1addon01.msb"); break;
             case 2: uiAPI.SFStringConstructor_char(&c_bgr, "ui_mainmenu_bg_loading_sf1addon02.msb"); break;
-            default: uiAPI.SFStringConstructor_char(&c_bgr, ""); break;
+            default: uiAPI.SFStringConstructor_char(&c_bgr, "ui_mainmenu_bg_loading_sf1.msb"); break;
         }
     }
     uiAPI.setupMenuContainerData(another_container, 0.0, 0.0, 0.0, 0.0, &c_bgr, &c_brdr);
@@ -1585,7 +1585,7 @@ void CreateSplashScreenHelper (CAppMenu *_this, CMnuContainer **param_1, SF_Stri
     //some container vfun163
 
     //offset 0x148 =1
-    _this->CAppMenu_data.more_data2[0xB0] = 1;
+    _this->CAppMenu_data.more_data2[0x70] = 1;
 
 }
 
@@ -1729,7 +1729,7 @@ void initialize_vanilla_fix_hooks()
     get_race_fix_hook();
     army_size_fix_hook();
     figure_turn_off_battle_mode_hook();
-    //splash_screen_hook();
-    //load_screens_json();
+    splash_screen_hook();
+    load_screens_json();
 
 }
