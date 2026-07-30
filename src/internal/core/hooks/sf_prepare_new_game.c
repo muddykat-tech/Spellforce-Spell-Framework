@@ -121,6 +121,50 @@ uint8_t __thiscall pn_preload_get_skip_tutorial(CUiMenuPreLoad *_this)
     return 1;
 }
 
+void build_load_path(CAppMenu *_this, void *preload, SF_String *out)
+{
+    SF_String base, avatar_name, slot_name;
+
+    /* all three are constructing out-params - do NOT pre-construct */
+    s_get_base_path_string(&base);
+    pn_preload_get_avatar_name(preload, &avatar_name);
+    pn_preload_get_slot_name(preload, &slot_name);
+
+    wchar_t  dirbuf[256];
+    const wchar_t *dir;
+    int ct  = _this->CAppMenu_data.campaign_type;
+    int idx = ct - SFSF_CAMPAIGN_TYPE_BASE;
+
+    if (idx >= 0 && idx < (int32_t)g_campaign_count) {
+        /* %hs = narrow string into a wide format (MSVC/C99) */
+        swprintf(dirbuf, 256, L"save\\%hs\\",
+                 g_campaigns[idx].campaign_folder);
+        dir = dirbuf;
+    }
+    else if (ct == 1) dir = L"save\\campaign2\\";
+    else if (ct == 2) dir = L"save\\campaign3\\";
+    else              dir = L"save\\";
+
+    const wchar_t *bp = base.raw_data        ? base.raw_data        : L"";
+    const wchar_t *an = avatar_name.raw_data ? avatar_name.raw_data : L"";
+    const wchar_t *sn = slot_name.raw_data   ? slot_name.raw_data   : L"";
+    int bl = base.raw_data        ? base.str_length        : 0;
+    int al = avatar_name.raw_data ? avatar_name.str_length : 0;
+    int sl = slot_name.raw_data   ? slot_name.str_length   : 0;
+
+    wchar_t full[2048];
+    swprintf(full, 2048, L"%.*ls%ls%.*ls~%.*ls.sav",
+             bl, bp, dir, al, an, sl, sn);
+
+    log_info("Attempting to load Save from %ls", full);
+
+    uiAPI.SFStringDestructor(&slot_name);
+    uiAPI.SFStringDestructor(&avatar_name);
+    uiAPI.SFStringDestructor(&base);
+
+    uiAPI.SFStringConstructor_wchar(out, full);
+}
+
 void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload)
 {
     log_info("Preparing New Game");
@@ -255,7 +299,23 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
         }
         case 6:
         {
-            log_info("Load Selected Save");
+            SF_String save_path;                       /* local_210 */
+            build_load_path(_this, preload, &save_path);
+
+            pn_gi_set_save_file_path(game_info, &save_path);
+
+            {
+                SF_String empty;                        /* local_220 */
+                uiAPI.SFStringConstructor(&empty);
+
+                /* 00596534 - 00596549. Six stack args:
+                game_info, 100, 0, 0, 0, &empty  */
+                s_start_game(_this, game_info, 100, 0, 0, 0, &empty);
+
+                uiAPI.SFStringDestructor(&empty);
+            }
+
+            uiAPI.SFStringDestructor(&save_path);
             break;
         }
         default:
