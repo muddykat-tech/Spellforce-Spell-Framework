@@ -114,6 +114,34 @@ int32_t register_campaign(const SFSF_CampaignDef *def)
 }
 
 /* Un'Schtalch's code block - updated and reworked a bit for you ~Muddykat*/
+
+
+void checkDirs(CAppSession *_this)
+{
+    SF_String base_dirs[5];
+    char *paths[3];
+    SF_String base_path;
+
+
+    uiAPI.SFStringConstructor_char(&base_dirs[0], "save");
+    uiAPI.SFStringConstructor_char(&base_dirs[1], "temp");
+    uiAPI.SFStringConstructor_char(&base_dirs[2], "char");
+    uiAPI.SFStringConstructor_char(&base_dirs[3], "campaign2");
+    uiAPI.SFStringConstructor_char(&base_dirs[4], "campaign3");
+
+    s_getDataStorageLocation(paths, 0);
+    uiAPI.SFStringConstructor_char(&base_path, paths[0]);
+    //TODO
+
+
+    for (int i = 0; i < 5; i++)
+    {
+        uiAPI.SFStringDestructor(&base_dirs[i]);
+    }
+    uiAPI.SFStringDestructor(&base_path);
+}
+
+
 //TODO -- rename into getSavePath later on.
 SF_String * __thiscall getSavePath(CAppSession *_this, SF_String *output, uint32_t campaign_type)
 {
