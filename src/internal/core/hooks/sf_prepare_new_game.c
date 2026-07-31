@@ -121,48 +121,39 @@ uint8_t __thiscall pn_preload_get_skip_tutorial(CUiMenuPreLoad *_this)
     return 1;
 }
 
+SF_String * __thiscall getSavePath(CAppSession *_this, SF_String *output, uint32_t campaign_type);
+
 void build_load_path(CAppMenu *_this, void *preload, SF_String *out)
 {
     SF_String base, avatar_name, slot_name;
+    //sorry, why do you use base path sting here?
+    uiAPI.SFStringConstructor(&base);
+    int ct = _this->CAppMenu_data.campaign_type;
+
+    getSavePath(_this->CAppMenu_data.CAppSession, &base, ct);
 
     /* all three are constructing out-params - do NOT pre-construct */
-    s_get_base_path_string(&base);
+    //s_get_base_path_string(&base);
     pn_preload_get_avatar_name(preload, &avatar_name);
     pn_preload_get_slot_name(preload, &slot_name);
-
-    wchar_t  dirbuf[256];
-    const wchar_t *dir;
-    int ct  = _this->CAppMenu_data.campaign_type;
-    int idx = ct - SFSF_CAMPAIGN_TYPE_BASE;
-
-    if (idx >= 0 && idx < (int32_t)g_campaign_count) {
-        /* %hs = narrow string into a wide format (MSVC/C99) */
-        swprintf(dirbuf, 256, L"save\\%hs\\",
-                 g_campaigns[idx].campaign_folder);
-        dir = dirbuf;
-    }
-    else if (ct == 1) dir = L"save\\campaign2\\";
-    else if (ct == 2) dir = L"save\\campaign3\\";
-    else              dir = L"save\\";
 
     const wchar_t *bp = base.raw_data        ? base.raw_data        : L"";
     const wchar_t *an = avatar_name.raw_data ? avatar_name.raw_data : L"";
     const wchar_t *sn = slot_name.raw_data   ? slot_name.raw_data   : L"";
-    int bl = base.raw_data        ? base.str_length        : 0;
-    int al = avatar_name.raw_data ? avatar_name.str_length : 0;
-    int sl = slot_name.raw_data   ? slot_name.str_length   : 0;
+    wchar_t *bl = base.raw_data        ? base.str_length        : 0;
+    wchar_t *al = avatar_name.raw_data ? avatar_name.str_length : 0;
+    wchar_t *sl = slot_name.raw_data   ? slot_name.str_length   : 0;
 
-    wchar_t full[2048];
-    swprintf(full, 2048, L"%.*ls%ls%.*ls~%.*ls.sav",
-             bl, bp, dir, al, an, sl, sn);
+    uiAPI.SFStringConstructor(out);
 
-    log_info("Attempting to load Save from %ls", full);
+    uiAPI.SFprintf(out, L"%ls%ls~%ls.sav", bp, an, sn);
+
+    log_info("Attempting to load Save from %ls", out->raw_data);
 
     uiAPI.SFStringDestructor(&slot_name);
     uiAPI.SFStringDestructor(&avatar_name);
     uiAPI.SFStringDestructor(&base);
-
-    uiAPI.SFStringConstructor_wchar(out, full);
+    return out;
 }
 
 void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload)
@@ -210,7 +201,7 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
 
     log_info("Check 11");
     char store_last_played = 0;      /* local_1fd */
-    int  did_name_lookup   = 0;      /* local_23c */
+    int did_name_lookup   = 0;       /* local_23c */
 
     SF_String dot_map, predefined_template;
     uiAPI.SFStringConstructor_char(&predefined_template, "figure_template\\predefined\\");
@@ -230,22 +221,22 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
                 uint32_t skip_tutorial = pn_preload_get_skip_tutorial(preload);
 
                 initFirstMap(game_info, skip_tutorial & 0xff, skill_id, subskill_spec,
-                            campaign_type, (uint8_t)sotp_side != 0);
+                             campaign_type, (uint8_t)sotp_side != 0);
 
                 uint8_t kit = pn_preload_get_kit_index(preload);
                 pn_update_kit(game_info,
-                            (_this->CAppMenu_data).pregame_load_result == 2, kit);
+                              (_this->CAppMenu_data).pregame_load_result == 2, kit);
 
                 SF_String des_name;
                 uiAPI.SFStringConstructor(&des_name);                 /* 0x00783900 */
 
                 uint32_t side_again = pn_preload_get_sotp_side(preload);
-                uint8_t  kit_idx    = pn_gi_get_kit_index(game_info); /* 0x00575F00 */
+                uint8_t kit_idx    = pn_gi_get_kit_index(game_info);  /* 0x00575F00 */
 
                 uiAPI.SFprintf(&des_name,
-                            (side_again == 0) ? L"PDC3_%02dp.des"
+                               (side_again == 0) ? L"PDC3_%02dp.des"
                                                 : L"PDC3_%02ds.des",
-                            (kit_idx & 0xff) + 1);                 /* 0x00784170 */
+                               (kit_idx & 0xff) + 1);              /* 0x00784170 */
 
                 game_info->start_mode = 2;
 
@@ -263,15 +254,15 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
                 uint32_t skip_tutorial = pn_preload_get_skip_tutorial(preload);
 
                 initFirstMap(game_info, skip_tutorial & 0xff, skill_id, subskill_spec,
-                            campaign_id, false);
+                             campaign_id, false);
 
                 uint8_t kit = pn_preload_get_kit_index(preload);
                 pn_update_kit(game_info,
-                            (_this->CAppMenu_data).pregame_load_result == 2, kit);
+                              (_this->CAppMenu_data).pregame_load_result == 2, kit);
 
                 kit = pn_preload_get_kit_index(preload);
                 pn_update_kit_2(game_info,
-                    (uint32_t)((_this->CAppMenu_data).pregame_load_result == 2), kit);
+                                (uint32_t)((_this->CAppMenu_data).pregame_load_result == 2), kit);
             }
 
             uiAPI.SFStringCopy(&(_this->CAppMenu_data).pregrame_dotmap_string, &dot_map);
@@ -300,6 +291,7 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
         case 6:
         {
             SF_String save_path;                       /* local_210 */
+
             build_load_path(_this, preload, &save_path);
 
             pn_gi_set_save_file_path(game_info, &save_path);
@@ -309,7 +301,7 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
                 uiAPI.SFStringConstructor(&empty);
 
                 /* 00596534 - 00596549. Six stack args:
-                game_info, 100, 0, 0, 0, &empty  */
+                   game_info, 100, 0, 0, 0, &empty  */
                 s_start_game(_this, game_info, 100, 0, 0, 0, &empty);
 
                 uiAPI.SFStringDestructor(&empty);
@@ -320,7 +312,7 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
         }
         default:
             goto skip_name_lookup;
-        break;
+            break;
     }
 
     // Scope this code to avoid error from label crossing initialization
@@ -332,7 +324,7 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
     store_last_played = (nm->str_length == 0) ? 0 : 1;
     uiAPI.SFStringDestructor(&avatar_name);
 
-    skip_name_lookup:
+skip_name_lookup:
     if (store_last_played != 0)
     {
         log_info("Write Last Played");
