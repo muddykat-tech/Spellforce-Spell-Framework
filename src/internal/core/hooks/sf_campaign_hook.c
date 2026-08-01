@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <direct.h>
+#include <sys/stat.h>
 
 static gameInfoSetMapPathFull_ptr s_gameinfo_set_map_path; // deprecated I think
 static appMenuEnterCampaignFlow_ptr s_enter_campaign_flow;
@@ -115,14 +116,24 @@ int32_t register_campaign(const SFSF_CampaignDef *def)
 
 /* Un'Schtalch's code block - updated and reworked a bit for you ~Muddykat*/
 
+int isDirectoryExists(const char *path)
+{
+    struct stat stats;
+    if (stat(path, &stats) == 0)
+    {
+        return S_ISDIR(stats.st_mode);
+    }
+    return 0;
+}
 
 void checkDirs(CAppSession *_this)
 {
     SF_String base_dirs[5];
     char *paths[3];
     SF_String base_path;
+    SF_String back_slash;
 
-
+    uiAPI.SFStringConstructor_char(&back_slash, "\\");
     uiAPI.SFStringConstructor_char(&base_dirs[0], "save");
     uiAPI.SFStringConstructor_char(&base_dirs[1], "temp");
     uiAPI.SFStringConstructor_char(&base_dirs[2], "char");
@@ -132,7 +143,52 @@ void checkDirs(CAppSession *_this)
     s_getDataStorageLocation(paths, 0);
     uiAPI.SFStringConstructor_char(&base_path, paths[0]);
     //TODO
+    uiAPI.SFStringConcat(&base_path, &base_dirs[0]);
+    char *real_path = uiAPI.SFStringCMbStr(&base_path);
+    if (!isDirectoryExists(real_path))
+    {
+        _mkdir(real_path);
+    }
 
+    //vanilla campaigns
+    for (int i = 1; i < 5; i++)
+    {
+        SF_String temp;
+        uiAPI.SFStringConstructor_char(&temp, real_path);
+        uiAPI.SFStringConcat(&temp, &back_slash);
+        uiAPI.SFStringConcat(&temp, &base_dirs[i]);
+        char *temp_path = uiAPI.SFStringCMbStr(&temp);
+        if (!isDirectoryExists(temp_path))
+        {
+            _mkdir(temp_path);
+        }
+        uiAPI.SFStringDestructor(&temp);
+    }
+
+    for (uint32_t i = 0; i < g_campaign_count; i++)
+    {
+        const SFSF_CampaignDef *custom = NULL;
+        custom = &g_campaigns[i];
+        if (custom != NULL)
+        {
+            SF_String temp;
+            SF_String camp_folder;
+            uiAPI.SFStringConstructor_char(&temp, real_path);
+            uiAPI.SFStringConstructor_char(&camp_folder, custom->campaign_folder);
+
+            uiAPI.SFStringConcat(&temp, &back_slash);
+            uiAPI.SFStringConcat(&temp, &camp_folder);
+            char *temp_path = uiAPI.SFStringCMbStr(&temp);
+            if (!isDirectoryExists(temp_path))
+            {
+                _mkdir(temp_path);
+            }
+            uiAPI.SFStringDestructor(&temp);
+            uiAPI.SFStringDestructor(&camp_folder);
+
+        }
+
+    }
 
     for (int i = 0; i < 5; i++)
     {
@@ -142,7 +198,6 @@ void checkDirs(CAppSession *_this)
 }
 
 
-//TODO -- rename into getSavePath later on.
 SF_String * __thiscall getSavePath(CAppSession *_this, SF_String *output, uint32_t campaign_type)
 {
     char *paths[3];
@@ -293,7 +348,7 @@ void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t
     SF_String intial_map_name;
     log_info("initFirstMap Hook: Starter Kit Start ");
 
-    log_info("Values: %x %d %d %d %d", (uint32_t)_this, skip_tutorial, skill, subskill, campaign_id, is_shadowblade);
+    log_info("Values: %x %d %d %d %d %d", (uint32_t)_this, skip_tutorial, skill, subskill, campaign_id, is_shadowblade);
 
     /* -- starter kit: figure_template\starterkit\SK_<skill><subskill>.des -- */
     uiAPI.SFStringConstructor_char(&dot_map, ".map");
