@@ -49,7 +49,7 @@ AC82_Zero_ptr AC82_Zero;
 checkFileExists_ptr checkFileExists;
 
 static void hook_qs_load();
-
+static void hook_check_dirs();
 
 void initialize_campaign_hooks()
 {
@@ -76,6 +76,8 @@ void initialize_campaign_hooks()
     hook_initfirstmap();
     hook_getsavepath();
     hook_qs_load();
+    hook_check_dirs();
+
 
     initialize_preparenewgame_rewrite();
 
@@ -326,6 +328,17 @@ void hook_qs_load()
     *(int *)(ASI::AddrOf(0x185c01)) = (int)(&loadQuickSave) - ASI::AddrOf(0x185c05);
     ASI::EndRewrite(mreg_qs);
     log_info("QuickSave Load replacement hooked (entry JMP)");
+}
+
+static void hook_check_dirs()
+{
+    ASI::MemoryRegion mreg(ASI::AddrOf(0x1b6fa0), 5);
+    ASI::BeginRewrite(mreg);
+    *(unsigned char *)(ASI::AddrOf(0x1b6fa0)) = 0xE9; // JMP instruction
+    *(int *)(ASI::AddrOf(0x1b6fa1)) = (int)(&checkDirs) - ASI::AddrOf(0x1b6fa5);
+    ASI::EndRewrite(mreg);
+    log_info("Check Dirs replacement hooked (entry JMP)");
+
 }
 
 /**
