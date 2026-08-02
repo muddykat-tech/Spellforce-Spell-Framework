@@ -1159,6 +1159,55 @@ struct __attribute__((packed)) SF_CGdObject
     uint32_t unknown[13];
 };
 
+
+
+typedef struct __attribute__((packed))
+{
+    void *CGdDecals;
+    void *CGdBattleDevelopment;
+    void *CGdAiMain;
+    void *CGdAStar;
+    AutoClass14 *OpaqueClass;
+    SF_CGdBuilding *CGdBuilding;
+    SF_CGdBuildingToolbox *CGdBuildingToolbox;
+    void *CGdDoubleLinkedList;
+    void *AutoClass38;
+    SF_CGdEffect *CGdEffect;
+    void *AutoClass30;
+    SF_CGdFigure *CGdFigure;
+    SF_CGdFigureJobs *CGdFigureJobs;
+    SF_CGdFigureToolbox *CGdFigureToolbox;
+    void *CGdFormation;
+    void *AutoClass34;
+    void *CGdInfluenceMap;
+    void *AutoClass36;
+    SF_CGdObject *CGdObject;
+    void *CGdObjectToolBox;
+    void *AutoClass44;
+    SF_CGdPlayer *CGdPlayer;
+    AutoClass46 *AutoClass46;
+    void *AutClass47;
+    SF_CGdResource *CGdResource;
+    void *CGdSetup;
+    SF_CGdSpell *CGdSpell;
+    void *AutoClass48;
+    void *CGdTile;
+    void *AutoClass50;
+    void *CGdVisibility;
+    void *CGdLakes;
+    void *CGdWeather;
+    SF_CGdWorld *CGdWorld;
+    SF_CGdWorldToolBox *SF_CGdWorldToolBox;
+    void *CGdXDataList;
+    uint8_t unknown_data[0x418];
+} CGdMain_data;
+
+typedef struct __attribute__((packed))
+{
+    void *vtable_ptr;
+    CGdMain_data data;
+} SF_CGdMain;
+
 /* Menu Structures */
 
 typedef struct __attribute__((packed))
@@ -1167,7 +1216,8 @@ typedef struct __attribute__((packed))
     uint32_t param_1_callback;
     uint32_t param_2_callback;
     uint32_t param_3_callback;
-    uint8_t data[0x118];
+    uint8_t data[0x114];
+    uint32_t flags;
     uint32_t parent_ptr;
     uint8_t data2[0xdc];
 } CMnuBase_data;
@@ -1256,153 +1306,6 @@ typedef struct __attribute__((packed))
     uint8_t padding_maybe;
     uint8_t unknown_config_param;
 } SF_UIElement;
-
-
-typedef struct __attribute__((packed))
-{
-    void *CNetMain;
-    uint32_t AutoClass72[8];
-    uint32_t CGdEventIterator[8];
-    void *unkn_ptr2;
-    uint16_t current_player;
-    uint8_t padding[0x19a];
-} CGdControllerClientData;
-
-struct __attribute__((packed)) CGdControllerClient
-{
-    void *vftable;
-    uint32_t CGdControllerBaseData[0x220];
-    CGdControllerClientData data;
-};
-
-typedef struct __attribute__((packed))
-{
-    uint8_t unkn[0xb8];
-    uint32_t offset_b8;
-    uint8_t unkn2[0x7028];
-    SF_CGdFigureToolbox *CGdFigureToolBox;
-    void *CGdResource;
-    SF_CGdFigure *CGdFigure;
-    uint8_t unkn3[0xc];
-    CGdControllerClient *CGdControllerClient;
-    void *UiDbProxy;
-    uint8_t unkn4[0x10];
-    void *CUiGame;
-    void *CDrwGameView;
-    uint8_t unkn5[0x2A4];
-    uint32_t unknown_action_type;
-    uint8_t unkn9[0x38];
-    void *CUiMainDetailView;
-    void *unkn_ptr1;
-    void *unkn_ptr2;
-    void *CUiBuilding;
-    void *CUiBottom;
-    void *CUiMonument;
-    uint8_t unkn6[0x10];
-    void *AutoClass112;
-    void *AutoClass113;
-    uint8_t unkn7[0x1152];
-    uint16_t offset_857e;
-    uint8_t uknn8[0xda];
-} CUiMain_data;
-
-typedef struct __attribute__((packed))
-{
-    uint32_t CUiMain_cftable_ptr;
-    CMnuBase_data CMnuBaseData;
-    uint8_t CMnuVisControl_data[0x9C];
-    uint8_t CMnuContainer_data[0x98];
-    CUiMain_data CUiMain_data;
-} SF_CUiMain;
-
-typedef struct __attribute__((packed))
-{
-    uint8_t unkn[4];
-    uint32_t offset_0x4;
-    uint32_t offset_0x8;
-    SF_String string1;
-    SF_String string2;
-    uint32_t offset_0x2c;
-} SF_CUiVideoSequence_data;
-
-typedef struct __attribute__((packed))
-{
-    uint32_t vtable_ptr;
-    CMnuBase_data baseData;
-    uint8_t CMnuVisControl_data[0x9C];
-    uint8_t CMnuContainer_data[0x98];
-    SF_CUiVideoSequence_data videoData;
-} SF_CUiVideoSequence;
-
-typedef struct __attribute__((packed))
-{
-    uint32_t vtable_ptr;
-    CMnuBase_data baseData;
-    uint8_t CMnuVisControl_data[0x9C];
-    uint8_t CMnuContainer_data[0x98];
-    uint8_t videoData[0xc];
-} SF_CUiVideo;
-
-typedef struct __attribute__((packed))
-{
-    void *CGdDecals;
-    void *CGdBattleDevelopment;
-    void *CGdAiMain;
-    void *CGdAStar;
-    AutoClass14 *OpaqueClass;
-    SF_CGdBuilding *CGdBuilding;
-    SF_CGdBuildingToolbox *CGdBuildingToolbox;
-    void *CGdDoubleLinkedList;
-    void *AutoClass38;
-    SF_CGdEffect *CGdEffect;
-    void *AutoClass30;
-    SF_CGdFigure *CGdFigure;
-    SF_CGdFigureJobs *CGdFigureJobs;
-    SF_CGdFigureToolbox *CGdFigureToolbox;
-    void *CGdFormation;
-    void *AutoClass34;
-    void *CGdInfluenceMap;
-    void *AutoClass36;
-    SF_CGdObject *CGdObject;
-    void *CGdObjectToolBox;
-    void *AutoClass44;
-    SF_CGdPlayer *CGdPlayer;
-    AutoClass46 *AutoClass46;
-    void *AutClass47;
-    SF_CGdResource *CGdResource;
-    void *CGdSetup;
-    SF_CGdSpell *CGdSpell;
-    void *AutoClass48;
-    void *CGdTile;
-    void *AutoClass50;
-    void *CGdVisibility;
-    void *CGdLakes;
-    void *CGdWeather;
-    SF_CGdWorld *CGdWorld;
-    SF_CGdWorldToolBox *SF_CGdWorldToolBox;
-    void *CGdXDataList;
-    uint8_t unknown_data[0x418];
-} CGdMain_data;
-
-typedef struct __attribute__((packed))
-{
-    void *vtable_ptr;
-    CGdMain_data data;
-} SF_CGdMain;
-
-typedef struct __attribute__((packed))
-{
-    uint8_t unknwn_data[0x78];
-    CGdControllerClient *controllerClient;
-    SF_CGdMain *CGdMain;
-    uint8_t unknwn_data2[0xa4];
-} CAppSession_data;
-
-typedef struct __attribute__((packed))
-{
-    void *vtable_ptr;
-    CAppSession_data data;
-} CAppSession;
 
 typedef struct __attribute__((packed))
 {
@@ -1498,6 +1401,111 @@ typedef struct __attribute__((packed))
     uint32_t is_coop;
     uint32_t unknown4;
 } SF_GameInfo;
+
+typedef struct __attribute__((packed))
+{
+    void *CNetMain;
+    uint32_t AutoClass72[8];
+    uint32_t CGdEventIterator[8];
+    void *unkn_ptr2;
+    uint16_t current_player;
+    uint8_t padding[0x19a];
+} CGdControllerClientData;
+
+struct __attribute__((packed)) CGdControllerClient
+{
+    void *vftable;
+    uint32_t CGdControllerBaseData[0x220];
+    CGdControllerClientData data;
+};
+
+typedef struct __attribute__((packed))
+{
+    uint8_t unkn[0xb8];
+    uint32_t offset_b8;
+    uint8_t unkn2[0x7024];
+    SF_CGdMain *CGdMain;
+    SF_CGdFigureToolbox *CGdFigureToolBox;
+    void *CGdResource;
+    SF_CGdFigure *CGdFigure;
+    uint8_t unkn3[0xc];
+    CGdControllerClient *CGdControllerClient;
+    void *UiDbProxy;
+    void *AC95;
+    void *AC101;
+    uint32_t campaign_type;
+    void *unkn4;
+    void *CUiGame;
+    void *CDrwGameView;
+    uint8_t unkn5[0x2A4];
+    uint32_t unknown_action_type;
+    uint8_t unkn9[0x38];
+    void *CUiMainDetailView;
+    void *unkn_ptr1;
+    void *unkn_ptr2;
+    void *CUiBuilding;
+    void *CUiBottom;
+    void *CUiMonument;
+    uint8_t unkn6[0xc];
+    SF_GameInfo *game_info;
+    void *AutoClass112;
+    void *AutoClass113;
+    uint8_t unkn7[0x1152];
+    uint16_t offset_857e;
+    uint8_t uknn8[0xda];
+} CUiMain_data;
+
+typedef struct __attribute__((packed))
+{
+    uint32_t CUiMain_cftable_ptr;
+    CMnuBase_data CMnuBaseData;
+    uint8_t CMnuVisControl_data[0x9C];
+    uint8_t CMnuContainer_data[0x98];
+    CUiMain_data CUiMain_data;
+} SF_CUiMain;
+
+typedef struct __attribute__((packed))
+{
+    uint8_t unkn[4];
+    uint32_t offset_0x4;
+    uint32_t offset_0x8;
+    SF_String string1;
+    SF_String string2;
+    uint32_t offset_0x2c;
+} SF_CUiVideoSequence_data;
+
+typedef struct __attribute__((packed))
+{
+    uint32_t vtable_ptr;
+    CMnuBase_data baseData;
+    uint8_t CMnuVisControl_data[0x9C];
+    uint8_t CMnuContainer_data[0x98];
+    SF_CUiVideoSequence_data videoData;
+} SF_CUiVideoSequence;
+
+typedef struct __attribute__((packed))
+{
+    uint32_t vtable_ptr;
+    CMnuBase_data baseData;
+    uint8_t CMnuVisControl_data[0x9C];
+    uint8_t CMnuContainer_data[0x98];
+    uint8_t videoData[0xc];
+} SF_CUiVideo;
+
+typedef struct __attribute__((packed))
+{
+    uint8_t unknwn_data[0x78];
+    CGdControllerClient *controllerClient;
+    SF_CGdMain *CGdMain;
+    uint8_t unknwn_data2[0xa4];
+} CAppSession_data;
+
+typedef struct __attribute__((packed))
+{
+    void *vtable_ptr;
+    CAppSession_data data;
+} CAppSession;
+
 
 typedef struct __attribute__((packed))
 {
@@ -1599,7 +1607,8 @@ typedef struct __attribute__((packed))
     SF_String name_maybe;
 } CUtlConfigFile;
 
-typedef struct __attribute__((packed)) {
+typedef struct __attribute__((packed))
+{
     uint8_t unknown_datablock[0x6c];
     CMnuContainer *some_container_label;
     void *some_unknown_pointer;
@@ -1667,7 +1676,8 @@ typedef struct __attribute__((packed)) {
     uint32_t field715_0x4cc;
 } CUiMenuPreLoad_data;
 
-typedef struct  __attribute__((packed)){ /* class CUiMenuPreLoad : CMnuContainer */
+typedef struct  __attribute__((packed))  /* class CUiMenuPreLoad : CMnuContainer */
+{
     uint32_t vftable_ptr;
     CMnuBase_data CMnuBase_data;
     uint8_t CMnuVisControl_data[0x9c];

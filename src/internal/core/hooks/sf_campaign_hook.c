@@ -40,10 +40,20 @@ typedef uint32_t (__cdecl *checkFileExists_ptr)(SF_String *name);
 typedef void (__thiscall *prepareTransition_ptr)(CAppMenu *_this,uint32_t param_1,uint32_t param_2);
 typedef SF_GameInfo *(__thiscall *initDefaultInfo_ptr)(SF_GameInfo *_this);
 typedef void (__thiscall *AC82_Zero_ptr)(AutoClass82 *_this);
+typedef void (__thiscall *some_vector_init_ptr)(void *_this, uint32_t *size);
+typedef uint32_t (__thiscall *CMnuBaseFlagGetter_ptr)(CMnuBase *_this);
+
 static GetDataStorageLocation_ptr s_getDataStorageLocation;
+CMnuBaseFlagGetter_ptr CMnuBaseIsVisible;
 prepareTransition_ptr prepareTransition;
 initDefaultInfo_ptr initDefaultInfo;
 AC82_Zero_ptr AC82_Zero;
+
+typedef SF_String *(__thiscall *AC95_get_figure_name_ptr)(void *AC95, SF_String *name_buffer, uint32_t figure_id);
+
+extern AC95_get_figure_name_ptr AC95_get_figure_name;
+
+some_vector_init_ptr some_vector_init; //FUN_007264d0
 
 //TODO -- make this function available for framework. Will need for proper loading screens and maps later on!!!
 checkFileExists_ptr checkFileExists;
@@ -72,7 +82,8 @@ void initialize_campaign_hooks()
     AC82_Zero = (AC82_Zero_ptr)(ASI::AddrOf(0x19e730));
     s_getDataStorageLocation = (GetDataStorageLocation_ptr)(ASI::AddrOf(0x1ee9f0));
     s_start_game = (startGame_ptr)(ASI::AddrOf(0x183560));
-
+    CMnuBaseIsVisible = (CMnuBaseFlagGetter_ptr)(ASI::AddrOf(0x5142c0));
+    some_vector_init = (some_vector_init_ptr)(ASI::AddrOf(0x3264d0));                     //FUN_007264d0
     hook_initfirstmap();
     hook_getsavepath();
     hook_qs_load();
@@ -144,7 +155,7 @@ void checkDirs(CAppSession *_this)
 
     s_getDataStorageLocation(paths, 0);
     uiAPI.SFStringConstructor_char(&base_path, paths[0]);
-    //TODO
+
     uiAPI.SFStringConcat(&base_path, &base_dirs[0]);
     char *real_path = uiAPI.SFStringCMbStr(&base_path);
     if (!isDirectoryExists(real_path))
@@ -258,10 +269,87 @@ SF_String * __thiscall getSavePath(CAppSession *_this, SF_String *output, uint32
     }
     return output;
 }
-typedef SF_String *(__thiscall *AC95_get_figure_name_ptr)(void *AC95, SF_String *name_buffer, uint32_t figure_id);
 
-extern AC95_get_figure_name_ptr AC95_get_figure_name;
 
+uint8_t __thiscall quickLoad_helper(SF_CUiMain *_this)
+{
+    //vfunction53 flags & isVisible
+    if (CMnuBaseIsVisible((CMnuBase *)_this) == 0)
+    {
+        return 0;
+    }
+    uint16_t player_id = _this->CUiMain_data.CGdControllerClient->data.current_player;
+    if ((_this->CUiMain_data.uknn8[0x3c] == 0) ||
+        (_this->CUiMain_data.game_info->is_coop != 0) ||
+        (_this->CUiMain_data.game_info->unknown4 != 0))
+    {
+        ushort_list_node node;
+        node.first = 0;
+        node.data = 0;
+        node.post_last = 0;
+        uint32_t size = 0x15;
+        some_vector_init(&node.first, &size);
+        size = 1;
+        /* pass-though required
+           CUtlCallbackInit(_this, &node.first, 0x9ef71e, &size);
+           if (node.first != 0)
+           {
+                some_vector_dispose(&node.first, ((uint32_t)node.post_last - ((uint32_t))node.first) >> 2);
+           }
+         */
+        return 1;
+    }
+    if (player_id == 0)
+    {
+        return 1;
+    }
+    SF_CGdPlayer *players = _this->CUiMain_data.CGdMain->data.CGdPlayer;
+    if (players->players[player_id].use == 0)
+    {
+        return 1;
+    }
+    SF_String avatar_name;
+    SF_String postfix;
+    SF_String base_path;
+    uiAPI.SFStringConstructor(&avatar_name);
+    AC95_get_figure_name(_this->CUiMain_data.AC95,&avatar_name, players->players[player_id].avatar_figure_index);
+    uiAPI.SFStringConstructor_char(&postfix, "~QUICKSAVE.sav");
+    uiAPI.SFStringConcat(&avatar_name, &postfix);
+    getSavePath((void *)_this, &base_path, _this->CUiMain_data.campaign_type);
+    uiAPI.SFStringConcat(&base_path,&avatar_name);
+    uint32_t shallContinue = false;
+    if (checkFileExists(&base_path))
+    {
+        if ((CMnuBaseIsVisible((CMnuBase *)_this->CUiMain_data.CUiGame) == 1) &&
+            (CMnuBaseIsVisible(*(CMnuBase **)&_this->CUiMain_data.unkn7[0x1128]) == 1))
+        {
+            shallContinue = true;
+        }
+    }
+
+    uiAPI.SFStringDestructor(&avatar_name);
+    uiAPI.SFStringDestructor(&postfix);
+    uiAPI.SFStringDestructor(&base_path);
+
+    if (!shallContinue)
+    {
+        return 1;
+    }
+    ushort_list_node node;
+    node.first = 0;
+    node.data = 0;
+    node.post_last = 0;
+    uint32_t size = 0xb;
+    some_vector_init(&node.first, &size);
+    //CUiGameZero(_this->CUiMain_data.CUiGame); //FUN_009a1af0
+    //FUN_009a1fd0
+    //CUtlCallbackInit(_this, &node.first, 0x9ef6bd, &size); 9de450
+    //       if (node.first != 0)
+    //{
+    //   some_vector_dispose(&node.first, ((uint32_t)node.post_last - ((uint32_t))node.first) >> 2);
+    //}
+    return 1;
+}
 
 void __thiscall loadQuickSave(CAppMenu *_this, uint32_t unknown)
 {
