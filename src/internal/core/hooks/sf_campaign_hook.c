@@ -40,26 +40,34 @@ typedef uint32_t (__cdecl *checkFileExists_ptr)(SF_String *name);
 typedef void (__thiscall *prepareTransition_ptr)(CAppMenu *_this,uint32_t param_1,uint32_t param_2);
 typedef SF_GameInfo *(__thiscall *initDefaultInfo_ptr)(SF_GameInfo *_this);
 typedef void (__thiscall *AC82_Zero_ptr)(AutoClass82 *_this);
-typedef void (__thiscall *some_vector_init_ptr)(void *_this, uint32_t *size);
+typedef void (__thiscall *some_vector_fun_ptr)(void *_this, uint32_t *size);
 typedef uint32_t (__thiscall *CMnuBaseFlagGetter_ptr)(CMnuBase *_this);
+typedef void (__thiscall *CUtlCallBackInit_ptr)(void *_this, void *param1, void *param2, uint32_t param3);
+typedef void (__thiscall *CUiGameZero_ptr)(void *_this);
+typedef void (__thiscall *CUiGame_009a1fd0_ptr)(void *_this, uint32_t param1);
+
 
 static GetDataStorageLocation_ptr s_getDataStorageLocation;
 CMnuBaseFlagGetter_ptr CMnuBaseIsVisible;
 prepareTransition_ptr prepareTransition;
 initDefaultInfo_ptr initDefaultInfo;
 AC82_Zero_ptr AC82_Zero;
-
+CUiGameZero_ptr CUiGameZero;
+CUiGame_009a1fd0_ptr CUiGame_009a1fd0;
 typedef SF_String *(__thiscall *AC95_get_figure_name_ptr)(void *AC95, SF_String *name_buffer, uint32_t figure_id);
 
 extern AC95_get_figure_name_ptr AC95_get_figure_name;
 
-some_vector_init_ptr some_vector_init; //FUN_007264d0
+some_vector_fun_ptr some_vector_init; //FUN_007264d0
+some_vector_fun_ptr some_vector_dispose; // FUN_006115e0
+CUtlCallBackInit_ptr CUtlCallBackInit;
 
 //TODO -- make this function available for framework. Will need for proper loading screens and maps later on!!!
 checkFileExists_ptr checkFileExists;
 
 static void hook_qs_load();
 static void hook_check_dirs();
+static void hook_ql_helper();
 
 void initialize_campaign_hooks()
 {
@@ -83,12 +91,17 @@ void initialize_campaign_hooks()
     s_getDataStorageLocation = (GetDataStorageLocation_ptr)(ASI::AddrOf(0x1ee9f0));
     s_start_game = (startGame_ptr)(ASI::AddrOf(0x183560));
     CMnuBaseIsVisible = (CMnuBaseFlagGetter_ptr)(ASI::AddrOf(0x5142c0));
-    some_vector_init = (some_vector_init_ptr)(ASI::AddrOf(0x3264d0));                     //FUN_007264d0
+    some_vector_init = (some_vector_fun_ptr)(ASI::AddrOf(0x3264d0));                     //FUN_007264d0
+    some_vector_dispose = (some_vector_fun_ptr)(ASI::AddrOf(0x2115e0));
+
+    CUtlCallBackInit = (CUtlCallBackInit_ptr)(ASI::AddrOf(0x5de450));
+    CUiGameZero = (CUiGameZero_ptr)(ASI::AddrOf(0x5a1af0));
+    CUiGame_009a1fd0 = (CUiGame_009a1fd0_ptr)(ASI::AddrOf(0x5a1fd0));
     hook_initfirstmap();
     hook_getsavepath();
     hook_qs_load();
     hook_check_dirs();
-
+    hook_ql_helper();
 
     initialize_preparenewgame_rewrite();
 
@@ -290,13 +303,12 @@ uint8_t __thiscall quickLoad_helper(SF_CUiMain *_this)
         uint32_t size = 0x15;
         some_vector_init(&node.first, &size);
         size = 1;
-        /* pass-though required
-           CUtlCallbackInit(_this, &node.first, 0x9ef71e, &size);
-           if (node.first != 0)
-           {
-                some_vector_dispose(&node.first, ((uint32_t)node.post_last - ((uint32_t))node.first) >> 2);
-           }
-         */
+        CUtlCallBackInit(_this, &node.first, 0x9ef71e, &size);
+        if (node.first != 0)
+        {
+            some_vector_dispose(&node.first, ((uint32_t)(node.post_last) - (uint32_t) (node.first)) >> 2);
+        }
+
         return 1;
     }
     if (player_id == 0)
@@ -321,7 +333,7 @@ uint8_t __thiscall quickLoad_helper(SF_CUiMain *_this)
     if (checkFileExists(&base_path))
     {
         if ((CMnuBaseIsVisible((CMnuBase *)_this->CUiMain_data.CUiGame) == 1) &&
-            (CMnuBaseIsVisible(*(CMnuBase **)&_this->CUiMain_data.unkn7[0x1128]) == 1))
+            (CMnuBaseIsVisible(*(CMnuBase **)&_this->CUiMain_data.unkn7[0x1128]) == 0))
         {
             shallContinue = true;
         }
@@ -341,13 +353,15 @@ uint8_t __thiscall quickLoad_helper(SF_CUiMain *_this)
     node.post_last = 0;
     uint32_t size = 0xb;
     some_vector_init(&node.first, &size);
-    //CUiGameZero(_this->CUiMain_data.CUiGame); //FUN_009a1af0
-    //FUN_009a1fd0
-    //CUtlCallbackInit(_this, &node.first, 0x9ef6bd, &size); 9de450
-    //       if (node.first != 0)
-    //{
-    //   some_vector_dispose(&node.first, ((uint32_t)node.post_last - ((uint32_t))node.first) >> 2);
-    //}
+    CUiGameZero(_this->CUiMain_data.CUiGame); //FUN_009a1af0
+    CUiGame_009a1fd0(_this->CUiMain_data.CUiGame, 0);
+
+    CUtlCallBackInit(_this, &node.first, 0x9ef6bd, 0);// 9de450
+    some_vector_dispose(&node.first, ((uint32_t)(node.post_last) - (uint32_t) (node.first)) >> 2);
+
+    node.first = 0;
+    node.data = 0;
+    node.post_last = 0;
     return 1;
 }
 
@@ -406,6 +420,16 @@ void __thiscall loadQuickSave(CAppMenu *_this, uint32_t unknown)
     uiAPI.SFStringDestructor(&tilda);
     uiAPI.SFStringDestructor(&quicksave);
     uiAPI.SFStringDestructor(&base_path);
+}
+
+void hook_ql_helper()
+{
+    ASI::MemoryRegion mreg_qs(ASI::AddrOf(0x5ef3a0), 5);
+    ASI::BeginRewrite(mreg_qs);
+    *(unsigned char *)(ASI::AddrOf(0x5ef3a0)) = 0xE9; // JMP instruction
+    *(int *)(ASI::AddrOf(0x5ef3a1)) = (int)(&quickLoad_helper) - ASI::AddrOf(0x5ef3a5);
+    ASI::EndRewrite(mreg_qs);
+    log_info("QuickSave Load Helper replacement hooked (entry JMP)");
 }
 
 void hook_qs_load()
