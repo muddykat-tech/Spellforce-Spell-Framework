@@ -54,6 +54,7 @@ static SF_String *pn_s_last_addon;       /* S_LAST_PLAYED_ADDON @ 0xd243d0      
 static SF_String *pn_s_last_sotp;        /* DAT_00d24480 @ 0xd24480              */
 static SF_String *pn_s_last_coop;        /* DAT_00d23c90 @ 0xd23c90              */
 CreateMnuHintExt_ptr CreateMnuHintExt;
+CreateMenuPreMulti_ptr CreateMenuPreMulti;
 
 static void install_preparenewgame_hook();
 
@@ -99,6 +100,8 @@ void initialize_preparenewgame_rewrite()
     pn_update_kit_2          = (preloadUpdateKit2_ptr)(ASI::AddrOf(0x1a1b10));
     CreateMnuHintExt         = (CreateMnuHintExt_ptr)(ASI::AddrOf(0x18eca0));
 
+    CreateMenuPreMulti = (CreateMenuPreMulti_ptr)(ASI::AddrOf(0x193980));
+
     pn_s_cfg_key    = (SF_String *)(ASI::AddrOf(0x924120));
     pn_s_last_addon = (SF_String *)(ASI::AddrOf(0x9243d0));
     pn_s_last_sotp  = (SF_String *)(ASI::AddrOf(0x924480));
@@ -129,8 +132,18 @@ void build_load_path(CAppMenu *_this, void *preload, SF_String *out)
     //sorry, why do you use base path sting here?
     uiAPI.SFStringConstructor(&base);
     int ct = _this->CAppMenu_data.campaign_type;
-
-    getSavePath(_this->CAppMenu_data.CAppSession, &base, ct);
+    if (_this->CAppMenu_data.game_info.is_coop)
+    {
+        SF_String coop_str;
+        uiAPI.SFStringConstructor_char(&coop_str, "CHAR\\");
+        getSavePath(_this->CAppMenu_data.CAppSession, &base, 0);
+        uiAPI.SFStringConcat(&base, &coop_str);
+        uiAPI.SFStringDestructor(&coop_str);
+    }
+    else
+    {
+        getSavePath(_this->CAppMenu_data.CAppSession, &base, ct);
+    }
 
     /* all three are constructing out-params - do NOT pre-construct */
     //s_get_base_path_string(&base);
@@ -145,8 +158,15 @@ void build_load_path(CAppMenu *_this, void *preload, SF_String *out)
     wchar_t *sl = slot_name.raw_data   ? slot_name.str_length   : 0;
 
     uiAPI.SFStringConstructor(out);
-
-    uiAPI.SFprintf(out, L"%ls%ls~%ls.sav", bp, an, sn);
+    //Don't need to append avatar name for coop
+    if (_this->CAppMenu_data.game_info.is_coop)
+    {
+        uiAPI.SFprintf(out, L"%ls%ls.sav", bp, sn);
+    }
+    else
+    {
+        uiAPI.SFprintf(out, L"%ls%ls~%ls.sav", bp, an, sn);
+    }
 
     log_info("Attempting to load Save from %ls", out->raw_data);
 
@@ -224,8 +244,7 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
                              campaign_type, (uint8_t)sotp_side != 0);
 
                 uint8_t kit = pn_preload_get_kit_index(preload);
-                pn_update_kit(game_info,
-                              (_this->CAppMenu_data).pregame_load_result == 2, kit);
+                pn_update_kit(game_info, (_this->CAppMenu_data).pregame_load_result == 2, kit);
 
                 SF_String des_name;
                 uiAPI.SFStringConstructor(&des_name);                 /* 0x00783900 */
@@ -272,7 +291,23 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
 
         case 7:
         {
-            log_info("Delete Save");
+            log_info("FGM Load Save");
+            SF_String save_path;
+            build_load_path(_this, preload, &save_path);
+            pn_delete_save(_this, &save_path);
+            uiAPI.SFStringDestructor(&save_path);
+            SF_String avatar_name;
+            SF_String extra;
+            wchar_t *ava_name = _this->CAppMenu_data.game_info.AC82.avatarData.internal.name;
+            uiAPI.SFStringConstructor_wchar(&avatar_name, ava_name);
+            uiAPI.SFStringConstructor_char(&extra, "");
+
+            CreateMenuPreMulti(_this, 0, 0, 6, 0, 0, 2, 0x1b1e, &extra, &avatar_name);
+
+            uiAPI.SFStringDestructor(&extra);
+            uiAPI.SFStringDestructor(&avatar_name);
+
+            break;
         }
         case 8:
         {
