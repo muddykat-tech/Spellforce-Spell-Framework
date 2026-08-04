@@ -69,6 +69,9 @@ static void hook_qs_load();
 static void hook_check_dirs();
 static void hook_ql_helper();
 
+static uint32_t s_ql_return_ok;
+static uint32_t s_ql_return_fail;
+
 void initialize_campaign_hooks()
 {
 
@@ -97,6 +100,10 @@ void initialize_campaign_hooks()
     CUtlCallBackInit = (CUtlCallBackInit_ptr)(ASI::AddrOf(0x5de450));
     CUiGameZero = (CUiGameZero_ptr)(ASI::AddrOf(0x5a1af0));
     CUiGame_009a1fd0 = (CUiGame_009a1fd0_ptr)(ASI::AddrOf(0x5a1fd0));
+
+    s_ql_return_ok = ASI::AddrOf(0x5ef663);
+    s_ql_return_fail = ASI::AddrOf(0x5ef74c);
+
     hook_initfirstmap();
     hook_getsavepath();
     hook_qs_load();
@@ -286,39 +293,16 @@ SF_String * __thiscall getSavePath(CAppSession *_this, SF_String *output, uint32
 
 uint8_t __thiscall quickLoad_helper(SF_CUiMain *_this)
 {
-    //vfunction53 flags & isVisible
-    if (CMnuBaseIsVisible((CMnuBase *)_this) == 0)
+    uint16_t player_id = _this->CUiMain_data.CGdControllerClient->data.current_player;
+    if (player_id == 0)
     {
         return 0;
     }
-    uint16_t player_id = _this->CUiMain_data.CGdControllerClient->data.current_player;
-    if ((_this->CUiMain_data.uknn8[0x3c] == 0) ||
-        (_this->CUiMain_data.game_info->is_coop != 0) ||
-        (_this->CUiMain_data.game_info->unknown4 != 0))
-    {
-        ushort_list_node node;
-        node.first = 0;
-        node.data = 0;
-        node.post_last = 0;
-        uint32_t size = 0x15;
-        some_vector_init(&node.first, &size);
-        size = 1;
-        CUtlCallBackInit(_this, &node.first, 0x9ef71e, &size);
-        if (node.first != 0)
-        {
-            some_vector_dispose(&node.first, ((uint32_t)(node.post_last) - (uint32_t) (node.first)) >> 2);
-        }
 
-        return 1;
-    }
-    if (player_id == 0)
-    {
-        return 1;
-    }
     SF_CGdPlayer *players = _this->CUiMain_data.CGdMain->data.CGdPlayer;
     if (players->players[player_id].use == 0)
     {
-        return 1;
+        return 0;
     }
     SF_String avatar_name;
     SF_String postfix;
@@ -345,25 +329,38 @@ uint8_t __thiscall quickLoad_helper(SF_CUiMain *_this)
 
     if (!shallContinue)
     {
-        return 1;
+        return 0;
     }
-    ushort_list_node node;
-    node.first = 0;
-    node.data = 0;
-    node.post_last = 0;
-    uint32_t size = 0xb;
-    some_vector_init(&node.first, &size);
-    CUiGameZero(_this->CUiMain_data.CUiGame); //FUN_009a1af0
-    CUiGame_009a1fd0(_this->CUiMain_data.CUiGame, 0);
 
-    CUtlCallBackInit(_this, &node.first, 0x9ef6bd, 0);// 9de450
-    some_vector_dispose(&node.first, ((uint32_t)(node.post_last) - (uint32_t) (node.first)) >> 2);
-
-    node.first = 0;
-    node.data = 0;
-    node.post_last = 0;
     return 1;
 }
+
+//We have inlined and optimized getSavePath over there, so let's just plug-in
+
+static void __declspec(naked) quickload_hook()
+{
+    asm ("mov %%esi, %%ecx   \n\t"  // Getting CUIMain
+         "call %P0           \n\t"  // Calling the Hook Function
+         "test %%eax, %%eax  \n\t"  // checking what have we returned
+         "jne 1f             \n\t"
+         "jmp *%2            \n\t"
+         "1: jmp *%1         \n\t" : : "i" (quickLoad_helper),
+         "o" (s_ql_return_ok),"o" (s_ql_return_fail) );
+}
+
+
+void hook_ql_helper()
+{
+    ASI::MemoryRegion mreg_qs(ASI::AddrOf(0x5ef43a), 6);
+    ASI::BeginRewrite(mreg_qs);
+    *(unsigned char *)(ASI::AddrOf(0x5ef43a)) = 0x90; // NOP
+    *(unsigned char *)(ASI::AddrOf(0x5ef43b)) = 0xE9; // JMP instruction
+    *(int *)(ASI::AddrOf(0x5ef43c)) = (int)(&quickload_hook) - ASI::AddrOf(0x5ef440);
+    ASI::EndRewrite(mreg_qs);
+    log_info("QuickSave Load replacement hooked (entry JMP)");
+
+}
+
 
 void __thiscall loadQuickSave(CAppMenu *_this, uint32_t unknown)
 {
@@ -420,16 +417,6 @@ void __thiscall loadQuickSave(CAppMenu *_this, uint32_t unknown)
     uiAPI.SFStringDestructor(&tilda);
     uiAPI.SFStringDestructor(&quicksave);
     uiAPI.SFStringDestructor(&base_path);
-}
-
-void hook_ql_helper()
-{
-    ASI::MemoryRegion mreg_qs(ASI::AddrOf(0x5ef3a0), 5);
-    ASI::BeginRewrite(mreg_qs);
-    *(unsigned char *)(ASI::AddrOf(0x5ef3a0)) = 0xE9; // JMP instruction
-    *(int *)(ASI::AddrOf(0x5ef3a1)) = (int)(&quickLoad_helper) - ASI::AddrOf(0x5ef3a5);
-    ASI::EndRewrite(mreg_qs);
-    log_info("QuickSave Load Helper replacement hooked (entry JMP)");
 }
 
 void hook_qs_load()
