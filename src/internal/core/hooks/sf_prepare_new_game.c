@@ -126,7 +126,7 @@ uint8_t __thiscall pn_preload_get_skip_tutorial(CUiMenuPreLoad *_this)
 
 SF_String * __thiscall getSavePath(CAppSession *_this, SF_String *output, uint32_t campaign_type);
 
-void build_load_path(CAppMenu *_this, void *preload, SF_String *out)
+SF_String * build_load_path(CAppMenu *_this, void *preload, SF_String *out)
 {
     SF_String base, avatar_name, slot_name;
     //sorry, why do you use base path sting here?
@@ -153,9 +153,7 @@ void build_load_path(CAppMenu *_this, void *preload, SF_String *out)
     const wchar_t *bp = base.raw_data        ? base.raw_data        : L"";
     const wchar_t *an = avatar_name.raw_data ? avatar_name.raw_data : L"";
     const wchar_t *sn = slot_name.raw_data   ? slot_name.raw_data   : L"";
-    wchar_t *bl = base.raw_data        ? base.str_length        : 0;
-    wchar_t *al = avatar_name.raw_data ? avatar_name.str_length : 0;
-    wchar_t *sl = slot_name.raw_data   ? slot_name.str_length   : 0;
+
 
     uiAPI.SFStringConstructor(out);
     //Don't need to append avatar name for coop

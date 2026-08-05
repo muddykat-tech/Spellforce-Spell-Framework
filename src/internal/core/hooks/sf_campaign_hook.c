@@ -71,7 +71,7 @@ static void hook_ql_helper();
 
 static uint32_t s_ql_return_ok;
 static uint32_t s_ql_return_fail;
-
+static uint32_t s_hdr_result_ok;
 void initialize_campaign_hooks()
 {
 
@@ -103,7 +103,7 @@ void initialize_campaign_hooks()
 
     s_ql_return_ok = ASI::AddrOf(0x5ef663);
     s_ql_return_fail = ASI::AddrOf(0x5ef74c);
-
+    s_hdr_result_ok = ASI::AddrOf(0x5fb864);
     hook_initfirstmap();
     hook_getsavepath();
     hook_qs_load();
@@ -348,6 +348,32 @@ static void __declspec(naked) quickload_hook()
          "o" (s_ql_return_ok),"o" (s_ql_return_fail) );
 }
 
+uint32_t __thiscall getHdrStringID(uint32_t camp_type)
+{
+    if (camp_type == 2)
+    {
+        return 0x1cb8;
+    }
+    if (camp_type == 1)
+    {
+        return 0x1bbf;
+    }
+    return 0x1979;
+}
+
+static void hdr_helper()
+{
+
+    asm ("mov 0x3c4(%%ebx), %%eax   \n\t"   // Getting campaign type
+         "mov %%eax, %%ecx          \n\t"
+         "call %P0                  \n\t"  // Calling the Hook Function
+         "mov %%eax, %%ecx          \n\t"  // saving the result
+         "lea -0x330(%%ebp), %%eax  \n\t"
+         "push %%eax                \n\t"
+         "push %%ecx                \n\t"
+         "jmp *%1         \n\t" : : "i" (getHdrStringID),
+         "o" (s_hdr_result_ok) );
+}
 
 void hook_ql_helper()
 {
@@ -358,6 +384,14 @@ void hook_ql_helper()
     *(int *)(ASI::AddrOf(0x5ef43c)) = (int)(&quickload_hook) - ASI::AddrOf(0x5ef440);
     ASI::EndRewrite(mreg_qs);
     log_info("QuickSave Load replacement hooked (entry JMP)");
+
+
+    ASI::MemoryRegion mreg_hdr(ASI::AddrOf(0x5fb827), 6);
+    ASI::BeginRewrite(mreg_hdr);
+    *(unsigned char *)(ASI::AddrOf(0x5fb827)) = 0x90;  // NOP
+    *(unsigned char *)(ASI::AddrOf(0x5fb828)) = 0xE9;  // JMP instruction
+    *(int *)(ASI::AddrOf(0x5fb829)) = (int)(&hdr_helper) - ASI::AddrOf(0x5fb82d);
+    ASI::EndRewrite(mreg_hdr);
 
 }
 
@@ -439,6 +473,8 @@ static void hook_check_dirs()
     log_info("Check Dirs replacement hooked (entry JMP)");
 
 }
+
+
 
 /**
  * @brief Proper map selection code for the future
