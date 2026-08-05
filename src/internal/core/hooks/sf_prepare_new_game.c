@@ -225,7 +225,7 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
 
     SF_String dot_map, predefined_template;
     uiAPI.SFStringConstructor_char(&predefined_template, "figure_template\\predefined\\");
-    uiAPI.SFStringConstructor_char(&dot_map, ".map");
+    uiAPI.SFStringConstructor_char(&dot_map, "*.map");
     //stack corruption section end
     SF_String *nm = NULL;
     switch((_this->CAppMenu_data).pregame_load_result)
@@ -326,10 +326,8 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
             pn_update_kit(game_info, (_this->CAppMenu_data).pregame_load_result == 3, kit_index);
             pn_gi_apply_premade_kit(game_info, (_this->CAppMenu_data).pregame_load_result == 3, kit_index);
 
-            SF_String default_str;
-            uiAPI.SFStringConstructor_char(&default_str, "*.map");
-            uiAPI.SFStringDeepCopy(&_this->CAppMenu_data.pregrame_dotmap_string, &default_str);
-            uiAPI.SFStringDestructor(&default_str);
+
+            uiAPI.SFStringDeepCopy(&_this->CAppMenu_data.pregrame_dotmap_string, &dot_map);
 
             SF_String avatar_name;
             SF_String extra;
