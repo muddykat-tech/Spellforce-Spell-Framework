@@ -746,14 +746,15 @@ void close_campaign_screen_callback(CMnuSmpButton *button)
 void __thiscall show_custom_campaign_screen(CMnuSmpButton *_this)
 {
     CMnuContainer *parent = (CMnuContainer *)_this->CMnuBase_data.param_2_callback;
-
+/* let's try to re-create container each and every time!*/
+/*
     if (s_screen_exists)
     {
         s_screen_visible = !s_screen_visible;
         uiAPI.setContainerVisible(s_campaign_screen, s_screen_visible, 0);
         return;
     }
-
+ */
     log_info("Building custom campaign screen (%u campaigns)", g_campaign_count);
 
     s_campaign_screen = uiAPI.createContainer(0, 0, 1024, 768,
