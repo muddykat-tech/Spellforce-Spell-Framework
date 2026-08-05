@@ -703,7 +703,8 @@ void campaign_launch_flow(int32_t campaign_index)
 
     stop_intro_video(app_menu);
     g_active_custom_campaign = campaign_index;              /* UI state only */
-
+    //Achtung! Missing this will mess up logic of the preload screen
+    app_menu->CAppMenu_data.game_info.is_coop = 0;
     app_menu->CAppMenu_data.campaign_type = SFSF_CAMPAIGN_TYPE_BASE + campaign_index;
     s_gameinfo_set_avatar_type(&app_menu->CAppMenu_data.game_info, (uint16_t)def->avatar_type);
     log_info ("Campaign type offset 0x%x",
