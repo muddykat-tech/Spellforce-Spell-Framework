@@ -298,11 +298,11 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
             uiAPI.SFStringDestructor(&save_path);
             SF_String avatar_name;
             SF_String extra;
-            wchar_t *ava_name = _this->CAppMenu_data.game_info.AC82.avatarData.internal.name;
+            wchar_t *ava_name = a->internal.name;
             uiAPI.SFStringConstructor_wchar(&avatar_name, ava_name);
             uiAPI.SFStringConstructor_char(&extra, "");
 
-            CreateMenuPreMulti(_this, 0, 0, 6, 0, 0, 2, 0x1b1e, &extra, &avatar_name);
+            CreateMenuPreMulti(_this, 0, 0, 6, 0, 0, 2, 6942, &extra, &avatar_name);
 
             uiAPI.SFStringDestructor(&extra);
             uiAPI.SFStringDestructor(&avatar_name);
@@ -321,6 +321,25 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
         case 3:
         {
             log_info("Name Conflicts with Path - Reset to starter Kit + feedback Dialog");
+            pn_gi_starterkit_reset(game_info, skill_id, subskill_spec);
+            uint8_t kit_index = pn_preload_get_kit_index (preload);
+            pn_update_kit(game_info, (_this->CAppMenu_data).pregame_load_result == 3, kit_index);
+            pn_gi_apply_premade_kit(game_info, (_this->CAppMenu_data).pregame_load_result == 3, kit_index);
+
+            SF_String default_str;
+            uiAPI.SFStringConstructor_char(&default_str, "*.map");
+            uiAPI.SFStringDeepCopy(&_this->CAppMenu_data.pregrame_dotmap_string, &default_str);
+            uiAPI.SFStringDestructor(&default_str);
+
+            SF_String avatar_name;
+            SF_String extra;
+            uiAPI.SFStringConstructor_char(&extra, "");
+            pn_preload_get_avatar_name(preload, &avatar_name);
+
+            CreateMenuPreMulti(_this, 0, 0, 6, 0, 0, 2, 6942, &extra, &avatar_name);
+
+            uiAPI.SFStringDestructor(&extra);
+            uiAPI.SFStringDestructor(&avatar_name);
             break;
         }
         case 6:
