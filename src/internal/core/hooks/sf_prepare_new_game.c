@@ -294,6 +294,7 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
             build_load_path(_this, preload, &save_path);
             pn_delete_save(_this, &save_path);
             uiAPI.SFStringDestructor(&save_path);
+            pn_gi_refresh_case7(game_info); //start mode 0, is_tutorial 0, f4 3;
             SF_String avatar_name;
             SF_String extra;
             wchar_t *ava_name = a->internal.name;
