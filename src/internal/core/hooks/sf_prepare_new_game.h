@@ -11,7 +11,9 @@ typedef void (__thiscall *gameInfoReset_ptr)(SF_GameInfo *gi, uint32_t p1);     
 typedef GdAvatarData *(__thiscall *preloadGetAvatar_ptr)(void *preload, void *out);  /* 0x9fae00 */
 typedef void (__thiscall *gameInfoSetAvatar_ptr)(SF_GameInfo *gi, void *avatar,
                                                  uint16_t first_elem_u16);           /* 0x5a1440 */
-typedef uint8_t (__thiscall *gameInfoGetU8_ptr)(SF_GameInfo *gi);                    /* skill 0x59e7a0 / subskill 0x59e7c0 / kit 0x575f00 */
+typedef uint8_t (__thiscall *gameInfoGetU8_ptr)(SF_GameInfo *gi);                    /* kit 0x575f00 */
+typedef uint8_t (__thiscall *gameInfoFigureAbilities_ptr)(SF_GameInfo *gi, uint32_t param_2);     /* skill 0x59e7a0 / subskill 0x59e7c0 */
+
 typedef uint32_t (__thiscall *preloadGetU32_ptr)(void *preload);                     /* sotp side 0xa0a3d0 / campaign 0x9faa10 / */
 typedef uint8_t (__thiscall *preloadGetU8_ptr)(void *preload);                          /* skiptut 0xa09780 */
 typedef void (__thiscall *giSetBoolU8_ptr)(SF_GameInfo *gi, uint32_t b, uint8_t i);     /* 0x576760 / 0x5a1b10 */
@@ -21,7 +23,7 @@ typedef SF_String *(__thiscall *giSetTemplateName_ptr)(SF_GameInfo *gi, SF_Strin
 typedef void (__thiscall *giVoid_ptr)(SF_GameInfo *gi);                              /* 0x576480 */
 typedef void (__thiscall *giStarterKitReset_ptr)(SF_GameInfo *gi, uint32_t skill, uint32_t subskill);     /* 0x5763c0 needs double check*/
 typedef SF_String *(__thiscall *preloadGetStr_ptr)(void *preload, SF_String *out);   /* 0xa09520 slot / 0xa09600 avatar / 0xa0a3e0 fg map / 0xa0a410 fg tmpl */
-typedef void (__thiscall *appMenuDeleteSave_ptr)(CAppMenu *m, SF_String *s);         /* 0x586520 */
+typedef void (__thiscall *appMenuReadSave_ptr)(CAppMenu *m, SF_String *s);         /* 0x586520 */
 /* custom splash hints? */
 typedef CMnuScreen *(__thiscall *getPregameScreen_ptr)(CMnuScreen *_this);                           /* 0x90f930 */
 typedef SF_String *(__thiscall *getScreenName_ptr)(CMnuScreen *_this);                                 /* 0x910cf0 */
