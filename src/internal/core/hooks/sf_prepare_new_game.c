@@ -267,6 +267,8 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
 
                 uiAPI.SFStringDestructor(&tmpl);
                 uiAPI.SFStringDestructor(&des_name);
+                uiAPI.SFStringDestructor(&predefined_template);
+
             }
             else
             {
@@ -321,6 +323,25 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
         case 8:
         {
             log_info("Entered Free Game with Template");
+            game_info->unknown_0xf0 = 1;
+            game_info->unknown_0xf4 = 3;
+            game_info->unknown4 = 1;
+            SF_String map_name;
+            pn_preload_get_freegame_map(preload, &map_name);
+            pn_gi_set_save_file_name(game_info, &map_name);
+            uiAPI.SFStringDestructor(&map_name);
+
+            game_info->start_mode = 1;
+            SF_String template_name;
+            pn_preload_get_freegame_template(preload, &template_name);
+            uiAPI.SFStringConcat(&predefined_template, &template_name);
+            pn_gi_set_template_name(game_info, &predefined_template);
+            uiAPI.SFStringDestructor(&predefined_template);
+            SF_String extra;
+            uiAPI.SFStringConstructor_char(&extra, "");
+            s_start_game(_this, game_info, 100, 0,0, 0, &extra);
+            uiAPI.SFStringDestructor(&extra);
+
         }
         case 9:
         {
