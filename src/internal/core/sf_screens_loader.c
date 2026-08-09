@@ -141,8 +141,9 @@ const char *find_screen_for_map(const char *map_name)
     if (name_len < 4)
         return NULL;
 
-    const char *start = filename + 4;
-    size_t out_len = name_len - 4;
+    const char *start = strchr(filename, '_') + 1;
+    size_t out_len = start ? (size_t)(dot - start) : name_len;
+
 
     char extracted[SCREEN_MAP_NAME_LEN];
     if (out_len >= sizeof(extracted))
