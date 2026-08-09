@@ -56,6 +56,10 @@ static SF_String *pn_s_last_coop;        /* DAT_00d23c90 @ 0xd23c90             
 CreateMnuHintExt_ptr CreateMnuHintExt;
 CreateMenuPreMulti_ptr CreateMenuPreMulti;
 
+static InitUnknownAvatar_0x54_ptr InitUnknownAvatar_0x54, DisposeUnknownAvatar_0x54;
+static updatePreloadUnknown_0x54_ptr updatePreloadUnknown_0x54;
+static InitAvatarInternal_ptr InitAvatarInternal;
+importFromSave_ptr importFromSave;
 static void install_preparenewgame_hook();
 
 void initialize_preparenewgame_rewrite()
@@ -107,6 +111,12 @@ void initialize_preparenewgame_rewrite()
     pn_s_last_sotp  = (SF_String *)(ASI::AddrOf(0x924480));
     pn_s_last_coop  = (SF_String *)(ASI::AddrOf(0x923c90));
 
+    InitUnknownAvatar_0x54 = (InitUnknownAvatar_0x54_ptr)(ASI::AddrOf(0x17dd30));
+    DisposeUnknownAvatar_0x54 = (InitUnknownAvatar_0x54_ptr)(ASI::AddrOf(0x17f110));
+
+    updatePreloadUnknown_0x54 = (updatePreloadUnknown_0x54_ptr)(ASI::AddrOf(0x6097b0));
+    InitAvatarInternal = (InitAvatarInternal_ptr)(ASI::AddrOf(0x17d920));
+    importFromSave = (importFromSave_ptr)(ASI::AddrOf(0x18a140));
     install_preparenewgame_hook();
 }
 
@@ -221,7 +231,6 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
 
     CreateMnuHintExt(_this);
 
-    log_info("Check 11");
     char store_last_played = 0;      /* local_1fd */
     int did_name_lookup   = 0;       /* local_23c */
 
@@ -341,11 +350,51 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
             uiAPI.SFStringConstructor_char(&extra, "");
             s_start_game(_this, game_info, 100, 0,0, 0, &extra);
             uiAPI.SFStringDestructor(&extra);
-
+            break;
         }
         case 9:
         {
-            log_info("Load Campaign SotP");
+            log_info("Campaign SotP Import");
+            InitUnknownAvatar_0x54(&avatar_buf_b[0x54]);
+            log_info("Stage passed 1");
+
+            uiAPI.SFStringConstructor((SF_String *)(&avatar_buf_b[0xc4]));
+            log_info("Stage passed 2");
+            if (updatePreloadUnknown_0x54(preload, &avatar_buf_b[0x54]))
+            {
+                log_info("Stage passed 3");
+                GdAvatarInternal *ava_int = InitAvatarInternal(&avatar_buf_a[0x8]);
+                log_info("Stage passed 4");
+                if (importFromSave(_this, &avatar_buf_b[0x54], ava_int))
+                {
+                    pn_gi_set_avatar_equipdata(game_info, ava_int, 0);
+                    log_info("Stage passed 5");
+                    uint32_t sotp_side     = avatar_buf_b[0xd4];
+                    log_info("Ava type %d ", sotp_side);
+                    SF_String initial_map;
+                    if (sotp_side)
+                    {
+                        uiAPI.SFStringConstructor_char(&initial_map, "map\\Campaign3\\P202_City_Of_Souls.map");
+                    }
+                    else
+                    {
+                        uiAPI.SFStringConstructor_char(&initial_map, "map\\Campaign3\\P201_Blackwater_Coast.map");
+                    }
+                    game_info->unknown_0xf0 = 1;
+                    game_info->unknown_0xf4 = 3;
+                    game_info->is_tutorial = 0;
+                    game_info->start_mode = 3;
+                    log_info("Stage passed 6");
+                    uiAPI.SFStringDeepCopy(&game_info->filename, &initial_map);
+                    log_info("Stage passed 7");
+                    uiAPI.SFStringDestructor(&initial_map);
+                    s_play_campaign_intro(_this);
+                    log_info("Stage passed 8");
+                }
+                DisposeUnknownAvatar_0x54(&avatar_buf_b[0x54]);
+                log_info("Stage passed 9");
+            }
+            break;
         }
         case 1:
         case 3:

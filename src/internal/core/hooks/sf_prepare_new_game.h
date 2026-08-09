@@ -39,4 +39,8 @@ typedef void (__thiscall *CreateMenuPreMulti_ptr)(CAppMenu *_this, uint32_t para
                                                   uint32_t param_4, uint32_t param_5, uint32_t param_6,
                                                   uint16_t param_7, SF_String *param_8,SF_String *param_9); /* 593980 */
 
+typedef void (__thiscall *InitUnknownAvatar_0x54_ptr)(void *_this);
+typedef uint8_t (__thiscall *updatePreloadUnknown_0x54_ptr)(CUiMenuPreLoad *_this, void *param1);
+typedef GdAvatarInternal *(__thiscall *InitAvatarInternal_ptr)(void *buffer);
+typedef uint32_t (__thiscall *importFromSave_ptr)(CAppMenu *_this,void *param_1, GdAvatarInternal *param_2);
 #endif // SF_PREPGAME_HOOK_H
