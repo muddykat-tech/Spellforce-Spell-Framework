@@ -268,7 +268,7 @@ SF_String * __thiscall getSavePath(CAppSession *_this, SF_String *output, uint32
         default:
         {
             //place to add for custom campaign stuff
-            log_info("Loading into getSavePath");
+            //log_info("Loading into getSavePath");
             const SFSF_CampaignDef *custom = NULL;
             int custom_idx = (int)campaign_type - SFSF_CAMPAIGN_TYPE_BASE;
             if (custom_idx >= 0 && custom_idx < (int32_t)g_campaign_count)
@@ -311,6 +311,7 @@ uint8_t __thiscall quickLoad_helper(SF_CUiMain *_this)
     AC95_get_figure_name(_this->CUiMain_data.AC95,&avatar_name, players->players[player_id].avatar_figure_index);
     uiAPI.SFStringConstructor_char(&postfix, "~QUICKSAVE.sav");
     uiAPI.SFStringConcat(&avatar_name, &postfix);
+    //Not a bug. First parameter is unused inside, since it's static member function.
     getSavePath((void *)_this, &base_path, _this->CUiMain_data.campaign_type);
     uiAPI.SFStringConcat(&base_path,&avatar_name);
     uint32_t shallContinue = false;
@@ -421,12 +422,12 @@ void __thiscall loadQuickSave(CAppMenu *_this, uint32_t unknown)
     uiAPI.SFStringConcat(&avatar_name, &tilda);
     uiAPI.SFStringConcat(&avatar_name, &quicksave);
     getSavePath(session, &base_path, _this->CAppMenu_data.campaign_type);
-    log_info("Base path %ls", base_path.raw_data);
+    //log_info("Base path %ls", base_path.raw_data);
 
     uiAPI.SFStringConcat(&base_path, &avatar_name);
     if (checkFileExists(&base_path))
     {
-        log_info("Full save path %ls", base_path.raw_data);
+        //log_info("Full save path %ls", base_path.raw_data);
 
         prepareTransition(_this, 1, 1);
         SF_GameInfo newInfo;
@@ -494,9 +495,9 @@ void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t
     SF_String dot_map;
     SF_String campagn_path;
     SF_String intial_map_name;
-    log_info("initFirstMap Hook: Starter Kit Start ");
+    //log_info("initFirstMap Hook: Starter Kit Start ");
 
-    log_info("Values: %x %d %d %d %d %d", (uint32_t)_this, skip_tutorial, skill, subskill, campaign_id, is_shadowblade);
+    //log_info("Values: %x %d %d %d %d %d", (uint32_t)_this, skip_tutorial, skill, subskill, campaign_id, is_shadowblade);
 
     /* -- starter kit: figure_template\starterkit\SK_<skill><subskill>.des -- */
     uiAPI.SFStringConstructor_char(&dot_map, ".map");
@@ -508,7 +509,7 @@ void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t
     uiAPI.SFStringConcat(&full_template, &default_template);
     uiAPI.SFStringDeepCopy(&_this->starter_kit_name, &full_template);
 
-    log_info("initFirstMap Hook: Avatar Snapshot to deep Copy");
+    //log_info("initFirstMap Hook: Avatar Snapshot to deep Copy");
     /* -- avatar snapshot AC82 -> AC82_1: FULL deep copy (vanilla parity).
      *    Downstream flows (restart map, PrepareNewGame) read AC82_1;
      *    the shallow field copies alone are NOT sufficient. -- */
@@ -520,7 +521,7 @@ void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t
     uint32_t proper_offset = (uint32_t)(&_this->AC82.avatarData.begin) - 0x10;
     s_avatar_vectors_copy(&_this->AC82_1.avatarData.begin, proper_offset);
 
-    log_info("initFirstMap Hook: Check for Custom Campaign");
+    //log_info("initFirstMap Hook: Check for Custom Campaign");
     /* -- active custom campaign? -- */
     const SFSF_CampaignDef *custom = NULL;
     int custom_idx = (int)campaign_id - SFSF_CAMPAIGN_TYPE_BASE;
@@ -534,7 +535,7 @@ void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t
      *    campaign's folder, e.g. map\Campaign2\tutorial.map). -- */
     if (custom != NULL)
     {
-        log_info("initFirstMap Hook: Attempting to load Custom Campaign");
+        //log_info("initFirstMap Hook: Attempting to load Custom Campaign");
         char folder[160];
         snprintf(folder, sizeof(folder), "map\\%s\\", custom->campaign_folder);
         uiAPI.SFStringConstructor_char(&campagn_path, folder);
@@ -546,20 +547,20 @@ void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t
         {
             skip_tutorial = 1;
         }
-        log_info("Campaign '%s': maps from %s", custom->name, folder);
+        //log_info("Campaign '%s': maps from %s", custom->name, folder);
     }
     else
     {
-        log_info("initFirstMap Hook: Not Custom - Deverting to Vanilla Flow");
+        //log_info("initFirstMap Hook: Not Custom - Deverting to Vanilla Flow");
         switch (campaign_id)
         {
             case 1:
-                log_info("initFirstMap Hook: Engine Type 1");
+                //log_info("initFirstMap Hook: Engine Type 1");
                 uiAPI.SFStringConstructor_char(&campagn_path, "map\\Campaign2\\");
                 uiAPI.SFStringConstructor_wchar(&intial_map_name, L"P101_Mirraw_Thur");
                 break;
             case 2:
-                log_info("initFirstMap Hook: Engine Type 2");
+                //log_info("initFirstMap Hook: Engine Type 2");
                 uiAPI.SFStringConstructor_char(&campagn_path, "map\\Campaign3\\");
                 if (is_shadowblade)
                 {
@@ -572,12 +573,12 @@ void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t
                 break;
             case 0:
             default:
-                log_info("initFirstMap Hook: Campaign Type != (1||2)");
+                //log_info("initFirstMap Hook: Campaign Type != (1||2)");
                 /* default falls back to Order so the strings are ALWAYS
                  * constructed - the epilogue destructors depend on it. */
                 if (campaign_id > 2)
                 {
-                    log_info("initFirstMap: Located Custom Campaign ID %d", campaign_id);
+                    //log_info("initFirstMap: Located Custom Campaign ID %d", campaign_id);
                     char path[512];
                     snprintf(path, sizeof(path), "map\\CustomCampaigns\\%s", custom->campaign_folder);
                     uiAPI.SFStringConstructor_char(&campagn_path, path);
@@ -591,19 +592,19 @@ void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t
         }
     }
 
-    log_info("initFirstMap Hook: Check Tutorial");
+    //log_info("initFirstMap Hook: Check Tutorial");
     if (skip_tutorial)
     {
-        log_info("initFirstMap Hook: Skipping Tutorial");
+        //log_info("initFirstMap Hook: Skipping Tutorial");
         /* Direct start: Assign player their skill-derived starter kit (armor equipment ect). */
         uiAPI.SFStringDeepCopy(&_this->template_name, &_this->starter_kit_name);
-        log_info("initFirstMap Hook; setting GameInfo");
+        //log_info("initFirstMap Hook; setting GameInfo");
         _this->start_mode  = 2;
         _this->is_tutorial = 0;
     }
     else
     {
-        log_info("initFirstMap Hook: Loading Tutorial");
+        //log_info("initFirstMap Hook: Loading Tutorial");
         /* Tutorial: swap the map NAME (folder already selected above),
          * fixed tutorial figure template. */
         uiAPI.SFStringDestructor(&intial_map_name);
@@ -616,7 +617,7 @@ void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t
             uiAPI.SFStringConstructor_wchar(&intial_map_name, L"tutorial");
         }
 
-        log_info("initFirstMap Hook: Tutorial Kit Load");
+        //log_info("initFirstMap Hook: Tutorial Kit Load");
         SF_String tutorial_template;
         SF_String tutorial_kit_name;
         SF_String tutorial_template_path;
@@ -630,12 +631,12 @@ void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t
         uiAPI.SFStringDestructor(&tutorial_template);
         uiAPI.SFStringDestructor(&tutorial_template_path);
 
-        log_info("initFirstMap Hook: Updating GameInfo");
+        //log_info("initFirstMap Hook: Updating GameInfo");
         _this->start_mode  = 1;
         _this->is_tutorial = 1;
     }
 
-    log_info("initFirstMap Hook: prepping map file for loading");
+    //log_info("initFirstMap Hook: prepping map file for loading");
     /* -- filename = <folder><map>.map + branch-invariant state -- */
     uiAPI.SFStringConcat(&campagn_path, &intial_map_name);
     uiAPI.SFStringConcat(&campagn_path, &dot_map);
@@ -643,14 +644,14 @@ void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t
     _this->unknown_0xf0 = 1;
     _this->unknown_0xf4 = 3;
 
-    log_info("initFirstMap Hook; Cleanup");
+    //log_info("initFirstMap Hook; Cleanup");
     uiAPI.SFStringDestructor(&default_template);
     uiAPI.SFStringDestructor(&template_path);
     uiAPI.SFStringDestructor(&full_template);
     uiAPI.SFStringDestructor(&dot_map);
     uiAPI.SFStringDestructor(&campagn_path);
     uiAPI.SFStringDestructor(&intial_map_name);
-    log_info("initFirstMap Hook; Complete Returning");
+    //log_info("initFirstMap Hook; Complete Returning");
 }
 
 void hook_initfirstmap()
@@ -707,13 +708,6 @@ void campaign_launch_flow(int32_t campaign_index)
     app_menu->CAppMenu_data.game_info.is_coop = 0;
     app_menu->CAppMenu_data.campaign_type = SFSF_CAMPAIGN_TYPE_BASE + campaign_index;
     s_gameinfo_set_avatar_type(&app_menu->CAppMenu_data.game_info, (uint16_t)def->avatar_type);
-    log_info ("Campaign type offset 0x%x",
-              (uint32_t)&app_menu->CAppMenu_data.campaign_type-(uint32_t)&app_menu->CAppMenu_data);
-    log_info ("Game info offset 0x%x",
-              (uint32_t)&app_menu->CAppMenu_data.game_info-(uint32_t)&app_menu->CAppMenu_data);
-    log_info ("Game info size 0x%x", sizeof(SF_GameInfo));
-    log_info("Launching campaign '%s' (flow, engine_type %u, avatar %u)",
-             def->name, app_menu->CAppMenu_data.campaign_type, def->avatar_type);
     s_enter_campaign_flow(app_menu, 1);
 }
 
@@ -756,7 +750,7 @@ void __thiscall show_custom_campaign_screen(CMnuSmpButton *_this)
         return;
     }
  */
-    log_info("Building custom campaign screen (%u campaigns)", g_campaign_count);
+    //log_info("Building custom campaign screen (%u campaigns)", g_campaign_count);
 
     s_campaign_screen = uiAPI.createContainer(0, 0, 1024, 768,
                                               "ui_bgr_landscape_bg.msb", "", 0.99f);

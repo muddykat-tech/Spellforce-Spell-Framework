@@ -49,7 +49,6 @@ static preloadUpdateKit2_ptr pn_update_kit_2;
 
 /* last-played globals best guesses */
 static SF_String *pn_s_cfg_key;          /* DAT_00d24120 @ 0xd24120 (section?)   */
-static SF_String *pn_s_last_sf1;         /* DAT_00d24320 @ 0xd24320              */
 static SF_String *pn_s_last_addon;       /* S_LAST_PLAYED_ADDON @ 0xd243d0       */
 static SF_String *pn_s_last_sotp;        /* DAT_00d24480 @ 0xd24480              */
 static SF_String *pn_s_last_coop;        /* DAT_00d23c90 @ 0xd23c90              */
@@ -122,15 +121,15 @@ void initialize_preparenewgame_rewrite()
 
 uint8_t __thiscall pn_preload_get_skip_tutorial(CUiMenuPreLoad *_this)
 {
-    log_info("check coop");
+    //log_info("check coop");
     uint8_t is_coop = (_this->CUiMenuPreLoad_data.game_info)->is_coop;
-    log_info("got it?");
+    //log_info("got it?");
     if(is_coop == 0 && (_this->CUiMenuPreLoad_data).campaign_type == 0)
     {
-        log_info("return skip tut in preload data");
+        //log_info("return skip tut in preload data");
         return (_this->CUiMenuPreLoad_data).skip_tutorial;
     }
-    log_info("return 1");
+    //log_info("return 1");
     return 1;
 }
 
@@ -176,7 +175,7 @@ SF_String * build_load_path(CAppMenu *_this, void *preload, SF_String *out)
         uiAPI.SFprintf(out, L"%ls%ls~%ls.sav", bp, an, sn);
     }
 
-    log_info("Attempting to load Save from %ls", out->raw_data);
+    //log_info("Attempting to load Save from %ls", out->raw_data);
 
     uiAPI.SFStringDestructor(&slot_name);
     uiAPI.SFStringDestructor(&avatar_name);
@@ -186,7 +185,7 @@ SF_String * build_load_path(CAppMenu *_this, void *preload, SF_String *out)
 
 void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload)
 {
-    log_info("Preparing New Game");
+    //log_info("Preparing New Game");
     CUtlConfigFile configFile;
     pn_cfg_ctor(&configFile, (char *)0x0);
 
@@ -197,8 +196,8 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
     (_this->CAppMenu_data).pregame_load_result = result_code;
 
     GdAvatarData *avatar_data = &(game_info->AC82).avatarData;
-    log_info("Game info offset 0x%x", (uint32_t)&(_this->CAppMenu_data).game_info - (uint32_t)&(_this->CAppMenu_data));
-    log_info("Game info size 0x%x", sizeof (SF_GameInfo));
+    //log_info("Game info offset 0x%x", (uint32_t)&(_this->CAppMenu_data).game_info - (uint32_t)&(_this->CAppMenu_data));
+    //log_info("Game info size 0x%x", sizeof (SF_GameInfo));
 
 
     GdAvatarInternal *internal_avatar = &avatar_data->internal;
@@ -216,9 +215,6 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
     uint8_t skill_id = pn_gi_get_skill(game_info, 0);
     uint8_t subskill_spec = pn_gi_get_subskill(game_info, 1);
 
-    SF_String *screen_name;
-    SF_String name_allocated;
-
     CMnuScreen *pregame_screen = pn_get_pregame_screen((_this->CAppMenu_data).splash_screen);
 
     if (pregame_screen != (CMnuScreen *)0)
@@ -232,7 +228,6 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
     CreateMnuHintExt(_this);
 
     char store_last_played = 0;      /* local_1fd */
-    int did_name_lookup   = 0;       /* local_23c */
 
     SF_String dot_map, predefined_template;
     uiAPI.SFStringConstructor_char(&predefined_template, "figure_template\\predefined\\");
@@ -244,7 +239,7 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
         case 0:
         case 2:
         {
-            log_info("Loading into Create New Game via Premade / Created Avatar");
+            //log_info("Loading into Create New Game via Premade / Created Avatar");
             if ((_this->CAppMenu_data).campaign_type == 2)
             {
                 uint32_t sotp_side     = pn_preload_get_sotp_side(preload);
@@ -331,7 +326,7 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
         }
         case 8:
         {
-            log_info("Entered Free Game with Template");
+            //log_info("Entered Free Game with Template");
             game_info->unknown_0xf0 = 1;
             game_info->unknown_0xf4 = 3;
             game_info->unknown4 = 1;
@@ -388,7 +383,7 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
         case 1:
         case 3:
         {
-            log_info("Name Conflicts with Path - Reset to starter Kit + feedback Dialog");
+            ////log_info("Name Conflicts with Path - Reset to starter Kit + feedback Dialog");
             pn_gi_starterkit_reset(game_info, skill_id, subskill_spec);
             uint8_t kit_index = pn_preload_get_kit_index (preload);
             pn_update_kit(game_info, (_this->CAppMenu_data).pregame_load_result == 3, kit_index);
@@ -436,18 +431,17 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
     }
 
     // Scope this code to avoid error from label crossing initialization
-    log_info("Name Lookup");
+    //log_info("Name Lookup");
     SF_String avatar_name;
     nm = pn_preload_get_avatar_name(preload, &avatar_name);
-    did_name_lookup  = 1;
-    log_info("Name Lookup checking if last played exists");
+    //log_info("Name Lookup checking if last played exists");
     store_last_played = (nm->str_length == 0) ? 0 : 1;
     uiAPI.SFStringDestructor(&avatar_name);
 
 skip_name_lookup:
     if (store_last_played != 0)
     {
-        log_info("Write Last Played");
+        //log_info("Write Last Played");
         SF_String empty;
         SF_String name;
 
@@ -470,16 +464,16 @@ skip_name_lookup:
         char stored_buf[32];
         strncpy(stored_buf, "Stored", sizeof(stored_buf));
         stored_buf[sizeof(stored_buf) - 1] = '\0';
-        log_info("Set Config File");
+        //log_info("Set Config File");
         pn_cfg_set_string(&configFile, stored_buf, key_buf, &name, &empty);
-        log_info("Clean up");
+        //log_info("Clean up");
         uiAPI.SFStringDestructor(&name);
         uiAPI.SFStringDestructor(&empty);
     }
-    log_info("Close Config File");
+    //log_info("Close Config File");
     uiAPI.SFStringDestructor(&configFile.name_maybe);
     pn_cfg_dtor(&configFile);
-    log_info("Return");
+    //log_info("Return");
 }
 
 void install_preparenewgame_hook()
@@ -489,7 +483,7 @@ void install_preparenewgame_hook()
     *(unsigned char *)(ASI::AddrOf(0x195e10)) = 0xE9;
     *(int *)(ASI::AddrOf(0x195e11)) = (int)(&hooked_prepare_new_game) - (int)(ASI::AddrOf(0x195e15));
     ASI::EndRewrite(mreg);
-    log_info("PrepareNewGame replacement hooked (entry JMP @ 0x595e10)");
+    //log_info("PrepareNewGame replacement hooked (entry JMP @ 0x595e10)");
 }
 
 /** @} */
