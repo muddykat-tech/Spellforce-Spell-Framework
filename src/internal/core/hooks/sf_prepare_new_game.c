@@ -354,23 +354,16 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
         }
         case 9:
         {
-            log_info("Campaign SotP Import");
             InitUnknownAvatar_0x54(&avatar_buf_b[0x54]);
-            log_info("Stage passed 1");
 
             uiAPI.SFStringConstructor((SF_String *)(&avatar_buf_b[0xc4]));
-            log_info("Stage passed 2");
             if (updatePreloadUnknown_0x54(preload, &avatar_buf_b[0x54]))
             {
-                log_info("Stage passed 3");
                 GdAvatarInternal *ava_int = InitAvatarInternal(&avatar_buf_a[0x8]);
-                log_info("Stage passed 4");
                 if (importFromSave(_this, &avatar_buf_b[0x54], ava_int))
                 {
                     pn_gi_set_avatar_equipdata(game_info, ava_int, 0);
-                    log_info("Stage passed 5");
                     uint32_t sotp_side     = avatar_buf_b[0xd4];
-                    log_info("Ava type %d ", sotp_side);
                     SF_String initial_map;
                     if (sotp_side)
                     {
@@ -384,15 +377,11 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
                     game_info->unknown_0xf4 = 3;
                     game_info->is_tutorial = 0;
                     game_info->start_mode = 3;
-                    log_info("Stage passed 6");
                     uiAPI.SFStringDeepCopy(&game_info->filename, &initial_map);
-                    log_info("Stage passed 7");
                     uiAPI.SFStringDestructor(&initial_map);
                     s_play_campaign_intro(_this);
-                    log_info("Stage passed 8");
                 }
                 DisposeUnknownAvatar_0x54(&avatar_buf_b[0x54]);
-                log_info("Stage passed 9");
             }
             break;
         }
