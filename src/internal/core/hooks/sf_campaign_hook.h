@@ -23,7 +23,7 @@
 typedef struct __attribute__((packed))
 {
     char name[64];            /**< Shown on the campaign button */
-    char campaign_name_id[64]; /**< Optional, reserved for future use. Empty string when unset. */
+    uint16_t campaign_name_id; /**< Optional, reserved for future use. Empty string when unset. */
     char description[256];    /**< For the right-hand detail panel */
     char author[64];          /**< Optional, shown under the name in the detail panel */
     char start_map[64];       /**< Map name WITHOUT path/extension, e.g. "mycampaign" */
@@ -41,7 +41,7 @@ typedef struct __attribute__((packed))
                                  Custom campaigns: Currently setup to use 8 + campaign_index so
                                  saves are identified for each custom campaign load order issues might
                                  happen with differnt mods though will need extensive error handling / checking.
-                                 */
+                             */
 } SFSF_CampaignDef;
 
 typedef GdAvatarInternal *(__thiscall *avatarInternalCopy_ptr)(GdAvatarInternal *dest,

@@ -139,9 +139,12 @@ static bool parse_campaign_from_tokens(const char *json, const jsmntok_t *tokens
                 out_campaign->found_name = true;
                 break;
             case CAMPAIGN_FIELD_CAMPAIGN_NAME_ID:
-                json_str(json, value_token, def->campaign_name_id, sizeof(def->campaign_name_id));
+            {
+                int campaign_name_id = jsonint(json, value_token);
+                def->campaign_name_id = campaign_name_id;
                 out_campaign->found_campaign_name_id = true;
                 break;
+            }
             case CAMPAIGN_FIELD_DESCRIPTION:
                 json_str(json, value_token, def->description, sizeof(def->description));
                 out_campaign->found_description = true;

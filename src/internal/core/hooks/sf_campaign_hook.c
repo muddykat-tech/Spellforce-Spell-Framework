@@ -361,7 +361,19 @@ uint32_t __thiscall getHdrStringID(uint32_t camp_type)
     {
         return 0x1bbf;
     }
-    return 0x1979;
+    if (camp_type == 0)
+    {
+        return 0x1979;
+    }
+    int custom_idx = (int)camp_type - SFSF_CAMPAIGN_TYPE_BASE;
+    if (g_campaigns[custom_idx].campaign_name_id)
+    {
+        return g_campaigns[custom_idx].campaign_name_id;
+    }
+    else
+    {
+        return 0x1979;
+    }
 }
 
 static void hdr_helper()
@@ -386,7 +398,7 @@ void hook_ql_helper()
     *(unsigned char *)(ASI::AddrOf(0x5ef43b)) = 0xE9; // JMP instruction
     *(int *)(ASI::AddrOf(0x5ef43c)) = (int)(&quickload_hook) - ASI::AddrOf(0x5ef440);
     ASI::EndRewrite(mreg_qs);
-    
+
     ASI::MemoryRegion mreg_hdr(ASI::AddrOf(0x5fb827), 6);
     ASI::BeginRewrite(mreg_hdr);
     *(unsigned char *)(ASI::AddrOf(0x5fb827)) = 0x90;  // NOP
@@ -752,7 +764,7 @@ void campaign_launch_flow(int32_t campaign_index)
     }
 
     stop_intro_video(app_menu);
-    g_active_custom_campaign = campaign_index;              
+    g_active_custom_campaign = campaign_index;
     app_menu->CAppMenu_data.game_info.is_coop = 0;
     app_menu->CAppMenu_data.campaign_type = SFSF_CAMPAIGN_TYPE_BASE + campaign_index;
     s_gameinfo_set_avatar_type(&app_menu->CAppMenu_data.game_info, (uint16_t)def->avatar_type);
