@@ -263,6 +263,7 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(ui, vfunction12, 0x511a00);
     DEFINE_FUNCTION(ui, bringToFront, 0x507c10);
     DEFINE_FUNCTION(ui, vfunction163, 0x513d90);
+    DEFINE_FUNCTION(ui, destroyLabel, 0X51B0C0);
 
     DEFINE_FUNCTION(ui, SFprintf, 0x384170);
     DEFINE_FUNCTION(ui, SFStringConcat, 0x383d00);

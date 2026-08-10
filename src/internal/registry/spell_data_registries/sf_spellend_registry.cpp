@@ -19,7 +19,7 @@ void registerSpellEndHandler(uint16_t spell_line, handler_ptr handler)
         sprintf(message,
                 "%s (v%s) has replaced an End Handler [%d] (Was this on purpose?)",
                 g_current_mod->mod_id, g_current_mod->mod_version, spell_line);
-        log_warning(message);
+        log_warning_level(DEBUG_LOW, message);
     }
 
     s_spellend_handler_map[spell_line] = handler;

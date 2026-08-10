@@ -1,4 +1,5 @@
 #include "sf_mod_registry.h"
+#include "sf_error_registry.h"
 
 #include "spell_data_registries/sf_spelltype_registry.h"
 #include "spell_data_registries/sf_spelleffect_registry.h"
@@ -318,23 +319,17 @@ uint8_t __thiscall getRacialQuarry(uint8_t race)
 /**
  * @brief Registers the mod spells and performs basic conflict checking.
  *
- * This function iterates over the g_internal_spell_list and registers each spell by
- * adding it to the spell_id_map and spell_effect_id_map. It checks for conflicts
- * by checking if the spell_id or spell_effect_id is already registered by another
- * mod. If a conflict is detected, an error message is logged. If no conflict is
- * detected, the spell is added to the respective map.
+ * This function iterates over the g_internal_spell_list and claims each spell's
+ * spell_id and spell_effect_id through the shared conflict registry, which logs
+ * and attributes any clash with a mod that registered the same ID earlier.
  *
  * Additionally, it registers the spell type handler, spell effect handler, and spell
  * end handler if the SFSpell struct has a non-null handler pointer.
  *
- * After registering all the spells, the memory allocated for each spell is freed.
+ * @see claim_numeric_id(), sf_error_registry.h
  */
 void register_mod_spells()
 {
-    // Basic Conflict Checking
-    std::map<uint16_t, SFMod *> spell_id_map;
-    std::map<uint16_t, SFMod *> spell_effect_id_map;
-
     SFMod *temp = g_current_mod;
     uint8_t spell_count_for_mod = 0;
     for (SFSpell *spell_data : g_internal_spell_list)
@@ -376,79 +371,21 @@ void register_mod_spells()
                      "| - Starting Registration for [%s by %s]",
                      parent_mod->mod_id, parent_mod->mod_author);
             log_info(info);
-            g_current_mod->mod_errors[0] = 0;
             temp = g_current_mod;
         }
         else
         {
-            temp->mod_errors[0] = 0;
             spell_count_for_mod = spell_count_for_mod + 1;
         }
 
-        // Check for conflicts
-        if (spell_id_map.find(spell_id) != spell_id_map.end())
-        {
-            char error_msg[256];
-            SFMod *conflict_mod = spell_id_map[spell_id];
-            if (spell_id < 242)
-            {
-                snprintf(error_msg, sizeof(error_msg),
-                         "| - %s has Overwritten a vanilla spell ID [%d], this was previously registered by [%s]",
-                         parent_mod->mod_id, spell_id, conflict_mod->mod_id);
-                log_warning(error_msg);
-            }
-            else
-            {
-                snprintf(error_msg, sizeof(error_msg),
-                         "| - Mod Conflict Detected [%s]: Spell ID [%d] is already registered by [%s]",
-                         parent_mod->mod_id, spell_id, conflict_mod->mod_id);
-                log_error(error_msg);
-                snprintf(conflict_mod->mod_errors,
-                         sizeof(parent_mod->mod_errors),
-                         "%sSpell ID [%d] was overwritten by %s\n",
-                         conflict_mod->mod_errors, spell_id,
-                         parent_mod->mod_id);
-                g_error_count = g_error_count + 1;
-            }
-        }
-
-        if (spell_effect_id_map.find(spell_effect_id) !=
-            spell_effect_id_map.end())
-        {
-            char error_msg[256];
-            SFMod *conflict_mod = spell_effect_id_map[spell_effect_id];
-            if (spell_effect_id < 0xa6)
-            {
-                snprintf(error_msg, sizeof(error_msg),
-                         "| - %s has Overwritten a vanilla spell effect ID [%d] this was previously registered by [%s]",
-                         parent_mod->mod_id, spell_effect_id,
-                         conflict_mod->mod_id);
-                log_warning(error_msg);
-            }
-            else
-            {
-                snprintf(error_msg, sizeof(error_msg),
-                         "| - Mod Conflict Detected [%s]: Spell Effect ID [%d] is already registered by [%s]",
-                         parent_mod->mod_id, spell_effect_id,
-                         conflict_mod->mod_id);
-                log_error(error_msg);
-
-                snprintf(conflict_mod->mod_errors,
-                         sizeof(parent_mod->mod_errors),
-                         "%sSpell Effect ID [%d] was overwritten by %s\n",
-                         conflict_mod->mod_errors, spell_effect_id,
-                         parent_mod->mod_id);
-
-                g_error_count = g_error_count + 1;
-            }
-        }
-
-        // Update Conflict Maps
-        spell_id_map[spell_id] = parent_mod;
+        // Check for conflicts. Vanilla spells are registered by the framework
+        // mod
+        claim_numeric_id(CONFLICT_SPELL_ID, spell_id, parent_mod, 242, "Spell ID");
 
         if (spell_effect_id != 0x00)
         {
-            spell_effect_id_map[spell_effect_id] = parent_mod;
+            claim_numeric_id(CONFLICT_SPELL_EFFECT_ID, spell_effect_id, parent_mod,
+                             0xa6, "Spell Effect ID");
         }
 
         // Do Registration
@@ -525,8 +462,6 @@ void register_mod_spells()
         log_info(spell_count_info);
         spell_count_for_mod = 0;
     }
-
-    log_info("Error Contains2?: %s", temp->mod_errors);
 }
 
 addBuilding_ptr AddBuilding;
@@ -671,8 +606,6 @@ uint8_t get_resource_id(const char *resource_name)
 
 void register_mod_buildings()
 {
-    std::map<int, SFMod *> building_id_map;
-
     SFMod *temp = g_current_mod;
     int building_count_for_mod = 0;
 
@@ -695,7 +628,6 @@ void register_mod_buildings()
             char info[256];
             snprintf(info, sizeof(info), "| - Starting Registration for [%s by %s]",
                      parent_mod->mod_id, parent_mod->mod_author);
-            parent_mod->mod_errors[0] = '\0';
             log_info(info);
             temp = g_current_mod;
         }
@@ -748,6 +680,10 @@ void register_mod_buildings()
 
             register_building_to_game(building_data, &parsed_building);
         }
+
+        claim_numeric_id(CONFLICT_BUILDING_ID, building_data->building_id, parent_mod,
+                         0xd1, "Building ID");
+
         if (building_data->done_handler != nullptr)
         {
             registerBuildingDoneHandler(building_data->building_id, building_data->done_handler);

@@ -894,10 +894,12 @@ typedef struct __attribute__((packed))
 {
     uint8_t toggle;  // toggle used to track if a button is enabled or not.
     uint32_t index;   // Used to hold the index of loaded mods for the showmod page
-    CMnuLabel *title_label;  // Title Label
+    CMnuLabel *title_label;  // Mod name and version
+    CMnuLabel *author_label;  // "by <author>"
     CMnuLabel *desc_label;  // Description Label
     CMnuLabel *page_label;  // Page Index Label
     CMnuLabel *error_label;  // Error Info Label
+    CMnuLabel *type_label;  // Mod Type tag (framework / core module), blank for external mods
 } SFSF_ModlistStruct;
 
 

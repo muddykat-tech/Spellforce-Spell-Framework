@@ -36,7 +36,6 @@ getBasePathString_ptr s_get_base_path_string;
 gameInfoSetAvatarType_ptr s_gameinfo_set_avatar_type;
 
 typedef LPCSTR *(__cdecl *GetDataStorageLocation_ptr)(char **param_1, uint32_t type);
-typedef uint32_t (__cdecl *checkFileExists_ptr)(SF_String *name);
 typedef void (__thiscall *prepareTransition_ptr)(CAppMenu *_this,uint32_t param_1,uint32_t param_2);
 typedef SF_GameInfo *(__thiscall *initDefaultInfo_ptr)(SF_GameInfo *_this);
 typedef void (__thiscall *AC82_Zero_ptr)(AutoClass82 *_this);
@@ -62,7 +61,7 @@ some_vector_fun_ptr some_vector_init; //FUN_007264d0
 some_vector_fun_ptr some_vector_dispose; // FUN_006115e0
 CUtlCallBackInit_ptr CUtlCallBackInit;
 
-//TODO -- make this function available for framework. Will need for proper loading screens and maps later on!!!
+// Declared in sf_campaign_hook.h so the core modules can validate their assets.
 checkFileExists_ptr checkFileExists;
 
 static void hook_qs_load();
@@ -112,15 +111,8 @@ void initialize_campaign_hooks()
 
     initialize_preparenewgame_rewrite();
 
-    // TEST CAMPAIGN - remove once registration comes from the mod registry
-    SFSF_CampaignDef test_campaign = {};
-    strncpy(test_campaign.name,        "testcampaign",      sizeof(test_campaign.name) - 1);
-    strncpy(test_campaign.description, "Hook test",         sizeof(test_campaign.description) - 1);
-    strncpy(test_campaign.start_map,   "000_liannon",   sizeof(test_campaign.start_map) - 1);
-    strncpy(test_campaign.campaign_folder, "testcampaign",      sizeof(test_campaign.campaign_folder) - 1);
-    strncpy(test_campaign.tutorial_map, "",                 sizeof(test_campaign.tutorial_map) - 1);
-    test_campaign.avatar_type = 8;   // 8 + campaign_index convention
-    register_campaign(&test_campaign);
+    /* Campaigns themselves are registered by the Custom Campaign Module from
+     * sfsf\campaigns\*.json - see initialize_campaign_module(). */
 }
 
 SFSF_CampaignDef g_campaigns[SFSF_MAX_CAMPAIGNS];
@@ -137,7 +129,7 @@ int32_t register_campaign(const SFSF_CampaignDef *def)
     }
 
     g_campaigns[g_campaign_count] = *def;
-    if (g_campaigns[g_campaign_count].avatar_type == 0)
+    if (g_campaigns[g_campaign_count].avatar_type == -1)
         g_campaigns[g_campaign_count].avatar_type = 8 + g_campaign_count;
 
     log_info("Registered campaign %u: %s (type %u, map: %s, saves: %s)",
@@ -275,6 +267,16 @@ SF_String * __thiscall getSavePath(CAppSession *_this, SF_String *output, uint32
             {
                 custom = &g_campaigns[custom_idx];
             }
+
+            /* Unknown campaign type: fall back to the base save folder rather
+             * than dereferencing a campaign that was never registered. */
+            if (custom == NULL)
+            {
+                log_error("getSavePath: no registered campaign for type %u, using the base save folder",
+                          campaign_type);
+                break;
+            }
+
             SF_String campaign_path;
             SF_String back_slash;
 
@@ -384,9 +386,7 @@ void hook_ql_helper()
     *(unsigned char *)(ASI::AddrOf(0x5ef43b)) = 0xE9; // JMP instruction
     *(int *)(ASI::AddrOf(0x5ef43c)) = (int)(&quickload_hook) - ASI::AddrOf(0x5ef440);
     ASI::EndRewrite(mreg_qs);
-    log_info("QuickSave Load replacement hooked (entry JMP)");
-
-
+    
     ASI::MemoryRegion mreg_hdr(ASI::AddrOf(0x5fb827), 6);
     ASI::BeginRewrite(mreg_hdr);
     *(unsigned char *)(ASI::AddrOf(0x5fb827)) = 0x90;  // NOP
@@ -461,7 +461,6 @@ void hook_qs_load()
     *(unsigned char *)(ASI::AddrOf(0x185c00)) = 0xE9; // JMP instruction
     *(int *)(ASI::AddrOf(0x185c01)) = (int)(&loadQuickSave) - ASI::AddrOf(0x185c05);
     ASI::EndRewrite(mreg_qs);
-    log_info("QuickSave Load replacement hooked (entry JMP)");
 }
 
 static void hook_check_dirs()
@@ -471,8 +470,6 @@ static void hook_check_dirs()
     *(unsigned char *)(ASI::AddrOf(0x1b6fa0)) = 0xE9; // JMP instruction
     *(int *)(ASI::AddrOf(0x1b6fa1)) = (int)(&checkDirs) - ASI::AddrOf(0x1b6fa5);
     ASI::EndRewrite(mreg);
-    log_info("Check Dirs replacement hooked (entry JMP)");
-
 }
 
 
@@ -499,11 +496,30 @@ void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t
 
     //log_info("Values: %x %d %d %d %d %d", (uint32_t)_this, skip_tutorial, skill, subskill, campaign_id, is_shadowblade);
 
-    /* -- starter kit: figure_template\starterkit\SK_<skill><subskill>.des -- */
+    //log_info("initFirstMap Hook: Check for Custom Campaign");
+    /* -- active custom campaign? Resolved up front: the starter kit below
+     *    depends on it. -- */
+    const SFSF_CampaignDef *custom = NULL;
+    int custom_idx = (int)campaign_id - SFSF_CAMPAIGN_TYPE_BASE;
+    if (custom_idx >= 0 && custom_idx < (int32_t)g_campaign_count)
+    {
+        custom = &g_campaigns[custom_idx];
+    }
+
+    /* -- starter kit: figure_template\starterkit\<kit>.des. A campaign may pin
+     *    its own kit file, which replaces the whole SK_<skill><subskill> name;
+     *    an empty value falls back to the vanilla skill-derived one. -- */
     uiAPI.SFStringConstructor_char(&dot_map, ".map");
     uiAPI.SFStringConstructor(&full_template);
-    uiAPI.SFStringConstructor(&default_template);
-    uiAPI.SFprintf(&default_template, L"SK_%02d%02d.des", skill, subskill);
+    if (custom != NULL && custom->starterkit[0] != '\0')
+    {
+        uiAPI.SFStringConstructor_char(&default_template, custom->starterkit);
+    }
+    else
+    {
+        uiAPI.SFStringConstructor(&default_template);
+        uiAPI.SFprintf(&default_template, L"SK_%02d%02d.des", skill, subskill);
+    }
     uiAPI.SFStringConstructor_char(&template_path, "figure_template\\starterkit\\");
     uiAPI.SFStringConcat(&full_template, &template_path);
     uiAPI.SFStringConcat(&full_template, &default_template);
@@ -520,15 +536,6 @@ void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t
     s_avatar_internal_copy(&_this->AC82_1.avatarData.internal, &_this->AC82.avatarData.internal);
     uint32_t proper_offset = (uint32_t)(&_this->AC82.avatarData.begin) - 0x10;
     s_avatar_vectors_copy(&_this->AC82_1.avatarData.begin, proper_offset);
-
-    //log_info("initFirstMap Hook: Check for Custom Campaign");
-    /* -- active custom campaign? -- */
-    const SFSF_CampaignDef *custom = NULL;
-    int custom_idx = (int)campaign_id - SFSF_CAMPAIGN_TYPE_BASE;
-    if (custom_idx >= 0 && custom_idx < (int32_t)g_campaign_count)
-    {
-        custom = &g_campaigns[custom_idx];
-    }
 
     /* -- folder + start map: selected FIRST, tutorial branch only overrides
      *    the map NAME (vanilla order - vanilla tutorials live in their own
@@ -575,15 +582,16 @@ void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t
             default:
                 //log_info("initFirstMap Hook: Campaign Type != (1||2)");
                 /* default falls back to Order so the strings are ALWAYS
-                 * constructed - the epilogue destructors depend on it. */
+                 * constructed - the epilogue destructors depend on it.
+                 *
+                 * A campaign_id above 2 that reached this branch means the
+                 * lookup above found no registered campaign for it, so there is
+                 * no definition to read - fall through to Order rather than
+                 * dereferencing a NULL custom. */
                 if (campaign_id > 2)
                 {
-                    //log_info("initFirstMap: Located Custom Campaign ID %d", campaign_id);
-                    char path[512];
-                    snprintf(path, sizeof(path), "map\\CustomCampaigns\\%s", custom->campaign_folder);
-                    uiAPI.SFStringConstructor_char(&campagn_path, path);
-                    uiAPI.SFStringConstructor_char(&intial_map_name, custom->start_map);
-                    break;
+                    log_error("initFirstMap: campaign type %u has no registered campaign, starting Order instead",
+                              campaign_id);
                 }
 
                 uiAPI.SFStringConstructor_char(&campagn_path, "map\\Campaign\\");
@@ -661,13 +669,55 @@ void hook_initfirstmap()
     *(unsigned char *)(ASI::AddrOf(0x176040)) = 0xE9;
     *(int *)(ASI::AddrOf(0x176041)) = (int)(&initFirstMap) - (int)(ASI::AddrOf(0x176045));
     ASI::EndRewrite(mreg);
-    log_info("initFirstMap replacement hooked (entry JMP)");
 }
+
+/* Detail panel geometry, relative to the 443x619 right hand container. */
+#define CAMPAIGN_PANEL_WIDTH 443
+#define CAMPAIGN_NAME_Y      32
+#define CAMPAIGN_NAME_H      48
+#define CAMPAIGN_AUTHOR_Y    88
+#define CAMPAIGN_AUTHOR_H    28
+#define CAMPAIGN_DESC_Y      140
+#define CAMPAIGN_DESC_H      360
+#define CAMPAIGN_PLAY_X      108
+#define CAMPAIGN_PLAY_Y      540
+#define CAMPAIGN_PLAY_W      227
+#define CAMPAIGN_PLAY_H      36
+
+/** Character width the description wraps at, matching the mod info panel. */
+#define CAMPAIGN_DESC_WRAP 40
+
+/* One row per campaign; the registry caps at SFSF_MAX_CAMPAIGNS so they all fit
+ * in the left panel without paging. */
+#define CAMPAIGN_ROW_X       108
+#define CAMPAIGN_ROW_Y_START 40
+#define CAMPAIGN_ROW_PITCH   36
+#define CAMPAIGN_ROW_W       227
+#define CAMPAIGN_ROW_H       30
+
+static bool s_screen_exists = false;
+static bool s_screen_visible = false;
+static CMnuContainer *s_campaign_screen = NULL;
+static CMnuSmpButton *s_campaign_buttons[SFSF_MAX_CAMPAIGNS];
+static CMnuLabel *s_campaign_name_label = NULL;
+static CMnuLabel *s_campaign_author_label = NULL;
+static CMnuLabel *s_campaign_desc_label = NULL;
+
+/** Campaign shown in the detail panel, -1 before anything is picked. */
+static int32_t s_selected_campaign = -1;
 
 void campaign_hook_on_main_menu(CAppMenu *app_menu)
 {
     g_campaign_app_menu = app_menu;
     g_active_custom_campaign = -1;
+    s_screen_exists = false;
+    s_screen_visible = false;
+    s_campaign_screen = NULL;
+    s_campaign_name_label = NULL;
+    s_campaign_author_label = NULL;
+    s_campaign_desc_label = NULL;
+    s_selected_campaign = -1;
+    memset(s_campaign_buttons, 0, sizeof(s_campaign_buttons));
 }
 
 static void hook_getsavepath()
@@ -677,7 +727,6 @@ static void hook_getsavepath()
     *(unsigned char *)(ASI::AddrOf(0x1b89d0)) = 0xE9; /* JMP */
     *(int *)(ASI::AddrOf(0x1b89d1)) = (int)(&getSavePath) - ASI::AddrOf(0x1b89d5);
     ASI::EndRewrite(mreg);
-    log_info("getSavePath replacement hooked");
 }
 
 void stop_intro_video(CAppMenu *app_menu)
@@ -703,54 +752,89 @@ void campaign_launch_flow(int32_t campaign_index)
     }
 
     stop_intro_video(app_menu);
-    g_active_custom_campaign = campaign_index;              /* UI state only */
-    //Achtung! Missing this will mess up logic of the preload screen
+    g_active_custom_campaign = campaign_index;              
     app_menu->CAppMenu_data.game_info.is_coop = 0;
     app_menu->CAppMenu_data.campaign_type = SFSF_CAMPAIGN_TYPE_BASE + campaign_index;
     s_gameinfo_set_avatar_type(&app_menu->CAppMenu_data.game_info, (uint16_t)def->avatar_type);
     s_enter_campaign_flow(app_menu, 1);
 }
 
-static bool s_screen_exists = false;
-static bool s_screen_visible = false;
-static CMnuContainer *s_campaign_screen = NULL;
-static CMnuSmpButton *s_campaign_buttons[SFSF_MAX_CAMPAIGNS];
+/**
+ * @brief Renders one campaign into the right hand detail panel.
+ */
+static void show_campaign_details(int32_t campaign_index)
+{
+    if (campaign_index < 0 || campaign_index >= (int32_t)g_campaign_count)
+    {
+        return;
+    }
 
+    s_selected_campaign = campaign_index;
+    const SFSF_CampaignDef *def = &g_campaigns[campaign_index];
+
+    char author[128];
+    snprintf(author, sizeof(author), "by %s",
+             (def->author[0] != '\0') ? def->author : "Unknown");
+
+    char wrapped_description[1024] = {0};
+    wrap_text(def->description, wrapped_description, CAMPAIGN_DESC_WRAP);
+
+    set_centred_label_text(s_campaign_name_label, def->name,
+                           CAMPAIGN_PANEL_WIDTH, CAMPAIGN_NAME_Y, CAMPAIGN_NAME_H);
+    set_centred_label_text(s_campaign_author_label, author,
+                           CAMPAIGN_PANEL_WIDTH, CAMPAIGN_AUTHOR_Y, CAMPAIGN_AUTHOR_H);
+    set_centred_label_text(s_campaign_desc_label, wrapped_description,
+                           CAMPAIGN_PANEL_WIDTH, CAMPAIGN_DESC_Y, CAMPAIGN_DESC_H);
+}
+
+/** @brief Left panel row callback */
 void __thiscall on_campaign_selected(CMnuSmpButton *_this)
 {
     for (uint32_t i = 0; i < g_campaign_count; i++)
     {
         if (s_campaign_buttons[i] == _this)
         {
-            campaign_launch_flow((int32_t)i);
+            show_campaign_details((int32_t)i);
             return;
         }
     }
     log_error("Campaign button not found in registry");
 }
 
+/** @brief Play button callback - launches whatever the list has selected. */
+void __thiscall on_campaign_play(CMnuSmpButton *_this)
+{
+    if (s_selected_campaign < 0 || s_selected_campaign >= (int32_t)g_campaign_count)
+    {
+        log_error("Play pressed with no campaign selected");
+        return;
+    }
+
+    campaign_launch_flow(s_selected_campaign);
+}
+
 void close_campaign_screen_callback(CMnuSmpButton *button)
 {
-    uiAPI.setContainerVisible(s_campaign_screen, false, 0);
+    if (s_campaign_screen != NULL)
+    {
+        uiAPI.setContainerVisible(s_campaign_screen, false, 0);
+    }
     s_screen_visible = false;
 }
 
-// Has same issues as mod menu, it works fine on cold boot, but once in game then back out, causes crash
-// likely bad methodology on how we initalize the data
-
+/**
+ * @brief Builds the campaign screen
+ */
 void __thiscall show_custom_campaign_screen(CMnuSmpButton *_this)
 {
     CMnuContainer *parent = (CMnuContainer *)_this->CMnuBase_data.param_2_callback;
-/* let's try to re-create container each and every time!*/
-/*
-    if (s_screen_exists)
+
+    if (s_screen_exists && s_campaign_screen != NULL)
     {
         s_screen_visible = !s_screen_visible;
         uiAPI.setContainerVisible(s_campaign_screen, s_screen_visible, 0);
         return;
     }
- */
-    //log_info("Building custom campaign screen (%u campaigns)", g_campaign_count);
 
     s_campaign_screen = uiAPI.createContainer(0, 0, 1024, 768,
                                               "ui_bgr_landscape_bg.msb", "", 0.99f);
@@ -767,6 +851,27 @@ void __thiscall show_custom_campaign_screen(CMnuSmpButton *_this)
     if (!s_campaign_screen || !frame || !list_panel || !detail_panel)
     {
         log_error("Unable to create Campaign Menu containers");
+
+        if (s_campaign_screen)
+        {
+            uiAPI.destroyContainer(s_campaign_screen);
+        }
+        if (frame)
+        {
+            uiAPI.destroyContainer(frame);
+        }
+        if (list_panel)
+        {
+            uiAPI.destroyContainer(list_panel);
+        }
+        if (detail_panel)
+        {
+            uiAPI.destroyContainer(detail_panel);
+        }
+
+        s_campaign_screen = NULL;
+        s_screen_exists = false;
+        s_screen_visible = false;
         return;
     }
 
@@ -778,17 +883,12 @@ void __thiscall show_custom_campaign_screen(CMnuSmpButton *_this)
     char title[32] = "Custom Campaigns";
     CMnuLabel *title_label = uiAPI.attachLabel(NULL, frame, title, 6, 468, 16, 128, 16);
     uiAPI.setMenuID(title_label, 0x6);
-    uiAPI.setLabelColour(title_label, 0.85f, 0.64f, 0.12f, '\0');
-    uiAPI.setLabelColour(title_label, 0.85f, 0.64f, 0.12f, '\x01');
+    apply_label_colour(title_label, 0.85f, 0.64f, 0.12f);
 
     char btn_default[32]  = "ui_mainmenu_button_default.msh";
     char btn_pressed[32]  = "ui_mainmenu_button_pressed.msh";
     char btn_disabled[32] = "ui_mainmenu_button_disabled.msh";
     char btn_load[1]      = "";
-
-    const int LIST_X = 100;
-    const int LIST_Y_START = 90;
-    const int LIST_Y_PITCH = 44;
 
     for (uint32_t i = 0; i < g_campaign_count; i++)
     {
@@ -797,11 +897,39 @@ void __thiscall show_custom_campaign_screen(CMnuSmpButton *_this)
             btn_default, btn_pressed, btn_load, btn_disabled,
             g_campaigns[i].name,
             7,
-            LIST_X, LIST_Y_START + (LIST_Y_PITCH * i),
-            227, 36,
+            CAMPAIGN_ROW_X, CAMPAIGN_ROW_Y_START + (CAMPAIGN_ROW_PITCH * i),
+            CAMPAIGN_ROW_W, CAMPAIGN_ROW_H,
             32 + i,
             (uint32_t)&on_campaign_selected);
     }
+
+    char placeholder[2] = " ";
+
+    s_campaign_name_label = uiAPI.attachLabel(NULL, detail_panel, placeholder, 6,
+                                              0, CAMPAIGN_NAME_Y,
+                                              CAMPAIGN_PANEL_WIDTH, CAMPAIGN_NAME_H);
+    uiAPI.setMenuID(s_campaign_name_label, 0x6);
+    apply_label_colour(s_campaign_name_label, 0.85f, 0.64f, 0.12f);
+
+    s_campaign_author_label = uiAPI.attachLabel(NULL, detail_panel, placeholder, 6,
+                                                0, CAMPAIGN_AUTHOR_Y,
+                                                CAMPAIGN_PANEL_WIDTH, CAMPAIGN_AUTHOR_H);
+    uiAPI.setMenuID(s_campaign_author_label, 0x6);
+    apply_label_colour(s_campaign_author_label, 0.45f, 0.72f, 0.95f);
+
+    s_campaign_desc_label = uiAPI.attachLabel(NULL, detail_panel, placeholder, 11,
+                                              0, CAMPAIGN_DESC_Y,
+                                              CAMPAIGN_PANEL_WIDTH, CAMPAIGN_DESC_H);
+    uiAPI.setMenuID(s_campaign_desc_label, 0x6);
+
+    char play_label[8] = "PLAY";
+    uiAPI.attachNewButton(detail_panel,
+                          btn_default, btn_pressed, btn_load, btn_disabled,
+                          play_label, 7,
+                          CAMPAIGN_PLAY_X, CAMPAIGN_PLAY_Y,
+                          CAMPAIGN_PLAY_W, CAMPAIGN_PLAY_H,
+                          30,
+                          (uint32_t)&on_campaign_play);
 
     char back_default[32]  = "ui_btn_nav_back_default.msh";
     char back_pressed[32]  = "ui_btn_nav_back_pressed.msh";
@@ -815,6 +943,8 @@ void __thiscall show_custom_campaign_screen(CMnuSmpButton *_this)
 
     s_screen_exists = true;
     s_screen_visible = true;
+
+    show_campaign_details(0);
 }
 
 /** @} */

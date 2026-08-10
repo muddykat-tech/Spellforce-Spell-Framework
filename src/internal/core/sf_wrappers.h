@@ -103,7 +103,13 @@ extern has_spell_effect_ptr has_spell_effect;
 
 extern get_phys_damage_reduction_ptr g_get_reduced_damage;
 
+/** @brief Logs a warning at DEBUG_INFO, i.e. always shown. */
 extern "C" void log_warning(const char *format, ...) LOG_PRINTF_FMT(1, 2);
+
+/**
+ * @brief Logs a warning that is only shown once the log level reaches @p level.
+ */
+extern "C" void log_warning_level(DebugLevel level, const char *format, ...) LOG_PRINTF_FMT(2, 3);
 extern "C" void log_info(const char *format, ...) LOG_PRINTF_FMT(1, 2);
 extern "C" void log_error(const char *format, ...) LOG_PRINTF_FMT(1, 2);
 extern "C" void log_debug(DebugLevel level, const char *format, ...);

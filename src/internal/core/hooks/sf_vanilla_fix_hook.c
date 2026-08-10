@@ -1,7 +1,7 @@
 #include "../sf_wrappers.h"
 #include "../../../asi/sf_asi.h"
 #include "sf_vanilla_fix_hook.h"
-#include "../sf_screens_loader.h"
+#include "../sf_screens_module.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <vector>
@@ -1730,6 +1730,5 @@ void initialize_vanilla_fix_hooks()
     army_size_fix_hook();
     figure_turn_off_battle_mode_hook();
     splash_screen_hook();
-    load_screens_json();
 
 }

@@ -1,20 +1,20 @@
+/**
+ * @addtogroup ScreensLoader
+ * @{
+ */
+
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
 
 #include "sf_screens_loader.h"
-#include "sf_building_loader.h"
+#include "sf_building_loader.h" /* readfile() */
 #include "sf_wrappers.h"
-#include "sf_hooks.h"
 
-// Prevent duplicate link error
 #define JSMN_STATIC
 #define JSMN_PARENT_LINKS
 #include "jsmn.h"
-
-static ScreenEntry g_screen_entries[MAX_SCREEN_ENTRIES];
-static int g_screen_entry_count = 0;
 
 static void str_to_lower(char *str)
 {
@@ -29,135 +29,102 @@ static void json_str(const char *json, const jsmntok_t *token, char *out, size_t
 {
     int len = token->end - token->start;
     if (len >= (int)out_size)
+    {
         len = (int)out_size - 1;
+    }
     strncpy(out, json + token->start, len);
     out[len] = '\0';
 }
 
-static bool parse_screens_json(const char *json_string)
+bool parse_screens_json_file(const char *path, ScreenEntry *out_entries,
+                             int max_entries, int *out_count)
 {
+    *out_count = 0;
+
+    char *json_string = readfile(path);
+    if (json_string == NULL)
+    {
+        // readfile has already logged the reason.
+        return false;
+    }
+
     jsmn_parser parser;
-    jsmntok_t *tokens;
-
     jsmn_init(&parser);
-    int token_count = jsmn_parse(&parser, json_string, strlen(json_string), NULL, 0);
-    tokens = (jsmntok_t *)calloc(token_count, sizeof(jsmntok_t));
-    jsmn_init(&parser);
-    token_count = jsmn_parse(&parser, json_string, strlen(json_string), tokens, token_count);
 
+    size_t json_length = strlen(json_string);
+    int token_count = jsmn_parse(&parser, json_string, json_length, NULL, 0);
     if (token_count < 1)
     {
-        log_error("Failed to parse screens.json (Enable DEBUG HIGH to view raw JSON string.)");
+        log_error("screens.json is not valid JSON: %s", path);
         log_debug(DEBUG_HIGH, json_string);
-        free(tokens);
+        free(json_string);
         return false;
     }
 
-    if (tokens[0].type != JSMN_OBJECT)
+    jsmntok_t *tokens = (jsmntok_t *)calloc(token_count, sizeof(jsmntok_t));
+    if (tokens == NULL)
+    {
+        log_error("Unable to allocate %d JSON tokens for: %s", token_count, path);
+        free(json_string);
+        return false;
+    }
+
+    jsmn_init(&parser);
+    token_count = jsmn_parse(&parser, json_string, json_length, tokens, token_count);
+
+    bool success = false;
+    if (token_count < 1)
+    {
+        log_error("screens.json failed to tokenize: %s", path);
+        log_debug(DEBUG_HIGH, json_string);
+    }
+    else if (tokens[0].type != JSMN_OBJECT)
     {
         log_error("screens.json must be a single JSON object of map_name : msb_file pairs");
-        free(tokens);
-        return false;
     }
-
-    int pairs_to_process = tokens[0].size;
-    int current_token_index = 1;
-
-    for (int i = 0; i < pairs_to_process; i++)
+    else
     {
-        if (g_screen_entry_count >= MAX_SCREEN_ENTRIES)
+        int pairs_to_process = tokens[0].size;
+        int current_token_index = 1;
+
+        for (int i = 0; i < pairs_to_process; i++)
         {
-            log_error("screens.json has more than %d entries, ignoring the rest", MAX_SCREEN_ENTRIES);
-            break;
+            if (current_token_index + 1 >= token_count)
+            {
+                break;
+            }
+
+            if (*out_count >= max_entries)
+            {
+                log_error("screens.json has more than %d entries, ignoring the rest", max_entries);
+                break;
+            }
+
+            const jsmntok_t *key_token = &tokens[current_token_index];
+            const jsmntok_t *value_token = &tokens[current_token_index + 1];
+
+            if (key_token->type != JSMN_STRING || value_token->type != JSMN_STRING)
+            {
+                log_error("screens.json entry %d is not a string:string pair, skipping", i);
+            }
+            else
+            {
+                ScreenEntry *entry = &out_entries[*out_count];
+                json_str(json_string, key_token, entry->map_name, sizeof(entry->map_name));
+                json_str(json_string, value_token, entry->msb_file, sizeof(entry->msb_file));
+                str_to_lower(entry->map_name);
+                (*out_count)++;
+            }
+
+            current_token_index += 2;
         }
 
-        const jsmntok_t *key_token = &tokens[current_token_index];
-        const jsmntok_t *value_token = &tokens[current_token_index + 1];
-
-        if (key_token->type != JSMN_STRING || value_token->type != JSMN_STRING)
-        {
-            log_error("screens.json entry %d is not a string:string pair, skipping", i);
-        }
-        else
-        {
-            ScreenEntry *entry = &g_screen_entries[g_screen_entry_count];
-            json_str(json_string, key_token, entry->map_name, sizeof(entry->map_name));
-            json_str(json_string, value_token, entry->msb_file, sizeof(entry->msb_file));
-            str_to_lower(entry->map_name);
-            g_screen_entry_count++;
-        }
-
-        current_token_index += 2;
+        success = true;
     }
 
     free(tokens);
-    return true;
+    free(json_string);
+    return success;
 }
 
-void load_screens_json()
-{
-    g_screen_entry_count = 0;
-
-    char currentDir[MAX_PATH];
-    GetCurrentDirectory(MAX_PATH, currentDir);
-    char path[MAX_PATH];
-    snprintf(path, sizeof(path), "%s\\sfsf\\screens.json", currentDir);
-
-    char *json_str_data = readfile(path);
-    if (!json_str_data)
-    {
-        log_info("No screens.json found at: %s (custom loading screens disabled)", path);
-        return;
-    }
-
-    if (parse_screens_json(json_str_data))
-    {
-        log_info("Loaded %d custom loading screen(s) from screens.json", g_screen_entry_count);
-    }
-
-    free(json_str_data);
-}
-
-const char *find_screen_for_map(const char *map_name)
-{
-    if (!map_name)
-        return NULL;
-
-    char lowered[SCREEN_MAP_NAME_LEN];
-    size_t len = strlen(map_name);
-    if (len >= sizeof(lowered))
-        len = sizeof(lowered) - 1;
-
-    strncpy(lowered, map_name, len);
-    lowered[len] = '\0';
-    str_to_lower(lowered);
-
-    const char *last_bs = strrchr(lowered, '\\');
-    const char *filename = (last_bs ? last_bs + 1 : lowered);
-
-    const char *dot = strrchr(filename, '.');
-    size_t name_len = dot ? (size_t)(dot - filename) : strlen(filename);
-
-    if (name_len < 4)
-        return NULL;
-
-    const char *start = strchr(filename, '_') + 1;
-    size_t out_len = start ? (size_t)(dot - start) : name_len;
-
-
-    char extracted[SCREEN_MAP_NAME_LEN];
-    if (out_len >= sizeof(extracted))
-        out_len = sizeof(extracted) - 1;
-
-    memcpy(extracted, start, out_len);
-    extracted[out_len] = '\0';
-    for (int i = 0; i < g_screen_entry_count; i++)
-    {
-        if (strcmp(g_screen_entries[i].map_name, extracted) == 0)
-        {
-            return g_screen_entries[i].msb_file;
-        }
-    }
-
-    return NULL;
-}
+/** @} */

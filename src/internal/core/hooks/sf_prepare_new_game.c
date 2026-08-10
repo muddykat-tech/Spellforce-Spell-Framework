@@ -121,15 +121,11 @@ void initialize_preparenewgame_rewrite()
 
 uint8_t __thiscall pn_preload_get_skip_tutorial(CUiMenuPreLoad *_this)
 {
-    //log_info("check coop");
     uint8_t is_coop = (_this->CUiMenuPreLoad_data.game_info)->is_coop;
-    //log_info("got it?");
     if(is_coop == 0 && (_this->CUiMenuPreLoad_data).campaign_type == 0)
     {
-        //log_info("return skip tut in preload data");
         return (_this->CUiMenuPreLoad_data).skip_tutorial;
     }
-    //log_info("return 1");
     return 1;
 }
 
@@ -138,7 +134,6 @@ SF_String * __thiscall getSavePath(CAppSession *_this, SF_String *output, uint32
 SF_String * build_load_path(CAppMenu *_this, void *preload, SF_String *out)
 {
     SF_String base, avatar_name, slot_name;
-    //sorry, why do you use base path sting here?
     uiAPI.SFStringConstructor(&base);
     int ct = _this->CAppMenu_data.campaign_type;
     if (_this->CAppMenu_data.game_info.is_coop)
@@ -154,8 +149,6 @@ SF_String * build_load_path(CAppMenu *_this, void *preload, SF_String *out)
         getSavePath(_this->CAppMenu_data.CAppSession, &base, ct);
     }
 
-    /* all three are constructing out-params - do NOT pre-construct */
-    //s_get_base_path_string(&base);
     pn_preload_get_avatar_name(preload, &avatar_name);
     pn_preload_get_slot_name(preload, &slot_name);
 
@@ -165,7 +158,6 @@ SF_String * build_load_path(CAppMenu *_this, void *preload, SF_String *out)
 
 
     uiAPI.SFStringConstructor(out);
-    //Don't need to append avatar name for coop
     if (_this->CAppMenu_data.game_info.is_coop)
     {
         uiAPI.SFprintf(out, L"%ls%ls.sav", bp, sn);
@@ -175,8 +167,6 @@ SF_String * build_load_path(CAppMenu *_this, void *preload, SF_String *out)
         uiAPI.SFprintf(out, L"%ls%ls~%ls.sav", bp, an, sn);
     }
 
-    //log_info("Attempting to load Save from %ls", out->raw_data);
-
     uiAPI.SFStringDestructor(&slot_name);
     uiAPI.SFStringDestructor(&avatar_name);
     uiAPI.SFStringDestructor(&base);
@@ -185,7 +175,6 @@ SF_String * build_load_path(CAppMenu *_this, void *preload, SF_String *out)
 
 void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload)
 {
-    //log_info("Preparing New Game");
     CUtlConfigFile configFile;
     pn_cfg_ctor(&configFile, (char *)0x0);
 
@@ -196,9 +185,6 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
     (_this->CAppMenu_data).pregame_load_result = result_code;
 
     GdAvatarData *avatar_data = &(game_info->AC82).avatarData;
-    //log_info("Game info offset 0x%x", (uint32_t)&(_this->CAppMenu_data).game_info - (uint32_t)&(_this->CAppMenu_data));
-    //log_info("Game info size 0x%x", sizeof (SF_GameInfo));
-
 
     GdAvatarInternal *internal_avatar = &avatar_data->internal;
     uint16_t saved_avatar_type = internal_avatar->avatar_type;
@@ -211,7 +197,6 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
     pn_gi_set_avatar_equipdata(game_info, (GdAvatar *)b, equip_word);
     game_info->AC82.avatarData.internal.avatar_type = saved_avatar_type;
 
-    //IDK, seems annotations are wrong somewhhat
     uint8_t skill_id = pn_gi_get_skill(game_info, 0);
     uint8_t subskill_spec = pn_gi_get_subskill(game_info, 1);
 
@@ -219,7 +204,6 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
 
     if (pregame_screen != (CMnuScreen *)0)
     {
-        /* owned by the control - borrow only, never destruct */
         SF_String *ctrl_name = pn_screen_get_name(pregame_screen);
         pn_screen_delete_control((_this->CAppMenu_data).splash_screen, ctrl_name);
         pn_screen_set_active((_this->CAppMenu_data).splash_screen, (CMnuScreen *)0);
@@ -227,19 +211,17 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
 
     CreateMnuHintExt(_this);
 
-    char store_last_played = 0;      /* local_1fd */
+    char store_last_played = 0;
 
     SF_String dot_map, predefined_template;
     uiAPI.SFStringConstructor_char(&predefined_template, "figure_template\\predefined\\");
     uiAPI.SFStringConstructor_char(&dot_map, "*.map");
-    //stack corruption section end
     SF_String *nm = NULL;
     switch((_this->CAppMenu_data).pregame_load_result)
     {
         case 0:
         case 2:
         {
-            //log_info("Loading into Create New Game via Premade / Created Avatar");
             if ((_this->CAppMenu_data).campaign_type == 2)
             {
                 uint32_t sotp_side     = pn_preload_get_sotp_side(preload);
@@ -276,7 +258,6 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
             }
             else
             {
-                /* vanilla / custom */
                 uint32_t campaign_id   = pn_preload_get_campaign_type(preload);
                 uint32_t skip_tutorial = pn_preload_get_skip_tutorial(preload);
 
@@ -309,7 +290,7 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
             uiAPI.SFStringDestructor(&save_path);
             uiAPI.SFStringDestructor(&dot_sav);
 
-            pn_gi_refresh_case7(game_info); //start mode 0, is_tutorial 0, f4 3;
+            pn_gi_refresh_case7(game_info); 
             uiAPI.SFStringDeepCopy(&(_this->CAppMenu_data).pregrame_dotmap_string, &dot_map);
 
             SF_String avatar_name;
@@ -326,7 +307,6 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
         }
         case 8:
         {
-            //log_info("Entered Free Game with Template");
             game_info->unknown_0xf0 = 1;
             game_info->unknown_0xf4 = 3;
             game_info->unknown4 = 1;
@@ -383,7 +363,6 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
         case 1:
         case 3:
         {
-            ////log_info("Name Conflicts with Path - Reset to starter Kit + feedback Dialog");
             pn_gi_starterkit_reset(game_info, skill_id, subskill_spec);
             uint8_t kit_index = pn_preload_get_kit_index (preload);
             pn_update_kit(game_info, (_this->CAppMenu_data).pregame_load_result == 3, kit_index);
@@ -415,8 +394,6 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
                 SF_String empty;                        /* local_220 */
                 uiAPI.SFStringConstructor(&empty);
 
-                /* 00596534 - 00596549. Six stack args:
-                   game_info, 100, 0, 0, 0, &empty  */
                 s_start_game(_this, game_info, 100, 0, 0, 0, &empty);
 
                 uiAPI.SFStringDestructor(&empty);
@@ -430,18 +407,14 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
             break;
     }
 
-    // Scope this code to avoid error from label crossing initialization
-    //log_info("Name Lookup");
     SF_String avatar_name;
     nm = pn_preload_get_avatar_name(preload, &avatar_name);
-    //log_info("Name Lookup checking if last played exists");
     store_last_played = (nm->str_length == 0) ? 0 : 1;
     uiAPI.SFStringDestructor(&avatar_name);
 
 skip_name_lookup:
     if (store_last_played != 0)
     {
-        //log_info("Write Last Played");
         SF_String empty;
         SF_String name;
 
@@ -464,16 +437,13 @@ skip_name_lookup:
         char stored_buf[32];
         strncpy(stored_buf, "Stored", sizeof(stored_buf));
         stored_buf[sizeof(stored_buf) - 1] = '\0';
-        //log_info("Set Config File");
         pn_cfg_set_string(&configFile, stored_buf, key_buf, &name, &empty);
-        //log_info("Clean up");
         uiAPI.SFStringDestructor(&name);
         uiAPI.SFStringDestructor(&empty);
     }
-    //log_info("Close Config File");
+    
     uiAPI.SFStringDestructor(&configFile.name_maybe);
     pn_cfg_dtor(&configFile);
-    //log_info("Return");
 }
 
 void install_preparenewgame_hook()
@@ -483,7 +453,6 @@ void install_preparenewgame_hook()
     *(unsigned char *)(ASI::AddrOf(0x195e10)) = 0xE9;
     *(int *)(ASI::AddrOf(0x195e11)) = (int)(&hooked_prepare_new_game) - (int)(ASI::AddrOf(0x195e15));
     ASI::EndRewrite(mreg);
-    //log_info("PrepareNewGame replacement hooked (entry JMP @ 0x595e10)");
 }
 
 /** @} */

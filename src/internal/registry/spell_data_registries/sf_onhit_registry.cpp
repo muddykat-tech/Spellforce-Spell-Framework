@@ -19,7 +19,7 @@ void registerOnHitHandler(uint16_t spell_line_id, onhit_handler_ptr handler, OnH
 
     char buffer[256];
     sprintf(buffer, "Mod [%s] setting on hit handler for Spell line ID [%d]",  g_current_mod->mod_id, spell_line_id);
-    log_info(buffer);
+    log_debug(DEBUG_LOW, buffer);
 
     for (auto &entry : handler_list)
     {

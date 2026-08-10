@@ -7,6 +7,7 @@
 #include "sf_modloader.h"
 
 #include "../registry/sf_registry.h"
+#include "../registry/sf_error_registry.h"
 
 typedef void (*InitModuleFunc)(void *);
 typedef SFMod *(*RegisterModFunc)(void *);
@@ -58,6 +59,7 @@ void load_mod(const char *modPath, void *pFrameworkAPI)
     }
 
     g_current_mod = registerMod(pFrameworkAPI);
+    register_mod_for_listing(g_current_mod, MOD_TYPE_EXTERNAL);
     initModule(pFrameworkAPI);
     g_mod_count += 1;
     log_info("| - [Initialized Mod: %s (Ver. %s)]", g_current_mod->mod_id, g_current_mod->mod_version);
@@ -97,7 +99,6 @@ void load_all_mods(const char *subfolder, void *pFrameworkAPI)
 
 void initialize_mods()
 {
-    log_info("| - Core Mod [%s] Initialized", g_current_mod->mod_id);
     load_all_mods("sfsf", &frameworkAPI);
     log_info("| - %d Mods Initialized with %d error(s)", g_mod_count, g_error_count);
 }

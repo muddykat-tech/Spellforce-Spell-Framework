@@ -27,7 +27,7 @@ void registerEnchantHandler(uint16_t spell_line, enchant_handler_ptr handler)
     auto check = s_enchant_handlers_map.find(spell_line);
     if (check != s_enchant_handlers_map.end())
     {
-        log_warning("%s (v%s) has replaced a Enchantment Chance Handler [%d] (Was this on purpose?)",
+        log_warning_level(DEBUG_LOW, "%s (v%s) has replaced a Enchantment Chance Handler [%d]",
                     g_current_mod->mod_id, g_current_mod->mod_version, spell_line);
     }
     s_enchant_handlers_map[spell_line] = handler;
@@ -38,7 +38,7 @@ enchant_handler_ptr get_enchant_handler(uint16_t spell_line)
     auto it = s_enchant_handlers_map.find(spell_line);
     if (it == s_enchant_handlers_map.end())
     {
-        //log_debug(DEBUG_HIGH, "Using default handler for enchant [%d]", spell_line);
+        log_debug(DEBUG_HIGH, "Using default handler for enchant [%d]", spell_line);
         it = s_enchant_handlers_map.emplace(spell_line, &default_enchant_handler).first;
     }
     return it->second;

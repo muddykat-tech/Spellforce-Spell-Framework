@@ -13,19 +13,29 @@
 #include "../../../api/sfsf.h"
 #include "../../../asi/sf_asi.h"
 
-#define SFSF_MAX_CAMPAIGNS 2
+#define SFSF_MAX_CAMPAIGNS 16
 #define SFSF_CAMPAIGN_TYPE_BASE 3
+
+/** Custom avatar types run from this value upwards, one per campaign index. */
+#define SFSF_AVATAR_TYPE_BASE 8
+#define SFSF_AVATAR_TYPE_MAX  (SFSF_AVATAR_TYPE_BASE + SFSF_MAX_CAMPAIGNS - 1)
 
 typedef struct __attribute__((packed))
 {
     char name[64];            /**< Shown on the campaign button */
+    char campaign_name_id[64]; /**< Optional, reserved for future use. Empty string when unset. */
     char description[256];    /**< For the right-hand detail panel */
+    char author[64];          /**< Optional, shown under the name in the detail panel */
     char start_map[64];       /**< Map name WITHOUT path/extension, e.g. "mycampaign" */
     char tutorial_map[64];    /**< Optional tutorial map. */
-    char campaign_folder[64]; /**< Folder for save separation and map loading, may need rename, e.g. "mycampaign" */
+    char campaign_folder[64]; /**< Folder for save separation and map loading, e.g. "mycampaign" */
     char intro_video[64];     /**< Optional: "videos\\myintro" - empty = engine_type
                                  default. NOT implemented yet (needs CUiVideo replication of PlayCampaignIntroVideo). */
-    uint32_t avatar_type;     /**< GdAvatar field should continue past a GameInfo reset in PrepareNewGame and is
+    char starterkit[128];     /**< Starter kit .des filename, relative to
+                                 figure_template\starterkit\. Replaces the whole
+                                 "SK_<skill><subskill>.des" name, this will need work to ensure the skill subskill stuff is taken into account.
+                                 Leave empty to keep the vanilla skill-derived name. */
+    int8_t avatar_type;     /**< GdAvatar field should continue past a GameInfo reset in PrepareNewGame and is
                                  serialized into saves). Vanilla: 3 = SF1,
                                  4 = AddOn1, 7 = AddOn2, 1/5 = multiplayer.
                                  Custom campaigns: Currently setup to use 8 + campaign_index so
@@ -52,6 +62,14 @@ typedef SF_String *(__thiscall *getSavePath_real_ptr)(SF_String *_this, int camp
 
 typedef char **(__cdecl *getBasePathString_ptr)(void *out_string_obj);
 
+/**
+ * @brief The engine's file existence check, resolved by initialize_campaign_hooks().
+ *
+ * Paths are taken relative to the game directory, e.g. "map\\mycampaign\\start.map".
+ */
+typedef uint32_t (__cdecl *checkFileExists_ptr)(SF_String *name);
+extern checkFileExists_ptr checkFileExists;
+
 extern SFSF_CampaignDef g_campaigns[SFSF_MAX_CAMPAIGNS];
 extern uint32_t g_campaign_count;
 extern int32_t g_active_custom_campaign; /**< -1 = vanilla / none active */
@@ -69,8 +87,11 @@ void campaign_hook_on_main_menu(CAppMenu *app_menu);
 /** Main-menu button callback - builds and toggles the campaign screen. */
 void __thiscall show_custom_campaign_screen(CMnuSmpButton *_this);
 
-/** Per-campaign button callback. */
+/** Per-campaign list row callback - selects the campaign, does not launch it. */
 void __thiscall on_campaign_selected(CMnuSmpButton *_this);
+
+/** Play button callback - launches the campaign currently selected in the list. */
+void __thiscall on_campaign_play(CMnuSmpButton *_this);
 
 extern void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial,
                                     uint8_t skill, uint8_t subskill,

@@ -11,6 +11,7 @@
 #include "hooks/sf_console_hook.h"
 #include "hooks/sf_vanilla_fix_hook.h"
 #include "../registry/sf_mod_registry.h"
+#include "../registry/sf_error_registry.h"
 
 void wrap_text(const char *input, char *output, size_t max_width)
 {
@@ -46,9 +47,6 @@ void wrap_text(const char *input, char *output, size_t max_width)
 
     output[output_index] = '\0';
 }
-
-static bool is_init_finished = false;
-
 
 
 /**
@@ -118,22 +116,85 @@ CMnuSmpButton *right_nav;
 static bool is_mod_list_shown = false;
 static bool does_mod_list_exist = false;
 
+/**
+ * @brief Number of mod rows the left panel can show at once.
+ */
+#define MOD_LIST_ROWS 11
+
+#define MOD_ROW_X       108
+#define MOD_ROW_Y_START 40
+#define MOD_ROW_PITCH   44
+#define MOD_ROW_WIDTH   227
+#define MOD_ROW_HEIGHT  36
+#define MOD_NAV_Y       540
+
+#define MOD_INFO_PANEL_WIDTH 443
+#define MOD_INFO_TITLE_Y     34
+#define MOD_INFO_TITLE_H     34
+#define MOD_INFO_AUTHOR_Y    62
+#define MOD_INFO_AUTHOR_H    28
+#define MOD_INFO_TYPE_Y      98
+#define MOD_INFO_TYPE_H      28
+#define MOD_INFO_DESC_Y      136
+#define MOD_INFO_DESC_H      248
+#define MOD_INFO_ERROR_Y     396
+#define MOD_INFO_ERROR_H     200
+
+/**
+ * @brief Approximate pixel width of one glyph in the info panel fonts.
+ *
+ * Used to centre a text block by measurement - label flags are
+ * undocumented. So labels are simply positioned so the widest line sits
+ * centred in the panel. this is all just an approximation.
+ */
+#define MOD_GLYPH_WIDTH 8
+
+/** Info panel label colours, as red, green, blue argument triples. */
+#define MOD_TITLE_RGB  0.85f, 0.64f, 0.12f
+#define MOD_AUTHOR_RGB 0.75f, 0.75f, 0.75f
+#define MOD_TYPE_RGB  0.45f, 0.72f, 0.95f
+#define MOD_ERROR_RGB 1.0f, 0.0f, 0.0f
+
+static CMnuSmpButton *s_mod_buttons[MOD_LIST_ROWS];
+
+/** Absolute index into get_registered_mods() per row, or -1 for an unused row. */
+static int s_mod_row_target[MOD_LIST_ROWS];
+
+
+/**
+ * @brief Drops every cached mod list pointer, this will ensure we don't crash after a map load.
+ */
+void reset_mod_list_screen()
+{
+    mod_info_page = nullptr;
+    mod_container = nullptr;
+    mod_list = nullptr;
+    mod_list_title = nullptr;
+    left_nav = nullptr;
+    right_nav = nullptr;
+
+    mod_struct.title_label = nullptr;
+    mod_struct.author_label = nullptr;
+    mod_struct.desc_label = nullptr;
+    mod_struct.page_label = nullptr;
+    mod_struct.error_label = nullptr;
+    mod_struct.type_label = nullptr;
+    mod_struct.toggle = 0;
+    mod_struct.index = 0;
+
+    for (int row = 0; row < MOD_LIST_ROWS; row++)
+    {
+        s_mod_buttons[row] = nullptr;
+        s_mod_row_target[row] = -1;
+    }
+    is_mod_list_shown = false;
+    does_mod_list_exist = false;
+}
+
 
 int calculate_total_unique_mods()
 {
-    int total_unique_mods = 0;
-    SFMod *last_parent = nullptr;
-
-    for (const SFSpell *spell_data : g_internal_spell_list)
-    {
-        if (spell_data->parent_mod != last_parent)
-        {
-            total_unique_mods++;
-            last_parent = spell_data->parent_mod;
-        }
-    }
-
-    return total_unique_mods;
+    return (int)get_registered_mods().size();
 }
 
 int calculate_total_pages(int total_unique_mods, int mods_per_page)
@@ -149,11 +210,18 @@ int normalize_page_index(int page, int total_pages)
 
 void prepare_mod_title(SFMod *parent_mod, char *mod_title, size_t buffer_size)
 {
-    snprintf(mod_title, buffer_size, "%s %s\nby %s",
+    snprintf(mod_title, buffer_size, "%s - %s",
              parent_mod->mod_id,
-             parent_mod->mod_version,
-             parent_mod->mod_author);
+             parent_mod->mod_version);
 }
+
+void prepare_mod_author(SFMod *parent_mod, char *mod_author, size_t buffer_size)
+{
+    snprintf(mod_author, buffer_size, "by %s",
+             (parent_mod->mod_author[0] != '\0') ? parent_mod->mod_author : "Unknown");
+}
+
+#define MOD_INFO_WRAP 50
 
 void prepare_mod_description(SFMod *parent_mod, char *mod_description, size_t description_buffer_size,
                              char *wrapped_description, size_t wrapped_buffer_size)
@@ -161,7 +229,7 @@ void prepare_mod_description(SFMod *parent_mod, char *mod_description, size_t de
     snprintf(mod_description, description_buffer_size, "%s",
              parent_mod->mod_description);
 
-    wrap_text(mod_description, wrapped_description, 80);
+    wrap_text(mod_description, wrapped_description, MOD_INFO_WRAP);
 }
 
 void prepare_mod_page_info(int page, int total_pages, char *mod_page_info, size_t buffer_size)
@@ -173,183 +241,297 @@ void prepare_mod_page_info(int page, int total_pages, char *mod_page_info, size_
 void prepare_mod_error_info(SFMod *parent_mod, char *mod_error_info, size_t error_buffer_size,
                             char *wrapped_error_info, size_t wrapped_buffer_size)
 {
-    log_info("Called into error Prep");
     if (parent_mod->mod_errors[0] != 0)
     {
-
-        log_info("Error Exists? %s", parent_mod->mod_errors);
         snprintf(mod_error_info, error_buffer_size, "%s",
                  parent_mod->mod_errors);
-        wrap_text(mod_error_info, wrapped_error_info, 80);
+        wrap_text(mod_error_info, wrapped_error_info, MOD_INFO_WRAP);
     }
     else
     {
-        log_info("No Errors %s", " ");
         snprintf(mod_error_info, error_buffer_size, " ");
+        snprintf(wrapped_error_info, wrapped_buffer_size, " ");
     }
 }
 
 
-/**
- * Attaches mod labels to the container based on pagination settings
- *
- * @param container The menu container to attach labels to
- * @param mods_per_page Number of mods to display per page
- * @param page Current page number (0-based)
- */
-void attach_mod_labels(CMnuContainer *container, int mods_per_page, int page)
+/** @brief Returns the registered mod at an absolute index, or nullptr. */
+static const RegisteredMod *get_mod_at(int index)
 {
-    if (g_internal_spell_list.empty())
+    if (index < 0)
+    {
+        return nullptr;
+    }
+
+    int current = 0;
+    for (const RegisteredMod &entry : get_registered_mods())
+    {
+        if (current == index)
+        {
+            return &entry;
+        }
+        current++;
+    }
+    return nullptr;
+}
+
+/**
+ * @brief Repositions a label so its text block sits centred, then sets the text.
+ */
+void set_centred_label_text(CMnuLabel *label, const char *text, int panel_width,
+                            int y, int height)
+{
+    if (label == nullptr || text == nullptr)
     {
         return;
     }
 
-    int total_unique_mods = calculate_total_unique_mods();
+    g_set_label_flags(label, 0xa); //just centers position
+    uiAPI.updateLabelText(label, text);
+}
 
-    int total_pages = calculate_total_pages(total_unique_mods, mods_per_page);
+/** @brief Sets both colour slots of a label. (normal and on hover)*/
+void apply_label_colour(CMnuLabel *label, float red, float green, float blue)
+{
+    if (label == nullptr)
+    {
+        return;
+    }
+
+    uiAPI.setLabelColour(label, red, green, blue, '\0'); //normal
+    uiAPI.setLabelColour(label, red, green, blue, '\x01'); //hover
+}
+
+/** @brief Relabels an existing button */
+static void set_button_label(CMnuSmpButton *button, const char *text)
+{
+    if (button == nullptr)
+    {
+        return;
+    }
+
+    SF_String label;
+    SF_String *label_string = g_create_sf_string(&label, text);
+    uiAPI.CMnuBaseSetName((CMnuBase *)button, label_string);
+    uiAPI.setButtonName(button, label_string);
+    g_destroy_sf_string(label_string);
+}
+
+/**
+ * @brief Renders one mod into the right hand info panel.
+ *
+ * The labels are created once per menu session by build_mod_info_panel();
+ */
+void show_mod_details(int mod_index)
+{
+    const RegisteredMod *entry = get_mod_at(mod_index);
+    if (entry == nullptr)
+    {
+        return;
+    }
+
+    SFMod *mod = entry->mod;
+
+    char mod_title[512] = {0};
+    prepare_mod_title(mod, mod_title, sizeof(mod_title));
+
+    char mod_author[256] = {0};
+    prepare_mod_author(mod, mod_author, sizeof(mod_author));
+
+    char mod_description[512] = {0};
+    char wrapped_description[1024] = {0};
+    prepare_mod_description(mod, mod_description, sizeof(mod_description),
+                            wrapped_description, sizeof(wrapped_description));
+
+    char mod_error_info[512] = {0};
+    char wrapped_error_info[1024] = {0};
+    prepare_mod_error_info(mod, mod_error_info, sizeof(mod_error_info),
+                           wrapped_error_info, sizeof(wrapped_error_info));
+
+    set_centred_label_text(mod_struct.title_label, mod_title, MOD_INFO_PANEL_WIDTH, MOD_INFO_TITLE_Y, MOD_INFO_TITLE_H);
+    set_centred_label_text(mod_struct.author_label, mod_author,
+                           MOD_INFO_PANEL_WIDTH, MOD_INFO_AUTHOR_Y, MOD_INFO_AUTHOR_H);
+    set_centred_label_text(mod_struct.type_label, get_mod_type_label(entry->type),
+                           MOD_INFO_PANEL_WIDTH, MOD_INFO_TYPE_Y, MOD_INFO_TYPE_H);
+    set_centred_label_text(mod_struct.desc_label, wrapped_description, MOD_INFO_PANEL_WIDTH, MOD_INFO_DESC_Y, MOD_INFO_DESC_H);
+    set_centred_label_text(mod_struct.error_label, wrapped_error_info, MOD_INFO_PANEL_WIDTH, MOD_INFO_ERROR_Y, MOD_INFO_ERROR_H);
+}
+
+/**
+ * @brief Points the visible rows at the mods on the given page.
+ */
+void refresh_mod_list_page(int page)
+{
+    int total_mods = calculate_total_unique_mods();
+    int total_pages = calculate_total_pages(total_mods, MOD_LIST_ROWS);
 
     page = normalize_page_index(page, total_pages);
     mod_struct.index = page;
 
-    const int y_base_offset = 100;
-    const int y_item_spacing = 150;
-    const int x_title_pos = 468;
-    const int title_width = 600;
-    const int desc_width = 800;
+    const int first_mod = page * MOD_LIST_ROWS;
 
-    const int start_index = mods_per_page * page;
-    const int end_index = start_index + mods_per_page;
-
-    SFMod *current_parent = nullptr;
-    int mod_index = 0;
-    int displayed_mods = 0;
-
-    for (const SFSpell *spell_data : g_internal_spell_list)
+    for (int row = 0; row < MOD_LIST_ROWS; row++)
     {
-        SFMod *parent_mod = spell_data->parent_mod;
+        int mod_index = first_mod + row;
+        const RegisteredMod *entry = (mod_index < total_mods) ? get_mod_at(mod_index) : nullptr;
 
-        if (parent_mod != current_parent)
+        if (entry != nullptr)
         {
-            if (mod_index >= start_index && mod_index < end_index)
-            {
-                // Prepare display strings
-                char mod_title[512] = {0};
-                prepare_mod_title(parent_mod, mod_title, sizeof(mod_title));
-
-                char mod_description[512] = {0};
-                char wrapped_description[1024] = {0};
-                prepare_mod_description(parent_mod, mod_description, sizeof(mod_description),
-                                        wrapped_description, sizeof(wrapped_description));
-
-                char mod_page_info[48] = {0};
-                prepare_mod_page_info(mod_index, total_unique_mods, mod_page_info, sizeof(mod_page_info));
-
-                char mod_error_info[512] = {0};
-                char wrapped_error_info[1024] = {0};
-                prepare_mod_error_info(parent_mod, mod_error_info, sizeof(mod_error_info),
-                                       wrapped_error_info, sizeof(wrapped_error_info));
-
-                // Calculate Y position
-                const int relative_y_pos = displayed_mods * y_item_spacing;
-                const int absolute_y_pos = y_base_offset + relative_y_pos;
-
-                // Attach or update labels
-                if (is_init_finished)
-                {
-                    uiAPI.updateLabelText(mod_struct.title_label, mod_title);
-                    uiAPI.updateLabelText(mod_struct.desc_label, wrapped_description);
-                    uiAPI.updateLabelText(mod_struct.page_label, mod_page_info);
-                    uiAPI.updateLabelText(mod_struct.error_label, wrapped_error_info);
-                }
-                else
-                {
-                    mod_struct.title_label =
-                        uiAPI.attachLabel(nullptr, container, mod_title,
-                                          6, x_title_pos, absolute_y_pos - 48, title_width,
-                                          y_item_spacing);
-                    uiAPI.setMenuID(mod_struct.title_label, 0x6);
-                    uiAPI.setLabelColour(mod_struct.title_label, 0.85, 0.64, 0.12, '\0');
-                    uiAPI.setLabelColour(mod_struct.title_label, 0.85, 0.64, 0.12, '\x01');
-
-                    mod_struct.desc_label =
-                        uiAPI.attachLabel(nullptr, container, wrapped_description,
-                                          11, 48, absolute_y_pos + 24, desc_width, y_item_spacing);
-                    uiAPI.setMenuID(mod_struct.desc_label, 0x6);
-
-                    mod_struct.page_label =
-                        uiAPI.attachLabel(nullptr, container, mod_page_info,
-                                          6, 92, absolute_y_pos + 382, 50, y_item_spacing);
-                    uiAPI.setMenuID(mod_struct.page_label, 0x6);
-
-                    mod_struct.error_label =
-                        uiAPI.attachLabel(nullptr, container, wrapped_error_info,
-                                          11, 48, absolute_y_pos + 224, desc_width, y_item_spacing);
-                    uiAPI.setMenuID(mod_struct.error_label, 0x6);
-                    uiAPI.setLabelColour(mod_struct.error_label, 1.0, 0.0, 0.0, '\x01');
-
-                    is_init_finished = true;
-                }
-
-                displayed_mods++;
-            }
-
-            current_parent = parent_mod;
-            mod_index++;
+            s_mod_row_target[row] = mod_index;
+            set_button_label(s_mod_buttons[row], entry->mod->mod_id);
         }
+        else
+        {
+            s_mod_row_target[row] = -1;
+            set_button_label(s_mod_buttons[row], "");
+        }
+    }
 
-        // Stop once we have filled the page
-        if (displayed_mods >= mods_per_page)
-            break;
+    char mod_page_info[48] = {0};
+    prepare_mod_page_info(page, total_pages, mod_page_info, sizeof(mod_page_info));
+    if (mod_struct.page_label != nullptr)
+    {
+        uiAPI.updateLabelText(mod_struct.page_label, mod_page_info);
     }
 }
 
-static void navigate_page(CMnuSmpButton *button, int delta)
+/** @brief Left panel row callback */
+void __thiscall on_mod_selected(CMnuSmpButton *button)
 {
-    // Figure out how the fuck call back params work. as for some reason callback_param2 works as a parent?
-    CMnuContainer *parent =
-        (CMnuContainer *)button->CMnuBase_data.parent_ptr;
-    int total = calculate_total_pages(calculate_total_unique_mods(), 1);
-    mod_struct.index = normalize_page_index(mod_struct.index + delta, total);
-    attach_mod_labels(parent, 1, mod_struct.index);
+    if (!does_mod_list_exist)
+    {
+        return;
+    }
+
+    for (int row = 0; row < MOD_LIST_ROWS; row++)
+    {
+        if (s_mod_buttons[row] == button)
+        {
+            if (s_mod_row_target[row] >= 0)
+            {
+                show_mod_details(s_mod_row_target[row]);
+            }
+            return;
+        }
+    }
+}
+
+/**
+ * @brief moves the list by a page via delta value.
+ */
+static void navigate_page(int delta)
+{
+    if (!does_mod_list_exist)
+    {
+        return;
+    }
+
+    refresh_mod_list_page(mod_struct.index + delta);
 }
 
 static void navigate_page_left(CMnuSmpButton *button)
 {
-    navigate_page(button, -1);
-};
+    navigate_page(-1);
+}
+
 static void navigate_page_right(CMnuSmpButton *button)
 {
-    navigate_page(button, 1);
-};
+    navigate_page(1);
+}
 
-void add_navigation_buttons(CMnuContainer *parent)
+/** @brief Creates the clickable mod rows, the paging arrows and the counter. */
+void build_mod_list_panel(CMnuContainer *list_panel)
 {
+    char row_default[128]  = "ui_mainmenu_button_default.msh";
+    char row_pressed[128]  = "ui_mainmenu_button_pressed.msh";
+    char row_disabled[128] = "ui_mainmenu_button_disabled.msh";
+    char row_load[1] = "";
+    char row_label[1] = "";
+
+    for (int row = 0; row < MOD_LIST_ROWS; row++)
+    {
+        s_mod_row_target[row] = -1;
+        s_mod_buttons[row] = uiAPI.attachNewButton(
+            list_panel, row_default, row_pressed, row_load, row_disabled,
+            row_label, 7,
+            MOD_ROW_X, MOD_ROW_Y_START + (MOD_ROW_PITCH * row),
+            MOD_ROW_WIDTH, MOD_ROW_HEIGHT,
+            32 + row,
+            (uint32_t) &on_mod_selected);
+    }
+
     char btn_disabled[128] = "ui_btn_togglearrow_right_disabled.msh";
     char btn_pressed[128]  = "ui_btn_togglearrow_right_pressed.msh";
     char btn_load[1] = "";
     char btn_default[128]  = "ui_btn_togglearrow_right_default.msh";
     char btn_label[1] = "";
 
-    right_nav = uiAPI.attachNewButton(parent, btn_default, btn_pressed, btn_load,
-                                      btn_disabled, btn_label, 7, (443 - 96), 619 - 80,
+    right_nav = uiAPI.attachNewButton(list_panel, btn_default, btn_pressed, btn_load,
+                                      btn_disabled, btn_label, 7, (443 - 96), MOD_NAV_Y,
                                       48, 48, 0, (uint32_t) &navigate_page_right);
 
     char btn_disabled_left[128] = "ui_btn_togglearrow_left_disabled.msh";
     char btn_pressed_left[128] = "ui_btn_togglearrow_left_pressed.msh";
     char btn_default_left[128] = "ui_btn_togglearrow_left_default.msh";
 
-    left_nav = uiAPI.attachNewButton(parent, btn_default_left, btn_pressed_left,
-                                     btn_load, btn_disabled_left, btn_label, 7, 48, 619 - 80,
+    left_nav = uiAPI.attachNewButton(list_panel, btn_default_left, btn_pressed_left,
+                                     btn_load, btn_disabled_left, btn_label, 7, 48, MOD_NAV_Y,
                                      48, 48, 1, (uint32_t) &navigate_page_left);
 
-    attach_mod_labels(parent, 1, 0);
+    char page_placeholder[8] = "";
+    mod_struct.page_label = uiAPI.attachLabel(nullptr, list_panel, page_placeholder,
+                                              6, 190, MOD_NAV_Y + 14, 80, 32);
+    uiAPI.setMenuID(mod_struct.page_label, 0x6);
+}
+
+/**
+ * @brief Creates the right hand panel's labels.
+ */
+void build_mod_info_panel(CMnuContainer *info_panel)
+{
+    char placeholder[2] = " ";
+
+    mod_struct.title_label = uiAPI.attachLabel(nullptr, info_panel, placeholder,
+                                               4, 0, MOD_INFO_TITLE_Y,
+                                               MOD_INFO_PANEL_WIDTH, MOD_INFO_TITLE_H);
+    uiAPI.setMenuID(mod_struct.title_label, 0x6);
+    g_set_label_flags(mod_struct.title_label, 0xa);
+    apply_label_colour(mod_struct.title_label, MOD_TITLE_RGB);
+
+    mod_struct.author_label = uiAPI.attachLabel(nullptr, info_panel, placeholder,
+                                                8, 0, MOD_INFO_AUTHOR_Y,
+                                                MOD_INFO_PANEL_WIDTH, MOD_INFO_AUTHOR_H);
+    uiAPI.setMenuID(mod_struct.author_label, 0x6);
+    apply_label_colour(mod_struct.author_label, MOD_AUTHOR_RGB);
+
+    mod_struct.type_label = uiAPI.attachLabel(nullptr, info_panel, placeholder,
+                                              10, 0, MOD_INFO_TYPE_Y,
+                                              MOD_INFO_PANEL_WIDTH, MOD_INFO_TYPE_H);
+    uiAPI.setMenuID(mod_struct.type_label, 0x6);
+    apply_label_colour(mod_struct.type_label, MOD_TYPE_RGB);
+
+    mod_struct.desc_label = uiAPI.attachLabel(nullptr, info_panel, placeholder,
+                                              11, 0, MOD_INFO_DESC_Y,
+                                              MOD_INFO_PANEL_WIDTH, MOD_INFO_DESC_H);
+                                              
+    uiAPI.setMenuID(mod_struct.desc_label, 0x6);
+
+    mod_struct.error_label = uiAPI.attachLabel(nullptr, info_panel, placeholder,
+                                               11, 0, MOD_INFO_ERROR_Y,
+                                               MOD_INFO_PANEL_WIDTH, MOD_INFO_ERROR_H);
+    uiAPI.setMenuID(mod_struct.error_label, 0x6);
+    apply_label_colour(mod_struct.error_label, MOD_ERROR_RGB);
 }
 
 void __fastcall close_mod_list_callback(CMnuSmpButton *button, int32_t *cui_menu_ptr_maybe)
 {
     CMnuContainer *mod_list =
         (CMnuContainer *) button->CMnuBase_data.param_2_callback;
-    uiAPI.setContainerVisible(mod_list, false, false);
+
+    if (mod_list != nullptr)
+    {
+        uiAPI.setContainerVisible(mod_list, false, false);
+    }
     is_mod_list_shown = false;
 }
 
@@ -425,10 +607,8 @@ void add_close_button(CMnuContainer *mod_list)
 void __thiscall show_mod_list(CMnuSmpButton *button)
 {
     CMnuContainer *parent = (CMnuContainer *) button->CMnuBase_data.param_2_callback;
-    log_info("Callback for Mod List");
     if(!does_mod_list_exist)
     {
-        log_info("Callback for Mod List 2");
         is_mod_list_shown = true;
         mod_info_page = uiAPI.createContainer(
             0, 0, 1024, 768,
@@ -436,26 +616,48 @@ void __thiscall show_mod_list(CMnuSmpButton *button)
             "", 0.99f
             );
 
-        log_info("Callback for Mod List 3");
         mod_container = uiAPI.createContainer(
             11,6,1008,757,
             "ui_bgr_pregame_border_transparency.msb",
             "ui_bgr_pregame_border.msb", 0.5f
             );
 
-        log_info("Callback for Mod List 4");
         mod_list = uiAPI.createContainer(
             59, 50, 443, 619,
-            "ui_bgr_pregame_border_left_transparency.msb",
-            "ui_bgr_pregame_border_left.msb", 0.5f
+            "ui_bgr_pregame_border_right_transparency.msb",
+            "ui_bgr_pregame_border_right.msb", 0.5f
             );
 
-        log_info("Callback for Mod List 4");
         CMnuContainer *mod_list_info = uiAPI.createContainer(
             502, 50, 443, 619,
             "ui_bgr_pregame_border_right_transparency.msb",
             "ui_bgr_pregame_border_right.msb", 0.5f
             );
+
+        if (!mod_info_page || !mod_container || !mod_list || !mod_list_info)
+        {
+            log_error("Unable to create Mod Menu, a container allocation failed");
+
+            if (mod_info_page)
+            {
+                uiAPI.destroyContainer(mod_info_page);
+            }
+            if (mod_container)
+            {
+                uiAPI.destroyContainer(mod_container);
+            }
+            if (mod_list)
+            {
+                uiAPI.destroyContainer(mod_list);
+            }
+            if (mod_list_info)
+            {
+                uiAPI.destroyContainer(mod_list_info);
+            }
+
+            reset_mod_list_screen();
+            return;
+        }
 
         uiAPI.containerAddControl(parent, (CMnuBase *)mod_info_page, '\x01', '\x01', 0);
 
@@ -465,27 +667,24 @@ void __thiscall show_mod_list(CMnuSmpButton *button)
         uiAPI.containerAddControl(mod_container, (CMnuBase *)mod_list_info, '\x01', '\x01', 0);
 
         add_close_button(mod_info_page);
-        add_navigation_buttons(mod_list);
+
+        build_mod_list_panel(mod_list);
+        build_mod_info_panel(mod_list_info);
+        refresh_mod_list_page(0);
+        show_mod_details(0);
+
         char sfsf_mod_info[32] = "Mod Information";
         mod_list_title = uiAPI.attachLabel(nullptr, mod_container, sfsf_mod_info, 6, 468, 16, 128, 16);
 
-        log_info("Callback for Mod List 11");
         uiAPI.setMenuID(mod_list_title, 0x6);
-        log_info("Callback for Mod List 12");
         uiAPI.setLabelColour(mod_list_title, 0.85, 0.64, 0.12, '\0');
-        log_info("Callback for Mod List 13");
         uiAPI.setLabelColour(mod_list_title, 0.85, 0.64, 0.12, '\x01');
 
-        log_info("Callback for Mod List 14");
-        if(!mod_list)
-        {
-            log_error("Unable to create Mod Menu, Mod List Container is NULL");
-            return;
-        }
         does_mod_list_exist = true;
     }
-    else
+    else if (mod_info_page != nullptr)
     {
+        // Same menu session, so the screen *should* still be attached, so we can toggle visibility.
         is_mod_list_shown = !is_mod_list_shown;
         uiAPI.setContainerVisible(mod_info_page, is_mod_list_shown, 0);
     }
@@ -530,7 +729,7 @@ CMnuSmpButton * __thiscall attachNewButton(CMnuContainer *parent,
         g_create_sf_string(&m_mesh_string_disabled, button_mesh_disabled);
 
     // 0x3b0 seems to corralate to CUiStartMenu, but is directly cast to be a type of CUiFrameStats
-    new_button = (CMnuSmpButton *)uiAPI.newOperator(0x428); // 0x368, 0x3b0 and 0x708 are all valid. (I suspect that they're creating objects that have CMnuLabel as an Parent Class).
+    new_button = (CMnuSmpButton *)uiAPI.newOperator(0x428); // 0x368, 0x3b0 and 0x708 are all valid. (I suspect that they're creating objects that have CMnuLabel as a Parent Class).
 
     if (font_index > 32)
     {
@@ -543,7 +742,6 @@ CMnuSmpButton * __thiscall attachNewButton(CMnuContainer *parent,
 
     uiAPI.CMnuBaseSetName((CMnuBase *)new_button, label_string);
 
-    // This seems to fill out the actual button data itself.
     uiAPI.createButton(new_button,x_pos,y_pos,width,height,mesh_string_default,
                        init_load_mesh,mesh_string_pressed,mesh_string_disabled);
 
@@ -585,6 +783,8 @@ SFMod *createModInfo(const char *mod_id,const char *mod_version,
                      const char *mod_author, const char *mod_description)
 {
     SFMod *mod = (SFMod *)malloc(sizeof(SFMod));
+
+    clear_mod_errors(mod);
 
     strncpy(mod->mod_id, mod_id, 63);
     mod->mod_id[63] = '\0';
