@@ -61,7 +61,7 @@ cln:
 
 # Target for creating directories
 bin lib obj:
-	@if not exist "$@" mkdir "$@"
+	@if [ ! -d "$@" ]; then mkdir -p "$@"; fi
 
 # Internals build
 obj/sf_asi.o: src/asi/sf_asi.cpp src/asi/sf_asi.h | obj
