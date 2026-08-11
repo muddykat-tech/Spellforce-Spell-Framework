@@ -1228,7 +1228,7 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
                     uint8_t race = SF_Figures->figures[figure_id].race;
                     uint32_t aspd = figureAPI.getCurrentStat(SF_Figures, figure_id, FIGHT_SPEED);
                     uint32_t *AC34 = (uint32_t *)CGdMainGetAC34(_this->CGdMain);
-                    aspd = AC34calculateWeaponSpeed(AC34, aspd, race, l_item_id, dual_wield, (r_type == 12));
+                    aspd = AC34calculateWeaponSpeed(AC34, aspd, race, l_item_id, dual_wield, (l_type == 12));
 
                     double disp_aspd = static_cast<double>(aspd) / 1000.0;
                     uiAPI.SFprintf(&description, description.raw_data, disp_aspd);

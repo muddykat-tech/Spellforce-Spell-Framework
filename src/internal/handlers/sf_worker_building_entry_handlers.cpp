@@ -95,10 +95,8 @@ void __thiscall woodcutter_entry_handler (SF_CGdFigureJobs *_this,uint16_t figur
     SF_SGtFigureAction action;
     action.type = 0;
     action.subtype = 1;
-    action.unkn1 = 0;
-    action.unkn2 = 0;
-    action.unkn3 = 0;
-    action.unkn4 = 0;
+    action.cooldown_action = 0;
+    action.cooldown_global = 0;
     figureAPI.addAction(_this->CGdFigure, figure_id, &action);
 }
 
@@ -148,10 +146,8 @@ void __thiscall quarry_entry_handler (SF_CGdFigureJobs *_this,uint16_t figure_id
     SF_SGtFigureAction action;
     action.type = 0;
     action.subtype = 3;
-    action.unkn1 = 0;
-    action.unkn2 = 0;
-    action.unkn3 = 0;
-    action.unkn4 = 0;
+    action.cooldown_action = 0;
+    action.cooldown_global = 0;
     figureAPI.addAction(_this->CGdFigure, figure_id, &action);
 }
 
@@ -226,10 +222,8 @@ void __thiscall miner_entry_handler (SF_CGdFigureJobs *_this,uint16_t figure_id,
     {
         action.subtype = 6;
     }
-    action.unkn1 = 0;
-    action.unkn2 = 0;
-    action.unkn3 = 0;
-    action.unkn4 = 0;
+    action.cooldown_action = 0;
+    action.cooldown_global = 0;
     figureAPI.addAction(_this->CGdFigure, figure_id, &action);
 }
 

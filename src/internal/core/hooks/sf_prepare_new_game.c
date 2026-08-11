@@ -213,12 +213,6 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
 
     char store_last_played = 0;
 
-    /* REVIEW: dot_map isn't destroyed, I've forgotten if the game handles this
-     * or if we need to destroy it ourselves, the Deep Copy may handle things
-     * tho? The same thing applies for predefined_template, which only gets
-     * destroyed in the campaign_type == 2 branch of case 0/2 and in case 8 -
-     * cases 1/3, 6, 7, 9 and default skip it. Can you take a look as it may be
-     * a leak. */
     SF_String dot_map, predefined_template;
     uiAPI.SFStringConstructor_char(&predefined_template, "figure_template\\predefined\\");
     uiAPI.SFStringConstructor_char(&dot_map, "*.map");
@@ -296,7 +290,7 @@ void __thiscall hooked_prepare_new_game(CAppMenu *_this, CUiMenuPreLoad *preload
             uiAPI.SFStringDestructor(&save_path);
             uiAPI.SFStringDestructor(&dot_sav);
 
-            pn_gi_refresh_case7(game_info); 
+            pn_gi_refresh_case7(game_info);
             uiAPI.SFStringDeepCopy(&(_this->CAppMenu_data).pregrame_dotmap_string, &dot_map);
 
             SF_String avatar_name;
@@ -447,11 +441,9 @@ skip_name_lookup:
         uiAPI.SFStringDestructor(&name);
         uiAPI.SFStringDestructor(&empty);
     }
-    
-    /* REVIEW: we destroy name_maybe and then call the engine's CUtlConfigFile
-     * destructor right after - if pn_cfg_dtor already releases that string this
-     * is a double free. Worth a check in Ghidra at 0x387e20. */
+
     uiAPI.SFStringDestructor(&configFile.name_maybe);
+    uiAPI.SFStringDestructor(&dot_map);
     pn_cfg_dtor(&configFile);
 }
 
