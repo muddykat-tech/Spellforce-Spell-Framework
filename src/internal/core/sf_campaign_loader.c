@@ -118,6 +118,9 @@ static bool parse_campaign_from_tokens(const char *json, const jsmntok_t *tokens
 
     memset(out_campaign, 0, sizeof(CampaignJson));
 
+    /* -1 means "unset" to every consumer of avatar_type. */
+    out_campaign->def.avatar_type = -1;
+
     int pairs_to_process = tokens[0].size;
     int current_token_index = 1;
 

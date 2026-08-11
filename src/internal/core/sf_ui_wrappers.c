@@ -27,7 +27,7 @@ void wrap_text(const char *input, char *output, size_t max_width)
         if (current_line_width >= max_width)
         {
             size_t break_point = output_index;
-            while (break_point > 0 && !isspace(output[break_point - 1]))
+            while (break_point > 0 && !isspace((unsigned char)output[break_point - 1]))
             {
                 break_point--;
             }
@@ -105,7 +105,6 @@ void __thiscall updateLabelText(CMnuLabel *label, const char *text)
 }
 
 
-SFSF_ModlistStruct modinformation;
 CMnuContainer *mod_list;
 CMnuContainer *mod_container;
 CMnuContainer *mod_info_page;
@@ -525,12 +524,12 @@ void build_mod_info_panel(CMnuContainer *info_panel)
 
 void __fastcall close_mod_list_callback(CMnuSmpButton *button, int32_t *cui_menu_ptr_maybe)
 {
-    CMnuContainer *mod_list =
+    CMnuContainer *parent_container =
         (CMnuContainer *) button->CMnuBase_data.param_2_callback;
 
-    if (mod_list != nullptr)
+    if (parent_container != nullptr)
     {
-        uiAPI.setContainerVisible(mod_list, false, false);
+        uiAPI.setContainerVisible(parent_container, false, false);
     }
     is_mod_list_shown = false;
 }
@@ -784,19 +783,25 @@ SFMod *createModInfo(const char *mod_id,const char *mod_version,
 {
     SFMod *mod = (SFMod *)malloc(sizeof(SFMod));
 
+    if (mod == nullptr)
+    {
+        log_error("Unable to allocate SFMod for [%s]", (mod_id != nullptr) ? mod_id : "<unnamed>");
+        return nullptr;
+    }
+
     clear_mod_errors(mod);
 
-    strncpy(mod->mod_id, mod_id, 63);
-    mod->mod_id[63] = '\0';
+    strncpy(mod->mod_id, mod_id, sizeof(mod->mod_id) - 1);
+    mod->mod_id[sizeof(mod->mod_id) - 1] = '\0';
 
-    strncpy(mod->mod_version, mod_version, 23);
-    mod->mod_version[23] = '\0';
+    strncpy(mod->mod_version, mod_version, sizeof(mod->mod_version) - 1);
+    mod->mod_version[sizeof(mod->mod_version) - 1] = '\0';
 
-    strncpy(mod->mod_description, mod_description, 127);
-    mod->mod_description[127] = '\0';
+    strncpy(mod->mod_description, mod_description, sizeof(mod->mod_description) - 1);
+    mod->mod_description[sizeof(mod->mod_description) - 1] = '\0';
 
-    strncpy(mod->mod_author, mod_author, 127);
-    mod->mod_author[127] = '\0';
+    strncpy(mod->mod_author, mod_author, sizeof(mod->mod_author) - 1);
+    mod->mod_author[sizeof(mod->mod_author) - 1] = '\0';
 
     return mod;
 }

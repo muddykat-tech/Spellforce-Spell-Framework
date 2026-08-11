@@ -133,8 +133,8 @@ sf_menu_hook(uint32_t _CAppMenu)
 
     CMnuContainer *container = *(CMnuContainer **)(_CAppMenu + 0x58);
 
-    uiAPI.attachLabel(sfsf_version_label, container, sfsf_info,
-                      6, 10, 729, strlen(sfsf_info) * 4, 100);
+    sfsf_version_label = uiAPI.attachLabel(sfsf_version_label, container, sfsf_info,
+                                           6, 10, 729, strlen(sfsf_info) * 4, 100);
 
     char button_default[32]     = "ui_mainmenu_button_default.msh";
     char button_pressed[32]     = "ui_mainmenu_button_pressed.msh";

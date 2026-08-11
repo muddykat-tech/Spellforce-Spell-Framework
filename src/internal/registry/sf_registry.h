@@ -1,6 +1,6 @@
 #ifndef REGISTRY_H
 #define REGISTRY_H
-#define SPELLFRAMEWORK_TAG "beta"
+#define SPELLFRAMEWORK_TAG "RC"
 
 #include "../../api/sfsf.h"
 

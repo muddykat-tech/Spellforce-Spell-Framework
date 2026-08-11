@@ -24,6 +24,40 @@ static void str_to_lower(char *str)
     }
 }
 
+/** @brief Returns the index just past @p index and everything nested under it. */
+static int skip_token_tree(const jsmntok_t *tokens, int token_count, int index)
+{
+    if (index >= token_count)
+    {
+        return index;
+    }
+
+    if (tokens[index].type == JSMN_OBJECT || tokens[index].type == JSMN_ARRAY)
+    {
+        int children_count = tokens[index].size;
+        int next_index = index + 1;
+        for (int i = 0; i < children_count; i++)
+        {
+            if (next_index >= token_count)
+            {
+                return token_count;
+            }
+            if (tokens[index].type == JSMN_OBJECT)
+            {
+                next_index = skip_token_tree(tokens, token_count, next_index); // key
+                next_index = skip_token_tree(tokens, token_count, next_index); // value
+            }
+            else
+            {
+                next_index = skip_token_tree(tokens, token_count, next_index);
+            }
+        }
+        return next_index;
+    }
+
+    return index + 1;
+}
+
 // Copies a JSON string token's contents into a bounded buffer.
 static void json_str(const char *json, const jsmntok_t *token, char *out, size_t out_size)
 {
@@ -116,7 +150,9 @@ bool parse_screens_json_file(const char *path, ScreenEntry *out_entries,
                 (*out_count)++;
             }
 
-            current_token_index += 2;
+            /* Using skip_token_tree for safer json parsing. */
+            current_token_index = skip_token_tree(tokens, token_count, current_token_index); // key
+            current_token_index = skip_token_tree(tokens, token_count, current_token_index); // value
         }
 
         success = true;

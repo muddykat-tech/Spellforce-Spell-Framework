@@ -151,6 +151,9 @@ int isDirectoryExists(const char *path)
     return 0;
 }
 
+/* REVIEW: back_slash is constructed below but never destructed - does the game
+ * destroy this string, or are we leaking here? If we are leaking, we should be
+ * able to add the destructor at the end of the base_dirs destructor loop. */
 void checkDirs(CAppSession *_this)
 {
     SF_String base_dirs[5];
@@ -365,6 +368,15 @@ uint32_t __thiscall getHdrStringID(uint32_t camp_type)
     {
         return 0x1979;
     }
+    /* REVIEW: we may need to do a custom_idx bound check here, not 100% sure,
+     * but something like this should work?
+     *
+     *   if (custom_idx < 0 || custom_idx >= (int32_t)g_campaign_count)
+     *   {
+     *       return 0x1979;
+     *   }
+     *
+     * Matches the guards already used in getSavePath and initFirstMap. */
     int custom_idx = (int)camp_type - SFSF_CAMPAIGN_TYPE_BASE;
     if (g_campaigns[custom_idx].campaign_name_id)
     {
@@ -376,6 +388,9 @@ uint32_t __thiscall getHdrStringID(uint32_t camp_type)
     }
 }
 
+/* REVIEW: is __declspec(naked) required here? Every other asm block we have
+ * (quickload_hook, sf_damage_hook, menuload_hook_beta, ranged_exp_beta) uses it,
+ * and this one reads ebx/ebp from the hooked frame. Works as-is right now. */
 static void hdr_helper()
 {
 
