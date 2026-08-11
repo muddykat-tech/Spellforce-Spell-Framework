@@ -573,31 +573,31 @@ void register_building_to_game(SFBuilding *building, const Building *src)
 
 uint8_t get_resource_id(const char *resource_name)
 {
-    if (!strncmp("wood",resource_name, 5))
+    if (!strncmp("wood", resource_name, 5))
     {
         return 1;
     }
-    if (!strncmp("stone",resource_name, 6))
+    if (!strncmp("stone", resource_name, 6))
     {
         return 2;
     }
-    if (!strncmp("moonsilver",resource_name, 11))
+    if (!strncmp("moonsilver", resource_name, 11))
     {
         return 4;
     }
-    if (!strncmp("food",resource_name, 5))
+    if (!strncmp("food", resource_name, 5))
     {
         return 5;
     }
-    if (!strncmp("iron",resource_name, 5))
+    if (!strncmp("iron", resource_name, 5))
     {
         return 7;
     }
-    if (!strncmp("aria",resource_name, 5))
+    if (!strncmp("aria", resource_name, 5))
     {
         return 18;
     }
-    if (!strncmp("lenya",resource_name, 5))
+    if (!strncmp("lenya", resource_name, 5))
     {
         return 19;
     }

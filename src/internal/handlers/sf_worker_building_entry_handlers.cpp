@@ -13,7 +13,7 @@ bool buildingIsMaster(uint16_t building_type)
 }
 
 
-void __thiscall building_repair(SF_CGdFigureJobs *_this,uint16_t figure_id, uint16_t building_id)
+void __thiscall building_repair(SF_CGdFigureJobs *_this, uint16_t figure_id, uint16_t building_id)
 {
     uint16_t worker_building = toolboxAPI.getFigureXData(_this->CGdFigureToolBox, figure_id,
                                                          SpellDataKey::SPELL_CONSERVATION_SHIELD);
@@ -37,10 +37,10 @@ void __thiscall building_repair(SF_CGdFigureJobs *_this,uint16_t figure_id, uint
         }
     }
 }
-typedef void (__thiscall *jobCriticalHit_ptr)(SF_CGdFigureJobs *_this,uint16_t figure_id);
+typedef void (__thiscall *jobCriticalHit_ptr)(SF_CGdFigureJobs *_this, uint16_t figure_id);
 
 
-void __thiscall default_entry_handler(SF_CGdFigureJobs *_this,uint16_t figure_id, uint16_t building_id)
+void __thiscall default_entry_handler(SF_CGdFigureJobs *_this, uint16_t figure_id, uint16_t building_id)
 {
     if (building_id != 0)
     {
@@ -50,7 +50,7 @@ void __thiscall default_entry_handler(SF_CGdFigureJobs *_this,uint16_t figure_id
     jobCriticalHit(_this, figure_id);
 }
 
-void __thiscall hq_entry_handler(SF_CGdFigureJobs *_this,uint16_t figure_id, uint16_t building_id)
+void __thiscall hq_entry_handler(SF_CGdFigureJobs *_this, uint16_t figure_id, uint16_t building_id)
 {
     uint8_t good = _this->CGdFigure->figures[figure_id].good;
     if (good != 0)
@@ -67,7 +67,7 @@ void __thiscall hq_entry_handler(SF_CGdFigureJobs *_this,uint16_t figure_id, uin
     jobCriticalHit(_this, figure_id);
 }
 
-void __thiscall woodcutter_entry_handler (SF_CGdFigureJobs *_this,uint16_t figure_id, uint16_t building_id)
+void __thiscall woodcutter_entry_handler (SF_CGdFigureJobs *_this, uint16_t figure_id, uint16_t building_id)
 {
     uint8_t good = _this->CGdFigure->figures[figure_id].good;
 
@@ -100,7 +100,7 @@ void __thiscall woodcutter_entry_handler (SF_CGdFigureJobs *_this,uint16_t figur
     figureAPI.addAction(_this->CGdFigure, figure_id, &action);
 }
 
-void __thiscall sawmill_entry_handler (SF_CGdFigureJobs *_this,uint16_t figure_id, uint16_t building_id)
+void __thiscall sawmill_entry_handler (SF_CGdFigureJobs *_this, uint16_t figure_id, uint16_t building_id)
 {
     figureAPI.setJob(_this, figure_id, kGdJobCarpenterSearchForWork);
     toolboxAPI.equipArtisanArmour(_this->CGdFigureToolBox, figure_id);
@@ -116,7 +116,7 @@ void __thiscall sawmill_entry_handler (SF_CGdFigureJobs *_this,uint16_t figure_i
     }
 }
 
-void __thiscall cattle_breeder_entry_handler (SF_CGdFigureJobs *_this,uint16_t figure_id, uint16_t building_id)
+void __thiscall cattle_breeder_entry_handler (SF_CGdFigureJobs *_this, uint16_t figure_id, uint16_t building_id)
 {
     figureAPI.setJob(_this, figure_id, kGdJobCattleBreederSearchForWork);
     toolboxAPI.equipArtisanArmour(_this->CGdFigureToolBox, figure_id);
@@ -124,7 +124,7 @@ void __thiscall cattle_breeder_entry_handler (SF_CGdFigureJobs *_this,uint16_t f
     toolboxAPI.equipArtisanTools(_this->CGdFigureToolBox, figure_id, 0, 0);
 }
 
-void __thiscall quarry_entry_handler (SF_CGdFigureJobs *_this,uint16_t figure_id, uint16_t building_id)
+void __thiscall quarry_entry_handler (SF_CGdFigureJobs *_this, uint16_t figure_id, uint16_t building_id)
 {
     uint8_t good = _this->CGdFigure->figures[figure_id].good;
     if (good == 0)
@@ -151,7 +151,7 @@ void __thiscall quarry_entry_handler (SF_CGdFigureJobs *_this,uint16_t figure_id
     figureAPI.addAction(_this->CGdFigure, figure_id, &action);
 }
 
-void __thiscall foodstore_entry_handler (SF_CGdFigureJobs *_this,uint16_t figure_id, uint16_t building_id)
+void __thiscall foodstore_entry_handler (SF_CGdFigureJobs *_this, uint16_t figure_id, uint16_t building_id)
 {
     figureAPI.setJob(_this, figure_id, kGdJobFoodWorkerSearchForWork);
     toolboxAPI.equipArtisanArmour(_this->CGdFigureToolBox, figure_id);
@@ -167,7 +167,7 @@ void __thiscall foodstore_entry_handler (SF_CGdFigureJobs *_this,uint16_t figure
     figureAPI.setTask(_this->CGdFigure, figure_id, CGdFigureTask::TASK_STOREKEEPER);
 }
 
-typedef void (__thiscall *updateHunterList_ptr)(SF_CGdFigureJobs *_this,uint16_t figure_id);
+typedef void (__thiscall *updateHunterList_ptr)(SF_CGdFigureJobs *_this, uint16_t figure_id);
 
 void __thiscall hunter_entry_handler (SF_CGdFigureJobs *_this, uint16_t figure_id, uint16_t building_id)
 {
@@ -197,7 +197,7 @@ void __thiscall fisher_entry_handler (SF_CGdFigureJobs *_this, uint16_t figure_i
     toolboxAPI.equipArtisanTools(_this->CGdFigureToolBox, figure_id, 3, 0);
 }
 
-void __thiscall farmer_entry_handler (SF_CGdFigureJobs *_this,uint16_t figure_id, uint16_t building_id)
+void __thiscall farmer_entry_handler (SF_CGdFigureJobs *_this, uint16_t figure_id, uint16_t building_id)
 {
     figureAPI.setJob(_this, figure_id, kGdJobFarmerWaitForWork);
     toolboxAPI.equipArtisanArmour(_this->CGdFigureToolBox, figure_id);
@@ -205,7 +205,7 @@ void __thiscall farmer_entry_handler (SF_CGdFigureJobs *_this,uint16_t figure_id
     toolboxAPI.equipArtisanTools(_this->CGdFigureToolBox, figure_id, 0, 0);
 }
 
-void __thiscall miner_entry_handler (SF_CGdFigureJobs *_this,uint16_t figure_id, uint16_t building_id)
+void __thiscall miner_entry_handler (SF_CGdFigureJobs *_this, uint16_t figure_id, uint16_t building_id)
 {
     figureAPI.setJob(_this, figure_id, kGdJobMinerSearchResource);
     toolboxAPI.setFigureXData(_this->CGdFigureToolBox, figure_id, WORKER_HOST_BUILDING_POS_X,
@@ -227,7 +227,7 @@ void __thiscall miner_entry_handler (SF_CGdFigureJobs *_this,uint16_t figure_id,
     figureAPI.addAction(_this->CGdFigure, figure_id, &action);
 }
 
-void __thiscall smelter_entry_handler (SF_CGdFigureJobs *_this,uint16_t figure_id, uint16_t building_id)
+void __thiscall smelter_entry_handler (SF_CGdFigureJobs *_this, uint16_t figure_id, uint16_t building_id)
 {
     figureAPI.setJob(_this, figure_id, kGdJobSmelterSearchForWork);
     toolboxAPI.equipArtisanArmour(_this->CGdFigureToolBox, figure_id);
@@ -236,7 +236,7 @@ void __thiscall smelter_entry_handler (SF_CGdFigureJobs *_this,uint16_t figure_i
 }
 
 //aria and lenya
-void __thiscall shrine_entry_handler (SF_CGdFigureJobs *_this,uint16_t figure_id, uint16_t building_id)
+void __thiscall shrine_entry_handler (SF_CGdFigureJobs *_this, uint16_t figure_id, uint16_t building_id)
 {
     figureAPI.setJob(_this, figure_id, kGdJobShrineWorkerSearchForWork);
     toolboxAPI.equipArtisanArmour(_this->CGdFigureToolBox, figure_id);
@@ -252,7 +252,7 @@ void __thiscall shrine_entry_handler (SF_CGdFigureJobs *_this,uint16_t figure_id
     }
 }
 
-void __thiscall temple_entry_handler (SF_CGdFigureJobs *_this,uint16_t figure_id, uint16_t building_id)
+void __thiscall temple_entry_handler (SF_CGdFigureJobs *_this, uint16_t figure_id, uint16_t building_id)
 {
     figureAPI.setJob(_this, figure_id, kGdJobPriestSearchForWork);
     toolboxAPI.equipArtisanArmour(_this->CGdFigureToolBox, figure_id);
@@ -264,7 +264,7 @@ void __thiscall temple_entry_handler (SF_CGdFigureJobs *_this,uint16_t figure_id
     buildingAPI.updateProduction(_this->CGdPlayer, owner, race, bvar1, 1);
 }
 
-void __thiscall forester_entry_handler (SF_CGdFigureJobs *_this,uint16_t figure_id, uint16_t building_id)
+void __thiscall forester_entry_handler (SF_CGdFigureJobs *_this, uint16_t figure_id, uint16_t building_id)
 {
     figureAPI.setJob(_this, figure_id, kGdJobForesterSearchForWork);
     toolboxAPI.equipArtisanArmour(_this->CGdFigureToolBox, figure_id);
@@ -272,7 +272,7 @@ void __thiscall forester_entry_handler (SF_CGdFigureJobs *_this,uint16_t figure_
     toolboxAPI.equipArtisanTools(_this->CGdFigureToolBox, figure_id, 0, 0);
 }
 
-void __thiscall gatherer_entry_handler (SF_CGdFigureJobs *_this,uint16_t figure_id, uint16_t building_id)
+void __thiscall gatherer_entry_handler (SF_CGdFigureJobs *_this, uint16_t figure_id, uint16_t building_id)
 {
     figureAPI.setJob(_this, figure_id, kGdJobGathererSearchResource);
     toolboxAPI.equipArtisanArmour(_this->CGdFigureToolBox, figure_id);
@@ -280,7 +280,7 @@ void __thiscall gatherer_entry_handler (SF_CGdFigureJobs *_this,uint16_t figure_
     toolboxAPI.equipArtisanTools(_this->CGdFigureToolBox, figure_id, 0x0b, 0);
 }
 
-void __thiscall forge_entry_handler (SF_CGdFigureJobs *_this,uint16_t figure_id, uint16_t building_id)
+void __thiscall forge_entry_handler (SF_CGdFigureJobs *_this, uint16_t figure_id, uint16_t building_id)
 {
     figureAPI.setJob(_this, figure_id, kGdJobSmithSearchForWork);
     toolboxAPI.equipArtisanArmour(_this->CGdFigureToolBox, figure_id);
@@ -309,7 +309,7 @@ void __thiscall forge_entry_handler (SF_CGdFigureJobs *_this,uint16_t figure_id,
     buildingAPI.updateProduction(_this->CGdPlayer, owner, race, bvar1, 1);
 }
 
-void __thiscall mace_carver_entry_handler (SF_CGdFigureJobs *_this,uint16_t figure_id, uint16_t building_id)
+void __thiscall mace_carver_entry_handler (SF_CGdFigureJobs *_this, uint16_t figure_id, uint16_t building_id)
 {
     figureAPI.setJob(_this, figure_id, kGdJobClubMakerSearchForWork);
     toolboxAPI.equipArtisanArmour(_this->CGdFigureToolBox, figure_id);
@@ -321,7 +321,7 @@ void __thiscall mace_carver_entry_handler (SF_CGdFigureJobs *_this,uint16_t figu
     uint16_t owner = _this->CGdBuilding->buildings[building_id].owner;
     buildingAPI.updateProduction(_this->CGdPlayer, owner, race, bvar1, 1);
 }
-typedef void (__thiscall *updateScavengerList_ptr)(SF_CGdFigureJobs *_this,uint16_t figure_id);
+typedef void (__thiscall *updateScavengerList_ptr)(SF_CGdFigureJobs *_this, uint16_t figure_id);
 
 void __thiscall scavenger_entry_handler (SF_CGdFigureJobs *_this, uint16_t figure_id, uint16_t building_id)
 {

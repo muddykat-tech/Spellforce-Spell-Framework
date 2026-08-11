@@ -193,12 +193,9 @@ const char *get_mod_type_label(ModType type)
 {
     switch (type)
     {
-        case MOD_TYPE_FRAMEWORK:
-            return "[ FRAMEWORK ]";
-        case MOD_TYPE_CORE:
-            return "[ CORE MODULE ]";
-        default:
-            return " ";
+        case MOD_TYPE_FRAMEWORK: return "[ FRAMEWORK ]";
+        case MOD_TYPE_CORE: return "[ CORE MODULE ]";
+        default: return " ";
     }
 }
 

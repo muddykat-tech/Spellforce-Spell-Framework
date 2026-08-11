@@ -136,13 +136,15 @@ typedef struct
 
     /**
      * @brief Returns target's resistance to a primary magic school that a specified spell belongs in.
-     * In case the spell has requirements for more than one magic school, the school with the highest requirement is regarded as primary.
+     * In case the spell has requirements for more than one magic school, the school with the highest requirement is
+     * regarded as primary.
      *
      * @param autoclass34 A pointer to an internal class.
      * @param source The source character or entity casting the spell.
      * @param target The target character or entity that we want the resistance from.
      * @param spell_id spell index (not spell line!)
-     * @return The chance that the spell will be resisted, sometimes used as a 'chance' to fully resist the spell, also used to mitigate the damage dealt with the spell.
+     * @return The chance that the spell will be resisted, sometimes used as a 'chance' to fully resist the spell, also
+     * used to mitigate the damage dealt with the spell.
      */
     getChanceToResistSpell_ptr getChanceToResistSpell;
 
@@ -166,10 +168,12 @@ typedef struct
      * @param spell_id The Spell Index of the currently active spell.
      * @param effect_id The ID of the visual effect to apply. @see kGdEffectSpellHitTarget
      * @param unused Unused parameter that may be for future extensibility; Set to 0 for now.
-     * @param target The entity target data which the visual effect will be centered on. The X-Y coordinates passed as part of the target data will determine the visual effect offset relative to the target. @see SF_CGdTargetData
+     * @param target The entity target data which the visual effect will be centered on. The X-Y coordinates passed as
+     * part of the target data will determine the visual effect offset relative to the target. @see SF_CGdTargetData
      * @param tick_start The internal game tick when the visual effect must appear.
      * @param tick_count The number of ticks the visual effect will last.
-     * @param corner_coords The area that the visual effect would be within for AoE effects. Use {0,0} for non AOE Spells.
+     * @param corner_coords The area that the visual effect would be within for AoE effects. Use {0,0} for non AOE
+     * Spells.
      */
     addVisualEffect_ptr addVisualEffect;
 
@@ -202,7 +206,8 @@ typedef struct
      * @param spell_id The Spell Index of the currently active spell.
      * @param radius The radius of the area of effect.
      * @param center_maybe The center coordinates of the area of effect.
-     * @return A pointer to the rectangle representing the affected area that contains all possible targets of the spell.
+     * @return A pointer to the rectangle representing the affected area that contains all possible targets of the
+     * spell.
      */
     getTargetsRectangle_ptr getTargetsRectangle;
 
@@ -217,7 +222,8 @@ typedef struct
     /**
      * @brief Clears a specific flag on the spell object.
      *
-     * It works as a wrapper of more specific flag clearing functions, @see figClrChkSplBfrChkBattle or figTryClrCHkSPlBfrJob2
+     * It works as a wrapper of more specific flag clearing functions, @see figClrChkSplBfrChkBattle or
+     * figTryClrCHkSPlBfrJob2
      * @param _this A pointer to the global spell object.
      * @param spell_id The Spell Index of the currently active spell.
      * @param key The flag key to clear. @see SpellFlagKey
@@ -232,10 +238,12 @@ typedef struct
      *
      * @param _this A pointer to the global spell object.
      * @param spell_id The Spell Type ID of the spell to create.
-     * @param game_tick The internal game tick when the spell should appear. This value can be determined via the opaque class in the global spell object.
+     * @param game_tick The internal game tick when the spell should appear. This value can be determined via the opaque
+     * class in the global spell object.
      * @param source The index of the spell caster (source entity).
      * @param target The Spell Target entity index.
-     * @param param5 The purpose of this parameter is currently unknown. For safe use, it is recommended to pass it as 0.
+     * @param param5 The purpose of this parameter is currently unknown. For safe use, it is recommended to pass it as
+     * 0.
      */
     addSpell_ptr addSpell;
 
@@ -257,7 +265,8 @@ typedef struct
 
     /**
      * @brief Retrieves the Spell Effect ID for a given spell index.
-     * The spell effect ID can be used to obtain spell parameters (such as damage, radius, duration, etc.) from GameData.cff
+     * The spell effect ID can be used to obtain spell parameters (such as damage, radius, duration, etc.) from
+     * GameData.cff
      * @param _this A pointer to the global spell object.
      * @param spell_index The index of the spell.
      * @return The Spell Effect ID.
@@ -279,7 +288,8 @@ typedef struct
     /**
      * @brief Retrieves the tags associated with a spell.
      *
-     * This function returns a set of tags associated with a given spell, which can be used for filtering or classification.
+     * This function returns a set of tags associated with a given spell, which can be used for filtering or
+     * classification.
      * @param spell_index The index of the spell.
      * @return A set of tags related to the spell.
      */

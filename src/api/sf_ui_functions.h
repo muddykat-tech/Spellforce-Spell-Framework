@@ -53,7 +53,7 @@ DECLARE_FUNCTION(void, setFont,
                  void *_this, void *input)
 
 DECLARE_FUNCTION(void, setBaseAlpha, void *_this, float alpha);
-DECLARE_FUNCTION(void, initializeMenuContainer, CMnuContainer * _this);
+DECLARE_FUNCTION(void, initializeMenuContainer, CMnuContainer *_this);
 DECLARE_FUNCTION(void, setupMenuContainerData, CMnuContainer *_this, float x, float y,
                  float width,
                  float height,
@@ -74,7 +74,7 @@ DECLARE_FUNCTION(void, setButtonIndex, void *, int index);
 
 DECLARE_FUNCTION(void, setMenuButtonFlag, void *container, char flag);
 
-DECLARE_FUNCTION(void, attachCallback, void *, void *,void *, void *);
+DECLARE_FUNCTION(void, attachCallback, void *, void *, void *, void *);
 
 DECLARE_FUNCTION(void, vfunction16AttachCallback, void *_this, char p1);
 

@@ -138,9 +138,11 @@ static bool parse_campaign_from_tokens(const char *json, const jsmntok_t *tokens
         switch (key)
         {
             case CAMPAIGN_FIELD_NAME:
+            {
                 json_str(json, value_token, def->name, sizeof(def->name));
                 out_campaign->found_name = true;
                 break;
+            }
             case CAMPAIGN_FIELD_CAMPAIGN_NAME_ID:
             {
                 int campaign_name_id = jsonint(json, value_token);
@@ -149,33 +151,47 @@ static bool parse_campaign_from_tokens(const char *json, const jsmntok_t *tokens
                 break;
             }
             case CAMPAIGN_FIELD_DESCRIPTION:
+            {
                 json_str(json, value_token, def->description, sizeof(def->description));
                 out_campaign->found_description = true;
                 break;
+            }
             case CAMPAIGN_FIELD_AUTHOR:
+            {
                 json_str(json, value_token, def->author, sizeof(def->author));
                 out_campaign->found_author = true;
                 break;
+            }
             case CAMPAIGN_FIELD_START_MAP:
+            {
                 json_str(json, value_token, def->start_map, sizeof(def->start_map));
                 out_campaign->found_start_map = true;
                 break;
+            }
             case CAMPAIGN_FIELD_TUTORIAL_MAP:
+            {
                 json_str(json, value_token, def->tutorial_map, sizeof(def->tutorial_map));
                 out_campaign->found_tutorial_map = true;
                 break;
+            }
             case CAMPAIGN_FIELD_CAMPAIGN_FOLDER:
+            {
                 json_str(json, value_token, def->campaign_folder, sizeof(def->campaign_folder));
                 out_campaign->found_campaign_folder = true;
                 break;
+            }
             case CAMPAIGN_FIELD_STARTERKIT:
+            {
                 json_str(json, value_token, def->starterkit, sizeof(def->starterkit));
                 out_campaign->found_starterkit = true;
                 break;
+            }
             case CAMPAIGN_FIELD_INTRO_VIDEO:
+            {
                 json_str(json, value_token, def->intro_video, sizeof(def->intro_video));
                 out_campaign->found_intro_video = true;
                 break;
+            }
             case CAMPAIGN_FIELD_AVATAR_TYPE:
             {
                 int avatar_type = jsonint(json, value_token);
@@ -184,8 +200,10 @@ static bool parse_campaign_from_tokens(const char *json, const jsmntok_t *tokens
                 break;
             }
             default:
+            {
                 // Unknown key - skipped so future fields stay backwards compatible.
                 break;
+            }
         }
 
         current_token_index = skip_token_tree(tokens, token_count, current_token_index); // key

@@ -183,14 +183,9 @@ bool parse_world_coord(const char *json, const jsmntok_t *tokens, int token_coun
 
         switch (key)
         {
-            case FIELD_X:
-                coord->X = jsonint(json, value_token);
-                break;
-            case FIELD_Y:
-                coord->Y = jsonint(json, value_token);
-                break;
-            default:
-                break;
+            case FIELD_X: coord->X = jsonint(json, value_token); break;
+            case FIELD_Y: coord->Y = jsonint(json, value_token); break;
+            default: break;
         }
         current_index = skip_token_tree(tokens, token_count, current_index);
         current_index = skip_token_tree(tokens, token_count, current_index);
@@ -216,9 +211,7 @@ bool parse_collision(const char *json, const jsmntok_t *tokens, int token_count,
 
         switch (key)
         {
-            case FIELD_SHADOW:
-                collision->shadow = jsonbool(json, &tokens[current_index + 1]);
-                break;
+            case FIELD_SHADOW: collision->shadow = jsonbool(json, &tokens[current_index + 1]); break;
             case FIELD_POINTS:
             {
                 int points_array_index = current_index + 1;
@@ -243,8 +236,7 @@ bool parse_collision(const char *json, const jsmntok_t *tokens, int token_count,
                 }
                 break;
             }
-            default:
-                break;
+            default: break;
         }
         current_index = skip_token_tree(tokens, token_count, current_index);
         current_index = skip_token_tree(tokens, token_count, current_index);
@@ -269,21 +261,18 @@ bool parse_resource(const char *json, const jsmntok_t *tokens, int token_count, 
 
         switch (key)
         {
-            case FIELD_AMOUNT:
-                resource->amount = jsonint(json, &tokens[current_index + 1]);
-                break;
+            case FIELD_AMOUNT: resource->amount = jsonint(json, &tokens[current_index + 1]); break;
             case FIELD_TYPE:
             {
                 const jsmntok_t *type_token = &tokens[current_index + 1];
                 int len = type_token->end - type_token->start;
-                if (len >= 32)
-                    len = 31;
+                if (len >= MAX_RESOURCE_TYPE_LEN)
+                    len = MAX_RESOURCE_TYPE_LEN - 1;
                 strncpy(resource->type, json + type_token->start, len);
                 resource->type[len] = '\0';
-            }
-            break;
-            default:
                 break;
+            }
+            default: break;
         }
         current_index = skip_token_tree(tokens, token_count, current_index);
         current_index = skip_token_tree(tokens, token_count, current_index);
@@ -310,8 +299,10 @@ bool parse_resources(const char *json, const jsmntok_t *tokens, int token_count,
         switch (key)
         {
             case FIELD_NUMBER:
+            {
                 // No need to parse this, as we'll count the actual items in the list.
                 break;
+            }
             case FIELD_LIST:
             {
                 int list_array_index = current_index + 1;
@@ -336,8 +327,7 @@ bool parse_resources(const char *json, const jsmntok_t *tokens, int token_count,
                 }
                 break;
             }
-            default:
-                break;
+            default: break;
         }
         current_index = skip_token_tree(tokens, token_count, current_index);
         current_index = skip_token_tree(tokens, token_count, current_index);
@@ -408,53 +398,77 @@ bool parse_building_from_tokens(const char *json, jsmntok_t *tokens, int token_c
         switch (key)
         {
             case FIELD_ID:
+            {
                 building->id = jsonint(json, &tokens[value_index]);
                 building->found_id = true;
                 break;
+            }
             case FIELD_BUILDING_REQUIRED:
+            {
                 building->building_required = jsonint(json, &tokens[value_index]);
                 building->found_building_required = true;
                 break;
+            }
             case FIELD_CAN_ENTER:
+            {
                 building->can_enter = jsonbool(json, &tokens[value_index]);
                 building->found_can_enter = true;
                 break;
+            }
             case FIELD_CENTER_X:
+            {
                 building->center_x = jsonint(json, &tokens[value_index]);
                 building->found_center_x = true;
                 break;
+            }
             case FIELD_CENTER_Y:
+            {
                 building->center_y = jsonint(json, &tokens[value_index]);
                 building->found_center_y = true;
                 break;
+            }
             case FIELD_COLLISION_COUNT:
+            {
                 building->collision_count = jsonint(json, &tokens[value_index]);
                 building->found_collision_count = true;
                 break;
+            }
             case FIELD_DESCRIPTION_ID:
+            {
                 building->description_id = jsonint(json, &tokens[value_index]);
                 building->found_description_id = true;
                 break;
+            }
             case FIELD_FLAGS:
+            {
                 building->flags = jsonint(json, &tokens[value_index]);
                 building->found_flags = true;
                 break;
+            }
             case FIELD_HEALTH:
+            {
                 building->health = jsonint(json, &tokens[value_index]);
                 building->found_health = true;
                 break;
+            }
             case FIELD_NAME_ID:
+            {
                 building->name_id = jsonint(json, &tokens[value_index]);
                 building->found_name_id = true;
                 break;
+            }
             case FIELD_RACE:
+            {
                 building->race = jsonint(json, &tokens[value_index]);
                 building->found_race = true;
                 break;
+            }
             case FIELD_SLOT_COUNT:
+            {
                 building->slot_count = jsonint(json, &tokens[value_index]);
                 building->found_slot_count = true;
                 break;
+            }
             case FIELD_COLLISIONS:
             {
                 building->collision_count = 0;
@@ -477,12 +491,12 @@ bool parse_building_from_tokens(const char *json, jsmntok_t *tokens, int token_c
                 }
                 break;
             }
-            case FIELD_RESOURCES:
-                parse_resources(json, tokens, token_count, value_index, building);
-                break;
+            case FIELD_RESOURCES: parse_resources(json, tokens, token_count, value_index, building); break;
             default:
+            {
                 // Unknown key, just skip it
                 break;
+            }
         }
 
         // Advance the current index past the key and its entire value tree
@@ -502,13 +516,13 @@ char *readfile(const char *path)
         return NULL;
     }
 
-    fseek(file,0,SEEK_END);
+    fseek(file,0, SEEK_END);
     long len = ftell(file);
-    fseek(file,0,SEEK_SET);
+    fseek(file,0, SEEK_SET);
 
     if(len <= 0)
     {
-        log_error("Empty or unreadable file: \"%s\"\n",path);
+        log_error("Empty or unreadable file: \"%s\"\n", path);
         fclose(file);
         return NULL;
     }
@@ -517,7 +531,7 @@ char *readfile(const char *path)
     char *buffer = (char *) malloc(len+1);
     if(buffer == NULL)
     {
-        log_error("Unable to allocate memory for file: \"%s\"\n",path);
+        log_error("Unable to allocate memory for file: \"%s\"\n", path);
         fclose(file);
         return NULL;
     }

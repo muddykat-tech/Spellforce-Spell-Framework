@@ -135,27 +135,30 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call,
                 OutputDebugStringA("[SFSF] Are you on public_test branch? Spellforce should be version 1.61.11213");
                 return FALSE;
             }
-            else
+
+            // Truncate any log from a previous run before the first log_info lands.
+            FILE *file = fopen("sfsf.log", "w");
+            if (file != NULL)
             {
-                FILE *file = fopen("sfsf.log", "w");
                 fclose(file);
-
-                log_info("Spellforce Version Accepted; Starting SFSF");
-
-                load_debug_level_from_ini(CONFIG_FILE);
-
-                log_debug(DEBUG_INFO, "Loading Configs, Log Level is %s", debug_level_to_string(global_debug_level));
-
-                initialize_framework();
-                initialize_beta_hooks();
-                OutputDebugStringA("[SFSF] |======================| Injection Complete |======================|");
-                break;
             }
+
+            log_info("Spellforce Version Accepted; Starting SFSF");
+
+            load_debug_level_from_ini(CONFIG_FILE);
+
+            log_debug(DEBUG_INFO, "Loading Configs, Log Level is %s", debug_level_to_string(global_debug_level));
+
+            initialize_framework();
+            initialize_beta_hooks();
+            OutputDebugStringA("[SFSF] |======================| Injection Complete |======================|");
             break;
         }
         case DLL_PROCESS_DETACH:
+        {
             OutputDebugStringA("[SFSF] Framework Detached");
-        break;
+            break;
+        }
     }
     return TRUE;
 }

@@ -659,7 +659,7 @@ void __thiscall effect_siege_aura (SF_CGdSpell *_this, uint16_t spell_index)
                                                              building_index,
                                                              source_index, 1);
                         SF_Coord building_pos = *(SF_Coord *)&building_rect.partA;
-                        uint16_t current_distance = toolboxAPI.getDistance(&caster_pos,&building_pos);
+                        uint16_t current_distance = toolboxAPI.getDistance(&caster_pos, &building_pos);
                         if ((current_distance < min_distance) && (current_distance <= spell_data.params[2]))
                         {
                             min_distance = current_distance;
@@ -817,7 +817,7 @@ void __thiscall effect_self_illusion(SF_CGdSpell *_this, uint16_t spell_index)
                         figure->flags |= ILLUSION;
                         figure->master_figure = source_index;
                         figureAPI.setJob(_this->SF_CGdFigureJobs, figure_index, kGdJobPetIdle);
-                        figureAPI.setTask(_this->SF_CGdFigure,figure_index, TASK_PET);
+                        figureAPI.setTask(_this->SF_CGdFigure, figure_index, TASK_PET);
                         SF_CGdFigureWeaponStats weapon_stats;
 
                         getWeaponStats(_this->SF_CGdFigure, source_index, 0, &weapon_stats);
@@ -1104,7 +1104,7 @@ void __thiscall effect_pain_area (SF_CGdSpell *_this, uint16_t spell_index)
 
             CGdFigureIterator iter;
             iteratorAPI.setupFigureIterator(&iter, _this);
-            iteratorAPI.iteratorSetArea(&iter,&spell->target.position, area);
+            iteratorAPI.iteratorSetArea(&iter, &spell->target.position, area);
             std::vector<uint16_t> targets;
             std::vector<uint16_t> old_targets;
             std::vector<uint16_t> final_targets;
@@ -1120,7 +1120,7 @@ void __thiscall effect_pain_area (SF_CGdSpell *_this, uint16_t spell_index)
             {
                 CGdFigureIterator iter;
                 iteratorAPI.setupFigureIterator(&iter, _this);
-                iteratorAPI.iteratorSetArea(&iter,&spell->target.position, area-1);
+                iteratorAPI.iteratorSetArea(&iter, &spell->target.position, area-1);
                 uint16_t target_index = iteratorAPI.getNextFigure(&iter);
                 while (target_index != 0)
                 {
@@ -1134,7 +1134,7 @@ void __thiscall effect_pain_area (SF_CGdSpell *_this, uint16_t spell_index)
             {
                 for (uint32_t i = 0; i < targets.size(); i++)
                 {
-                    if (!std::binary_search(old_targets.begin(), old_targets.end(),targets[i]))
+                    if (!std::binary_search(old_targets.begin(), old_targets.end(), targets[i]))
                     {
                         final_targets.push_back(targets[i]);
                     }
@@ -1281,7 +1281,7 @@ void __thiscall effect_assistance(SF_CGdSpell *_this, uint16_t spell_index)
 
                 SF_Rectangle rect = {0,0};
                 spellAPI.addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &target,
-                                         _this->OpaqueClass->current_step,tick_count, &rect);
+                                         _this->OpaqueClass->current_step, tick_count, &rect);
                 return;
             }
         }

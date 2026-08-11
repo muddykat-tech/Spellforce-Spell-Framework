@@ -22,8 +22,8 @@ typedef uint16_t (__thiscall *phys_effect_handler_ptr)(SF_CGdEffect *_this, uint
 
 typedef uint16_t (__thiscall *enchant_handler_ptr)(SF_CGdFigure *_this, uint16_t figure_id);
 
-typedef void (__thiscall *building_done_handler_ptr)(SF_CGdBuildingToolbox *_this,uint16_t building_index);
-typedef void (__thiscall *building_entry_handler_ptr)(SF_CGdFigureJobs *_this,uint16_t figure_id, uint16_t building_id);
+typedef void (__thiscall *building_done_handler_ptr)(SF_CGdBuildingToolbox *_this, uint16_t building_index);
+typedef void (__thiscall *building_entry_handler_ptr)(SF_CGdFigureJobs *_this, uint16_t figure_id, uint16_t building_id);
 
 
 typedef struct __attribute__((packed))

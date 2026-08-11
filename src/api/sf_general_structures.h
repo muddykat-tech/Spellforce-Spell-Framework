@@ -997,7 +997,8 @@ typedef struct __attribute__((packed))
     uint16_t figure_index;
 } AutoClass69;
 
-// This class is required for the RANDOM function, AutoClass14 also seems to hold some relevance to the game world as well
+// This class is required for the RANDOM function, AutoClass14 also seems to hold some relevance to the game world as
+// well
 // This class is initialized in the GameInit function, so it is likely very important.
 typedef struct __attribute__((packed))
 {
@@ -1747,7 +1748,7 @@ typedef CUiOption *(__thiscall *create_option_ptr)(CUiOption *_this);
 // SF Menu / GUI Hooks for Auras
 typedef void (__thiscall *autoclass113_fun_00a27530_ptr)(
     void *_this_autoclass113);
-typedef uint32_t *(__thiscall *fun_0086dd60_ptr)(void *_this,uint8_t p1,
+typedef uint32_t *(__thiscall *fun_0086dd60_ptr)(void *_this, uint8_t p1,
                                                  uint32_t p2);
 typedef void (__thiscall *autoclass113_fun_00a278c0_ptr)(
     void *_this_autoclass113, uint32_t p1);
@@ -1804,7 +1805,7 @@ typedef void (__thiscall *CMnuScreen_attach_control_ptr)(void *_CMnuScreen_ptr,
 
 extern void attachVideo(CAppMenu *CAppMenu_ptr,  CMnuContainer *parent,
                         char *video_loc_and_name_charsC);
-extern CMnuLabel * __thiscall attach_new_meshed_label(CMnuLabel *label_ptr,
+extern CMnuLabel *__thiscall attach_new_meshed_label(CMnuLabel *label_ptr,
                                                       CMnuContainer *parent,
                                                       char *mesh_name,
                                                       char *label_text,
@@ -1813,13 +1814,13 @@ extern CMnuLabel * __thiscall attach_new_meshed_label(CMnuLabel *label_ptr,
                                                       uint16_t y_pos,
                                                       uint16_t width,
                                                       uint16_t height);
-extern CMnuLabel * __thiscall attach_new_label(CMnuLabel *label_ptr,
+extern CMnuLabel *__thiscall attach_new_label(CMnuLabel *label_ptr,
                                                CMnuContainer *parent,
                                                char *label_text,
                                                uint8_t font_index,
                                                uint16_t x_pos, uint16_t y_pos,
                                                uint16_t width, uint16_t height);
-extern CMnuSmpButton * __thiscall attach_new_button(CMnuContainer *parent,
+extern CMnuSmpButton *__thiscall attach_new_button(CMnuContainer *parent,
                                                     char *button_mesh_default,
                                                     char *button_mesh_pressed,
                                                     char *button_mesh_highlight,
