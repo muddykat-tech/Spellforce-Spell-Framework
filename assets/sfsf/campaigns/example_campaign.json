@@ -1,0 +1,12 @@
+{
+  "name": "Example Campaign",
+  "campaign_name_id": 0,
+  "description": "A template custom campaign. Copy this file, rename it, and point it at your own maps.",
+  "author": "Your Name",
+  "start_map": "000_liannon",
+  "tutorial_map": "",
+  "campaign_folder": "example_campaign",
+  "starterkit": "",
+  "intro_video": "",
+  "avatar_type": 0
+}

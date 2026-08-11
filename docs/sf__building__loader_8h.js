@@ -1,0 +1,37 @@
+var sf__building__loader_8h =
+[
+    [ "WorldCoord", "struct_world_coord.html", "struct_world_coord" ],
+    [ "Collision", "struct_collision.html", "struct_collision" ],
+    [ "Resource", "struct_resource.html", "struct_resource" ],
+    [ "Building", "struct_building.html", "struct_building" ],
+    [ "MAX_COLLISIONS", "sf__building__loader_8h.html#a1f0e4fb383eba545273cbfd481b98e1e", null ],
+    [ "MAX_POINTS", "sf__building__loader_8h.html#a3b8cb7c2cda80c18f333c00601c6905b", null ],
+    [ "MAX_RESOURCES", "sf__building__loader_8h.html#a036c05ee5aeca0a55276156cd8870adc", null ],
+    [ "FieldKey", "sf__building__loader_8h.html#a4759fcbf0566e64bfb74e9b5efcb4c8b", [
+      [ "FIELD_UNKNOWN", "sf__building__loader_8h.html#a4759fcbf0566e64bfb74e9b5efcb4c8ba18398cdd086fff9949b2f3df53b56189", null ],
+      [ "FIELD_ID", "sf__building__loader_8h.html#a4759fcbf0566e64bfb74e9b5efcb4c8ba5e4be4eb7dcbcbc4b47db55930d45573", null ],
+      [ "FIELD_BUILDING_REQUIRED", "sf__building__loader_8h.html#a4759fcbf0566e64bfb74e9b5efcb4c8bac6da304fb670cf5727e4ff804f9b5690", null ],
+      [ "FIELD_CAN_ENTER", "sf__building__loader_8h.html#a4759fcbf0566e64bfb74e9b5efcb4c8ba9116cc40cf0af15fc65b407f138491df", null ],
+      [ "FIELD_CENTER_X", "sf__building__loader_8h.html#a4759fcbf0566e64bfb74e9b5efcb4c8ba1606988cc2dcbf6925517c386b60ec52", null ],
+      [ "FIELD_CENTER_Y", "sf__building__loader_8h.html#a4759fcbf0566e64bfb74e9b5efcb4c8ba6d2719fdc24ed4550d7f27209ad3a64e", null ],
+      [ "FIELD_X", "sf__building__loader_8h.html#a4759fcbf0566e64bfb74e9b5efcb4c8ba5798cda0ae2d55075196b811a23f18d5", null ],
+      [ "FIELD_Y", "sf__building__loader_8h.html#a4759fcbf0566e64bfb74e9b5efcb4c8ba9bd237cfdff8df529512ceba0140907d", null ],
+      [ "FIELD_COLLISION_COUNT", "sf__building__loader_8h.html#a4759fcbf0566e64bfb74e9b5efcb4c8bada86c715ac080d69dfa298872463598f", null ],
+      [ "FIELD_DESCRIPTION_ID", "sf__building__loader_8h.html#a4759fcbf0566e64bfb74e9b5efcb4c8ba503ee79e24712b88734c70c314533fb6", null ],
+      [ "FIELD_FLAGS", "sf__building__loader_8h.html#a4759fcbf0566e64bfb74e9b5efcb4c8bace88c4a35ec6ef359c587fcfdf5aead5", null ],
+      [ "FIELD_HEALTH", "sf__building__loader_8h.html#a4759fcbf0566e64bfb74e9b5efcb4c8ba7749e96ba2a296ba43020b6f9e6ad74b", null ],
+      [ "FIELD_NAME_ID", "sf__building__loader_8h.html#a4759fcbf0566e64bfb74e9b5efcb4c8ba92baa6614ec522ac25a94018641ce09e", null ],
+      [ "FIELD_RACE", "sf__building__loader_8h.html#a4759fcbf0566e64bfb74e9b5efcb4c8ba55545a3b2009cc0e6d7d282a2509a160", null ],
+      [ "FIELD_SLOT_COUNT", "sf__building__loader_8h.html#a4759fcbf0566e64bfb74e9b5efcb4c8baaf97107d3b4c02e5329f77c2fbfab314", null ],
+      [ "FIELD_COLLISIONS", "sf__building__loader_8h.html#a4759fcbf0566e64bfb74e9b5efcb4c8bacea4034936b0e03ab433e4136a4bf78b", null ],
+      [ "FIELD_RESOURCES", "sf__building__loader_8h.html#a4759fcbf0566e64bfb74e9b5efcb4c8ba05d29a982e54388a5c5b2c3432ccefe6", null ],
+      [ "FIELD_SHADOW", "sf__building__loader_8h.html#a4759fcbf0566e64bfb74e9b5efcb4c8ba054aa926684a86fc592c35c3bcf07a96", null ],
+      [ "FIELD_POINTS", "sf__building__loader_8h.html#a4759fcbf0566e64bfb74e9b5efcb4c8bac7ac74a4fee1bc7758a139f3b8e060f3", null ],
+      [ "FIELD_AMOUNT", "sf__building__loader_8h.html#a4759fcbf0566e64bfb74e9b5efcb4c8bae4b2a3e6dd7cf312966ab9b7dc4ea18b", null ],
+      [ "FIELD_TYPE", "sf__building__loader_8h.html#a4759fcbf0566e64bfb74e9b5efcb4c8ba90ea4524f086a532bfbc3ee1fd80edd2", null ],
+      [ "FIELD_LIST", "sf__building__loader_8h.html#a4759fcbf0566e64bfb74e9b5efcb4c8ba4978c2f21958093339e2ebc5287fe16b", null ],
+      [ "FIELD_NUMBER", "sf__building__loader_8h.html#a4759fcbf0566e64bfb74e9b5efcb4c8ba313243c5fdb6bee7bc68ff7e28bbf882", null ]
+    ] ],
+    [ "parse_building_json_entrypoint", "sf__building__loader_8h.html#aae8c89ac7535eae6241d0646194d95fc", null ],
+    [ "readfile", "sf__building__loader_8h.html#a7f5df47fb24621badc48fd9135606545", null ]
+];

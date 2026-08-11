@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['include_5ffunction_0',['INCLUDE_FUNCTION',['../sf__hooks_8h.html#a6266997369ee994155f407bd6d2b2734',1,'sf_hooks.h']]]
+  ['config_5ffile_0',['CONFIG_FILE',['../sfsf_8h.html#a42bf63540ee0039a3a23db1b5ec3202b',1,'sfsf.h']]]
 ];

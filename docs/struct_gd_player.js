@@ -1,0 +1,28 @@
+var struct_gd_player =
+[
+    [ "alliance", "struct_gd_player.html#a8f336d2ce754897640d14487fb0a1117", null ],
+    [ "avatar_figure_index", "struct_gd_player.html#a0342abb2d0bb34d5733f3a733f34e8f7", null ],
+    [ "avatar_name", "struct_gd_player.html#ad7814a3313757a040461088feb74d244", null ],
+    [ "building_list", "struct_gd_player.html#a2a59f958f54299286cd55d87d0ec7495", null ],
+    [ "civilian_count", "struct_gd_player.html#ab3988cb1505d8c3096397e1da1c919a8", null ],
+    [ "global_player_id", "struct_gd_player.html#ab90f8df258cbc74d54ea7d3fcf0c69cb", null ],
+    [ "good_amount", "struct_gd_player.html#aa6a124eb70b07ee971640932d7b2741b", null ],
+    [ "good_remainder", "struct_gd_player.html#a604c20aa2721f67ce03bf4671cd8804a", null ],
+    [ "group", "struct_gd_player.html#a6afd1d24bb75575b214e3ae277e0d95d", null ],
+    [ "hero_figure_index", "struct_gd_player.html#a93e311db994173a082305412ff79f9de", null ],
+    [ "hero_names", "struct_gd_player.html#a1dc651136fff625f98d089bcf4f0e4b5", null ],
+    [ "hq_updrade_level", "struct_gd_player.html#a31fbf4089909f3315d3b37e0bf873f3d", null ],
+    [ "monument_list", "struct_gd_player.html#a0959dbc74481ed9b8ea4236f3bf05bff", null ],
+    [ "runepower_current", "struct_gd_player.html#aedcbca2b96d236389ba26daf7721d322", null ],
+    [ "runepower_max", "struct_gd_player.html#ae3112e72ac9969f6037f352fbba037c4", null ],
+    [ "swarm_size", "struct_gd_player.html#a61afdb48eb5a8d47588b34891511227f", null ],
+    [ "unknown", "struct_gd_player.html#a86d84fa6924f1a0206001f5b83e78ed7", null ],
+    [ "unknown2", "struct_gd_player.html#abaf5a29c5cce8595c97af62128379964", null ],
+    [ "unknown3", "struct_gd_player.html#ae6811e5afad337883523200e6124cfe4", null ],
+    [ "unknown4", "struct_gd_player.html#ad5977d13984db7ff23603d027a961016", null ],
+    [ "unknown5", "struct_gd_player.html#a1dc706106053bd1f4754c365fd6030fe", null ],
+    [ "unknown6", "struct_gd_player.html#aa8368aafef20e221163c9768e81a70c3", null ],
+    [ "unknown7", "struct_gd_player.html#a762b9127f1891c683bcf23f10a2212d6", null ],
+    [ "use", "struct_gd_player.html#a19c2446fae642d8356137e5832cb2e46", null ],
+    [ "warrior_count", "struct_gd_player.html#ae56685a7a87e2e7fdd24bcf70fef4bbf", null ]
+];

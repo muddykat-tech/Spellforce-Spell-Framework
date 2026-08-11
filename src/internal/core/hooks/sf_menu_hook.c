@@ -11,6 +11,7 @@
 #include "../sf_ui_wrappers.h"
 #include "sf_menu_hook.h"
 #include "../sf_hooks.h"
+#include "sf_campaign_hook.h"
 #include "../sf_modloader.h"
 #include "../../registry/sf_mod_registry.h"
 
@@ -30,20 +31,12 @@ static message_box_ptr s_show_message_box;
 cuiVideoSequence_constructor_ptr cuiVideoSequence_constructor;
 CMnuScreen_attach_control_ptr CMnuScreen_attach_control;
 create_option_ptr f_create_menu_option;
-container_add_control_ptr g_container_add_control;
 uint32_t g_menu_return_addr;
 uint32_t g_ui_hook_fix_addr;
 uint32_t g_ui_hook_fix_addr2;
 uint32_t g_sf_enchant_addr;
 uint32_t g_sf_enchant_addr2;
-new_operator_ptr g_new_operator;
-menu_label_constructor_ptr g_menu_label_constructor;
 set_label_flags_ptr g_set_label_flags;
-mnu_label_init_data_ptr g_init_menu_element;
-get_smth_fonts_ptr g_get_smth_fonts;
-menu_label_set_font_ptr g_menu_label_set_font;
-get_font_ptr g_get_font;
-menu_label_set_string_ptr g_menu_label_set_string;
 
 autoclass113_fun_00a27530_ptr fun_00a27530;
 fun_0086dd60_ptr fun_0086dd60;
@@ -79,21 +72,12 @@ void initialize_menu_data_hooks()
     s_show_message_box = (message_box_ptr)(ASI::AddrOf(0x198660));
 
     g_set_label_flags = (set_label_flags_ptr)(ASI::AddrOf(0x52f1d0));
-    g_menu_label_set_string = (menu_label_set_string_ptr)(ASI::AddrOf(0x52fab0));
     g_menu_return_addr = (ASI::AddrOf(0x182799));
     g_ui_hook_fix_addr = (ASI::AddrOf(0x5D119E));
     g_ui_hook_fix_addr2 = (ASI::AddrOf(0x5d0a7e));
 
     g_sf_enchant_addr = (ASI::AddrOf(0x5d0bbd));
     g_sf_enchant_addr2 = (ASI::AddrOf(0x5d12e7));
-
-    g_new_operator = (new_operator_ptr)(ASI::AddrOf(0x675A9D));
-    g_menu_label_constructor = (menu_label_constructor_ptr)(ASI::AddrOf(0x51a180));
-    g_init_menu_element = (mnu_label_init_data_ptr)(ASI::AddrOf(0x52cfe0));
-    g_get_smth_fonts = (get_smth_fonts_ptr)(ASI::AddrOf(0x5357b0));
-    g_menu_label_set_font = (menu_label_set_font_ptr)(ASI::AddrOf(0x530e00));
-    g_get_font = (get_font_ptr)(ASI::AddrOf(0x535180));
-    g_container_add_control = (container_add_control_ptr)(ASI::AddrOf(0x506f30));
 
     f_create_menu_option = (create_option_ptr)(ASI::AddrOf(0x61CF80));
 
@@ -129,16 +113,18 @@ void initialize_menu_data_hooks()
 
 CMnuSmpButton *show_mod_list_button;
 CMnuSmpButton *open_campaign_screen;
-CMnuContainer *custom_campaign_screen;
 
 SFSF_ModlistStruct mod_struct;
 CMnuLabel *sfsf_version_label;
-CMnuLabel *campaign_title_label;
 
 void __attribute__((no_caller_saved_registers, thiscall))
 sf_menu_hook(uint32_t _CAppMenu)
 {
     log_info("Starting Menu Hook");
+
+    reset_mod_list_screen();
+
+    campaign_hook_on_main_menu((CAppMenu *)_CAppMenu);
 
     char sfsf_info[256];
     snprintf(sfsf_info, sizeof(sfsf_info),
@@ -147,8 +133,8 @@ sf_menu_hook(uint32_t _CAppMenu)
 
     CMnuContainer *container = *(CMnuContainer **)(_CAppMenu + 0x58);
 
-    uiAPI.attachLabel(sfsf_version_label, container, sfsf_info,
-                      6, 10, 729, strlen(sfsf_info) * 4, 100);
+    sfsf_version_label = uiAPI.attachLabel(sfsf_version_label, container, sfsf_info,
+                                           6, 10, 729, strlen(sfsf_info) * 4, 100);
 
     char button_default[32]     = "ui_mainmenu_button_default.msh";
     char button_pressed[32]     = "ui_mainmenu_button_pressed.msh";
@@ -182,134 +168,25 @@ sf_menu_hook(uint32_t _CAppMenu)
                                                  BUTTON_INDEX,
                                                  (uint32_t)&show_mod_list);
 
+    if (g_campaign_count > 0)
+    {
+        char campaign_label[32] = "CUSTOM CAMPAIGNS";
+        open_campaign_screen = uiAPI.attachNewButton(container,
+                                                     button_default,
+                                                     button_pressed,
+                                                     button_highlight,
+                                                     button_disabled,
+                                                     campaign_label,
+                                                     BUTTON_FONT_INDEX,
+                                                     BUTTON_X,
+                                                     BUTTON_Y - 44,   // one slot above mod list
+                                                     BUTTON_WIDTH,
+                                                     BUTTON_HEIGHT,
+                                                     16,
+                                                     (uint32_t)&show_custom_campaign_screen);
+    }
 
-    /*  char campaign_label[32]       = "Custom Campaign";
-       open_campaign_screen = uiAPI.attachNewButton(container, button_default,
-                                                   button_pressed,
-                                                   button_highlight,
-                                                   button_disabled,
-                                                   campaign_label,
-                                                   BUTTON_FONT_INDEX,
-                                                   BUTTON_X,
-                                                   32,
-                                                   BUTTON_WIDTH,
-                                                   BUTTON_HEIGHT,
-                                                   16,
-                                                   (uint32_t)&show_campaign_screen);
-     */
-    log_info ("CAppMenu addr %x", _CAppMenu);
     s_menu_func(_CAppMenu);
-}
-
-bool does_campaign_screen_exist = false;
-bool is_campaign_screen_visible = false;
-void __thiscall show_campaign_screen(CMnuSmpButton *_this)
-{
-    log_info("Called Campaign Screen");
-    CMnuContainer *parent = (CMnuContainer *) _this->CMnuBase_data.param_2_callback;
-    if(!does_campaign_screen_exist)
-    {
-        log_info("Called Campaign Screen 1");
-        is_campaign_screen_visible = true;
-        custom_campaign_screen = uiAPI.createContainer(
-            0, 0, 1024, 768,
-            "ui_bgr_landscape_bg.msb",
-            "", 0.99f
-            );
-
-        log_info("Called Campaign Screen 2");
-        CMnuContainer *custom_campaign_container = uiAPI.createContainer(
-            11,6,1008,757,
-            "ui_bgr_pregame_border_transparency.msb",
-            "ui_bgr_pregame_border.msb", 0.5f
-            );
-
-        log_info("Called Campaign Screen 3");
-        CMnuContainer *campaign_list = uiAPI.createContainer(
-            59, 50, 443, 619,
-            "ui_bgr_pregame_border_left_transparency.msb",
-            "ui_bgr_pregame_border_left.msb", 0.5f
-            );
-
-        log_info("Called Campaign Screen 4");
-        CMnuContainer *campaign_list_right = uiAPI.createContainer(
-            502, 50, 443, 619,
-            "ui_bgr_pregame_border_right_transparency.msb",
-            "ui_bgr_pregame_border_right.msb", 0.5f
-            );
-
-        log_info("Called Campaign Screen ATTACH Containers");
-        g_container_add_control(parent, (CMnuBase *)custom_campaign_screen, '\x01', '\x01', 0);
-        log_info("Called Campaign Screen ATTACH Containers 2");
-        g_container_add_control(custom_campaign_screen, (CMnuBase *)custom_campaign_container, '\x01', '\x01', 0);
-        log_info("Called Campaign Screen ATTACH Containers 3");
-        g_container_add_control(custom_campaign_container, (CMnuBase *)campaign_list, '\x01', '\x01', 0);
-        log_info("Called Campaign Screen ATTACH Containers 3");
-        g_container_add_control(custom_campaign_container, (CMnuBase *)campaign_list_right, '\x01', '\x01', 0);
-
-        log_info("Called Campaign Screen Close Btn Setup");
-        char close_btn_default[128] = "ui_btn_nav_back_default.msh";
-        char close_btn_pressed[128] = "ui_btn_nav_back_pressed.msh";
-        char close_btn_disabled[128] = "ui_btn_nav_back_disabled.msh";
-        char close_btn_load[1] = "";
-        char close_btn_label[1] = "";
-
-        log_info("Called Campaign Screen Close Btn Attach");
-        uiAPI.attachNewButton(
-            custom_campaign_screen,
-            close_btn_default,
-            close_btn_pressed,
-            close_btn_load,
-            close_btn_disabled,
-            close_btn_label,
-            7,
-            52,
-            678,
-            48,
-            48,
-            2,
-            (uint32_t) &close_campaign_callback
-            );
-
-        log_info("Called Campaign Screen Label Setup");
-        char campaign_title[32] = "Custom Campaigns";
-
-        log_info("Called Campaign Screen Label Attach");
-        campaign_title_label = uiAPI.attachLabel(nullptr, custom_campaign_container, campaign_title, 6, 468, 16, 128,
-                                                 16);
-
-        log_info("Called Campaign Screen Menu ID set");
-        uiAPI.setMenuID(campaign_title_label, 0x6);
-
-        log_info("Called Campaign Screen Label Set Colour 1");
-        uiAPI.setLabelColour(campaign_title_label, 0.85, 0.64, 0.12, '\0');
-
-        log_info("Called Campaign Screen Label Set Colour 2");
-        uiAPI.setLabelColour(campaign_title_label, 0.85, 0.64, 0.12, '\x01');
-
-        log_info("Called Campaign Screen Check Condition ");
-        if(!campaign_title_label)
-        {
-            log_error("Unable to create Campaign Menu, Campaign List Container is NULL");
-            return;
-        }
-
-        log_info("Called Campaign Screen Complete");
-        does_campaign_screen_exist = true;
-    }
-    else
-    {
-        log_info("Called Campaign Screen Toggle ");
-        is_campaign_screen_visible = !is_campaign_screen_visible;
-        uiAPI.setContainerVisible(custom_campaign_screen, is_campaign_screen_visible, 0);
-    }
-}
-
-void __fastcall close_campaign_callback(CMnuSmpButton *button, int32_t *cui_menu_ptr_maybe)
-{
-    CMnuContainer *campaign_screen = (CMnuContainer *) button->CMnuBase_data.param_2_callback;
-    uiAPI.setContainerVisible(campaign_screen, false, false);
-    is_campaign_screen_visible = false;
 }
 
 bool hasThisAuraRunning(SF_CGdFigureToolbox *_this, uint16_t aura_spell_id, uint16_t figure_id)

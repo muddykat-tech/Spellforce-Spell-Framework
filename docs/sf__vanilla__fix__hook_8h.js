@@ -1,0 +1,26 @@
+var sf__vanilla__fix__hook_8h =
+[
+    [ "get_figure_statistic_current_ac", "sf__vanilla__fix__hook_8h.html#adf5242438a35dafbefe1a20461c7afa4", null ],
+    [ "get_figure_statistic_current_agi", "sf__vanilla__fix__hook_8h.html#a3028bd98a27ba21db29843bf09350ef6", null ],
+    [ "get_figure_statistic_current_black_res", "sf__vanilla__fix__hook_8h.html#a0f3f654be56a49105b13660c5608dff0", null ],
+    [ "get_figure_statistic_current_cast_spd", "sf__vanilla__fix__hook_8h.html#ac0401f6403c70440ab797574781c0a98", null ],
+    [ "get_figure_statistic_current_cha", "sf__vanilla__fix__hook_8h.html#aad90f860c7f57c5c38c5fca911daeda8", null ],
+    [ "get_figure_statistic_current_dex", "sf__vanilla__fix__hook_8h.html#a58e3d4956189fd5fe3bf8f3b29b5734e", null ],
+    [ "get_figure_statistic_current_fight_spd", "sf__vanilla__fix__hook_8h.html#a85957fba0736a94c1e18202ea3d1c569", null ],
+    [ "get_figure_statistic_current_fire_res", "sf__vanilla__fix__hook_8h.html#a1194105cfd5a63e7ae2dd981896424b4", null ],
+    [ "get_figure_statistic_current_hp", "sf__vanilla__fix__hook_8h.html#a5a5bd30fe713b615067d7d30083dd25e", null ],
+    [ "get_figure_statistic_current_ice_res", "sf__vanilla__fix__hook_8h.html#aee8bddaa287bff35d7c65ad6f514ea19", null ],
+    [ "get_figure_statistic_current_int", "sf__vanilla__fix__hook_8h.html#a590f75e8fdbb45a8d487a58c9987ed2e", null ],
+    [ "get_figure_statistic_current_mental_res", "sf__vanilla__fix__hook_8h.html#aa4a27fca006755b921f31cf29b5542b7", null ],
+    [ "get_figure_statistic_current_mp", "sf__vanilla__fix__hook_8h.html#a957e546e3e9af902f870737e01e37765", null ],
+    [ "get_figure_statistic_current_sta", "sf__vanilla__fix__hook_8h.html#ae01450a9254cc913384ef813f1b0a269", null ],
+    [ "get_figure_statistic_current_str", "sf__vanilla__fix__hook_8h.html#acb95a0dd7bb91ef92e793165bce87d97", null ],
+    [ "get_figure_statistic_current_walk_spd", "sf__vanilla__fix__hook_8h.html#ab4c82d02eecd15a7adf53e8182b9ad35", null ],
+    [ "get_figure_statistic_current_wis", "sf__vanilla__fix__hook_8h.html#a26b0dca5dbe83a85817861fc765106a7", null ],
+    [ "get_figure_statistic_max_hp", "sf__vanilla__fix__hook_8h.html#ad4a045ece8b0e93caa1a9401eb14251b", null ],
+    [ "get_figure_statistic_max_mp", "sf__vanilla__fix__hook_8h.html#a118e76f5c61b1d6d6eeeaecee85952bc", null ],
+    [ "get_figure_statistic_max_sta", "sf__vanilla__fix__hook_8h.html#a88f6e1f44205cf0bfbea6b570ee8a160", null ],
+    [ "getSpecialFigureName", "sf__vanilla__fix__hook_8h.html#a88b96c356407e29fe2d49a760a2fe987", null ],
+    [ "initialize_vanilla_fix_hooks", "sf__vanilla__fix__hook_8h.html#a8c59f15bc7a10f462d67091121162e43", null ],
+    [ "portrait_overlay_hook", "sf__vanilla__fix__hook_8h.html#a9b36f5389beaf58222c50fa885a91e04", null ]
+];

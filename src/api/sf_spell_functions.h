@@ -44,7 +44,7 @@ DECLARE_FUNCTION(uint32_t, addToXData, SF_CGdSpell *_this, uint16_t spell_id,
                  SpellDataKey key, uint32_t value);
 DECLARE_FUNCTION(uint32_t, getChanceToResistSpell, void *autoclass34,
                  uint16_t source, uint16_t target,
-                 SF_SpellEffectInfo effect_info);
+                 uint16_t spell_index);
 DECLARE_FUNCTION(uint16_t, getRandom, void *autoclass14, uint16_t max_value);
 DECLARE_FUNCTION(void, addVisualEffect, SF_CGdSpell *_this, uint16_t spell_id,
                  CGdEffectType effect_id, void *unused,
@@ -141,7 +141,7 @@ typedef struct
      * @param autoclass34 A pointer to an internal class.
      * @param source The source character or entity casting the spell.
      * @param target The target character or entity that we want the resistance from.
-     * @param effect_info spell effect ID and spell job ID grouped in a single variable of SF_SpellEffectInfo
+     * @param spell_id spell index (not spell line!)
      * @return The chance that the spell will be resisted, sometimes used as a 'chance' to fully resist the spell, also used to mitigate the damage dealt with the spell.
      */
     getChanceToResistSpell_ptr getChanceToResistSpell;

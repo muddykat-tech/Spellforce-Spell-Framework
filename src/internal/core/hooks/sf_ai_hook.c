@@ -22,10 +22,8 @@ void clearAction(SF_SGtFigureAction *_this)
 {
     _this->type = 0xffff;
     _this->subtype = 0;
-    _this->unkn1 = 0;
-    _this->unkn2 = 0;
-    _this->unkn3 = 0;
-    _this->unkn4 = 0;
+    _this->cooldown_action = 0;
+    _this->cooldown_global = 0;
 }
 
 bool isSpellAction(SF_SGtFigureAction *_this)

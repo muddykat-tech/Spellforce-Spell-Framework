@@ -2,14 +2,18 @@ var searchData=
 [
   ['has_5fspell_5feffect_0',['has_spell_effect',['../group__wrappers.html#ga838b126e69424452c6827777c6139856',1,'has_spell_effect:&#160;sf_wrappers.c'],['../group__wrappers.html#ga838b126e69424452c6827777c6139856',1,'has_spell_effect:&#160;sf_wrappers.c']]],
   ['hasauraactive_1',['hasAuraActive',['../struct_toolbox_functions.html#a9f62925a946ee7b974de44c06b7d7712',1,'ToolboxFunctions']]],
-  ['hasspellonit_2',['hasSpellOnIt',['../struct_toolbox_functions.html#a4252a801c57cf3f1c933c14a5c33cb49',1,'ToolboxFunctions']]],
-  ['hasspelltag_3',['hasSpellTag',['../struct_spell_functions.html#ac436a0f2ad21ce5c66af94c9a001018a',1,'SpellFunctions']]],
-  ['hate_5fentry_4',['hate_entry',['../struct_gd_figure.html#a46d8ec528407fb2f6a4403fd9fd26e8d',1,'GdFigure']]],
-  ['hate_5fvalue_5',['hate_value',['../struct_auto_class60__data.html#a039918690d0a98fb0fc6f127bec1a560',1,'EntityPriorityList_data::hate_value'],['../struct_c_gd_figure_hate_entry.html#a6eaabb36ee1bd98884e1f35da0d01905',1,'CGdFigureHateEntry::hate_value']]],
-  ['head_6',['head',['../struct_gd_figure.html#a1b09576392d90ab51d0589ab257d6932',1,'GdFigure']]],
-  ['health_7',['health',['../struct_gd_figure.html#a65fb7fceb7f9986c4c399878094b3cf3',1,'GdFigure']]],
-  ['health_5fcurrent_8',['health_current',['../struct_gd_building.html#a41aab837855ce481cbe794d74dd95f6e',1,'GdBuilding']]],
-  ['health_5fmax_9',['health_max',['../struct_gd_building.html#a83d53ea4ba21b7dab8b54c6481844de9',1,'GdBuilding']]],
-  ['heightmap_10',['heightmap',['../struct_s_f___c_gd_world.html#a380fb5ac49b8ab67182a17d4fee531c0',1,'SF_CGdWorld']]],
-  ['hit_5fphase_11',['hit_phase',['../struct_s_f_spell.html#a9182fd76a9cdad7450deeca84e225de4',1,'SFSpell']]]
+  ['hasbuildingtag_2',['hasBuildingTag',['../struct_building_functions.html#a838e8b71a44e4ee0e521a89f93f0efd4',1,'BuildingFunctions']]],
+  ['hasspellonit_3',['hasSpellOnIt',['../struct_toolbox_functions.html#a4252a801c57cf3f1c933c14a5c33cb49',1,'ToolboxFunctions']]],
+  ['hasspelltag_4',['hasSpellTag',['../struct_spell_functions.html#ac436a0f2ad21ce5c66af94c9a001018a',1,'SpellFunctions']]],
+  ['hate_5fentry_5',['hate_entry',['../struct_gd_figure.html#a46d8ec528407fb2f6a4403fd9fd26e8d',1,'GdFigure']]],
+  ['hate_5fvalue_6',['hate_value',['../struct_entity_priority_list__data.html#a17f9a51ddaff2176c98f4701a6d00fdd',1,'EntityPriorityList_data::hate_value'],['../struct_c_gd_figure_hate_entry.html#a6eaabb36ee1bd98884e1f35da0d01905',1,'CGdFigureHateEntry::hate_value']]],
+  ['head_7',['head',['../struct_gd_avatar_internal.html#a6a53410ee73a2268555380ef0d4754e5',1,'GdAvatarInternal::head'],['../struct_gd_figure.html#a1b09576392d90ab51d0589ab257d6932',1,'GdFigure::head'],['../struct_c_gd_resource_unit_stats.html#abb2f6f3e969186f1e70327e53029eacc',1,'CGdResourceUnitStats::head']]],
+  ['health_8',['health',['../struct_building_resource.html#a7151c547a0a0d33c7e5117dc48ff820d',1,'BuildingResource::health'],['../struct_gd_figure.html#a65fb7fceb7f9986c4c399878094b3cf3',1,'GdFigure::health'],['../struct_s_f_building.html#a33a1b007a7dd3c2ef5eb8dd4237502d0',1,'SFBuilding::health'],['../struct_building.html#a523d7e00f5244c64994d2b50556a75fc',1,'Building::health']]],
+  ['health_5fcurrent_9',['health_current',['../struct_gd_building.html#a41aab837855ce481cbe794d74dd95f6e',1,'GdBuilding']]],
+  ['health_5fmax_10',['health_max',['../struct_gd_building.html#a83d53ea4ba21b7dab8b54c6481844de9',1,'GdBuilding']]],
+  ['heightmap_11',['heightmap',['../struct_s_f___c_gd_world.html#a380fb5ac49b8ab67182a17d4fee531c0',1,'SF_CGdWorld']]],
+  ['hero_5ffigure_5findex_12',['hero_figure_index',['../struct_gd_player.html#a93e311db994173a082305412ff79f9de',1,'GdPlayer']]],
+  ['hero_5fnames_13',['hero_names',['../struct_gd_player.html#a1dc651136fff625f98d089bcf4f0e4b5',1,'GdPlayer']]],
+  ['hit_5fphase_14',['hit_phase',['../struct_s_f_spell.html#a9182fd76a9cdad7450deeca84e225de4',1,'SFSpell']]],
+  ['hq_5fupdrade_5flevel_15',['hq_updrade_level',['../struct_gd_player.html#a31fbf4089909f3315d3b37e0bf873f3d',1,'GdPlayer']]]
 ];

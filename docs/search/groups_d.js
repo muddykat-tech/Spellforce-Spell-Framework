@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['wrappers_0',['Framework Wrappers',['../group__wrappers.html',1,'']]]
+  ['utility_20hooks_0',['Utility Hooks',['../group___util_hooks.html',1,'']]]
 ];

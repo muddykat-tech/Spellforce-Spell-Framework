@@ -1,12 +1,12 @@
 var searchData=
 [
-  ['redo_0',['REDO',['../sf__general__structures_8h.html#ac82390a633ae8fc23e2141e25507f732ad20f1b79e9cfc073db19741638050449',1,'sf_general_structures.h']]],
-  ['resesrved_5fonly_1',['RESESRVED_ONLY',['../sf__general__structures_8h.html#ac82390a633ae8fc23e2141e25507f732a334804a6345aef2899f81fbba7d67c62',1,'sf_general_structures.h']]],
-  ['resistance_5fblack_2',['RESISTANCE_BLACK',['../sf__figure__functions_8h.html#a35c57de9b4dfd894cc11e998a47b1436aba33bba9d11739550db8ae43f6ddd697',1,'sf_figure_functions.h']]],
-  ['resistance_5ffire_3',['RESISTANCE_FIRE',['../sf__figure__functions_8h.html#a35c57de9b4dfd894cc11e998a47b1436a7cd1fc71f02905c575e036ac6884d775',1,'sf_figure_functions.h']]],
-  ['resistance_5fice_4',['RESISTANCE_ICE',['../sf__figure__functions_8h.html#a35c57de9b4dfd894cc11e998a47b1436a53763c1bd94b6534522b78c94f3d1ab6',1,'sf_figure_functions.h']]],
-  ['resistance_5fmental_5',['RESISTANCE_MENTAL',['../sf__figure__functions_8h.html#a35c57de9b4dfd894cc11e998a47b1436aafd6b7e0ba2b9514f6074c141bafe8bf',1,'sf_figure_functions.h']]],
-  ['retreat_6',['RETREAT',['../sf__general__structures_8h.html#ac82390a633ae8fc23e2141e25507f732acd04451478f0bb20692e4364f9a36d4e',1,'sf_general_structures.h']]],
-  ['round_5fhit_7',['ROUND_HIT',['../sf__general__structures_8h.html#a6978b403a7119e4900450f3243eb3571a2d7da124498b99f7aa18d18e2c5c161f',1,'sf_general_structures.h']]],
-  ['run_5fmode_8',['RUN_MODE',['../sf__general__structures_8h.html#a6978b403a7119e4900450f3243eb3571adbef8108cc9b9ff34b003ebbd5690173',1,'sf_general_structures.h']]]
+  ['patrol_5fmode_0',['PATROL_MODE',['../sf__general__structures_8h.html#a6978b403a7119e4900450f3243eb3571a714e1c712ebb8b1a1e9111a9b8b115fd',1,'sf_general_structures.h']]],
+  ['phase_5f0_1',['PHASE_0',['../sf__general__structures_8h.html#a3e8710f28511f2f23efc53abe698d2b7a67c68c964d611409fa66e6abdc814c21',1,'sf_general_structures.h']]],
+  ['phase_5f1_2',['PHASE_1',['../sf__general__structures_8h.html#a3e8710f28511f2f23efc53abe698d2b7addc95d86d3f460d55c86c8611161b75c',1,'sf_general_structures.h']]],
+  ['phase_5f2_3',['PHASE_2',['../sf__general__structures_8h.html#a3e8710f28511f2f23efc53abe698d2b7ace40f24eeadff069119bb911c280b43e',1,'sf_general_structures.h']]],
+  ['phase_5f3_4',['PHASE_3',['../sf__general__structures_8h.html#a3e8710f28511f2f23efc53abe698d2b7a44a2c382473b0dfa2ab45afd6e399e71',1,'sf_general_structures.h']]],
+  ['phase_5f4_5',['PHASE_4',['../sf__general__structures_8h.html#a3e8710f28511f2f23efc53abe698d2b7a52537e429cf11babfdce28f09c58d0e3',1,'sf_general_structures.h']]],
+  ['phase_5f5_6',['PHASE_5',['../sf__general__structures_8h.html#a3e8710f28511f2f23efc53abe698d2b7ad0b4e178cc3b69a5cf3af80dc5605af5',1,'sf_general_structures.h']]],
+  ['post_7',['POST',['../sf__general__structures_8h.html#a3f1ae4d570090b097230b86e02b1a178a368c5bc07109370b819193871352b926',1,'sf_general_structures.h']]],
+  ['pre_8',['PRE',['../sf__general__structures_8h.html#a3f1ae4d570090b097230b86e02b1a178abfbf875310a12806703353540abf4285',1,'sf_general_structures.h']]]
 ];

@@ -10,67 +10,67 @@
 #include "./structures/sf_ui_structures.h"
 
 DECLARE_FUNCTION(CMnuContainer *, createContainer,
-uint16_t x, uint16_t y, uint16_t width, uint16_t height,
-const char *background_msb, const char *border_msb, float alpha)
+                 uint16_t x, uint16_t y, uint16_t width, uint16_t height,
+                 const char *background_msb, const char *border_msb, float alpha)
 
 DECLARE_FUNCTION(CMnuLabel *, attachMeshedLabel,
-CMnuLabel *new_label, CMnuContainer *parent,
-char *mesh_char, char *label_char, uint8_t font_index,
-uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height)
+                 CMnuLabel *new_label, CMnuContainer *parent,
+                 char *mesh_char, char *label_char, uint8_t font_index,
+                 uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height)
 
 DECLARE_FUNCTION(CMnuLabel *, attachLabel,
-CMnuLabel *label_ptr, CMnuContainer *parent,
-char *label_chars, uint8_t font_index,
-uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height)
+                 CMnuLabel *label_ptr, CMnuContainer *parent,
+                 char *label_chars, uint8_t font_index,
+                 uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height)
 
 DECLARE_FUNCTION(void, updateLabelText,
-CMnuLabel *label, const char *text)
+                 CMnuLabel *label, const char *text)
 
 DECLARE_FUNCTION(void, destroyLabel,
-CMnuLabel *label)
+                 CMnuLabel *label)
 
 DECLARE_FUNCTION(CMnuSmpButton *, attachNewButton,
-CMnuContainer *parent,
-char *button_mesh_default, char *button_mesh_pressed,
-char *button_initial_load_mesh, char *button_mesh_disabled,
-char *label_char, uint8_t font_index,
-uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height,
-int button_index, uint32_t callback_func_ptr)
+                 CMnuContainer *parent,
+                 char *button_mesh_default, char *button_mesh_pressed,
+                 char *button_initial_load_mesh, char *button_mesh_disabled,
+                 char *label_char, uint8_t font_index,
+                 uint16_t x_pos, uint16_t y_pos, uint16_t width, uint16_t height,
+                 int button_index, uint32_t callback_func_ptr)
 
 DECLARE_FUNCTION(void, destroyButton,
-CMnuSmpButton *button)
+                 CMnuSmpButton *button)
 
 DECLARE_FUNCTION(void, destroyContainer,
-CMnuContainer *container)
+                 CMnuContainer *container)
 
 DECLARE_FUNCTION(void, setElementAlpha,
-void *_this, float alpha)
+                 void *_this, float alpha)
 
 DECLARE_FUNCTION(uint32_t, getVisualControl,
-CMnuContainer *_this)
+                 CMnuContainer *_this)
 
 DECLARE_FUNCTION(void, setFont,
-void *_this, void *input)
+                 void *_this, void *input)
 
 DECLARE_FUNCTION(void, setBaseAlpha, void *_this, float alpha);
 DECLARE_FUNCTION(void, initializeMenuContainer, CMnuContainer * _this);
 DECLARE_FUNCTION(void, setupMenuContainerData, CMnuContainer *_this, float x, float y,
-                                                         float width,
-                                                         float height,
-                                                         SF_String *background,
-                                                         SF_String *border);
+                 float width,
+                 float height,
+                 SF_String *background,
+                 SF_String *border);
 
-DECLARE_FUNCTION(CMnuSmpButton* , initializeSmpButton, CMnuSmpButton *btn);
+DECLARE_FUNCTION(CMnuSmpButton *, initializeSmpButton, CMnuSmpButton *btn);
 
 DECLARE_FUNCTION(void, createButton, CMnuSmpButton *smpButton,
-                                             float x_pos, float y_pos,
-                                             float width, float height,
-                                             SF_String *default_mesh,
-                                             SF_String *unkn_mesh_string,
-                                             SF_String *pressed_mesh,
-                                             SF_String *disable_mesh);
+                 float x_pos, float y_pos,
+                 float width, float height,
+                 SF_String *default_mesh,
+                 SF_String *unkn_mesh_string,
+                 SF_String *pressed_mesh,
+                 SF_String *disable_mesh);
 
-DECLARE_FUNCTION(void, setButtonIndex, void*, int index);
+DECLARE_FUNCTION(void, setButtonIndex, void *, int index);
 
 DECLARE_FUNCTION(void, setMenuButtonFlag, void *container, char flag);
 
@@ -90,6 +90,65 @@ DECLARE_FUNCTION(void, setMenuID, void *container, uint32_t id);
 
 DECLARE_FUNCTION(void, setContainerVisible, void *container, uint32_t visible, uint8_t _unknown);
 DECLARE_FUNCTION(void, setLabelColour, CMnuLabel *_this, float r, float g, float b, char flag);
+
+DECLARE_FUNCTION(void, containerAddControl, CMnuContainer *_this, CMnuBase *CMnubase, char c1, char c2, uint32_t p4);
+DECLARE_FUNCTION(void, menuLabelConstructor, CMnuLabel *_this);
+DECLARE_FUNCTION(void, initMenuElement, void *_this, float xpos, float ypos, float width, float height,
+                 SF_String *string);
+DECLARE_FUNCTION(SF_FontStruct *, getFonts, void);
+DECLARE_FUNCTION(void, menuLabelSetFont, void *_this, SF_Font *font);
+DECLARE_FUNCTION(void, menuLabelSetString, CMnuLabel *_this, SF_String *string);
+DECLARE_FUNCTION(SF_Font *, getFont, SF_FontStruct *_this, uint32_t font_id);
+DECLARE_FUNCTION(uint32_t, setScreenName, void *_this, SF_String *name);
+DECLARE_FUNCTION(void, vfunction175, CMnuLabel *_this, uint8_t param_1);
+DECLARE_FUNCTION(void, setCanFocus, CMnuBase *_this, uint8_t value);
+DECLARE_FUNCTION(void, attachControlToScreen, void *_this, CMnuBase *param_1, uint8_t param_2);
+DECLARE_FUNCTION(void, vfunction12, CMnuBase *_this, float param_1, uint8_t param_2);
+DECLARE_FUNCTION(void, bringToFront, CMnuContainer *_this, void *param_1);
+DECLARE_FUNCTION(void, vfunction163, CMnuContainer *_this, void *param_1);
+
+/**
+ * @brief operator new (global allocator). Declared manually (not via
+ * DECLARE_FUNCTION) because the real symbol is __cdecl - DECLARE_FUNCTION
+ * always generates __thiscall, which would pass the size argument in ECX
+ * instead of on the stack and corrupt every allocation.
+ */
+typedef void *(__cdecl *newOperator_ptr)(uint32_t size);
+
+/**
+ * @brief printf-style formatting into an SF_String. Declared manually (not via
+ * DECLARE_FUNCTION) because the real symbol is variadic and therefore __cdecl -
+ * DECLARE_FUNCTION always generates __thiscall and
+ * would corrupt the stack.
+ * @note Format string is wide (L"..."). %s expects wchar_t data (raw_data).
+ */
+typedef uint32_t (__cdecl *SFprintf_ptr)(SF_String *_this, const wchar_t *format, ...);
+
+// TODO move breifs down to struct so Doxygen picks them up
+/** @brief Appends source to destination. */
+DECLARE_FUNCTION(SF_String *, SFStringConcat, SF_String *destination, SF_String *source);
+DECLARE_FUNCTION(SF_String *, SFStringConcatMulti, SF_String *_this, SF_String *destination, SF_String *source);
+/** @brief (Re)allocates the string buffer to hold the given length. */
+DECLARE_FUNCTION(void, SFStringSetLength, SF_String *_this, uint32_t length);
+/** @brief Fills the string with `length` repetitions of the given wide char. */
+DECLARE_FUNCTION(SF_String *, SFStringFromWchar, SF_String *_this, wchar_t value, uint32_t length);
+/** @brief Frees the string's buffers. Call on every SF_String you constructed. */
+DECLARE_FUNCTION(void, SFStringDestructor, SF_String *_this);
+/** @brief Shallow copy of source into destination. */
+DECLARE_FUNCTION(SF_String *, SFStringCopy, SF_String *destination, SF_String *source);
+/** @brief Deep copy of source into destination (duplicates the buffer). */
+DECLARE_FUNCTION(SF_String *, SFStringDeepCopy, SF_String *destination, SF_String *source);
+/** @brief Returns the multibyte (char) representation of the string. */
+DECLARE_FUNCTION(char *, SFStringCMbStr, SF_String *source);
+/** @brief zero-initializes an SF_String (no allocation). */
+DECLARE_FUNCTION(void, SFStringConstructor, SF_String *_this);
+/** @brief constructs an SF_String from a null-terminated char string. */
+DECLARE_FUNCTION(SF_String *, SFStringConstructor_char, SF_String *_this, const char *char_string);
+DECLARE_FUNCTION(SF_String *, SFStringConstructor_wchar, SF_String *_this, const wchar_t *value);
+
+DECLARE_FUNCTION(uint32_t, vfunction187, void *_this, SF_String *name);
+
+DECLARE_FUNCTION(void, vfunction207, void *_this, CMnuBase *param_1, uint8_t param_2);
 
 /**
  * @ingroup API
@@ -142,4 +201,35 @@ typedef struct
     CMnuBaseSetName_ptr CMnuBaseSetName;
     setMenuID_ptr setMenuID;
     setContainerVisible_ptr setContainerVisible;
+    containerAddControl_ptr containerAddControl;
+    menuLabelConstructor_ptr menuLabelConstructor;
+    initMenuElement_ptr initMenuElement;
+    getFonts_ptr getFonts;
+    menuLabelSetFont_ptr menuLabelSetFont;
+    menuLabelSetString_ptr menuLabelSetString;
+    getFont_ptr getFont;
+    newOperator_ptr newOperator;
+    setScreenName_ptr setScreenName;
+
+    /* SF_String API? */
+    SFprintf_ptr SFprintf;
+    SFStringConcat_ptr SFStringConcat;
+    SFStringConcatMulti_ptr SFStringConcatMulti;
+    SFStringSetLength_ptr SFStringSetLength;
+    SFStringFromWchar_ptr SFStringFromWchar;
+    SFStringDestructor_ptr SFStringDestructor;
+    SFStringCopy_ptr SFStringCopy;
+    SFStringDeepCopy_ptr SFStringDeepCopy;
+    SFStringCMbStr_ptr SFStringCMbStr;
+    SFStringConstructor_ptr SFStringConstructor;
+    SFStringConstructor_char_ptr SFStringConstructor_char;
+    SFStringConstructor_wchar_ptr SFStringConstructor_wchar;
+    vfunction187_ptr vfunction187;
+    vfunction175_ptr vfunction175;
+    setCanFocus_ptr setCanFocus;
+    vfunction207_ptr vfunction207;
+    vfunction12_ptr vfunction12;
+    attachControlToScreen_ptr attachControlToScreen;
+    bringToFront_ptr bringToFront;
+    vfunction163_ptr vfunction163;
 } UiFunctions;

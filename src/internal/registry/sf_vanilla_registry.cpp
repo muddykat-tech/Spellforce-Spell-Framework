@@ -865,6 +865,7 @@ void initialize_vanilla_spells()
 
     SFSpell *self_illusion = registrationAPI.registerSpell(kGdSpellLineSelfIllusion);
     registrationAPI.linkTypeHandler(self_illusion, &self_illusion_handler);
+    registrationAPI.linkSingleTargetAIHandler(self_illusion, &illusion_ai_handler);
 
     // Next Block
 

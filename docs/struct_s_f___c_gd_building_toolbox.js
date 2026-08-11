@@ -1,0 +1,28 @@
+var struct_s_f___c_gd_building_toolbox =
+[
+    [ "AutoClass22", "struct_s_f___c_gd_building_toolbox.html#a27338c9ed81d0eb08096f9c25f4647ab", null ],
+    [ "AutoClass30", "struct_s_f___c_gd_building_toolbox.html#afe2a552b661383644e12d9f3d1a94bde", null ],
+    [ "AutoClass34", "struct_s_f___c_gd_building_toolbox.html#a9c9d8f6bbd061fa73ac10bda7fa9e8fa", null ],
+    [ "AutoClass47", "struct_s_f___c_gd_building_toolbox.html#a88189fa150f63243ce0da4a768ddaa7a", null ],
+    [ "CGdAStar", "struct_s_f___c_gd_building_toolbox.html#a80cd06e9fc48b40fc5575c6dab188313", null ],
+    [ "CGdBuilding", "struct_s_f___c_gd_building_toolbox.html#aa9f0dc3bba4cb35aa8f1f84c2dee128a", null ],
+    [ "CGdDoubleLinkList", "struct_s_f___c_gd_building_toolbox.html#a5e9539e5021dbe1446f390767973cfdc", null ],
+    [ "CGdEffect", "struct_s_f___c_gd_building_toolbox.html#a561445d8752e58b6a3a15eb50ac0aca2", null ],
+    [ "CGdFigure", "struct_s_f___c_gd_building_toolbox.html#ad83da95e287740f359973c2ecf8e05b1", null ],
+    [ "CGdFigureJobs", "struct_s_f___c_gd_building_toolbox.html#a750ae22f341f465ae01041d9886e02b3", null ],
+    [ "CGdFigureToolbox", "struct_s_f___c_gd_building_toolbox.html#a8ae919d54cde22353ecaaf22c9604a76", null ],
+    [ "CGdObject", "struct_s_f___c_gd_building_toolbox.html#a15c674fb9a32d1f89ac36c395a4771b8", null ],
+    [ "CGdPlayer", "struct_s_f___c_gd_building_toolbox.html#a26fc463a56c68b8e81f737a84872393a", null ],
+    [ "CGdResource", "struct_s_f___c_gd_building_toolbox.html#a98ee548ad6e7329c10ec732fc5af50f7", null ],
+    [ "CGdWorld", "struct_s_f___c_gd_building_toolbox.html#ad234ffe0dab5afb705364673e319c5f7", null ],
+    [ "CGdWorldToolbox", "struct_s_f___c_gd_building_toolbox.html#abb8c04b34aa94e908369dd86dc2a87ff", null ],
+    [ "CGdXDataList", "struct_s_f___c_gd_building_toolbox.html#ae046a7224561ae0bf8c376bedfac10b1", null ],
+    [ "Decals", "struct_s_f___c_gd_building_toolbox.html#acbd5f0ea6edc719ad87f7c40873e2baf", null ],
+    [ "OpaqueClass", "struct_s_f___c_gd_building_toolbox.html#aac24c62c890eb26597216b6c3cc918db", null ],
+    [ "unknown1", "struct_s_f___c_gd_building_toolbox.html#a03c6e0c0237d994c01c60d1c555c0546", null ],
+    [ "unknown2", "struct_s_f___c_gd_building_toolbox.html#a8f4503f74ce5a54f4db64500b7415eec", null ],
+    [ "unknown3", "struct_s_f___c_gd_building_toolbox.html#aa7c1d2ec2badc419040902659a5f4820", null ],
+    [ "unknown4", "struct_s_f___c_gd_building_toolbox.html#a63239b8388a4e547b8a345ac44c18bb0", null ],
+    [ "unknown5", "struct_s_f___c_gd_building_toolbox.html#a1530e14ed394f125d7a78e8a82e07d0c", null ],
+    [ "unknown6", "struct_s_f___c_gd_building_toolbox.html#a503cb676ae710277cccbf27456d33952", null ]
+];

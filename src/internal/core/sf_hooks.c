@@ -28,6 +28,7 @@
 #include "hooks/sf_building_entry_hook.h"
 #include "hooks/sf_worker_logic_hook.h"
 #include "hooks/sf_enchant_hook.h"
+#include "hooks/sf_campaign_hook.h"
 
 #include "hooks/sf_effect_hook.h"
 
@@ -64,6 +65,10 @@ void initialize_data_hooks()
     log_debug (DEBUG_HIGH, "| - Spelltypes");
 
     initialize_menu_data_hooks();
+
+    log_debug (DEBUG_HIGH, "| - Custom Campaign Hooks");
+
+    initialize_campaign_hooks();
 
     log_debug (DEBUG_HIGH, "| - Worker Logic");
     initialize_worker_logic_data_hooks();
@@ -189,6 +194,7 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(toolbox, equipArtisanTools, 0x2fd783);
     DEFINE_FUNCTION(toolbox, findClosestMonument, 0x2bb380);
     DEFINE_FUNCTION(toolbox, doMapOutCry, 0x2c3d60);
+    DEFINE_FUNCTION(toolbox, getSightRange, 0x2fe2f4);
 
     log_info("| - BuildingAPI Hooks");
     DEFINE_FUNCTION(building, buildingDealDamage, 0x2d6d80);
@@ -236,6 +242,35 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(ui, setMenuID, 0x50E660);
     DEFINE_FUNCTION(ui, setContainerVisible, 0x513910);
     DEFINE_FUNCTION(ui, setLabelColour, 0x530330);
+    DEFINE_FUNCTION(ui, containerAddControl, 0x506f30);
+    DEFINE_FUNCTION(ui, menuLabelConstructor, 0x51a180);
+    DEFINE_FUNCTION(ui, initMenuElement, 0x52cfe0);
+    DEFINE_FUNCTION(ui, getFonts, 0x5357b0);
+    DEFINE_FUNCTION(ui, menuLabelSetFont, 0x530e00);
+    DEFINE_FUNCTION(ui, menuLabelSetString, 0x52fab0);
+    DEFINE_FUNCTION(ui, getFont, 0x535180);
+    DEFINE_FUNCTION(ui, newOperator, 0x675A9D);
+    DEFINE_FUNCTION(ui, setScreenName, 0x5083d0);
+    DEFINE_FUNCTION(ui, vfunction175, 0x52f5f0);
+    DEFINE_FUNCTION(ui, setCanFocus, 0x511ac0);
+    DEFINE_FUNCTION(ui, attachControlToScreen, 0x507240);
+    DEFINE_FUNCTION(ui, vfunction12, 0x511a00);
+    DEFINE_FUNCTION(ui, bringToFront, 0x507c10);
+    DEFINE_FUNCTION(ui, vfunction163, 0x513d90);
+    DEFINE_FUNCTION(ui, destroyLabel, 0X51B0C0);
+
+    DEFINE_FUNCTION(ui, SFprintf, 0x384170);
+    DEFINE_FUNCTION(ui, SFStringConcat, 0x383d00);
+    DEFINE_FUNCTION(ui, SFStringSetLength, 0x3846d0);
+    DEFINE_FUNCTION(ui, SFStringFromWchar, 0x383920);
+    DEFINE_FUNCTION(ui, SFStringDestructor, 0x3839c0);
+    DEFINE_FUNCTION(ui, SFStringCopy, 0x383720);
+    DEFINE_FUNCTION(ui, SFStringDeepCopy, 0x383a20);
+    DEFINE_FUNCTION(ui, SFStringCMbStr, 0x383db0);
+    DEFINE_FUNCTION(ui, SFStringConstructor_wchar, 0x383890);
+    DEFINE_FUNCTION(ui, SFStringConcatMulti, 0x383b10);
+    INCLUDE_FUNCTION(ui, SFStringConstructor, &SFStringConstructor);
+    INCLUDE_FUNCTION(ui, SFStringConstructor_char, &SFStringConstructor_char);
 
     log_info("| - uiAPI Wrappers");
     INCLUDE_FUNCTION(ui, updateLabelText, &updateLabelText);

@@ -1,22 +1,8 @@
 var searchData=
 [
-  ['cappmenu_0',['CAppMenu',['../struct_c_app_menu.html',1,'']]],
-  ['cappmenu_5fdata_1',['CAppMenu_data',['../struct_c_app_menu__data.html',1,'']]],
-  ['cgdaibattledata_2',['CGdAIBattleData',['../struct_c_gd_a_i_battle_data.html',1,'']]],
-  ['cgdbuildingiterator_3',['CGdBuildingIterator',['../struct_c_gd_building_iterator.html',1,'']]],
-  ['cgdcontrollerclient_4',['CGdControllerClient',['../struct_c_gd_controller_client.html',1,'']]],
-  ['cgdcontrollerclientdata_5',['CGdControllerClientData',['../struct_c_gd_controller_client_data.html',1,'']]],
-  ['cgdfigurehateentry_6',['CGdFigureHateEntry',['../struct_c_gd_figure_hate_entry.html',1,'']]],
-  ['cgdfigureiterator_7',['CGdFigureIterator',['../struct_c_gd_figure_iterator.html',1,'']]],
-  ['cgdtileiterator_5fdata_8',['CGdTileIterator_data',['../struct_c_gd_tile_iterator__data.html',1,'']]],
-  ['cmnubase_9',['CMnuBase',['../struct_c_mnu_base.html',1,'']]],
-  ['cmnubase_5fdata_10',['CMnuBase_data',['../struct_c_mnu_base__data.html',1,'']]],
-  ['cmnubutton_5fdata_11',['CMnuButton_data',['../struct_c_mnu_button__data.html',1,'']]],
-  ['cmnucontainer_12',['CMnuContainer',['../struct_c_mnu_container.html',1,'']]],
-  ['cmnulabel_13',['CMnuLabel',['../struct_c_mnu_label.html',1,'']]],
-  ['cmnusmpbutton_14',['CMnuSmpButton',['../struct_c_mnu_smp_button.html',1,'']]],
-  ['cuimain_5fdata_15',['CUiMain_data',['../struct_c_ui_main__data.html',1,'']]],
-  ['cuioption_16',['CUiOption',['../struct_c_ui_option.html',1,'']]],
-  ['cuistartmenu_17',['CUiStartMenu',['../struct_c_ui_start_menu.html',1,'']]],
-  ['cutlcallback2_18',['CUtlCallback2',['../struct_c_utl_callback2.html',1,'']]]
+  ['building_0',['Building',['../struct_building.html',1,'']]],
+  ['buildingauxentry_1',['BuildingAuxEntry',['../struct_building_aux_entry.html',1,'']]],
+  ['buildingauxentry_5frelated_2',['BuildingAuxEntry_related',['../struct_building_aux_entry__related.html',1,'']]],
+  ['buildingfunctions_3',['BuildingFunctions',['../struct_building_functions.html',1,'']]],
+  ['buildingresource_4',['BuildingResource',['../struct_building_resource.html',1,'']]]
 ];

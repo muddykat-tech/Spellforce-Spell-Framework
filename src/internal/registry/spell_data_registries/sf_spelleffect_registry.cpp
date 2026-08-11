@@ -18,7 +18,7 @@ void registerEffectHandler(uint16_t spell_job, handler_ptr handler)
         sprintf(message,
                 "%s (v%s) has replaced an Effect Handler [%d] (Was this on purpose?)",
                 g_current_mod->mod_id, g_current_mod->mod_version, spell_job);
-        log_warning(message);
+        log_warning_level(DEBUG_LOW, message);
     }
     s_effect_handler_map[spell_job] = handler;
 }

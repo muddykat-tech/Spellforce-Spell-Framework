@@ -116,6 +116,33 @@ uint32_t __thiscall offensive_aura_ai_handler(SF_CGdBattleDevelopment *_this,
     return rank;
 }
 
+uint32_t __thiscall illusion_ai_handler(SF_CGdBattleDevelopment *_this,
+                                        uint16_t target_index,
+                                        uint16_t spell_line,
+                                        SF_CGdResourceSpell *spell_data)
+{
+    uint32_t rank = 4;
+    if (_this->battleData.current_figure != target_index)
+    {
+        rank = 0;
+    }
+    if (_this->battleData.enemy_figures.entityCount == 0)
+    {
+        rank = 0;
+    }
+    SF_Coord caster_pos = _this->battleData.CGdFigure->figures[target_index].position;
+    SF_Coord initial_offset = {1,10};
+    SF_Coord figure_pos = {0,0};
+    uint16_t sector = _this->battleData.CGdWorld->cells[caster_pos.Y * 400 + caster_pos.X].sector;
+
+    if (!toolboxAPI.findClosestFreePosition(_this->battleData.CGdWorldToolBox, &caster_pos, &initial_offset, sector,
+                                            &figure_pos))
+    {
+        rank = 0;
+    }
+    return rank;
+}
+
 // kGdSpellLineAuraStrength
 // kGdSpellLineAuraEndurance
 // kGdSpellLineAuraFastFighting
@@ -182,6 +209,24 @@ uint32_t __thiscall healing_aura_ai_handler(SF_CGdBattleDevelopment *_this,
             {
                 uint16_t manacost = (spell_data->mana_cost * 7) / 2;
                 if (figureAPI.getCurrentStat(_this->battleData.CGdFigure, target_index, MANA) < manacost)
+                {
+                    rank = 0;
+                }
+                uint16_t best_target = 0;
+                uint16_t subspell_id = spell_data->params[6];
+                SF_CGdResourceSpell sub_spell_data;
+                spellAPI.getResourceSpellData(_this->battleData.CGdResource, &sub_spell_data, subspell_id);
+                uint16_t healing_amount = sub_spell_data.params[0];
+                for (int i = 0; i < _this->battleData.ally_figures.entityCount; i++)
+                {
+                    uint16_t figure_id = _this->battleData.ally_figures.data[i].entity_index;
+                    if (_this->battleData.CGdFigure->figures[figure_id].health.missing_val >= healing_amount)
+                    {
+                        best_target = figure_id;
+                        break;
+                    }
+                }
+                if (best_target == 0)
                 {
                     rank = 0;
                 }

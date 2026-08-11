@@ -20,10 +20,13 @@
 #include "../core/sf_modloader.h"
 #include "../core/sf_wrappers.h"
 #include "../core/sf_hooks.h"
+#include "../core/sf_campaign_module.h"
+#include "../core/sf_screens_module.h"
 
 #include "sf_registry.h"
 #include "sf_vanilla_registry.h"
 #include "sf_mod_registry.h"
+#include "sf_error_registry.h"
 
 #include "spell_data_registries/sf_spelltype_registry.h"
 #include "spell_data_registries/sf_spelleffect_registry.h"
@@ -77,6 +80,7 @@ void registerFrameworkAPI()
                                     "Muddykat, UnSchtalch and shovel_knight",
                                     "A Modding Framework to ease the creation of new Spells in the game Spellforce Platinum Edition.");
     g_current_mod = g_framework_mod;
+    register_mod_for_listing(g_framework_mod, MOD_TYPE_FRAMEWORK);
 }
 
 /**
@@ -118,7 +122,6 @@ void initialize_framework()
 
     log_info("| - Linking API functions");
 
-    // setup framework api structure references
     registerFrameworkAPI();
 
     log_info("| - Initialization of Vanilla Spells");
@@ -154,9 +157,18 @@ void initialize_framework()
     log_info(
         "|+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.|");
     log_info(
+        "|===== ===== ======| Core Module Phase Start |===== ===== ======-|");
+
+    initialize_screens_module();
+    initialize_campaign_module();
+
+    log_info(
+        "|====== ===== =====| Core Module Phase End |===== ===== ======--|");
+    log_info(
+        "|+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.+.|");
+    log_info(
         "|====== ====== ======| Mod Loading Phase Start |====== ====== =====|");
 
-    // Attempt to load all mods -> see sf_modloader.h
     initialize_mods();
 
     log_info(
@@ -166,7 +178,6 @@ void initialize_framework()
     log_info(
         "|====== === ======| Mod Registration Phase Start |====== === ======|");
 
-    // Now try and register these spells
     register_mod_spells();
     register_mod_buildings();
 

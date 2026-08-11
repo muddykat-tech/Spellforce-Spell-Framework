@@ -9,10 +9,10 @@ void __thiscall stone_rain_phys_handler(SF_CGdEffect *_this, uint16_t effect_id)
     uint32_t pos_x = _this->effects[effect_id].position.X;
     uint32_t pos_y = _this->effects[effect_id].position.Y;
 
-    for (uint32_t i = 9, j = 0; i > 0; i--, j+=7)
+    for (uint32_t i = 9; i > 0; i--)
     {
-        uint16_t w_x = _this->SF_CGdWorld->unknown1[j].uknwn1 + pos_x;
-        uint16_t w_y = _this->SF_CGdWorld->unknown1[j].uknwn2 + pos_y;
+        uint16_t w_x = _this->SF_CGdWorld->unknown1[i].uknwn1 + pos_x;
+        uint16_t w_y = _this->SF_CGdWorld->unknown1[i].uknwn2 + pos_y;
         uint16_t map_size =  _this->SF_CGdWorld->map_size;
         if ((w_x < map_size) && (w_y < map_size))
         {

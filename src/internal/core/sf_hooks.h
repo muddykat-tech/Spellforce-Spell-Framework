@@ -44,7 +44,8 @@ extern void __thiscall linkPhysRainHandler(SFSpell *spell, sub_effect_handler_pt
 extern void __thiscall linkPhysEffectHandler(SFSpell *spell, phys_effect_handler_ptr handler);
 extern void __thiscall linkEnchantChanceHandler(SFSpell *spell, enchant_handler_ptr handler);
 
-extern SFMod *createModInfo(const char *mod_id, char *mod_version, const char *mod_author, const char *mod_description);
+extern SFMod *createModInfo(const char *mod_id, const char *mod_version, const char *mod_author,
+                            const char *mod_description);
 
 void initialize_beta_hooks();
 void initialize_data_hooks();

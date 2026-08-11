@@ -1,0 +1,27 @@
+var group___hooks =
+[
+    [ "Console Hook", "group___console_hook.html", "group___console_hook" ],
+    [ "End Spell Hook", "group___end_spell_hook.html", "group___end_spell_hook" ],
+    [ "AI Hooks", "group___a_i_hook.html", "group___a_i_hook" ],
+    [ "Custom Campaign Hook", "group___campaign_hook.html", "group___campaign_hook" ],
+    [ "Damage Hook", "group___damage_hook.html", "group___damage_hook" ],
+    [ "Menu Hook", "group___menu_hook.html", "group___menu_hook" ],
+    [ "Refresh Hook", "group___refresh_hook.html", "group___refresh_hook" ],
+    [ "Effect Hook", "group___effect_hook.html", "group___effect_hook" ],
+    [ "Spell Type Hook", "group___spell_type_hook.html", "group___spell_type_hook" ],
+    [ "SubEffect Hook", "group___sub_effect_hook.html", "group___sub_effect_hook" ],
+    [ "Utility Hooks", "group___util_hooks.html", "group___util_hooks" ],
+    [ "initialize_beta_hooks", "group___hooks.html#ga68518887ac30bef0798064a5ea87b1f5", null ],
+    [ "initialize_data_hooks", "group___hooks.html#ga053468e9037e13eede0757a9c0dc4f90", null ],
+    [ "aiAPI", "group___hooks.html#ga9f46704f751d2e936794090d969bfb63", null ],
+    [ "buildingAPI", "group___hooks.html#ga7914029da60a65d0815010fe03fd63fd", null ],
+    [ "effectAPI", "group___hooks.html#ga6223ae94a537c083aa89e5ad9033bb62", null ],
+    [ "figureAPI", "group___hooks.html#gae5424c0f69d85cabda2866498e788521", null ],
+    [ "g_ranged_return_fail", "group___hooks.html#ga8cced9cb1052a68ec15066cd04290a1b", null ],
+    [ "g_ranged_return_ok", "group___hooks.html#ga9dfa560c9a9eb0828fdd1b5d4cc44935", null ],
+    [ "iteratorAPI", "group___hooks.html#ga764358640400f5367f96608b5794f0c2", null ],
+    [ "registrationAPI", "group___hooks.html#gae864f2c7237380a404ae0b972f87d36f", null ],
+    [ "spellAPI", "group___hooks.html#gabbb7953e765f98bb525822ff276a1e53", null ],
+    [ "toolboxAPI", "group___hooks.html#ga8033183c435322904cc190565a1e03ff", null ],
+    [ "uiAPI", "group___hooks.html#ga690cee41d984e383c3663c6f60d460c2", null ]
+];

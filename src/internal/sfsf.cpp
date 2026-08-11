@@ -122,10 +122,17 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call,
     {
         case DLL_PROCESS_ATTACH:
         {
+            OutputDebugStringA("[SFSF] |======================| Attach SFSF |======================|");
             if (!ASI::Init(hModule))
+            {
+                OutputDebugStringA("[SFSF] |======================| Bad Init |======================|");
+                OutputDebugStringA("[SFSF] Something is bad with either SFSF integrity or Spellforce Version");
                 return FALSE;
+            }
             if (!ASI::CheckSFVersion(ASI::SF_BETA))
             {
+                OutputDebugStringA("[SFSF] |======================| Bad Version |======================|");
+                OutputDebugStringA("[SFSF] Are you on public_test branch? Spellforce should be version 1.61.11213");
                 return FALSE;
             }
             else
@@ -147,7 +154,8 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call,
             break;
         }
         case DLL_PROCESS_DETACH:
-            break;
+            OutputDebugStringA("[SFSF] Framework Detached");
+        break;
     }
     return TRUE;
 }

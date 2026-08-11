@@ -26,8 +26,6 @@
 typedef uint32_t (__thiscall *XDataGet_ptr)(void *_this,uint16_t key,uint8_t keyType);
 typedef uint32_t (__thiscall *CGdXDataExists_ptr)(void *_this, uint16_t key, uint8_t keyType);
 
-
-
 SF_String_ctor_ptr g_create_sf_string;
 SF_String_dtor_ptr g_destroy_sf_string;
 has_spell_effect_ptr has_spell_effect;
@@ -106,17 +104,37 @@ void log_message(const char *filename, const char *format, ...)
     }
 }
 
-void log_warning(const char *format, ...)
+/**
+ * @brief Shared body for the warning logger.
+ *
+ */
+static void log_warning_v(DebugLevel level, const char *format, va_list args)
 {
+    if (level > global_debug_level)
+        return;
+
     char buffer[LOG_BUFFER_SIZE];
-    va_list args;
-    va_start(args, format);
     vsnprintf(buffer, LOG_BUFFER_SIZE, format, args);
-    va_end(args);
 
     char modifiedMessage[LOG_BUFFER_SIZE];
     snprintf(modifiedMessage, LOG_BUFFER_SIZE, "[WARNING] %s", buffer);
     console_log(modifiedMessage);
+}
+
+void log_warning(const char *format, ...)
+{
+    va_list args;
+    va_start(args, format);
+    log_warning_v(DEBUG_INFO, format, args);
+    va_end(args);
+}
+
+void log_warning_level(DebugLevel level, const char *format, ...)
+{
+    va_list args;
+    va_start(args, format);
+    log_warning_v(level, format, args);
+    va_end(args);
 }
 
 void log_info(const char *format, ...)

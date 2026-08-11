@@ -1,0 +1,105 @@
+/**
+ * @defgroup CampaignHook Custom Campaign Hook
+ * @ingroup Hooks
+ * @brief Custom Campaign selection screen and launch via the vanilla pre-game flow.
+ *
+ * @addtogroup CampaignHook
+ * @{
+ */
+
+#ifndef SF_CAMPAIGN_HOOK_H
+#define SF_CAMPAIGN_HOOK_H
+
+#include "../../../api/sfsf.h"
+#include "../../../asi/sf_asi.h"
+
+#define SFSF_MAX_CAMPAIGNS 16
+#define SFSF_CAMPAIGN_TYPE_BASE 3
+
+/** Custom avatar types run from this value upwards, one per campaign index. */
+#define SFSF_AVATAR_TYPE_BASE 8
+#define SFSF_AVATAR_TYPE_MAX  (SFSF_AVATAR_TYPE_BASE + SFSF_MAX_CAMPAIGNS - 1)
+
+typedef struct __attribute__((packed))
+{
+    char name[64];            /**< Shown on the campaign button */
+    uint16_t campaign_name_id; /**< Optional, reserved for future use. Empty string when unset. */
+    char description[256];    /**< For the right-hand detail panel */
+    char author[64];          /**< Optional, shown under the name in the detail panel */
+    char start_map[64];       /**< Map name WITHOUT path/extension, e.g. "mycampaign" */
+    char tutorial_map[64];    /**< Optional tutorial map. */
+    char campaign_folder[64]; /**< Folder for save separation and map loading, e.g. "mycampaign" */
+    char intro_video[64];     /**< Optional: "videos\\myintro" - empty = engine_type
+                                 default. NOT implemented yet (needs CUiVideo replication of PlayCampaignIntroVideo). */
+    char starterkit[128];     /**< Starter kit .des filename, relative to
+                                 figure_template\starterkit\. Replaces the whole
+                                 "SK_<skill><subskill>.des" name, this will need work to ensure the skill subskill stuff is taken into account.
+                                 Leave empty to keep the vanilla skill-derived name. */
+    int8_t avatar_type;     /**< GdAvatar field should continue past a GameInfo reset in PrepareNewGame and is
+                                 serialized into saves). Vanilla: 3 = SF1,
+                                 4 = AddOn1, 7 = AddOn2, 1/5 = multiplayer.
+                                 Custom campaigns: Currently setup to use 8 + campaign_index so
+                                 saves are identified for each custom campaign load order issues might
+                                 happen with differnt mods though will need extensive error handling / checking.
+                             */
+} SFSF_CampaignDef;
+
+typedef GdAvatarInternal *(__thiscall *avatarInternalCopy_ptr)(GdAvatarInternal *dest,
+                                                               GdAvatarInternal *src);
+
+typedef void (__thiscall *avatarVectorsCopy_ptr)(void *dest_vectors, void *src_vectors);
+typedef void (__thiscall *gameInfoSetAvatarType_ptr)(SF_GameInfo *_this, uint16_t avatar_type);
+typedef void (__thiscall *gameInfoSetMapPathFull_ptr)(SF_GameInfo *_this, SF_String *map_path);
+typedef void (__thiscall *appMenuEnterCampaignFlow_ptr)(CAppMenu *_this, uint32_t param_1);
+typedef void (__fastcall *playCampaignIntro_ptr)(CAppMenu *_this);
+typedef void (__thiscall *videoSequenceStop_ptr)(SF_CUiVideoSequence *_this);
+typedef void (__thiscall *startGame_ptr)(CAppMenu *_this, SF_GameInfo *game_info,
+                                         uint32_t param_2, uint32_t param_3,
+                                         uint32_t param_4, uint32_t coord,
+                                         SF_String *param_6);
+
+typedef SF_String *(__thiscall *getSavePath_real_ptr)(SF_String *_this, int campaign_type);
+
+typedef char **(__cdecl *getBasePathString_ptr)(void *out_string_obj);
+
+/**
+ * @brief The engine's file existence check, resolved by initialize_campaign_hooks().
+ *
+ * Paths are taken relative to the game directory, e.g. "map\\mycampaign\\start.map".
+ */
+typedef uint32_t (__cdecl *checkFileExists_ptr)(SF_String *name);
+extern checkFileExists_ptr checkFileExists;
+
+extern SFSF_CampaignDef g_campaigns[SFSF_MAX_CAMPAIGNS];
+extern uint32_t g_campaign_count;
+extern int32_t g_active_custom_campaign; /**< -1 = vanilla / none active */
+extern CAppMenu *g_campaign_app_menu;    /**< Stashed by sf_menu_hook on menu build untested and probably will crash us */
+
+void initialize_campaign_hooks();
+
+extern void initialize_preparenewgame_rewrite();
+
+/** Registers a campaign definition. Returns campaign index or -1. */
+int32_t register_campaign(const SFSF_CampaignDef *def);
+
+void campaign_hook_on_main_menu(CAppMenu *app_menu);
+
+/** Main-menu button callback - builds and toggles the campaign screen. */
+void __thiscall show_custom_campaign_screen(CMnuSmpButton *_this);
+
+/** Per-campaign list row callback - selects the campaign, does not launch it. */
+void __thiscall on_campaign_selected(CMnuSmpButton *_this);
+
+/** Play button callback - launches the campaign currently selected in the list. */
+void __thiscall on_campaign_play(CMnuSmpButton *_this);
+
+extern void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial,
+                                    uint8_t skill, uint8_t subskill,
+                                    uint32_t campaign_id, bool is_shadowblade);
+
+extern startGame_ptr s_start_game;
+extern playCampaignIntro_ptr s_play_campaign_intro;
+extern getBasePathString_ptr s_get_base_path_string;
+extern gameInfoSetAvatarType_ptr s_gameinfo_set_avatar_type;
+/** @} */
+#endif // SF_CAMPAIGN_HOOK_H

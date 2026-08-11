@@ -1,0 +1,26 @@
+var struct_s_f_building =
+[
+    [ "building_id", "struct_s_f_building.html#aae2de202d2d5f03d69933b0b9071ef3b", null ],
+    [ "building_json_name", "struct_s_f_building.html#a0ef5513404d3cd1bafb1bc9f91882534", null ],
+    [ "building_required", "struct_s_f_building.html#a234e9f3b535704ecc562dd540976acf2", null ],
+    [ "building_tags", "struct_s_f_building.html#a7b0cb953abb062a64af79f15a710b1ab", null ],
+    [ "can_enter", "struct_s_f_building.html#a1a8a7edc5d1e842017d8c6cd0cf960b8", null ],
+    [ "centerX", "struct_s_f_building.html#a47a45f03d5a0be87aabb0a72a858ce7a", null ],
+    [ "centerY", "struct_s_f_building.html#a08258a063a3e15c4d945d086cd54e303", null ],
+    [ "done_handler", "struct_s_f_building.html#a2310b9d1cefed29381d152ed70d42d9e", null ],
+    [ "entry_handler", "struct_s_f_building.html#a2fc6eed832695308234f2545473e506d", null ],
+    [ "ext_description_id", "struct_s_f_building.html#a9b7a227cc79fc491f34e4cfa2180bdac", null ],
+    [ "flags", "struct_s_f_building.html#a3e61f2138eaabe1e5ecc8909faf57ff1", null ],
+    [ "health", "struct_s_f_building.html#a33a1b007a7dd3c2ef5eb8dd4237502d0", null ],
+    [ "initial_angle", "struct_s_f_building.html#a05f4c2c11c94b0169e4518b595c9ac60", null ],
+    [ "name_id", "struct_s_f_building.html#a5cb1c8bc179a6fa456d8417638f769de", null ],
+    [ "parent_mod", "struct_s_f_building.html#a59f59bcfe9830c495366f0d3607fc4f2", null ],
+    [ "poly_count", "struct_s_f_building.html#a4c204bf5c0b8db88711c0769e50a1070", null ],
+    [ "race", "struct_s_f_building.html#a2b5cdef61ccfc5399fd3447de2eea171", null ],
+    [ "resource_req_amount", "struct_s_f_building.html#aaaa71b18ec91e49767d040775eba8262", null ],
+    [ "resource_req_num", "struct_s_f_building.html#a1b942cb020a09156b030222003ff5221", null ],
+    [ "resource_req_type", "struct_s_f_building.html#a7b11d285351f28b72048317ad790443c", null ],
+    [ "shadows", "struct_s_f_building.html#a66ccea07898043d36d934fce6f8eb49a", null ],
+    [ "slot_count", "struct_s_f_building.html#a3de95f6b6dc168ce4de76d6ac70ee6a1", null ],
+    [ "worker_cycle", "struct_s_f_building.html#aa5a11bbf4bdd951c7f7f0ed28701631b", null ]
+];

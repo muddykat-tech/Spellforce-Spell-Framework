@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['declare_5ffunction_0',['DECLARE_FUNCTION',['../sf__general__structures_8h.html#a8fc1a791568a2848b8b001524eee155c',1,'sf_general_structures.h']]],
-  ['define_5ffunction_1',['DEFINE_FUNCTION',['../sf__hooks_8h.html#a1dc51ab3463a7f65414da784ac3332d1',1,'sf_hooks.h']]]
+  ['_5fuse_5fmath_5fdefines_0',['_USE_MATH_DEFINES',['../sf__vanilla__fix__hook_8c.html#a525335710b53cb064ca56b936120431e',1,'sf_vanilla_fix_hook.c']]]
 ];
