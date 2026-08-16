@@ -49,8 +49,8 @@
       "order": 7
     },
     {
-      "name": "godrays",
-      "fragment": "godrays.hlsl",
+      "name": "worldspace_test",
+      "fragment": "worldspace_test.hlsl",
       "enabled": false,
       "order": 8
     }

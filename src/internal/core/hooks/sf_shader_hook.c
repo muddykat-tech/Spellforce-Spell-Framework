@@ -54,10 +54,7 @@
  */
 #define SFSF_OFFSET_DSP_RESOURCE 0x490
 
-/**
- * TEST DEPTH Stuff
- *
- */
+/* |-========== Depth ==========-| */
 
 /** INTZ: a depth-stencil format that is also sampleable. Not in d3d9.h. */
 #define FOURCC_INTZ ((D3DFORMAT)MAKEFOURCC('I','N','T','Z'))
@@ -72,7 +69,49 @@ static IDirect3DSurface9 *s_depth_surface = NULL;
 static bool s_depth_available = false;
 static PFN_SetDepthStencil s_real_setdepthstencil = NULL;
 
-/** END */
+/* World space
+ *
+ * The engine drives its transforms through vertex shader constants - the
+ * fixed-function VIEW/PROJECTION/WORLD matrices all read back as identity. The
+ * view-projection lives in c3..c6, which was identified from a live dump:
+ *
+ *   c3  [ 1.000   0.000   0.000   179.200]
+ *   c4  [ 0.000  -0.669  -0.743   -45.547]   c3..c5 are orthonormal (a rotation
+ *   c5  [ 0.000  -0.743   0.669  -201.115]   with translation in .w, ~48 deg pitch)
+ *   c6  [ 0.000  -0.743   0.669  -200.095]   same direction as c5, .w differs by
+ *                                            1.02 -> the projection's w row,
+ *                                            near plane 1.02
+ *
+ * Constants are last-write-wins and the last thing drawn each frame is UI, so
+ * the matrix is snapshotted at the first draw call instead, when world geometry
+ * is being rendered.
+ */
+
+/** IDirect3DDevice9::SetVertexShaderConstantF (vtable +0x178). */
+#define VT_IDIRECT3DDEVICE9_SETVSCONSTF 94
+
+/** IDirect3DDevice9::DrawIndexedPrimitive (vtable +0x148, per DSP_Display decomp). */
+#define VT_IDIRECT3DDEVICE9_DRAWINDEXEDPRIM 82
+
+/** Registers to shadow. The view-projection lives in the first few. */
+#define SFSF_VS_CONST_TRACK 24
+
+/** First register of the view-projection matrix. */
+#define SFSF_VS_VIEWPROJ_BASE 3
+
+typedef HRESULT (WINAPI *PFN_SetVSConstF)(IDirect3DDevice9 *, UINT, const float *, UINT);
+typedef HRESULT (WINAPI *PFN_DrawIndexedPrimitive)(IDirect3DDevice9 *, D3DPRIMITIVETYPE,
+                                                   INT, UINT, UINT, UINT, UINT);
+
+static PFN_SetVSConstF          s_real_setvsconstf = NULL;
+static PFN_DrawIndexedPrimitive s_real_drawindexed = NULL;
+
+static float s_vs_constants[SFSF_VS_CONST_TRACK][4];
+static bool  s_vs_seen[SFSF_VS_CONST_TRACK];
+
+static float s_view_proj[4][4];
+static bool  s_view_proj_valid     = false;
+static bool  s_frame_snapshot_done = false;
 
 /* Minimal ID3DBlob
  * Declared here rather than pulling in d3dcommon.h
@@ -235,6 +274,65 @@ static bool patch_vtable(void *com_object, int index, void *replacement, void **
     return true;
 }
 
+/**
+ * @brief General 4x4 inverse.
+ *
+ * Done on the CPU once per frame rather than in HLSL, where a full inverse
+ * would cost far more than the whole post-process pass.
+ *
+ * @return false when the matrix is singular.
+ */
+static bool invert_4x4(const float m[4][4], float out[4][4])
+{
+    float a[16], inv[16];
+    memcpy(a, m, sizeof(a));
+
+    inv[0]  =  a[5]*a[10]*a[15] - a[5]*a[11]*a[14] - a[9]*a[6]*a[15]
+             + a[9]*a[7]*a[14] + a[13]*a[6]*a[11] - a[13]*a[7]*a[10];
+    inv[4]  = -a[4]*a[10]*a[15] + a[4]*a[11]*a[14] + a[8]*a[6]*a[15]
+             - a[8]*a[7]*a[14] - a[12]*a[6]*a[11] + a[12]*a[7]*a[10];
+    inv[8]  =  a[4]*a[9]*a[15] - a[4]*a[11]*a[13] - a[8]*a[5]*a[15]
+             + a[8]*a[7]*a[13] + a[12]*a[5]*a[11] - a[12]*a[7]*a[9];
+    inv[12] = -a[4]*a[9]*a[14] + a[4]*a[10]*a[13] + a[8]*a[5]*a[14]
+             - a[8]*a[6]*a[13] - a[12]*a[5]*a[10] + a[12]*a[6]*a[9];
+    inv[1]  = -a[1]*a[10]*a[15] + a[1]*a[11]*a[14] + a[9]*a[2]*a[15]
+             - a[9]*a[3]*a[14] - a[13]*a[2]*a[11] + a[13]*a[3]*a[10];
+    inv[5]  =  a[0]*a[10]*a[15] - a[0]*a[11]*a[14] - a[8]*a[2]*a[15]
+             + a[8]*a[3]*a[14] + a[12]*a[2]*a[11] - a[12]*a[3]*a[10];
+    inv[9]  = -a[0]*a[9]*a[15] + a[0]*a[11]*a[13] + a[8]*a[1]*a[15]
+             - a[8]*a[3]*a[13] - a[12]*a[1]*a[11] + a[12]*a[3]*a[9];
+    inv[13] =  a[0]*a[9]*a[14] - a[0]*a[10]*a[13] - a[8]*a[1]*a[14]
+             + a[8]*a[2]*a[13] + a[12]*a[1]*a[10] - a[12]*a[2]*a[9];
+    inv[2]  =  a[1]*a[6]*a[15] - a[1]*a[7]*a[14] - a[5]*a[2]*a[15]
+             + a[5]*a[3]*a[14] + a[13]*a[2]*a[7] - a[13]*a[3]*a[6];
+    inv[6]  = -a[0]*a[6]*a[15] + a[0]*a[7]*a[14] + a[4]*a[2]*a[15]
+             - a[4]*a[3]*a[14] - a[12]*a[2]*a[7] + a[12]*a[3]*a[6];
+    inv[10] =  a[0]*a[5]*a[15] - a[0]*a[7]*a[13] - a[4]*a[1]*a[15]
+             + a[4]*a[3]*a[13] + a[12]*a[1]*a[7] - a[12]*a[3]*a[5];
+    inv[14] = -a[0]*a[5]*a[14] + a[0]*a[6]*a[13] + a[4]*a[1]*a[14]
+             - a[4]*a[2]*a[13] - a[12]*a[1]*a[6] + a[12]*a[2]*a[5];
+    inv[3]  = -a[1]*a[6]*a[11] + a[1]*a[7]*a[10] + a[5]*a[2]*a[11]
+             - a[5]*a[3]*a[10] - a[9]*a[2]*a[7] + a[9]*a[3]*a[6];
+    inv[7]  =  a[0]*a[6]*a[11] - a[0]*a[7]*a[10] - a[4]*a[2]*a[11]
+             + a[4]*a[3]*a[10] + a[8]*a[2]*a[7] - a[8]*a[3]*a[6];
+    inv[11] = -a[0]*a[5]*a[11] + a[0]*a[7]*a[9] + a[4]*a[1]*a[11]
+             - a[4]*a[3]*a[9] - a[8]*a[1]*a[7] + a[8]*a[3]*a[5];
+    inv[15] =  a[0]*a[5]*a[10] - a[0]*a[6]*a[9] - a[4]*a[1]*a[10]
+             + a[4]*a[2]*a[9] + a[8]*a[1]*a[6] - a[8]*a[2]*a[5];
+
+    float det = a[0]*inv[0] + a[1]*inv[4] + a[2]*inv[8] + a[3]*inv[12];
+    if (det == 0.0f)
+    {
+        return false;
+    }
+
+    det = 1.0f / det;
+    for (int i = 0; i < 16; i++)
+    {
+        ((float *)out)[i] = inv[i] * det;
+    }
+    return true;
+}
 
 /**
  * @brief Logs what the engine's own depth-stencil looks like.
@@ -359,6 +457,52 @@ static HRESULT WINAPI sf_setdepthstencil_hook(IDirect3DDevice9 *device,
     return s_real_setdepthstencil(device, surface);
 }
 
+/** @brief Shadows the vertex shader constants the engine sets. */
+static HRESULT WINAPI sf_setvsconstf_hook(IDirect3DDevice9 *device, UINT start_register,
+                                          const float *data, UINT count)
+{
+    if (device == s_device && data != NULL && start_register < SFSF_VS_CONST_TRACK)
+    {
+        UINT n = count;
+        if (start_register + n > SFSF_VS_CONST_TRACK)
+        {
+            n = SFSF_VS_CONST_TRACK - start_register;
+        }
+        memcpy(&s_vs_constants[start_register][0], data, n * 4 * sizeof(float));
+        for (UINT i = 0; i < n; i++)
+        {
+            s_vs_seen[start_register + i] = true;
+        }
+    }
+
+    return s_real_setvsconstf(device, start_register, data, count);
+}
+
+/**
+ * @brief Snapshots the view-projection at the first draw of each frame.
+ *
+ * The constants are last-write-wins and the last thing drawn is UI, so the end
+ * of frame state is the wrong matrix. World geometry goes first.
+ *
+ * The signature must match IDirect3DDevice9::DrawIndexedPrimitive exactly - six
+ * parameters after `this`. These are __stdcall, so the callee cleans the stack;
+ * one extra parameter here pops four bytes too many, corrupts the return
+ * address and jumps to a junk address on the first world draw.
+ */
+static HRESULT WINAPI sf_drawindexed_hook(IDirect3DDevice9 *device, D3DPRIMITIVETYPE type,
+                                          INT base_vertex, UINT min_index, UINT num_vertices,
+                                          UINT start_index, UINT primitive_count)
+{
+    if (device == s_device && !s_frame_snapshot_done)
+    {
+        s_frame_snapshot_done = true;
+        memcpy(s_view_proj, &s_vs_constants[SFSF_VS_VIEWPROJ_BASE][0], sizeof(s_view_proj));
+        s_view_proj_valid = true;
+    }
+
+    return s_real_drawindexed(device, type, base_vertex, min_index, num_vertices,
+                              start_index, primitive_count);
+}
 
 static bool load_compiler()
 {
@@ -518,8 +662,6 @@ static bool compile_all_passes()
     return (s_pass_count > 0);
 }
 
-/* |-========== Device resources ==========-| */
-
 /** @brief Releases everything in D3DPOOL_DEFAULT. Must run before a Reset. */
 static void release_device_resources()
 {
@@ -538,16 +680,37 @@ static void release_device_resources()
         s_state_block->Release();
         s_state_block = NULL;
     }
-
-    if (s_depth_surface != NULL) { s_depth_surface->Release(); s_depth_surface = NULL; }
-    if (s_depth_texture != NULL) { s_depth_texture->Release(); s_depth_texture = NULL; }
-
+    if (s_depth_surface != NULL)
+    {
+        s_depth_surface->Release();
+        s_depth_surface = NULL;
+    }
+    if (s_depth_texture != NULL)
+    {
+        s_depth_texture->Release();
+        s_depth_texture = NULL;
+    }
 
     s_capture_width   = 0;
     s_capture_height  = 0;
-
     s_depth_available = false;
     s_resources_ready = false;
+}
+
+static void log_device_creation_flags()
+{
+    D3DDEVICE_CREATION_PARAMETERS creation;
+    if (FAILED(s_device->GetCreationParameters(&creation)))
+    {
+        return;
+    }
+
+    log_info("| - Shader: device flags 0x%08lX (%s%s%s%s)",
+             (unsigned long)creation.BehaviorFlags,
+             (creation.BehaviorFlags & D3DCREATE_PUREDEVICE) ? "PURE " : "",
+             (creation.BehaviorFlags & D3DCREATE_HARDWARE_VERTEXPROCESSING) ? "HWVP " : "",
+             (creation.BehaviorFlags & D3DCREATE_SOFTWARE_VERTEXPROCESSING) ? "SWVP " : "",
+             (creation.BehaviorFlags & D3DCREATE_MIXED_VERTEXPROCESSING) ? "MIXED" : "");
 }
 
 static bool create_device_resources()
@@ -596,13 +759,15 @@ static bool create_device_resources()
     s_capture_width   = desc.Width;
     s_capture_height  = desc.Height;
 
-    /* Depth is optional: colour passes work without it. */
-    static bool logged_depth_once = false;
-    if (!logged_depth_once)
+    static bool logged_once = false;
+    if (!logged_once)
     {
-        logged_depth_once = true;
+        logged_once = true;
+        log_device_creation_flags();
         log_engine_depth_surface();
     }
+
+    /* Depth is optional: colour passes work without it. */
     create_depth_resources(&desc);
 
     s_resources_ready = true;
@@ -680,7 +845,13 @@ static void run_post_process()
     const float constants[4] = { width, height, elapsed, width / height };
     s_device->SetPixelShaderConstantF(0, constants, 1);
 
-    s_device->SetPixelShaderConstantF(0, constants, 1);
+    /* c1..c4: inverse view-projection, for shaders that reconstruct world
+     * position from depth. Left untouched when the matrix is unavailable. */
+    float inverse[4][4];
+    if (s_view_proj_valid && invert_4x4(s_view_proj, inverse))
+    {
+        s_device->SetPixelShaderConstantF(1, &inverse[0][0], 4);
+    }
 
     for (int i = 0; i < s_pass_count; i++)
     {
@@ -715,6 +886,36 @@ static void run_post_process()
         saved_depth->Release();
     }
     backbuffer->Release();
+}
+
+/** @brief F10 diagnostic: the shadowed constants and the snapshotted matrix. */
+static void dump_vs_constants()
+{
+    log_info("| - Shader: vertex shader constants");
+    for (int i = 0; i < SFSF_VS_CONST_TRACK; i++)
+    {
+        if (!s_vs_seen[i])
+        {
+            continue;
+        }
+        log_info("| -   c%-2d [%9.3f %9.3f %9.3f %9.3f]", i,
+                 s_vs_constants[i][0], s_vs_constants[i][1],
+                 s_vs_constants[i][2], s_vs_constants[i][3]);
+    }
+
+    if (!s_view_proj_valid)
+    {
+        log_info("| - Shader: no view-projection snapshot yet");
+        return;
+    }
+
+    log_info("| - Shader: view-projection snapshot (first draw of frame)");
+    for (int r = 0; r < 4; r++)
+    {
+        log_info("| -   [%9.3f %9.3f %9.3f %9.3f]",
+                 s_view_proj[r][0], s_view_proj[r][1],
+                 s_view_proj[r][2], s_view_proj[r][3]);
+    }
 }
 
 /**
@@ -757,23 +958,18 @@ static HRESULT WINAPI sf_present_hook(IDirect3DDevice9 *device, const RECT *sour
                     log_info("| - Shader: pipeline live");
                 }
 
+                static bool key_was_down = false;
+                bool key_is_down = (GetAsyncKeyState(VK_F10) & 0x8000) != 0;
+                if (key_is_down && !key_was_down)
+                {
+                    dump_vs_constants();
+                }
+                key_was_down = key_is_down;
+
                 if (SUCCEEDED(s_device->BeginScene()))
                 {
                     run_post_process();
                     s_device->EndScene();
-                }
-
-                IDirect3DSurface9 *depth = NULL;
-                if (SUCCEEDED(s_device->GetDepthStencilSurface(&depth)) && depth != NULL)
-                {
-                    D3DSURFACE_DESC desc;
-                    depth->GetDesc(&desc);
-                    log_info("| - Shader: depth %ux%u fmt 0x%X (%c%c%c%c) msaa %d",
-                             desc.Width, desc.Height, desc.Format,
-                             (desc.Format      ) & 0xFF, (desc.Format >>  8) & 0xFF,
-                             (desc.Format >> 16) & 0xFF, (desc.Format >> 24) & 0xFF,
-                             (int)desc.MultiSampleType);
-                    depth->Release();
                 }
             }
         }
@@ -956,7 +1152,7 @@ static IDirect3DDevice9 *find_device(BYTE *dsp_display, int *out_offset,
 }
 
 /**
- * @brief Locates the device and patches Present / Reset on it. One shot.
+ * @brief Locates the device and patches its vtable. One shot.
  *
  * Retried across frames rather than latched on the first attempt, in case the
  * display does not own a device yet on the earliest RenderFrame calls.
@@ -1050,6 +1246,20 @@ static void capture_device_from_dsp(void *dsp_display_ptr)
         log_warning("| - Shader: SetDepthStencilSurface was not hooked - depth may "
                     "come from the engine's own surface instead of INTZ");
     }
+
+    if (!patch_vtable(device, VT_IDIRECT3DDEVICE9_SETVSCONSTF,
+                      (void *)&sf_setvsconstf_hook, (void **)&s_real_setvsconstf))
+    {
+        log_warning("| - Shader: SetVertexShaderConstantF was not hooked - no world "
+                    "space reconstruction");
+    }
+
+    if (!patch_vtable(device, VT_IDIRECT3DDEVICE9_DRAWINDEXEDPRIM,
+                      (void *)&sf_drawindexed_hook, (void **)&s_real_drawindexed))
+    {
+        log_warning("| - Shader: DrawIndexedPrimitive was not hooked - the "
+                    "view-projection snapshot will pick up UI state instead");
+    }
 }
 
 /**
@@ -1063,6 +1273,10 @@ static int __thiscall sf_dsp_beginscene_hook(void *dsp_display)
     {
         capture_device_from_dsp(dsp_display);
     }
+
+    /* Arm the snapshot for this frame: the next draw call carries the world
+     * matrix, before any UI has overwritten the constants. */
+    s_frame_snapshot_done = false;
 
     if (s_depth_available && s_device != NULL)
     {
