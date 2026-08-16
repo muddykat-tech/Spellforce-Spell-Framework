@@ -1,0 +1,58 @@
+{
+  "shaders": [
+    {
+      "name": "grayscale",
+      "fragment": "grayscale.hlsl",
+      "enabled": false,
+      "order": 0
+    },
+    {
+      "name": "disco",
+      "fragment": "disco.hlsl",
+      "enabled": false,
+      "order": 1
+    },
+    {
+      "name": "edgy",
+      "fragment": "edgy.hlsl",
+      "enabled": false,
+      "order": 2
+    },
+    {
+      "name": "retro",
+      "fragment": "retro.hlsl",
+      "enabled": false,
+      "order": 3
+    },
+    {
+      "name": "ripple",
+      "fragment": "ripple.hlsl",
+      "enabled": false,
+      "order": 4
+    },
+    {
+      "name": "trippy",
+      "fragment": "trippy.hlsl",
+      "enabled": false,
+      "order": 5
+    },
+    {
+      "name": "vintage",
+      "fragment": "vintage.hlsl",
+      "enabled": false,
+      "order": 6
+    },
+    {
+      "name": "blur",
+      "fragment": "blur.hlsl",
+      "enabled": false,
+      "order": 7
+    },
+    {
+      "name": "godrays",
+      "fragment": "godrays.hlsl",
+      "enabled": false,
+      "order": 8
+    }
+  ]
+}

@@ -22,6 +22,7 @@
 #include "../core/sf_hooks.h"
 #include "../core/sf_campaign_module.h"
 #include "../core/sf_screens_module.h"
+#include "../core/sf_shader_module.h"
 
 #include "sf_registry.h"
 #include "sf_vanilla_registry.h"
@@ -36,6 +37,7 @@
 #include "spell_data_registries/sf_spelldamage_registry.h"
 #include "spell_data_registries/sf_enchant_registry.h"
 
+#include "../core/hooks/sf_shader_hook.h"
 
 #include <windows.h>
 #include <iostream>
@@ -161,6 +163,10 @@ void initialize_framework()
 
     initialize_screens_module();
     initialize_campaign_module();
+    initialize_shader_module();
+/* Must follow initialize_shader_module(): the hook only installs itself
+     * when the module has accepted at least one pass. */
+    initialize_shader_hooks();
 
     log_info(
         "|====== ===== =====| Core Module Phase End |===== ===== ======--|");

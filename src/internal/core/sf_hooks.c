@@ -29,7 +29,6 @@
 #include "hooks/sf_worker_logic_hook.h"
 #include "hooks/sf_enchant_hook.h"
 #include "hooks/sf_campaign_hook.h"
-
 #include "hooks/sf_effect_hook.h"
 
 #include <stdint.h>
