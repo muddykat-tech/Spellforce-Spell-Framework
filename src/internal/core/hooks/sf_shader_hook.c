@@ -54,8 +54,6 @@
  */
 #define SFSF_OFFSET_DSP_RESOURCE 0x490
 
-/* |-========== Depth ==========-| */
-
 /** INTZ: a depth-stencil format that is also sampleable. Not in d3d9.h. */
 #define FOURCC_INTZ ((D3DFORMAT)MAKEFOURCC('I','N','T','Z'))
 
@@ -82,9 +80,6 @@ static PFN_SetDepthStencil s_real_setdepthstencil = NULL;
  *                                            1.02 -> the projection's w row,
  *                                            near plane 1.02
  *
- * Constants are last-write-wins and the last thing drawn each frame is UI, so
- * the matrix is snapshotted at the first draw call instead, when world geometry
- * is being rendered.
  */
 
 /** IDirect3DDevice9::SetVertexShaderConstantF (vtable +0x178). */
@@ -93,8 +88,12 @@ static PFN_SetDepthStencil s_real_setdepthstencil = NULL;
 /** IDirect3DDevice9::DrawIndexedPrimitive (vtable +0x148, per DSP_Display decomp). */
 #define VT_IDIRECT3DDEVICE9_DRAWINDEXEDPRIM 82
 
-/** Registers to shadow. The view-projection lives in the first few. */
-#define SFSF_VS_CONST_TRACK 24
+/**
+ * Registers to shadow. c3..c6 turned out to be a WORLD-view-projection - it
+ * changes per draw - so the pure view-projection is elsewhere and the range has
+ * to be wide enough to find it.
+ */
+#define SFSF_VS_CONST_TRACK 96
 
 /** First register of the view-projection matrix. */
 #define SFSF_VS_VIEWPROJ_BASE 3
@@ -109,9 +108,30 @@ static PFN_DrawIndexedPrimitive s_real_drawindexed = NULL;
 static float s_vs_constants[SFSF_VS_CONST_TRACK][4];
 static bool  s_vs_seen[SFSF_VS_CONST_TRACK];
 
+/**
+ * Per-frame variance tracking. A register that changes between draws within one
+ * frame is per-object data; one that holds still all frame but changes when the
+ * camera moves is view state. That distinction is what separates the pure
+ * view-projection from the world-view-projection in c3..c6.
+ */
+static float s_vs_frame_start[SFSF_VS_CONST_TRACK][4];
+static bool  s_vs_varies_in_frame[SFSF_VS_CONST_TRACK];
+
 static float s_view_proj[4][4];
 static bool  s_view_proj_valid     = false;
 static bool  s_frame_snapshot_done = false;
+
+/**
+ * True while the main scene's depth target is bound. Shadow passes bind their
+ * own smaller surfaces, so this distinguishes the scene camera's matrix from a
+ * light's - without it, the snapshot picks up whichever pass happens to draw
+ * first, which changes as shadow casters enter and leave the view.
+ */
+static bool s_main_pass_active = false;
+
+/** Frames left to trace draw calls for. Armed by the F10 diagnostic. */
+static int s_trace_draws = 0;
+static int s_draw_index  = 0;
 
 /* Minimal ID3DBlob
  * Declared here rather than pulling in d3dcommon.h
@@ -443,14 +463,29 @@ static bool create_depth_resources(const D3DSURFACE_DESC *backbuffer_desc)
 static HRESULT WINAPI sf_setdepthstencil_hook(IDirect3DDevice9 *device,
                                               IDirect3DSurface9 *surface)
 {
-    if (s_depth_available && device == s_device &&
-        surface != NULL && surface != s_depth_surface)
+    if (device == s_device)
     {
-        D3DSURFACE_DESC desc;
-        if (SUCCEEDED(surface->GetDesc(&desc)) &&
-            desc.Width == s_capture_width && desc.Height == s_capture_height)
+        if (surface == NULL)
         {
-            surface = s_depth_surface;
+            s_main_pass_active = false;
+        }
+        else if (surface == s_depth_surface)
+        {
+            s_main_pass_active = true;
+        }
+        else
+        {
+            D3DSURFACE_DESC desc;
+            bool is_main = SUCCEEDED(surface->GetDesc(&desc)) &&
+                           desc.Width == s_capture_width &&
+                           desc.Height == s_capture_height;
+
+            s_main_pass_active = is_main;
+
+            if (is_main && s_depth_available)
+            {
+                surface = s_depth_surface;
+            }
         }
     }
 
@@ -471,7 +506,14 @@ static HRESULT WINAPI sf_setvsconstf_hook(IDirect3DDevice9 *device, UINT start_r
         memcpy(&s_vs_constants[start_register][0], data, n * 4 * sizeof(float));
         for (UINT i = 0; i < n; i++)
         {
-            s_vs_seen[start_register + i] = true;
+            UINT reg = start_register + i;
+            s_vs_seen[reg] = true;
+
+            if (memcmp(&s_vs_constants[reg][0], &s_vs_frame_start[reg][0],
+                       4 * sizeof(float)) != 0)
+            {
+                s_vs_varies_in_frame[reg] = true;
+            }
         }
     }
 
@@ -493,11 +535,37 @@ static HRESULT WINAPI sf_drawindexed_hook(IDirect3DDevice9 *device, D3DPRIMITIVE
                                           INT base_vertex, UINT min_index, UINT num_vertices,
                                           UINT start_index, UINT primitive_count)
 {
-    if (device == s_device && !s_frame_snapshot_done)
+    if (device == s_device)
     {
-        s_frame_snapshot_done = true;
-        memcpy(s_view_proj, &s_vs_constants[SFSF_VS_VIEWPROJ_BASE][0], sizeof(s_view_proj));
-        s_view_proj_valid = true;
+        s_draw_index++;
+
+        /* Only the main scene pass carries the camera's matrix. */
+        if (!s_frame_snapshot_done && s_main_pass_active)
+        {
+            s_frame_snapshot_done = true;
+            memcpy(s_view_proj, &s_vs_constants[SFSF_VS_VIEWPROJ_BASE][0],
+                   sizeof(s_view_proj));
+            s_view_proj_valid = true;
+
+            if (s_trace_draws > 0)
+            {
+                log_info("| - Shader: snapshot taken at draw %d (%u prims)",
+                         s_draw_index, primitive_count);
+            }
+        }
+
+        /* Bounded trace: enough to see which pass draws first, not enough to
+         * flood the console. */
+        if (s_trace_draws > 0 && s_draw_index <= 8)
+        {
+            log_info("| - Shader:   draw %d: %u prims, main_pass=%d, "
+                     "c3=[%7.3f %7.3f %7.3f %9.3f] c6=[%7.3f %7.3f %7.3f %9.3f]",
+                     s_draw_index, primitive_count, (int)s_main_pass_active,
+                     s_vs_constants[3][0], s_vs_constants[3][1],
+                     s_vs_constants[3][2], s_vs_constants[3][3],
+                     s_vs_constants[6][0], s_vs_constants[6][1],
+                     s_vs_constants[6][2], s_vs_constants[6][3]);
+        }
     }
 
     return s_real_drawindexed(device, type, base_vertex, min_index, num_vertices,
@@ -661,6 +729,8 @@ static bool compile_all_passes()
 
     return (s_pass_count > 0);
 }
+
+/* |-========== Device resources ==========-| */
 
 /** @brief Releases everything in D3DPOOL_DEFAULT. Must run before a Reset. */
 static void release_device_resources()
@@ -891,14 +961,16 @@ static void run_post_process()
 /** @brief F10 diagnostic: the shadowed constants and the snapshotted matrix. */
 static void dump_vs_constants()
 {
-    log_info("| - Shader: vertex shader constants");
+    log_info("| - Shader: vertex shader constants  (VARIES = changed between draws "
+             "this frame, so per-object; steady registers are view state)");
     for (int i = 0; i < SFSF_VS_CONST_TRACK; i++)
     {
         if (!s_vs_seen[i])
         {
             continue;
         }
-        log_info("| -   c%-2d [%9.3f %9.3f %9.3f %9.3f]", i,
+        log_info("| -   c%-2d %-6s [%9.3f %9.3f %9.3f %9.3f]", i,
+                 s_vs_varies_in_frame[i] ? "VARIES" : "steady",
                  s_vs_constants[i][0], s_vs_constants[i][1],
                  s_vs_constants[i][2], s_vs_constants[i][3]);
     }
@@ -909,13 +981,18 @@ static void dump_vs_constants()
         return;
     }
 
-    log_info("| - Shader: view-projection snapshot (first draw of frame)");
+    log_info("| - Shader: c3..c6 snapshot at the first main-pass draw "
+             "(currently a WORLD-view-projection, hence the drift)");
     for (int r = 0; r < 4; r++)
     {
         log_info("| -   [%9.3f %9.3f %9.3f %9.3f]",
                  s_view_proj[r][0], s_view_proj[r][1],
                  s_view_proj[r][2], s_view_proj[r][3]);
     }
+
+    /* Trace the next two frames' opening draws, so the pass that carries the
+     * matrix can be identified rather than assumed. */
+    s_trace_draws = 2;
 }
 
 /**
@@ -1265,7 +1342,6 @@ static void capture_device_from_dsp(void *dsp_display_ptr)
 /**
  * @brief Stands in for DSP_Display::BeginScene at one call site.
  *
- * Plain __thiscall, so the patched CALL needs no trampoline or naked asm.
  */
 static int __thiscall sf_dsp_beginscene_hook(void *dsp_display)
 {
@@ -1274,9 +1350,16 @@ static int __thiscall sf_dsp_beginscene_hook(void *dsp_display)
         capture_device_from_dsp(dsp_display);
     }
 
-    /* Arm the snapshot for this frame: the next draw call carries the world
-     * matrix, before any UI has overwritten the constants. */
+    /* Arm the snapshot for this frame, and rebase the variance test. */
     s_frame_snapshot_done = false;
+    s_draw_index = 0;
+    memcpy(s_vs_frame_start, s_vs_constants, sizeof(s_vs_frame_start));
+    memset(s_vs_varies_in_frame, 0, sizeof(s_vs_varies_in_frame));
+    if (s_trace_draws > 0)
+    {
+        s_trace_draws--;
+        log_info("| - Shader: --- frame trace ---");
+    }
 
     if (s_depth_available && s_device != NULL)
     {

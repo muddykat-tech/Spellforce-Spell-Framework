@@ -3,8 +3,7 @@
 // Unprojects each pixel using its depth and the inverse view-projection matrix
 // the engine hands its vertex shaders, then visualises the result. If the
 // matrix is correct the pattern is LOCKED TO THE TERRAIN: pan or rotate the
-// camera and the colours should stay glued to the ground rather than sliding with the
-// screen.
+// camera and the colours should stay glued to the ground, this is not currently the case because I'm bad at math
 //
 // Registers supplied by the framework:
 //   s0    = colour capture
@@ -17,7 +16,7 @@
 // MODE 2 : raw world position as RGB     - smooth, mostly for sanity
 // MODE 3 : contour lines every N units   - sharpest test of stability
 
-#define MODE       0
+#define MODE       3
 #define GRID_SIZE  10.0   // world units per grid cell / contour band
 
 sampler2D uTexture : register(s0);
