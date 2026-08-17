@@ -1,8 +1,6 @@
-// Atmospheric grade - vibrant, sunlit, high-contrast.
+// Atmospheric - e.g high fantasy ish (just pushed up saturation and a few other things)
 //
-// Uses colour and depth only, so it does not depend on the view-projection and
-// is stable regardless of what the matrix search is doing... would be better if it was used tho.
-//
+// Uses colour and depth only
 // all numbers used are just guesswork and "feel" rather than specific tweaking, this can likely be made far better
 
 // Registers supplied by the framework:

@@ -337,8 +337,8 @@ void show_mod_details(int mod_index)
     char mod_author[256] = {0};
     prepare_mod_author(mod, mod_author, sizeof(mod_author));
 
-    char mod_description[512] = {0};
-    char wrapped_description[1024] = {0};
+    char mod_description[1024] = {0};
+    char wrapped_description[2048] = {0};
     prepare_mod_description(mod, mod_description, sizeof(mod_description),
                             wrapped_description, sizeof(wrapped_description));
 

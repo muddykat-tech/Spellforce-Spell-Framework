@@ -11,6 +11,7 @@
 #include "../sf_ui_wrappers.h"
 #include "sf_menu_hook.h"
 #include "../sf_hooks.h"
+#include "sf_shader_hook.h"
 #include "sf_campaign_hook.h"
 #include "../sf_modloader.h"
 #include "../../registry/sf_mod_registry.h"
@@ -121,7 +122,7 @@ void __attribute__((no_caller_saved_registers, thiscall))
 sf_menu_hook(uint32_t _CAppMenu)
 {
     log_info("Starting Menu Hook");
-
+    shader_hook_release_all();
     reset_mod_list_screen();
 
     campaign_hook_on_main_menu((CAppMenu *)_CAppMenu);

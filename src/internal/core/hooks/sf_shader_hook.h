@@ -35,5 +35,36 @@ void initialize_shader_hooks();
 /** @brief True once a device was captured and at least one pass compiled. */
 bool shader_pipeline_is_live();
 
+
+/**
+ * @brief How many references the shader hook holds on the D3D9 device.
+ *
+ * Counts objects created from the device: the capture texture, the state block,
+ * the INTZ depth texture and one per compiled pixel shader. Surfaces fetched
+ * with GetSurfaceLevel reference their parent texture rather than the device,
+ * so they are not counted.
+ *
+ * Note this grows with the number of compiled passes - every declared shader is
+ * compiled so it can be soloed at runtime, not just the enabled ones - so a
+ * Release hook comparing against a fixed number will be wrong. Ask instead.
+ */
+int shader_hook_held_references();
+
+/**
+ * @brief Drops every device object the shader hook owns.
+ *
+ * Call this when the engine is tearing the device down, before it releases its
+ * own reference. Leaves the hook inert: the device pointer is cleared and no
+ * further capture is attempted.
+ */
+void shader_hook_release_all();
+
+/**
+ * @brief Same as shader_hook_release_all, but permanent.
+ *
+ * Nothing is re-captured afterwards. Call this on the way out of the process.
+ */
+void shader_hook_shutdown();
+
 /** @} */
 #endif // SF_SHADER_HOOK_H

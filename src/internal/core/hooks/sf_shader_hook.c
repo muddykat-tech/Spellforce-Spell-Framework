@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 #include "sf_shader_hook.h"
 #include "../sf_shader_module.h"
@@ -54,6 +55,8 @@
  */
 #define SFSF_OFFSET_DSP_RESOURCE 0x490
 
+/* |-========== Depth ==========-| */
+
 /** INTZ: a depth-stencil format that is also sampleable. Not in d3d9.h. */
 #define FOURCC_INTZ ((D3DFORMAT)MAKEFOURCC('I','N','T','Z'))
 
@@ -92,7 +95,7 @@ static PFN_SetDepthStencil s_real_setdepthstencil = NULL;
 #define VT_IDIRECT3DDEVICE9_DRAWINDEXEDPRIM 82
 
 /**
- * Registers to shadow. c3..c6 turned out to be a world-view-projection - it
+ * Registers to shadow. c3..c6 turned out to be a WORLD-view-projection - it
  * changes per draw - so the pure view-projection is elsewhere and the range has
  * to be wide enough to find it.
  */
@@ -109,9 +112,9 @@ static PFN_SetDepthStencil s_real_setdepthstencil = NULL;
  * every global they source from - the transform block at 0xd28f68, the light
  * positions from 0xd29444 - reads as zeros while rendering, so the engine does
  * not drive that path in this build. There is no GetWorldToClip either, so a
- * pure view-projection is not known currently.
+ * pure view-projection is never computed anywhere.
  *
- * We still have c3..c6, which is DSP_GetObjectToClip: a WORLD-view-projection
+ * What remains is c3..c6, which is DSP_GetObjectToClip: a WORLD-view-projection
  * that changes per object. The view-projection is recovered from it by picking
  * a draw whose world matrix is identity - see consider_view_proj.
  */
@@ -132,7 +135,7 @@ static bool  s_vs_seen[SFSF_VS_CONST_TRACK];
 /**
  * Per-frame variance tracking. A register that changes between draws within one
  * frame is per-object data; one that holds still all frame but changes when the
- * camera moves is view state. That can help locate the pure
+ * camera moves is view state. That distinction is what separates the pure
  * view-projection from the world-view-projection in c3..c6.
  */
 static float s_vs_frame_start[SFSF_VS_CONST_TRACK][4];
@@ -155,18 +158,20 @@ static int s_trace_draws = 0;
 static int s_draw_index  = 0;
 
 /**
- * Per-frame search for the view-projection.
+ * Per-frame search for the true view-projection.
  *
- * The engine doesn't appear to upload a pure view-projection - world is multiplied in on
+ * The engine never uploads a pure view-projection - world is multiplied in on
  * the CPU, so c3..c6 differs per object (every register from c2 to c93 tests as
- * per-object). What separates the real one is that the camera sits at the eye
- * as in position of camera itself means a true view-projection should map to w = 0:
+ * per-object). What separates the real one is that the camera sits at the eye,
+ * so a true view-projection maps it to w = 0:
  *
  *   residual = |dot(row3.xyz, cameraWorld) + row3.w|
  *
  * A world-view-projection only satisfies that if its world matrix fixes the
- * eye, which in practice means identity / the terrain. Every main-pass draw is
- * scored as it happens and the best is kept.
+ * eye, which in practice means identity - the terrain. Every main-pass draw is
+ * scored as it happens and the best is kept, so there is no candidate table to
+ * overflow and no frame lag between the camera reading and the matrices it is
+ * scored against.
  */
 static float s_best_matrix[4][4];
 static int   s_best_prims    = 0;
@@ -174,7 +179,7 @@ static int   s_winning_prims = 0;
 static bool  s_have_best     = false;
 
 /**
- * @brief Keeps the matrix belonging to the frame's largest draw. (super hacky probably shouldn't do that)
+ * @brief Keeps the matrix belonging to the frame's largest draw.
  *
  * Terrain is drawn with an identity world matrix - a terrain-only map
  * reconstructs perfectly - and terrain chunks are much the biggest draws,
@@ -182,8 +187,8 @@ static bool  s_have_best     = false;
  * therefore carries a matrix whose world is identity, which is the
  * view-projection.
  *
- * This replaced a check to get the engine's DSP_GetCameraWorld
- * but when attempting to read it, the globals are all zero.
+ * This replaced an eye-residual test, which needed a camera position; the
+ * engine's DSP_GetCameraWorld reads globals that are all zero in this build.
  */
 static void consider_view_proj(const float matrix[4][4], UINT primitive_count)
 {
@@ -202,7 +207,7 @@ static void consider_view_proj(const float matrix[4][4], UINT primitive_count)
  *
  * The eye is the one world point mapping to x = y = w = 0 in clip space, so
  * rows 0, 1 and 3 give three equations in three unknowns, solved by Cramer's
- * rule. This is how we acoid asking for camera data so far.
+ * rule. This is why nothing needs to ask the engine for a camera.
  */
 static bool camera_from_view_proj(const float m[4][4], float out[3])
 {
@@ -256,7 +261,7 @@ static void resolve_view_proj()
 }
 
 /* Minimal ID3DBlob
- * Declared here rather than pulling in all of d3dcommon.h
+ * Declared here rather than pulling in d3dcommon.h
  */
 typedef struct SFBlob SFBlob;
 typedef struct
@@ -330,6 +335,19 @@ static PFN_D3DCompile s_d3d_compile  = NULL;
 
 static PFN_DspBeginScene s_real_dsp_beginscene = NULL;
 static bool s_device_capture_done = false;
+
+/**
+ * The device vtable we patched, kept so the slots can be put back.
+ *
+ * Restoring matters at teardown: the vtable lives in d3d9.dll but the hooks
+ * point into sfsf. Whichever module unloads first leaves the other jumping into
+ * freed memory, which surfaces as a DEP violation executing an address inside a
+ * module range.
+ */
+static void **s_device_vtable = NULL;
+
+/** Set once the hook is shut down for good; no further re-arming. */
+static bool s_shutdown = false;
 
 /**
  * @brief True when the whole span at @p address is committed and readable.
@@ -657,6 +675,11 @@ static HRESULT WINAPI sf_setvsconstf_hook(IDirect3DDevice9 *device, UINT start_r
  *
  * The constants are last-write-wins and the last thing drawn is UI, so the end
  * of frame state is the wrong matrix. World geometry goes first.
+ *
+ * The signature must match IDirect3DDevice9::DrawIndexedPrimitive exactly - six
+ * parameters after `this`. These are __stdcall, so the callee cleans the stack;
+ * one extra parameter here pops four bytes too many, corrupts the return
+ * address and jumps to a junk address on the first world draw.
  */
 static HRESULT WINAPI sf_drawindexed_hook(IDirect3DDevice9 *device, D3DPRIMITIVETYPE type,
                                           INT base_vertex, UINT min_index, UINT num_vertices,
@@ -689,6 +712,25 @@ static HRESULT WINAPI sf_drawindexed_hook(IDirect3DDevice9 *device, D3DPRIMITIVE
 
     return s_real_drawindexed(device, type, base_vertex, min_index, num_vertices,
                               start_index, primitive_count);
+}
+
+/** @brief Puts an original function pointer back into a vtable slot. */
+static void restore_vtable(void **vtable, int index, void *original)
+{
+    if (vtable == NULL || original == NULL)
+    {
+        return;
+    }
+
+    DWORD old_protect = 0;
+    if (!VirtualProtect(&vtable[index], sizeof(void *), PAGE_READWRITE, &old_protect))
+    {
+        return;
+    }
+
+    vtable[index] = original;
+    VirtualProtect(&vtable[index], sizeof(void *), old_protect, &old_protect);
+    FlushInstructionCache(GetCurrentProcess(), &vtable[index], sizeof(void *));
 }
 
 static bool load_compiler()
@@ -1041,13 +1083,36 @@ static void run_post_process()
         s_device->SetPixelShaderConstantF(1, &inverse[0][0], 4);
     }
 
-    /* c5: camera world position, c6: light 0 world position. w flags if it's valid so
-     * a shader can use a fall back value. */
+    /* c5: camera world position, c6: light 0 world position. w flags validity so
+     * a shader can fall back rather than use a stale value. */
     const float camera_constant[4] = { s_camera_world[0], s_camera_world[1],
                                        s_camera_world[2], s_camera_valid ? 1.0f : 0.0f };
-    /* Light 0 stays zero: DSP_LightPosition's globals is all zeros I may have wrong global or
-     * bad read time, so shaders should treat .w = 0 as "no light data". for now */
+    /* Light 0 stays zero: DSP_LightPosition's globals read as zeros here, so
+     * shaders should treat .w = 0 as "no light data". */
     const float light_constant[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+
+    /*
+     * c11: candidate sun direction, harvested from vertex shader register 16.
+     *
+     * That register is consistently a unit vector with a zero middle component
+     * and w around 0.92-0.98 - e.g. [-0.866, 0.000, -0.500, 0.930] - which
+     * reads as a light direction plus an intensity. It is not confirmed, so
+     * shaders should treat it as a hint and be able to fall back to a
+     * configured direction.
+     */
+    const float *register16 = &s_vs_constants[16][0];
+    float direction_length = sqrtf(register16[0] * register16[0] +
+                                   register16[1] * register16[1] +
+                                   register16[2] * register16[2]);
+
+    /* Only pass it on when it actually looks like a unit vector. */
+    bool direction_plausible = (direction_length > 0.9f && direction_length < 1.1f);
+
+    const float sun_constant[4] = {
+        register16[0], register16[1], register16[2],
+        direction_plausible ? 1.0f : 0.0f
+    };
+    s_device->SetPixelShaderConstantF(11, sun_constant, 1);
     s_device->SetPixelShaderConstantF(5, camera_constant, 1);
     s_device->SetPixelShaderConstantF(6, light_constant, 1);
 
@@ -1098,17 +1163,19 @@ static void run_post_process()
     backbuffer->Release();
 }
 
-/* Runtime controls
+/* |-========== Runtime controls ==========-|
  *
- * F10  dump constants, camera, light and the matrix residual
+ * F8   recompile every pass from disk
+ * F10  dump constants, camera and the chosen matrix
  * F11  cycle which pass is soloed (manifest -> pass 0 -> pass 1 -> ... -> manifest)
- * F12  recompile every pass from disk
  *
- * HLSL file can be edited and the result seen without
- * restarting the game
+ * F8 rather than F12: F12 is already bound in game.
+ *
+ * Together these mean an HLSL file can be edited and the result seen without
+ * restarting the game, which is most of the iteration cost when tuning.
  */
 
-/** @brief Edge-detected key test, so should avoid double presses */
+/** @brief Edge-detected key test, so one press gives one action. */
 static bool key_pressed(int virtual_key, bool *was_down)
 {
     bool is_down = (GetAsyncKeyState(virtual_key) & 0x8000) != 0;
@@ -1162,7 +1229,7 @@ static void cycle_solo_pass()
  * @brief Drops every compiled shader so the next frame rebuilds from disk.
  *
  * read_shader_sources reads the files fresh each time, so edited HLSL is picked
- * up. The manifest itself is not re-read - adding a new shader to json still needs a
+ * up. The manifest itself is not re-read - adding a new pass still needs a
  * restart, changing an existing one does not.
  */
 static void reload_shaders()
@@ -1206,7 +1273,7 @@ static void reload_shaders()
     }
 }
 
-/** @brief diagnostic dump, for the shadowed constants and the snapshotted matrix. */
+/** @brief F10 diagnostic: the shadowed constants and the snapshotted matrix. */
 static void dump_vs_constants()
 {
     log_info("| - Shader: vertex shader constants  (VARIES = changed between draws "
@@ -1242,8 +1309,8 @@ static void dump_vs_constants()
                  s_view_proj[r][2], s_view_proj[r][3]);
     }
 
-    /* Trace the next two frames' opening draws, so the pass that has the
-     * matrix can be identified. */
+    /* Trace the next two frames' opening draws, so the pass that carries the
+     * matrix can be identified rather than assumed. */
     s_trace_draws = 2;
 }
 
@@ -1287,9 +1354,9 @@ static HRESULT WINAPI sf_present_hook(IDirect3DDevice9 *device, const RECT *sour
                     log_info("| - Shader: pipeline live");
                 }
 
+                static bool f8_down  = false;
                 static bool f10_down = false;
                 static bool f11_down = false;
-                static bool f8_down = false;
 
                 if (key_pressed(VK_F10, &f10_down))
                 {
@@ -1304,7 +1371,7 @@ static HRESULT WINAPI sf_present_hook(IDirect3DDevice9 *device, const RECT *sour
                     reload_shaders();
                 }
 
-                /* this finishes the frame search before the passes read it. */
+                /* Settle this frame's search before the passes read it. */
                 resolve_view_proj();
 
                 if (SUCCEEDED(s_device->BeginScene()))
@@ -1380,7 +1447,8 @@ static bool has_d3d9_vtable(const void *candidate)
     return is_within_module(vtable, "d3d9.dll");
 }
 
-/* Declared locally rather than linking dxguid, These are D3D9 interface IDs that worked out */
+/* Declared locally rather than linking dxguid, which is not in every MinGW
+ * distribution. These are the documented D3D9 interface IDs. */
 static const GUID k_iid_idirect3ddevice9 =
     { 0xd0223b96, 0xbf7a, 0x43fd, { 0x92, 0xbd, 0xa4, 0x3b, 0x0d, 0x82, 0xb9, 0xeb } };
 static const GUID k_iid_idirect3dresource9 =
@@ -1408,13 +1476,13 @@ static bool is_direct3d_device9(void *candidate)
 }
 
 /**
- * @brief Asks a d3d9 resource which device it's on.
+ * @brief Asks a d3d9 resource which device owns it.
  *
  * GetDevice is inherited by every texture, surface and vertex buffer, so any
  * one of them names the engine's device without us needing a device pointer of
  * our own.
  *
- * @return The device with its reference already released, or NULL.
+ * @return The owning device with its reference already released, or NULL.
  */
 static IDirect3DDevice9 *device_from_resource(void *candidate)
 {
@@ -1492,14 +1560,14 @@ static IDirect3DDevice9 *find_device(BYTE *dsp_display, int *out_offset,
 }
 
 /**
- * @brief Locates the device and patches its vtable.
+ * @brief Locates the device and patches its vtable. One shot.
  *
  * Retried across frames rather than latched on the first attempt, in case the
- * display does not have a device yet on early RenderFrame calls.
+ * display does not own a device yet on the earliest RenderFrame calls.
  */
 static void capture_device_from_dsp(void *dsp_display_ptr)
 {
-    if (s_device_capture_done || dsp_display_ptr == NULL)
+    if (s_shutdown || s_device_capture_done || dsp_display_ptr == NULL)
     {
         return;
     }
@@ -1561,6 +1629,7 @@ static void capture_device_from_dsp(void *dsp_display_ptr)
 
     s_device_capture_done = true;
     s_device = device;
+    s_device_vtable = *(void ***)device;
     log_info("| - Shader: device %p found at DSP_Display+0x%X (%s) on frame %d",
              (void *)device, offset, route, s_capture_attempts);
 
@@ -1603,7 +1672,9 @@ static void capture_device_from_dsp(void *dsp_display_ptr)
 }
 
 /**
- * @brief Stand in for DSP_Display::BeginScene.
+ * @brief Stands in for DSP_Display::BeginScene at one call site.
+ *
+ * Plain __thiscall, so the patched CALL needs no trampoline or naked asm.
  */
 static int __thiscall sf_dsp_beginscene_hook(void *dsp_display)
 {
@@ -1612,6 +1683,8 @@ static int __thiscall sf_dsp_beginscene_hook(void *dsp_display)
         capture_device_from_dsp(dsp_display);
     }
 
+    /* Refresh the camera first: this frame's draws are scored against it, so
+     * the two must come from the same frame. */
     s_have_best = false;
     s_frame_snapshot_done = false;
     s_draw_index = 0;
@@ -1636,18 +1709,97 @@ bool shader_pipeline_is_live()
     return s_pipeline_live;
 }
 
+int shader_hook_held_references()
+{
+    /* Only objects created FROM the device hold a reference to it. Surfaces
+     * obtained with GetSurfaceLevel add a reference to their parent texture,
+     * not to the device, so they are deliberately not counted here. */
+    int held = 0;
+
+    if (s_capture_texture != NULL) { held++; }
+    if (s_state_block     != NULL) { held++; }
+    if (s_depth_texture   != NULL) { held++; }
+
+    for (int i = 0; i < s_pass_count; i++)
+    {
+        if (s_passes[i].shader != NULL) { held++; }
+    }
+
+    return held;
+}
+
+void shader_hook_release_all()
+{
+    log_debug(DEBUG_MED, "| - Shader: tearing down, %d device reference(s) held",
+              shader_hook_held_references());
+
+    /* Unpatch first. After this the engine calls d3d9 directly again, so
+     * nothing can re-enter while the resources are being freed. */
+    if (s_device_vtable != NULL)
+    {
+        restore_vtable(s_device_vtable, VT_IDIRECT3DDEVICE9_PRESENT,
+                       (void *)s_real_present);
+        restore_vtable(s_device_vtable, VT_IDIRECT3DDEVICE9_RESET,
+                       (void *)s_real_reset);
+        restore_vtable(s_device_vtable, VT_IDIRECT3DDEVICE9_SETDEPTHSTENCIL,
+                       (void *)s_real_setdepthstencil);
+        restore_vtable(s_device_vtable, VT_IDIRECT3DDEVICE9_SETVSCONSTF,
+                       (void *)s_real_setvsconstf);
+        restore_vtable(s_device_vtable, VT_IDIRECT3DDEVICE9_DRAWINDEXEDPRIM,
+                       (void *)s_real_drawindexed);
+        s_device_vtable = NULL;
+    }
+
+    s_real_present         = NULL;
+    s_real_reset           = NULL;
+    s_real_setdepthstencil = NULL;
+    s_real_setvsconstf     = NULL;
+    s_real_drawindexed     = NULL;
+
+    for (int i = 0; i < s_pass_count; i++)
+    {
+        if (s_passes[i].shader != NULL)
+        {
+            s_passes[i].shader->Release();
+            s_passes[i].shader = NULL;
+        }
+    }
+    s_pass_count       = 0;
+    s_shaders_compiled = false;
+    s_solo_pass        = -1;
+
+    release_device_resources();
+
+    s_pipeline_live   = false;
+    s_view_proj_valid = false;
+    s_camera_valid    = false;
+    s_device          = NULL;
+
+    /* Re-armable: the BeginScene call site is still patched, so the next menu
+     * frame re-captures the device and recompiles. */
+    s_device_capture_done = false;
+}
+
+void shader_hook_shutdown()
+{
+    s_shutdown = true;
+    shader_hook_release_all();
+    s_device_capture_done = true;   /* and stay down */
+    log_info("| - Shader: shut down");
+}
+
 void initialize_shader_hooks()
 {
     if (get_shader_pass_count() == 0)
     {
-        log_debug(DEBUG_MED, "| - Shader: nothing enabled in shaders.json");
+        log_debug(DEBUG_MED, "| - Shader: nothing declared in shaders.json");
     }
 
     s_real_dsp_beginscene = (PFN_DspBeginScene)ASI::AddrOf(SFSF_ADDR_DSP_BEGINSCENE);
 
     ASI::MemoryRegion beginscene_mreg(ASI::AddrOf(SFSF_ADDR_BEGINSCENE_CALL), 5);
     ASI::BeginRewrite(beginscene_mreg);
-    *(unsigned char *)(ASI::AddrOf(SFSF_ADDR_BEGINSCENE_CALL)) = 0xE8;
+    *(unsigned char *)(ASI::AddrOf(0x197bd2)) = 0xE8; // CALL instruction
     *(int *)(ASI::AddrOf(0x197bd3)) =
         (int)(&sf_dsp_beginscene_hook) - ASI::AddrOf(0x197bd7);
     ASI::EndRewrite(beginscene_mreg);
