@@ -67,7 +67,7 @@ static IDirect3DSurface9 *s_depth_surface = NULL;
 static bool s_depth_available = false;
 static PFN_SetDepthStencil s_real_setdepthstencil = NULL;
 
-/* World space
+/* |-========== World space ==========-|
  *
  * The engine drives its transforms through vertex shader constants - the
  * fixed-function VIEW/PROJECTION/WORLD matrices all read back as identity. The
@@ -80,6 +80,9 @@ static PFN_SetDepthStencil s_real_setdepthstencil = NULL;
  *                                            1.02 -> the projection's w row,
  *                                            near plane 1.02
  *
+ * Constants are last-write-wins and the last thing drawn each frame is UI, so
+ * the matrix is snapshotted at the first draw call instead, when world geometry
+ * is being rendered.
  */
 
 /** IDirect3DDevice9::SetVertexShaderConstantF (vtable +0x178). */
@@ -89,7 +92,7 @@ static PFN_SetDepthStencil s_real_setdepthstencil = NULL;
 #define VT_IDIRECT3DDEVICE9_DRAWINDEXEDPRIM 82
 
 /**
- * Registers to shadow. c3..c6 turned out to be a WORLD-view-projection - it
+ * Registers to shadow. c3..c6 turned out to be a world-view-projection - it
  * changes per draw - so the pure view-projection is elsewhere and the range has
  * to be wide enough to find it.
  */
@@ -97,6 +100,24 @@ static PFN_SetDepthStencil s_real_setdepthstencil = NULL;
 
 /** First register of the view-projection matrix. */
 #define SFSF_VS_VIEWPROJ_BASE 3
+
+/* |-========== A note on the engine's render-data interfaces ==========-|
+ *
+ * FUN_005de200 registers a DSP_RenderDataInterface family - GetObjectToWorld,
+ * GetObjectToClip, GetCameraWorld, GetCameraObject, SecondPass, LightPosition,
+ * AmbientLight and the texture providers. Reading them looked promising, but
+ * every global they source from - the transform block at 0xd28f68, the light
+ * positions from 0xd29444 - reads as zeros while rendering, so the engine does
+ * not drive that path in this build. There is no GetWorldToClip either, so a
+ * pure view-projection is not known currently.
+ *
+ * We still have c3..c6, which is DSP_GetObjectToClip: a WORLD-view-projection
+ * that changes per object. The view-projection is recovered from it by picking
+ * a draw whose world matrix is identity - see consider_view_proj.
+ */
+
+static float s_camera_world[3] = { 0.0f, 0.0f, 0.0f };
+static bool  s_camera_valid    = false;
 
 typedef HRESULT (WINAPI *PFN_SetVSConstF)(IDirect3DDevice9 *, UINT, const float *, UINT);
 typedef HRESULT (WINAPI *PFN_DrawIndexedPrimitive)(IDirect3DDevice9 *, D3DPRIMITIVETYPE,
@@ -111,7 +132,7 @@ static bool  s_vs_seen[SFSF_VS_CONST_TRACK];
 /**
  * Per-frame variance tracking. A register that changes between draws within one
  * frame is per-object data; one that holds still all frame but changes when the
- * camera moves is view state. That distinction is what separates the pure
+ * camera moves is view state. That can help locate the pure
  * view-projection from the world-view-projection in c3..c6.
  */
 static float s_vs_frame_start[SFSF_VS_CONST_TRACK][4];
@@ -133,8 +154,109 @@ static bool s_main_pass_active = false;
 static int s_trace_draws = 0;
 static int s_draw_index  = 0;
 
+/**
+ * Per-frame search for the view-projection.
+ *
+ * The engine doesn't appear to upload a pure view-projection - world is multiplied in on
+ * the CPU, so c3..c6 differs per object (every register from c2 to c93 tests as
+ * per-object). What separates the real one is that the camera sits at the eye
+ * as in position of camera itself means a true view-projection should map to w = 0:
+ *
+ *   residual = |dot(row3.xyz, cameraWorld) + row3.w|
+ *
+ * A world-view-projection only satisfies that if its world matrix fixes the
+ * eye, which in practice means identity / the terrain. Every main-pass draw is
+ * scored as it happens and the best is kept.
+ */
+static float s_best_matrix[4][4];
+static int   s_best_prims    = 0;
+static int   s_winning_prims = 0;
+static bool  s_have_best     = false;
+
+/**
+ * @brief Keeps the matrix belonging to the frame's largest draw. (super hacky probably shouldn't do that)
+ *
+ * Terrain is drawn with an identity world matrix - a terrain-only map
+ * reconstructs perfectly - and terrain chunks are much the biggest draws,
+ * hundreds to thousands of primitives against tens for props. The largest draw
+ * therefore carries a matrix whose world is identity, which is the
+ * view-projection.
+ *
+ * This replaced a check to get the engine's DSP_GetCameraWorld
+ * but when attempting to read it, the globals are all zero.
+ */
+static void consider_view_proj(const float matrix[4][4], UINT primitive_count)
+{
+    if ((int)primitive_count <= s_best_prims)
+    {
+        return;
+    }
+
+    memcpy(s_best_matrix, matrix, sizeof(s_best_matrix));
+    s_best_prims = (int)primitive_count;
+    s_have_best  = true;
+}
+
+/**
+ * @brief Recovers the camera position from a view-projection.
+ *
+ * The eye is the one world point mapping to x = y = w = 0 in clip space, so
+ * rows 0, 1 and 3 give three equations in three unknowns, solved by Cramer's
+ * rule. This is how we acoid asking for camera data so far.
+ */
+static bool camera_from_view_proj(const float m[4][4], float out[3])
+{
+    const float a[3][3] = {
+        { m[0][0], m[0][1], m[0][2] },
+        { m[1][0], m[1][1], m[1][2] },
+        { m[3][0], m[3][1], m[3][2] },
+    };
+    const float b[3] = { -m[0][3], -m[1][3], -m[3][3] };
+
+    float det = a[0][0] * (a[1][1] * a[2][2] - a[1][2] * a[2][1])
+              - a[0][1] * (a[1][0] * a[2][2] - a[1][2] * a[2][0])
+              + a[0][2] * (a[1][0] * a[2][1] - a[1][1] * a[2][0]);
+
+    if (det > -1e-9f && det < 1e-9f)
+    {
+        return false;
+    }
+
+    for (int col = 0; col < 3; col++)
+    {
+        float c[3][3];
+        memcpy(c, a, sizeof(c));
+        c[0][col] = b[0];
+        c[1][col] = b[1];
+        c[2][col] = b[2];
+
+        float d = c[0][0] * (c[1][1] * c[2][2] - c[1][2] * c[2][1])
+                - c[0][1] * (c[1][0] * c[2][2] - c[1][2] * c[2][0])
+                + c[0][2] * (c[1][0] * c[2][1] - c[1][1] * c[2][0]);
+
+        out[col] = d / det;
+    }
+
+    return true;
+}
+
+/** @brief Promotes the frame's winner and recovers the camera from it. */
+static void resolve_view_proj()
+{
+    if (s_have_best)
+    {
+        memcpy(s_view_proj, s_best_matrix, sizeof(s_view_proj));
+        s_view_proj_valid = true;
+        s_winning_prims   = s_best_prims;
+        s_camera_valid    = camera_from_view_proj(s_view_proj, s_camera_world);
+    }
+
+    s_have_best  = false;
+    s_best_prims = 0;
+}
+
 /* Minimal ID3DBlob
- * Declared here rather than pulling in d3dcommon.h
+ * Declared here rather than pulling in all of d3dcommon.h
  */
 typedef struct SFBlob SFBlob;
 typedef struct
@@ -178,6 +300,16 @@ typedef struct
 
 static CompiledPass s_passes[MAX_SHADER_ENTRIES];
 static int s_pass_count = 0;
+
+/**
+ * Which passes actually run. Every declared pass is compiled regardless of its
+ * "enabled" flag so it can be switched on at runtime; this array starts from
+ * the manifest and is then driven by the F11 solo cycle.
+ */
+static bool s_pass_enabled[MAX_SHADER_ENTRIES];
+
+/** -1 = follow the manifest, otherwise the index of the single soloed pass. */
+static int s_solo_pass = -1;
 
 static IDirect3DDevice9     *s_device          = NULL;
 static IDirect3DTexture9    *s_capture_texture = NULL;
@@ -525,11 +657,6 @@ static HRESULT WINAPI sf_setvsconstf_hook(IDirect3DDevice9 *device, UINT start_r
  *
  * The constants are last-write-wins and the last thing drawn is UI, so the end
  * of frame state is the wrong matrix. World geometry goes first.
- *
- * The signature must match IDirect3DDevice9::DrawIndexedPrimitive exactly - six
- * parameters after `this`. These are __stdcall, so the callee cleans the stack;
- * one extra parameter here pops four bytes too many, corrupts the return
- * address and jumps to a junk address on the first world draw.
  */
 static HRESULT WINAPI sf_drawindexed_hook(IDirect3DDevice9 *device, D3DPRIMITIVETYPE type,
                                           INT base_vertex, UINT min_index, UINT num_vertices,
@@ -540,18 +667,10 @@ static HRESULT WINAPI sf_drawindexed_hook(IDirect3DDevice9 *device, D3DPRIMITIVE
         s_draw_index++;
 
         /* Only the main scene pass carries the camera's matrix. */
-        if (!s_frame_snapshot_done && s_main_pass_active)
+        if (s_main_pass_active)
         {
-            s_frame_snapshot_done = true;
-            memcpy(s_view_proj, &s_vs_constants[SFSF_VS_VIEWPROJ_BASE][0],
-                   sizeof(s_view_proj));
-            s_view_proj_valid = true;
-
-            if (s_trace_draws > 0)
-            {
-                log_info("| - Shader: snapshot taken at draw %d (%u prims)",
-                         s_draw_index, primitive_count);
-            }
+            consider_view_proj((const float (*)[4])&s_vs_constants[SFSF_VS_VIEWPROJ_BASE][0],
+                               primitive_count);
         }
 
         /* Bounded trace: enough to see which pass draws first, not enough to
@@ -697,11 +816,8 @@ static bool compile_all_passes()
 
     for (int i = 0; i < entry_count; i++)
     {
-        if (!entries[i].enabled)
-        {
-            continue;
-        }
-
+        /* Compiled even when disabled, so F11 can switch to it without a
+         * restart. s_pass_enabled decides what actually runs. */
         char *vertex_source = NULL;
         char *pixel_source = NULL;
         if (!read_shader_sources(&entries[i], &vertex_source, &pixel_source))
@@ -720,7 +836,9 @@ static bool compile_all_passes()
 
         if (compile_pass(&entries[i], pixel_source, profile, &s_passes[s_pass_count]))
         {
-            log_info("| - Shader: compiled pass \"%s\" as %s", entries[i].name, profile);
+            s_pass_enabled[s_pass_count] = entries[i].enabled;
+            log_info("| - Shader: compiled pass \"%s\" as %s%s", entries[i].name, profile,
+                     entries[i].enabled ? "" : " (declared disabled)");
             s_pass_count++;
         }
 
@@ -923,8 +1041,30 @@ static void run_post_process()
         s_device->SetPixelShaderConstantF(1, &inverse[0][0], 4);
     }
 
+    /* c5: camera world position, c6: light 0 world position. w flags if it's valid so
+     * a shader can use a fall back value. */
+    const float camera_constant[4] = { s_camera_world[0], s_camera_world[1],
+                                       s_camera_world[2], s_camera_valid ? 1.0f : 0.0f };
+    /* Light 0 stays zero: DSP_LightPosition's globals is all zeros I may have wrong global or
+     * bad read time, so shaders should treat .w = 0 as "no light data". for now */
+    const float light_constant[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+    s_device->SetPixelShaderConstantF(5, camera_constant, 1);
+    s_device->SetPixelShaderConstantF(6, light_constant, 1);
+
+    /* c7..c10: the forward view-projection, for projecting a world position
+     * into screen space (the light, for one). */
+    if (s_view_proj_valid)
+    {
+        s_device->SetPixelShaderConstantF(7, &s_view_proj[0][0], 4);
+    }
+
     for (int i = 0; i < s_pass_count; i++)
     {
+        if (!s_pass_enabled[i])
+        {
+            continue;
+        }
+
         /* Grab whatever is in the backbuffer, including the previous pass's
          * output, so passes chain. */
         if (FAILED(s_device->StretchRect(backbuffer, NULL, s_capture_surface,
@@ -958,7 +1098,115 @@ static void run_post_process()
     backbuffer->Release();
 }
 
-/** @brief F10 diagnostic: the shadowed constants and the snapshotted matrix. */
+/* Runtime controls
+ *
+ * F10  dump constants, camera, light and the matrix residual
+ * F11  cycle which pass is soloed (manifest -> pass 0 -> pass 1 -> ... -> manifest)
+ * F12  recompile every pass from disk
+ *
+ * HLSL file can be edited and the result seen without
+ * restarting the game
+ */
+
+/** @brief Edge-detected key test, so should avoid double presses */
+static bool key_pressed(int virtual_key, bool *was_down)
+{
+    bool is_down = (GetAsyncKeyState(virtual_key) & 0x8000) != 0;
+    bool pressed = is_down && !*was_down;
+    *was_down = is_down;
+    return pressed;
+}
+
+/** @brief Restores the manifest's enabled flags. */
+static void apply_manifest_pass_state()
+{
+    int entry_count = 0;
+    const ShaderEntry *entries = get_shader_entries(&entry_count);
+
+    for (int i = 0; i < s_pass_count && i < entry_count; i++)
+    {
+        s_pass_enabled[i] = entries[i].enabled;
+    }
+}
+
+/** @brief Advances the solo cycle: manifest, then each pass in turn. */
+static void cycle_solo_pass()
+{
+    if (s_pass_count == 0)
+    {
+        return;
+    }
+
+    s_solo_pass++;
+    if (s_solo_pass >= s_pass_count)
+    {
+        s_solo_pass = -1;
+    }
+
+    if (s_solo_pass < 0)
+    {
+        apply_manifest_pass_state();
+        log_info("| - Shader: following shaders.json");
+        return;
+    }
+
+    for (int i = 0; i < s_pass_count; i++)
+    {
+        s_pass_enabled[i] = (i == s_solo_pass);
+    }
+    log_info("| - Shader: soloing pass %d/%d \"%s\"",
+             s_solo_pass + 1, s_pass_count, s_passes[s_solo_pass].name);
+}
+
+/**
+ * @brief Drops every compiled shader so the next frame rebuilds from disk.
+ *
+ * read_shader_sources reads the files fresh each time, so edited HLSL is picked
+ * up. The manifest itself is not re-read - adding a new shader to json still needs a
+ * restart, changing an existing one does not.
+ */
+static void reload_shaders()
+{
+    for (int i = 0; i < s_pass_count; i++)
+    {
+        if (s_passes[i].shader != NULL)
+        {
+            s_passes[i].shader->Release();
+            s_passes[i].shader = NULL;
+        }
+    }
+
+    int previous_solo = s_solo_pass;
+
+    s_pass_count       = 0;
+    s_shaders_compiled = false;
+    s_pipeline_live    = false;
+    s_solo_pass        = -1;
+
+    clear_mod_errors(g_shader_mod);
+    log_info("| - Shader: reloading shaders from disk");
+
+    /* Recompile immediately so failures are reported now rather than being
+     * blamed on whatever happens next frame. */
+    if (compile_all_passes())
+    {
+        log_info("| - Shader: %d pass(es) recompiled", s_pass_count);
+
+        /* Re-solo whatever was soloed before, if it still exists. */
+        if (previous_solo >= 0 && previous_solo < s_pass_count)
+        {
+            s_solo_pass = previous_solo - 1;
+            cycle_solo_pass();
+        }
+    }
+    else
+    {
+        log_warning("| - Shader: nothing compiled - previous passes are gone, "
+                    "fix the HLSL and press F12 again");
+    }
+}
+
+/** @brief diagnostic dump, for the shadowed constants and the snapshotted matrix. */
 static void dump_vs_constants()
 {
     log_info("| - Shader: vertex shader constants  (VARIES = changed between draws "
@@ -981,8 +1229,12 @@ static void dump_vs_constants()
         return;
     }
 
-    log_info("| - Shader: c3..c6 snapshot at the first main-pass draw "
-             "(currently a WORLD-view-projection, hence the drift)");
+    log_info("| - Shader: view-projection from the frame's largest draw (%d prims); "
+             "camera %s [%9.3f %9.3f %9.3f]",
+             s_winning_prims, s_camera_valid ? "derived" : "unavailable",
+             s_camera_world[0], s_camera_world[1], s_camera_world[2]);
+
+    log_info("| - Shader: chosen view-projection");
     for (int r = 0; r < 4; r++)
     {
         log_info("| -   [%9.3f %9.3f %9.3f %9.3f]",
@@ -990,8 +1242,8 @@ static void dump_vs_constants()
                  s_view_proj[r][2], s_view_proj[r][3]);
     }
 
-    /* Trace the next two frames' opening draws, so the pass that carries the
-     * matrix can be identified rather than assumed. */
+    /* Trace the next two frames' opening draws, so the pass that has the
+     * matrix can be identified. */
     s_trace_draws = 2;
 }
 
@@ -1035,13 +1287,25 @@ static HRESULT WINAPI sf_present_hook(IDirect3DDevice9 *device, const RECT *sour
                     log_info("| - Shader: pipeline live");
                 }
 
-                static bool key_was_down = false;
-                bool key_is_down = (GetAsyncKeyState(VK_F10) & 0x8000) != 0;
-                if (key_is_down && !key_was_down)
+                static bool f10_down = false;
+                static bool f11_down = false;
+                static bool f8_down = false;
+
+                if (key_pressed(VK_F10, &f10_down))
                 {
                     dump_vs_constants();
                 }
-                key_was_down = key_is_down;
+                if (key_pressed(VK_F11, &f11_down))
+                {
+                    cycle_solo_pass();
+                }
+                if (key_pressed(VK_F8, &f8_down))
+                {
+                    reload_shaders();
+                }
+
+                /* this finishes the frame search before the passes read it. */
+                resolve_view_proj();
 
                 if (SUCCEEDED(s_device->BeginScene()))
                 {
@@ -1116,8 +1380,7 @@ static bool has_d3d9_vtable(const void *candidate)
     return is_within_module(vtable, "d3d9.dll");
 }
 
-/* Declared locally rather than linking dxguid, which is not in every MinGW
- * distribution. These are the documented D3D9 interface IDs. */
+/* Declared locally rather than linking dxguid, These are D3D9 interface IDs that worked out */
 static const GUID k_iid_idirect3ddevice9 =
     { 0xd0223b96, 0xbf7a, 0x43fd, { 0x92, 0xbd, 0xa4, 0x3b, 0x0d, 0x82, 0xb9, 0xeb } };
 static const GUID k_iid_idirect3dresource9 =
@@ -1145,13 +1408,13 @@ static bool is_direct3d_device9(void *candidate)
 }
 
 /**
- * @brief Asks a d3d9 resource which device owns it.
+ * @brief Asks a d3d9 resource which device it's on.
  *
  * GetDevice is inherited by every texture, surface and vertex buffer, so any
  * one of them names the engine's device without us needing a device pointer of
  * our own.
  *
- * @return The owning device with its reference already released, or NULL.
+ * @return The device with its reference already released, or NULL.
  */
 static IDirect3DDevice9 *device_from_resource(void *candidate)
 {
@@ -1229,10 +1492,10 @@ static IDirect3DDevice9 *find_device(BYTE *dsp_display, int *out_offset,
 }
 
 /**
- * @brief Locates the device and patches its vtable. One shot.
+ * @brief Locates the device and patches its vtable.
  *
  * Retried across frames rather than latched on the first attempt, in case the
- * display does not own a device yet on the earliest RenderFrame calls.
+ * display does not have a device yet on early RenderFrame calls.
  */
 static void capture_device_from_dsp(void *dsp_display_ptr)
 {
@@ -1340,8 +1603,7 @@ static void capture_device_from_dsp(void *dsp_display_ptr)
 }
 
 /**
- * @brief Stands in for DSP_Display::BeginScene at one call site.
- *
+ * @brief Stand in for DSP_Display::BeginScene.
  */
 static int __thiscall sf_dsp_beginscene_hook(void *dsp_display)
 {
@@ -1350,7 +1612,7 @@ static int __thiscall sf_dsp_beginscene_hook(void *dsp_display)
         capture_device_from_dsp(dsp_display);
     }
 
-    /* Arm the snapshot for this frame, and rebase the variance test. */
+    s_have_best = false;
     s_frame_snapshot_done = false;
     s_draw_index = 0;
     memcpy(s_vs_frame_start, s_vs_constants, sizeof(s_vs_frame_start));
@@ -1378,17 +1640,16 @@ void initialize_shader_hooks()
 {
     if (get_shader_pass_count() == 0)
     {
-        log_debug(DEBUG_MED, "| - Shader: nothing declared in shaders.json, hook not installed");
-        return;
+        log_debug(DEBUG_MED, "| - Shader: nothing enabled in shaders.json");
     }
 
     s_real_dsp_beginscene = (PFN_DspBeginScene)ASI::AddrOf(SFSF_ADDR_DSP_BEGINSCENE);
 
     ASI::MemoryRegion beginscene_mreg(ASI::AddrOf(SFSF_ADDR_BEGINSCENE_CALL), 5);
     ASI::BeginRewrite(beginscene_mreg);
-    *(unsigned char *)(ASI::AddrOf(SFSF_ADDR_BEGINSCENE_CALL)) = 0xE8; // CALL instruction
-    *(int *)(ASI::AddrOf(SFSF_ADDR_BEGINSCENE_CALL + 1)) =
-        (int)(&sf_dsp_beginscene_hook) - ASI::AddrOf(SFSF_ADDR_BEGINSCENE_CALL + 5);
+    *(unsigned char *)(ASI::AddrOf(SFSF_ADDR_BEGINSCENE_CALL)) = 0xE8;
+    *(int *)(ASI::AddrOf(0x197bd3)) =
+        (int)(&sf_dsp_beginscene_hook) - ASI::AddrOf(0x197bd7);
     ASI::EndRewrite(beginscene_mreg);
 
     log_info("| - Shader: hooked DSP_Display::BeginScene call site, "

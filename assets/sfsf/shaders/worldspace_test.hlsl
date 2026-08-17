@@ -2,8 +2,11 @@
 //
 // Unprojects each pixel using its depth and the inverse view-projection matrix
 // the engine hands its vertex shaders, then visualises the result. If the
-// matrix is correct the pattern is LOCKED TO THE TERRAIN: pan or rotate the
-// camera and the colours should stay glued to the ground, this is not currently the case because I'm bad at math
+// matrix is correct the pattern is LOCKED TO THE TERRAIN... a pan or rotate of the
+// camera and the colours / grid should stay glued to the ground.
+//
+// This works now, but trust me it's done badly, basically, we're getting like third hand data and we try to filter out
+// Noise, works *mostly* alright, but UI is still included so we're getting bad UI bleed.
 //
 // Registers supplied by the framework:
 //   s0    = colour capture

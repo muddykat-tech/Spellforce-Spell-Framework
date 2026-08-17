@@ -156,7 +156,7 @@ void initialize_shader_module()
 
     g_shader_mod = createModInfo("Shader Module (experimental)", version_tag_buffer,
                                  "Muddykat",
-                                 "Runs HLSL post-process passes listed by sfsf\\shaders.json.");
+                                 "Runs HLSL post-process passes listed by sfsf\\shaders.json.\nUse f10 to dump debug info, f11 to cycle shaders (returns to default settings after full cycle) and f8 to recompile shaders");
     clear_mod_errors(g_shader_mod);
     register_mod_for_listing(g_shader_mod, MOD_TYPE_CORE);
 

@@ -1,4 +1,4 @@
-// 2. Pulsing Color Tint (Disco)
+// Pulsing Color Tint (Disco)
 sampler2D uTexture : register(s0);
 float4    uParams  : register(c0);
 

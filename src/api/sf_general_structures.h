@@ -811,9 +811,9 @@ typedef struct __attribute__((packed))
 {
     char mod_id[64];
     char mod_version[24];
-    char mod_description[128];
-    char mod_author[128];
-    char mod_errors[256];  //Large Buffer for all error reporting needs.
+    char mod_description[1024];
+    char mod_author[256];
+    char mod_errors[512];
 } SFMod;
 
 typedef void (*log_function_ptr)(const char *format, ...);

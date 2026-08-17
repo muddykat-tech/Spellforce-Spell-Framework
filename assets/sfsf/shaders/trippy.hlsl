@@ -1,4 +1,4 @@
-// 7. Psychedelic Effect - "trippy"
+// 7. Psychedelic Effect or just the "trippy" shader
 
 sampler2D uTexture : register(s0);
 float4    uParams  : register(c0);

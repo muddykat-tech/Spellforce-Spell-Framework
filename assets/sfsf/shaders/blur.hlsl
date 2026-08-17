@@ -13,20 +13,14 @@ sampler2D uTexture : register(s0);
 sampler2D uDepth   : register(s1);
 float4    uParams  : register(c0);
 
-// --- Tuning -----------------------------------------------------------------
-// Depth is post-projection z/w and wildly nonlinear, so these are raw depth
-// values, not metres. Start here and adjust by eye.
 #define FOCUS_START  0.980   // everything nearer than this stays sharp
 #define FOCUS_END    0.999   // at/after this, blur is at maximum
 #define MAX_RADIUS   3.0     // max offset in pixels
-// ----------------------------------------------------------------------------
 
 float4 main(float2 uv : TEXCOORD0) : COLOR0
 {
     float depth = tex2D(uDepth, uv).r;
 
-    // Sky/cleared pixels sit at the far plane. Left unblurred so the horizon
-    // doesn't smear; drop this line if you want the sky blurred too.
     float is_geometry = 1.0 - step(0.99999, depth);
 
     float blur = saturate((depth - FOCUS_START) / (FOCUS_END - FOCUS_START));
@@ -35,7 +29,7 @@ float4 main(float2 uv : TEXCOORD0) : COLOR0
     float2 texel  = float2(1.0 / uParams.x, 1.0 / uParams.y);
     float2 radius = texel * MAX_RADIUS * blur;
 
-    // 9-tap box. Centre weighted double so low-blur pixels stay crisp.
+    // 9-tap box. Centre weighted double so low-blur pixels are viable / sharper than they otherwise would be.
     float3 sum = tex2D(uTexture, uv).rgb * 2.0;
     sum += tex2D(uTexture, uv + float2(-radius.x, -radius.y)).rgb;
     sum += tex2D(uTexture, uv + float2( 0.0,      -radius.y)).rgb;

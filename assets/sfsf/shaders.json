@@ -53,6 +53,24 @@
       "fragment": "worldspace_test.hlsl",
       "enabled": false,
       "order": 8
+    },
+    {
+      "name": "godrays",
+      "fragment": "godrays.hlsl",
+      "enabled": false,
+      "order": 9
+    },
+    {
+      "name": "atmospheric",
+      "fragment": "atmospheric.hlsl",
+      "enabled": false,
+      "order": 10
+    },
+    {
+      "name": "noir",
+      "fragment": "noir.hlsl",
+      "enabled": false,
+      "order": 11
     }
   ]
 }

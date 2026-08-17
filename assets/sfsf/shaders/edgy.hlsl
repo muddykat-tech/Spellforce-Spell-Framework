@@ -1,4 +1,4 @@
-// 4. Edge Detection
+// Edge Detection
 sampler2D uTexture : register(s0);
 float4    uParams  : register(c0);
 
