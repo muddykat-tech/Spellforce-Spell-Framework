@@ -4,7 +4,7 @@
 
 **A native modding framework for SpellForce 1: Platinum Edition that supports new spells, buildings, campaigns, and UI, all in C/C++ without touching the game’s binary.**
 
-[![Latest Release](https://img.shields.io/github/v/release/muddykat-tech/Spellforce-Spell-Framework&label=release&color=blue)](https://github.com/muddykat-tech/Spellforce-Spell-Framework/releases)
+[![Latest Release](https://img.shields.io/github/v/release/muddykat-tech/Spellforce-Spell-framework?color=blue&?link=https%3A%2F%2Fgithub.com%2Fmuddykat-tech%2FSpellforce-Spell-Framework%2Freleases)](https://github.com/muddykat-tech/Spellforce-Spell-Framework/releases)
 [![Build](https://github.com/muddykat-tech/Spellforce-Spell-Framework/actions/workflows/c-release.yml/badge.svg)](https://github.com/muddykat-tech/Spellforce-Spell-Framework/actions/workflows/c-release.yml)
 [![Downloads](https://img.shields.io/github/downloads-pre/muddykat-tech/Spellforce-Spell-Framework/latest/total?label=downloads)](https://github.com/muddykat-tech/Spellforce-Spell-Framework/releases/latest)
 [![License: GPL v3](https://img.shields.io/badge/license-GPLv3-green)](LICENSE)
