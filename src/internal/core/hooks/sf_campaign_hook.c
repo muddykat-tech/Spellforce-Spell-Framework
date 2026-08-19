@@ -350,6 +350,74 @@ uint8_t __thiscall quickLoad_helper(SF_CUiMain *_this)
     return 1;
 }
 
+void bindstone_fix_helper(CAppMenu *_this, SF_String *output)
+{
+    uint8_t campaign_type = _this->CAppMenu_data.campaign_type;
+    SF_String base_path;
+    uiAPI.SFStringConstructor_wchar(&base_path, L"map\\");
+    uiAPI.SFStringConcat(output, &base_path);
+    uiAPI.SFStringDestructor(&base_path);
+
+    switch (campaign_type)
+    {
+        case 0:
+        {
+            SF_String campaign_path;
+            uiAPI.SFStringConstructor_wchar(&campaign_path, L"campaign\\");
+            uiAPI.SFStringConcat(output, &campaign_path);
+            uiAPI.SFStringDestructor(&campaign_path);
+            break;
+        }
+        case 1:
+        {
+            SF_String campaign_path;
+            uiAPI.SFStringConstructor_wchar(&campaign_path, L"campaign2\\");
+            uiAPI.SFStringConcat(output, &campaign_path);
+            uiAPI.SFStringDestructor(&campaign_path);
+            break;
+        }
+        case 2:
+        {
+            SF_String campaign_path;
+            uiAPI.SFStringConstructor_wchar(&campaign_path, L"campaign3\\");
+            uiAPI.SFStringConcat(output, &campaign_path);
+            uiAPI.SFStringDestructor(&campaign_path);
+            break;
+        }
+        default:
+        {
+            const SFSF_CampaignDef *custom = NULL;
+            int custom_idx = (int)campaign_type - SFSF_CAMPAIGN_TYPE_BASE;
+            if (custom_idx >= 0 && custom_idx < (int32_t)g_campaign_count)
+            {
+                custom = &g_campaigns[custom_idx];
+            }
+            SF_String campaign_path;
+            SF_String back_slash;
+
+            uiAPI.SFStringConstructor_char(&campaign_path, custom->campaign_folder);
+            uiAPI.SFStringConstructor_char(&back_slash, "\\");
+            uiAPI.SFStringConcat(output, &campaign_path);
+            uiAPI.SFStringConcat(output, &back_slash);
+            uiAPI.SFStringDestructor(&campaign_path);
+            uiAPI.SFStringDestructor(&back_slash);
+            break;
+        }
+    }
+}
+
+static void __declspec(naked) bindstone_fix_hook()
+{
+    asm ("mov %%esi, %%ecx   \n\t"  // Getting CUIMain
+         "call %P0           \n\t"  // Calling the Hook Function
+         "test %%eax, %%eax  \n\t"  // checking what have we returned
+         "jne 1f             \n\t"
+         "jmp *%2            \n\t"
+         "1: jmp *%1         \n\t" : : "i" (quickLoad_helper),
+         "o" (s_ql_return_ok),"o" (s_ql_return_fail) );
+}
+
+
 //We have inlined and optimized getSavePath over there, so let's just plug-in
 
 static void __declspec(naked) quickload_hook()
