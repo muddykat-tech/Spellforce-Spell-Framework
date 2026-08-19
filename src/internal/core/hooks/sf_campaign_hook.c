@@ -54,8 +54,11 @@ AC82_Zero_ptr AC82_Zero;
 CUiGameZero_ptr CUiGameZero;
 CUiGame_009a1fd0_ptr CUiGame_009a1fd0;
 typedef SF_String *(__thiscall *AC95_get_figure_name_ptr)(void *AC95, SF_String *name_buffer, uint32_t figure_id);
+typedef void (__thiscall *GetDescriptionText_ptr)(void *_this,uint32_t param_1,SF_String *name_buffer);
 
 extern AC95_get_figure_name_ptr AC95_get_figure_name;
+extern GetDescriptionText_ptr GetDescriptionText;
+
 load_character_preset_ptr load_character_preset;
 
 some_vector_fun_ptr some_vector_init; //FUN_007264d0
@@ -760,7 +763,6 @@ void startGame_helper(CAppMenu *_this, SF_GameInfo *game_info)
     SF_String template_path;
     uint32_t unused;
     SF_String *starter_kit = getTemplate(&_this->CAppMenu_data.game_info);
-    log_info("Starter kit %ls", starter_kit->raw_data);
     uiAPI.SFStringConstructor_char(&template_path, "figure_template\\starterkit\\");
 
     if (!game_info->is_coop)
@@ -949,6 +951,8 @@ void close_campaign_screen_callback(CMnuSmpButton *button)
 /**
  * @brief Builds the campaign screen
  */
+extern uint32_t g_UiDbProxy;
+
 void __thiscall show_custom_campaign_screen(CMnuSmpButton *_this)
 {
     CMnuContainer *parent = (CMnuContainer *)_this->CMnuBase_data.param_2_callback;
@@ -1016,15 +1020,24 @@ void __thiscall show_custom_campaign_screen(CMnuSmpButton *_this)
 
     for (uint32_t i = 0; i < g_campaign_count; i++)
     {
+        SF_String campaign_name;
+        uiAPI.SFStringConstructor(&campaign_name);
+
+        GetDescriptionText(g_UiDbProxy, g_campaigns[i].campaign_name_id, &campaign_name);
+
+        char *display_name = (campaign_name.str_length !=0) ?
+                             (uiAPI.SFStringCMbStr(&campaign_name)) : (g_campaigns[i].name);
         s_campaign_buttons[i] = uiAPI.attachNewButton(
             list_panel,
             btn_default, btn_pressed, btn_load, btn_disabled,
-            g_campaigns[i].name,
+            display_name,
             7,
             CAMPAIGN_ROW_X, CAMPAIGN_ROW_Y_START + (CAMPAIGN_ROW_PITCH * i),
             CAMPAIGN_ROW_W, CAMPAIGN_ROW_H,
             32 + i,
             (uint32_t)&on_campaign_selected);
+
+        uiAPI.SFStringDestructor(&campaign_name);
     }
 
     char placeholder[2] = " ";

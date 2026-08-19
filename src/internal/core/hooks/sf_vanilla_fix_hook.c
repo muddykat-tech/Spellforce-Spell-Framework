@@ -1636,9 +1636,7 @@ void __thiscall CreateSplashScreen(CAppMenu *_this, CMnuContainer **param_1, SF_
     {
         SF_String map_name;
         uiAPI.SFStringConstructor_wchar(&map_name, test_var);
-        log_info ("1 Map name from portal change %ls", map_name.raw_data);
         CreateSplashScreenHelper(_this, param_1, param_2, &map_name);
-        log_info ("2 Map name from portal change %ls", map_name.raw_data);
         uiAPI.SFStringDestructor(&map_name);
     }
     else
@@ -1647,7 +1645,6 @@ void __thiscall CreateSplashScreen(CAppMenu *_this, CMnuContainer **param_1, SF_
         if (map_name != NULL)
         {
             CreateSplashScreenHelper(_this, param_1, param_2, map_name);
-            log_info ("Map name from save: %ls", map_name->raw_data);
             uiAPI.SFStringDestructor(map_name);
             free(map_name);
         }
