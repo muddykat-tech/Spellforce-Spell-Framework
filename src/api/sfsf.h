@@ -17,7 +17,7 @@
 
 #define SPELLFRAMEWORK_VERSION_MAJOR 5
 #define SPELLFRAMEWORK_VERSION_MINOR 0
-#define SPELLFRAMEWORK_VERSION_PATCH 0
+#define SPELLFRAMEWORK_VERSION_PATCH 1
 #define CONFIG_FILE "sfsf.ini"
 typedef void (*initializeModule_ptr)(void *);
 typedef SFMod *(*registerMod_ptr)(void *);

@@ -78,6 +78,7 @@ static uint32_t s_ql_return_ok;
 static uint32_t s_ql_return_fail;
 static uint32_t s_hdr_result_ok;
 static uint32_t s_sg_return;
+static uint32_t s_bsf_return;
 void initialize_campaign_hooks()
 {
 
@@ -113,6 +114,8 @@ void initialize_campaign_hooks()
     s_ql_return_fail = ASI::AddrOf(0x5ef74c);
     s_hdr_result_ok = ASI::AddrOf(0x5fb864);
     s_sg_return = ASI::AddrOf(0x199655);
+    s_bsf_return = ASI::AddrOf(0x188c3b);
+
     hook_initfirstmap();
     hook_getsavepath();
     hook_qs_load();
@@ -353,9 +356,11 @@ uint8_t __thiscall quickLoad_helper(SF_CUiMain *_this)
 void bindstone_fix_helper(CAppMenu *_this, SF_String *output)
 {
     uint8_t campaign_type = _this->CAppMenu_data.campaign_type;
+    SF_String result;
     SF_String base_path;
+    uiAPI.SFStringConstructor_char(&result, "");
     uiAPI.SFStringConstructor_wchar(&base_path, L"map\\");
-    uiAPI.SFStringConcat(output, &base_path);
+    uiAPI.SFStringConcat(&result, &base_path);
     uiAPI.SFStringDestructor(&base_path);
 
     switch (campaign_type)
@@ -364,7 +369,7 @@ void bindstone_fix_helper(CAppMenu *_this, SF_String *output)
         {
             SF_String campaign_path;
             uiAPI.SFStringConstructor_wchar(&campaign_path, L"campaign\\");
-            uiAPI.SFStringConcat(output, &campaign_path);
+            uiAPI.SFStringConcat(&result, &campaign_path);
             uiAPI.SFStringDestructor(&campaign_path);
             break;
         }
@@ -372,7 +377,7 @@ void bindstone_fix_helper(CAppMenu *_this, SF_String *output)
         {
             SF_String campaign_path;
             uiAPI.SFStringConstructor_wchar(&campaign_path, L"campaign2\\");
-            uiAPI.SFStringConcat(output, &campaign_path);
+            uiAPI.SFStringConcat(&result, &campaign_path);
             uiAPI.SFStringDestructor(&campaign_path);
             break;
         }
@@ -380,7 +385,7 @@ void bindstone_fix_helper(CAppMenu *_this, SF_String *output)
         {
             SF_String campaign_path;
             uiAPI.SFStringConstructor_wchar(&campaign_path, L"campaign3\\");
-            uiAPI.SFStringConcat(output, &campaign_path);
+            uiAPI.SFStringConcat(&result, &campaign_path);
             uiAPI.SFStringDestructor(&campaign_path);
             break;
         }
@@ -397,24 +402,27 @@ void bindstone_fix_helper(CAppMenu *_this, SF_String *output)
 
             uiAPI.SFStringConstructor_char(&campaign_path, custom->campaign_folder);
             uiAPI.SFStringConstructor_char(&back_slash, "\\");
-            uiAPI.SFStringConcat(output, &campaign_path);
-            uiAPI.SFStringConcat(output, &back_slash);
+            uiAPI.SFStringConcat(&result, &campaign_path);
+            uiAPI.SFStringConcat(&result, &back_slash);
             uiAPI.SFStringDestructor(&campaign_path);
             uiAPI.SFStringDestructor(&back_slash);
             break;
         }
     }
+    uiAPI.SFStringDeepCopy(output, &result);
+    uiAPI.SFStringDestructor(&result);
 }
 
 static void __declspec(naked) bindstone_fix_hook()
 {
-    asm ("mov %%esi, %%ecx   \n\t"  // Getting CUIMain
-         "call %P0           \n\t"  // Calling the Hook Function
-         "test %%eax, %%eax  \n\t"  // checking what have we returned
-         "jne 1f             \n\t"
-         "jmp *%2            \n\t"
-         "1: jmp *%1         \n\t" : : "i" (quickLoad_helper),
-         "o" (s_ql_return_ok),"o" (s_ql_return_fail) );
+    asm ("lea -0x174(%%ebp), %%ecx    \n\t"  // Getting local_178 as output string
+         "push %%ecx                \n\t"
+         "push %%edi                \n\t" // Getting CAppMenu
+         "call %P0                  \n\t" // Calling the Hook Function
+         "pop %%edi                 \n\t" // Stack cleanup
+         "pop %%ecx                 \n\t" // Stack cleanup
+         "jmp *%1         \n\t" : : "i" (bindstone_fix_helper),
+         "o" (s_bsf_return));
 }
 
 
@@ -470,6 +478,7 @@ static void __declspec(naked) hdr_helper()
          "o" (s_hdr_result_ok) );
 }
 
+
 void hook_ql_helper()
 {
     ASI::MemoryRegion mreg_qs(ASI::AddrOf(0x5ef43a), 6);
@@ -485,6 +494,13 @@ void hook_ql_helper()
     *(unsigned char *)(ASI::AddrOf(0x5fb828)) = 0xE9;  // JMP instruction
     *(int *)(ASI::AddrOf(0x5fb829)) = (int)(&hdr_helper) - ASI::AddrOf(0x5fb82d);
     ASI::EndRewrite(mreg_hdr);
+
+    ASI::MemoryRegion mreg_bs(ASI::AddrOf(0x188c09), 6);
+    ASI::BeginRewrite(mreg_bs);
+    *(unsigned char *)(ASI::AddrOf(0x188c09)) = 0x90;  // NOP
+    *(unsigned char *)(ASI::AddrOf(0x188c0a)) = 0xE9;  // JMP instruction
+    *(int *)(ASI::AddrOf(0x188c0b)) = (int)(&bindstone_fix_hook) - ASI::AddrOf(0x188c0f);
+    ASI::EndRewrite(mreg_bs);
 
 }
 
