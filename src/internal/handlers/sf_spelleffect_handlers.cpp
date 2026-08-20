@@ -797,83 +797,85 @@ void __thiscall effect_self_illusion(SF_CGdSpell *_this, uint16_t spell_index)
             stats.wspeed = _this->SF_CGdFigure->figures[source_index].walk_speed.base_val;
             stats.cspeed = _this->SF_CGdFigure->figures[source_index].cast_speed.base_val;
             stats.scaling = _this->SF_CGdFigure->figures[source_index].scaling;
-
-            for (int i = 0; i< summon_count - existing_clones; i++)
+            if (summon_count != existing_clones)
             {
-                SF_Coord caster_pos = _this->SF_CGdFigure->figures[source_index].position;
-                SF_Coord initial_offset = {1,10};
-                SF_Coord figure_pos = {0,0};
-                uint16_t sector = _this->SF_CGdWorld->cells[caster_pos.Y * 400 + caster_pos.X].sector;
-
-                if (toolboxAPI.findClosestFreePosition(_this->SF_CGdWorldToolBox, &caster_pos, &initial_offset, sector,
-                                                       &figure_pos))
+                for (int i = 0; i < summon_count - existing_clones; i++)
                 {
-                    uint16_t figure_index = reserveFigure(_this->SF_CGdFigureToolBox, figure_pos.X, figure_pos.Y,
-                                                          _this->SF_CGdFigure->figures[source_index].owner, &stats,
-                                                          TASK_NPC, 0x1c);
-                    if (figure_index != 0)
+                    SF_Coord caster_pos = _this->SF_CGdFigure->figures[source_index].position;
+                    SF_Coord initial_offset = {1,10};
+                    SF_Coord figure_pos = {0,0};
+                    uint16_t sector = _this->SF_CGdWorld->cells[caster_pos.Y * 400 + caster_pos.X].sector;
+
+                    if (toolboxAPI.findClosestFreePosition(_this->SF_CGdWorldToolBox, &caster_pos, &initial_offset,
+                                                           (uint16_t)(-1), &figure_pos))
                     {
-                        GdFigure *figure = &_this->SF_CGdFigure->figures[figure_index];
-                        figure->flags |= ILLUSION;
-                        figure->master_figure = source_index;
-                        figureAPI.setJob(_this->SF_CGdFigureJobs, figure_index, kGdJobPetIdle);
-                        figureAPI.setTask(_this->SF_CGdFigure, figure_index, TASK_PET);
-                        SF_CGdFigureWeaponStats weapon_stats;
-
-                        getWeaponStats(_this->SF_CGdFigure, source_index, 0, &weapon_stats);
-                        weapon_stats.min_dmg = 0;
-                        weapon_stats.max_dmg = 0;
-                        setWeaponStats(_this->SF_CGdFigure, figure_index, 0, &weapon_stats);
-
-                        getWeaponStats(_this->SF_CGdFigure, source_index, 1, &weapon_stats);
-                        weapon_stats.min_dmg = 0;
-                        weapon_stats.max_dmg = 0;
-                        setWeaponStats(_this->SF_CGdFigure, figure_index, 1, &weapon_stats);
-
-                        for (int j = 0; j < 15; j++)
+                        uint16_t figure_index = reserveFigure(_this->SF_CGdFigureToolBox, figure_pos.X, figure_pos.Y,
+                                                              _this->SF_CGdFigure->figures[source_index].owner, &stats,
+                                                              TASK_NPC, 0x1c);
+                        if (figure_index != 0)
                         {
-                            SF_SGtFigureAction action;
-                            aiAPI.getFigureAction(_this->SF_CGdFigure, &action, source_index, j);
-                            if ((action.type != 0xFFFF) && (action.type >= 10000))
+                            GdFigure *figure = &_this->SF_CGdFigure->figures[figure_index];
+                            figure->flags |= ILLUSION;
+                            figure->master_figure = source_index;
+                            figureAPI.setJob(_this->SF_CGdFigureJobs, figure_index, kGdJobPetIdle);
+                            figureAPI.setTask(_this->SF_CGdFigure, figure_index, TASK_PET);
+                            SF_CGdFigureWeaponStats weapon_stats;
+
+                            getWeaponStats(_this->SF_CGdFigure, source_index, 0, &weapon_stats);
+                            weapon_stats.min_dmg = 0;
+                            weapon_stats.max_dmg = 0;
+                            setWeaponStats(_this->SF_CGdFigure, figure_index, 0, &weapon_stats);
+
+                            getWeaponStats(_this->SF_CGdFigure, source_index, 1, &weapon_stats);
+                            weapon_stats.min_dmg = 0;
+                            weapon_stats.max_dmg = 0;
+                            setWeaponStats(_this->SF_CGdFigure, figure_index, 1, &weapon_stats);
+
+                            for (int j = 0; j < 15; j++)
                             {
-                                figureAPI.addAction(_this->SF_CGdFigure, figure_index, &action);
+                                SF_SGtFigureAction action;
+                                aiAPI.getFigureAction(_this->SF_CGdFigure, &action, source_index, j);
+                                if ((action.type != 0xFFFF) && (action.type >= 10000))
+                                {
+                                    figureAPI.addAction(_this->SF_CGdFigure, figure_index, &action);
+                                }
                             }
+                            for (int j = 0; j < 16; j++)
+                            {
+                                uint16_t eq_id = _this->SF_CGdFigure->figures[source_index].equipment[j];
+                                figure->equipment[j] = eq_id;
+                            }
+                            uint16_t armour = figureAPI.getCurrentStat(_this->SF_CGdFigure, source_index, ARMOR);
+                            figure->armor.base_val = (armour * scale_factor) / 100;
+
+                            SF_CGdTargetData source;
+                            source.entity_index = source_index;
+                            source.entity_type = 1;
+                            source.position = {0,0};
+
+                            SF_CGdTargetData target;
+                            target.entity_index = figure_index;
+                            target.entity_type = 1;
+                            target.position = {0,0};
+
+                            SF_Rectangle rect = {0,0};
+
+                            uint16_t effect_index = effectAPI.addEffect(_this->SF_CGdEffect, kGdEffectSpellHitTarget,
+                                                                        &source,
+                                                                        &target, _this->OpaqueClass->current_step, 0,
+                                                                        &rect);
+                            if (effect_index !=0 )
+                            {
+                                effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_SPELL_ID,
+                                                         spell->spell_id);
+                            }
+                            toolboxAPI.addSpellToFigure(_this->SF_CGdFigureToolBox, figure_index, spell_index);
                         }
-                        for (int j = 0; j < 16; j++)
-                        {
-                            uint16_t eq_id = _this->SF_CGdFigure->figures[source_index].equipment[j];
-                            figure->equipment[j] = eq_id;
-                        }
-                        uint16_t armour = figureAPI.getCurrentStat(_this->SF_CGdFigure, source_index, ARMOR);
-                        figure->armor.base_val = (armour * scale_factor) / 100;
-
-                        SF_CGdTargetData source;
-                        source.entity_index = source_index;
-                        source.entity_type = 1;
-                        source.position = {0,0};
-
-                        SF_CGdTargetData target;
-                        target.entity_index = figure_index;
-                        target.entity_type = 1;
-                        target.position = {0,0};
-
-                        SF_Rectangle rect = {0,0};
-
-                        uint16_t effect_index = effectAPI.addEffect(_this->SF_CGdEffect, kGdEffectSpellHitTarget,
-                                                                    &source,
-                                                                    &target, _this->OpaqueClass->current_step, 0,
-                                                                    &rect);
-                        if (effect_index !=0 )
-                        {
-                            effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_SPELL_ID,
-                                                     spell->spell_id);
-                        }
-                        toolboxAPI.addSpellToFigure(_this->SF_CGdFigureToolBox, figure_index, spell_index);
                     }
                 }
+                spell->to_do_count = (spell_data.params[2] * 10) / 1000;
+                return;
             }
-            spell->to_do_count = (spell_data.params[2] * 10) / 1000;
-            return;
         }
         if (existing_clones != 0)
         {
