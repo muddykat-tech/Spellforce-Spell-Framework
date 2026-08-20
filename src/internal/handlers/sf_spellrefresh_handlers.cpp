@@ -34,8 +34,8 @@ int __thiscall slowness_refresh_handler(SF_CGdSpell *_this,
 
     if (hasSpell)
     {
-        uint16_t spell_index_of_type = toolboxAPI.getSpellIndexOfType(_this->SF_CGdFigureToolBox,target_index,
-                                                                      spell_line,spell_index);
+        uint16_t spell_index_of_type = toolboxAPI.getSpellIndexOfType(_this->SF_CGdFigureToolBox, target_index,
+                                                                      spell_line, spell_index);
         if (spell_index_of_type)
         {
             spellAPI.removeDLLNode(_this, spell_index_of_type);

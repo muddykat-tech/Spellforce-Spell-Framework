@@ -67,7 +67,7 @@ void __thiscall SFStringConstructor(SF_String *_this)
  * @note Relies on uiAPI.SFStringSetLength, which is registered at the very top
  * of initialize_data_hooks() before any code path that can call this.
  */
-SF_String * __thiscall SFStringConstructor_char(SF_String *_this, const char *char_string)
+SF_String *__thiscall SFStringConstructor_char(SF_String *_this, const char *char_string)
 {
     SFStringConstructor(_this);
     uint32_t length = 0;
@@ -352,8 +352,10 @@ void show_mod_details(int mod_index)
                            MOD_INFO_PANEL_WIDTH, MOD_INFO_AUTHOR_Y, MOD_INFO_AUTHOR_H);
     set_centred_label_text(mod_struct.type_label, get_mod_type_label(entry->type),
                            MOD_INFO_PANEL_WIDTH, MOD_INFO_TYPE_Y, MOD_INFO_TYPE_H);
-    set_centred_label_text(mod_struct.desc_label, wrapped_description, MOD_INFO_PANEL_WIDTH, MOD_INFO_DESC_Y, MOD_INFO_DESC_H);
-    set_centred_label_text(mod_struct.error_label, wrapped_error_info, MOD_INFO_PANEL_WIDTH, MOD_INFO_ERROR_Y, MOD_INFO_ERROR_H);
+    set_centred_label_text(mod_struct.desc_label, wrapped_description,
+                           MOD_INFO_PANEL_WIDTH, MOD_INFO_DESC_Y, MOD_INFO_DESC_H);
+    set_centred_label_text(mod_struct.error_label, wrapped_error_info,
+                           MOD_INFO_PANEL_WIDTH, MOD_INFO_ERROR_Y, MOD_INFO_ERROR_H);
 }
 
 /**
@@ -512,7 +514,7 @@ void build_mod_info_panel(CMnuContainer *info_panel)
     mod_struct.desc_label = uiAPI.attachLabel(nullptr, info_panel, placeholder,
                                               11, 0, MOD_INFO_DESC_Y,
                                               MOD_INFO_PANEL_WIDTH, MOD_INFO_DESC_H);
-                                              
+
     uiAPI.setMenuID(mod_struct.desc_label, 0x6);
 
     mod_struct.error_label = uiAPI.attachLabel(nullptr, info_panel, placeholder,
@@ -534,7 +536,7 @@ void __fastcall close_mod_list_callback(CMnuSmpButton *button, int32_t *cui_menu
     is_mod_list_shown = false;
 }
 
-CMnuContainer * __thiscall createContainer(
+CMnuContainer *__thiscall createContainer(
     uint16_t x,
     uint16_t y,
     uint16_t width,
@@ -689,7 +691,7 @@ void __thiscall show_mod_list(CMnuSmpButton *button)
     }
 }
 
-CMnuSmpButton * __thiscall attachNewButton(CMnuContainer *parent,
+CMnuSmpButton *__thiscall attachNewButton(CMnuContainer *parent,
                                            char *button_mesh_default,
                                            char *button_mesh_pressed,
                                            char *button_initial_load_mesh,
@@ -728,7 +730,9 @@ CMnuSmpButton * __thiscall attachNewButton(CMnuContainer *parent,
         g_create_sf_string(&m_mesh_string_disabled, button_mesh_disabled);
 
     // 0x3b0 seems to corralate to CUiStartMenu, but is directly cast to be a type of CUiFrameStats
-    new_button = (CMnuSmpButton *)uiAPI.newOperator(0x428); // 0x368, 0x3b0 and 0x708 are all valid. (I suspect that they're creating objects that have CMnuLabel as a Parent Class).
+    // 0x368, 0x3b0 and 0x708 are all valid. (I suspect that they're creating
+    // objects that have CMnuLabel as a Parent Class).
+    new_button = (CMnuSmpButton *)uiAPI.newOperator(0x428);
 
     if (font_index > 32)
     {
@@ -741,8 +745,8 @@ CMnuSmpButton * __thiscall attachNewButton(CMnuContainer *parent,
 
     uiAPI.CMnuBaseSetName((CMnuBase *)new_button, label_string);
 
-    uiAPI.createButton(new_button,x_pos,y_pos,width,height,mesh_string_default,
-                       init_load_mesh,mesh_string_pressed,mesh_string_disabled);
+    uiAPI.createButton(new_button, x_pos, y_pos, width, height, mesh_string_default,
+                       init_load_mesh, mesh_string_pressed, mesh_string_disabled);
 
     uiAPI.setFont(new_button, selected_font);
 
@@ -778,7 +782,7 @@ CMnuSmpButton * __thiscall attachNewButton(CMnuContainer *parent,
     return new_button;
 }
 
-SFMod *createModInfo(const char *mod_id,const char *mod_version,
+SFMod *createModInfo(const char *mod_id, const char *mod_version,
                      const char *mod_author, const char *mod_description)
 {
     SFMod *mod = (SFMod *)malloc(sizeof(SFMod));
@@ -830,7 +834,7 @@ SFMod *createModInfo(const char *mod_id,const char *mod_version,
    }
  */
 
-CMnuLabel * __thiscall attachMeshedLabel(CMnuLabel *new_label,
+CMnuLabel *__thiscall attachMeshedLabel(CMnuLabel *new_label,
                                          CMnuContainer *parent,
                                          char *mesh_char,
                                          char *label_char,
@@ -873,7 +877,7 @@ CMnuLabel * __thiscall attachMeshedLabel(CMnuLabel *new_label,
     return new_label;
 }
 
-CMnuLabel * __thiscall attachLabel(CMnuLabel *label_ptr,
+CMnuLabel *__thiscall attachLabel(CMnuLabel *label_ptr,
                                    CMnuContainer *parent,
                                    char *label_chars, uint8_t font_index,
                                    uint16_t x_pos, uint16_t y_pos,

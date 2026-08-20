@@ -11,6 +11,7 @@
 #define MAX_POINTS 255
 #define MAX_COLLISIONS 5
 #define MAX_RESOURCES 5
+#define MAX_RESOURCE_TYPE_LEN 32
 
 typedef struct
 {
@@ -28,7 +29,7 @@ typedef struct
 typedef struct
 {
     int amount;
-    char type[32];
+    char type[MAX_RESOURCE_TYPE_LEN];
 } Resource;
 
 typedef struct

@@ -18,7 +18,7 @@ extern CMnuScreen_attach_control_ptr CMnuScreen_attach_control;
 
 extern CMnuLabel *sfsf_version_label;
 
-void __thiscall sf_menu_hook(uint32_t _CAppMenu);
+void __thiscall sf_menu_hook(CAppMenu *_this);
 uint16_t __thiscall sf_ui_overlay_fix(SF_CGdFigure *_this, void *CGdResource, uint16_t spell_id, uint16_t figure_id);
 
 void initialize_menu_data_hooks();

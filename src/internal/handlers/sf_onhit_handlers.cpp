@@ -250,7 +250,7 @@ uint16_t __thiscall assistance_onhit_handler(SF_CGdFigureJobs *_this,
         if ((figureAPI.isAlive(_this->CGdFigure, figure_id))
             && (toolboxAPI.isTargetable(_this->CGdFigureToolBox, figure_id)))
         {
-            if (toolboxAPI.figuresCheckFriendly(_this->CGdFigureToolBox,target_index, figure_id))
+            if (toolboxAPI.figuresCheckFriendly(_this->CGdFigureToolBox, target_index, figure_id))
             {
 
                 if (figure_id != target_index)

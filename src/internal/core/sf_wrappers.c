@@ -23,7 +23,7 @@
  * @{
  */
 
-typedef uint32_t (__thiscall *XDataGet_ptr)(void *_this,uint16_t key,uint8_t keyType);
+typedef uint32_t (__thiscall *XDataGet_ptr)(void *_this, uint16_t key, uint8_t keyType);
 typedef uint32_t (__thiscall *CGdXDataExists_ptr)(void *_this, uint16_t key, uint8_t keyType);
 
 SF_String_ctor_ptr g_create_sf_string;
@@ -166,7 +166,7 @@ void log_error(const char *format, ...)
     console_log(modifiedMessage);
 }
 
-const char * debug_level_to_string(DebugLevel level)
+const char *debug_level_to_string(DebugLevel level)
 {
     switch (level)
     {
@@ -596,9 +596,7 @@ void __thiscall addBonusMultToStatistic(SF_CGdFigure *figure,
         case FIGHT_SPEED:        statistic = &figure->figures[target].fight_speed; break;
         case CAST_SPEED:         statistic = &figure->figures[target].cast_speed; break;
 
-        default:
-            log_warning("INVALID STATISTIC KEY: %d", key);
-            return;
+        default: log_warning("INVALID STATISTIC KEY: %d", key); return;
     }
 
     figureAPI.addBonusMult(statistic, value);

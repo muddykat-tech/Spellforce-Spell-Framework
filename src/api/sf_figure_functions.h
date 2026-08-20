@@ -29,11 +29,11 @@ DECLARE_FUNCTION(void, rescaleMana, SF_CGdFigure *figure, uint16_t figure_id,
 DECLARE_FUNCTION(void, rescaleHealth, SF_CGdFigure *figure, uint16_t figure_id,
                  uint16_t max_health);
 DECLARE_FUNCTION(uint16_t, getJob, SF_CGdFigure *figure, uint16_t figure_id);
-DECLARE_FUNCTION(uint16_t, getAggroValue, SF_CGdFigure * _this,
+DECLARE_FUNCTION(uint16_t, getAggroValue, SF_CGdFigure *_this,
                  uint16_t figure_id, uint16_t target_index);
-DECLARE_FUNCTION(void, setAggroValue, SF_CGdFigure * _this, uint16_t figure_id,
+DECLARE_FUNCTION(void, setAggroValue, SF_CGdFigure *_this, uint16_t figure_id,
                  uint16_t target_index, uint16_t aggroValue, uint32_t unkn);
-DECLARE_FUNCTION(void *, getHealersList, SF_CGdFigure * _this, void *autoclass9,
+DECLARE_FUNCTION(void *, getHealersList, SF_CGdFigure *_this, void *autoclass9,
                  uint16_t figure_id);
 DECLARE_FUNCTION(bool, isFlagSet, SF_CGdFigure *figure, uint16_t figure_index,
                  GdFigureFlags flag);
@@ -56,11 +56,11 @@ DECLARE_FUNCTION(bool, isSiegeUnit, SF_CGdFigure *figure, uint16_t figure_id);
 DECLARE_FUNCTION(bool, FUN_006e3a90, SF_CGdFigureJobs *_this, uint16_t figure_id);
 DECLARE_FUNCTION(void, prepareJobTransition, SF_CGdFigureJobs *_this, uint16_t figure_id, uint16_t job_from,
                  uint16_t job_to);
-DECLARE_FUNCTION(void, setJob, SF_CGdFigureJobs *_this,uint16_t figure_id,uint16_t job_id);
+DECLARE_FUNCTION(void, setJob, SF_CGdFigureJobs *_this, uint16_t figure_id, uint16_t job_id);
 DECLARE_FUNCTION(void, onStartJob,  SF_CGdFigureJobs *_this, uint16_t figure_id, uint16_t job_id);
 DECLARE_FUNCTION(void, disposeHealerList, void *healer_list);
-DECLARE_FUNCTION(void, setFigureWalkPos, SF_CGdFigureJobs *_this,uint16_t figure_id,SF_Coord *target_pos,
-                 uint8_t walk_mode,uint32_t param_4);
+DECLARE_FUNCTION(void, setFigureWalkPos, SF_CGdFigureJobs *_this, uint16_t figure_id, SF_Coord *target_pos,
+                 uint8_t walk_mode, uint32_t param_4);
 /**
  * @ingroup API
  * @brief Group of functions to manipulate the behavior and statistics of the game figures (units)

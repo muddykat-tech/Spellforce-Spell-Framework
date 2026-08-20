@@ -5,7 +5,7 @@
 #include "./structures/sf_toolbox_structures.h"
 
 // Declare the function pointers for the ToolboxFunctions group
-DECLARE_FUNCTION(void, dealDamage, SF_CGdFigureToolbox *CGdFigureToolbox,uint16_t source_index, uint16_t target_index,
+DECLARE_FUNCTION(void, dealDamage, SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t source_index, uint16_t target_index,
                  uint32_t damage, uint32_t is_spell_damage, uint32_t param5, uint32_t param6);
 DECLARE_FUNCTION(bool, isTargetable, SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t figure_index);
 DECLARE_FUNCTION(uint16_t, figuresCheckHostile, SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t source_index,
@@ -56,15 +56,15 @@ DECLARE_FUNCTION(uint32_t, getFigureXData, SF_CGdFigureToolbox *_this, uint16_t 
 DECLARE_FUNCTION(void, setFigureXData, SF_CGdFigureToolbox *_this, uint16_t figure_id, uint8_t xdata_type,
                  uint32_t value);
 
-DECLARE_FUNCTION(void, equipArtisanArmour, SF_CGdFigureToolbox* _this, uint16_t figure_id);
-DECLARE_FUNCTION(void, equipArtisanTools, SF_CGdFigureToolbox* _this, uint16_t figure_id, uint32_t param2,
+DECLARE_FUNCTION(void, equipArtisanArmour, SF_CGdFigureToolbox *_this, uint16_t figure_id);
+DECLARE_FUNCTION(void, equipArtisanTools, SF_CGdFigureToolbox *_this, uint16_t figure_id, uint32_t param2,
                  uint32_t param3);
 
 DECLARE_FUNCTION(uint8_t, getSightRange, SF_CGdFigureToolbox *_this, uint16_t figure_id);
 // getDistance(SF_Coord *pointA, SF_Coord *pointB)
 DECLARE_FUNCTION(uint32_t, getDistance, SF_Coord *pointA, SF_Coord *pointB);
 
-DECLARE_FUNCTION(uint16_t, findClosestMonument, void *SF_CGdObjectToolBox,uint16_t figure_id,uint16_t *result);
+DECLARE_FUNCTION(uint16_t, findClosestMonument, void *SF_CGdObjectToolBox, uint16_t figure_id, uint16_t *result);
 
 DECLARE_FUNCTION(void, doMapOutCry, void *AC30, uint16_t outCryType, uint16_t owner, uint8_t param3, uint16_t param4,
                  uint16_t pos_x, uint16_t pos_y);
@@ -74,7 +74,8 @@ DECLARE_FUNCTION(void, doMapOutCry, void *AC30, uint16_t outCryType, uint16_t ow
 
 /**
  * @ingroup API
- * @brief Holds most of the Toolbox Functions relevent for custom spells. Includes functions for the manipulation of Figures.
+ * @brief Holds most of the Toolbox Functions relevent for custom spells. Includes functions for the manipulation of
+ * Figures.
  */
 typedef struct
 {

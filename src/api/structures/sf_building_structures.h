@@ -130,6 +130,6 @@ struct __attribute__((packed)) SF_CGdResource
     uint32_t not_annotated[46];
 };
 
-typedef void (__thiscall *addBuilding_ptr)(void *_this,void *struct1, void *struct2);
+typedef void (__thiscall *addBuilding_ptr)(void *_this, void *struct1, void *struct2);
 typedef void (__thiscall *addBuildingAuxData_ptr)(void *_this, BuildingAuxEntry_related *entry, uint8_t *building_id);
 typedef void (__thiscall *setCollisionListSize_ptr)(uint_list_node *_this, uint8_t list_size);

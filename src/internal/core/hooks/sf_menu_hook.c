@@ -117,21 +117,23 @@ CMnuSmpButton *open_campaign_screen;
 SFSF_ModlistStruct mod_struct;
 CMnuLabel *sfsf_version_label;
 
-void __attribute__((no_caller_saved_registers, thiscall))
-sf_menu_hook(uint32_t _CAppMenu)
+uint32_t g_UiDbProxy;
+void __attribute__((no_caller_saved_registers, thiscall)) sf_menu_hook(CAppMenu *_this)
 {
     log_info("Starting Menu Hook");
 
     reset_mod_list_screen();
 
-    campaign_hook_on_main_menu((CAppMenu *)_CAppMenu);
+    campaign_hook_on_main_menu(_this);
 
     char sfsf_info[256];
     snprintf(sfsf_info, sizeof(sfsf_info),
              "Spell Framework %s\n%d Mod(s) Loaded with %d Error(s)",
              g_framework_mod->mod_version, g_mod_count, g_error_count);
 
-    CMnuContainer *container = *(CMnuContainer **)(_CAppMenu + 0x58);
+    CMnuContainer *container = *(CMnuContainer **)((uint32_t)_this + 0x58);
+
+    g_UiDbProxy = _this->CAppMenu_data.UiDbProxy;
 
     sfsf_version_label = uiAPI.attachLabel(sfsf_version_label, container, sfsf_info,
                                            6, 10, 729, strlen(sfsf_info) * 4, 100);
@@ -186,7 +188,7 @@ sf_menu_hook(uint32_t _CAppMenu)
                                                      (uint32_t)&show_custom_campaign_screen);
     }
 
-    s_menu_func(_CAppMenu);
+    s_menu_func(_this);
 }
 
 bool hasThisAuraRunning(SF_CGdFigureToolbox *_this, uint16_t aura_spell_id, uint16_t figure_id)

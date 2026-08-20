@@ -43,7 +43,8 @@ typedef uint32_t (__thiscall *CMnuBaseFlagGetter_ptr)(CMnuBase *_this);
 typedef void (__thiscall *CUtlCallBackInit_ptr)(void *_this, void *param1, void *param2, uint32_t param3);
 typedef void (__thiscall *CUiGameZero_ptr)(void *_this);
 typedef void (__thiscall *CUiGame_009a1fd0_ptr)(void *_this, uint32_t param1);
-
+typedef void (__thiscall *load_character_preset_ptr)(CAppMenu *_this, SF_String *name, void *AC11);
+typedef SF_String *(__thiscall *getTemplate_ptr)(SF_GameInfo *_this);
 
 static GetDataStorageLocation_ptr s_getDataStorageLocation;
 CMnuBaseFlagGetter_ptr CMnuBaseIsVisible;
@@ -53,12 +54,17 @@ AC82_Zero_ptr AC82_Zero;
 CUiGameZero_ptr CUiGameZero;
 CUiGame_009a1fd0_ptr CUiGame_009a1fd0;
 typedef SF_String *(__thiscall *AC95_get_figure_name_ptr)(void *AC95, SF_String *name_buffer, uint32_t figure_id);
+typedef void (__thiscall *GetDescriptionText_ptr)(void *_this,uint32_t param_1,SF_String *name_buffer);
 
 extern AC95_get_figure_name_ptr AC95_get_figure_name;
+extern GetDescriptionText_ptr GetDescriptionText;
+
+load_character_preset_ptr load_character_preset;
 
 some_vector_fun_ptr some_vector_init; //FUN_007264d0
 some_vector_fun_ptr some_vector_dispose; // FUN_006115e0
 CUtlCallBackInit_ptr CUtlCallBackInit;
+getTemplate_ptr getTemplate;
 
 // Declared in sf_campaign_hook.h so the core modules can validate their assets.
 checkFileExists_ptr checkFileExists;
@@ -66,10 +72,13 @@ checkFileExists_ptr checkFileExists;
 static void hook_qs_load();
 static void hook_check_dirs();
 static void hook_ql_helper();
+static void hook_start_game();
 
 static uint32_t s_ql_return_ok;
 static uint32_t s_ql_return_fail;
 static uint32_t s_hdr_result_ok;
+static uint32_t s_sg_return;
+static uint32_t s_bsf_return;
 void initialize_campaign_hooks()
 {
 
@@ -98,15 +107,21 @@ void initialize_campaign_hooks()
     CUtlCallBackInit = (CUtlCallBackInit_ptr)(ASI::AddrOf(0x5de450));
     CUiGameZero = (CUiGameZero_ptr)(ASI::AddrOf(0x5a1af0));
     CUiGame_009a1fd0 = (CUiGame_009a1fd0_ptr)(ASI::AddrOf(0x5a1fd0));
+    load_character_preset = (load_character_preset_ptr)(ASI::AddrOf(0x18fc90));
+    getTemplate = (getTemplate_ptr)(ASI::AddrOf(0x176010));
 
     s_ql_return_ok = ASI::AddrOf(0x5ef663);
     s_ql_return_fail = ASI::AddrOf(0x5ef74c);
     s_hdr_result_ok = ASI::AddrOf(0x5fb864);
+    s_sg_return = ASI::AddrOf(0x199655);
+    s_bsf_return = ASI::AddrOf(0x188c3b);
+
     hook_initfirstmap();
     hook_getsavepath();
     hook_qs_load();
     hook_check_dirs();
     hook_ql_helper();
+    hook_start_game();
 
     initialize_preparenewgame_rewrite();
 
@@ -338,6 +353,79 @@ uint8_t __thiscall quickLoad_helper(SF_CUiMain *_this)
     return 1;
 }
 
+void bindstone_fix_helper(CAppMenu *_this, SF_String *output)
+{
+    uint8_t campaign_type = _this->CAppMenu_data.campaign_type;
+    SF_String result;
+    SF_String base_path;
+    uiAPI.SFStringConstructor_char(&result, "");
+    uiAPI.SFStringConstructor_wchar(&base_path, L"map\\");
+    uiAPI.SFStringConcat(&result, &base_path);
+    uiAPI.SFStringDestructor(&base_path);
+
+    switch (campaign_type)
+    {
+        case 0:
+        {
+            SF_String campaign_path;
+            uiAPI.SFStringConstructor_wchar(&campaign_path, L"campaign\\");
+            uiAPI.SFStringConcat(&result, &campaign_path);
+            uiAPI.SFStringDestructor(&campaign_path);
+            break;
+        }
+        case 1:
+        {
+            SF_String campaign_path;
+            uiAPI.SFStringConstructor_wchar(&campaign_path, L"campaign2\\");
+            uiAPI.SFStringConcat(&result, &campaign_path);
+            uiAPI.SFStringDestructor(&campaign_path);
+            break;
+        }
+        case 2:
+        {
+            SF_String campaign_path;
+            uiAPI.SFStringConstructor_wchar(&campaign_path, L"campaign3\\");
+            uiAPI.SFStringConcat(&result, &campaign_path);
+            uiAPI.SFStringDestructor(&campaign_path);
+            break;
+        }
+        default:
+        {
+            const SFSF_CampaignDef *custom = NULL;
+            int custom_idx = (int)campaign_type - SFSF_CAMPAIGN_TYPE_BASE;
+            if (custom_idx >= 0 && custom_idx < (int32_t)g_campaign_count)
+            {
+                custom = &g_campaigns[custom_idx];
+            }
+            SF_String campaign_path;
+            SF_String back_slash;
+
+            uiAPI.SFStringConstructor_char(&campaign_path, custom->campaign_folder);
+            uiAPI.SFStringConstructor_char(&back_slash, "\\");
+            uiAPI.SFStringConcat(&result, &campaign_path);
+            uiAPI.SFStringConcat(&result, &back_slash);
+            uiAPI.SFStringDestructor(&campaign_path);
+            uiAPI.SFStringDestructor(&back_slash);
+            break;
+        }
+    }
+    uiAPI.SFStringDeepCopy(output, &result);
+    uiAPI.SFStringDestructor(&result);
+}
+
+static void __declspec(naked) bindstone_fix_hook()
+{
+    asm ("lea -0x174(%%ebp), %%ecx    \n\t"  // Getting local_178 as output string
+         "push %%ecx                \n\t"
+         "push %%edi                \n\t" // Getting CAppMenu
+         "call %P0                  \n\t" // Calling the Hook Function
+         "pop %%edi                 \n\t" // Stack cleanup
+         "pop %%ecx                 \n\t" // Stack cleanup
+         "jmp *%1         \n\t" : : "i" (bindstone_fix_helper),
+         "o" (s_bsf_return));
+}
+
+
 //We have inlined and optimized getSavePath over there, so let's just plug-in
 
 static void __declspec(naked) quickload_hook()
@@ -390,6 +478,7 @@ static void __declspec(naked) hdr_helper()
          "o" (s_hdr_result_ok) );
 }
 
+
 void hook_ql_helper()
 {
     ASI::MemoryRegion mreg_qs(ASI::AddrOf(0x5ef43a), 6);
@@ -405,6 +494,13 @@ void hook_ql_helper()
     *(unsigned char *)(ASI::AddrOf(0x5fb828)) = 0xE9;  // JMP instruction
     *(int *)(ASI::AddrOf(0x5fb829)) = (int)(&hdr_helper) - ASI::AddrOf(0x5fb82d);
     ASI::EndRewrite(mreg_hdr);
+
+    ASI::MemoryRegion mreg_bs(ASI::AddrOf(0x188c09), 6);
+    ASI::BeginRewrite(mreg_bs);
+    *(unsigned char *)(ASI::AddrOf(0x188c09)) = 0x90;  // NOP
+    *(unsigned char *)(ASI::AddrOf(0x188c0a)) = 0xE9;  // JMP instruction
+    *(int *)(ASI::AddrOf(0x188c0b)) = (int)(&bindstone_fix_hook) - ASI::AddrOf(0x188c0f);
+    ASI::EndRewrite(mreg_bs);
 
 }
 
@@ -518,20 +614,12 @@ void __thiscall initFirstMap(SF_GameInfo *_this, uint32_t skip_tutorial, uint8_t
         custom = &g_campaigns[custom_idx];
     }
 
-    /* -- starter kit: figure_template\starterkit\<kit>.des. A campaign may pin
-     *    its own kit file, which replaces the whole SK_<skill><subskill> name;
-     *    an empty value falls back to the vanilla skill-derived one. -- */
     uiAPI.SFStringConstructor_char(&dot_map, ".map");
     uiAPI.SFStringConstructor(&full_template);
-    if (custom != NULL && custom->starterkit[0] != '\0')
-    {
-        uiAPI.SFStringConstructor_char(&default_template, custom->starterkit);
-    }
-    else
-    {
-        uiAPI.SFStringConstructor(&default_template);
-        uiAPI.SFprintf(&default_template, L"SK_%02d%02d.des", skill, subskill);
-    }
+
+    uiAPI.SFStringConstructor(&default_template);
+    uiAPI.SFprintf(&default_template, L"SK_%02d%02d.des", skill, subskill);
+
     uiAPI.SFStringConstructor_char(&template_path, "figure_template\\starterkit\\");
     uiAPI.SFStringConcat(&full_template, &template_path);
     uiAPI.SFStringConcat(&full_template, &default_template);
@@ -748,8 +836,118 @@ void stop_intro_video(CAppMenu *app_menu)
     if (seq != NULL)
     {
         s_video_sequence_stop(seq);
+        fidFree((uint32_t *)seq);
         app_menu->CAppMenu_data.CUiVideoSequence_ptr = NULL;
     }
+}
+
+void startGame_helper(CAppMenu *_this, SF_GameInfo *game_info)
+{
+    SF_String template_name;
+    SF_String template_path;
+    uint32_t unused;
+    SF_String *starter_kit = getTemplate(&_this->CAppMenu_data.game_info);
+    uiAPI.SFStringConstructor_char(&template_path, "figure_template\\starterkit\\");
+
+    if (!game_info->is_coop)
+    {
+        uint32_t campaign_type = _this->CAppMenu_data.campaign_type;
+        switch (campaign_type)
+        {
+            case 0:
+            {
+                uiAPI.SFStringConstructor_char(&template_name, "figure_template\\starterkit\\SK_ALL.des");
+                load_character_preset(_this, &template_name, &unused);
+                uiAPI.SFStringDestructor(&template_name);
+                break;
+            }
+            case 1:
+            {
+                uiAPI.SFStringConstructor_char(&template_name,
+                                               "figure_template\\starterkit\\SK_all_addoncampaign.des");
+                load_character_preset(_this, &template_name, &unused);
+                uiAPI.SFStringDestructor(&template_name);
+                break;
+            }
+            case 2:
+            {
+                /* don't load general preset, it is handled in predefined files*/
+                break;
+            }
+            default:
+            {
+                const SFSF_CampaignDef *custom = NULL;
+                int custom_idx = (int)campaign_type - SFSF_CAMPAIGN_TYPE_BASE;
+                if (custom_idx >= 0 && custom_idx < (int32_t)g_campaign_count)
+                {
+                    custom = &g_campaigns[custom_idx];
+                }
+                SF_String template_name;
+                /* Unknown campaign type: fall back to the base save folder rather
+                 * than dereferencing a campaign that was never registered. */
+                if (custom == NULL)
+                {
+                    log_error("Start Game: no registered campaign for type %u, using default kits",
+                              campaign_type);
+
+                    uiAPI.SFStringConstructor_char(&template_name, "SK_ALL.des");
+                    load_character_preset(_this, &template_name, &unused);
+                    uiAPI.SFStringDestructor(&template_name);
+                    break;
+                }
+                uiAPI.SFStringConstructor_char(&template_name, custom->starterkit);
+                uiAPI.SFStringConcat(&template_path, &template_name);
+                uiAPI.SFStringDestructor(&template_name);
+
+                if (!checkFileExists(&template_path))
+                {
+                    log_error("Start Game: starter kit not found for camapign %u, using default kits",
+                              campaign_type);
+                    uiAPI.SFStringDestructor(&template_path);
+                    uiAPI.SFStringConstructor_char(&template_name, "SK_ALL.des");
+                    uiAPI.SFStringConstructor_char(&template_path, "figure_template\\starterkit\\");
+                    uiAPI.SFStringConcat(&template_path, &template_name);
+                }
+                load_character_preset(_this, &template_path, &unused);
+                uiAPI.SFStringDestructor(&template_path);
+                break;
+            }
+        }
+    }
+    else
+    {
+        uiAPI.SFStringConstructor_char(&template_name, "SK_all_coop.des");
+        uiAPI.SFStringConcat(&template_path, &template_name);
+        uiAPI.SFStringDestructor(&template_name);
+        load_character_preset(_this, &template_path, &unused);
+        uiAPI.SFStringDestructor(&template_path);
+    }
+
+    load_character_preset(_this, starter_kit, &unused);
+
+}
+
+static void __declspec(naked) start_game_hook()
+{
+    asm (
+        "push %%ebx         \n\t"  // Getting GameInfo
+        "push %%esi         \n\t"  // Getting CAppMenu
+        "call %P0           \n\t"  // Calling the Hook Function
+        "pop %%esi          \n\t" // restoring data
+        "pop %%ebx          \n\t"
+        "1: jmp *%1         \n\t" : : "i" (startGame_helper),
+        "o" (s_sg_return));
+}
+
+static void hook_start_game()
+{
+    ASI::MemoryRegion mreg(ASI::AddrOf(0x199525), 5);
+    ASI::BeginRewrite(mreg);
+    *(unsigned char *)(ASI::AddrOf(0x199525)) = 0x90; /* NOP */
+    *(unsigned char *)(ASI::AddrOf(0x199526)) = 0x90; /* NOP */
+    *(unsigned char *)(ASI::AddrOf(0x199527)) = 0xE9; /* JMP */
+    *(int *)(ASI::AddrOf(0x199528)) = (int)(&start_game_hook) - ASI::AddrOf(0x19952c);
+    ASI::EndRewrite(mreg);
 }
 
 void campaign_launch_flow(int32_t campaign_index)
@@ -837,6 +1035,8 @@ void close_campaign_screen_callback(CMnuSmpButton *button)
 /**
  * @brief Builds the campaign screen
  */
+extern uint32_t g_UiDbProxy;
+
 void __thiscall show_custom_campaign_screen(CMnuSmpButton *_this)
 {
     CMnuContainer *parent = (CMnuContainer *)_this->CMnuBase_data.param_2_callback;
@@ -904,15 +1104,24 @@ void __thiscall show_custom_campaign_screen(CMnuSmpButton *_this)
 
     for (uint32_t i = 0; i < g_campaign_count; i++)
     {
+        SF_String campaign_name;
+        uiAPI.SFStringConstructor(&campaign_name);
+
+        GetDescriptionText(g_UiDbProxy, g_campaigns[i].campaign_name_id, &campaign_name);
+
+        char *display_name = (campaign_name.str_length !=0) ?
+                             (uiAPI.SFStringCMbStr(&campaign_name)) : (g_campaigns[i].name);
         s_campaign_buttons[i] = uiAPI.attachNewButton(
             list_panel,
             btn_default, btn_pressed, btn_load, btn_disabled,
-            g_campaigns[i].name,
+            display_name,
             7,
             CAMPAIGN_ROW_X, CAMPAIGN_ROW_Y_START + (CAMPAIGN_ROW_PITCH * i),
             CAMPAIGN_ROW_W, CAMPAIGN_ROW_H,
             32 + i,
             (uint32_t)&on_campaign_selected);
+
+        uiAPI.SFStringDestructor(&campaign_name);
     }
 
     char placeholder[2] = " ";

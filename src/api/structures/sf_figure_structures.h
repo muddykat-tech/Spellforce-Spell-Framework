@@ -105,7 +105,9 @@ typedef struct __attribute__((packed))
     FigureStatistic walk_speed;
     FigureStatistic fight_speed;
     FigureStatistic cast_speed;
-    uint16_t equipment[16];  // No idea how this works, may need a class (undefined2[16] in ghidra, but is 20 bytes FigureStatistic is 6 bytes)
+    // No idea how this works, may need a class (undefined2[16] in ghidra, but is
+    // 20 bytes FigureStatistic is 6 bytes)
+    uint16_t equipment[16];
     uint16_t head;           // Not sure what this does
     SF_SGtFigureAction actions[15];
     GdFigureAbility abilties[10];
@@ -137,7 +139,9 @@ typedef struct __attribute__((packed))
     uint8_t padding2[3];
     FigureJobData prev_job;
     uint8_t padding3[3];
-    uint32_t incoming_spells_vector[3];  // Skipping some variable sections, contains differences Also Check what FigureJobData is, it's used multiple times in this section
+    // Skipping some variable sections, contains differences Also Check what
+    // FigureJobData is, it's used multiple times in this section
+    uint32_t incoming_spells_vector[3];
     uint8_t dwarf_rank;
     uint8_t set_type;
 } GdFigure;

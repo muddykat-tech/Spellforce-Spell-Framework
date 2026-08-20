@@ -66,15 +66,15 @@ DECLARE_FUNCTION(uint16_t, getCastType, void *resource, uint16_t spellID);
 DECLARE_FUNCTION(void *, AC60AddOrGetEntity, void *_autoclass60,
                  uint16_t entity_index);
 DECLARE_FUNCTION(SF_Coord *, getPositionToCastAlly,
-                 SF_CGdBattleDevelopment *_this,SF_Coord *param_1,
+                 SF_CGdBattleDevelopment *_this, SF_Coord *param_1,
                  void *std_vector_uint16_t);
 DECLARE_FUNCTION(SF_Coord *, getPositionToCastEnemy,
-                 SF_CGdBattleDevelopment *_this,SF_Coord *param_1,
+                 SF_CGdBattleDevelopment *_this, SF_Coord *param_1,
                  void *std_vector_uint16_t);
 
 DECLARE_FUNCTION(bool, isUnknownWorldFeature, SF_CGdWorldToolBox *,
-                 uint16_t figure_index, SF_Coord * param2, SF_Coord *param3,
-                 uint32_t param4, SF_Coord * param5, uint16_t param6);
+                 uint16_t figure_index, SF_Coord *param2, SF_Coord *param3,
+                 uint32_t param4, SF_Coord *param5, uint16_t param6);
 
 /**
  * @ingroup API

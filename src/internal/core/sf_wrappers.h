@@ -113,7 +113,7 @@ extern "C" void log_warning_level(DebugLevel level, const char *format, ...) LOG
 extern "C" void log_info(const char *format, ...) LOG_PRINTF_FMT(1, 2);
 extern "C" void log_error(const char *format, ...) LOG_PRINTF_FMT(1, 2);
 extern "C" void log_debug(DebugLevel level, const char *format, ...);
-extern const char * debug_level_to_string(DebugLevel level);
+extern const char *debug_level_to_string(DebugLevel level);
 extern DebugLevel global_debug_level;
 
 #endif
