@@ -1,5 +1,19 @@
 var searchData=
 [
-  ['x_0',['X',['../struct_s_f___coord.html#aa3b47ef0b6e966001ae237d08b5556d1',1,'SF_Coord']]],
-  ['xdata_5fkey_1',['xdata_key',['../struct_auto_class24.html#a5bd9ceaf83be8cf7dadb3dad4ba3aa5b',1,'FigureJobData::xdata_key'],['../struct_s_f___gd_spell.html#a2755a6805abc17ad3257e7c3792ada23',1,'SF_GdSpell::xdata_key'],['../struct_s_f___gd_effect.html#ad1569934ff54fad127b9f0d9aaa0f30b',1,'SF_GdEffect::xdata_key'],['../struct_gd_building.html#a2d8a775c261566a16b47aa06872621b3',1,'GdBuilding::xdata_key']]]
+  ['walk_5fspeed_0',['walk_speed',['../struct_gd_avatar_internal.html#a02bd6f7664fc7003eb14525606e35114',1,'GdAvatarInternal::walk_speed'],['../struct_gd_figure.html#ac936df3874345a696df1044b63c9233c',1,'GdFigure::walk_speed']]],
+  ['walk_5fto_5fpos_1',['walk_to_pos',['../struct_figure_job_data.html#a50ad284a9eaa4aefca3147008cab6eda',1,'FigureJobData']]],
+  ['walking_5fmode_2',['walking_mode',['../struct_figure_job_data.html#a29b2591875455362a8a36024c3a5f8bd',1,'FigureJobData']]],
+  ['warrior_5fcount_3',['warrior_count',['../struct_gd_player.html#ae56685a7a87e2e7fdd24bcf70fef4bbf',1,'GdPlayer']]],
+  ['weapon_5fstats_4',['weapon_stats',['../struct_gd_figure.html#a2822faa5531914416b17f855e58d94e6',1,'GdFigure']]],
+  ['window_5foffset_5',['WINDOW_OFFSET',['../namespace_a_s_i.html#a560306678b08a2a6d38984dd0ada8dd6',1,'ASI']]],
+  ['wisdom_6',['wisdom',['../struct_gd_avatar_internal.html#a6d778d0ada60146dae5e0eed96b1ca84',1,'GdAvatarInternal::wisdom'],['../struct_gd_figure.html#a6ac96cd6869f59ef11ec7f9fee1c5cde',1,'GdFigure::wisdom'],['../struct_c_gd_resource_unit_stats.html#a906c3a16d213c2a553cf83b334acdd9c',1,'CGdResourceUnitStats::wisdom']]],
+  ['worker_5fcount_7',['worker_count',['../struct_gd_building.html#a08e8456eaf833d643f21466ea04e9190',1,'GdBuilding']]],
+  ['worker_5fcount_5fmax_8',['worker_count_max',['../struct_gd_building.html#ad66b63cde5696c776ebbbe2f248aefd4',1,'GdBuilding']]],
+  ['worker_5fcycle_9',['worker_cycle',['../struct_building_resource.html#a60ea67d5736f70cf5199b63909480b59',1,'BuildingResource::worker_cycle'],['../struct_s_f_building.html#aa5a11bbf4bdd951c7f7f0ed28701631b',1,'SFBuilding::worker_cycle']]],
+  ['world_5fcell_5fflags_10',['world_cell_flags',['../struct_s_f__world__unkn__2.html#ab441afe3f606e25a68aa60eb248ce2d3',1,'SF_world_unkn_2']]],
+  ['world_5fname_11',['world_name',['../struct_c_gd_a_i_battle_data.html#a7355f19debe5af37a220a508e84ce499',1,'CGdAIBattleData']]],
+  ['wpn_5fmat_12',['wpn_mat',['../struct_c_gd_resource_weapon_data.html#ae6abd2050402b8844104563e6604a781',1,'CGdResourceWeaponData::wpn_mat'],['../struct_s_f___c_gd_figure_weapon_stats.html#af890b0eb15d19aee47b6717877a8c8ed',1,'SF_CGdFigureWeaponStats::wpn_mat']]],
+  ['wpn_5fspd_13',['wpn_spd',['../struct_c_gd_resource_weapon_data.html#a255429a2654a34cfafdeb4fe610bec2f',1,'CGdResourceWeaponData::wpn_spd'],['../struct_s_f___c_gd_figure_weapon_stats.html#a2da174fc40603cf2da1d4bff13aa0d95',1,'SF_CGdFigureWeaponStats::wpn_spd']]],
+  ['wpn_5ftype_14',['wpn_type',['../struct_c_gd_resource_weapon_data.html#a188abc8c01566d7ebf3fda7ecbe2a2f5',1,'CGdResourceWeaponData::wpn_type'],['../struct_s_f___c_gd_figure_weapon_stats.html#a1de92d56bc15f207bf4597283b22728c',1,'SF_CGdFigureWeaponStats::wpn_type']]],
+  ['wspeed_15',['wspeed',['../struct_c_gd_resource_unit_stats.html#aba6641900a7079fe598b5e1e12cafb45',1,'CGdResourceUnitStats']]]
 ];

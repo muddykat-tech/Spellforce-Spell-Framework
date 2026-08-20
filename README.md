@@ -2,13 +2,13 @@
 
 # Spellforce Spell Framework
 
-**A native modding framework for SpellForce 1: Platinum Edition that supports new spells, buildings, campaigns, and UI, all in C/C++ without touching the game's binary.**
+**A native modding framework for SpellForce 1: Platinum Edition that supports new spells, buildings, campaigns, and UI, all in C/C++ without touching the game’s binary.**
 
-[![Latest Release](https://img.shields.io/github/v/release/muddykat-tech/Spellforce-Spell-Framework?include_prereleases&label=release&color=blue)](https://github.com/muddykat-tech/Spellforce-Spell-Framework/releases)
+[![Latest Release](https://img.shields.io/github/v/release/muddykat-tech/Spellforce-Spell-framework?color=blue&?link=https%3A%2F%2Fgithub.com%2Fmuddykat-tech%2FSpellforce-Spell-Framework%2Freleases)](https://github.com/muddykat-tech/Spellforce-Spell-Framework/releases)
 [![Build](https://github.com/muddykat-tech/Spellforce-Spell-Framework/actions/workflows/c-release.yml/badge.svg)](https://github.com/muddykat-tech/Spellforce-Spell-Framework/actions/workflows/c-release.yml)
 [![Downloads](https://img.shields.io/github/downloads-pre/muddykat-tech/Spellforce-Spell-Framework/latest/total?label=downloads)](https://github.com/muddykat-tech/Spellforce-Spell-Framework/releases/latest)
 [![License: GPL v3](https://img.shields.io/badge/license-GPLv3-green)](LICENSE)
-[![Development](https://img.shields.io/badge/status-in%20development-orange)](https://github.com/muddykat-tech/Spellforce-Spell-Framework/tree/indev)
+[![Maintained](https://img.shields.io/maintenance/yes/2026)](https://github.com/muddykat-tech/Spellforce-Spell-Framework/commits)
 
 [![Documentation](https://img.shields.io/badge/docs-API%20reference-8a2be2)](https://muddykat-tech.github.io/Spellforce-Spell-Framework/)
 [![Wiki](https://img.shields.io/badge/wiki-tutorials-lightgrey)](https://github.com/muddykat-tech/Spellforce-Spell-Framework/wiki)
@@ -21,19 +21,14 @@
 
 ---
 
-## Development Branch
-
-**This is the `indev` branch.** It contains experimental features and ongoing development. The API may change significantly between commits. **Do not use in production.** For stable releases, use the [main branch](https://github.com/muddykat-tech/Spellforce-Spell-Framework).
-
----
-
 ## Overview
 
 The **Spellforce Spell Framework (SFSF)** is an ASI plugin that loads into *Spellforce 1* at runtime and exposes the game's internals through a stable, versioned C API. Mods are compiled as standalone `.sfm` modules and loaded at startup.
 
-Where traditional *SpellForce* modding is limited to editing gamedata files or requires deep reverse engineering and assembly knowledge, SFSF lets you write entirely new spell types, implement custom effect logic, evaluate enemy AI for those spells, add new buildings, build full custom campaigns, and extend the game's user interface. All of this is possible without interacting with ASM or the game's internals.
+Where traditional *SpellForce* modding is limited to editing gamedata files or requires deep reverse engineering and assembly knowledge, SFSF lets you write entirely new spell types, implement custom effect logic, evaluate enemy AI for those spells, add new buildings, build full custom campaigns, and extend the game’s user interface. All of this is possible without interacting with ASM or the game’s internals.
 
-> **Development branch.** Features in this branch are experimental and subject to breaking changes. Check the [Changelog](CHANGELOG.md) and recent commits before using.
+> [!NOTE]
+> **Current version: 5.0.0-RC.** The framework is under active development and the API may still change between major releases. See the [Changelog](CHANGELOG.md) for breaking changes before upgrading.
 
 ### Features
 
@@ -83,13 +78,9 @@ Full reference: **[SFSF Documentation Site](https://muddykat-tech.github.io/Spel
 
 ## Installation
 
-1. Clone or download the `indev` branch:
-   ```sh
-   git clone --branch indev https://github.com/muddykat-tech/Spellforce-Spell-Framework.git
-   ```
-2. Build the framework (see [Building from Source](#building-from-source)).
-3. Copy the generated `sfsf.asi` into the root directory of your *Spellforce 1* installation, next to the game executable.
-4. Create an `sfsf` folder in that same directory and place any framework mods inside it.
+1. Download the latest `sfsf.asi` from the [Releases page](https://github.com/muddykat-tech/Spellforce-Spell-Framework/releases).
+2. Copy `sfsf.asi` into the root directory of your *Spellforce 1* installation, next to the game executable.
+3. Create an `sfsf` folder in that same directory and place any framework mods inside it.
 
 The resulting layout:
 
@@ -164,6 +155,7 @@ SFSF can register custom campaigns from JSON files. Place one `.json` file per c
 
 Each campaign gets its own save folder named after `campaign_folder`, created next to the vanilla campaign folders. Saves also carry the campaign's `avatar_type`.
 
+> [!IMPORTANT]
 > The default `avatar_type` is derived from the campaign's index, so changing which campaign files are installed can change that index and orphan existing saves. **set `avatar_type` explicitly** if the load order is causing issues.
 
 ---
@@ -206,7 +198,7 @@ Each directory under [`examples`](examples) has its own Makefile and builds inde
 | [Chapter 0: Build Environment](https://github.com/muddykat-tech/Spellforce-Spell-Framework/wiki/Chapter-0:-Build-environment) | Teekius' walk-through for setting up a working toolchain from scratch. |
 | [API Headers](src/api) | The headers you compile against, just include `sfsf.h` and it pulls in the others as well. |
 | [Examples](examples) | Buildable reference mods |
-| [Changelog](CHANGELOG.md) | Release history, including breaking API changes. (Check for recent commits on `indev`.) |
+| [Changelog](CHANGELOG.md) | Release history, including breaking API changes. |
 | [Coding Style](CodingStyle.md) | Conventions expected in contributions. |
 
 ### Debugging mods
@@ -220,28 +212,25 @@ This is the same workflow used to debug the framework itself.
 
 ### Ghidra project access
 
-A partially annotated Ghidra project of the *Spellforce* codebase is available on request. Contact **contact@muddykat.tech** for read-only access.
+A partially annotated Ghidra project of the *Spellforce* codebase is available on request. Contact **jarrod.muddyman@muddykat.tech** for read-only access.
 
 ---
 
 ## Testing and Bug Reporting
 
-**On the `indev` branch, bugs and incomplete features are expected.** If you encounter issues:
+SFSF is in active development and bugs are expected. Testing and detailed reports are the most valuable contribution you can make.
 
-1. Check the [recent commits](https://github.com/muddykat-tech/Spellforce-Spell-Framework/commits/indev) to see if your issue has already been fixed.
-2. Review open issues for similar reports before filing a new one.
-3. Include your game version and branch and commit hash, the mods you had loaded, and any relevant debugger output.
-4. Open reports on the [issue tracker](https://github.com/muddykat-tech/Spellforce-Spell-Framework/issues) and mention that the issue is on `indev`.
+When reporting an issue, please include your game version and branch, the SFSF version, the mods you had loaded, and any relevant debugger output. Open reports on the [issue tracker](https://github.com/muddykat-tech/Spellforce-Spell-Framework/issues).
 
 ---
 
 ## Contributing
 
-Contributions are welcome. The `indev` branch is the target for new features and breaking changes.
+Contributions are welcome.
 
 1. Read the [Contribution Guidelines](CONTRIBUTING.md) and the [Code of Conduct](CODE_OF_CONDUCT.md).
 2. Match the conventions in [CodingStyle.md](CodingStyle.md) (a `.clang-format` and `uncrustify.cfg` are provided).
-3. Fork, branch from `indev`, and open a pull request describing the change and how you tested it.
+3. Fork, branch, and open a pull request describing the change and how you tested it.
 
 ---
 

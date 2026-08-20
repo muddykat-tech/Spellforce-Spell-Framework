@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['utility_20hooks_0',['Utility Hooks',['../group___util_hooks.html',1,'']]]
+  ['type_20hook_0',['Spell Type Hook',['../group___spell_type_hook.html',1,'']]]
 ];

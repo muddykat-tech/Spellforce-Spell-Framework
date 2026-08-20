@@ -1,0 +1,28 @@
+var struct_s_f___c_gd_spell =
+[
+    [ "AC30", "struct_s_f___c_gd_spell.html#a1395d8a8d40fd46af96ebc92b6bebd1b", null ],
+    [ "AC50", "struct_s_f___c_gd_spell.html#a70c76930646aa780934388bb8c8a321c", null ],
+    [ "active_spell_list", "struct_s_f___c_gd_spell.html#ad47a2714e07011fe9a16688cc25fe4ff", null ],
+    [ "AutoClass34", "struct_s_f___c_gd_spell.html#a86c9a56eeed9434fb4f336f49b114798", null ],
+    [ "CGdBuilding", "struct_s_f___c_gd_spell.html#aca4c6cb5deb8ca8f3cd6847b73f41743", null ],
+    [ "CGdPlayer", "struct_s_f___c_gd_spell.html#a9ae7693d1e54c4cd2ac6fc2bd6630c6f", null ],
+    [ "max_used", "struct_s_f___c_gd_spell.html#adad06d22595599ef274858aa2bac5df2", null ],
+    [ "OpaqueClass", "struct_s_f___c_gd_spell.html#aa7a30cd83f344b261e69c31c5e8c6447", null ],
+    [ "SF_CGdAiMain", "struct_s_f___c_gd_spell.html#a6c6d604a630d568129057248957c9b25", null ],
+    [ "SF_CGdBuildingToolbox", "struct_s_f___c_gd_spell.html#ae566c2538d984cc30f487e888308a746", null ],
+    [ "SF_CGdDoubleLinkedList", "struct_s_f___c_gd_spell.html#a2663497e90527959e9d702ceb93f7254", null ],
+    [ "SF_CGdEffect", "struct_s_f___c_gd_spell.html#ade6b82b35ecf28cbc1ebc42a55c0acd3", null ],
+    [ "SF_CGdFigure", "struct_s_f___c_gd_spell.html#a6bbcecec66343e230948a55f9ddc542b", null ],
+    [ "SF_CGdFigureJobs", "struct_s_f___c_gd_spell.html#a49e54a674664427dce864ebefa574aa2", null ],
+    [ "SF_CGdFigureToolBox", "struct_s_f___c_gd_spell.html#ab90a0a8a5c4ddc0528316390b606db15", null ],
+    [ "SF_CGdFormation", "struct_s_f___c_gd_spell.html#ab7def5ab827a6fda8a37761674bf88c9", null ],
+    [ "SF_CGdObject", "struct_s_f___c_gd_spell.html#aac9dc34207feffde988b8ddbde6b8372", null ],
+    [ "SF_CGdObjectToolBox", "struct_s_f___c_gd_spell.html#a3dff16ca150c79559adc4710ff8a9083", null ],
+    [ "SF_CGdResource", "struct_s_f___c_gd_spell.html#a089ee0ce37bd32788a659528620a6fb1", null ],
+    [ "SF_CGdTile", "struct_s_f___c_gd_spell.html#a65871ad4e3bee3f7e66377a58a716958", null ],
+    [ "SF_CGdWorld", "struct_s_f___c_gd_spell.html#aa1141fb6ddd9c9f83cc4a4e27a5cdfdf", null ],
+    [ "SF_CGdWorldToolBox", "struct_s_f___c_gd_spell.html#a8c37628ed842317db3bd91bed75ca0e2", null ],
+    [ "SF_CGdXDataList", "struct_s_f___c_gd_spell.html#ae45712685585d1972319f3b81c56ff72", null ],
+    [ "unkn5", "struct_s_f___c_gd_spell.html#a089565db34e5084d60a6dd7377f0b3df", null ],
+    [ "unkn6", "struct_s_f___c_gd_spell.html#afaab121b3c2d1bf05ff83b984640d491", null ]
+];

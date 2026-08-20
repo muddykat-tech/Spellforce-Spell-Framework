@@ -1,0 +1,23 @@
+var sf__worker__building__entry__handlers_8h =
+[
+    [ "building_repair", "sf__worker__building__entry__handlers_8h.html#a7d4ed46ce369247114fdc585c99b2f5b", null ],
+    [ "cattle_breeder_entry_handler", "sf__worker__building__entry__handlers_8h.html#afdc9e70b0e37be9311d4bddf71f9d77e", null ],
+    [ "default_entry_handler", "sf__worker__building__entry__handlers_8h.html#a7729605f3150ac7e0b1154e645065af7", null ],
+    [ "farmer_entry_handler", "sf__worker__building__entry__handlers_8h.html#ab08888f011c020536f81cf732f3d976a", null ],
+    [ "fisher_entry_handler", "sf__worker__building__entry__handlers_8h.html#a0ca423bf6937c24e0f4718d2f6fa92f4", null ],
+    [ "foodstore_entry_handler", "sf__worker__building__entry__handlers_8h.html#a04f2eea338f50baba181fe962eca7ce6", null ],
+    [ "forester_entry_handler", "sf__worker__building__entry__handlers_8h.html#a7f3ff7eb4a4cd7b0a728e177dc54c1fd", null ],
+    [ "forge_entry_handler", "sf__worker__building__entry__handlers_8h.html#a67c46a43c7f8f84be464e1d10343fe64", null ],
+    [ "gatherer_entry_handler", "sf__worker__building__entry__handlers_8h.html#a68a166f00df60da8f33e7f67f9dc8d93", null ],
+    [ "hq_entry_handler", "sf__worker__building__entry__handlers_8h.html#a42cf5e9f6a66035ab6927fae93213bb4", null ],
+    [ "hunter_entry_handler", "sf__worker__building__entry__handlers_8h.html#ac70911ac3b2785c04707df25bd5d0e73", null ],
+    [ "mace_carver_entry_handler", "sf__worker__building__entry__handlers_8h.html#a6b66df0cc7ad31063fa65d9771901b90", null ],
+    [ "miner_entry_handler", "sf__worker__building__entry__handlers_8h.html#a9353897a93ab4afdc8cd196f882cc57d", null ],
+    [ "quarry_entry_handler", "sf__worker__building__entry__handlers_8h.html#aa4d9b996da3de47ead239cfb2fb98eae", null ],
+    [ "sawmill_entry_handler", "sf__worker__building__entry__handlers_8h.html#abe8fb5a23d8b5d2539494535778d5f56", null ],
+    [ "scavenger_entry_handler", "sf__worker__building__entry__handlers_8h.html#a4b793b132499fe7ff4a600fe41e6c822", null ],
+    [ "shrine_entry_handler", "sf__worker__building__entry__handlers_8h.html#aba0248b069eab6592d93e03c6bb5b71c", null ],
+    [ "smelter_entry_handler", "sf__worker__building__entry__handlers_8h.html#ad052db22373214eea15a10c433fd16d6", null ],
+    [ "temple_entry_handler", "sf__worker__building__entry__handlers_8h.html#a881d85ea06fd1737058f38f5748666fc", null ],
+    [ "woodcutter_entry_handler", "sf__worker__building__entry__handlers_8h.html#ae4b2c424f7fd86ecfa45d699d4f3c3ad", null ]
+];
