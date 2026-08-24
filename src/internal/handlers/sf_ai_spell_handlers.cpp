@@ -893,7 +893,7 @@ uint32_t __thiscall lifetap_ai_handler(SF_CGdBattleDevelopment *_this,
         rank = 0;
     }
     percent = figureAPI.getCurrentHealthPercent(_this->battleData.CGdFigure, target_index);
-    if (percent > 10)
+    if (percent < 10)
     {
         rank = 0;
     }

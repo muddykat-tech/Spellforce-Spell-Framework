@@ -1242,6 +1242,8 @@ void initialize_vanilla_spells()
 
     SFSpell *lifetap_aura = registrationAPI.registerSpell(kGdSpellLineLifeTapAura);
     registrationAPI.linkTypeHandler(lifetap_aura, &lifetap_aura_handler);
+    registrationAPI.linkSingleTargetAIHandler(lifetap_aura, &lifetap_ai_handler);
+
 
     SFSpell *fireball2 = registrationAPI.registerSpell(kGdSpellLineFireBallEffect);
     registrationAPI.linkTypeHandler(fireball2, &fireball2_handler);
@@ -1608,6 +1610,7 @@ void initialize_vanilla_spells()
 
     SFSpell *lifetap2 = registrationAPI.registerSpell(kGdSpellLineLifeTapChained);
     registrationAPI.linkTypeHandler(lifetap2, &lifetap_handler);
+    registrationAPI.linkSingleTargetAIHandler(lifetap2, &lifetap_ai_handler);
 
     SFSpell *manatap2 = registrationAPI.registerSpell(kGdSpellLineManaTapChained);
     registrationAPI.linkTypeHandler(manatap2, &manatap_handler);
