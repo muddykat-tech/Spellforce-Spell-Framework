@@ -28,7 +28,7 @@ The **Spellforce Spell Framework (SFSF)** is an ASI plugin that loads into *Spel
 Where traditional *SpellForce* modding is limited to editing gamedata files or requires deep reverse engineering and assembly knowledge, SFSF lets you write entirely new spell types, implement custom effect logic, evaluate enemy AI for those spells, add new buildings, build full custom campaigns, and extend the game’s user interface. All of this is possible without interacting with ASM or the game’s internals.
 
 > [!NOTE]
-> **Current version: 5.0.0-RC.** The framework is under active development and the API may still change between major releases. See the [Changelog](CHANGELOG.md) for breaking changes before upgrading.
+> **Current version: 5.0.2-RC.** The framework is under active development and the API may still change between major releases. See the [Changelog](CHANGELOG.md) for breaking changes before upgrading.
 
 ### Features
 
