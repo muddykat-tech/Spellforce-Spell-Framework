@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "../../registry/sf_hero_registry.h"
+#include "../sf_wrappers.h"
 
 typedef uint32_t (__thiscall *getItemGeneral_ptr)(void *CDbLocal, uint16_t item_id, ItemGeneralData *out);
 typedef uint32_t (__thiscall *getUnitStats_ptr)(void *CDbLocal, uint16_t unit_stats_id,
@@ -28,8 +29,8 @@ typedef uint32_t (__thiscall *serializeInvContainerUpdateMsg_ptr)(InvContainerUp
 typedef void (__thiscall *disposeInvContainerUpdateMsg_ptr)(InvContainerUpdateMsg *_this);
 typedef void (__thiscall *sendToPlayer_ptr)(void *_this, uint32_t param1, uint32_t param2, void *param3,
                                             uint32_t param4);
-typedef void (__thiscall *dispose_ushort_vector_ptr)(void *_this, uint32_t size);
-typedef void (__thiscall *dispose_UpdatesVector_ptr)(void *_this, uint32_t size);
+typedef void (__stdcall *dispose_ushort_vector_ptr)(void *_this, uint32_t size);
+typedef void (__stdcall *dispose_UpdatesVector_ptr)(void *_this, uint32_t size);
 
 getItemGeneral_ptr getItemGeneral;      //0x2494e0
 getUnitStats_ptr getUnitStats;          //0x244720
@@ -241,6 +242,7 @@ void __thiscall createHeroFromRuneHook(AutoClass6 *_this, uint32_t player_id, ui
             disposeInvContainerUpdateMsg(&update_msg);
         }
     }
+
     InvContainerUpdateMsg update_msg;
     initInvContainerUpdateMsg(&update_msg);
     uint8_t slot_index = hero_slot + kGtInvSlotEquipmentChar1;
@@ -248,7 +250,6 @@ void __thiscall createHeroFromRuneHook(AutoClass6 *_this, uint32_t player_id, ui
     update_msg.first_slot = 0;
     update_msg.slot_count = 0;
     update_msg.is_slot_list = 1;
-
     bool has_update = false;
 
     HeroGearEntry custom_gear[7];
@@ -282,7 +283,6 @@ void __thiscall createHeroFromRuneHook(AutoClass6 *_this, uint32_t player_id, ui
         uint32_t msg_size = serializeInvContainerUpdateMsg(&update_msg, _this->send_buffer, _this->send_buffer_size);
         sendToPlayer(_this->net, player_id, 0x1f49, _this->send_buffer, msg_size);
     }
-
     disposeInvContainerUpdateMsg(&update_msg);
 
     if (unit_spells.first !=0)

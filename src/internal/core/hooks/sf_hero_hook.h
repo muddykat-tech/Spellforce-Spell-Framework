@@ -69,3 +69,7 @@ typedef struct __attribute__((packed))
     uint8_t send_buffer[0x7000];
     int send_buffer_size;
 } AutoClass6;
+
+void __thiscall createHeroFromRuneHook(AutoClass6 *_this, uint32_t player_id, uint16_t hero_slot, uint16_t container_id,
+                                       uint16_t rune_item_id, uint32_t no_notify);
+void init_hero_functions();
