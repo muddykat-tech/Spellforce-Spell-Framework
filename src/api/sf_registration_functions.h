@@ -31,6 +31,9 @@ DECLARE_FUNCTION(void, linkBuildingEntryHandler, SFBuilding *building, building_
 DECLARE_FUNCTION(void, linkBuildingJSON, SFBuilding *building, const char *building_json_name);
 DECLARE_FUNCTION(void, applyBuildingTag, SFBuilding *building, BuildingTag tag);
 
+DECLARE_FUNCTION(SFHero *, registerHero, uint16_t hero_id);
+DECLARE_FUNCTION(void, linkHeroJSON, SFHero *building, const char *hero_json_name);
+
 /**
  * @ingroup API
  * @brief A structure dedicated to the registration of spells

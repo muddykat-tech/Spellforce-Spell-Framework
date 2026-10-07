@@ -538,6 +538,69 @@ typedef enum : uint16_t
     kGdEffectMax = 39
 } CGdEffectType;
 
+typedef enum : uint8_t
+{
+    kEquipModeUnknown0 = 0,
+    kEquipModeFree = 1,
+    kEquipModeBodyLocked = 2,
+    kEquipModeAllLocked = 3,
+} GtCreoEquipMode;
+
+typedef enum : uint8_t
+{
+    kGtInvSlotNone = 0,
+    kGtInvSlotEquipment = 1,
+    kGtInvSlotEquipmentChar0 = 2,
+    kGtInvSlotEquipmentChar1 = 3,
+    kGtInvSlotEquipmentChar2 = 4,
+    kGtInvSlotEquipmentChar3 = 5,
+    kGtInvSlotEquipmentChar4 = 6,
+    kGtInvSlotEquipmentChar5 = 7,
+    kGtInvSlotSpell = 8,
+    kGtInvSlotSpellBook = 9,
+    kGtInvSlotSpellMemoryChar0 = 10,
+    kGtInvSlotSpellMemoryChar1 = 11,
+    kGtInvSlotSpellMemoryChar2 = 12,
+    kGtInvSlotSpellMemoryChar3 = 13,
+    kGtInvSlotSpellMemoryChar4 = 14,
+    kGtInvSlotSpellMemoryChar5 = 15,
+    kGtInvSlotCreo = 16,
+    kGtInvSlotCreoHero = 17,
+    kGtInvSlotCreoHuman = 18,
+    kGtInvSlotCreoDwarf = 19,
+    kGtInvSlotCreoElf = 20,
+    kGtInvSlotCreoOrc = 21,
+    kGtInvSlotCreoTroll = 22,
+    kGtInvSlotCreoDarkElf = 23,
+    kGtInvSlotMouse = 24,
+    kGtInvSlotUnitBuildingPlan = 25,
+    kGtInvSlotBuildingHuman = 26,
+    kGtInvSlotBuildingElf = 27,
+    kGtInvSlotBuildingDwarf = 28,
+    kGtInvSlotBuildingOrc = 29,
+    kGtInvSlotBuildingTroll = 30,
+    kGtInvSlotBuildingDarkElf = 31,
+    kGtInvSlotUnitHuman = 32,
+    kGtInvSlotUnitElf = 33,
+    kGtInvSlotUnitDwarf = 34,
+    kGtInvSlotUnitOrc = 35,
+    kGtInvSlotUnitTroll = 36,
+    kGtInvSlotUnitDarkElf = 37,
+    kGtInvSlotMisc = 38,
+    kGtInvSlotMerchant = 39,
+    kGtInvSlotMaxUsed = 40,
+} GtInvSlot;
+
+typedef enum : uint16_t
+{
+    kGtEquipSlotHead = 0,
+    kGtEquipSlotRightHand = 1,
+    kGtEquipSlotChest = 2,
+    kGtEquipSlotLeftHand = 3,
+    kGtEquipSlotRightRing = 4,
+    kGtEquipSlotLegs = 5,
+    kGtEquipSlotLeftRing = 6,
+} GtEquipSlot;
 
 typedef enum
 {

@@ -232,4 +232,22 @@ typedef struct __attribute__((packed))
     uint8_t unknwn5; //offset 46
 
     GdFigureAbility abilities[10]; //offset 47
+} CGdResourceFigureStats;
+
+
+typedef struct __attribute__((packed))
+{
+    uint16_t creo;
+    uint8_t level;
+    uint8_t unk_03;
+    uint8_t race;
+    uint16_t agility, dexterity, charisma, intelligence, stamina, strength, wisdom;
+    uint16_t unk_13;
+    uint16_t res_fire, res_ice, res_black, res_mind;
+    uint16_t walk_speed, fight_speed, cast_speed, scaling;
+    uint16_t unk_25;
+    uint32_t unk_27;
+    uint8_t unit_flags;
+    uint16_t head;
+    GtCreoEquipMode equip_mode;
 } CGdResourceUnitStats;

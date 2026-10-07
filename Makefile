@@ -6,11 +6,11 @@ DLL_LDFLAGS = -m32 -shared -lgcc -static-libgcc -static-libstdc++ -Wl,-Bstatic,-
 FW_LDFLAGS = -m32 -shared -lgcc -static-libgcc -static-libstdc++ -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive -Wl,--subsystem,windows,--out-implib,lib/sfsf.a
 
 # Object files for the new architecture
-HOOK_OBJ = obj/sf_hooks.o obj/sf_onhit_hook.o obj/sf_campaign_hook.o obj/sf_prepare_new_game.o obj/sf_refresh_hook.o obj/sf_endspell_hook.o obj/sf_menu_hook.o obj/sf_spelleffect_hook.o obj/sf_subeffect_hook.o obj/sf_spelltype_hook.o obj/sf_damage_hook.o obj/sf_console_hook.o obj/sf_ai_hook.o obj/sf_utility_hooks.o obj/sf_vanilla_fix_hook.o obj/sf_building_done_hook.o obj/sf_building_entry_hook.o obj/sf_worker_logic_hook.o obj/sf_phys_effect_hook.o obj/sf_enchant_hook.o obj/sf_effect_hook.o
-REGISTRY_OBJ = obj/sf_registry.o obj/sf_mod_registry.o obj/sf_error_registry.o obj/sf_spelltype_registry.o obj/sf_spelleffect_registry.o obj/sf_spellend_registry.o obj/sf_subeffect_registry.o obj/sf_spellrefresh_registry.o obj/sf_vanilla_registry.o obj/sf_spelldamage_registry.o obj/sf_onhit_registry.o obj/sf_ai_avoidance_registry.o obj/sf_ai_single_target_registry.o obj/sf_ai_aoe_registry.o obj/sf_phys_effect_registry.o obj/sf_building_done_registry.o obj/sf_building_entry_registry.o obj/sf_enchant_registry.o
+HOOK_OBJ = obj/sf_hooks.o obj/sf_onhit_hook.o obj/sf_hero_hook.o obj/sf_campaign_hook.o obj/sf_prepare_new_game.o obj/sf_refresh_hook.o obj/sf_endspell_hook.o obj/sf_menu_hook.o obj/sf_spelleffect_hook.o obj/sf_subeffect_hook.o obj/sf_spelltype_hook.o obj/sf_damage_hook.o obj/sf_console_hook.o obj/sf_ai_hook.o obj/sf_utility_hooks.o obj/sf_vanilla_fix_hook.o obj/sf_building_done_hook.o obj/sf_building_entry_hook.o obj/sf_worker_logic_hook.o obj/sf_phys_effect_hook.o obj/sf_enchant_hook.o obj/sf_effect_hook.o
+REGISTRY_OBJ = obj/sf_registry.o obj/sf_mod_registry.o obj/sf_hero_registry.o obj/sf_error_registry.o obj/sf_spelltype_registry.o obj/sf_spelleffect_registry.o obj/sf_spellend_registry.o obj/sf_subeffect_registry.o obj/sf_spellrefresh_registry.o obj/sf_vanilla_registry.o obj/sf_spelldamage_registry.o obj/sf_onhit_registry.o obj/sf_ai_avoidance_registry.o obj/sf_ai_single_target_registry.o obj/sf_ai_aoe_registry.o obj/sf_phys_effect_registry.o obj/sf_building_done_registry.o obj/sf_building_entry_registry.o obj/sf_enchant_registry.o
 HANDLER_OBJ = obj/sf_spelltype_handlers.o obj/sf_spelleffect_handlers.o obj/sf_spellend_handlers.o obj/sf_sub_effect_handlers.o obj/sf_spellrefresh_handlers.o obj/sf_spelldamage_handlers.o obj/sf_onhit_handlers.o obj/sf_ai_avoidance_handlers.o obj/sf_ai_spell_handlers.o obj/sf_ai_aoe_handlers.o obj/sf_building_done_handlers.o obj/sf_worker_building_entry_handlers.o obj/sf_phys_effect_handlers.o
 
-NTERNALS_OBJ = obj/sfsf.o obj/sf_modloader.o obj/sf_building_loader.o obj/sf_screens_loader.o obj/sf_screens_module.o obj/sf_campaign_loader.o obj/sf_campaign_module.o obj/sf_asi.o obj/sf_wrappers.o obj/sf_ui_wrappers.o ${REGISTRY_OBJ} ${HANDLER_OBJ} ${HOOK_OBJ}
+NTERNALS_OBJ = obj/sfsf.o obj/sf_modloader.o obj/sf_building_loader.o obj/sf_hero_loader.o obj/sf_screens_loader.o obj/sf_screens_module.o obj/sf_campaign_loader.o obj/sf_campaign_module.o obj/sf_asi.o obj/sf_wrappers.o obj/sf_ui_wrappers.o ${REGISTRY_OBJ} ${HANDLER_OBJ} ${HOOK_OBJ}
 TEST_MOD_OBJ = obj/TestMod.o
 INTERNALS_SRC = src/internal
 
@@ -80,6 +80,9 @@ obj/sf_ui_wrappers.o: ${CORE_SRC}/sf_ui_wrappers.c | obj
 obj/sf_building_loader.o: ${CORE_SRC}/sf_building_loader.c ${CORE_SRC}/sf_building_loader.h ${CORE_SRC}/jsmn.h | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
+obj/sf_hero_loader.o: ${CORE_SRC}/sf_hero_loader.c ${CORE_SRC}/sf_hero_loader.h ${CORE_SRC}/jsmn.h | obj
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
+
 obj/sf_screens_loader.o: ${CORE_SRC}/sf_screens_loader.c ${CORE_SRC}/sf_screens_loader.h ${CORE_SRC}/jsmn.h | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
@@ -110,6 +113,9 @@ obj/sf_prepare_new_game.o: ${HOOKS_SRC}/sf_prepare_new_game.c | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_refresh_hook.o: ${HOOKS_SRC}/sf_refresh_hook.c | obj
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
+
+obj/sf_hero_hook.o: ${HOOKS_SRC}/sf_hero_hook.c | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_endspell_hook.o: ${HOOKS_SRC}/sf_endspell_hook.c | obj
@@ -169,6 +175,9 @@ obj/sf_registry.o: ${REGISTRY_SRC}/sf_registry.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_mod_registry.o: ${REGISTRY_SRC}/sf_mod_registry.cpp | obj
+	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
+
+obj/sf_hero_registry.o: ${REGISTRY_SRC}/sf_hero_registry.cpp | obj
 	${CC} ${DLL_CFLAGS} -c "$<" -o "$@"
 
 obj/sf_error_registry.o: ${REGISTRY_SRC}/sf_error_registry.cpp ${REGISTRY_SRC}/sf_error_registry.h | obj
