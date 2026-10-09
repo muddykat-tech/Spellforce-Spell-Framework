@@ -64,4 +64,7 @@ typedef struct
     linkBuildingDoneHandler_ptr linkBuildingDoneHandler;
     linkBuildingEntryHandler_ptr linkBuildingEntryHandler;
     applyBuildingTag_ptr applyBuildingTag;
+
+    registerHero_ptr registerHero;
+    linkHeroJSON_ptr linkHeroJSON;
 } RegistrationFunctions;

@@ -715,7 +715,7 @@ void register_mod_buildings()
     }
 }
 
-void register_mod_heros()
+void register_mod_heroes()
 {
     SFMod *temp = g_current_mod;
     int hero_count_for_mod = 0;
@@ -729,7 +729,7 @@ void register_mod_heros()
         {
             if (hero_count_for_mod > 0)
             {
-                log_info("| - Finished Registration of %d buildings for %s", hero_count_for_mod, temp->mod_id);
+                log_info("| - Finished Registration of %d heroes for %s", hero_count_for_mod, temp->mod_id);
                 hero_count_for_mod = 0;
             }
             log_info("| - Starting Registration for [%s by %s]", parent_mod->mod_id, parent_mod->mod_author);

@@ -183,6 +183,7 @@ void initialize_framework()
 
     register_mod_spells();
     register_mod_buildings();
+    register_mod_heroes();
 
     log_info(
         "|====== ==== ======| Mod Registration Phase End |====== ==== ======|");

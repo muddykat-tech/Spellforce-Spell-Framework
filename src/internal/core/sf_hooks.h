@@ -44,6 +44,9 @@ extern void __thiscall linkPhysRainHandler(SFSpell *spell, sub_effect_handler_pt
 extern void __thiscall linkPhysEffectHandler(SFSpell *spell, phys_effect_handler_ptr handler);
 extern void __thiscall linkEnchantChanceHandler(SFSpell *spell, enchant_handler_ptr handler);
 
+extern SFHero *__thiscall registerHero(uint16_t creo_id);
+extern void __thiscall linkHeroJSON(SFHero *hero, const char *hero_json_name);
+
 extern SFMod *createModInfo(const char *mod_id, const char *mod_version, const char *mod_author,
                             const char *mod_description);
 

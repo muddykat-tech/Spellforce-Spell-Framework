@@ -368,6 +368,9 @@ void initialize_data_hooks()
     INCLUDE_FUNCTION(registration, linkBuildingEntryHandler, &linkBuildingEntryHandler);
     INCLUDE_FUNCTION(registration, applyBuildingTag, &applyBuildingTag);
 
+    INCLUDE_FUNCTION(registration, registerHero, &registerHero);
+    INCLUDE_FUNCTION(registration, linkHeroJSON, &linkHeroJSON);
+
 }
 
 static void initialize_spelltype_hook()
@@ -725,8 +728,6 @@ static void initialize_utility_hooks()
 
 static void initialize_hero_hook()
 {
-
-    log_info("Hooking Special Heroes");
     ASI::MemoryRegion hero_mreg (ASI::AddrOf(0x228d31), 5);
     ASI::BeginRewrite(hero_mreg);
     *(unsigned char *)(ASI::AddrOf(0x228d31)) = 0xE8;  // JUMP instruction
@@ -735,8 +736,8 @@ static void initialize_hero_hook()
 
     ASI::MemoryRegion hero_mreg2 (ASI::AddrOf(0x22b65e), 5);
     ASI::BeginRewrite(hero_mreg2);
-    *(unsigned char *)(ASI::AddrOf(0x22b65e)) = 0xE8;  // JUMP instruction
-    *(int *)(ASI::AddrOf(0x22b66f)) = (int)(&createHeroFromRuneHook) - ASI::AddrOf(0x22b663);
+    *(unsigned char *)(ASI::AddrOf(0x22b65e)) = 0xE8;  // CALL instruction
+    *(int *)(ASI::AddrOf(0x22b65f)) = (int)(&createHeroFromRuneHook) - ASI::AddrOf(0x22b663);
     ASI::EndRewrite(hero_mreg2);
 }
 
