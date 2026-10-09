@@ -152,6 +152,9 @@ void initialize_framework()
     log_info("| - Registration of Vanilla Building Done Handlers");
     initialize_vanilla_buildings();
 
+    log_info("| - Registration of Vanilla custom heroes");
+    initialize_vanilla_heroes();
+
     log_info(
         "|======| Spellforce Spell Framework Configuration Phase End |======|");
     log_info(
@@ -180,6 +183,7 @@ void initialize_framework()
 
     register_mod_spells();
     register_mod_buildings();
+    register_mod_heroes();
 
     log_info(
         "|====== ==== ======| Mod Registration Phase End |====== ==== ======|");

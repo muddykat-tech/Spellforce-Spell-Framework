@@ -12,5 +12,6 @@
 
 void initialize_vanilla_spells();
 void initialize_vanilla_buildings();
+void initialize_vanilla_heroes();
 
 #endif

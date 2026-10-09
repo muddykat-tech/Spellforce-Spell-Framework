@@ -29,6 +29,7 @@
 #include "hooks/sf_worker_logic_hook.h"
 #include "hooks/sf_enchant_hook.h"
 #include "hooks/sf_campaign_hook.h"
+#include "hooks/sf_hero_hook.h"
 
 #include "hooks/sf_effect_hook.h"
 
@@ -366,6 +367,9 @@ void initialize_data_hooks()
     INCLUDE_FUNCTION(registration, linkBuildingDoneHandler, &linkBuildingDoneHandler);
     INCLUDE_FUNCTION(registration, linkBuildingEntryHandler, &linkBuildingEntryHandler);
     INCLUDE_FUNCTION(registration, applyBuildingTag, &applyBuildingTag);
+
+    INCLUDE_FUNCTION(registration, registerHero, &registerHero);
+    INCLUDE_FUNCTION(registration, linkHeroJSON, &linkHeroJSON);
 
 }
 
@@ -722,6 +726,21 @@ static void initialize_utility_hooks()
     // ASI::EndRewrite(storm_test_mreg);
 }
 
+static void initialize_hero_hook()
+{
+    ASI::MemoryRegion hero_mreg (ASI::AddrOf(0x228d31), 5);
+    ASI::BeginRewrite(hero_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x228d31)) = 0xE8;  // JUMP instruction
+    *(int *)(ASI::AddrOf(0x228d32)) = (int)(&createHeroFromRuneHook) - ASI::AddrOf(0x228d36);
+    ASI::EndRewrite(hero_mreg);
+
+    ASI::MemoryRegion hero_mreg2 (ASI::AddrOf(0x22b65e), 5);
+    ASI::BeginRewrite(hero_mreg2);
+    *(unsigned char *)(ASI::AddrOf(0x22b65e)) = 0xE8;  // CALL instruction
+    *(int *)(ASI::AddrOf(0x22b65f)) = (int)(&createHeroFromRuneHook) - ASI::AddrOf(0x22b663);
+    ASI::EndRewrite(hero_mreg2);
+}
+
 static void initialize_spell_buttons_hooks()
 {
 
@@ -927,6 +946,9 @@ void initialize_beta_hooks()
     log_info("Hooking spell buttons");
     initialize_spell_buttons_hooks();
 
+    log_info("Hooking special heroes");
+    init_hero_functions();
+    initialize_hero_hook();
 }
 
 /**

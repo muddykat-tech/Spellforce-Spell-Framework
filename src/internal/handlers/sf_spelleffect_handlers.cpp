@@ -181,7 +181,7 @@ extern BuildingFunctions buildingAPI;
 extern AiFunctions aiAPI;
 
 typedef uint16_t (__thiscall *reserveFigure_ptr)(SF_CGdFigureToolbox *_this, uint16_t x, uint16_t y, uint16_t owner,
-                                                 CGdResourceUnitStats *stats, CGdFigureTask task, uint16_t param6);
+                                                 CGdResourceFigureStats *stats, CGdFigureTask task, uint16_t param6);
 reserveFigure_ptr reserveFigure;
 
 void __thiscall apply_aura_effect(SF_CGdSpell *_this, uint16_t spell_index, uint16_t sub_spell_index,
@@ -759,8 +759,8 @@ void __thiscall effect_self_illusion(SF_CGdSpell *_this, uint16_t spell_index)
         uint16_t current_tick = spellAPI.addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1);
         if (current_tick == 1)
         {
-            CGdResourceUnitStats stats;
-            memset(&stats, 0, sizeof(CGdResourceUnitStats));
+            CGdResourceFigureStats stats;
+            memset(&stats, 0, sizeof(CGdResourceFigureStats));
 
             uint16_t scale_factor = spell_data.params[1];
             uint16_t summon_count = spell_data.params[0];

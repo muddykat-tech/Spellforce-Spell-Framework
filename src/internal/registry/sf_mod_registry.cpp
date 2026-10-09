@@ -17,7 +17,7 @@
 #include "ai_data_registries/sf_ai_single_target_registry.h"
 #include "building_registry/sf_building_done_registry.h"
 #include "building_registry/sf_building_entry_registry.h"
-
+#include "sf_hero_registry.h"
 
 #include <windows.h>
 #include <iostream>
@@ -29,6 +29,26 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../core/sf_building_loader.h"
+#include "../core/sf_hero_loader.h"
+
+
+std::list<SFHero *> g_internal_hero_list;
+
+SFHero *__thiscall registerHero(uint16_t creo_id)
+{
+    SFHero *hero = new SFHero;
+    hero->creo_id = 0;
+    hero->hero_json_name[0] = '\0';
+    hero->parent_mod = g_current_mod;
+    g_internal_hero_list.push_back(hero);
+
+    return hero;
+}
+
+void __thiscall linkHeroJSON(SFHero *hero, const char *hero_json_name)
+{
+    strncpy(hero->hero_json_name, hero_json_name, sizeof(hero->hero_json_name) - 1);
+}
 
 std::list<SFBuilding *> g_internal_building_list;
 
@@ -691,6 +711,43 @@ void register_mod_buildings()
         if (building_data->entry_handler != nullptr)
         {
             registerBuildingEntryHandler(building_data->building_id, building_data->entry_handler);
+        }
+    }
+}
+
+void register_mod_heroes()
+{
+    SFMod *temp = g_current_mod;
+    int hero_count_for_mod = 0;
+
+    for (SFHero *hero_data : g_internal_hero_list)
+    {
+        SFMod *parent_mod = hero_data->parent_mod;
+        g_current_mod = parent_mod;
+
+        if (temp != g_current_mod)
+        {
+            if (hero_count_for_mod > 0)
+            {
+                log_info("| - Finished Registration of %d heroes for %s", hero_count_for_mod, temp->mod_id);
+                hero_count_for_mod = 0;
+            }
+            log_info("| - Starting Registration for [%s by %s]", parent_mod->mod_id, parent_mod->mod_author);
+            temp = g_current_mod;
+        }
+        else
+        {
+            hero_count_for_mod++;
+        }
+        CustomHero parsed_hero;
+        if (strlen(hero_data->hero_json_name) != 0)
+        {
+            if (!parse_hero_json_entrypoint(hero_data->hero_json_name, g_current_mod->mod_id, &parsed_hero))
+            {
+                log_error("Custom Hero JSON structure invalid: %s", hero_data->hero_json_name);
+                continue;
+            }
+            registerHeroGear(parsed_hero.creo_id, parsed_hero.gear, parsed_hero.item_count);
         }
     }
 }

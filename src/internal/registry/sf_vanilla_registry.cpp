@@ -8,6 +8,77 @@
 #include "../handlers/sf_building_done_handlers.h"
 #include "../handlers/sf_worker_building_entry_handlers.h"
 #include "../handlers/sf_phys_effect_handlers.h"
+#include "sf_hero_registry.h"
+
+void initialize_vanilla_heroes()
+{
+    HeroGearEntry gitzo_gear[1];
+    gitzo_gear[0].item_id = 0xff0;
+    gitzo_gear[0].slot = kGtEquipSlotChest;
+    registerHeroGear(0x6ad, gitzo_gear, 1);
+
+    HeroGearEntry bladeweaver_gear[2];
+    bladeweaver_gear[0].item_id = 0xff5;
+    bladeweaver_gear[0].slot = kGtEquipSlotChest;
+    bladeweaver_gear[1].item_id = 0xff8;
+    bladeweaver_gear[1].slot = kGtEquipSlotRightHand;
+    registerHeroGear(0x6ae, bladeweaver_gear, 2);
+
+    HeroGearEntry bladeprinceps_gear[2];
+    bladeprinceps_gear[0].item_id = 0xff6;
+    bladeprinceps_gear[0].slot = kGtEquipSlotChest;
+    bladeprinceps_gear[1].item_id = 0xff9;
+    bladeprinceps_gear[1].slot = kGtEquipSlotRightHand;
+    registerHeroGear(0x6bf, bladeprinceps_gear, 2);
+
+    HeroGearEntry blademinion_gear[2];
+    blademinion_gear[0].item_id = 0xff4;
+    blademinion_gear[0].slot = kGtEquipSlotChest;
+    blademinion_gear[1].item_id = 0xff7;
+    blademinion_gear[1].slot = kGtEquipSlotRightHand;
+    registerHeroGear(0x6c0, blademinion_gear, 2);
+
+    HeroGearEntry shar_arduin_gear[1];
+    shar_arduin_gear[0].item_id = 0xff3;
+    shar_arduin_gear[0].slot = kGtEquipSlotChest;
+    registerHeroGear(0x6c1, shar_arduin_gear, 1);
+
+    HeroGearEntry kyra_gear[1];
+    kyra_gear[0].item_id = 0xff2;
+    kyra_gear[0].slot = kGtEquipSlotChest;
+    registerHeroGear(0x6c2, kyra_gear, 1);
+
+    HeroGearEntry gultark_gear[1];
+    gultark_gear[0].item_id = 0xff1;
+    gultark_gear[0].slot = kGtEquipSlotChest;
+    registerHeroGear(0x6c3, gultark_gear, 1);
+
+    HeroGearEntry anktahr_gear[2];
+    anktahr_gear[0].item_id = 0x12c2;
+    anktahr_gear[0].slot = kGtEquipSlotChest;
+    anktahr_gear[1].item_id = 0x1b9c;
+    anktahr_gear[1].slot = kGtEquipSlotRightHand;
+    registerHeroGear(0x90f, anktahr_gear, 2);
+
+    HeroGearEntry glamrig_gear[1];
+    glamrig_gear[0].item_id = 0x12c1;
+    glamrig_gear[0].slot = kGtEquipSlotChest;
+    registerHeroGear(0x910, glamrig_gear, 1);
+
+    HeroGearEntry ump_gear[1];
+    ump_gear[0].item_id = 0x12c0;
+    ump_gear[0].slot = kGtEquipSlotChest;
+    registerHeroGear(0x911, ump_gear, 1);
+
+    HeroGearEntry xyallah_gear[3];
+    xyallah_gear[0].item_id = 0x12c3;
+    xyallah_gear[0].slot = kGtEquipSlotChest;
+    xyallah_gear[1].item_id = 0x12c4;
+    xyallah_gear[1].slot = kGtEquipSlotRightHand;
+    xyallah_gear[2].item_id = 0x12c5;
+    xyallah_gear[2].slot = kGtEquipSlotLeftHand;
+    registerHeroGear(0x912, xyallah_gear, 3);
+}
 
 
 
