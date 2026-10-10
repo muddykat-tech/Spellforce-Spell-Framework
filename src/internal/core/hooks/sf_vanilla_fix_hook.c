@@ -1670,6 +1670,29 @@ static void splash_screen_hook()
 
 }
 
+int32_t __thiscall clamp_stat_bonus (SF_CGdSpell *_this, int32_t current, int32_t required)
+{
+    int32_t bonus = required;
+    if (current + required > 100)
+    {
+        bonus = 100 - current;
+    }
+    if ((bonus > 127) || (bonus < -128))
+    {
+        bonus = (bonus > 127) ? 127 : -128;
+    }
+    return bonus;
+}
+
+static void stat_bonus_clamp_fix_hook()
+{
+    ASI::MemoryRegion mreg(ASI::AddrOf(0x329f60), 5);
+    ASI::BeginRewrite(mreg);
+    *(unsigned char *)(ASI::AddrOf(0x329f60)) = 0xE9; // jmp instruction
+    *(int *)(ASI::AddrOf(0x329f61)) = (int)(&clamp_stat_bonus) - ASI::AddrOf(0x329f65);
+    ASI::EndRewrite(mreg);
+}
+
 void initialize_vanilla_fix_hooks()
 {
     add_item = (add_item_ptr)(ASI::AddrOf(0x260d70));
@@ -1722,6 +1745,7 @@ void initialize_vanilla_fix_hooks()
     figure_statistic_hook_current_walk_spd();
     figure_statistic_hook_current_fight_spd();
     figure_statistic_hook_current_cast_spd();
+    stat_bonus_clamp_fix_hook();
     salvo_fix_hook();
     get_race_fix_hook();
     army_size_fix_hook();

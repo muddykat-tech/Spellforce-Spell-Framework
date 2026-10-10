@@ -190,3 +190,12 @@ uint32_t __thiscall illusion_ai_handler(SF_CGdBattleDevelopment *_this,
                                         uint16_t target_index,
                                         uint16_t spell_line,
                                         SF_CGdResourceSpell *spell_data);
+
+uint32_t __thiscall meditation_ai_handler(SF_CGdBattleDevelopment *_this,
+                                          uint16_t target_index,
+                                          uint16_t spell_line,
+                                          SF_CGdResourceSpell *spell_data);
+uint32_t __thiscall enlightment_ai_handler(SF_CGdBattleDevelopment *_this,
+                                           uint16_t target_index,
+                                           uint16_t spell_line,
+                                           SF_CGdResourceSpell *spell_data);
