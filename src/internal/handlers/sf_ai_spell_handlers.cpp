@@ -741,6 +741,36 @@ uint32_t __thiscall extinct_ai_handler(SF_CGdBattleDevelopment *_this,
     return rank;
 }
 
+uint32_t __thiscall meditation_ai_handler(SF_CGdBattleDevelopment *_this,
+                                          uint16_t target_index,
+                                          uint16_t spell_line,
+                                          SF_CGdResourceSpell *spell_data)
+{
+    if (target_index != _this->battleData.current_figure)
+    {
+        return 0;
+    }
+    uint32_t max_mana = figureAPI.getMaxStat(_this->battleData.CGdFigure, target_index, MANA);
+    uint32_t current_mana = figureAPI.getCurrentStat(_this->battleData.CGdFigure, target_index, MANA);
+    if (current_mana * 100 >= max_mana * 30)
+    {
+        return 0;
+    }
+    return 2;
+}
+
+
+uint32_t __thiscall enlightment_ai_handler(SF_CGdBattleDevelopment *_this,
+                                           uint16_t target_index,
+                                           uint16_t spell_line,
+                                           SF_CGdResourceSpell *spell_data)
+{
+    if (target_index != _this->battleData.current_figure)
+    {
+        return 0;
+    }
+    return 2;
+}
 uint32_t __thiscall healing_ai_handler(SF_CGdBattleDevelopment *_this,
                                        uint16_t target_index,
                                        uint16_t spell_line,
