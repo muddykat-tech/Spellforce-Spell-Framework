@@ -196,10 +196,11 @@ void __thiscall createHeroFromRuneHook(AutoClass6 *_this, uint32_t player_id, ui
     setHeroRecord(_this->db, player_id, &hero, hero_slot & 0xff);
 
     getUnitSpells(_this->db, hero.creo, &unit_spells);
-    if ((unit_spells.data - unit_spells.first) >> 1 > 0)
+    uint8_t total_unit_spells = ((uint32_t)unit_spells.data - (uint32_t)unit_spells.first) >> 1;
+    if (total_unit_spells > 0)
     {
         uint32_t spell_count = 0;
-        for (int index = 0; index < (unit_spells.data - unit_spells.first) >> 1; index++)
+        for (int index = 0; index < total_unit_spells; index++)
         {
             uint16_t spell_item_id = 0;
             InvSlotEntry slot_entry;
@@ -226,7 +227,6 @@ void __thiscall createHeroFromRuneHook(AutoClass6 *_this, uint32_t player_id, ui
             }
             spell_count++;
         }
-
         if ((spell_count != 0) && (no_notify == 0))
         {
             InvContainerUpdateMsg update_msg;
