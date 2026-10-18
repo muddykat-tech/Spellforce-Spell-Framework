@@ -9,6 +9,34 @@
 #include "../handlers/sf_worker_building_entry_handlers.h"
 #include "../handlers/sf_phys_effect_handlers.h"
 #include "sf_hero_registry.h"
+#include "sf_level_up_registry.h"
+
+void initialize_vanilla_level_up_abilities()
+{
+    registerLearnedAbility(1, 0, 1, 3211);
+    registerLearnedAbility(1, 0, 2, 3212);
+    registerLearnedAbility(1, 0, 4, 3213);
+    registerLearnedAbility(1, 0, 6, 3214);
+    registerLearnedAbility(1, 0, 14, 7315);
+    registerLearnedAbility(1, 0, 17, 7316);
+
+    registerLearnedAbility(2, 0, 1, 3207);
+    registerLearnedAbility(2, 0, 2, 3208);
+    registerLearnedAbility(2, 0, 4, 3209);
+    registerLearnedAbility(2, 0, 6, 3210);
+    registerLearnedAbility(2, 0, 14, 7315);
+    registerLearnedAbility(2, 0, 17, 7314);
+
+    registerLearnedAbility(3, 0, 1, 3215);
+    registerLearnedAbility(3, 0, 2, 3212);
+    registerLearnedAbility(3, 0, 4, 3216);
+    registerLearnedAbility(3, 0, 6, 3217);
+    registerLearnedAbility(3, 0, 14, 7315);
+    registerLearnedAbility(3, 0, 17, 7316);
+
+    //TODO Remove me
+    //registerLearnedAbility(2, 2, 2, 7491);
+}
 
 void initialize_vanilla_heroes()
 {

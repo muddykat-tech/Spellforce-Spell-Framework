@@ -225,7 +225,7 @@ void __thiscall apply_aura_effect(SF_CGdSpell *_this, uint16_t spell_index, uint
 void __thiscall effect_conservation(SF_CGdSpell *_this, uint16_t spell_index)
 {
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
-    uint16_t source_index = spell->source.entity_index;
+//  uint16_t source_index = spell->source.entity_index;
     uint16_t target_index = spell->target.entity_index;
 
 
@@ -804,7 +804,7 @@ void __thiscall effect_self_illusion(SF_CGdSpell *_this, uint16_t spell_index)
                     SF_Coord caster_pos = _this->SF_CGdFigure->figures[source_index].position;
                     SF_Coord initial_offset = {1,10};
                     SF_Coord figure_pos = {0,0};
-                    uint16_t sector = _this->SF_CGdWorld->cells[caster_pos.Y * 400 + caster_pos.X].sector;
+                    //uint16_t sector = _this->SF_CGdWorld->cells[caster_pos.Y * 400 + caster_pos.X].sector;
 
                     if (toolboxAPI.findClosestFreePosition(_this->SF_CGdWorldToolBox, &caster_pos, &initial_offset,
                                                            (uint16_t)(-1), &figure_pos))

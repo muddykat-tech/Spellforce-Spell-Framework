@@ -30,6 +30,7 @@
 #include "hooks/sf_enchant_hook.h"
 #include "hooks/sf_campaign_hook.h"
 #include "hooks/sf_hero_hook.h"
+#include "hooks/sf_level_up_hook.h"
 
 #include "hooks/sf_effect_hook.h"
 
@@ -726,11 +727,26 @@ static void initialize_utility_hooks()
     // ASI::EndRewrite(storm_test_mreg);
 }
 
+static void initialize_skill_level_up_hook()
+{
+    ASI::MemoryRegion skill_mreg (ASI::AddrOf(0x2268d6), 5);
+    ASI::BeginRewrite(skill_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x2268d6)) = 0xE8;  // CALL instruction
+    *(int *)(ASI::AddrOf(0x2268d7)) = (int)(&learnSkillOnLevelUp_hook) - ASI::AddrOf(0x2268db);
+    ASI::EndRewrite(skill_mreg);
+
+    ASI::MemoryRegion skill_mreg2 (ASI::AddrOf(0x23074f), 5);
+    ASI::BeginRewrite(skill_mreg2);
+    *(unsigned char *)(ASI::AddrOf(0x23074f)) = 0xE8;  // CALL instruction
+    *(int *)(ASI::AddrOf(0x230750)) = (int)(&learnSkillOnLevelUp_hook) - ASI::AddrOf(0x230754);
+    ASI::EndRewrite(skill_mreg2);
+}
+
 static void initialize_hero_hook()
 {
     ASI::MemoryRegion hero_mreg (ASI::AddrOf(0x228d31), 5);
     ASI::BeginRewrite(hero_mreg);
-    *(unsigned char *)(ASI::AddrOf(0x228d31)) = 0xE8;  // JUMP instruction
+    *(unsigned char *)(ASI::AddrOf(0x228d31)) = 0xE8;  // CALL instruction
     *(int *)(ASI::AddrOf(0x228d32)) = (int)(&createHeroFromRuneHook) - ASI::AddrOf(0x228d36);
     ASI::EndRewrite(hero_mreg);
 
@@ -949,6 +965,10 @@ void initialize_beta_hooks()
     log_info("Hooking special heroes");
     init_hero_functions();
     initialize_hero_hook();
+
+    log_info("Hooking skill up abilities");
+    init_lvl_up_functions();
+    initialize_skill_level_up_hook();
 }
 
 /**

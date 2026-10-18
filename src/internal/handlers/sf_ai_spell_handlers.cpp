@@ -1148,7 +1148,7 @@ uint32_t __thiscall dominate_animal_ai_handler(SF_CGdBattleDevelopment *_this,
     {
         rank = 0;
     }
-    uint8_t race = _this->battleData.CGdFigure->figures[target_index].race;
+    //uint8_t race = _this->battleData.CGdFigure->figures[target_index].race;
     //TODO CGdResource::isRaceAnimal passthrough
     if (false)
     {

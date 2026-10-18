@@ -155,6 +155,10 @@ void initialize_framework()
     log_info("| - Registration of Vanilla custom heroes");
     initialize_vanilla_heroes();
 
+    log_info("| - Registration of Vanilla on Level Up Abilities");
+    initialize_vanilla_level_up_abilities();
+
+
     log_info(
         "|======| Spellforce Spell Framework Configuration Phase End |======|");
     log_info(
