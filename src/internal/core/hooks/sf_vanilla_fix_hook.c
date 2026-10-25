@@ -1672,10 +1672,13 @@ static void splash_screen_hook()
 
 int32_t __thiscall clamp_stat_bonus (SF_CGdSpell *_this, int32_t current, int32_t required)
 {
-    int32_t total       = (int8_t) current + (int8_t)required;
+    //log_info("Required %d current %d", (int16_t) required, (int8_t) current);
+    int32_t total       = (int8_t) current + (int16_t)required;
     int32_t clamp_tot   = (total > 127) ? 127 : ((total < -100) ? -100 : total);
+    //log_info("Total %d clamp %d", (int8_t) total, (int8_t) clamp_tot);
     int32_t delta       = clamp_tot - (int8_t)current;
     int32_t bonus = (delta > 127) ? 127 : ((delta < -128) ? -128 : delta);
+    //log_info("Delta %d bonus %d", (int8_t) delta, (int8_t) bonus);
     return bonus;
 }
 
