@@ -1095,8 +1095,7 @@ typedef struct __attribute__((packed))
     uint8_t unknown3[29];
     uint8_t alliance;
     uint8_t hq_updrade_level[2];
-    void *monument_list;
-    uint32_t unknown4[2];
+    uint_list_node monument_list;
     void *building_list;
     uint32_t unknown5[7];
     uint32_t runepower_current;
