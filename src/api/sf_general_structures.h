@@ -1493,7 +1493,7 @@ typedef struct __attribute__((packed))
     uint8_t unkn2[0x7024];
     SF_CGdMain *CGdMain;
     SF_CGdFigureToolbox *CGdFigureToolBox;
-    void *CGdResource;
+    SF_CGdResource *CGdResource;
     SF_CGdFigure *CGdFigure;
     uint8_t unkn3[0xc];
     CGdControllerClient *CGdControllerClient;
