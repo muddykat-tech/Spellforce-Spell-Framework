@@ -29,6 +29,7 @@ typedef struct SF_CGdObject SF_CGdObject;
 
 typedef struct CMnuLabel CMnuLabel;
 typedef struct CGdControllerClient CGdControllerClient;
+typedef struct SF_CGdMain SF_CGdMain;
 
 /* |-========== Enums ==========-| */
 
@@ -1109,13 +1110,13 @@ typedef struct __attribute__((packed))
 typedef struct __attribute__((packed))
 {
     void *UiDbProxy;
-    void *CGdMain;
-    CGdControllerClient *SF_CGdControllerClient;
+    SF_CGdMain *CGdMain;
+    CGdControllerClient *CGdControllerClient;
     void *AC95;
-    SF_CGdResource *SF_CGdResource;
-    SF_CGdBuilding *SF_CGdBuilding;
-    SF_CGdBuildingToolbox *SF_CGdBuildingToolbox;
-    SF_CGdPlayer *SF_CGdPlayer;
+    SF_CGdResource *CGdResource;
+    SF_CGdBuilding *CGdBuilding;
+    SF_CGdBuildingToolbox *CGdBuildingToolbox;
+    SF_CGdPlayer *CGdPlayer;
     uint32_t ShowItemId;
 } AutoClass101;
 
@@ -1268,11 +1269,11 @@ typedef struct __attribute__((packed))
     uint8_t unknown_data[0x418];
 } CGdMain_data;
 
-typedef struct __attribute__((packed))
+struct __attribute__((packed)) SF_CGdMain
 {
     void *vtable_ptr;
     CGdMain_data data;
-} SF_CGdMain;
+};
 
 /* Menu Structures */
 
@@ -1678,7 +1679,7 @@ typedef struct __attribute__((packed))
     uint8_t unknown_datablock[0x6c];
     CMnuContainer *some_container_label;
     void *some_unknown_pointer;
-    void *SF_CGdMain;
+    SF_CGdMain *CGdMain;
     SF_GameInfo *game_info;
     CAppMenu *SF_CAppMenu;
     uint32_t offset_0x80;
@@ -1756,12 +1757,12 @@ typedef struct  __attribute__((packed))  /* class CUiMenuPreLoad : CMnuContainer
 // These functions are used in SFSF internally, and WILL be moved.
 
 typedef void (__thiscall *console_print_ptr)(uint32_t, const char *);
-typedef uint16_t (__thiscall *get_spell_spell_line_ptr)(void *, uint16_t);
+typedef uint16_t (__thiscall *get_spell_spell_line_ptr)(SF_CGdResource *, uint16_t);
 typedef uint32_t (__thiscall *figure_toolbox_get_unkn_ptr)(void *, uint16_t);
-typedef void (__thiscall *figure_toolbox_add_spell_ptr)(void *, uint16_t,
+typedef void (__thiscall *figure_toolbox_add_spell_ptr)(SF_CGdFigureToolbox *, uint16_t,
                                                         uint16_t);
 typedef bool (__thiscall *figure_toolbox_is_targetable_ptr)(
-    void *CGdFigureToolbox, uint16_t figure_index);
+    SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t figure_index);
 typedef uint32_t (__thiscall *FUN_0069eaf0_ptr)(void *ac69, void *ac69_2,
                                                 void *ac69_3, void *ac69_4);
 typedef void (*fidfree_ptr)(uint32_t *memory_ptr);

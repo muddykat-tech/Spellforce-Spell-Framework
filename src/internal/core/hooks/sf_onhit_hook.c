@@ -217,7 +217,7 @@ uint16_t __thiscall handle_riposte_set(SF_CGdFigureJobs *_this,
     }
     if (apply_set)
     {
-        uint16_t damage = g_get_reduced_damage(_this->AutoClass34, source_index, source_index, weapon_damage);
+        uint16_t damage = g_get_reduced_damage(_this->CGdAutoClass34, source_index, source_index, weapon_damage);
         toolboxAPI.dealDamage(_this->CGdFigureToolBox, source_index, source_index, damage, 0, 0, 0);
         return 0;
     }
@@ -292,7 +292,7 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
             return;
         }
 
-        uint16_t hit_chance = g_get_hit_chance(_this->AutoClass34, source_index, target.entity_index);
+        uint16_t hit_chance = g_get_hit_chance(_this->CGdAutoClass34, source_index, target.entity_index);
 
         // miss handling
         if ((hit_chance < spellAPI.getRandom(_this->OpaqueClass, 100)) && (param_2 == 0))
@@ -319,7 +319,7 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
          */
 
 
-        uint16_t damage = g_get_reduced_damage(_this->AutoClass34, source_index, target.entity_index, weapon_damage);
+        uint16_t damage = g_get_reduced_damage(_this->CGdAutoClass34, source_index, target.entity_index, weapon_damage);
         damage = ((damage & 0xffff) * ((uint8_t) param_3) + 0x32) / 100;
         damage = damage & 0xffff;
         // glanced hit
@@ -570,7 +570,7 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
     }
     if (target.entity_type == 2)
     {
-        uint16_t damage = g_get_reduced_building_damage(_this->AutoClass34, source_index, target.entity_index,
+        uint16_t damage = g_get_reduced_building_damage(_this->CGdAutoClass34, source_index, target.entity_index,
                                                         weapon_damage);
         if ((target.entity_index != 0) && (_this->CGdBuilding->buildings[target.entity_index].health_current != 0))
         {

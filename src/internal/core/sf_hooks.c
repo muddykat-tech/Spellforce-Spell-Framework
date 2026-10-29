@@ -31,6 +31,7 @@
 #include "hooks/sf_campaign_hook.h"
 #include "hooks/sf_hero_hook.h"
 #include "hooks/sf_level_up_hook.h"
+#include "hooks/sf_avatar_level_hook.h"
 
 #include "hooks/sf_effect_hook.h"
 
@@ -368,9 +369,6 @@ void initialize_data_hooks()
     INCLUDE_FUNCTION(registration, linkBuildingDoneHandler, &linkBuildingDoneHandler);
     INCLUDE_FUNCTION(registration, linkBuildingEntryHandler, &linkBuildingEntryHandler);
     INCLUDE_FUNCTION(registration, applyBuildingTag, &applyBuildingTag);
-
-    INCLUDE_FUNCTION(registration, registerHero, &registerHero);
-    INCLUDE_FUNCTION(registration, linkHeroJSON, &linkHeroJSON);
 
 }
 
@@ -969,6 +967,9 @@ void initialize_beta_hooks()
     log_info("Hooking skill up abilities");
     init_lvl_up_functions();
     initialize_skill_level_up_hook();
+
+    log_info("Hooking avatar level up abilities");
+    init_avatar_level_hook();
 }
 
 /**

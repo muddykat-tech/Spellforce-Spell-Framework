@@ -65,14 +65,14 @@ void __thiscall shield_wall_end_handler(SF_CGdSpell *_this, uint16_t spell_index
     // we pull the percentage by which the target's armor rating was increased
     uint16_t recalc_value = spellAPI->getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER);
     // we remove the bonus to target's armor rating by adding negative amount of this value
-    figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, target_index, -recalc_value);
+    figureAPI->addBonusMultToStatistic(_this->CGdFigure, ARMOR, target_index, -recalc_value);
 
     spellAPI->removeDLLNode(_this, spell_index); // we remove spell from the list of active spells over the target
     spellAPI->setEffectDone(_this, spell_index, 0); // we end a spell
 
     // here you might see the legacy of attempt to implement flat bonus to armor
     // it's not functional because armor.bonus_val can be overwritten by worn armor whenever you reequip it
-    //_this->SF_CGdFigure->figures[target_index].armor.bonus_val += -recalc_value;
+    //_this->CGdFigure->figures[target_index].armor.bonus_val += -recalc_value;
 }
 
 
@@ -94,7 +94,7 @@ void __thiscall shield_wall_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
 
     // we declare a structure for spell to store spell parameters which we will load from GameData.cff
     SF_CGdResourceSpell spell_data;
-    spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+    spellAPI->getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);
 
     // we load interval specified in milliseconds between the beginning and the ending ticks from GameData.cff
     uint16_t ticks_interval = spell_data.params[1];
@@ -113,9 +113,9 @@ void __thiscall shield_wall_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
 
         // we're adding the bonus to figure statistic
         // game automatically calculates multiplied armor rating value in the next game tick (not to be confused with spell tick)
-        figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, target_index, recalc_value);
+        figureAPI->addBonusMultToStatistic(_this->CGdFigure, ARMOR, target_index, recalc_value);
 
-        // _this->SF_CGdFigure->figures[target_index].armor.bonus_val += recalc_value;
+        // _this->CGdFigure->figures[target_index].armor.bonus_val += recalc_value;
         // alternatively it could be possible to add value as flat bonus with bonus_val
         // but won't work properly, because this key directly overwritten by worn armor
 
@@ -133,12 +133,12 @@ void __thiscall shield_wall_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
         // we retrieve the armor multiplier directly from the spell instance
         uint16_t recalc_value = spellAPI->getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER);
         // we add negative value of this multiplier to figure's statistic
-        figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, target_index, -recalc_value);
+        figureAPI->addBonusMultToStatistic(_this->CGdFigure, ARMOR, target_index, -recalc_value);
 
 
         // keeping it to show how it could be possibly done in flat way
         // but it can't be actually used due to interference with other instances using bonus_val as well
-        //_this->SF_CGdFigure->figures[target_index].armor.bonus_val += -recalc_value;
+        //_this->CGdFigure->figures[target_index].armor.bonus_val += -recalc_value;
 
         // we end the spell
         spellAPI->setEffectDone(_this, spell_index, 0);
@@ -172,12 +172,12 @@ void __thiscall melee_group_ability_effect_handler(SF_CGdSpell *_this, uint16_t 
     // we load the spell parameters from GameData.cff
     // we'll use them later
     SF_CGdResourceSpell spell_data;
-    spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+    spellAPI->getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);
 
 
     // we declare structure for relative position of visual effect
     SF_CGdTargetData relative_data;
-    figureAPI->getPosition(_this->SF_CGdFigure, &relative_data.position, source_index);
+    figureAPI->getPosition(_this->CGdFigure, &relative_data.position, source_index);
     relative_data.entity_type = 4;
     relative_data.entity_index = 0;
     uint32_t unused;
@@ -189,7 +189,7 @@ void __thiscall melee_group_ability_effect_handler(SF_CGdSpell *_this, uint16_t 
     SF_Coord cast_center;
     // we get XY coordinates of the spell center with API function
     // basically, we just center the spell around its spellcaster (source)
-    figureAPI->getPosition(_this->SF_CGdFigure, &cast_center, source_index);
+    figureAPI->getPosition(_this->CGdFigure, &cast_center, source_index);
 
     // we get coordinates of area affected and record them as a squared circle
     // spell_data.params[0] stands for a spell radius
@@ -227,9 +227,9 @@ void __thiscall melee_group_ability_effect_handler(SF_CGdSpell *_this, uint16_t 
         // we apply the spell only to living figures belonging to our own faction, as long as those figures are targetable
         // notice that we affect those flags directly via respective structures rather than with API functions as in previous example
         // both options are allowable
-        if (((int16_t)(_this->SF_CGdFigure->figures[target_index].owner) == (int16_t)(_this->SF_CGdFigure->figures[source_index].owner)) &&
-            (((uint8_t)(_this->SF_CGdFigure->figures[target_index].flags) & 0xa) == 0) &&
-            (toolboxAPI->isTargetable(_this->SF_CGdFigureToolBox, target_index)))
+        if (((int16_t)(_this->CGdFigure->figures[target_index].owner) == (int16_t)(_this->CGdFigure->figures[source_index].owner)) &&
+            (((uint8_t)(_this->CGdFigure->figures[target_index].flags) & 0xa) == 0) &&
+            (toolboxAPI->isTargetable(_this->CGdFigureToolBox, target_index)))
         {
             // we also can't apply the spell to target if the target is already affected with another instance of the spell
             // checkCanApply triggers the refresh handler for a spell specified via its spell_index (SHIELDWALL GROUP in this case)
@@ -281,15 +281,15 @@ int __thiscall shield_wall_group_refresh_handler(SF_CGdSpell *_this, uint16_t sp
 
     // we declare spell_data for SHIELDWALL GROUP spell, because we need to pull the spell id of SHIELDWALL spell linked with SHIELDWALL GROUP spell
     SF_CGdResourceSpell spell_data;
-    spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);  
+    spellAPI->getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);  
     
     // we declare own spell_data for SHIELDWALL spell
     SF_CGdResourceSpell spell_data_2;
-    spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data_2, spell_data.params[3]);
+    spellAPI->getResourceSpellData(_this->CGdResource, &spell_data_2, spell_data.params[3]);
 
     // we check whether the figure has the SHIELDWALL spell applied to it already
     // method hasSpellOnIt accepts spell_line_id property of spell data as argument in order to idenfity the spell
-    if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index, spell_data_2.spell_line_id))
+    if (toolboxAPI->hasSpellOnIt(_this->CGdFigureToolBox, target_index, spell_data_2.spell_line_id))
        // the SHIELDWALL spell already exists on the target
         {
 
@@ -302,13 +302,13 @@ int __thiscall shield_wall_group_refresh_handler(SF_CGdSpell *_this, uint16_t sp
             // here comes the magic
             // we can get the spell index from the list of active spells affecting the target by knowing this spell's spell job id
             // we pass SHIELDWALL GROUP spell_index as the last known spell index for this figure, but this value is insignificant (used for optimizing search purposes?)
-            uint16_t shield_wall_spell_index = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, target_index, SHIELD_WALL_LINE, spell_index);
+            uint16_t shield_wall_spell_index = toolboxAPI->getSpellIndexOfType(_this->CGdFigureToolBox, target_index, SHIELD_WALL_LINE, spell_index);
 
             // we should remove the bonus provided with the instance of the spell we're going to remove
             // knowing spell index, we can get the bonus multiplier to the armor rating
             uint16_t recalc_value = spellAPI->getXData(_this, shield_wall_spell_index, SPELL_STAT_MUL_MODIFIER);
             // we remove it in the usual way, by adding its negative value to figure's statistic
-            figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, ARMOR, target_index, -recalc_value);
+            figureAPI->addBonusMultToStatistic(_this->CGdFigure, ARMOR, target_index, -recalc_value);
             // we finish the SHIELDWALL spell using its spell index
             spellAPI->setEffectDone(_this, shield_wall_spell_index, 0);
             */

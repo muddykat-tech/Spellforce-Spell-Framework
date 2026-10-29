@@ -24,27 +24,27 @@ typedef struct __attribute__((packed))
 
 struct __attribute__((packed)) SF_CGdSpell
 {
-    void *SF_CGdAiMain;
+    void *CGdAiMain;
     AutoClass14 *OpaqueClass;  // For Random (Rename to Global Tick?)
     SF_CGdBuilding *CGdBuilding;
-    SF_CGdBuildingToolbox *SF_CGdBuildingToolbox;
-    void *SF_CGdDoubleLinkedList;
-    SF_CGdEffect *SF_CGdEffect;
-    void *AC30;
-    SF_CGdFigure *SF_CGdFigure;
-    SF_CGdFigureJobs *SF_CGdFigureJobs;
-    SF_CGdFigureToolbox *SF_CGdFigureToolBox;
-    void *SF_CGdFormation;
-    void *AutoClass34;  // Seems to be used as first param for GetChanceToResistSpell
-    SF_CGdObject *SF_CGdObject;
-    void *SF_CGdObjectToolBox;
+    SF_CGdBuildingToolbox *CGdBuildingToolbox;
+    void *CGdDoubleLinkedList;
+    SF_CGdEffect *CGdEffect;
+    void *CGdAutoClass30;
+    SF_CGdFigure *CGdFigure;
+    SF_CGdFigureJobs *CGdFigureJobs;
+    SF_CGdFigureToolbox *CGdFigureToolBox;
+    void *CGdFormation;
+    void *CGdAutoClass34;  // Seems to be used as first param for GetChanceToResistSpell
+    SF_CGdObject *CGdObject;
+    void *CGdObjectToolBox;
     SF_CGdPlayer *CGdPlayer;
-    void *SF_CGdResource;
-    void *SF_CGdTile;
-    void *AC50;
-    SF_CGdWorld *SF_CGdWorld;
-    SF_CGdWorldToolBox *SF_CGdWorldToolBox;
-    void *SF_CGdXDataList;
+    SF_CGdResource *CGdResource;
+    void *CGdTile;
+    void *CGdAutoClass50;
+    SF_CGdWorld *CGdWorld;
+    SF_CGdWorldToolBox *CGdWorldToolBox;
+    void *CGdXDataList;
     uint16_t max_used;
     SF_GdSpell active_spell_list[800];
     void *unkn5;

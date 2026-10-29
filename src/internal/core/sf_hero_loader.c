@@ -215,6 +215,8 @@ bool parse_hero_from_tokens(const char *json, jsmntok_t *tokens, int token_count
                 int item_count = tokens[points_array_index].size;
                 if (item_count > MAX_SLOTS)
                 {
+                    log_warning("Custom Hero JSON has more than %d gear entries, ignoring the rest",
+                                MAX_SLOTS);
                     item_count = MAX_SLOTS;
                 }
                 int point_index = points_array_index + 1;
@@ -241,13 +243,8 @@ bool parse_hero_from_tokens(const char *json, jsmntok_t *tokens, int token_count
 }
 
 
-bool parse_hero_json_entrypoint(const char *hero_json_name, const char *mod_id, CustomHero *out_hero)
+bool parse_hero_json_file(const char *path, CustomHero *out_hero)
 {
-    char currentDir[MAX_PATH];
-    GetCurrentDirectory(MAX_PATH, currentDir);
-    char path[MAX_PATH];
-    snprintf(path, sizeof(path), "%s\\sfsf\\%s\\heroes\\%s.json", currentDir, mod_id, hero_json_name);
-
     char *json_str = readfile(path);
     if (!json_str)
     {
@@ -259,7 +256,7 @@ bool parse_hero_json_entrypoint(const char *hero_json_name, const char *mod_id, 
     bool success = parse_hero_json(json_str, out_hero);
     if (!success)
     {
-        log_error("Custom Hero JSON structure invalid: %s", hero_json_name);
+        log_error("Custom Hero JSON structure invalid: %s", path);
     }
 
     free(json_str);

@@ -31,7 +31,7 @@ uint16_t __thiscall sf_spelltype_hook(SF_CGdSpell *_this, uint16_t spell_id,
     uint16_t spell_line;
     if (target->entity_type == 1)
     {
-        if (!s_figure_toolbox_get_unkn(_this->SF_CGdFigureToolBox,
+        if (!s_figure_toolbox_get_unkn(_this->CGdFigureToolBox,
                                        target->entity_index))
         {
             return 0;
@@ -59,7 +59,7 @@ uint16_t __thiscall sf_spelltype_hook(SF_CGdSpell *_this, uint16_t spell_id,
 
     // somewhere here is smth goes south
     _this->active_spell_list[spell_index].spell_id = spell_id;
-    spell_line = s_get_spell_spell_line(_this->SF_CGdResource, spell_id);
+    spell_line = s_get_spell_spell_line(_this->CGdResource, spell_id);
     _this->active_spell_list[spell_index].spell_line = spell_line;
     _this->active_spell_list[spell_index].source.entity_type =
         source->entity_type;
@@ -89,7 +89,7 @@ uint16_t __thiscall sf_spelltype_hook(SF_CGdSpell *_this, uint16_t spell_id,
     {
         if (spell_line != 0x5A)
         {
-            s_figure_toolbox_add_spell(_this->SF_CGdFigureToolBox,
+            s_figure_toolbox_add_spell(_this->CGdFigureToolBox,
                                        target->entity_index, spell_index);
         }
     }

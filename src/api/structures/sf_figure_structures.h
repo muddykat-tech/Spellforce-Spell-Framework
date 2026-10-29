@@ -168,13 +168,13 @@ struct __attribute__((packed)) SF_CGdFigureJobs
     SF_CGdFigure *CGdFigure;
     SF_CGdFigureToolbox *CGdFigureToolBox;
     uint32_t *CGdFormation;
-    uint32_t *AutoClass34;
-    uint32_t *CGdObject;
+    uint32_t *CGdAutoClass34;
+    SF_CGdObject *CGdObject;
     uint32_t *CGdObjectToolBox;
     SF_CGdPlayer *CGdPlayer;
     uint32_t *AutoClass46;
     uint32_t *AutoClass47;
-    uint32_t *CGdResource;
+    SF_CGdResource *CGdResource;
     SF_CGdSpell *CGdSpell;
     uint32_t *AutoClass48;
     uint32_t *AutoClass22;

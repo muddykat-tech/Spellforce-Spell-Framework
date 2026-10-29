@@ -839,7 +839,7 @@ void  prepareDamageString(AutoClass101 *_this, SF_CGdFigure *figures, uint16_t f
     }
     else
     {
-        lvl_mult = GetDamageMultiplierPerLevel(_this->SF_CGdResource, figures->figures[figure_id].level);
+        lvl_mult = GetDamageMultiplierPerLevel(_this->CGdResource, figures->figures[figure_id].level);
     }
     uint32_t str_mult = figureAPI.getCurrentStat(figures, figure_id, STRENGTH);
     str_mult *= 3 * (figures->figures[figure_id].level + 9);
@@ -939,8 +939,8 @@ void prepareSpellString(AutoClass101 *_this, SF_String *out_string, uint16_t spe
     uiAPI.SFStringFromWchar(&spell_string, L'\n', 1);
     uiAPI.SFStringFromWchar(&newline, L'\n', 1);
 
-    spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, spell_id);
-    if ((GetResourceSpellLine(_this->SF_CGdResource, spell_data.spell_line_id,
+    spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
+    if ((GetResourceSpellLine(_this->CGdResource, spell_data.spell_line_id,
                               &spell_line_data) != 0) && (spell_line_data.description_id != 0))
     {
         GetTextById(_this->UiDbProxy, spell_line_data.text_id, &desc_str1);
@@ -981,9 +981,9 @@ void prepareEffectString(AutoClass101 *_this, SF_CGdFigure *figures, uint16_t fi
     uiAPI.SFStringFromWchar(&newline, L'\n', 1);
 
     SF_CGdResourceSpell spell_data;
-    spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, effect_id);
+    spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, effect_id);
     SF_CGdResourceSpellLine spell_line_data;
-    GetResourceSpellLine(_this->SF_CGdResource, spell_data.spell_line_id, &spell_line_data);
+    GetResourceSpellLine(_this->CGdResource, spell_data.spell_line_id, &spell_line_data);
     if (spell_data.spell_line_id != 0 && spell_line_data.description_id != 0)
     {
         GetDescriptionText(_this->UiDbProxy, 6550, &desc_str1);
@@ -1084,13 +1084,13 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
             uint8_t r_type;
             uint8_t l_type;
             uint16_t r_item_id = SF_Figures->figures[figure_id].equipment[1];
-            GetItemInfo(_this->SF_CGdResource,&r_item_info, r_item_id);
+            GetItemInfo(_this->CGdResource,&r_item_info, r_item_id);
 
             uint16_t l_item_id =  SF_Figures->figures[figure_id].equipment[3];
-            GetItemInfo(_this->SF_CGdResource,&l_item_info, l_item_id);
+            GetItemInfo(_this->CGdResource,&l_item_info, l_item_id);
 
-            r_type = GetWeaponType(_this->SF_CGdResource, r_item_id);
-            l_type = GetWeaponType(_this->SF_CGdResource, l_item_id);
+            r_type = GetWeaponType(_this->CGdResource, r_item_id);
+            l_type = GetWeaponType(_this->CGdResource, l_item_id);
             active_hand_info = &r_item_info;
             if ((l_item_info.min_dmg == 0) || (r_item_info.min_dmg == 0))
             {
@@ -1179,7 +1179,7 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
                 uiAPI.SFStringConstructor(&description);
 
                 uint16_t effects[4];
-                GetWeaponEffects(_this->SF_CGdResource, effects, r_item_id);
+                GetWeaponEffects(_this->CGdResource, effects, r_item_id);
                 for (int i = 1; i < 4; i++)
                 {
                     SF_String effect_string;
@@ -1194,7 +1194,7 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
                     {
                         if (SF_Figures->figures[figure_id].owner != 0)
                         {
-                            effect_id = spellAPI.getLeveledSpellID(_this->SF_CGdResource, effect_id,
+                            effect_id = spellAPI.getLeveledSpellID(_this->CGdResource, effect_id,
                                                                    SF_Figures->figures[figure_id].level);
                         }
                     }
@@ -1269,7 +1269,7 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
                     uiAPI.SFStringConstructor(&description);
 
                     uint16_t effects[4];
-                    GetWeaponEffects(_this->SF_CGdResource, effects, l_item_id);
+                    GetWeaponEffects(_this->CGdResource, effects, l_item_id);
                     for (int i = 1; i < 4; i++)
                     {
                         SF_String effect_string;
@@ -1284,7 +1284,7 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
                         {
                             if (SF_Figures->figures[figure_id].owner != 0)
                             {
-                                effect_id = spellAPI.getLeveledSpellID(_this->SF_CGdResource, effect_id,
+                                effect_id = spellAPI.getLeveledSpellID(_this->CGdResource, effect_id,
                                                                        SF_Figures->figures[figure_id].level);
                             }
                         }
@@ -1335,7 +1335,7 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
                         {
                             if (SF_Figures->figures[figure_id].owner != 0)
                             {
-                                spell_id = spellAPI.getLeveledSpellID(_this->SF_CGdResource, spell_id,
+                                spell_id = spellAPI.getLeveledSpellID(_this->CGdResource, spell_id,
                                                                       SF_Figures->figures[figure_id].level);
                             }
                         }

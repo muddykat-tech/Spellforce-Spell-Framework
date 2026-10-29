@@ -48,10 +48,8 @@ uint32_t __thiscall onSpellCastHook(SF_CGdFigureToolbox *_this, uint16_t figure_
         SF_SGtFigureAction action;
         action.type = spell_data.spell_line_id;
         action.subtype =spell_id;
-        action.unkn1 = 0;
-        action.unkn2 = 0;
-        action.unkn3 = 0;
-        action.unkn4 = 0;
+        action.cooldown_action = 0;
+        action.cooldown_global = 0;
 
         setFigureAction(ac24, &action);
         return 1;
@@ -60,7 +58,7 @@ uint32_t __thiscall onSpellCastHook(SF_CGdFigureToolbox *_this, uint16_t figure_
 
 void __thiscall aura_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
-    SF_CGdFigure *sf_figures = _this->SF_CGdFigure;
+    SF_CGdFigure *sf_figures = _this->CGdFigure;
     uint16_t source_index = _this->active_spell_list[spell_index].source.entity_index;
     if ((sf_figures->figures[source_index].owner != (uint16_t)(-1)) &&
         ((sf_figures->figures[source_index].flags & (IS_DEAD | RESESRVED_ONLY)) == 0))
@@ -76,17 +74,17 @@ void __thiscall aura_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
         //     },
         //     [](SF_CGdSpell* spell, uint16_t src_idx, uint16_t walked_index, uint16_t spell_index) -> void {
         //         if( walked_index != spell_index ) {
-        //             SF_CGdFigure *sf_figures = spell->SF_CGdFigure;
+        //             SF_CGdFigure *sf_figures = spell->CGdFigure;
         //             sf_figures->figures[src_idx].flags = static_cast<GdFigureFlags>(sf_figures->figures[src_idx].flags &
         //                 (~static_cast<unsigned int>(GdFigureFlags::AURA_RUNNING)));
         //         }
         //     });
 
-        uint16_t node_id = figureAPI->getSpellJobStartNode(_this->SF_CGdFigure, source_index);
+        uint16_t node_id = figureAPI->getSpellJobStartNode(_this->CGdFigure, source_index);
         bool should_stop = true;
         while (node_id != 0)
         {
-            uint16_t index = toolboxAPI->getSpellIndexFromDLL(_this->SF_CGdDoubleLinkedList, node_id);
+            uint16_t index = toolboxAPI->getSpellIndexFromDLL(_this->CGdDoubleLinkedList, node_id);
             if (index != spell_index)
             {
                 uint16_t spell_line = spellAPI->getSpellLine(_this, index);
@@ -96,7 +94,7 @@ void __thiscall aura_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
                     break;
                 }
             }
-            node_id = toolboxAPI->getNextNode(_this->SF_CGdDoubleLinkedList, node_id);
+            node_id = toolboxAPI->getNextNode(_this->CGdDoubleLinkedList, node_id);
         }
         if (should_stop)
         {
@@ -109,7 +107,7 @@ void __thiscall aura_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
     uint16_t effect_index = spellAPI->getXData(_this, spell_index, EFFECT_EFFECT_INDEX);
     if (effect_index != 0)
     {
-        effectAPI->tryEndEffect(_this->SF_CGdEffect, effect_index);
+        effectAPI->tryEndEffect(_this->CGdEffect, effect_index);
     }
     default_end_handler(_this, spell_index);
 }

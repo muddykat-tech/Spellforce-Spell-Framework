@@ -31,7 +31,7 @@ void __thiscall template_effect_handler(SF_CGdSpell *_this, uint16_t spell_index
   SF_GdSpell *spell = &_this->active_spell_list[spell_index];
 
   SF_CGdResourceSpell spell_data;
-  spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+  spellAPI->getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);
 
   spellAPI->removeDLLNode(_this, spell_index);
   spellAPI->setEffectDone(_this, spell_index, 0);

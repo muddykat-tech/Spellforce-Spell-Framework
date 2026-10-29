@@ -10,7 +10,6 @@ extern std::list<SFSpell *> g_internal_spell_list;
 extern std::list<SFBuilding *> g_internal_building_list;
 void register_mod_spells();
 void register_mod_buildings();
-void register_mod_heroes();
 
 // TODO Clean this up, move to spell API
 uint16_t __thiscall getSpellTags(uint16_t spell_line_id);

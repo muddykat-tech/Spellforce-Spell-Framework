@@ -21,7 +21,7 @@ DECLARE_FUNCTION(void, rescaleLevelStats, SF_CGdFigureToolbox *CGdFigureToolbox,
                  uint16_t figure_index);
 DECLARE_FUNCTION(void, addSpellToFigure, SF_CGdFigureToolbox *CGdFigureToolbox,
                  uint16_t figure_index, uint16_t spell_index);
-DECLARE_FUNCTION(uint16_t, getFigureFromWorld, void *CGdWorldToolBox,
+DECLARE_FUNCTION(uint16_t, getFigureFromWorld, SF_CGdWorldToolBox *CGdWorldToolBox,
                  uint16_t param1, uint16_t param2, uint32_t param3);
 DECLARE_FUNCTION(uint16_t, getSpellIndexOfType,
                  SF_CGdFigureToolbox *CGdFigureToolbox, uint16_t target_index,
@@ -30,7 +30,7 @@ DECLARE_FUNCTION(uint16_t, getSpellIndexFromDLL, uint32_t *CGdDoubleLinkedList,
                  uint16_t spell_job_start_node);
 DECLARE_FUNCTION(uint16_t, getNextNode, uint32_t *CGdDoubleLinkedList,
                  uint16_t current_node);
-DECLARE_FUNCTION(void, figureSetNewJob, void *CGdFigureJobs, uint32_t figure_id,
+DECLARE_FUNCTION(void, figureSetNewJob, SF_CGdFigureJobs *CGdFigureJobs, uint32_t figure_id,
                  uint32_t new_job, uint32_t param_3, uint32_t param_4,
                  uint32_t param_5); // @SHUFFLE Move to Figure Functions
 DECLARE_FUNCTION(uint32_t, removeSpellFromList,
