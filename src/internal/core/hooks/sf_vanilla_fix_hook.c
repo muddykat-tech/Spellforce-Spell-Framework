@@ -39,6 +39,28 @@ typedef uint32_t (__thiscall *AC34calculateWeaponSpeed_ptr) (void *_this,uint32_
 typedef void *(__thiscall *CGdMainGetAC34_ptr)(void *_this);
 
 typedef SF_String *(__cdecl *getSpecialDesc_ptr)(SF_String *param_1,uint32_t param_2);
+
+typedef int (__cdecl *tolua_tag_ptr)(void *L, const char *type_name);
+typedef int (__cdecl *tolua_istype_ptr)(void *L, int index, int tag, int def);
+typedef int (__cdecl *tolua_isnoobj_ptr)(void *L, int index);
+typedef double (__cdecl *tolua_getnumber_ptr)(void *L, int index, double def);
+typedef void *(__cdecl *tolua_getusertype_ptr)(void *L, int index, void *def);
+typedef void (__cdecl *tolua_pushnumber_ptr)(void *L, double value);
+typedef void (__cdecl *tolua_error_ptr)(void *L, const char *message);
+typedef uint16_t (__thiscall *CGdBuildingToolBox_AddBuilding_ptr)(void *_this, uint32_t position,
+                                                                   uint32_t angle, uint32_t owner,
+                                                                   uint32_t building_type, uint32_t arg6,
+                                                                   uint32_t arg7, uint32_t arg8,
+                                                                   uint32_t arg9);
+
+static tolua_tag_ptr tolua_tag;
+static tolua_istype_ptr tolua_istype;
+static tolua_isnoobj_ptr tolua_isnoobj;
+static tolua_getnumber_ptr tolua_getnumber;
+static tolua_getusertype_ptr tolua_getusertype;
+static tolua_pushnumber_ptr tolua_pushnumber;
+static tolua_error_ptr tolua_error_ptr_value;
+static CGdBuildingToolBox_AddBuilding_ptr CGdBuildingToolBox_AddBuilding;
 typedef void (__stdcall *getWeaponRangeDescription_ptr)(SF_String *param_1, uint16_t param_2,uint16_t param_3,
                                                         SF_String *param_4, uint8_t param_5);
 
@@ -1691,6 +1713,74 @@ static void stat_bonus_clamp_fix_hook()
     ASI::EndRewrite(mreg);
 }
 
+/* Lua: id = BuildingToolBox:AddBuilding(x, y, angle, owner, buildingType, arg6, arg7)
+ *
+ * Replacement for the vanilla glue lua_CGdBuildingToolBox_AddBuilding (0x67a2a0): the
+ * original expects an SCoord usertype for the position, but SCoord is not exposed to
+ * Lua, so the function was never callable from scripts. Mirrors the working
+ * lua_CGdFigureToolBox_AddUnit pattern instead: two plain numbers for the coordinates,
+ * packed into the native position dword (x | y << 16). */
+static int __cdecl lua_CGdBuildingToolBox_AddBuilding_fixed(void *L)
+{
+    if (tolua_istype == NULL || tolua_getnumber == NULL || tolua_getusertype == NULL ||
+        tolua_pushnumber == NULL || tolua_error_ptr_value == NULL || tolua_isnoobj == NULL ||
+        tolua_tag == NULL || CGdBuildingToolBox_AddBuilding == NULL)
+    {
+        return 0;
+    }
+
+    int self_tag = tolua_tag(L, "CGdBuildingToolBox");
+    int valid = tolua_istype(L, 1, self_tag, 0);
+    for (int index = 2; index <= 8; index++)
+    {
+        valid = valid && tolua_istype(L, index, 2, 0); /* 2 = number tag */
+    }
+    valid = valid && tolua_isnoobj(L, 9);
+
+    if (valid == 0)
+    {
+        tolua_error_ptr_value(L, "#ferror in function 'AddBuilding'.");
+        return 0;
+    }
+
+    void *toolbox = tolua_getusertype(L, 1, NULL);
+    uint16_t x = (uint16_t)tolua_getnumber(L, 2, 0.0);
+    uint16_t y = (uint16_t)tolua_getnumber(L, 3, 0.0);
+    uint32_t position = ((uint32_t)y << 16) | (uint32_t)x;
+    uint32_t angle = (uint32_t)tolua_getnumber(L, 4, 0.0);
+    uint32_t owner = (uint32_t)tolua_getnumber(L, 5, 0.0);
+    uint32_t building_type = (uint32_t)tolua_getnumber(L, 6, 0.0);
+    uint32_t arg6 = (uint32_t)tolua_getnumber(L, 7, 0.0);
+    uint32_t arg7 = (uint32_t)tolua_getnumber(L, 8, 0.0);
+
+    uint16_t building_id = CGdBuildingToolBox_AddBuilding(toolbox, position, angle, owner,
+                                                          building_type, arg6, arg7, 1, 0);
+    tolua_pushnumber(L, (double)building_id);
+    return 1;
+}
+
+static void vanilla_fix_lua_addbuilding()
+{
+    tolua_tag = (tolua_tag_ptr)(ASI::AddrOf(0x0d420));
+    tolua_istype = (tolua_istype_ptr)(ASI::AddrOf(0x0e6b0));
+    tolua_isnoobj = (tolua_isnoobj_ptr)(ASI::AddrOf(0x0e9e0));
+    tolua_getnumber = (tolua_getnumber_ptr)(ASI::AddrOf(0x0dba0));
+    tolua_getusertype = (tolua_getusertype_ptr)(ASI::AddrOf(0x0dc60));
+    tolua_pushnumber = (tolua_pushnumber_ptr)(ASI::AddrOf(0x0dfc0));
+    tolua_error_ptr_value = (tolua_error_ptr)(ASI::AddrOf(0x0fbf0));
+    CGdBuildingToolBox_AddBuilding = (CGdBuildingToolBox_AddBuilding_ptr)(ASI::AddrOf(0x2d6a80));
+
+    /* Replace the vanilla glue entry (0x67a2a0) with the fixed one; the original
+     * is fully superseded, no trampoline is needed. */
+    ASI::MemoryRegion addbuilding_mreg (ASI::AddrOf(0x27a2a0), 5);
+    ASI::BeginRewrite(addbuilding_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x27a2a0)) = 0xE9; // jmp instruction
+    *(int *)(ASI::AddrOf(0x27a2a1)) = (int)(&lua_CGdBuildingToolBox_AddBuilding_fixed) -
+                                      ASI::AddrOf(0x27a2a5);
+    ASI::EndRewrite(addbuilding_mreg);
+    log_info("| - Lua AddBuilding signature fixed (x, y instead of SCoord)");
+}
+
 void initialize_vanilla_fix_hooks()
 {
     add_item = (add_item_ptr)(ASI::AddrOf(0x260d70));
@@ -1726,6 +1816,7 @@ void initialize_vanilla_fix_hooks()
     readMapNameFromSave = (readMapNameFromSave_ptr)(ASI::AddrOf(0x2c1f10));
 
     log_info("| - Vanilla Fix Hooks");
+    vanilla_fix_lua_addbuilding();
     figure_statistic_hook_current_ac();
     figure_statistic_hook_current_agi();
     figure_statistic_hook_current_cha();

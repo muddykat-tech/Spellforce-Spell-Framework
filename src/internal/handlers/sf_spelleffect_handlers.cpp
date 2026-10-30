@@ -372,7 +372,7 @@ void __thiscall effect_ability_warcry(SF_CGdSpell *_this, uint16_t spell_index)
             }
             return;
         }
-        for (int i = 0; i<_this->CGdFigure->max_used; i++)
+        for (int i = 1; i <= _this->CGdFigure->max_used; i++)
         {
             if ((_this->CGdFigure->figures[i].owner != (uint16_t)(-1)) &&
                 ((_this->CGdFigure->figures[i].flags & (IS_DEAD|RESESRVED_ONLY)) == 0))
@@ -745,8 +745,9 @@ void __thiscall effect_self_illusion(SF_CGdSpell *_this, uint16_t spell_index)
         spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);
 
         uint16_t source_index = spell->source.entity_index;
+
         uint16_t existing_clones = 0;
-        for (int i = 1; i < _this->CGdFigure->max_used; i++)
+        for (int i = 1; i <= _this->CGdFigure->max_used; i++)
         {
             GdFigure *figure = &_this->CGdFigure->figures[i];
             if (((figure->flags & ILLUSION) != 0) &&
@@ -797,9 +798,42 @@ void __thiscall effect_self_illusion(SF_CGdSpell *_this, uint16_t spell_index)
             stats.wspeed = _this->CGdFigure->figures[source_index].walk_speed.base_val;
             stats.cspeed = _this->CGdFigure->figures[source_index].cast_speed.base_val;
             stats.scaling = _this->CGdFigure->figures[source_index].scaling;
-            if (summon_count != existing_clones)
+
+            /* Recast refresh: every living clone of this caster is healed back to full
+             * (subHealth with a negative amount), the missing ones are spawned below.
+             * Loop bound is inclusive: the newest figure carries the max_used index. */
+            for (int i = 1; i <= _this->CGdFigure->max_used; i++)
             {
-                for (int i = 0; i < summon_count - existing_clones; i++)
+                GdFigure *figure = &_this->CGdFigure->figures[i];
+                if (((figure->flags & ILLUSION) != 0) &&
+                    (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, i, kGdSpellLineSelfIllusion)) &&
+                    (figure->master_figure == source_index))
+                {
+                    uint16_t hp_current = figureAPI.getCurrentStat(_this->CGdFigure, i, HEALTH);
+                    uint16_t hp_max = figureAPI.getMaxStat(_this->CGdFigure, i, HEALTH);
+                    if (hp_current < hp_max)
+                    {
+                        figureAPI.subHealth(_this->CGdFigure, i, -(int32_t)(hp_max - hp_current));
+                    }
+                }
+            }
+
+            uint16_t to_spawn = 0;
+            if (summon_count > existing_clones)
+            {
+                to_spawn = summon_count - existing_clones;
+            }
+
+            if (to_spawn == 0)
+            {
+                /* Clone cap reached: nothing left to do for this cast - terminate it
+                 * instead of attaching a duplicate upkeep instance. */
+                spellAPI.removeDLLNode(_this, spell_index);
+                spellAPI.setEffectDone(_this, spell_index, 0);
+                return;
+            }
+
+            for (int i = 0; i < to_spawn; i++)
                 {
                     SF_Coord caster_pos = _this->CGdFigure->figures[source_index].position;
                     SF_Coord initial_offset = {1,10};
@@ -875,14 +909,13 @@ void __thiscall effect_self_illusion(SF_CGdSpell *_this, uint16_t spell_index)
                 }
                 spell->to_do_count = (spell_data.params[2] * 10) / 1000;
                 return;
-            }
         }
         if (existing_clones != 0)
         {
             uint16_t current_mana = figureAPI.getCurrentStat(_this->CGdFigure, source_index, MANA);
             if (current_mana < spell_data.params[3])
             {
-                for (int i = 1; i < _this->CGdFigure->max_used; i++)
+                for (int i = 1; i <= _this->CGdFigure->max_used; i++)
                 {
                     GdFigure *figure = &_this->CGdFigure->figures[i];
                     if (((figure->flags & ILLUSION) != 0) &&
