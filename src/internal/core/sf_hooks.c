@@ -31,7 +31,6 @@
 #include "hooks/sf_campaign_hook.h"
 #include "hooks/sf_hero_hook.h"
 #include "hooks/sf_level_up_hook.h"
-#include "hooks/sf_avatar_level_hook.h"
 
 #include "hooks/sf_effect_hook.h"
 
