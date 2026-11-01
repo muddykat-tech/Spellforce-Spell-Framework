@@ -88,7 +88,9 @@ static uint16_t getSlotWeaponType(DrwFigure *_this, uint8_t slot)
 {
     SF_CGdFigureWeaponStats stats;
     SF_CGdFigure *CGdFigure = getCGdMain()->data.CGdFigure;
-    //TODO -- check against tooltip fix hook.
+    /* Verified against the tooltip fix: same CGdMain (same 0xD75D38 holder the
+     * vanilla callee reads) and same data.CGdFigure field (tooltip getFigurePtr
+     * reads +0x30); decompiled 0x6B3050 is a plain weapon_stats[slot] copy, no +2. */
     getWeaponStatsInSlot(CGdFigure, &stats, getDrwFigureID(_this), slot);
     return stats.wpn_type;
 }
@@ -149,13 +151,30 @@ uint16_t getFigureJobFlags(uint16_t figure_index)
  * strikes (strike exits write the weapon type instead); the binary has no
  * enum for them, so they stay local literals. */
 
- //TODO -- figure out other members of the enum
+/* Engine anim-state constants, complete for the whole registered family:
+ * values decoded from the lua constant registrar (lua_register_constant
+ * call sites at 0x7CB0xx/0x7D5Cxx, pooled double literals per name) and
+ * cross-checked against byte-verified SelectJobAnimation writes plus the
+ * Original Scripts movie tables (hero-male Range1: Default/Special1 =
+ * attackbow_aim_01/02; DwarfAnims RoundHit = whirlwind). The family ends
+ * at 107 - nothing >= 108 is registered; values 18..99 of the subtype
+ * space are weapon types (kDrwWt 1..21), not kDrwAnim members. */
 enum
 {
     kDrwAnimDefault = 0,
     kDrwAnimWar = 1,
     kDrwAnimRun = 2,
     kDrwAnimRetreat = 3,
+    kDrwAnimSpecial1 = 4,
+    kDrwAnimSpecial2 = 5,
+    kDrwAnimSpecial3 = 6,
+    kDrwAnimSpecial4 = 7,
+    kDrwAnimSpecial5 = 8,
+    kDrwAnimSpecial6 = 9,
+    kDrwAnimFront = 10,
+    kDrwAnimShoulder = 11,
+    kDrwAnimMagic = 12,
+    kDrwAnimFish = 13,
     kDrwAnimTalkIdle = 14,
     kDrwAnimTalk = 15,
     kDrwAnimBack = 16,
@@ -164,9 +183,10 @@ enum
     kDrwAnimShield = 101,
     kDrwAnimBoth = 102,
     kDrwAnimStaff = 103,
-    kDrwAnimDeathBlow = 105,
+    kDrwAnimDual = 104,
+    kDrwAnimScytheHit = 105,
     kDrwAnimRoundHit = 106,
-    kDrwAnimStartWork = 107
+    kDrwAnimDeathBlow = 107
 };
 
 /* Health percent threshold of the walk branch: cmp ax, 0x19 / jbe. */
@@ -319,11 +339,14 @@ static void selectJobAnimationHitTarget(DrwFigure *_this, FigureJobs *job, uint8
     *anim = (uint8_t)cache->strike_weapon; /* vanilla 0x7DB8BB: mov al,[edi+0x132] */
 
     /* Forced anims, checked in order, a later flag overwrites an earlier one.
-     * vanilla 0x7DB8D1 (0x1000), 0x7DB8F0 (0x800), 0x7DB917 (0x2000). */
+     * vanilla 0x7DB8D1 (0x1000), 0x7DB8F0 (0x800), 0x7DB917 (0x2000). The
+     * flag and anim names deliberately do not pair - registrar-proven: the
+     * DEATH_BLOW flag writes 0x69 = kDrwAnimScytheHit and START_WORK writes
+     * 0x6B = kDrwAnimDeathBlow. */
     uint16_t job_flags = getFigureJobFlags(figure_index);
     if (job_flags & CGdFigureJobFlags::DEATH_BLOW)
     {
-        *anim = kDrwAnimDeathBlow;
+        *anim = kDrwAnimScytheHit;
     }
     if (job_flags & CGdFigureJobFlags::ROUND_HIT)
     {
@@ -331,7 +354,7 @@ static void selectJobAnimationHitTarget(DrwFigure *_this, FigureJobs *job, uint8
     }
     if (job_flags & CGdFigureJobFlags::START_WORK_AT_BUILDING_FORCE_JOB)
     {
-        *anim = kDrwAnimStartWork;
+        *anim = kDrwAnimDeathBlow;
     }
 }
 

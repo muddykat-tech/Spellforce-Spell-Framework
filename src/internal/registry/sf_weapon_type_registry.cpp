@@ -9,6 +9,14 @@ static std::vector<WeaponTypeEntry> s_weapon_type_registry;
 void resetWeaponTypeRegistry()
 {
     s_weapon_type_registry.clear();
+
+    /* vanilla base entry — crossbow stays ranged with or without catalog */
+    WeaponTypeEntry base;
+    base.id = KDRWWT_2H_CROSSBOW;
+    weaponTypeCopyBounded(base.name, sizeof(base.name), "2HCrossbow");
+    base.attack_style = WEAPON_ATTACK_STYLE_RANGED;
+    weaponTypeCopyBounded(base.source, sizeof(base.source), "vanilla");
+    s_weapon_type_registry.push_back(base);
 }
 
 void weaponTypeCopyBounded(char *dst, size_t dst_len, const char *src)
@@ -94,17 +102,12 @@ bool getWeaponTypeAt(size_t index, WeaponTypeEntry *out)
 
 bool isOverridedRangedWeaponType(uint16_t weapon_type)
 {
-    //TODO: use populate registry instead of this
-    if (weapon_type == KDRWWT_2H_CROSSBOW)
-    {
-        return true;
-    }
-    for (const WeaponTypeEntry &entry : s_weapon_type_registry)
-    {
-        if (entry.id == weapon_type && entry.attack_style == WEAPON_ATTACK_STYLE_RANGED)
-        {
-            return true;
-        }
-    }
-    return false;
+    /* The vector is id-sorted by finalizeWeaponTypes() after the catalog
+     * commit; before finalize this lookup is not called yet (the hook only
+     * runs once the game animates figures, after the Core Module Phase). */
+    std::vector<WeaponTypeEntry>::const_iterator it = std::lower_bound(
+        s_weapon_type_registry.begin(), s_weapon_type_registry.end(), weapon_type,
+        [](const WeaponTypeEntry &entry, uint16_t id) { return entry.id < id; });
+    return it != s_weapon_type_registry.end() && it->id == weapon_type &&
+           it->attack_style == WEAPON_ATTACK_STYLE_RANGED;
 }

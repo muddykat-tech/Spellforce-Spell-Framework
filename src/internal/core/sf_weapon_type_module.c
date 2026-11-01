@@ -35,7 +35,8 @@ static bool accept_weapon_type_record(const WeaponTypeJsonRecord *record, Weapon
         return false;
     }
 
-    /* ids up to 21 are vanilla (0..20 lua enum, 21 = StoneThrower in gamedata). */
+    /* ids up to 21 are vanilla (engine kDrwWt constants 1..21 mirror the
+     * gamedata WeaponTypes table: 1 Default .. 17 2HCrossbow, 21 Throw). */
     if (record->id < 22 || record->id > 255)
     {
         report_mod_error(g_weapon_type_mod, "Weapon type [%s]: id %d outside 22-255",
