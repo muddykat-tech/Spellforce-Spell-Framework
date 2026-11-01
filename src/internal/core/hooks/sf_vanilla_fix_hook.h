@@ -29,3 +29,8 @@ uint16_t __thiscall get_figure_statistic_current_walk_spd(SF_CGdFigure *_this, u
 uint16_t __thiscall get_figure_statistic_current_fight_spd(SF_CGdFigure *_this, uint16_t figure_id);
 uint16_t __thiscall get_figure_statistic_current_cast_spd(SF_CGdFigure *_this, uint16_t figure_id);
 void initialize_vanilla_fix_hooks();
+
+/* Resolved in initialize_vanilla_fix_hooks (RVA 0x269260); shared with the
+ * weapon type hook's shield check. */
+typedef uint8_t (__thiscall *GetWeaponType_ptr)(SF_CGdResource *_this, uint16_t item_id);
+extern GetWeaponType_ptr GetWeaponType;

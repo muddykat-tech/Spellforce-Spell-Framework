@@ -8,6 +8,7 @@
 
 #include "../../registry/spell_data_registries/sf_enchant_registry.h"
 #include "sf_endspell_hook.h"
+#include "sf_weapon_type_hook.h"
 
 extern SpellFunctions spellAPI;
 extern ToolboxFunctions toolboxAPI;
@@ -1836,6 +1837,7 @@ void initialize_vanilla_fix_hooks()
     figure_statistic_hook_current_cast_spd();
     stat_bonus_clamp_fix_hook();
     salvo_fix_hook();
+    install_select_job_animation_hook();
     get_race_fix_hook();
     army_size_fix_hook();
     figure_turn_off_battle_mode_hook();
