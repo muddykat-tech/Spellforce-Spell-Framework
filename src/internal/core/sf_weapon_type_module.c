@@ -21,6 +21,41 @@
 SFMod *g_weapon_type_mod = NULL;
 
 /**
+ * @brief Maps one attack_style json string to its enum value (TZ 6.1/6.3).
+ * @return false for every string outside the five v2 style names ("melee"
+ * included - it is a rejected alias of "strike", not a style of its own).
+ */
+static bool parse_weapon_attack_style(const char *text, WeaponAttackStyle *out_style)
+{
+    if (strcmp(text, "ranged") == 0)
+    {
+        *out_style = WEAPON_ATTACK_STYLE_RANGED;
+        return true;
+    }
+    if (strcmp(text, "strike") == 0)
+    {
+        *out_style = WEAPON_ATTACK_STYLE_MELEE;
+        return true;
+    }
+    if (strcmp(text, "stab") == 0)
+    {
+        *out_style = WEAPON_ATTACK_STYLE_STAB;
+        return true;
+    }
+    if (strcmp(text, "punch") == 0)
+    {
+        *out_style = WEAPON_ATTACK_STYLE_PUNCH;
+        return true;
+    }
+    if (strcmp(text, "staff") == 0)
+    {
+        *out_style = WEAPON_ATTACK_STYLE_STAFF;
+        return true;
+    }
+    return false;
+}
+
+/**
  * @brief Checks one parsed record and converts it into a registry entry.
  * @return true when the record was accepted.
  */
@@ -36,10 +71,27 @@ static bool accept_weapon_type_record(const WeaponTypeJsonRecord *record, Weapon
     }
 
     /* ids up to 21 are vanilla (engine kDrwWt constants 1..21 mirror the
-     * gamedata WeaponTypes table: 1 Default .. 17 2HCrossbow, 21 Throw). */
-    if (record->id < 22 || record->id > 255)
+     * gamedata WeaponTypes table: 1 Default .. 17 2HCrossbow, 21 Throw).
+     * 100-107 hold the kDrwAnim service subkeys of the melee cascade and
+     * 240-255 the synthetic shield-pair subkeys of the animset bridge - the
+     * two segments are reserved, every violation is a per-record skip. */
+    if (record->id >= 100 && record->id <= 107)
     {
-        report_mod_error(g_weapon_type_mod, "Weapon type [%s]: id %d outside 22-255",
+        report_mod_error(g_weapon_type_mod,
+                         "Weapon type [%s]: id %d collides with kDrwAnim (100-107)", source,
+                         record->id);
+        return false;
+    }
+    if (record->id >= 240 && record->id <= 255)
+    {
+        report_mod_error(g_weapon_type_mod,
+                         "Weapon type [%s]: id %d reserved for shield pairs (240-255)", source,
+                         record->id);
+        return false;
+    }
+    if (record->id < 22 || record->id > 239)
+    {
+        report_mod_error(g_weapon_type_mod, "Weapon type [%s]: id %d outside 22-99 and 108-239",
                          source, record->id);
         return false;
     }
@@ -61,18 +113,22 @@ static bool accept_weapon_type_record(const WeaponTypeJsonRecord *record, Weapon
         }
     }
 
-    /* Only "ranged" exists in this version; melee registration is out of scope. */
-    if (strcmp(record->attack_style, "ranged") != 0)
+    /* v2 style set (TZ 6.3): {"ranged", "strike", "stab", "punch", "staff"}.
+     * "melee" is deliberately NOT accepted - "strike" is the one name of the
+     * plain swing style, a second alias would split the catalog language. */
+    WeaponAttackStyle style;
+    if (!parse_weapon_attack_style(record->attack_style, &style))
     {
         report_mod_error(g_weapon_type_mod,
-                         "Weapon type [%s]: attack_style \"%s\" is not supported (only \"ranged\")",
-                         source, record->attack_style);
+                          "Weapon type [%s]: attack_style \"%s\" is not one of "
+                          "\"ranged\", \"strike\", \"stab\", \"punch\", \"staff\"",
+                          source, record->attack_style);
         return false;
     }
 
     entry->id = (uint16_t)record->id;
     weaponTypeCopyBounded(entry->name, sizeof(entry->name), record->name);
-    entry->attack_style = WEAPON_ATTACK_STYLE_RANGED;
+    entry->attack_style = style;
     weaponTypeCopyBounded(entry->source, sizeof(entry->source), source);
     return true;
 }

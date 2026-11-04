@@ -24,6 +24,7 @@
 #include "../core/sf_screens_module.h"
 #include "../core/sf_ability_module.h"
 #include "../core/sf_weapon_type_module.h"
+#include "../core/sf_animset_module.h"
 #include "../core/sf_hero_module.h"
 
 #include "sf_registry.h"
@@ -173,6 +174,7 @@ void initialize_framework()
     initialize_campaign_module();
     initialize_ability_module();
     initialize_weapon_type_module();
+    initialize_animset_module();
     initialize_hero_module();
 
     log_info(

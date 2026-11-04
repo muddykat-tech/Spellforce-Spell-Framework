@@ -15,6 +15,7 @@
 
 #include "sf_weapon_type_hook.h"
 #include "sf_vanilla_fix_hook.h"
+#include "sf_movie_lib_bridge.h"
 
 
 /* Callees of the replaced function that the framework does not resolve
@@ -42,7 +43,9 @@ typedef struct __attribute__((packed))
     uint8_t unknown_0x004[0x131 - 0x004];            /* unmapped */
     uint8_t ranged_anim;                             /* +0x131: cached ranged subtype */
     uint16_t strike_weapon;                          /* +0x132: strike weapon slot */
-    uint8_t unknown_0x134[0x18C - 0x134];            /* unmapped */
+    uint8_t unknown_0x134[0x180 - 0x134];            /* unmapped */
+    void *figure_template;                           /* +0x180: figure template object (movie lib at +0x14) */
+    uint8_t unknown_0x184[0x18C - 0x184];            /* unmapped */
     uint32_t frame_counter;                          /* +0x18C: LCG input together with figure_id */
 } DrwFigure;
 
@@ -52,8 +55,21 @@ static_assert(offsetof(DrwFigure, ranged_anim) == 0x131,
               "DrwFigure.ranged_anim must sit at +0x131 (cached ranged subtype)");
 static_assert(offsetof(DrwFigure, strike_weapon) == 0x132,
               "DrwFigure.strike_weapon must sit at +0x132 (strike weapon slot)");
+static_assert(offsetof(DrwFigure, figure_template) == 0x180,
+              "DrwFigure.figure_template must sit at +0x180 (UpdateAnims reads *(figure+0x180))");
 static_assert(offsetof(DrwFigure, frame_counter) == 0x18C,
               "DrwFigure.frame_counter must sit at +0x18C (LCG input together with figure_id)");
+
+/* Figure template object (CDrwObjectLibrary::CreateFigureObject 0x7E0330):
+ * stores the animset's movie library in its first members. */
+typedef struct __attribute__((packed))
+{
+    uint8_t unknown_0x00[0x14];  /* unmapped */
+    void *movie_lib;             /* +0x14: CDrwMovieLibrary* (UpdateAnims reads template->+0x14) */
+} DrwFigureTemplate;
+
+static_assert(offsetof(DrwFigureTemplate, movie_lib) == 0x14,
+              "DrwFigureTemplate.movie_lib must sit at +0x14");
 
 /* The CGdMain global slot (VA 0xD75D38): the global holds a pointer to an
  * engine holder object whose first member is the CGdMain pointer (vanilla
@@ -107,6 +123,18 @@ static bool isShieldEquipped(void *_this)
     uint16_t item_id = getCGdMain()->data.CGdFigure->figures[figure_index].equipment[3];
 
     return GetWeaponType(CGdResource, item_id) == 9;
+}
+
+/* The figure's movie library (animset): UpdateAnims 0x7DBE10 reads
+ * *(figure+0x180)+0x14 on every animation update. */
+static void *getFigureMovieLib(DrwFigure *_this)
+{
+    DrwFigureTemplate *template_object = (DrwFigureTemplate *)_this->figure_template;
+    if (template_object == NULL)
+    {
+        return NULL;
+    }
+    return template_object->movie_lib;
 }
 
 static bool isCastTargetSelf(void *_this)
@@ -237,7 +265,7 @@ static const uint8_t s_hit_group_by_slot[18] = {
     HIT_GROUP_STAFF,           /* slot0 15 */
     HIT_GROUP_DEFAULT,         /* slot0 16 */
     HIT_GROUP_DEFAULT,         /* slot0 17 */
-    HIT_GROUP_SHIELD,          /* slot0 18 (0x12, 1HClaw -> shield group) */
+    HIT_GROUP_SHIELD,          /* slot0 18 (0x12, 1HMaceBlunt -> shield group) */
     HIT_GROUP_PUNCH            /* slot0 19 */
 };
 
@@ -246,6 +274,29 @@ static int hitTargetGroup(uint16_t slot0)
     /* vanilla 0x7DB800: add eax,-2; cmp eax,0x11; ja default */
     if (slot0 < 2 || slot0 > 19)
     {
+        /* v2 (TZ 6.2): custom types dispatch by their weapon_types
+         * attack_style - stab -> STAB (deterministic Stab job), punch ->
+         * PUNCH, staff -> STAFF (Strike + extra 103); strike, ranged and
+         * unknown ids stay DEFAULT, bit-for-bit the previous behaviour. */
+        if ((slot0 >= 22 && slot0 <= 99) || (slot0 >= 108 && slot0 <= 239))
+        {
+            WeaponAttackStyle style;
+            if (getWeaponTypeAttackStyle(slot0, &style))
+            {
+                if (style == WEAPON_ATTACK_STYLE_STAB)
+                {
+                    return HIT_GROUP_STAB;
+                }
+                if (style == WEAPON_ATTACK_STYLE_PUNCH)
+                {
+                    return HIT_GROUP_PUNCH;
+                }
+                if (style == WEAPON_ATTACK_STYLE_STAFF)
+                {
+                    return HIT_GROUP_STAFF;
+                }
+            }
+        }
         return HIT_GROUP_DEFAULT;
     }
     return s_hit_group_by_slot[slot0 - 2];
@@ -338,6 +389,24 @@ static void selectJobAnimationHitTarget(DrwFigure *_this, FigureJobs *job, uint8
 
     *anim = (uint8_t)cache->strike_weapon; /* vanilla 0x7DB8BB: mov al,[edi+0x132] */
 
+    /* Animset synth emission (weapon+shield pairs): after the vanilla chain,
+     * before the forced anims - those stay on top. The synth film sits under
+     * (jobMap(slot0), synth) in the figure's movie library, so step 1 of the
+     * UpdateAnims cascade picks it up and extra_anim is never consulted.
+     * Emitted only for right-hand strikes: a clear HIT_LEFT_HAND_NEXT means
+     * the vanilla Left branch above already chose slot1 (mirror of the
+     * 0x7DB8A7 test). Type 4 rolls random Stabs: on a Stab roll the job does
+     * not equal jobMap(4) and the vanilla stab plays instead. */
+    if (shield_equipped && *job == (FigureJobs)animsetJobForWeapon(slot0) &&
+        (figure_flags & GdFigureFlags::HIT_LEFT_HAND_NEXT) != 0)
+    {
+        uint8_t synth = lookupShieldSynth(getFigureMovieLib(_this), slot0);
+        if (synth != 0)
+        {
+            *anim = synth;
+        }
+    }
+
     /* Forced anims, checked in order, a later flag overwrites an earlier one.
      * vanilla 0x7DB8D1 (0x1000), 0x7DB8F0 (0x800), 0x7DB917 (0x2000). The
      * flag and anim names deliberately do not pair - registrar-proven: the
@@ -375,6 +444,13 @@ void __thiscall sf_select_job_animation(DrwFigure *_this, FigureJobs *job, uint8
     uint32_t x = figure_index + _this->frame_counter;
     uint32_t figure_flags = getFigureFlags(figure_index);
     uint16_t job_flags = getFigureJobFlags(figure_index);
+
+    /* Animsets v2 registration point (TZ 5.2): one call before the switch
+     * covers EVERY path of this function - melee solo, shield pairs and both
+     * ranged phases - and always precedes the emission, so step 1 of the
+     * UpdateAnims cascade finds the registered films. Empty catalog: no-op;
+     * warm cache of any state: one signature verification. */
+    ensureMovieLibConfigured(getFigureMovieLib(_this));
 
     switch (*job)
     {
@@ -516,6 +592,9 @@ void install_select_job_animation_hook()
 {
     getWeaponStatsInSlot = (getWeaponStatsInSlot_ptr)(ASI::AddrOf(0x2b3050));
     getAnimationState = (getAnimationState_ptr)(ASI::AddrOf(0x3d9ec0));
+
+    /* Animset bridge callees, resolved before the redirect goes live. */
+    install_movie_lib_bridge();
 
     /* Base ranged classification {17} works with or without a catalog; the
      * weapon type module fills the catalog later in the Core Module Phase. */

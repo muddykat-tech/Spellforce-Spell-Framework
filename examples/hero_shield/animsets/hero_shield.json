@@ -1,0 +1,7 @@
+{ "entries": [
+  { "figure": "figure_hero_male",
+    "base_name": "figure_hero_male",
+    "shielded": [
+      { "weapon": 3, "anims": ["figure_hero_male_attackshieldstabtest"] }
+    ] }
+] }

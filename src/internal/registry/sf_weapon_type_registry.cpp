@@ -111,3 +111,20 @@ bool isOverridedRangedWeaponType(uint16_t weapon_type)
     return it != s_weapon_type_registry.end() && it->id == weapon_type &&
            it->attack_style == WEAPON_ATTACK_STYLE_RANGED;
 }
+
+bool getWeaponTypeAttackStyle(uint16_t weapon_type, WeaponAttackStyle *out_style)
+{
+    if (out_style == NULL)
+    {
+        return false;
+    }
+    std::vector<WeaponTypeEntry>::const_iterator it = std::lower_bound(
+        s_weapon_type_registry.begin(), s_weapon_type_registry.end(), weapon_type,
+        [](const WeaponTypeEntry &entry, uint16_t id) { return entry.id < id; });
+    if (it == s_weapon_type_registry.end() || it->id != weapon_type)
+    {
+        return false;
+    }
+    *out_style = it->attack_style;
+    return true;
+}

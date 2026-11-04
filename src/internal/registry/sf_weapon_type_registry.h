@@ -14,8 +14,11 @@
 
 typedef enum
 {
-    WEAPON_ATTACK_STYLE_MELEE = 0,
-    WEAPON_ATTACK_STYLE_RANGED = 1
+    WEAPON_ATTACK_STYLE_MELEE = 0,  /* "strike": the plain swing, v2 name for the v1 default */
+    WEAPON_ATTACK_STYLE_RANGED = 1, /* "ranged" */
+    WEAPON_ATTACK_STYLE_STAB = 2,   /* "stab": dagger-like, deterministic Stab job */
+    WEAPON_ATTACK_STYLE_PUNCH = 3,  /* "punch": fist-item-like, Punch job */
+    WEAPON_ATTACK_STYLE_STAFF = 4   /* "staff": staff-like, Strike job + Staff extra */
 } WeaponAttackStyle;
 
 /** @brief One custom weapon type as loaded from sfsf\weapon_types\*.json. */
@@ -76,5 +79,15 @@ bool getWeaponTypeAt(size_t index, WeaponTypeEntry *out);
  * subtype) over the bow base {4,5} inside ranged jobs.
  */
 bool isOverridedRangedWeaponType(uint16_t weapon_type);
+
+/**
+ * @brief Attack style lookup for the animsets v2 consumers (TZ 6.2/6.3).
+ *
+ * The table is id-sorted by finalizeWeaponTypes(); the vanilla crossbow base
+ * entry (id 17) answers RANGED like every catalog "ranged" record.
+ * @return true with @p out_style set when the id is in the table, false for
+ * unknown ids (the callers then fall back to DEFAULT/Strike semantics).
+ */
+bool getWeaponTypeAttackStyle(uint16_t weapon_type, WeaponAttackStyle *out_style);
 
 /** @} */
