@@ -12,8 +12,9 @@
                                 "figure_hero_male_right2hswordheavy_02"] }
     ],
     "ranged": [
-      { "weapon": 22, "aim": ["figure_hero_male_orbaim_01"],
-        "shoot": ["figure_hero_male_orbshoot_01", "figure_hero_male_orbshoot_02"] }
+      { "weapon": 22,
+        "aim":   ["figure_hero_male_castdamage"],
+        "shoot": ["figure_hero_male_resolveenemy"] }
     ] },
   { "figure": "figure_npc_spellblade",
     "base_name": "figure_npc_spellblade",
