@@ -40,7 +40,7 @@ typedef struct __attribute((packed))
 typedef struct __attribute__((packed))
 {
     SF_CGdBuilding *CGdBuilding;                /**< Pointer to the building data. */
-    void *CGdBuildingToolBox;                   /**< ToolBox for managing building-related operations. */
+    SF_CGdBuildingToolbox *CGdBuildingToolBox;  /**< ToolBox for managing building-related operations. */
     void *autoclass30;                          /**< Unidentified component */
     SF_CGdFigure *CGdFigure;                    /**< Pointer to the Global Figure data structure . */
     SF_CGdFigureJobs *CGdFigureJobs;            /**< Pointer to the Global Figure Job data structure. */
@@ -49,10 +49,10 @@ typedef struct __attribute__((packed))
     void *CGdFormation;
     void *CGdDoubleLinkList;
     void *CGdInfluenceMap;
-    void *CGdObject;
+    SF_CGdObject *CGdObject;
     void *CGdObjectToolBox;
     SF_CGdPlayer *CGdPlayer;
-    void *CGdResource;
+    SF_CGdResource *CGdResource;
     SF_CGdSpell *CGdSpell;
     void *autoclass22;
     void *autoclass50;

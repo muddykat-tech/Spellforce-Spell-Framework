@@ -8,6 +8,7 @@
 
 #include "../../registry/spell_data_registries/sf_enchant_registry.h"
 #include "sf_endspell_hook.h"
+#include "sf_weapon_type_hook.h"
 
 extern SpellFunctions spellAPI;
 extern ToolboxFunctions toolboxAPI;
@@ -39,6 +40,28 @@ typedef uint32_t (__thiscall *AC34calculateWeaponSpeed_ptr) (void *_this,uint32_
 typedef void *(__thiscall *CGdMainGetAC34_ptr)(void *_this);
 
 typedef SF_String *(__cdecl *getSpecialDesc_ptr)(SF_String *param_1,uint32_t param_2);
+
+typedef int (__cdecl *tolua_tag_ptr)(void *L, const char *type_name);
+typedef int (__cdecl *tolua_istype_ptr)(void *L, int index, int tag, int def);
+typedef int (__cdecl *tolua_isnoobj_ptr)(void *L, int index);
+typedef double (__cdecl *tolua_getnumber_ptr)(void *L, int index, double def);
+typedef void *(__cdecl *tolua_getusertype_ptr)(void *L, int index, void *def);
+typedef void (__cdecl *tolua_pushnumber_ptr)(void *L, double value);
+typedef void (__cdecl *tolua_error_ptr)(void *L, const char *message);
+typedef uint16_t (__thiscall *CGdBuildingToolBox_AddBuilding_ptr)(void *_this, uint32_t position,
+                                                                   uint32_t angle, uint32_t owner,
+                                                                   uint32_t building_type, uint32_t arg6,
+                                                                   uint32_t arg7, uint32_t arg8,
+                                                                   uint32_t arg9);
+
+static tolua_tag_ptr tolua_tag;
+static tolua_istype_ptr tolua_istype;
+static tolua_isnoobj_ptr tolua_isnoobj;
+static tolua_getnumber_ptr tolua_getnumber;
+static tolua_getusertype_ptr tolua_getusertype;
+static tolua_pushnumber_ptr tolua_pushnumber;
+static tolua_error_ptr tolua_error_ptr_value;
+static CGdBuildingToolBox_AddBuilding_ptr CGdBuildingToolBox_AddBuilding;
 typedef void (__stdcall *getWeaponRangeDescription_ptr)(SF_String *param_1, uint16_t param_2,uint16_t param_3,
                                                         SF_String *param_4, uint8_t param_5);
 
@@ -839,7 +862,7 @@ void  prepareDamageString(AutoClass101 *_this, SF_CGdFigure *figures, uint16_t f
     }
     else
     {
-        lvl_mult = GetDamageMultiplierPerLevel(_this->SF_CGdResource, figures->figures[figure_id].level);
+        lvl_mult = GetDamageMultiplierPerLevel(_this->CGdResource, figures->figures[figure_id].level);
     }
     uint32_t str_mult = figureAPI.getCurrentStat(figures, figure_id, STRENGTH);
     str_mult *= 3 * (figures->figures[figure_id].level + 9);
@@ -939,8 +962,8 @@ void prepareSpellString(AutoClass101 *_this, SF_String *out_string, uint16_t spe
     uiAPI.SFStringFromWchar(&spell_string, L'\n', 1);
     uiAPI.SFStringFromWchar(&newline, L'\n', 1);
 
-    spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, spell_id);
-    if ((GetResourceSpellLine(_this->SF_CGdResource, spell_data.spell_line_id,
+    spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
+    if ((GetResourceSpellLine(_this->CGdResource, spell_data.spell_line_id,
                               &spell_line_data) != 0) && (spell_line_data.description_id != 0))
     {
         GetTextById(_this->UiDbProxy, spell_line_data.text_id, &desc_str1);
@@ -981,9 +1004,9 @@ void prepareEffectString(AutoClass101 *_this, SF_CGdFigure *figures, uint16_t fi
     uiAPI.SFStringFromWchar(&newline, L'\n', 1);
 
     SF_CGdResourceSpell spell_data;
-    spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, effect_id);
+    spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, effect_id);
     SF_CGdResourceSpellLine spell_line_data;
-    GetResourceSpellLine(_this->SF_CGdResource, spell_data.spell_line_id, &spell_line_data);
+    GetResourceSpellLine(_this->CGdResource, spell_data.spell_line_id, &spell_line_data);
     if (spell_data.spell_line_id != 0 && spell_line_data.description_id != 0)
     {
         GetDescriptionText(_this->UiDbProxy, 6550, &desc_str1);
@@ -1084,13 +1107,13 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
             uint8_t r_type;
             uint8_t l_type;
             uint16_t r_item_id = SF_Figures->figures[figure_id].equipment[1];
-            GetItemInfo(_this->SF_CGdResource,&r_item_info, r_item_id);
+            GetItemInfo(_this->CGdResource,&r_item_info, r_item_id);
 
             uint16_t l_item_id =  SF_Figures->figures[figure_id].equipment[3];
-            GetItemInfo(_this->SF_CGdResource,&l_item_info, l_item_id);
+            GetItemInfo(_this->CGdResource,&l_item_info, l_item_id);
 
-            r_type = GetWeaponType(_this->SF_CGdResource, r_item_id);
-            l_type = GetWeaponType(_this->SF_CGdResource, l_item_id);
+            r_type = GetWeaponType(_this->CGdResource, r_item_id);
+            l_type = GetWeaponType(_this->CGdResource, l_item_id);
             active_hand_info = &r_item_info;
             if ((l_item_info.min_dmg == 0) || (r_item_info.min_dmg == 0))
             {
@@ -1179,7 +1202,7 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
                 uiAPI.SFStringConstructor(&description);
 
                 uint16_t effects[4];
-                GetWeaponEffects(_this->SF_CGdResource, effects, r_item_id);
+                GetWeaponEffects(_this->CGdResource, effects, r_item_id);
                 for (int i = 1; i < 4; i++)
                 {
                     SF_String effect_string;
@@ -1194,7 +1217,7 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
                     {
                         if (SF_Figures->figures[figure_id].owner != 0)
                         {
-                            effect_id = spellAPI.getLeveledSpellID(_this->SF_CGdResource, effect_id,
+                            effect_id = spellAPI.getLeveledSpellID(_this->CGdResource, effect_id,
                                                                    SF_Figures->figures[figure_id].level);
                         }
                     }
@@ -1269,7 +1292,7 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
                     uiAPI.SFStringConstructor(&description);
 
                     uint16_t effects[4];
-                    GetWeaponEffects(_this->SF_CGdResource, effects, l_item_id);
+                    GetWeaponEffects(_this->CGdResource, effects, l_item_id);
                     for (int i = 1; i < 4; i++)
                     {
                         SF_String effect_string;
@@ -1284,7 +1307,7 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
                         {
                             if (SF_Figures->figures[figure_id].owner != 0)
                             {
-                                effect_id = spellAPI.getLeveledSpellID(_this->SF_CGdResource, effect_id,
+                                effect_id = spellAPI.getLeveledSpellID(_this->CGdResource, effect_id,
                                                                        SF_Figures->figures[figure_id].level);
                             }
                         }
@@ -1335,7 +1358,7 @@ SF_String * __thiscall portrait_overlay_hook(AutoClass101 *_this, SF_String *par
                         {
                             if (SF_Figures->figures[figure_id].owner != 0)
                             {
-                                spell_id = spellAPI.getLeveledSpellID(_this->SF_CGdResource, spell_id,
+                                spell_id = spellAPI.getLeveledSpellID(_this->CGdResource, spell_id,
                                                                       SF_Figures->figures[figure_id].level);
                             }
                         }
@@ -1672,10 +1695,13 @@ static void splash_screen_hook()
 
 int32_t __thiscall clamp_stat_bonus (SF_CGdSpell *_this, int32_t current, int32_t required)
 {
-    int32_t total       = (int8_t) current + (int8_t)required;
+    //log_info("Required %d current %d", (int16_t) required, (int8_t) current);
+    int32_t total       = (int8_t) current + (int16_t)required;
     int32_t clamp_tot   = (total > 127) ? 127 : ((total < -100) ? -100 : total);
+    //log_info("Total %d clamp %d", (int8_t) total, (int8_t) clamp_tot);
     int32_t delta       = clamp_tot - (int8_t)current;
     int32_t bonus = (delta > 127) ? 127 : ((delta < -128) ? -128 : delta);
+    //log_info("Delta %d bonus %d", (int8_t) delta, (int8_t) bonus);
     return bonus;
 }
 
@@ -1686,6 +1712,74 @@ static void stat_bonus_clamp_fix_hook()
     *(unsigned char *)(ASI::AddrOf(0x329f60)) = 0xE9; // jmp instruction
     *(int *)(ASI::AddrOf(0x329f61)) = (int)(&clamp_stat_bonus) - ASI::AddrOf(0x329f65);
     ASI::EndRewrite(mreg);
+}
+
+/* Lua: id = BuildingToolBox:AddBuilding(x, y, angle, owner, buildingType, arg6, arg7)
+ *
+ * Replacement for the vanilla glue lua_CGdBuildingToolBox_AddBuilding (0x67a2a0): the
+ * original expects an SCoord usertype for the position, but SCoord is not exposed to
+ * Lua, so the function was never callable from scripts. Mirrors the working
+ * lua_CGdFigureToolBox_AddUnit pattern instead: two plain numbers for the coordinates,
+ * packed into the native position dword (x | y << 16). */
+static int __cdecl lua_CGdBuildingToolBox_AddBuilding_fixed(void *L)
+{
+    if (tolua_istype == NULL || tolua_getnumber == NULL || tolua_getusertype == NULL ||
+        tolua_pushnumber == NULL || tolua_error_ptr_value == NULL || tolua_isnoobj == NULL ||
+        tolua_tag == NULL || CGdBuildingToolBox_AddBuilding == NULL)
+    {
+        return 0;
+    }
+
+    int self_tag = tolua_tag(L, "CGdBuildingToolBox");
+    int valid = tolua_istype(L, 1, self_tag, 0);
+    for (int index = 2; index <= 8; index++)
+    {
+        valid = valid && tolua_istype(L, index, 2, 0); /* 2 = number tag */
+    }
+    valid = valid && tolua_isnoobj(L, 9);
+
+    if (valid == 0)
+    {
+        tolua_error_ptr_value(L, "#ferror in function 'AddBuilding'.");
+        return 0;
+    }
+
+    void *toolbox = tolua_getusertype(L, 1, NULL);
+    uint16_t x = (uint16_t)tolua_getnumber(L, 2, 0.0);
+    uint16_t y = (uint16_t)tolua_getnumber(L, 3, 0.0);
+    uint32_t position = ((uint32_t)y << 16) | (uint32_t)x;
+    uint32_t angle = (uint32_t)tolua_getnumber(L, 4, 0.0);
+    uint32_t owner = (uint32_t)tolua_getnumber(L, 5, 0.0);
+    uint32_t building_type = (uint32_t)tolua_getnumber(L, 6, 0.0);
+    uint32_t arg6 = (uint32_t)tolua_getnumber(L, 7, 0.0);
+    uint32_t arg7 = (uint32_t)tolua_getnumber(L, 8, 0.0);
+
+    uint16_t building_id = CGdBuildingToolBox_AddBuilding(toolbox, position, angle, owner,
+                                                          building_type, arg6, arg7, 1, 0);
+    tolua_pushnumber(L, (double)building_id);
+    return 1;
+}
+
+static void vanilla_fix_lua_addbuilding()
+{
+    tolua_tag = (tolua_tag_ptr)(ASI::AddrOf(0x0d420));
+    tolua_istype = (tolua_istype_ptr)(ASI::AddrOf(0x0e6b0));
+    tolua_isnoobj = (tolua_isnoobj_ptr)(ASI::AddrOf(0x0e9e0));
+    tolua_getnumber = (tolua_getnumber_ptr)(ASI::AddrOf(0x0dba0));
+    tolua_getusertype = (tolua_getusertype_ptr)(ASI::AddrOf(0x0dc60));
+    tolua_pushnumber = (tolua_pushnumber_ptr)(ASI::AddrOf(0x0dfc0));
+    tolua_error_ptr_value = (tolua_error_ptr)(ASI::AddrOf(0x0fbf0));
+    CGdBuildingToolBox_AddBuilding = (CGdBuildingToolBox_AddBuilding_ptr)(ASI::AddrOf(0x2d6a80));
+
+    /* Replace the vanilla glue entry (0x67a2a0) with the fixed one; the original
+     * is fully superseded, no trampoline is needed. */
+    ASI::MemoryRegion addbuilding_mreg (ASI::AddrOf(0x27a2a0), 5);
+    ASI::BeginRewrite(addbuilding_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x27a2a0)) = 0xE9; // jmp instruction
+    *(int *)(ASI::AddrOf(0x27a2a1)) = (int)(&lua_CGdBuildingToolBox_AddBuilding_fixed) -
+                                      ASI::AddrOf(0x27a2a5);
+    ASI::EndRewrite(addbuilding_mreg);
+    log_info("| - Lua AddBuilding signature fixed (x, y instead of SCoord)");
 }
 
 void initialize_vanilla_fix_hooks()
@@ -1723,6 +1817,7 @@ void initialize_vanilla_fix_hooks()
     readMapNameFromSave = (readMapNameFromSave_ptr)(ASI::AddrOf(0x2c1f10));
 
     log_info("| - Vanilla Fix Hooks");
+    vanilla_fix_lua_addbuilding();
     figure_statistic_hook_current_ac();
     figure_statistic_hook_current_agi();
     figure_statistic_hook_current_cha();
@@ -1742,6 +1837,7 @@ void initialize_vanilla_fix_hooks()
     figure_statistic_hook_current_cast_spd();
     stat_bonus_clamp_fix_hook();
     salvo_fix_hook();
+    install_select_job_animation_hook();
     get_race_fix_hook();
     army_size_fix_hook();
     figure_turn_off_battle_mode_hook();

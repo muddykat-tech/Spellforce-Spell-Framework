@@ -4,6 +4,7 @@
 
 ### Breaking
 
+- Removed the hero registration API: `registerHero`, `linkHeroJSON` and the `SFHero` structure no longer exist in `registrationAPI`. Custom heroes are data-driven instead - JSON files in `sfsf\heroes\` (previously `sfsf\<mod id>\heroes\` linked from the mod).
 - `getChanceToResistSpell` final parameter changed from `SF_SpellEffectInfo effect_info` to `uint16_t spell_index`.
 - `createModInfo` signature changed from `char *mod_version` to `const char *mod_version`.
 - Struct layouts changed in `sf_general_structures.h`. Mods built against 4.0.2 headers must be recompiled:
@@ -16,6 +17,8 @@
 
 ### Added
 
+- Learnable abilities via JSON: `sfsf\abilities\*.json` files hold an array of `{skill, spec, level, ability_id}` records feeding the shared level-up registry. Records with `skill == 0 && spec == 0` are avatar level-up records (`level` = avatar level), `ability_id == 0` disables an ability for the key. Files override vanilla entries; every override logs a conflict naming both sources. Registered by the Ability Learn Module.
+- Custom heroes are data-driven: `sfsf\heroes\*.json` (schema unchanged: `creo_id` + `gear`, max 7 entries). Files override vanilla heroes the same way - an empty `gear` list clears the gear of an already registered hero. Registered by the Custom Hero Module.
 - Custom campaigns. Campaigns are defined by JSON files in `sfsf\campaigns\` and registered by the Custom Campaign Module. See README for the schema and rules.
 - Custom campaign selection screen, reached from a `CUSTOM CAMPAIGNS` main menu button that appears only when at least one campaign is registered.
 - Per-campaign save folders, created alongside the vanilla `save`, `temp`, `char`, `campaign2` and `campaign3` folders.

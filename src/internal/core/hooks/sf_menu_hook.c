@@ -272,7 +272,7 @@ void __attribute__((thiscall)) sf_click_vertical_button(SF_CUiMain *_this,
     }
 }
 
-uint16_t __attribute__((thiscall)) sf_ui_overlay_fix(SF_CGdFigure *_this, void *CGdResource, uint16_t spell_id,
+uint16_t __attribute__((thiscall)) sf_ui_overlay_fix(SF_CGdFigure *_this, SF_CGdResource *CGdResource, uint16_t spell_id,
                                                      uint16_t figure_id)
 {
     if ((_this->figures[figure_id].race != 0) && (_this->figures[figure_id].race < 7))

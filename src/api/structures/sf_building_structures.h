@@ -106,10 +106,10 @@ struct __attribute__((packed)) SF_CGdBuildingToolbox
     SF_CGdFigureJobs *CGdFigureJobs;
     SF_CGdFigureToolbox *CGdFigureToolbox;
     void *AutoClass34;
-    void *CGdObject;
+    SF_CGdObject *CGdObject;
     SF_CGdPlayer *CGdPlayer;
     void *AutoClass47;
-    void *CGdResource;
+    SF_CGdResource *CGdResource;
     void *AutoClass22;
     SF_CGdWorld *CGdWorld;
     SF_CGdWorldToolBox *CGdWorldToolbox;

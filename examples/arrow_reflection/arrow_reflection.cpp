@@ -256,14 +256,14 @@ void __thiscall arrows_reflection_effect_handler(SF_CGdSpell *_this, uint16_t sp
             // we load the spell parameters from GameData.cff
             // we'll need them only in tick 0
             SF_CGdResourceSpell spell_data;
-            spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+            spellAPI->getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);
 
             // we store index of the spellcaster
             uint16_t source_index = _this->active_spell_list[spell_index].source.entity_index;
 
             // we declare structure for relative position of visual effect
             SF_CGdTargetData relative_data;
-            figureAPI->getPosition(_this->SF_CGdFigure, &relative_data.position, source_index);
+            figureAPI->getPosition(_this->CGdFigure, &relative_data.position, source_index);
             relative_data.entity_type = 4;
             relative_data.entity_index = 0;
             uint32_t unused;
@@ -280,7 +280,7 @@ void __thiscall arrows_reflection_effect_handler(SF_CGdSpell *_this, uint16_t sp
             _this->active_spell_list[spell_index].to_do_count = (uint16_t)((ticks_interval * 10) / 1000);
 
             // we have to activate the flag F_CHECK_SPELLS_BEFORE_JOB in order to make it possible for On Hit handler to trigger when the spellcaster makes an attack
-            _this->SF_CGdFigure->figures[source_index].flags |= F_CHECK_SPELLS_BEFORE_JOB;
+            _this->CGdFigure->figures[source_index].flags |= F_CHECK_SPELLS_BEFORE_JOB;
 
             // we activate the flag CHECK_SPELLS_BEFORE_JOB2 for the sake of optimization
             _this->active_spell_list[spell_index].flags |= CHECK_SPELLS_BEFORE_JOB2;
@@ -316,7 +316,7 @@ int __thiscall arrows_reflection_refresh_handler(SF_CGdSpell *_this, uint16_t sp
     uint16_t source_index = spell->source.entity_index;
 
     // we should check for whether the spellcaster is affected with more than a single instance of Arrows Reflection
-    uint16_t pruned_spell_index = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, source_index, ARROWS_REFLECTION_LINE, spell_index);
+    uint16_t pruned_spell_index = toolboxAPI->getSpellIndexOfType(_this->CGdFigureToolBox, source_index, ARROWS_REFLECTION_LINE, spell_index);
     // because we passed spell_index as last argument of the function, this index will be ignored
     // the function will return the spell index of another Arrows Reflection instance, if there is any
     // if there is no other instance of Arrows Reflection than the current, the function will return 0

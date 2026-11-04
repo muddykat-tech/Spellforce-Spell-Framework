@@ -49,15 +49,10 @@ void __thiscall ignite_spelleffect_handler(SF_CGdSpell *_this, uint16_t spell_in
     uint16_t target_index = spell->target.entity_index;
     uint16_t source_index = spell->source.entity_index;
 
-    // grabbing spell id and the id of its job (logic)
-    SF_SpellEffectInfo effect_info;
-    effect_info.spell_id = spell->spell_id;
-    effect_info.job_id = spell->spell_job;
-
     // declaring local structure for spell data
     SF_CGdResourceSpell spell_data;
     // we pull spell paraemters into spell_data from GameData.cff
-    spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+    spellAPI->getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);
 
     // we declare local variable for damage dealt, we'll use it later
     uint16_t damage;
@@ -76,11 +71,11 @@ void __thiscall ignite_spelleffect_handler(SF_CGdSpell *_this, uint16_t spell_in
 
 
     // setting flags to check whether spell is allowed to be used on the target
-    uint16_t isAlive = figureAPI->isAlive(_this->SF_CGdFigure, target_index);
-    uint16_t isTargetable = toolboxAPI->isTargetable(_this->SF_CGdFigureToolBox, target_index);
-    uint16_t isHostile = toolboxAPI->figuresCheckHostile(_this->SF_CGdFigureToolBox, source_index, target_index);
+    uint16_t isAlive = figureAPI->isAlive(_this->CGdFigure, target_index);
+    uint16_t isTargetable = toolboxAPI->isTargetable(_this->CGdFigureToolBox, target_index);
+    uint16_t isHostile = toolboxAPI->figuresCheckHostile(_this->CGdFigureToolBox, source_index, target_index);
     // we also can check figure properties by directly accessing them instead of using a function
-    uint16_t isOwner = _this->SF_CGdFigure->figures[target_index].owner;
+    uint16_t isOwner = _this->CGdFigure->figures[target_index].owner;
 
     // we've got a lot of technical conditions which can prevent spell cast, so if we don't meet at least one of them, spell fails
     // target must be alive, must be targetable, must be hostile, must not be our own unit
@@ -90,7 +85,7 @@ void __thiscall ignite_spelleffect_handler(SF_CGdSpell *_this, uint16_t spell_in
         if (tick_current == 0)
         {
             // roll only once for the resist
-            uint32_t resist_chance = spellAPI->getChanceToResistSpell(_this->AutoClass34, source_index, target_index, effect_info);
+            uint32_t resist_chance = spellAPI->getChanceToResistSpell(_this->CGdAutoClass34, source_index, target_index, spell_index);
             uint16_t random_roll = spellAPI->getRandom(_this->OpaqueClass, 100);
             if (resist_chance < random_roll)
             {
@@ -110,7 +105,7 @@ void __thiscall ignite_spelleffect_handler(SF_CGdSpell *_this, uint16_t spell_in
                 // we get initial damage of the spell
                 damage = spell_data.params[0];
                 // we apply damage to figure (an object which stores unit stats)
-                toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index, target_index, damage, 1, 0, 0);
+                toolboxAPI->dealDamage(_this->CGdFigureToolBox, source_index, target_index, damage, 1, 0, 0);
                 // we make hostile creature aggro after being damaged
                 spellAPI->figureAggro(_this, spell_index, target_index);
             }
@@ -155,7 +150,7 @@ void __thiscall ignite_spelleffect_handler(SF_CGdSpell *_this, uint16_t spell_in
                 // with the next command we make the game to ignore the spell effect handler for a specified amount of internal ticks until it's a proper time for the next spell tick to happen
                 // please note that internal ticks aren't the same as spell ticks (they're shorter by a magnitudes)
                 _this->active_spell_list[spell_index].to_do_count = (uint16_t)((ticks_interval * 10) / 1000);
-                toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index, target_index, damage, 1, 0, 0);
+                toolboxAPI->dealDamage(_this->CGdFigureToolBox, source_index, target_index, damage, 1, 0, 0);
             }
             else
             {

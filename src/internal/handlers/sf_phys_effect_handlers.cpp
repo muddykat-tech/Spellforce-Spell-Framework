@@ -11,38 +11,38 @@ void __thiscall stone_rain_phys_handler(SF_CGdEffect *_this, uint16_t effect_id)
 
     for (uint32_t i = 9; i > 0; i--)
     {
-        uint16_t w_x = _this->SF_CGdWorld->unknown1[i].uknwn1 + pos_x;
-        uint16_t w_y = _this->SF_CGdWorld->unknown1[i].uknwn2 + pos_y;
-        uint16_t map_size =  _this->SF_CGdWorld->map_size;
+        uint16_t w_x = _this->CGdWorld->unknown1[i].uknwn1 + pos_x;
+        uint16_t w_y = _this->CGdWorld->unknown1[i].uknwn2 + pos_y;
+        uint16_t map_size =  _this->CGdWorld->map_size;
         if ((w_x < map_size) && (w_y < map_size))
         {
-            if ((_this->SF_CGdWorld->cells[w_y*0x400 + w_x].world_cell_flags & 0x10) != 0)
+            if ((_this->CGdWorld->cells[w_y*0x400 + w_x].world_cell_flags & 0x10) != 0)
             {
-                uint16_t target_id = toolboxAPI.getFigureFromWorld(_this->SF_CGdWorldToolBox, w_x, w_y, 0);
-                if ((_this->SF_CGdFigure->figures[target_id].owner != (uint16_t)(-1)) &&
-                    ((_this->SF_CGdFigure->figures[target_id].flags & 0xa) == 0) &&
-                    (toolboxAPI.isTargetable(_this->SF_CGdFigureToolBox, target_id)))
+                uint16_t target_id = toolboxAPI.getFigureFromWorld(_this->CGdWorldToolBox, w_x, w_y, 0);
+                if ((_this->CGdFigure->figures[target_id].owner != (uint16_t)(-1)) &&
+                    ((_this->CGdFigure->figures[target_id].flags & 0xa) == 0) &&
+                    (toolboxAPI.isTargetable(_this->CGdFigureToolBox, target_id)))
                 {
-                    bool isFriendly = toolboxAPI.figuresCheckFriendly(_this->SF_CGdFigureToolBox, source_id,
+                    bool isFriendly = toolboxAPI.figuresCheckFriendly(_this->CGdFigureToolBox, source_id,
                                                                       target_id);
-                    bool isNeutral = toolboxAPI.figuresCheckNeutral(_this->SF_CGdFigureToolBox, source_id,
+                    bool isNeutral = toolboxAPI.figuresCheckNeutral(_this->CGdFigureToolBox, source_id,
                                                                     target_id);
-                    if ((!isFriendly && !isNeutral) || (_this->SF_CGdFigure->figures[target_id].owner != 0))
+                    if ((!isFriendly && !isNeutral) || (_this->CGdFigure->figures[target_id].owner != 0))
                     {
                         //kGdSpellLineStone
-                        uint16_t mult = toolboxAPI.getPhysDamageReduction(_this->SF_CGdFigureToolBox, source_id,
+                        uint16_t mult = toolboxAPI.getPhysDamageReduction(_this->CGdFigureToolBox, source_id,
                                                                           target_id, kGdSpellLineStone);
                         damage = (mult * damage + 5000) / 10000;
-                        if (_this->SF_CGdFigure->figures[source_id].set_type == 8)
+                        if (_this->CGdFigure->figures[source_id].set_type == 8)
                         {
                             damage *= 2;
                         }
-                        if (figureAPI.isSiegeUnit(_this->SF_CGdFigure, target_id))
+                        if (figureAPI.isSiegeUnit(_this->CGdFigure, target_id))
                         {
                             //BUGFIX
                             damage = (damage * 100 + 50) / 1000;
                         }
-                        toolboxAPI.dealDamage(_this->SF_CGdFigureToolBox, source_id, target_id, damage, 0, 1, 0);
+                        toolboxAPI.dealDamage(_this->CGdFigureToolBox, source_id, target_id, damage, 0, 1, 0);
                     }
                 }
             }

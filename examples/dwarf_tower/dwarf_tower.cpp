@@ -1,5 +1,4 @@
-#include "api/sfsf.h"
-//#include "../../src/api/sfsf.h"
+#include "../../src/api/sfsf.h"
 #include <windows.h>
 #include <stdio.h>
 
@@ -188,13 +187,13 @@ void __thiscall dwarf_hammer_tower_effect_handler(SF_CGdSpell *_this, uint16_t s
 
     // we load spell parameters from game data and put them into structure
     SF_CGdResourceSpell spell_data;
-    spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+    spellAPI->getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);
 
     // we've got a lot of technical conditions which can prevent spell cast, so if we don't meet at least one of them, spell fails
-    if ((figureAPI->isAlive(_this->SF_CGdFigure, target_index)) &&
-        (toolboxAPI->isTargetable(_this->SF_CGdFigureToolBox, target_index)) &&
-        (toolboxAPI->figuresCheckHostile(_this->SF_CGdFigureToolBox, source_index, target_index)) &&
-        ((int16_t)(_this->SF_CGdFigure->figures[target_index].owner) != -1))
+    if ((figureAPI->isAlive(_this->CGdFigure, target_index)) &&
+        (toolboxAPI->isTargetable(_this->CGdFigureToolBox, target_index)) &&
+        (toolboxAPI->figuresCheckHostile(_this->CGdFigureToolBox, source_index, target_index)) &&
+        ((int16_t)(_this->CGdFigure->figures[target_index].owner) != -1))
      {
 
                 uint32_t unused;
@@ -219,7 +218,7 @@ void __thiscall dwarf_hammer_tower_effect_handler(SF_CGdSpell *_this, uint16_t s
                 uint16_t damage = spell_data.params[0];
                 // because hammer throws deals physical damage, it must be reduced by target's armor
                 // let's get reduction percent with toolbox function getPhysDamageReduction
-                uint16_t reduction_percent = toolboxAPI->getPhysDamageReduction(_this->SF_CGdFigureToolBox, source_index, target_index, DWARF_HAMMER_TOWER_LINE);
+                uint16_t reduction_percent = toolboxAPI->getPhysDamageReduction(_this->CGdFigureToolBox, source_index, target_index, DWARF_HAMMER_TOWER_LINE);
                 // we adjust damage with damage reduction
                 damage = ((uint32_t)(damage * reduction_percent + 5000)) / 10000;
                 char aliveInfo[256];
@@ -233,7 +232,7 @@ void __thiscall dwarf_hammer_tower_effect_handler(SF_CGdSpell *_this, uint16_t s
                 logger->logInfo(aliveInfo);
 
                 // then we apply spell damage to the target
-                toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index, target_index, damage, 0, 0, 0);
+                toolboxAPI->dealDamage(_this->CGdFigureToolBox, source_index, target_index, damage, 0, 0, 0);
 
 
 

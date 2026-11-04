@@ -66,16 +66,9 @@ uint16_t __thiscall iceblade_onhit_handler(SF_CGdFigureJobs *_this, uint16_t sou
     // we retrieve the spell which exists behind given On Hit handler
     SF_GdSpell *spell = &_this->CGdSpell->active_spell_list[spell_index];
 
-    // we declare effect_info structure, because we'll need it later for function which retrieves target's resistance to ice
-    SF_SpellEffectInfo effect_info;
-
-    // we store spell id and spell job into effect_info structure
-    effect_info.spell_id = spell->spell_id;
-    effect_info.job_id = spell->spell_job;
-
     // we declare structure for spell data and load it from GameData.cff
     SF_CGdResourceSpell spell_data;
-    spellAPI->getResourceSpellData(_this->CGdResource, &spell_data, effect_info.spell_id);
+    spellAPI->getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);
 
     // we declare structure to save the spellcaster's action in it
     // we'll need it to determine whether the attack was ranged or melee
@@ -96,8 +89,8 @@ uint16_t __thiscall iceblade_onhit_handler(SF_CGdFigureJobs *_this, uint16_t sou
     if (isMeleeAttack)
     {
         // we learn target's resistance to Ice magic
-        // getChanceToResistSpell automatically determines the type of magic using effect info as the reference
-        uint16_t frost_resistance = spellAPI->getChanceToResistSpell(_this->CGdSpell->AutoClass34, source_index, target_index, effect_info);
+        // getChanceToResistSpell automatically determines the type of magic using the spell index as the reference
+        uint16_t frost_resistance = spellAPI->getChanceToResistSpell(_this->CGdSpell->CGdAutoClass34, source_index, target_index, spell_index);
 
         // we convert the specified percentage into ice damage
         uint16_t ice_damage = uint16_t(damage * spell_data.params[0] / 100);
@@ -147,14 +140,14 @@ void __thiscall iceblade_effect_handler(SF_CGdSpell *_this, uint16_t spell_index
             // we load the spell parameters from GameData.cff
             // we'll need them only in tick 0
             SF_CGdResourceSpell spell_data;
-            spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+            spellAPI->getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);
 
             // we store index of the spellcaster
             uint16_t source_index = _this->active_spell_list[spell_index].source.entity_index;
 
             // we declare structure for relative position of visual effect
             SF_CGdTargetData relative_data;
-            figureAPI->getPosition(_this->SF_CGdFigure, &relative_data.position, source_index);
+            figureAPI->getPosition(_this->CGdFigure, &relative_data.position, source_index);
             relative_data.entity_type = 4;
             relative_data.entity_index = 0;
             uint32_t unused;
@@ -167,7 +160,7 @@ void __thiscall iceblade_effect_handler(SF_CGdSpell *_this, uint16_t spell_index
             spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 0, &aux_data);
 
             // we have to activate the flag F_CHECK_SPELLS_BEFORE_JOB in order to make it possible for On Hit handler to trigger when the spellcaster makes an attack
-            _this->SF_CGdFigure->figures[source_index].flags |= F_CHECK_SPELLS_BEFORE_JOB;
+            _this->CGdFigure->figures[source_index].flags |= F_CHECK_SPELLS_BEFORE_JOB;
 
             // we activate the flag CHECK_SPELLS_BEFORE_JOB2 for the sake of optimization
             _this->active_spell_list[spell_index].flags |= CHECK_SPELLS_BEFORE_JOB2;
@@ -200,7 +193,7 @@ int __thiscall iceblade_refresh_handler(SF_CGdSpell *_this, uint16_t spell_index
     uint16_t source_index = spell->source.entity_index;
 
     // we should check for whether the spellcaster is affected with more than a single instance of Iceblade
-    uint16_t pruned_spell_index = toolboxAPI->getSpellIndexOfType(_this->SF_CGdFigureToolBox, source_index, ICEBLADE_LINE, spell_index);
+    uint16_t pruned_spell_index = toolboxAPI->getSpellIndexOfType(_this->CGdFigureToolBox, source_index, ICEBLADE_LINE, spell_index);
     // because we passed spell_index as last argument of the function, this index will be ignored
     // the function will return the spell index of another Iceblade instance, if there is any
     // if there is no other instance of Iceblade than the current, the function will return 0

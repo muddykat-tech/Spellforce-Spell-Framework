@@ -62,10 +62,8 @@ void __thiscall quarry_entry_handler (SF_CGdFigureJobs *_this,uint16_t figure_id
     SF_SGtFigureAction action;
     action.type = 0;
     action.subtype = 3;
-    action.target.entity_index = 0;
-    action.target.entity_type = 0;
-    action.target.position = {0, 0};
-    action.unkn = 0;
+    action.cooldown_action = 0;
+    action.cooldown_global = 0;
     figureAPI->addAction(_this->CGdFigure, figure_id, &action);
 }
 

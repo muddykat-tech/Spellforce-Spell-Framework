@@ -17,7 +17,7 @@ void __thiscall elemental_sub_effect_handler(SF_CGdEffect *_this, uint16_t effec
     {
         // here comes the black magic
         // CGdWorld structure is annotated badly, so offsets we use
-        uint32_t world = (uint32_t)(_this->SF_CGdWorld);
+        uint32_t world = (uint32_t)(_this->CGdWorld);
         uint16_t map_size = *(uint16_t *)(world + 0x11187);
         for (uint16_t i = 0, j = 9; j != 0; j--, i += 7)
         {
@@ -29,12 +29,12 @@ void __thiscall elemental_sub_effect_handler(SF_CGdEffect *_this, uint16_t effec
                 if ((flags & 0x10) != 0)
                 {
                     uint16_t target_index =
-                        toolboxAPI.getFigureFromWorld(_this->SF_CGdWorldToolBox, cell_x, cell_y, 0);
-                    if ((figureAPI.isAlive(_this->SF_CGdFigure, target_index) &&
-                         toolboxAPI.isTargetable(_this->SF_CGdFigureToolBox, target_index)) &&
-                        (((!toolboxAPI.figuresCheckFriendly(_this->SF_CGdFigureToolBox, source_index, target_index)) &&
-                          (!toolboxAPI.figuresCheckNeutral( _this->SF_CGdFigureToolBox, source_index, target_index))) ||
-                         (_this->SF_CGdFigure->figures[target_index].owner != 0)))
+                        toolboxAPI.getFigureFromWorld(_this->CGdWorldToolBox, cell_x, cell_y, 0);
+                    if ((figureAPI.isAlive(_this->CGdFigure, target_index) &&
+                         toolboxAPI.isTargetable(_this->CGdFigureToolBox, target_index)) &&
+                        (((!toolboxAPI.figuresCheckFriendly(_this->CGdFigureToolBox, source_index, target_index)) &&
+                          (!toolboxAPI.figuresCheckNeutral( _this->CGdFigureToolBox, source_index, target_index))) ||
+                         (_this->CGdFigure->figures[target_index].owner != 0)))
                     {
                         SF_CGdTargetData target = {1, target_index, {0, 0}};
                         SF_CGdTargetData source = {1, source_index, {0, 0}};

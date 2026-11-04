@@ -56,27 +56,23 @@ void __thiscall custom_spelleffect_handler(SF_CGdSpell *_this,
     uint16_t target_index = spell->target.entity_index;
     uint16_t source_index = spell->source.entity_index;
 
-    SF_SpellEffectInfo effect_info;
-    effect_info.spell_id = spell->spell_id;
-    effect_info.job_id = spell->spell_job;
-
-    uint32_t resist_chance = spellAPI->getChanceToResistSpell(_this->unkn2,
+    uint32_t resist_chance = spellAPI->getChanceToResistSpell(_this->CGdAutoClass34,
                                                               source_index,
                                                               target_index,
-                                                              effect_info);
+                                                              spell_index);
 
     uint16_t random_roll = spellAPI->getRandom(_this->OpaqueClass, 100);
 
-    uint16_t isAlive = figureAPI->isAlive(_this->SF_CGdFigure, target_index);
+    uint16_t isAlive = figureAPI->isAlive(_this->CGdFigure, target_index);
 
-    figureAPI->setWalkSpeed(_this->SF_CGdFigure, source_index, 200);
+    figureAPI->setWalkSpeed(_this->CGdFigure, source_index, 200);
 
-    figureAPI->addBonusMultToStatistic(_this->SF_CGdFigure, WISDOM,
+    figureAPI->addBonusMultToStatistic(_this->CGdFigure, WISDOM,
                                        source_index, 2);
 
     if (resist_chance < random_roll)
     {
-        toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index,
+        toolboxAPI->dealDamage(_this->CGdFigureToolBox, source_index,
                                target_index, damage, 1, 0, 0);
         return;
     }

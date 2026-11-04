@@ -81,10 +81,3 @@ typedef struct __attribute__((packed))
     uint32_t building_tags;
 
 } SFBuilding;
-
-typedef struct __attribute__((packed))
-{
-    SFMod *parent_mod;
-    uint16_t creo_id;
-    char hero_json_name[64];
-} SFHero;

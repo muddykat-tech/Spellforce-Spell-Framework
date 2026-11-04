@@ -84,14 +84,14 @@ void __thiscall summon_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
     SF_CGdResourceSpell spell_data;
     // we pull the pointer for this instance of spell
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
-    spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+    spellAPI->getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);
     uint32_t tick_number = spellAPI->getXData(_this, spell_index, SPELL_TICK_COUNT_AUX);
     if (tick_number == 0)
     {
-        uint16_t target_index = summonCreature(_this->SF_CGdFigureToolBox, spell->source.entity_index, spell_data.params[2]);
+        uint16_t target_index = summonCreature(_this->CGdFigureToolBox, spell->source.entity_index, spell_data.params[2]);
         if (target_index != 0)
         {
-            toolboxAPI->addSpellToFigure(_this->SF_CGdFigureToolBox, target_index, spell_index);
+            toolboxAPI->addSpellToFigure(_this->CGdFigureToolBox, target_index, spell_index);
             spellAPI->addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1);
             _this->active_spell_list[spell_index].to_do_count = (spell_data.params[0] * 10) / 1000;
             _this->active_spell_list[spell_index].target.entity_index = target_index;
@@ -103,11 +103,11 @@ void __thiscall summon_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
     }
     else
     {
-        uint16_t current_mana = figureAPI->getCurrentMana(_this->SF_CGdFigure, spell->source.entity_index);
+        uint16_t current_mana = figureAPI->getCurrentStat(_this->CGdFigure, spell->source.entity_index, MANA);
         if (current_mana >= spell_data.params[1])
         {
             _this->active_spell_list[spell_index].to_do_count = (spell_data.params[0] * 10) / 1000;
-            figureAPI->subMana(_this->SF_CGdFigure, spell->source.entity_index, spell_data.params[1]);
+            figureAPI->subMana(_this->CGdFigure, spell->source.entity_index, spell_data.params[1]);
             return;
         }
         else
@@ -120,7 +120,7 @@ void __thiscall summon_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
             uint32_t unused;
             spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget,
                                       &unused, &target, _this->OpaqueClass->current_step, 0x19, &some_rect);
-            toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, 0, spell->target.entity_index, 0x7FFF, 1, 0, 0);
+            toolboxAPI->dealDamage(_this->CGdFigureToolBox, 0, spell->target.entity_index, 0x7FFF, 1, 0, 0);
             return;
         }
     }

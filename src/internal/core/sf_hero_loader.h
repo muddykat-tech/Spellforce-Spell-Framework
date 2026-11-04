@@ -26,4 +26,4 @@ typedef struct
     uint8_t item_count;
 } CustomHero;
 
-bool parse_hero_json_entrypoint(const char *hero_json_name, const char *mod_id, CustomHero *out_hero);
+bool parse_hero_json_file(const char *path, CustomHero *out_hero);

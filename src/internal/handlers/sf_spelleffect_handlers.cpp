@@ -201,46 +201,46 @@ void __thiscall apply_aura_effect(SF_CGdSpell *_this, uint16_t spell_index, uint
     source_data.entity_index = source_index;
     source_data.entity_type = 1;
     source_data.position = {0,0};
-    SF_Coord caster_pos = _this->SF_CGdFigure->figures[source_index].position;
-    SF_Coord target_pos = _this->SF_CGdFigure->figures[target_index].position;
+    SF_Coord caster_pos = _this->CGdFigure->figures[source_index].position;
+    SF_Coord target_pos = _this->CGdFigure->figures[target_index].position;
     uint32_t distance = toolboxAPI.getDistance(&caster_pos, &target_pos);
     distance = (distance * 1400) / 4000;
     if (distance == 0)
     {
         distance = 1;
     }
-    uint16_t effect_index = effectAPI.addEffect(_this->SF_CGdEffect, kGdEffectAuraResolve,
+    uint16_t effect_index = effectAPI.addEffect(_this->CGdEffect, kGdEffectAuraResolve,
                                                 &source_data, &target_data,
                                                 _this->OpaqueClass->current_step, distance,
                                                 &rect);
-    effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_SPELL_INDEX, spell_index);
-    effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_SPELL_ID, spell->spell_id);
-    effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_SUBSPELL_ID, sub_spell_index);
-    effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_ENTITY_TYPE, 1);
-    effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_ENTITY_INDEX, source_index);
-    effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_ENTITY_TYPE2, 1);
-    effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_ENTITY_INDEX2, target_index);
+    effectAPI.setEffectXData(_this->CGdEffect, effect_index, EFFECT_SPELL_INDEX, spell_index);
+    effectAPI.setEffectXData(_this->CGdEffect, effect_index, EFFECT_SPELL_ID, spell->spell_id);
+    effectAPI.setEffectXData(_this->CGdEffect, effect_index, EFFECT_SUBSPELL_ID, sub_spell_index);
+    effectAPI.setEffectXData(_this->CGdEffect, effect_index, EFFECT_ENTITY_TYPE, 1);
+    effectAPI.setEffectXData(_this->CGdEffect, effect_index, EFFECT_ENTITY_INDEX, source_index);
+    effectAPI.setEffectXData(_this->CGdEffect, effect_index, EFFECT_ENTITY_TYPE2, 1);
+    effectAPI.setEffectXData(_this->CGdEffect, effect_index, EFFECT_ENTITY_INDEX2, target_index);
 }
 
 void __thiscall effect_conservation(SF_CGdSpell *_this, uint16_t spell_index)
 {
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
-    uint16_t source_index = spell->source.entity_index;
+//  uint16_t source_index = spell->source.entity_index;
     uint16_t target_index = spell->target.entity_index;
 
 
-    if ((_this->SF_CGdFigure->figures[target_index].owner != (uint16_t)(-1)) &&
-        ((_this->SF_CGdFigure->figures[target_index].flags & (IS_DEAD|RESESRVED_ONLY)) == 0))
+    if ((_this->CGdFigure->figures[target_index].owner != (uint16_t)(-1)) &&
+        ((_this->CGdFigure->figures[target_index].flags & (IS_DEAD|RESESRVED_ONLY)) == 0))
     {
         if (spellAPI.addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1) == 1)
         {
             if (spellAPI.checkCanApply(_this, spell_index))
             {
                 SF_CGdResourceSpell spell_data;
-                spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+                spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);
                 spellAPI.setXData(_this, spell_index, SPELL_CONSERVATION_SHIELD, spell_data.params[0]);
-                _this->SF_CGdFigure->figures[target_index].flags |= F_CHECK_SPELLS_BEFORE_CHECK_BATTLE;
-                _this->SF_CGdFigure->figures[target_index].flags |= F_CHECK_SPELLS_BEFORE_JOB;
+                _this->CGdFigure->figures[target_index].flags |= F_CHECK_SPELLS_BEFORE_CHECK_BATTLE;
+                _this->CGdFigure->figures[target_index].flags |= F_CHECK_SPELLS_BEFORE_JOB;
                 spell->flags |= CHECK_SPELLS_BEFORE_CHECK_BATTLE;
                 spell->flags |= CHECK_SPELLS_BEFORE_JOB2;
                 spell->to_do_count = 20;
@@ -261,7 +261,7 @@ void __thiscall effect_conservation(SF_CGdSpell *_this, uint16_t spell_index)
             if (shield != 0)
             {
                 SF_CGdResourceSpell spell_data;
-                spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+                spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);
                 uint32_t total_ticks = (spell_data.params[1] * 10) / 20000 - 1;
                 if (spellAPI.getXData(_this, spell_index, SPELL_TICK_COUNT_AUX) <= total_ticks)
                 {
@@ -288,12 +288,12 @@ void __thiscall effect_ability_warcry(SF_CGdSpell *_this, uint16_t spell_index)
         if (tick_count == 1)
         {
             SF_CGdResourceSpell spell_data;
-            spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+            spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);
 
             _this->active_spell_list[spell_index].to_do_count = (spell_data.params[0] * 10) / 1000;
 
             SF_Rectangle rect = {0,0};
-            SF_Coord caster_pos = _this->SF_CGdFigure->figures[source_index].position;
+            SF_Coord caster_pos = _this->CGdFigure->figures[source_index].position;
             //spellAPI.getTargetsRectangle(_this, &rect, spell_index, spell_data.params[3], &caster_pos);
 
             SF_CGdTargetData source_data;
@@ -304,7 +304,7 @@ void __thiscall effect_ability_warcry(SF_CGdSpell *_this, uint16_t spell_index)
             spellAPI.addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &rect, &source_data,
                                      _this->OpaqueClass->current_step, 100, &rect);
 
-            _this->SF_CGdFigure->figures[source_index].flags |=  F_CHECK_SPELLS_BEFORE_JOB;
+            _this->CGdFigure->figures[source_index].flags |=  F_CHECK_SPELLS_BEFORE_JOB;
             spell->flags |= CHECK_SPELLS_BEFORE_JOB2;
 
             CGdFigureIterator iter;
@@ -315,15 +315,15 @@ void __thiscall effect_ability_warcry(SF_CGdSpell *_this, uint16_t spell_index)
             uint16_t next_figure = iteratorAPI.getNextFigure(&iter);
             while (next_figure != 0)
             {
-                if ((_this->SF_CGdFigure->figures[next_figure].owner != (uint16_t)(-1)) &&
-                    ((_this->SF_CGdFigure->figures[next_figure].flags & (IS_DEAD|RESESRVED_ONLY)) == 0))
+                if ((_this->CGdFigure->figures[next_figure].owner != (uint16_t)(-1)) &&
+                    ((_this->CGdFigure->figures[next_figure].flags & (IS_DEAD|RESESRVED_ONLY)) == 0))
                 {
                     if ((next_figure != source_index) &&
-                        (toolboxAPI.figuresCheckFriendly(_this->SF_CGdFigureToolBox, source_index, next_figure)) &&
-                        (toolboxAPI.isTargetable(_this->SF_CGdFigureToolBox, next_figure)) &&
-                        (!toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, next_figure, kGdSpellLineAbilityWarCry)))
+                        (toolboxAPI.figuresCheckFriendly(_this->CGdFigureToolBox, source_index, next_figure)) &&
+                        (toolboxAPI.isTargetable(_this->CGdFigureToolBox, next_figure)) &&
+                        (!toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, next_figure, kGdSpellLineAbilityWarCry)))
                     {
-                        if (toolboxAPI.isUnitMelee(_this->SF_CGdFigureToolBox, next_figure))
+                        if (toolboxAPI.isUnitMelee(_this->CGdFigureToolBox, next_figure))
                         {
                             targets.push_back(next_figure);
                         }
@@ -359,7 +359,7 @@ void __thiscall effect_ability_warcry(SF_CGdSpell *_this, uint16_t spell_index)
             {
                 uint16_t target_index = targets.back();
 
-                _this->SF_CGdFigure->figures[target_index].flags |=  F_CHECK_SPELLS_BEFORE_JOB;
+                _this->CGdFigure->figures[target_index].flags |=  F_CHECK_SPELLS_BEFORE_JOB;
 
                 SF_CGdTargetData target_data;
                 target_data.entity_index = target_index;
@@ -367,17 +367,17 @@ void __thiscall effect_ability_warcry(SF_CGdSpell *_this, uint16_t spell_index)
                 target_data.position = {0,0};
                 spellAPI.addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &rect, &target_data,
                                          _this->OpaqueClass->current_step, 100, &rect);
-                toolboxAPI.addSpellToFigure(_this->SF_CGdFigureToolBox, target_index, spell_index);
+                toolboxAPI.addSpellToFigure(_this->CGdFigureToolBox, target_index, spell_index);
                 targets.pop_back();
             }
             return;
         }
-        for (int i = 0; i<_this->SF_CGdFigure->max_used; i++)
+        for (int i = 1; i <= _this->CGdFigure->max_used; i++)
         {
-            if ((_this->SF_CGdFigure->figures[i].owner != (uint16_t)(-1)) &&
-                ((_this->SF_CGdFigure->figures[i].flags & (IS_DEAD|RESESRVED_ONLY)) == 0))
+            if ((_this->CGdFigure->figures[i].owner != (uint16_t)(-1)) &&
+                ((_this->CGdFigure->figures[i].flags & (IS_DEAD|RESESRVED_ONLY)) == 0))
             {
-                if (toolboxAPI.removeSpellFromList(_this->SF_CGdFigureToolBox, i, spell_index))
+                if (toolboxAPI.removeSpellFromList(_this->CGdFigureToolBox, i, spell_index))
                 {
                     spellAPI.figTryClrCHkSPlBfrJob2(_this, spell_index);
                 }
@@ -393,10 +393,10 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
     SF_CGdResourceSpell spell_data;
     uint16_t source_index = spell->source.entity_index;
-    spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+    spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);
     uint16_t sub_effect_id = spell_data.params[6];
     SF_CGdResourceSpell sub_spell_data;
-    spellAPI.getResourceSpellData(_this->SF_CGdResource, &sub_spell_data, sub_effect_id);
+    spellAPI.getResourceSpellData(_this->CGdResource, &sub_spell_data, sub_effect_id);
     _this->active_spell_list[spell_index].to_do_count = (spell_data.params[0] * 10) / 1000;
 
     SF_CGdTargetData source_data;
@@ -405,35 +405,35 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
     source_data.position = {0,0};
     if (spell->source.entity_type == 1)
     {
-        if ((_this->SF_CGdFigure->figures[source_index].owner != (uint16_t)(-1)) &&
-            ((*(uint8_t *)(&_this->SF_CGdFigure->figures[source_index].flags) & 0xa) == 0))
+        if ((_this->CGdFigure->figures[source_index].owner != (uint16_t)(-1)) &&
+            ((*(uint8_t *)(&_this->CGdFigure->figures[source_index].flags) & 0xa) == 0))
         {
 
             uint32_t tick = spellAPI.addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1);
             if (tick == 1)
             {
-                _this->SF_CGdFigure->figures[source_index].flags |= AURA_RUNNING;
+                _this->CGdFigure->figures[source_index].flags |= AURA_RUNNING;
                 SF_Rectangle rect = {0, 0};
-                uint16_t effect_index = effectAPI.addEffect(_this->SF_CGdEffect, kGdEffectSpellHitTarget, &source_data,
+                uint16_t effect_index = effectAPI.addEffect(_this->CGdEffect, kGdEffectSpellHitTarget, &source_data,
                                                             &source_data,
                                                             _this->OpaqueClass->current_step, 0, &rect);
 
                 spellAPI.setXData(_this, spell_index, EFFECT_EFFECT_INDEX, effect_index);
-                effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_SPELL_INDEX, spell_index);
-                effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_SPELL_ID, spell->spell_id);
+                effectAPI.setEffectXData(_this->CGdEffect, effect_index, EFFECT_SPELL_INDEX, spell_index);
+                effectAPI.setEffectXData(_this->CGdEffect, effect_index, EFFECT_SPELL_ID, spell->spell_id);
             }
         }
 
-        uint16_t current_mp = figureAPI.getCurrentStat(_this->SF_CGdFigure, source_index, MANA);
+        uint16_t current_mp = figureAPI.getCurrentStat(_this->CGdFigure, source_index, MANA);
         uint16_t aura_target_type = spell_data.params[5];
         uint16_t manacost = spell_data.params[8];
-        if (_this->SF_CGdFigure->figures[source_index].set_type == 7)
+        if (_this->CGdFigure->figures[source_index].set_type == 7)
         {
             manacost -= ((manacost * 33) / 100);
         }
         if (current_mp >= manacost)
         {
-            SF_Coord caster_pos = _this->SF_CGdFigure->figures[source_index].position;
+            SF_Coord caster_pos = _this->CGdFigure->figures[source_index].position;
             CGdFigureIterator iter;
             iteratorAPI.setupFigureIterator(&iter, _this);
             iteratorAPI.iteratorSetArea(&iter,  &caster_pos, spell_data.params[2]);
@@ -441,23 +441,23 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
             uint16_t target_index = iteratorAPI.getNextFigure(&iter);
             while (target_index != 0)
             {
-                if ((_this->SF_CGdFigure->figures[target_index].owner != (uint16_t)(-1)) &&
-                    ((*(uint8_t *)(&_this->SF_CGdFigure->figures[target_index].flags) & 0xa) == 0))
+                if ((_this->CGdFigure->figures[target_index].owner != (uint16_t)(-1)) &&
+                    ((*(uint8_t *)(&_this->CGdFigure->figures[target_index].flags) & 0xa) == 0))
                 {
                     //allied auras
                     if (aura_target_type == 1)
                     {
-                        if (!toolboxAPI.figuresCheckHostile(_this->SF_CGdFigureToolBox, source_index, target_index))
+                        if (!toolboxAPI.figuresCheckHostile(_this->CGdFigureToolBox, source_index, target_index))
                         {
-                            if (_this->SF_CGdFigure->figures[target_index].owner ==
-                                _this->SF_CGdFigure->figures[source_index].owner)
+                            if (_this->CGdFigure->figures[target_index].owner ==
+                                _this->CGdFigure->figures[source_index].owner)
                             {
                                 //special logic here
                                 if (spell->spell_line == kGdSpellLineAuraHealing)
                                 {
-                                    uint16_t missing_hp = _this->SF_CGdFigure->figures[target_index].health.missing_val;
+                                    uint16_t missing_hp = _this->CGdFigure->figures[target_index].health.missing_val;
                                     if ((missing_hp >sub_spell_data.params[0]) &&
-                                        (!toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index,
+                                        (!toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, target_index,
                                                                   kGdSpellLineRemediless)))
                                     {
                                         targets.push_back(target_index);
@@ -468,9 +468,9 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
 
                                 if (spell->spell_line == kGdSpellLineAuraRegeneration)
                                 {
-                                    uint16_t missing_hp = _this->SF_CGdFigure->figures[target_index].health.missing_val;
+                                    uint16_t missing_hp = _this->CGdFigure->figures[target_index].health.missing_val;
                                     if ((missing_hp != 0) &&
-                                        (!toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index,
+                                        (!toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, target_index,
                                                                   sub_spell_data.spell_line_id)))
                                     {
                                         targets.push_back(target_index);
@@ -479,10 +479,10 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
                                     continue;
                                 }
 
-                                if (!toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index,
+                                if (!toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, target_index,
                                                              sub_spell_data.spell_line_id))
                                 {
-                                    if (figureAPI.isWarrior(_this->SF_CGdFigure, target_index))
+                                    if (figureAPI.isWarrior(_this->CGdFigure, target_index))
                                     {
                                         targets.push_back(target_index);
                                     }
@@ -493,11 +493,11 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
                     //hostile auras
                     if (aura_target_type == 2)
                     {
-                        if (toolboxAPI.figuresCheckHostile(_this->SF_CGdFigureToolBox, source_index, target_index))
+                        if (toolboxAPI.figuresCheckHostile(_this->CGdFigureToolBox, source_index, target_index))
                         {
-                            if (toolboxAPI.isTargetable(_this->SF_CGdFigureToolBox, target_index))
+                            if (toolboxAPI.isTargetable(_this->CGdFigureToolBox, target_index))
                             {
-                                if (!toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index,
+                                if (!toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, target_index,
                                                              sub_spell_data.spell_line_id))
                                 {
                                     targets.push_back(target_index);
@@ -518,24 +518,24 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
                     for (uint32_t j = 0; j < targets.size(); j++)
                     {
                         target_index = targets.at(j);
-                        SF_Coord target_pos = _this->SF_CGdFigure->figures[target_index].position;
+                        SF_Coord target_pos = _this->CGdFigure->figures[target_index].position;
                         uint16_t dx = 7;
                         uint16_t sec_prio = 0;
                         for (int i = 8; i> 0; i--)
                         {
                             //some serious bitfuckery
-                            uint16_t near_x = *(uint16_t *)((uint32_t)&_this->SF_CGdWorld->unknown1[0].uknwn1 + dx) +
+                            uint16_t near_x = *(uint16_t *)((uint32_t)&_this->CGdWorld->unknown1[0].uknwn1 + dx) +
                                               target_pos.X;
-                            uint16_t near_y = *(uint16_t *)((uint32_t)&_this->SF_CGdWorld->unknown1[0].uknwn2 + dx) +
+                            uint16_t near_y = *(uint16_t *)((uint32_t)&_this->CGdWorld->unknown1[0].uknwn2 + dx) +
                                               target_pos.Y;
-                            if (((*(uint8_t *)&_this->SF_CGdWorld->cells[near_y*0x400 + near_x].world_cell_flags) &
+                            if (((*(uint8_t *)&_this->CGdWorld->cells[near_y*0x400 + near_x].world_cell_flags) &
                                  0x10) !=
                                 0)
                             {
-                                uint16_t sec_target = toolboxAPI.getFigureFromWorld(_this->SF_CGdWorldToolBox, near_x,
+                                uint16_t sec_target = toolboxAPI.getFigureFromWorld(_this->CGdWorldToolBox, near_x,
                                                                                     near_y, 1);
 
-                                if ((sec_target != 0) && (toolboxAPI.figuresCheckHostile(_this->SF_CGdFigureToolBox,
+                                if ((sec_target != 0) && (toolboxAPI.figuresCheckHostile(_this->CGdFigureToolBox,
                                                                                          target_index, sec_target)))
                                 {
                                     sec_prio++;
@@ -543,7 +543,7 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
                             }
                             dx += 7;
                         }
-                        sec_prio *= (100 - figureAPI.getCurrentHealthPercent(_this->SF_CGdFigure, target_index));
+                        sec_prio *= (100 - figureAPI.getCurrentHealthPercent(_this->CGdFigure, target_index));
                         if (sec_prio > prio)
                         {
                             prio = sec_prio;
@@ -559,7 +559,7 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
                     for (uint32_t j = 0; j < targets.size(); j++)
                     {
                         target_index = targets.at(j);
-                        sec_prio = (100 - figureAPI.getCurrentHealthPercent(_this->SF_CGdFigure, target_index));
+                        sec_prio = (100 - figureAPI.getCurrentHealthPercent(_this->CGdFigure, target_index));
                         if (sec_prio > prio)
                         {
                             prio = sec_prio;
@@ -573,7 +573,7 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
                     aura_target = targets.at(value);
                 }
                 apply_aura_effect(_this, spell_index, sub_effect_id, source_index, aura_target);
-                figureAPI.subMana(_this->SF_CGdFigure, source_index, manacost);
+                figureAPI.subMana(_this->CGdFigure, source_index, manacost);
             }
             iteratorAPI.disposeFigureIterator(&iter);
             return;
@@ -584,10 +584,10 @@ void __thiscall effect_aura (SF_CGdSpell *_this, uint16_t spell_index)
         }
         if (source_index != 0)
         {
-            _this->SF_CGdFigure->figures[source_index].flags &= ~AURA_RUNNING;
+            _this->CGdFigure->figures[source_index].flags &= ~AURA_RUNNING;
         }
         uint16_t effect_index = spellAPI.getXData(_this, spell_index, EFFECT_EFFECT_INDEX);
-        effectAPI.tryEndEffect(_this->SF_CGdEffect, effect_index);
+        effectAPI.tryEndEffect(_this->CGdEffect, effect_index);
     }
     spellAPI.setXData(_this, spell_index, EFFECT_EFFECT_INDEX, 0);
     spellAPI.setEffectDone(_this, spell_index, 0);
@@ -600,7 +600,7 @@ void __thiscall effect_siege_aura (SF_CGdSpell *_this, uint16_t spell_index)
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
     SF_CGdResourceSpell spell_data;
     uint16_t source_index = spell->source.entity_index;
-    spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+    spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);
     SF_CGdTargetData source_data;
     source_data.entity_index = source_index;
     source_data.entity_type = 1;
@@ -608,36 +608,36 @@ void __thiscall effect_siege_aura (SF_CGdSpell *_this, uint16_t spell_index)
     _this->active_spell_list[spell_index].to_do_count = (spell_data.params[0] * 10) / 1000;
     if (spell->source.entity_type == 1)
     {
-        if ((_this->SF_CGdFigure->figures[source_index].owner != (uint16_t)(-1)) &&
-            ((*(uint8_t *)(&_this->SF_CGdFigure->figures[source_index].flags) & 0xa) == 0))
+        if ((_this->CGdFigure->figures[source_index].owner != (uint16_t)(-1)) &&
+            ((*(uint8_t *)(&_this->CGdFigure->figures[source_index].flags) & 0xa) == 0))
         {
             uint32_t tick = spellAPI.addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1);
             if (tick == 1)
             {
-                _this->SF_CGdFigure->figures[source_index].flags |= AURA_RUNNING;
+                _this->CGdFigure->figures[source_index].flags |= AURA_RUNNING;
                 SF_Rectangle rect = {0, 0};
-                uint16_t effect_index = effectAPI.addEffect(_this->SF_CGdEffect, kGdEffectSpellHitTarget, &source_data,
+                uint16_t effect_index = effectAPI.addEffect(_this->CGdEffect, kGdEffectSpellHitTarget, &source_data,
                                                             &source_data,
                                                             _this->OpaqueClass->current_step, 0, &rect);
 
                 spellAPI.setXData(_this, spell_index, EFFECT_EFFECT_INDEX, effect_index);
-                effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_SPELL_INDEX, spell_index);
-                effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_SPELL_ID, spell->spell_id);
+                effectAPI.setEffectXData(_this->CGdEffect, effect_index, EFFECT_SPELL_INDEX, spell_index);
+                effectAPI.setEffectXData(_this->CGdEffect, effect_index, EFFECT_SPELL_ID, spell->spell_id);
             }
 
         }
     }
-    uint16_t current_mp = figureAPI.getCurrentStat(_this->SF_CGdFigure, source_index, MANA);
+    uint16_t current_mp = figureAPI.getCurrentStat(_this->CGdFigure, source_index, MANA);
     uint16_t aura_target_type = spell_data.params[5];
     //Aura target type is either 1 or 2 for valid auras! IDK wtf is 3, but that's valid too? ~UnSchtalch
     if ((aura_target_type > 0) && (aura_target_type <= 3) && (current_mp >= spell_data.params[8]))
     {
         SF_Coord caster_pos;
-        caster_pos.X = _this->SF_CGdFigure->figures[source_index].position.X;
-        caster_pos.Y = _this->SF_CGdFigure->figures[source_index].position.Y;
+        caster_pos.X = _this->CGdFigure->figures[source_index].position.X;
+        caster_pos.Y = _this->CGdFigure->figures[source_index].position.Y;
         CGdBuildingIterator iter;
         iteratorAPI.buildingIteratorInit(&iter, 0, 0, 0x3ff, 0x3ff);
-        iteratorAPI.buildingIteratorSetPointers(&iter, _this->CGdBuilding, _this->SF_CGdTile, _this->SF_CGdWorld);
+        iteratorAPI.buildingIteratorSetPointers(&iter, _this->CGdBuilding, _this->CGdTile, _this->CGdWorld);
         //Types are similar, to a point, but I do need to cast it
 
         iteratorAPI.iteratorSetArea((CGdFigureIterator *)&iter, &caster_pos, spell_data.params[2]+10);
@@ -648,14 +648,14 @@ void __thiscall effect_siege_aura (SF_CGdSpell *_this, uint16_t spell_index)
         {
             //Since it's siege auras, they won't have allied buildings as targets. So I DO skip section with 1
             if (_this->CGdBuilding->buildings[building_index].owner !=
-                _this->SF_CGdFigure->figures[source_index].owner)
+                _this->CGdFigure->figures[source_index].owner)
             {
-                if (buildingAPI.buildingCheckHostile(_this->SF_CGdBuildingToolbox, source_index, building_index))
+                if (buildingAPI.buildingCheckHostile(_this->CGdBuildingToolbox, source_index, building_index))
                 {
                     if (_this->CGdBuilding->buildings[building_index].health_current != 0)
                     {
                         SF_Rectangle building_rect;
-                        buildingAPI.getBuildingClosestVertex(_this->SF_CGdBuildingToolbox, (SF_Coord *) &building_rect,
+                        buildingAPI.getBuildingClosestVertex(_this->CGdBuildingToolbox, (SF_Coord *) &building_rect,
                                                              building_index,
                                                              source_index, 1);
                         SF_Coord building_pos = *(SF_Coord *)&building_rect.partA;
@@ -677,28 +677,28 @@ void __thiscall effect_siege_aura (SF_CGdSpell *_this, uint16_t spell_index)
             building_data.entity_type = 2;
             building_data.position = {0,0};
             SF_Rectangle rect = {0,0};
-            uint16_t effect_index = effectAPI.addEffect(_this->SF_CGdEffect, kGdEffectSpellHitTarget,
+            uint16_t effect_index = effectAPI.addEffect(_this->CGdEffect, kGdEffectSpellHitTarget,
                                                         &source_data, &building_data,
                                                         _this->OpaqueClass->current_step, 0x14, &rect);
-            effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_SPELL_INDEX, spell_index);
-            effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_SPELL_ID, spell->spell_id);
-            effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_PHYSICAL_DAMAGE,
+            effectAPI.setEffectXData(_this->CGdEffect, effect_index, EFFECT_SPELL_INDEX, spell_index);
+            effectAPI.setEffectXData(_this->CGdEffect, effect_index, EFFECT_SPELL_ID, spell->spell_id);
+            effectAPI.setEffectXData(_this->CGdEffect, effect_index, EFFECT_PHYSICAL_DAMAGE,
                                      spell_data.params[7]);
-            effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_ADD_SUBSPELL, 1);
-            effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_ENTITY_TYPE, 1);
-            effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_ENTITY_INDEX, source_index);
-            effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_ENTITY_TYPE2, 2);
-            effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_ENTITY_INDEX2, target_building);
+            effectAPI.setEffectXData(_this->CGdEffect, effect_index, EFFECT_ADD_SUBSPELL, 1);
+            effectAPI.setEffectXData(_this->CGdEffect, effect_index, EFFECT_ENTITY_TYPE, 1);
+            effectAPI.setEffectXData(_this->CGdEffect, effect_index, EFFECT_ENTITY_INDEX, source_index);
+            effectAPI.setEffectXData(_this->CGdEffect, effect_index, EFFECT_ENTITY_TYPE2, 2);
+            effectAPI.setEffectXData(_this->CGdEffect, effect_index, EFFECT_ENTITY_INDEX2, target_building);
         }
         iteratorAPI.disposeFigureIterator((CGdFigureIterator *)&iter);
         return;
     }
     if (source_index != 0)
     {
-        _this->SF_CGdFigure->figures[source_index].flags &= ~AURA_RUNNING;
+        _this->CGdFigure->figures[source_index].flags &= ~AURA_RUNNING;
     }
     uint16_t effect_index = spellAPI.getXData(_this, spell_index, EFFECT_EFFECT_INDEX);
-    effectAPI.tryEndEffect(_this->SF_CGdEffect, effect_index);
+    effectAPI.tryEndEffect(_this->CGdEffect, effect_index);
     spellAPI.setXData(_this, spell_index, EFFECT_EFFECT_INDEX, 0);
     spellAPI.setEffectDone(_this, spell_index, 0);
     return;
@@ -742,15 +742,16 @@ void __thiscall effect_self_illusion(SF_CGdSpell *_this, uint16_t spell_index)
     if (spell->target.entity_type == 1)
     {
         SF_CGdResourceSpell spell_data;
-        spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+        spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);
 
         uint16_t source_index = spell->source.entity_index;
+
         uint16_t existing_clones = 0;
-        for (int i = 1; i < _this->SF_CGdFigure->max_used; i++)
+        for (int i = 1; i <= _this->CGdFigure->max_used; i++)
         {
-            GdFigure *figure = &_this->SF_CGdFigure->figures[i];
+            GdFigure *figure = &_this->CGdFigure->figures[i];
             if (((figure->flags & ILLUSION) != 0) &&
-                (toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, i, kGdSpellLineSelfIllusion)) &&
+                (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, i, kGdSpellLineSelfIllusion)) &&
                 (figure->master_figure == source_index))
             {
                 existing_clones++;
@@ -765,9 +766,9 @@ void __thiscall effect_self_illusion(SF_CGdSpell *_this, uint16_t spell_index)
             uint16_t scale_factor = spell_data.params[1];
             uint16_t summon_count = spell_data.params[0];
 
-            stats.level = _this->SF_CGdFigure->figures[source_index].level;
-            stats.race = _this->SF_CGdFigure->figures[source_index].race;
-            stats.head = _this->SF_CGdFigure->figures[source_index].head;
+            stats.level = _this->CGdFigure->figures[source_index].level;
+            stats.race = _this->CGdFigure->figures[source_index].race;
+            stats.head = _this->CGdFigure->figures[source_index].head;
 
             for (int i = 0; i< 10; i++)
             {
@@ -775,77 +776,110 @@ void __thiscall effect_self_illusion(SF_CGdSpell *_this, uint16_t spell_index)
                 stats.abilities[i].spec = 0xff;
                 stats.abilities[i].level = 0xff;
             }
-            if ((_this->SF_CGdFigure->figures[source_index].flags & FEMALE) != 0)
+            if ((_this->CGdFigure->figures[source_index].flags & FEMALE) != 0)
             {
                 stats.unit_flags |= 1;
             }
 
-            stats.agility = _this->SF_CGdFigure->figures[source_index].agility.base_val;
-            stats.dexterity = _this->SF_CGdFigure->figures[source_index].dexterity.base_val;
-            stats.charisma = _this->SF_CGdFigure->figures[source_index].charisma.base_val;
-            stats.strength = _this->SF_CGdFigure->figures[source_index].strength.base_val;
-            stats.stamina = (_this->SF_CGdFigure->figures[source_index].stamina.base_val * scale_factor) / 100;
-            stats.intelligence = _this->SF_CGdFigure->figures[source_index].intelligence.base_val;
-            stats.wisdom = _this->SF_CGdFigure->figures[source_index].wisdom.base_val;
+            stats.agility = _this->CGdFigure->figures[source_index].agility.base_val;
+            stats.dexterity = _this->CGdFigure->figures[source_index].dexterity.base_val;
+            stats.charisma = _this->CGdFigure->figures[source_index].charisma.base_val;
+            stats.strength = _this->CGdFigure->figures[source_index].strength.base_val;
+            stats.stamina = (_this->CGdFigure->figures[source_index].stamina.base_val * scale_factor) / 100;
+            stats.intelligence = _this->CGdFigure->figures[source_index].intelligence.base_val;
+            stats.wisdom = _this->CGdFigure->figures[source_index].wisdom.base_val;
 
-            stats.ires = _this->SF_CGdFigure->figures[source_index].resistance_ice.base_val;
-            stats.fres = _this->SF_CGdFigure->figures[source_index].resistance_fire.base_val;
-            stats.bres = _this->SF_CGdFigure->figures[source_index].resistance_black.base_val;
-            stats.mres = _this->SF_CGdFigure->figures[source_index].resistance_mental.base_val;
+            stats.ires = _this->CGdFigure->figures[source_index].resistance_ice.base_val;
+            stats.fres = _this->CGdFigure->figures[source_index].resistance_fire.base_val;
+            stats.bres = _this->CGdFigure->figures[source_index].resistance_black.base_val;
+            stats.mres = _this->CGdFigure->figures[source_index].resistance_mental.base_val;
 
-            stats.fspeed = _this->SF_CGdFigure->figures[source_index].fight_speed.base_val;
-            stats.wspeed = _this->SF_CGdFigure->figures[source_index].walk_speed.base_val;
-            stats.cspeed = _this->SF_CGdFigure->figures[source_index].cast_speed.base_val;
-            stats.scaling = _this->SF_CGdFigure->figures[source_index].scaling;
-            if (summon_count != existing_clones)
+            stats.fspeed = _this->CGdFigure->figures[source_index].fight_speed.base_val;
+            stats.wspeed = _this->CGdFigure->figures[source_index].walk_speed.base_val;
+            stats.cspeed = _this->CGdFigure->figures[source_index].cast_speed.base_val;
+            stats.scaling = _this->CGdFigure->figures[source_index].scaling;
+
+            /* Recast refresh: every living clone of this caster is healed back to full
+             * (subHealth with a negative amount), the missing ones are spawned below.
+             * Loop bound is inclusive: the newest figure carries the max_used index. */
+            for (int i = 1; i <= _this->CGdFigure->max_used; i++)
             {
-                for (int i = 0; i < summon_count - existing_clones; i++)
+                GdFigure *figure = &_this->CGdFigure->figures[i];
+                if (((figure->flags & ILLUSION) != 0) &&
+                    (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, i, kGdSpellLineSelfIllusion)) &&
+                    (figure->master_figure == source_index))
                 {
-                    SF_Coord caster_pos = _this->SF_CGdFigure->figures[source_index].position;
+                    uint16_t hp_current = figureAPI.getCurrentStat(_this->CGdFigure, i, HEALTH);
+                    uint16_t hp_max = figureAPI.getMaxStat(_this->CGdFigure, i, HEALTH);
+                    if (hp_current < hp_max)
+                    {
+                        figureAPI.subHealth(_this->CGdFigure, i, -(int32_t)(hp_max - hp_current));
+                    }
+                }
+            }
+
+            uint16_t to_spawn = 0;
+            if (summon_count > existing_clones)
+            {
+                to_spawn = summon_count - existing_clones;
+            }
+
+            if (to_spawn == 0)
+            {
+                /* Clone cap reached: nothing left to do for this cast - terminate it
+                 * instead of attaching a duplicate upkeep instance. */
+                spellAPI.removeDLLNode(_this, spell_index);
+                spellAPI.setEffectDone(_this, spell_index, 0);
+                return;
+            }
+
+            for (int i = 0; i < to_spawn; i++)
+                {
+                    SF_Coord caster_pos = _this->CGdFigure->figures[source_index].position;
                     SF_Coord initial_offset = {1,10};
                     SF_Coord figure_pos = {0,0};
-                    uint16_t sector = _this->SF_CGdWorld->cells[caster_pos.Y * 400 + caster_pos.X].sector;
+                    //uint16_t sector = _this->CGdWorld->cells[caster_pos.Y * 400 + caster_pos.X].sector;
 
-                    if (toolboxAPI.findClosestFreePosition(_this->SF_CGdWorldToolBox, &caster_pos, &initial_offset,
+                    if (toolboxAPI.findClosestFreePosition(_this->CGdWorldToolBox, &caster_pos, &initial_offset,
                                                            (uint16_t)(-1), &figure_pos))
                     {
-                        uint16_t figure_index = reserveFigure(_this->SF_CGdFigureToolBox, figure_pos.X, figure_pos.Y,
-                                                              _this->SF_CGdFigure->figures[source_index].owner, &stats,
+                        uint16_t figure_index = reserveFigure(_this->CGdFigureToolBox, figure_pos.X, figure_pos.Y,
+                                                              _this->CGdFigure->figures[source_index].owner, &stats,
                                                               TASK_NPC, 0x1c);
                         if (figure_index != 0)
                         {
-                            GdFigure *figure = &_this->SF_CGdFigure->figures[figure_index];
+                            GdFigure *figure = &_this->CGdFigure->figures[figure_index];
                             figure->flags |= ILLUSION;
                             figure->master_figure = source_index;
-                            figureAPI.setJob(_this->SF_CGdFigureJobs, figure_index, kGdJobPetIdle);
-                            figureAPI.setTask(_this->SF_CGdFigure, figure_index, TASK_PET);
+                            figureAPI.setJob(_this->CGdFigureJobs, figure_index, kGdJobPetIdle);
+                            figureAPI.setTask(_this->CGdFigure, figure_index, TASK_PET);
                             SF_CGdFigureWeaponStats weapon_stats;
 
-                            getWeaponStats(_this->SF_CGdFigure, source_index, 0, &weapon_stats);
+                            getWeaponStats(_this->CGdFigure, source_index, 0, &weapon_stats);
                             weapon_stats.min_dmg = 0;
                             weapon_stats.max_dmg = 0;
-                            setWeaponStats(_this->SF_CGdFigure, figure_index, 0, &weapon_stats);
+                            setWeaponStats(_this->CGdFigure, figure_index, 0, &weapon_stats);
 
-                            getWeaponStats(_this->SF_CGdFigure, source_index, 1, &weapon_stats);
+                            getWeaponStats(_this->CGdFigure, source_index, 1, &weapon_stats);
                             weapon_stats.min_dmg = 0;
                             weapon_stats.max_dmg = 0;
-                            setWeaponStats(_this->SF_CGdFigure, figure_index, 1, &weapon_stats);
+                            setWeaponStats(_this->CGdFigure, figure_index, 1, &weapon_stats);
 
                             for (int j = 0; j < 15; j++)
                             {
                                 SF_SGtFigureAction action;
-                                aiAPI.getFigureAction(_this->SF_CGdFigure, &action, source_index, j);
+                                aiAPI.getFigureAction(_this->CGdFigure, &action, source_index, j);
                                 if ((action.type != 0xFFFF) && (action.type >= 10000))
                                 {
-                                    figureAPI.addAction(_this->SF_CGdFigure, figure_index, &action);
+                                    figureAPI.addAction(_this->CGdFigure, figure_index, &action);
                                 }
                             }
                             for (int j = 0; j < 16; j++)
                             {
-                                uint16_t eq_id = _this->SF_CGdFigure->figures[source_index].equipment[j];
+                                uint16_t eq_id = _this->CGdFigure->figures[source_index].equipment[j];
                                 figure->equipment[j] = eq_id;
                             }
-                            uint16_t armour = figureAPI.getCurrentStat(_this->SF_CGdFigure, source_index, ARMOR);
+                            uint16_t armour = figureAPI.getCurrentStat(_this->CGdFigure, source_index, ARMOR);
                             figure->armor.base_val = (armour * scale_factor) / 100;
 
                             SF_CGdTargetData source;
@@ -860,33 +894,32 @@ void __thiscall effect_self_illusion(SF_CGdSpell *_this, uint16_t spell_index)
 
                             SF_Rectangle rect = {0,0};
 
-                            uint16_t effect_index = effectAPI.addEffect(_this->SF_CGdEffect, kGdEffectSpellHitTarget,
+                            uint16_t effect_index = effectAPI.addEffect(_this->CGdEffect, kGdEffectSpellHitTarget,
                                                                         &source,
                                                                         &target, _this->OpaqueClass->current_step, 0,
                                                                         &rect);
                             if (effect_index !=0 )
                             {
-                                effectAPI.setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_SPELL_ID,
+                                effectAPI.setEffectXData(_this->CGdEffect, effect_index, EFFECT_SPELL_ID,
                                                          spell->spell_id);
                             }
-                            toolboxAPI.addSpellToFigure(_this->SF_CGdFigureToolBox, figure_index, spell_index);
+                            toolboxAPI.addSpellToFigure(_this->CGdFigureToolBox, figure_index, spell_index);
                         }
                     }
                 }
                 spell->to_do_count = (spell_data.params[2] * 10) / 1000;
                 return;
-            }
         }
         if (existing_clones != 0)
         {
-            uint16_t current_mana = figureAPI.getCurrentStat(_this->SF_CGdFigure, source_index, MANA);
+            uint16_t current_mana = figureAPI.getCurrentStat(_this->CGdFigure, source_index, MANA);
             if (current_mana < spell_data.params[3])
             {
-                for (int i = 1; i < _this->SF_CGdFigure->max_used; i++)
+                for (int i = 1; i <= _this->CGdFigure->max_used; i++)
                 {
-                    GdFigure *figure = &_this->SF_CGdFigure->figures[i];
+                    GdFigure *figure = &_this->CGdFigure->figures[i];
                     if (((figure->flags & ILLUSION) != 0) &&
-                        (toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, i, kGdSpellLineSelfIllusion)) &&
+                        (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, i, kGdSpellLineSelfIllusion)) &&
                         (figure->master_figure == source_index))
                     {
 
@@ -900,14 +933,14 @@ void __thiscall effect_self_illusion(SF_CGdSpell *_this, uint16_t spell_index)
                         uint32_t unused;
                         spellAPI.addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused,
                                                  &target, _this->OpaqueClass->current_step, 0, &rect);
-                        toolboxAPI.dealDamage(_this->SF_CGdFigureToolBox, source_index, i, 0x7FFF, 1, 0, 0);
+                        toolboxAPI.dealDamage(_this->CGdFigureToolBox, source_index, i, 0x7FFF, 1, 0, 0);
                     }
 
                 }
             }
             else
             {
-                figureAPI.subMana(_this->SF_CGdFigure, source_index, spell_data.params[3]);
+                figureAPI.subMana(_this->CGdFigure, source_index, spell_data.params[3]);
                 spell->to_do_count = (spell_data.params[2] * 10) / 1000;
                 return;
             }
@@ -929,15 +962,15 @@ void __thiscall effect_ability_benefactions(SF_CGdSpell *_this, uint16_t spell_i
     if ((spell->target.entity_type == 1) && (target_index != 0))
     {
         SF_CGdResourceSpell spell_data;
-        spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+        spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);
         uint16_t heal = spell_data.params[0];
         uint16_t unit_count = spell_data.params[1];
         uint16_t radius = spell_data.params[2];
 
-        if (!toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index, kGdSpellLineRemediless))
+        if (!toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, target_index, kGdSpellLineRemediless))
         {
-            uint16_t current_hp = figureAPI.getCurrentStat(_this->SF_CGdFigure, target_index, HEALTH);
-            uint16_t max_hp = figureAPI.getMaxStat(_this->SF_CGdFigure, target_index, HEALTH);
+            uint16_t current_hp = figureAPI.getCurrentStat(_this->CGdFigure, target_index, HEALTH);
+            uint16_t max_hp = figureAPI.getMaxStat(_this->CGdFigure, target_index, HEALTH);
 
             if (current_hp <= max_hp)
             {
@@ -954,25 +987,25 @@ void __thiscall effect_ability_benefactions(SF_CGdSpell *_this, uint16_t spell_i
                 uint32_t unused;
                 spellAPI.addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &target_data,
                                          _this->OpaqueClass->current_step, 10, &rect);
-                figureAPI.subHealth(_this->SF_CGdFigure, target_index, -heal_amount);
+                figureAPI.subHealth(_this->CGdFigure, target_index, -heal_amount);
             }
         }
 
         CGdFigureIterator iter;
         iteratorAPI.figureIteratorInit(&iter, 0, 0, 0x3ff,0x3ff );
-        iteratorAPI.figureIteratorSetPointers(&iter, _this->SF_CGdFigure, _this->SF_CGdTile, _this->SF_CGdWorld);
+        iteratorAPI.figureIteratorSetPointers(&iter, _this->CGdFigure, _this->CGdTile, _this->CGdWorld);
 
-        iteratorAPI.iteratorSetArea(&iter, &_this->SF_CGdFigure->figures[target_index].position, radius);
+        iteratorAPI.iteratorSetArea(&iter, &_this->CGdFigure->figures[target_index].position, radius);
 
         std::vector<healing_entry> healing_targets;
         uint16_t next_figure = iteratorAPI.getNextFigure(&iter);
         while (next_figure != 0)
         {
-            if ((figureAPI.isAlive(_this->SF_CGdFigure, next_figure)) &&
-                (toolboxAPI.figuresCheckFriendly(_this->SF_CGdFigureToolBox, target_index, next_figure)))
+            if ((figureAPI.isAlive(_this->CGdFigure, next_figure)) &&
+                (toolboxAPI.figuresCheckFriendly(_this->CGdFigureToolBox, target_index, next_figure)))
             {
-                uint16_t current_hp = figureAPI.getCurrentStat(_this->SF_CGdFigure, next_figure, HEALTH);
-                uint16_t max_hp = figureAPI.getMaxStat(_this->SF_CGdFigure, next_figure, HEALTH);
+                uint16_t current_hp = figureAPI.getCurrentStat(_this->CGdFigure, next_figure, HEALTH);
+                uint16_t max_hp = figureAPI.getMaxStat(_this->CGdFigure, next_figure, HEALTH);
                 if (current_hp < max_hp)
                 {
                     healing_entry entry = {next_figure, max_hp - current_hp};
@@ -992,13 +1025,13 @@ void __thiscall effect_ability_benefactions(SF_CGdSpell *_this, uint16_t spell_i
             {
                 break;
             }
-            if (toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox,  healing_targets[i].figure_id,
+            if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox,  healing_targets[i].figure_id,
                                         kGdSpellLineRemediless))
             {
                 continue;
             }
-            uint16_t current_hp = figureAPI.getCurrentStat(_this->SF_CGdFigure, healing_targets[i].figure_id, HEALTH);
-            uint16_t max_hp = figureAPI.getMaxStat(_this->SF_CGdFigure, healing_targets[i].figure_id, HEALTH);
+            uint16_t current_hp = figureAPI.getCurrentStat(_this->CGdFigure, healing_targets[i].figure_id, HEALTH);
+            uint16_t max_hp = figureAPI.getMaxStat(_this->CGdFigure, healing_targets[i].figure_id, HEALTH);
 
             uint16_t heal_amount = (heal * max_hp) / 100;
             if (max_hp - current_hp < heal_amount)
@@ -1014,7 +1047,7 @@ void __thiscall effect_ability_benefactions(SF_CGdSpell *_this, uint16_t spell_i
             uint32_t unused;
             spellAPI.addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &target_data,
                                      _this->OpaqueClass->current_step, 10, &rect);
-            figureAPI.subHealth(_this->SF_CGdFigure, healing_targets[i].figure_id, -heal_amount);
+            figureAPI.subHealth(_this->CGdFigure, healing_targets[i].figure_id, -heal_amount);
         }
     }
     spellAPI.setEffectDone(_this, spell_index, 0);
@@ -1026,7 +1059,7 @@ void __thiscall effect_fire_resistance (SF_CGdSpell *_this, uint16_t spell_index
 {
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
     SF_CGdResourceSpell spell_data;
-    spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+    spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);
     uint16_t source_index = spell->source.entity_index;
     if (spell->target.entity_type == 5)
     {
@@ -1038,18 +1071,18 @@ void __thiscall effect_fire_resistance (SF_CGdSpell *_this, uint16_t spell_index
             spellAPI.addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1);
             int16_t multiplier = spell_data.params[0];
             (multiplier >= 127) ? (multiplier = 127) : (multiplier);
-            for (int i = 1; i <= _this->SF_CGdFigure->max_used; i++)
+            for (int i = 1; i <= _this->CGdFigure->max_used; i++)
             {
-                if ((_this->SF_CGdFigure->figures[i].owner != (uint16_t)(-1)) &&
-                    (_this->SF_CGdFigure->figures[i].owner == _this->SF_CGdFigure->figures[source_index].owner) &&
-                    ((*(uint8_t *)(&_this->SF_CGdFigure->figures[i].flags) & 0xa) == 0))
+                if ((_this->CGdFigure->figures[i].owner != (uint16_t)(-1)) &&
+                    (_this->CGdFigure->figures[i].owner == _this->CGdFigure->figures[source_index].owner) &&
+                    ((*(uint8_t *)(&_this->CGdFigure->figures[i].flags) & 0xa) == 0))
                 {
                     SF_CGdTargetData target_data;
                     target_data.entity_index = i;
                     target_data.entity_type = 1;
                     target_data.position = {0,0};
                     SF_Rectangle rect = {0,0};
-                    figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, RESISTANCE_FIRE, i, multiplier);
+                    figureAPI.addBonusMultToStatistic(_this->CGdFigure, RESISTANCE_FIRE, i, multiplier);
                     spellAPI.addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, 0, &target_data,
                                              _this->OpaqueClass->current_step,
                                              0x14, &rect);
@@ -1061,13 +1094,13 @@ void __thiscall effect_fire_resistance (SF_CGdSpell *_this, uint16_t spell_index
         {
             int16_t multiplier = spell_data.params[0];
             (multiplier >= 127) ? (multiplier = 127) : (multiplier);
-            for (int i = 1; i <= _this->SF_CGdFigure->max_used; i++)
+            for (int i = 1; i <= _this->CGdFigure->max_used; i++)
             {
-                if ((_this->SF_CGdFigure->figures[i].owner != (uint16_t)(-1)) &&
-                    (_this->SF_CGdFigure->figures[i].owner == _this->SF_CGdFigure->figures[source_index].owner) &&
-                    ((*(uint8_t *)(&_this->SF_CGdFigure->figures[i].flags) & 0xa) == 0))
+                if ((_this->CGdFigure->figures[i].owner != (uint16_t)(-1)) &&
+                    (_this->CGdFigure->figures[i].owner == _this->CGdFigure->figures[source_index].owner) &&
+                    ((*(uint8_t *)(&_this->CGdFigure->figures[i].flags) & 0xa) == 0))
                 {
-                    figureAPI.addBonusMultToStatistic(_this->SF_CGdFigure, RESISTANCE_FIRE, i, -multiplier);
+                    figureAPI.addBonusMultToStatistic(_this->CGdFigure, RESISTANCE_FIRE, i, -multiplier);
                 }
             }
         }
@@ -1084,7 +1117,7 @@ void __thiscall effect_pain_area (SF_CGdSpell *_this, uint16_t spell_index)
     if (spell->target.entity_type == 5)
     {
         SF_CGdResourceSpell spell_data;
-        spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+        spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);
         uint16_t damage = spell_data.params[0];
         uint16_t total_area = spell_data.params[1];
         uint16_t area = spellAPI.addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1);
@@ -1151,12 +1184,12 @@ void __thiscall effect_pain_area (SF_CGdSpell *_this, uint16_t spell_index)
             }
             for (uint32_t i = 0; i < final_targets.size(); i++)
             {
-                if (((_this->SF_CGdFigure->figures[final_targets[i]].flags & (IS_DEAD | RESESRVED_ONLY)) == 0) &&
-                    (_this->SF_CGdFigure->figures[final_targets[i]].owner != (uint16_t)(-1)) &&
-                    (toolboxAPI.figuresCheckHostile(_this->SF_CGdFigureToolBox, source_index, final_targets[i])) &&
-                    (toolboxAPI.isTargetable(_this->SF_CGdFigureToolBox, final_targets[i])))
+                if (((_this->CGdFigure->figures[final_targets[i]].flags & (IS_DEAD | RESESRVED_ONLY)) == 0) &&
+                    (_this->CGdFigure->figures[final_targets[i]].owner != (uint16_t)(-1)) &&
+                    (toolboxAPI.figuresCheckHostile(_this->CGdFigureToolBox, source_index, final_targets[i])) &&
+                    (toolboxAPI.isTargetable(_this->CGdFigureToolBox, final_targets[i])))
                 {
-                    uint32_t chance =  spellAPI.getChanceToResistSpell(_this->AutoClass34, source_index,
+                    uint32_t chance =  spellAPI.getChanceToResistSpell(_this->CGdAutoClass34, source_index,
                                                                        final_targets[i], spell->spell_id);
                     uint32_t random = spellAPI.getRandom(_this->OpaqueClass, 100);
                     if (chance < random)
@@ -1170,9 +1203,9 @@ void __thiscall effect_pain_area (SF_CGdSpell *_this, uint16_t spell_index)
                         spellAPI.addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused,
                                                  &target_data, _this->OpaqueClass->current_step, 0x19, &rect);
 
-                        if (((_this->SF_CGdFigure->figures[source_index].flags & (IS_DEAD | RESESRVED_ONLY)) == 0) &&
-                            (_this->SF_CGdFigure->figures[source_index].owner != (uint16_t)(-1)) &&
-                            (_this->SF_CGdFigure->figures[source_index].set_type == 8))
+                        if (((_this->CGdFigure->figures[source_index].flags & (IS_DEAD | RESESRVED_ONLY)) == 0) &&
+                            (_this->CGdFigure->figures[source_index].owner != (uint16_t)(-1)) &&
+                            (_this->CGdFigure->figures[source_index].set_type == 8))
                         {
                             uint32_t random = spellAPI.getRandom(_this->OpaqueClass, 100);
                             if (random < 26)
@@ -1180,7 +1213,7 @@ void __thiscall effect_pain_area (SF_CGdSpell *_this, uint16_t spell_index)
                                 damage *=2;
                             }
                         }
-                        toolboxAPI.dealDamage(_this->SF_CGdFigureToolBox, source_index, final_targets[i], damage,1,0,0);
+                        toolboxAPI.dealDamage(_this->CGdFigureToolBox, source_index, final_targets[i], damage,1,0,0);
                     }
                     else
                     {
@@ -1208,11 +1241,11 @@ void __thiscall effect_detect_metal(SF_CGdSpell *_this, uint16_t spell_index)
 {
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
     uint16_t source_index = spell->source.entity_index;
-    GdFigure *source_figure = &_this->SF_CGdFigure->figures[source_index];
+    GdFigure *source_figure = &_this->CGdFigure->figures[source_index];
     if (spell->target.entity_type == 1)
     {
         SF_CGdResourceSpell spell_data;
-        spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+        spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);
         SF_Rectangle t_rect;
         SF_Coord center = {0,0};
         spellAPI.getTargetsRectangle(_this, &t_rect, spell_index, spell_data.params[0], &center);
@@ -1224,11 +1257,11 @@ void __thiscall effect_detect_metal(SF_CGdSpell *_this, uint16_t spell_index)
                                  _this->OpaqueClass->current_step, 20, &t_rect);
         CGdObjectIterator iter;
         iteratorAPI.objectIteratorInit(&iter, 0, 0, 0x3ff, 0x3ff);
-        iteratorAPI.objectIteratorSetPointers(&iter, _this->SF_CGdObject, _this->SF_CGdTile, _this->SF_CGdWorld);
+        iteratorAPI.objectIteratorSetPointers(&iter, _this->CGdObject, _this->CGdTile, _this->CGdWorld);
         iteratorAPI.iteratorSetArea((CGdFigureIterator *)&iter, &source_figure->position, spell_data.params[0]);
         for (uint16_t i = iteratorAPI.getNextObject(&iter); i != 0; i = iteratorAPI.getNextObject(&iter))
         {
-            uint16_t data_id = _this->SF_CGdObject->objects[i].object_data_id;
+            uint16_t data_id = _this->CGdObject->objects[i].object_data_id;
             uint16_t out_type = 0;
             if ((uint16_t)(data_id - 1536) < 128)
             {
@@ -1243,10 +1276,10 @@ void __thiscall effect_detect_metal(SF_CGdSpell *_this, uint16_t spell_index)
             }
             if (out_type != 0)
             {
-                uint16_t pos_x = _this->SF_CGdObject->objects[i].pos.X;
-                uint16_t pos_y = _this->SF_CGdObject->objects[i].pos.Y;
+                uint16_t pos_x = _this->CGdObject->objects[i].pos.X;
+                uint16_t pos_y = _this->CGdObject->objects[i].pos.Y;
                 uint16_t owner = source_figure->owner;
-                toolboxAPI.doMapOutCry(_this->AC30, out_type, owner, 4, 0, pos_x, pos_y);
+                toolboxAPI.doMapOutCry(_this->CGdAutoClass30, out_type, owner, 4, 0, pos_x, pos_y);
             }
         }
         iteratorAPI.disposeFigureIterator((CGdFigureIterator *)&iter);
@@ -1258,7 +1291,7 @@ void __thiscall effect_assistance(SF_CGdSpell *_this, uint16_t spell_index)
 {
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
     uint16_t target_index = spell->target.entity_index;
-    GdFigure *target_figure = &_this->SF_CGdFigure->figures[target_index];
+    GdFigure *target_figure = &_this->CGdFigure->figures[target_index];
 
     if (spell->target.entity_type == 1)
     {
@@ -1267,7 +1300,7 @@ void __thiscall effect_assistance(SF_CGdSpell *_this, uint16_t spell_index)
         if ((tick == 1) && (canApply))
         {
             SF_CGdResourceSpell spell_data;
-            spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+            spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);
             if (((target_figure->flags & (IS_DEAD | RESESRVED_ONLY)) == 0) &&
                 (target_figure->owner != (uint16_t)(-1)))
             {

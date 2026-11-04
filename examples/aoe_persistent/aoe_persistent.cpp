@@ -28,14 +28,11 @@ void __thiscall thuderstorm_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
     iteratorAPI->setupFigureIterator(&iterator_memory, _this);
 
     // iteratorAPI->figureIteratorInit(&iterator_memory, 0x0, 0x0, 0x3ff, 0x3ff);
-    // iteratorAPI->figureIteratorSetPointers(&iterator_memory, _this->SF_CGdFigure, _this->unkn3, _this->SF_CGdWorld);
+    // iteratorAPI->figureIteratorSetPointers(&iterator_memory, _this->CGdFigure, _this->unkn3, _this->CGdWorld);
 
-    SF_SpellEffectInfo effect_info;
     SF_CGdResourceSpell spell_data;
-    spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+    spellAPI->getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);
 
-    effect_info.spell_id = spell->spell_id;
-    effect_info.job_id = spell->spell_job;
     uint16_t ticks_total = spell_data.params[2];
     uint16_t ticks_interval = spell_data.params[3];
     SF_Rectangle hit_area;
@@ -67,10 +64,10 @@ void __thiscall thuderstorm_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
             // If figure is not special unit
             // not dead and is not friendly
             // and is targetable - let's work with it
-            if (((int16_t)(_this->SF_CGdFigure->figures[target_index].owner) != -1) &&
-                (((uint8_t)(_this->SF_CGdFigure->figures[target_index].flags) & 0xa) == 0) &&
-                (toolboxAPI->figuresCheckHostile(_this->SF_CGdFigureToolBox, source_index, target_index)) &&
-                (toolboxAPI->isTargetable(_this->SF_CGdFigureToolBox, target_index)))
+            if (((int16_t)(_this->CGdFigure->figures[target_index].owner) != -1) &&
+                (((uint8_t)(_this->CGdFigure->figures[target_index].flags) & 0xa) == 0) &&
+                (toolboxAPI->figuresCheckHostile(_this->CGdFigureToolBox, source_index, target_index)) &&
+                (toolboxAPI->isTargetable(_this->CGdFigureToolBox, target_index)))
             {
                 /* debug output example
                 Let it be here
@@ -79,10 +76,10 @@ void __thiscall thuderstorm_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
                 sfsf->logInfo(aliveInfo);
                 */
                 uint16_t random_roll = spellAPI->getRandom(_this->OpaqueClass, 100);
-                uint32_t resist_chance = spellAPI->getChanceToResistSpell(_this->unkn2, source_index, target_index, effect_info);
+                uint32_t resist_chance = spellAPI->getChanceToResistSpell(_this->CGdAutoClass34, source_index, target_index, spell_index);
                 if ((uint32_t)resist_chance < random_roll)
                 {
-                    if (figureAPI->isAlive(_this->SF_CGdFigure, target_index))
+                    if (figureAPI->isAlive(_this->CGdFigure, target_index))
                     {
                         SF_CGdTargetData relative_data;
                         relative_data.position = {0, 0};
@@ -93,7 +90,7 @@ void __thiscall thuderstorm_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
                         aux_data.partA = 0;
                         aux_data.partB = 0;
                         spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 10, &hit_area);
-                        toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index, target_index, spell_data.params[1], 1, 0, 0);
+                        toolboxAPI->dealDamage(_this->CGdFigureToolBox, source_index, target_index, spell_data.params[1], 1, 0, 0);
                     }
                     else
                     {
@@ -109,7 +106,7 @@ void __thiscall thuderstorm_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
     {
         spellAPI->setEffectDone(_this, spell_index, 0);
     }
-    iteratorAPI->disposeFigureIterator(iterator_memory);
+    iteratorAPI->disposeFigureIterator(&iterator_memory);
 }
 
 /***

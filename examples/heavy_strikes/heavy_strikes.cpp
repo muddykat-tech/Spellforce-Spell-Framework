@@ -26,7 +26,7 @@ void __thiscall heavy_strikes_type_handler(SF_CGdSpell *_this, uint16_t spell_in
 
 void __thiscall heavy_strikes_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
-    SF_CGdFigure *sf_figures = _this->SF_CGdFigure;
+    SF_CGdFigure *sf_figures = _this->CGdFigure;
     uint16_t source_index = _this->active_spell_list[spell_index].source.entity_index;
     if ((sf_figures->figures[source_index].owner != (uint16_t)(-1)) &&
         ((sf_figures->figures[source_index].flags & GdFigureFlags::REDO) == 0))
@@ -38,7 +38,7 @@ void __thiscall heavy_strikes_end_handler(SF_CGdSpell *_this, uint16_t spell_ind
     uint16_t effect_index = spellAPI->getXData(_this, spell_index, EFFECT_EFFECT_INDEX);
     if (effect_index != 0)
     {
-        effectAPI->tryEndEffect(_this->SF_CGdEffect, effect_index);
+        effectAPI->tryEndEffect(_this->CGdEffect, effect_index);
     }
     spellAPI->figTryClrCHkSPlBfrJob2(_this, spell_index);
     spellAPI->figClrChkSplBfrChkBattle(_this, spell_index, 0);
@@ -52,7 +52,7 @@ void __thiscall heavy_strikes_effect_handler(SF_CGdSpell *_this, uint16_t spell_
     SF_CGdResourceSpell spell_data;
 
     uint16_t source_index = spell->source.entity_index;
-    spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+    spellAPI->getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);
     _this->active_spell_list[spell_index].to_do_count = (spell_data.params[2] * 10) / 1000;
 
     SF_CGdTargetData source_data;
@@ -61,28 +61,28 @@ void __thiscall heavy_strikes_effect_handler(SF_CGdSpell *_this, uint16_t spell_
     source_data.position = {0,0};
     if (spell->source.entity_type == 1)
     {
-        if ((_this->SF_CGdFigure->figures[source_index].owner != (uint16_t)(-1)) &&
-            ((*(uint8_t *)(&_this->SF_CGdFigure->figures[source_index].flags) & 0xa) == 0))
+        if ((_this->CGdFigure->figures[source_index].owner != (uint16_t)(-1)) &&
+            ((*(uint8_t *)(&_this->CGdFigure->figures[source_index].flags) & 0xa) == 0))
         {
 
             uint32_t tick = spellAPI->addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1);
             if (tick == 1)
             {
-                _this->SF_CGdFigure->figures[source_index].flags |= AURA_RUNNING;
+                _this->CGdFigure->figures[source_index].flags |= AURA_RUNNING;
                 SF_Rectangle rect = {0, 0};
-                uint16_t effect_index = effectAPI->addEffect(_this->SF_CGdEffect, kGdEffectSpellHitTarget, &source_data,
+                uint16_t effect_index = effectAPI->addEffect(_this->CGdEffect, kGdEffectSpellHitTarget, &source_data,
                                                              &source_data,
                                                              _this->OpaqueClass->current_step, 0, &rect);
 
                 spellAPI->setXData(_this, spell_index, EFFECT_EFFECT_INDEX, effect_index);
-                effectAPI->setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_SPELL_INDEX, spell_index);
+                effectAPI->setEffectXData(_this->CGdEffect, effect_index, EFFECT_SPELL_INDEX, spell_index);
 
-                _this->SF_CGdFigure->figures[source_index].flags |= F_CHECK_SPELLS_BEFORE_JOB;
+                _this->CGdFigure->figures[source_index].flags |= F_CHECK_SPELLS_BEFORE_JOB;
                 _this->active_spell_list[spell_index].flags |= CHECK_SPELLS_BEFORE_JOB2;
 
             }
             uint16_t mana_cost = spell_data.params[1];
-            uint16_t current_mp = figureAPI->getCurrentStat(_this->SF_CGdFigure, source_index, MANA);
+            uint16_t current_mp = figureAPI->getCurrentStat(_this->CGdFigure, source_index, MANA);
             if (current_mp >= mana_cost)
             {
                 return;
@@ -91,10 +91,10 @@ void __thiscall heavy_strikes_effect_handler(SF_CGdSpell *_this, uint16_t spell_
     }
     if (source_index != 0)
     {
-        _this->SF_CGdFigure->figures[source_index].flags &= ~AURA_RUNNING;
+        _this->CGdFigure->figures[source_index].flags &= ~AURA_RUNNING;
     }
     uint16_t effect_index = spellAPI->getXData(_this, spell_index, EFFECT_EFFECT_INDEX);
-    effectAPI->tryEndEffect(_this->SF_CGdEffect, effect_index);
+    effectAPI->tryEndEffect(_this->CGdEffect, effect_index);
     spellAPI->setXData(_this, spell_index, EFFECT_EFFECT_INDEX, 0);
     spellAPI->setEffectDone(_this, spell_index, 0);
     return;
@@ -173,8 +173,6 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     registrationAPI->linkOnHitHandler(heavy_strikes_spell, &heavy_strikes_onhit_handler, OnHitPhase::PHASE_4);
     registrationAPI->applySpellTag(heavy_strikes_spell,SpellTag::AURA_SPELL);
     registrationAPI->applySpellTag(heavy_strikes_spell,SpellTag::COMBAT_ABILITY_SPELL);
-
-    uiAPI->attachLabel()
 
 }
 

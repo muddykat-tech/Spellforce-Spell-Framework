@@ -548,14 +548,20 @@ char *readfile(const char *path)
 
     buffer[read_len] = '\0';
 
+    /* Clamp to the last closing brace of an object or the last closing bracket
+     * of an array, whichever comes last, so trailing garbage is ignored. */
     char *last_brace = strrchr(buffer, '}');
-    if(last_brace != NULL)
+    char *last_bracket = strrchr(buffer, ']');
+    char *last = (last_brace != NULL && (last_bracket == NULL || last_brace > last_bracket))
+                     ? last_brace
+                     : last_bracket;
+    if(last != NULL)
     {
-        last_brace[1] = '\0';
+        last[1] = '\0';
     }
     else
     {
-        log_error("Invalid JSON: No closing brace found in \"%s\"\n", path);
+        log_error("Invalid JSON: No closing brace or bracket found in \"%s\"\n", path);
         free(buffer);
         return NULL;
     }

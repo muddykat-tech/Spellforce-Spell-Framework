@@ -21,7 +21,7 @@ struct __attribute__((packed)) SF_CGdFigureToolbox
     uint32_t *autoclass50;
     uint32_t *CGdInfluenceMap;
     uint32_t *autoclass36;
-    uint32_t *CGdObject;
+    SF_CGdObject *CGdObject;
     uint32_t *CGdObjectToolBox;
     SF_CGdPlayer *CGdPlayer;
     uint32_t *autoclass46;
@@ -42,17 +42,17 @@ struct __attribute__((packed)) SF_CGdWorldToolBox
     uint32_t *CGdAStar;
     AutoClass14 *OpaqueClass;  // Unconfirmed
     SF_CGdBuilding *CGdBuilding;
-    uint32_t *CGdBuildingToolbox;
+    SF_CGdBuildingToolbox *CGdBuildingToolbox;
     uint32_t *CGdDoubleLinkedList;
     SF_CGdEffect *CGdEffect;
     SF_CGdFigure *CGdFigure;
-    uint32_t *CGdFigureJobs;
+    SF_CGdFigureJobs *CGdFigureJobs;
     uint32_t *autoclass47;
-    uint32_t *CGdObject;
+    SF_CGdObject *CGdObject;
     uint32_t *CGdObjectToolBox;
-    uint32_t *CGdResource;
+    SF_CGdResource *CGdResource;
     uint32_t *autoclass22;
-    SF_CGdWorld *SF_CGdWorld;
+    SF_CGdWorld *CGdWorld;
     uint32_t *CGdXDataList;
     uint32_t data[10000];
     uint32_t uknown1;  // 4x uint8_t

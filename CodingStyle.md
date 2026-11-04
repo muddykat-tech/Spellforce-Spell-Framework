@@ -137,6 +137,14 @@ Use short, meaningful names. C is a Spartan language:
 - Don’t use Hungarian notation
 - Use `i` or `tmp` for simple locals
 
+The codebase carries two naming generations and both are legitimate: older hook
+and installer code uses `snake_case` (`salvo_fix_hook`), while newer registry,
+loader and engine-typed helper code uses lowerCamelCase
+(`commitWeaponTypeCatalog`, `isOverridedRangedWeaponType`) to stay close to the
+reversed engine names they wrap (`GetWeaponStats`, `SelectJobAnimation`).
+Follow the local convention of the file you are editing; do not mass-rename
+working code from one convention to the other.
+
 Avoid growing functions that make variable naming hard.
 
 ### 5) Functions
@@ -402,3 +410,39 @@ static void initialize_spellrefresh_hook()
 - The redirection is transparent to the rest of the system.
 
 Only fall back to inline assembly if replicating the original logic is impractical or impossible due to complexity or required access to specific registers at specific times.
+
+## 10) Accessing Engine Structures
+
+Engine structure fields are accessed **only through packed structures with named
+fields**; raw numeric field offsets (`+0xNN`) in code are forbidden.
+
+- **Missing structures are declared, not patched around**: add a packed
+  structure with named fields at their byte-verified offsets, gap-filler arrays
+  for unmapped regions, and `static_assert(offsetof(...))` / `static_assert(sizeof(...))`
+  checks against the addresses verified in the game binary. If an existing
+  declaration fails such a check, fix the layout only after byte-verifying the
+  structure against the image — never silence the assert.
+- **Numeric literals are allowed only for two things**: overwrite addresses
+  (written as RVA literals with a short signature comment next to the write)
+  and value constants (ids, engine constants). Never for field offsets.
+
+### Valid Example
+
+```c
+typedef struct __attribute__((packed))
+{
+    uint32_t field_ref;                     /* +0x000 */
+    uint8_t  unknown_0x004[0x131 - 0x004];  /* unmapped gap */
+    uint8_t  ranged_anim;                   /* +0x131 */
+} DrwFigure;
+
+static_assert(offsetof(DrwFigure, ranged_anim) == 0x131,
+              "DrwFigure.ranged_anim must sit at +0x131");
+```
+
+### Invalid Example
+
+```c
+/* Raw offset access - rejected: */
+uint8_t anim = *(uint8_t *)((char *)figure + 0x131);
+```

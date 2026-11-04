@@ -18,7 +18,7 @@ void __thiscall sf_subeffect_hook(SF_CGdEffect *_this, uint16_t effect_id)
     if (spell_id)
     {
         SF_CGdResourceSpell spell_data;
-        spellAPI.getResourceSpellData(_this->SF_CGdResource, &spell_data, spell_id);
+        spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
         sub_effect_handler_ptr handler = get_sub_effect_handler(spell_data.spell_line_id);
         if (handler != NULL)
         {

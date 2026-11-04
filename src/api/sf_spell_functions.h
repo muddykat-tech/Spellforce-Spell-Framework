@@ -45,14 +45,14 @@ DECLARE_FUNCTION(uint32_t, addToXData, SF_CGdSpell *_this, uint16_t spell_id,
 DECLARE_FUNCTION(uint32_t, getChanceToResistSpell, void *autoclass34,
                  uint16_t source, uint16_t target,
                  uint16_t spell_index);
-DECLARE_FUNCTION(uint16_t, getRandom, void *autoclass14, uint16_t max_value);
+DECLARE_FUNCTION(uint16_t, getRandom, AutoClass14 *autoclass14, uint16_t max_value);
 DECLARE_FUNCTION(void, addVisualEffect, SF_CGdSpell *_this, uint16_t spell_id,
                  CGdEffectType effect_id, void *unused,
                  SF_CGdTargetData *target, uint32_t tick_start,
                  uint16_t tick_count, void *corner_coords);
 DECLARE_FUNCTION(void, figureAggro, SF_CGdSpell *_this, uint16_t spell_id,
                  uint16_t target_index);
-DECLARE_FUNCTION(SF_CGdResourceSpell *, getResourceSpellData, void *,
+DECLARE_FUNCTION(SF_CGdResourceSpell *, getResourceSpellData, SF_CGdResource *CGdResource,
                  SF_CGdResourceSpell *spellData, uint16_t index);
 DECLARE_FUNCTION(uint32_t, getXData, SF_CGdSpell *_this, uint16_t spell_id,
                  SpellDataKey key);
@@ -81,7 +81,7 @@ DECLARE_FUNCTION(int, checkCanApply, SF_CGdSpell *_this, uint16_t index);
 DECLARE_FUNCTION(void, spellEffectCallback, SF_CGdSpell *_this, uint16_t source_index, uint16_t spell_index,
                  bool (*conditionPtr)(SF_CGdSpell *, uint16_t, uint16_t),
                  void (*callbackPtr)(SF_CGdSpell *, uint16_t, uint16_t, uint16_t));
-DECLARE_FUNCTION(uint16_t, getLeveledSpellID, void *CGdResource, uint16_t source_spell_id, uint16_t spell_level);
+DECLARE_FUNCTION(uint16_t, getLeveledSpellID, SF_CGdResource *CGdResource, uint16_t source_spell_id, uint16_t spell_level);
 DECLARE_FUNCTION(void, tryClearCheckSpellsBeforeJob, SF_CGdSpell *_this, uint16_t spell_index, uint16_t figure_index);
 
 

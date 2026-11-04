@@ -30,6 +30,7 @@
 #include "hooks/sf_enchant_hook.h"
 #include "hooks/sf_campaign_hook.h"
 #include "hooks/sf_hero_hook.h"
+#include "hooks/sf_level_up_hook.h"
 
 #include "hooks/sf_effect_hook.h"
 
@@ -368,9 +369,6 @@ void initialize_data_hooks()
     INCLUDE_FUNCTION(registration, linkBuildingEntryHandler, &linkBuildingEntryHandler);
     INCLUDE_FUNCTION(registration, applyBuildingTag, &applyBuildingTag);
 
-    INCLUDE_FUNCTION(registration, registerHero, &registerHero);
-    INCLUDE_FUNCTION(registration, linkHeroJSON, &linkHeroJSON);
-
 }
 
 static void initialize_spelltype_hook()
@@ -638,18 +636,6 @@ static void initialize_avoidance_hook()
     ASI::EndRewrite(ai_avoidance_mreg);
 }
 
-uint32_t g_ranged_return_ok;
-uint32_t g_ranged_return_fail;
-static void __declspec(naked) ranged_exp_beta()
-{
-    asm ("cmpw $0x11, %%ax \n\t"
-         "je 1f            \n\t"
-         "cmpw $0x16, %%ax \n\t"
-         "je 1f            \n\t"
-         "jmp *%1          \n\t"
-         "1: jmp *%0       \n\t" : :
-         "o" (g_ranged_return_ok), "o" (g_ranged_return_fail));
-}
 static void initialize_utility_hooks()
 {
     log_info("Hooking Combat Ability Detection");
@@ -708,17 +694,6 @@ static void initialize_utility_hooks()
     *(int *)(ASI::AddrOf(0x32af61)) = (int)(&is_domination_spellline) - ASI::AddrOf(0x32af65);
     ASI::EndRewrite(is_domination_spellline_mreg);
 
-/*
-   Hook to add new weapon types with proper animations
-    g_ranged_return_ok = ASI::AddrOf(0x3db746);
-    g_ranged_return_fail = ASI::AddrOf(0x3db761);
-    ASI::MemoryRegion ranged_test (ASI::AddrOf(0x3db740), 6);
-    ASI::BeginRewrite(ranged_test);
- *(unsigned char *)(ASI::AddrOf(0x3db740)) = 0x90;
- *(unsigned char *)(ASI::AddrOf(0x3db741)) = 0xE9;  // JUMP instruction
- *(int *)(ASI::AddrOf(0x3db742)) = (int)(&ranged_exp_beta) - ASI::AddrOf(0x3db746);
-    ASI::EndRewrite(ranged_test);
- */
     // log_info("Temp Storm School Hook");
     // ASI::MemoryRegion storm_test_mreg (ASI::AddrOf(0x7FFD38), 1);
     // ASI::BeginRewrite(storm_test_mreg);
@@ -726,11 +701,26 @@ static void initialize_utility_hooks()
     // ASI::EndRewrite(storm_test_mreg);
 }
 
+static void initialize_skill_level_up_hook()
+{
+    ASI::MemoryRegion skill_mreg (ASI::AddrOf(0x2268d6), 5);
+    ASI::BeginRewrite(skill_mreg);
+    *(unsigned char *)(ASI::AddrOf(0x2268d6)) = 0xE8;  // CALL instruction
+    *(int *)(ASI::AddrOf(0x2268d7)) = (int)(&learnSkillOnLevelUp_hook) - ASI::AddrOf(0x2268db);
+    ASI::EndRewrite(skill_mreg);
+
+    ASI::MemoryRegion skill_mreg2 (ASI::AddrOf(0x23074f), 5);
+    ASI::BeginRewrite(skill_mreg2);
+    *(unsigned char *)(ASI::AddrOf(0x23074f)) = 0xE8;  // CALL instruction
+    *(int *)(ASI::AddrOf(0x230750)) = (int)(&learnSkillOnLevelUp_hook) - ASI::AddrOf(0x230754);
+    ASI::EndRewrite(skill_mreg2);
+}
+
 static void initialize_hero_hook()
 {
     ASI::MemoryRegion hero_mreg (ASI::AddrOf(0x228d31), 5);
     ASI::BeginRewrite(hero_mreg);
-    *(unsigned char *)(ASI::AddrOf(0x228d31)) = 0xE8;  // JUMP instruction
+    *(unsigned char *)(ASI::AddrOf(0x228d31)) = 0xE8;  // CALL instruction
     *(int *)(ASI::AddrOf(0x228d32)) = (int)(&createHeroFromRuneHook) - ASI::AddrOf(0x228d36);
     ASI::EndRewrite(hero_mreg);
 
@@ -949,6 +939,13 @@ void initialize_beta_hooks()
     log_info("Hooking special heroes");
     init_hero_functions();
     initialize_hero_hook();
+
+    log_info("Hooking skill up abilities");
+    init_lvl_up_functions();
+    initialize_skill_level_up_hook();
+
+    log_info("Hooking avatar level up abilities");
+    init_avatar_level_hook();
 }
 
 /**

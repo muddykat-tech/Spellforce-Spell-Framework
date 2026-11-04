@@ -59,7 +59,7 @@ void __thiscall rock_bullet_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
     SF_CGdResourceSpell spell_data;
 
-    spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+    spellAPI->getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);
 
 
     uint16_t target_index = spell->target.entity_index;
@@ -70,9 +70,9 @@ void __thiscall rock_bullet_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
     //figure is targetable
     //figure is not protected by special flags
     if ((spell->target.entity_type == 1) && (target_index != 0) &&
-        (_this->SF_CGdFigure->figures[target_index].owner != (uint16_t)(-1)) &&
-        (toolboxAPI->isTargetable(_this->SF_CGdFigureToolBox, target_index)) &&
-        ((*(uint8_t *)(&_this->SF_CGdFigure->figures[target_index].flags) & 0xa) == 0))
+        (_this->CGdFigure->figures[target_index].owner != (uint16_t)(-1)) &&
+        (toolboxAPI->isTargetable(_this->CGdFigureToolBox, target_index)) &&
+        ((*(uint8_t *)(&_this->CGdFigure->figures[target_index].flags) & 0xa) == 0))
     {
         uint16_t damage = spell_data.params[0];
         SF_CGdTargetData source_data;
@@ -90,49 +90,49 @@ void __thiscall rock_bullet_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
 
         //Wave form handling
         uint16_t prev_figure_index = spellAPI->getXData(_this, spell_index, EFFECT_ENTITY_INDEX3);
-        if ((prev_figure_index == 0) || (!figureAPI->isAlive(_this->SF_CGdFigure, prev_figure_index)))
+        if ((prev_figure_index == 0) || (!figureAPI->isAlive(_this->CGdFigure, prev_figure_index)))
         {
             prev_figure_index = source_index;
         }
 
-        uint16_t resist_chance = spellAPI->getChanceToResistSpell(_this->AutoClass34, source_index, target_index,
+        uint16_t resist_chance = spellAPI->getChanceToResistSpell(_this->CGdAutoClass34, source_index, target_index,
                                                                   spell->spell_id);
 
         uint16_t random = spellAPI->getRandom(_this->OpaqueClass, 100);
 
         if (resist_chance < random)
         {
-            uint16_t distance = getDistance(&_this->SF_CGdFigure->figures[source_index].position,
-                                            &_this->SF_CGdFigure->figures[target_index].position);
+            uint16_t distance = getDistance(&_this->CGdFigure->figures[source_index].position,
+                                            &_this->CGdFigure->figures[target_index].position);
 
             distance = (distance * 1400) / 5000;
             if (distance == 0)
             {
                 distance = 1; //we need it for non-zero flight time
             }
-            if (!toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index, kGdSpellLineDecay))
+            if (!toolboxAPI->hasSpellOnIt(_this->CGdFigureToolBox, target_index, kGdSpellLineDecay))
             {
-                uint16_t reduction_percent = toolboxAPI->getPhysDamageReduction(_this->SF_CGdFigureToolBox,
+                uint16_t reduction_percent = toolboxAPI->getPhysDamageReduction(_this->CGdFigureToolBox,
                                                                                 source_index,
                                                                                 target_index, kGdSpellLineRockBullet);
                 damage = ((uint32_t)(damage * reduction_percent + 5000)) / 10000;
             }
             //if caster is alive
-            if (figureAPI->isAlive(_this->SF_CGdFigure, source_index))
+            if (figureAPI->isAlive(_this->CGdFigure, source_index))
             {
                 //double damage magic set handling
-                if ((_this->SF_CGdFigure->figures[source_index].set_type == 8) &&
+                if ((_this->CGdFigure->figures[source_index].set_type == 8) &&
                     (spellAPI->getRandom(_this->OpaqueClass, 100) < 26))
                 {
                     damage *= 2;
                 }
             }
-            if (isSiegeUnit(_this->SF_CGdFigure, target_index))
+            if (isSiegeUnit(_this->CGdFigure, target_index))
             {
                 damage = ((uint16_t)(damage * 100) + 50) / 1000;
             }
 
-            if (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index, kGdSpellLinePetrify))
+            if (toolboxAPI->hasSpellOnIt(_this->CGdFigureToolBox, target_index, kGdSpellLinePetrify))
             {
                 damage *= 3;
             }
@@ -142,20 +142,20 @@ void __thiscall rock_bullet_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
             target_data.entity_type = 1;
             target_data.position.X = spell->target.position.X;
             target_data.position.Y = spell->target.position.Y;
-            uint16_t effect_index = effectAPI->addEffect(_this->SF_CGdEffect, kGdEffectSpellHitTarget, &source_data,
+            uint16_t effect_index = effectAPI->addEffect(_this->CGdEffect, kGdEffectSpellHitTarget, &source_data,
                                                          &target_data, _this->OpaqueClass->current_step, distance,
                                                          &rect);
-            effectAPI->setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_SPELL_INDEX, spell_index);
-            effectAPI->setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_SPELL_ID,
+            effectAPI->setEffectXData(_this->CGdEffect, effect_index, EFFECT_SPELL_INDEX, spell_index);
+            effectAPI->setEffectXData(_this->CGdEffect, effect_index, EFFECT_SPELL_ID,
                                       _this->active_spell_list[spell_index].spell_id);
 
-            effectAPI->setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_PHYSICAL_DAMAGE, damage);
-            effectAPI->setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_ADD_SUBSPELL, 1);
-            effectAPI->setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_ENTITY_INDEX, source_index);
-            effectAPI->setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_ENTITY_TYPE, 1);
-            effectAPI->setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_ENTITY_INDEX2, target_index);
-            effectAPI->setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_ENTITY_TYPE2, 1);
-            effectAPI->setEffectXData(_this->SF_CGdEffect, effect_index, EFFECT_ENTITY_INDEX3, prev_figure_index);
+            effectAPI->setEffectXData(_this->CGdEffect, effect_index, EFFECT_PHYSICAL_DAMAGE, damage);
+            effectAPI->setEffectXData(_this->CGdEffect, effect_index, EFFECT_ADD_SUBSPELL, 1);
+            effectAPI->setEffectXData(_this->CGdEffect, effect_index, EFFECT_ENTITY_INDEX, source_index);
+            effectAPI->setEffectXData(_this->CGdEffect, effect_index, EFFECT_ENTITY_TYPE, 1);
+            effectAPI->setEffectXData(_this->CGdEffect, effect_index, EFFECT_ENTITY_INDEX2, target_index);
+            effectAPI->setEffectXData(_this->CGdEffect, effect_index, EFFECT_ENTITY_TYPE2, 1);
+            effectAPI->setEffectXData(_this->CGdEffect, effect_index, EFFECT_ENTITY_INDEX3, prev_figure_index);
         }
         else
         {
@@ -182,31 +182,31 @@ void __thiscall rock_bullet_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
     if ((source_index != 0) && (target_index != 0))
     {
    //mandatory check for target not being reserved or dead
-        if ((_this->SF_CGdFigure->figures[target_index].owner != (uint16_t)(-1)) &&
-            ((*(uint8_t *)(&_this->SF_CGdFigure->figures[target_index].flags) & 0xa) == 0))
+        if ((_this->CGdFigure->figures[target_index].owner != (uint16_t)(-1)) &&
+            ((*(uint8_t *)(&_this->CGdFigure->figures[target_index].flags) & 0xa) == 0))
         {
    //get info from gamedata.cff
-            spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+            spellAPI->getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);
             uint16_t base_damage = spell_data.params[0];
    //armor reduction SCRAPPED!!!!
             uint32_t damage = base_damage;
-   //		uint32_t damage = toolboxAPI->getPhysDamageReduction(_this->SF_CGdFigureToolBox, source_index, target_index, kGdSpellLineThornShieldDamage);
+   //		uint32_t damage = toolboxAPI->getPhysDamageReduction(_this->CGdFigureToolBox, source_index, target_index, kGdSpellLineThornShieldDamage);
             //if caster is alive
-            if (figureAPI->isAlive(_this->SF_CGdFigure, source_index))
+            if (figureAPI->isAlive(_this->CGdFigure, source_index))
             {
                 //double damage magic set handling
-                if ((_this->SF_CGdFigure->figures[source_index].set_type == 8) &&
+                if ((_this->CGdFigure->figures[source_index].set_type == 8) &&
                     (spellAPI->getRandom(_this->OpaqueClass, 100) < 26))
                 {
                     damage *= 2;
                 }
             }
-            if (isSiegeUnit(_this->SF_CGdFigure, target_index))
+            if (isSiegeUnit(_this->CGdFigure, target_index))
             {
                 damage = ((uint16_t)(damage * 100) + 50) / 1000;
             }
-            if ((toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index, kGdSpellLineRoots)) ||
-                (toolboxAPI->hasSpellOnIt(_this->SF_CGdFigureToolBox, target_index, kGdSpellLineRootsArea)))
+            if ((toolboxAPI->hasSpellOnIt(_this->CGdFigureToolBox, target_index, kGdSpellLineRoots)) ||
+                (toolboxAPI->hasSpellOnIt(_this->CGdFigureToolBox, target_index, kGdSpellLineRootsArea)))
             {
                 damage *= 2;
             }
@@ -230,7 +230,7 @@ void __thiscall rock_bullet_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
                 spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &rect, &target_data,
                                           _this->OpaqueClass->current_step, 10, &rect);
    //dealing damage. last 3 numbers are flags: isSpellDamage, isRangedDamage, is(I can't remember, but is is 0 here)
-                toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index, target_index, damage, 1, 0, 0);
+                toolboxAPI->dealDamage(_this->CGdFigureToolBox, source_index, target_index, damage, 1, 0, 0);
             }
         }
 
@@ -740,12 +740,12 @@ void __thiscall thorns_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
     uint16_t source_index = spell->source.entity_index;
     uint16_t target_index = spell->target.entity_index;
 
-    if ((_this->SF_CGdFigure->figures[target_index].owner != (uint16_t)(-1))
-        && (((_this->SF_CGdFigure->figures[target_index].flags & (IS_DEAD|RESESRVED_ONLY)) == 0)))
+    if ((_this->CGdFigure->figures[target_index].owner != (uint16_t)(-1))
+        && (((_this->CGdFigure->figures[target_index].flags & (IS_DEAD|RESESRVED_ONLY)) == 0)))
     {
-        spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+        spellAPI->getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);
         uint16_t damage = spell_data.params[0];
-        uint32_t resist = spellAPI->getChanceToResistSpell(_this->AutoClass34, source_index, target_index,
+        uint32_t resist = spellAPI->getChanceToResistSpell(_this->CGdAutoClass34, source_index, target_index,
                                                            spell->spell_id);
         uint32_t random = spellAPI->getRandom(_this->OpaqueClass, 100);
         if (resist < random)
@@ -759,7 +759,7 @@ void __thiscall thorns_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
             uint32_t unused;
             spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &target,
                                       _this->OpaqueClass->current_step, 0x19, &some_rect);
-            toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index,target_index, damage, 1, 0, 0);
+            toolboxAPI->dealDamage(_this->CGdFigureToolBox, source_index,target_index, damage, 1, 0, 0);
         }
         else
         {
@@ -784,14 +784,14 @@ void __thiscall summon_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
     // we pull the pointer for this instance of spell
     SF_GdSpell *spell = &_this->active_spell_list[spell_index];
     uint16_t source_index = spell->source.entity_index;
-    spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+    spellAPI->getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);
     uint32_t tick_number = spellAPI->getXData(_this, spell_index, SPELL_TICK_COUNT_AUX);
     if (tick_number == 0)
     {
-        uint16_t target_index = summonCreature(_this->SF_CGdFigureToolBox, source_index, spell_data.params[2]);
+        uint16_t target_index = summonCreature(_this->CGdFigureToolBox, source_index, spell_data.params[2]);
         if (target_index != 0)
         {
-            toolboxAPI->addSpellToFigure(_this->SF_CGdFigureToolBox, target_index, spell_index);
+            toolboxAPI->addSpellToFigure(_this->CGdFigureToolBox, target_index, spell_index);
             spellAPI->addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1);
             _this->active_spell_list[spell_index].to_do_count = (spell_data.params[0] * 10) / 1000;
             _this->active_spell_list[spell_index].target.entity_index = target_index;
@@ -804,15 +804,15 @@ void __thiscall summon_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
     else
     {
         uint16_t required_mana =  spell_data.params[1];
-        if ((_this->SF_CGdFigure->figures[source_index].set_type == 10))
+        if ((_this->CGdFigure->figures[source_index].set_type == 10))
         {
             required_mana = required_mana >> 1;
         }
-        uint16_t current_mana = figureAPI->getCurrentStat(_this->SF_CGdFigure, source_index, MANA);
+        uint16_t current_mana = figureAPI->getCurrentStat(_this->CGdFigure, source_index, MANA);
         if (current_mana >= required_mana)
         {
             _this->active_spell_list[spell_index].to_do_count = (spell_data.params[0] * 10) / 1000;
-            figureAPI->subMana(_this->SF_CGdFigure, source_index, required_mana);
+            figureAPI->subMana(_this->CGdFigure, source_index, required_mana);
             return;
         }
         else
@@ -826,18 +826,18 @@ void __thiscall summon_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
             uint32_t unused;
             spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &target,
                                       _this->OpaqueClass->current_step, 0x19, &some_rect);
-            if ((figureAPI->isAlive(_this->SF_CGdFigure, target.entity_index)) &&
-                (_this->SF_CGdFigure->figures[target_index].owner != (uint16_t)(-1)) &&
-                (_this->SF_CGdFigure->figures[source_index].owner != (uint16_t)(-1)))
+            if ((figureAPI->isAlive(_this->CGdFigure, target.entity_index)) &&
+                (_this->CGdFigure->figures[target_index].owner != (uint16_t)(-1)) &&
+                (_this->CGdFigure->figures[source_index].owner != (uint16_t)(-1)))
             {
-                toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, 0, target_index, 0x7FFF, 1, 0, 0);
+                toolboxAPI->dealDamage(_this->CGdFigureToolBox, 0, target_index, 0x7FFF, 1, 0, 0);
             }
             else
             {
-                toolboxAPI->removeSpellFromList(_this->SF_CGdFigureToolBox, source_index, spell_index);
-                toolboxAPI->removeSpellFromList(_this->SF_CGdFigureToolBox, target_index, spell_index);
+                toolboxAPI->removeSpellFromList(_this->CGdFigureToolBox, source_index, spell_index);
+                toolboxAPI->removeSpellFromList(_this->CGdFigureToolBox, target_index, spell_index);
             }
-            if (_this->SF_CGdFigure->figures[target.entity_index].owner != (uint16_t)(-1))
+            if (_this->CGdFigure->figures[target.entity_index].owner != (uint16_t)(-1))
             {
                 logAPI->logDebug(DEBUG_HIGH,"Broken figure, index [%d] spell [%d] type [%d]",
                                  target.entity_index, spell_index, spell->spell_line);
@@ -854,33 +854,33 @@ void __thiscall explosion_helper(SF_CGdSpell *_this, uint16_t spell_index)
     uint16_t target_index = spell->target.entity_index;
     uint16_t source_index = spell->source.entity_index;
     SF_CGdResourceSpell spell_data;
-    spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+    spellAPI->getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);
     uint16_t damage = spell_data.params[0];
 
-    uint32_t pos_x = _this->SF_CGdFigure->figures[target_index].position.X;
-    uint32_t pos_y = _this->SF_CGdFigure->figures[target_index].position.Y;
+    uint32_t pos_x = _this->CGdFigure->figures[target_index].position.X;
+    uint32_t pos_y = _this->CGdFigure->figures[target_index].position.Y;
 
     for (uint32_t i = 8; i > 0; i--)
     {
-        uint16_t w_x = _this->SF_CGdWorld->unknown1[i].uknwn1 + pos_x;
-        uint16_t w_y = _this->SF_CGdWorld->unknown1[i].uknwn2 + pos_y;
-        uint16_t map_size =  _this->SF_CGdWorld->map_size;
+        uint16_t w_x = _this->CGdWorld->unknown1[i].uknwn1 + pos_x;
+        uint16_t w_y = _this->CGdWorld->unknown1[i].uknwn2 + pos_y;
+        uint16_t map_size =  _this->CGdWorld->map_size;
         if ((w_x < map_size) && (w_y < map_size))
         {
-            if ((_this->SF_CGdWorld->cells[w_y*0x400 + w_x].world_cell_flags & 0x10) != 0)
+            if ((_this->CGdWorld->cells[w_y*0x400 + w_x].world_cell_flags & 0x10) != 0)
             {
-                uint16_t target_id = toolboxAPI->getFigureFromWorld(_this->SF_CGdWorldToolBox, w_x, w_y, 0);
-                if ((_this->SF_CGdFigure->figures[target_id].owner != (uint16_t)(-1)) &&
-                    ((_this->SF_CGdFigure->figures[target_id].flags & 0xa) == 0) &&
-                    (toolboxAPI->isTargetable(_this->SF_CGdFigureToolBox, target_id)))
+                uint16_t target_id = toolboxAPI->getFigureFromWorld(_this->CGdWorldToolBox, w_x, w_y, 0);
+                if ((_this->CGdFigure->figures[target_id].owner != (uint16_t)(-1)) &&
+                    ((_this->CGdFigure->figures[target_id].flags & 0xa) == 0) &&
+                    (toolboxAPI->isTargetable(_this->CGdFigureToolBox, target_id)))
                 {
-                    bool isFriendly = toolboxAPI->figuresCheckFriendly(_this->SF_CGdFigureToolBox, source_index,
+                    bool isFriendly = toolboxAPI->figuresCheckFriendly(_this->CGdFigureToolBox, source_index,
                                                                        target_id);
-                    bool isNeutral = toolboxAPI->figuresCheckNeutral(_this->SF_CGdFigureToolBox, source_index,
+                    bool isNeutral = toolboxAPI->figuresCheckNeutral(_this->CGdFigureToolBox, source_index,
                                                                      target_id);
                     if (!isFriendly && !isNeutral)
                     {
-                        toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index, target_id, damage, 1, 0, 0);
+                        toolboxAPI->dealDamage(_this->CGdFigureToolBox, source_index, target_id, damage, 1, 0, 0);
                     }
                 }
             }
@@ -895,15 +895,15 @@ void __thiscall fireball_explosion_effect_handler(SF_CGdSpell *_this, uint16_t s
     uint16_t source_index = spell->source.entity_index;
     if ((spell->target.entity_type == 1) && (target_index != 0))
     {
-        if ((_this->SF_CGdFigure->figures[target_index].owner != (uint16_t)(-1))  &&
-            (((_this->SF_CGdFigure->figures[target_index].flags & (IS_DEAD|RESESRVED_ONLY)) == 0)))
+        if ((_this->CGdFigure->figures[target_index].owner != (uint16_t)(-1))  &&
+            (((_this->CGdFigure->figures[target_index].flags & (IS_DEAD|RESESRVED_ONLY)) == 0)))
         {
             SF_CGdResourceSpell spell_data;
-            spellAPI->getResourceSpellData(_this->SF_CGdResource, &spell_data, spell->spell_id);
+            spellAPI->getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);
             uint16_t current_tick = spellAPI->addToXData(_this, spell_index, SPELL_TICK_COUNT, 1);
             if (current_tick == 1)
             {
-                uint16_t resist_chance = spellAPI->getChanceToResistSpell(_this->AutoClass34, source_index,
+                uint16_t resist_chance = spellAPI->getChanceToResistSpell(_this->CGdAutoClass34, source_index,
                                                                           target_index, spell->spell_id);
                 uint16_t random = spellAPI->getRandom(_this->OpaqueClass, 100);
                 if (resist_chance < random)
@@ -920,8 +920,8 @@ void __thiscall fireball_explosion_effect_handler(SF_CGdSpell *_this, uint16_t s
                                               _this->OpaqueClass->current_step, 0x19, &rect);
                     spell->to_do_count = (spell_data.params[3] * 10) / 1000;
                     uint16_t damage = spell_data.params[0];
-                    if ((figureAPI->isAlive(_this->SF_CGdFigure, source_index)) &&
-                        (_this->SF_CGdFigure->figures[source_index].set_type == 8))
+                    if ((figureAPI->isAlive(_this->CGdFigure, source_index)) &&
+                        (_this->CGdFigure->figures[source_index].set_type == 8))
                     {
                         random =  spellAPI->getRandom(_this->OpaqueClass, 100);
                         if (random < 26)
@@ -930,7 +930,7 @@ void __thiscall fireball_explosion_effect_handler(SF_CGdSpell *_this, uint16_t s
                             spellAPI->setXData(_this, spell_index, SPELL_DOUBLE_DAMAGE, 1);
                         }
                     }
-                    toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index, target_index, damage, 1, 0, 0);
+                    toolboxAPI->dealDamage(_this->CGdFigureToolBox, source_index, target_index, damage, 1, 0, 0);
                     explosion_helper(_this, spell_index);
                     return;
                 }
@@ -959,7 +959,7 @@ void __thiscall fireball_explosion_effect_handler(SF_CGdSpell *_this, uint16_t s
                 {
                     damage *= 2;
                 }
-                toolboxAPI->dealDamage(_this->SF_CGdFigureToolBox, source_index, target_index, damage, 1, 0, 1);
+                toolboxAPI->dealDamage(_this->CGdFigureToolBox, source_index, target_index, damage, 1, 0, 1);
                 if (spell_data.params[2] >= current_tick)
                 {
                     spell->to_do_count = (spell_data.params[3] * 10) / 1000;

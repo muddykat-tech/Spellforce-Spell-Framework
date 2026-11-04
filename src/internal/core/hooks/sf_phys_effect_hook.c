@@ -27,8 +27,8 @@ void __thiscall sf_phys_effect_hook(SF_CGdEffect *_this, uint16_t effect_id)
         bool isMagicDamage = 0;
         if (target_type == 1)
         {
-            if ((figureAPI.isAlive(_this->SF_CGdFigure, target_id))
-                && (toolboxAPI.isTargetable(_this->SF_CGdFigureToolBox, target_id)))
+            if ((figureAPI.isAlive(_this->CGdFigure, target_id))
+                && (toolboxAPI.isTargetable(_this->CGdFigureToolBox, target_id)))
             {
                 uint16_t spell_line = effectAPI.getEffectXData(_this, effect_id, EFFECT_SPELL_LINE);
                 if (spell_line != 0)
@@ -38,7 +38,7 @@ void __thiscall sf_phys_effect_hook(SF_CGdEffect *_this, uint16_t effect_id)
                     damage = single_handler(_this, source_id, target_id, &isMagicDamage, damage);
 
                 }
-                if (toolboxAPI.hasSpellOnIt(_this->SF_CGdFigureToolBox, target_id, kGdSpellLineAssistance) &&
+                if (toolboxAPI.hasSpellOnIt(_this->CGdFigureToolBox, target_id, kGdSpellLineAssistance) &&
                     (damage != 0x7fff))
                 {
                     std::list<std::pair<uint16_t, onhit_handler_ptr>> onhit_list = get_onhit_phase(OnHitPhase::PHASE_2);
@@ -49,13 +49,13 @@ void __thiscall sf_phys_effect_hook(SF_CGdEffect *_this, uint16_t effect_id)
                         if (spell_line_id == kGdSpellLineAssistance)
                         {
                             onhit_handler_ptr onhit_func = entry.second;
-                            damage = onhit_func(_this->SF_CGdFigureToolBox->CGdFigureJobs, source_id, target_id,
+                            damage = onhit_func(_this->CGdFigureToolBox->CGdFigureJobs, source_id, target_id,
                                                 damage);
                         }
                     }
 
                 }
-                toolboxAPI.dealDamage(_this->SF_CGdFigureToolBox, source_id, target_id, damage, isMagicDamage, 1, 0);
+                toolboxAPI.dealDamage(_this->CGdFigureToolBox, source_id, target_id, damage, isMagicDamage, 1, 0);
                 //Monument protection handler
                 uint32_t mana_cost = effectAPI.getEffectXData(_this, effect_id, EFFECT_MANA_COST);
                 if (mana_cost != 0)
@@ -74,9 +74,9 @@ void __thiscall sf_phys_effect_hook(SF_CGdEffect *_this, uint16_t effect_id)
 
                     effectAPI.addEffect(_this, kGdEffectMonumentHitFigure, &source, &target,
                                         _this->OpaqueClass->current_step, 0x14, &rect);
-                    if (figureAPI.isAlive(_this->SF_CGdFigure, target_id))
+                    if (figureAPI.isAlive(_this->CGdFigure, target_id))
                     {
-                        figureAPI.subMana(_this->SF_CGdFigure, target_id, mana_cost);
+                        figureAPI.subMana(_this->CGdFigure, target_id, mana_cost);
                     }
                 }
             }
@@ -87,7 +87,7 @@ void __thiscall sf_phys_effect_hook(SF_CGdEffect *_this, uint16_t effect_id)
 
             if (_this->CGdBuilding->buildings[target_id].health_current != 0)
             {
-                buildingAPI.buildingDealDamage(_this->SF_CGdBuildingToolbox, source_id, target_id, damage, 0);
+                buildingAPI.buildingDealDamage(_this->CGdBuildingToolbox, source_id, target_id, damage, 0);
             }
         }
     }
@@ -104,7 +104,7 @@ void __thiscall sf_phys_effect_hook(SF_CGdEffect *_this, uint16_t effect_id)
     if (target_type == 1)
     {
         bool isMagicDamage = 0;
-        toolboxAPI.dealDamage(_this->SF_CGdFigureToolBox, source_id, target_id, damage, isMagicDamage, 0, 0);
+        toolboxAPI.dealDamage(_this->CGdFigureToolBox, source_id, target_id, damage, isMagicDamage, 0, 0);
         return;
     }
     if (target_type == 2)
@@ -113,7 +113,7 @@ void __thiscall sf_phys_effect_hook(SF_CGdEffect *_this, uint16_t effect_id)
 
         if (_this->CGdBuilding->buildings[target_id].health_current != 0)
         {
-            buildingAPI.buildingDealDamage(_this->SF_CGdBuildingToolbox, source_id, target_id, damage, 0);
+            buildingAPI.buildingDealDamage(_this->CGdBuildingToolbox, source_id, target_id, damage, 0);
         }
     }
     else

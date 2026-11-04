@@ -53,7 +53,7 @@ DECLARE_FUNCTION(void, figureIteratorInit, CGdFigureIterator *iterator,
                  uint16_t x_start, uint16_t y_start, uint16_t x_end,
                  uint16_t y_end);
 DECLARE_FUNCTION(void, figureIteratorSetPointers, CGdFigureIterator *iterator,
-                 SF_CGdFigure *figure, void *AutoClass22, void *CGdWorld);
+                 SF_CGdFigure *CGdFigure, void *CGdTile, SF_CGdWorld *CGdWorld);
 DECLARE_FUNCTION(void, iteratorSetArea, CGdFigureIterator *iterator,
                  SF_Coord *position, uint16_t radius);
 DECLARE_FUNCTION(uint16_t, getNextFigure, CGdFigureIterator *iterator);
@@ -65,16 +65,16 @@ DECLARE_FUNCTION(void, buildingIteratorInit, CGdBuildingIterator *iterator,
                  uint16_t x_start, uint16_t y_start, uint16_t x_end,
                  uint16_t y_end);
 DECLARE_FUNCTION(void, buildingIteratorSetPointers,
-                 CGdBuildingIterator *iterator, void *SF_CGdBuilding,
-                 void *AutoClass22, void *CGdWorld);
+                 CGdBuildingIterator *iterator, SF_CGdBuilding *CGdBuilding,
+                 void *CGdTile, SF_CGdWorld *CGdWorld);
 DECLARE_FUNCTION(uint16_t, getNextBuilding, CGdBuildingIterator *_this);
 
 DECLARE_FUNCTION(void, objectIteratorInit, CGdObjectIterator *iterator,
                  uint16_t x_start, uint16_t y_start, uint16_t x_end,
                  uint16_t y_end);
 DECLARE_FUNCTION(void, objectIteratorSetPointers,
-                 CGdObjectIterator *iterator, void *SF_CGdBuilding,
-                 void *AutoClass22, void *CGdWorld);
+                 CGdObjectIterator *iterator, SF_CGdObject *CGdObject,
+                 void *CGdTile, SF_CGdWorld *CGdWorld);
 DECLARE_FUNCTION(uint16_t, getNextObject, CGdObjectIterator *_this);
 
 /**

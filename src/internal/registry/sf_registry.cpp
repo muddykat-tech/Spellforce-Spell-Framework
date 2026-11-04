@@ -22,6 +22,10 @@
 #include "../core/sf_hooks.h"
 #include "../core/sf_campaign_module.h"
 #include "../core/sf_screens_module.h"
+#include "../core/sf_ability_module.h"
+#include "../core/sf_weapon_type_module.h"
+#include "../core/sf_animset_module.h"
+#include "../core/sf_hero_module.h"
 
 #include "sf_registry.h"
 #include "sf_vanilla_registry.h"
@@ -155,6 +159,10 @@ void initialize_framework()
     log_info("| - Registration of Vanilla custom heroes");
     initialize_vanilla_heroes();
 
+    log_info("| - Registration of Vanilla on Level Up Abilities");
+    initialize_vanilla_level_up_abilities();
+
+
     log_info(
         "|======| Spellforce Spell Framework Configuration Phase End |======|");
     log_info(
@@ -164,6 +172,10 @@ void initialize_framework()
 
     initialize_screens_module();
     initialize_campaign_module();
+    initialize_ability_module();
+    initialize_weapon_type_module();
+    initialize_animset_module();
+    initialize_hero_module();
 
     log_info(
         "|====== ===== =====| Core Module Phase End |===== ===== ======--|");
@@ -183,7 +195,6 @@ void initialize_framework()
 
     register_mod_spells();
     register_mod_buildings();
-    register_mod_heroes();
 
     log_info(
         "|====== ==== ======| Mod Registration Phase End |====== ==== ======|");

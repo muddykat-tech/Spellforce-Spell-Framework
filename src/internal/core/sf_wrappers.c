@@ -229,7 +229,7 @@ void __thiscall setupFigureIterator(CGdFigureIterator *iterator,
                                     SF_CGdSpell *spell)
 {
     iteratorAPI.figureIteratorInit(iterator, 0x0, 0x0, 0x3ff, 0x3ff);
-    iteratorAPI.figureIteratorSetPointers(iterator, spell->SF_CGdFigure, spell->SF_CGdTile, spell->SF_CGdWorld);
+    iteratorAPI.figureIteratorSetPointers(iterator, spell->CGdFigure, spell->CGdTile, spell->CGdWorld);
 }
 
 bool __thiscall hasSpellTag(uint16_t spell_id, SpellTag tag)
@@ -370,20 +370,20 @@ void __thiscall spellEffectCallback(SF_CGdSpell *_this, uint16_t source_index,
     if (!condition || !callback)
         return;
 
-    uint16_t node_id = figureAPI.getSpellJobStartNode(_this->SF_CGdFigure,
+    uint16_t node_id = figureAPI.getSpellJobStartNode(_this->CGdFigure,
                                                       source_index);
     while (node_id != 0)
     {
         uint16_t current_index =
             toolboxAPI.getSpellIndexFromDLL(
-                (uint32_t *)_this->SF_CGdDoubleLinkedList, node_id);
+                (uint32_t *)_this->CGdDoubleLinkedList, node_id);
         if ((*condition)(_this, current_index, spell_index))
         {
             (*callback)(_this, source_index, current_index);
             break;
         }
         node_id =
-            toolboxAPI.getNextNode((uint32_t *)_this->SF_CGdDoubleLinkedList,
+            toolboxAPI.getNextNode((uint32_t *)_this->CGdDoubleLinkedList,
                                    node_id);
     }
 }
@@ -641,7 +641,7 @@ bool __thiscall XDataExists(SF_CGdEffect *_this, uint16_t effect_index, SpellDat
     uint16_t xdata_key = _this->effects[effect_index].xdata_key;
     if (xdata_key != 0)
     {
-        uint32_t result = CGdXDataExists(_this->SF_CGdXDataList, xdata_key, data);
+        uint32_t result = CGdXDataExists(_this->CGdXDataList, xdata_key, data);
         if (result != 0)
         {
             return 1;
@@ -658,16 +658,16 @@ uint16_t __thiscall sf_get_spell_id(SF_CGdSpell *_this, uint16_t spell_index)
 
 void __thiscall tryClearCheckSpellsBeforeJob(SF_CGdSpell *_this, uint16_t spell_index, uint16_t figure_index)
 {
-    uint16_t spell_node = figureAPI.getSpellJobStartNode(_this->SF_CGdFigure, figure_index);
+    uint16_t spell_node = figureAPI.getSpellJobStartNode(_this->CGdFigure, figure_index);
     while (spell_node != 0)
     {
-        uint16_t spell_id = toolboxAPI.getSpellIndexFromDLL(_this->SF_CGdDoubleLinkedList, spell_node);
+        uint16_t spell_id = toolboxAPI.getSpellIndexFromDLL(_this->CGdDoubleLinkedList, spell_node);
         if ((spell_index != spell_id) && ((_this->active_spell_list[spell_id].flags & 0x2) != 0))
         {
             return;
         }
-        spell_node = toolboxAPI.getNextNode(_this->SF_CGdDoubleLinkedList, spell_node);
+        spell_node = toolboxAPI.getNextNode(_this->CGdDoubleLinkedList, spell_node);
     }
-    _this->SF_CGdFigure->figures[figure_index].flags &= ~(F_CHECK_SPELLS_BEFORE_JOB);
+    _this->CGdFigure->figures[figure_index].flags &= ~(F_CHECK_SPELLS_BEFORE_JOB);
 
 }

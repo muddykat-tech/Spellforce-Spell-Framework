@@ -1,0 +1,24 @@
+{ "entries": [
+  { "figure": "figure_hero_male",
+    "base_name": "figure_hero_male",
+    "shielded": [
+      { "weapon": 0, "anims": ["figure_hero_male_attackshieldbash_01",
+                                "figure_hero_male_attackshieldbash_02"] },
+      { "weapon": 3, "anims": ["figure_hero_male_attackshieldstabtest"],
+        "sound": { "name": "battle_hit_1haxe", "offset": 0.05, "length": 0.4 } }
+    ],
+    "solo": [
+      { "weapon": 9, "anims": ["figure_hero_male_right2hswordheavy_01",
+                                "figure_hero_male_right2hswordheavy_02"] }
+    ],
+    "ranged": [
+      { "weapon": 22,
+        "aim":   ["figure_hero_male_castdamage"],
+        "shoot": ["figure_hero_male_resolveenemy"] }
+    ] },
+  { "figure": "figure_npc_spellblade",
+    "base_name": "figure_npc_spellblade",
+    "shielded": [ { "weapon": 30, "anims": ["figure_npc_spellblade_shieldcut_01"] } ],
+    "solo":  [ { "weapon": 30, "anims": ["figure_npc_spellblade_cut_01",
+                                          "figure_npc_spellblade_cut_02"] } ] }
+] }
