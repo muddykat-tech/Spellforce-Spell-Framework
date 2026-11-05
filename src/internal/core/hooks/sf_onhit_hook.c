@@ -209,6 +209,12 @@ uint16_t __thiscall handle_riposte_set(SF_CGdFigureJobs *_this,
                                        uint16_t target_index,
                                        uint16_t weapon_damage)
 {
+    // A 0-0 weapon hit must not produce an empty riposte reflection
+    // (dealDamage(source, source, 0) below); nothing to mirror at zero damage.
+    if (weapon_damage == 0)
+    {
+        return weapon_damage;
+    }
     bool apply_set = false;
     if (_this->CGdFigure->figures[target_index].set_type == 0x03)
     {
@@ -322,8 +328,13 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
         uint16_t damage = g_get_reduced_damage(_this->CGdAutoClass34, source_index, target.entity_index, weapon_damage);
         damage = ((damage & 0xffff) * ((uint8_t) param_3) + 0x32) / 100;
         damage = damage & 0xffff;
-        // glanced hit
-        if (damage == 0)
+        // A true glance means armor ate a non-zero weapon base roll down to zero.
+        // A 0-0 weapon (all damage comes from enchantments) and unarmed attackers
+        // (stats 0-0 without a weapon item) deliberately fall through to the full
+        // else branch: cast interruption, on-hit phases, projectile, Havoc curse
+        // and weapon enchantments (owner decision, TZ sf-phys-effect-v2 par. 3.7).
+        bool glanced = (damage == 0) && (weapon_stats.max_dmg != 0);
+        if (glanced)
         {
 #if _DEBUG_
             log_info("Damage IS 0");

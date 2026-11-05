@@ -19,6 +19,9 @@ DECLARE_FUNCTION(uint16_t, addEffect, SF_CGdEffect *_this, CGdEffectType effect_
                  SF_CGdTargetData *target, uint32_t tick_start, uint16_t tick_count, SF_Rectangle *param_6);
 DECLARE_FUNCTION(void, tryEndEffect, SF_CGdEffect *_this, uint16_t effect_index);
 DECLARE_FUNCTION(bool, effectXDataExists, SF_CGdEffect *_this, uint16_t effect_index, SpellDataKey key);
+DECLARE_FUNCTION(uint16_t, getCurrentEffectIndex);
+DECLARE_FUNCTION(uint16_t, cloneEffect, SF_CGdEffect *_this, uint16_t src_effect_id, SF_CGdTargetData *source,
+                 SF_CGdTargetData *target, uint32_t tick_start, uint16_t tick_count, SF_Rectangle *rect);
 /**
  * @ingroup API
  * @brief Group of functions related to Effect manipulation.
@@ -30,4 +33,6 @@ typedef struct
     effectXDataExists_ptr effectXDataExists;
     getEffectXData_ptr getEffectXData;
     tryEndEffect_ptr tryEndEffect;
+    getCurrentEffectIndex_ptr getCurrentEffectIndex;
+    cloneEffect_ptr cloneEffect;
 } EffectFunctions;

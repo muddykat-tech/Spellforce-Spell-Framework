@@ -110,9 +110,29 @@ void __thiscall linkPhysRainHandler(SFSpell *spell, sub_effect_handler_ptr handl
     spell->phys_rain_handler = handler;
 }
 
-void __thiscall linkPhysEffectHandler(SFSpell *spell, phys_effect_handler_ptr handler)
+// Phase carrier for phys effect handlers between linkPhysEffectHandler() and
+// register_mod_spells(); SFSpell must not gain new fields, so the phase rides
+// in this side map and the entry is dropped once registration is done.
+static std::map<SFSpell *, OnHitPhase> s_phys_effect_phase_map;
+
+void __thiscall linkPhysEffectHandler(SFSpell *spell, phys_effect_handler_ptr handler, OnHitPhase phase)
 {
+    // the side map is erased only on the successful registration path in
+    // register_mod_spells(), so a broken link must not write an entry at all,
+    // otherwise the record survives forever
+    if (spell == nullptr)
+    {
+        log_warning("linkPhysEffectHandler called without a spell, no phase entry recorded");
+        return;
+    }
+    if (handler == nullptr)
+    {
+        log_warning("linkPhysEffectHandler called without a handler for spell %u, no phase entry recorded",
+                    spell->spell_id);
+        return;
+    }
     spell->phys_effect_handler = handler;
+    s_phys_effect_phase_map[spell] = phase;
 }
 
 void __thiscall linkTypeHandler(SFSpell *spell, handler_ptr typeHandler)
@@ -352,6 +372,12 @@ void register_mod_spells()
         enchant_handler_ptr enchant_handler = spell_data->spell_enchtant_handler;
         SpellDamagePhase damage_phase = spell_data->damage_phase;
         OnHitPhase onhit_phase = spell_data->hit_phase;
+        OnHitPhase phys_effect_phase = OnHitPhase::PHASE_5; // defensive default, mirrors hit_phase
+        auto phys_phase_it = s_phys_effect_phase_map.find(spell_data);
+        if (phys_phase_it != s_phys_effect_phase_map.end())
+        {
+            phys_effect_phase = phys_phase_it->second;
+        }
         SFMod *parent_mod = spell_data->parent_mod;
         g_current_mod = spell_data->parent_mod;
 
@@ -446,7 +472,8 @@ void register_mod_spells()
         }
         if (phys_effect_handler != nullptr)
         {
-            registerPhysEffectHandler(spell_id, phys_effect_handler);
+            registerPhysEffectHandler(spell_id, phys_effect_handler, phys_effect_phase);
+            s_phys_effect_phase_map.erase(spell_data);
         }
         if (enchant_handler != nullptr)
         {

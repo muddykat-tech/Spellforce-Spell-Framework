@@ -1,16 +1,16 @@
 #include "../../src/api/sfsf.h"
 #include <windows.h>
-#include <stdio.h>
 
 // Arrow Reflections is a spell which reflects any ranged attacks which hit the spellcaster back towards an attacker
 
 // We declare macros for Arrows Reflection Spell Type and Spell Job
-// Spell Type 0xf8 = 248, Spell Job 0xaf = 175
+// Spell Type 247, Spell Job 0xaf = 175
 
 // The custom Spell Type also must be defined within GameData.cff
 // and provided with at least one spell corresponding to it
 
-#define ARROWS_REFLECTION_LINE 0xf8
+// line 247 in working gamedata (spell 3554 overwritten for testing), owner directive 2026-11-04
+#define ARROWS_REFLECTION_LINE 247
 #define ARROWS_REFLECTION_JOB 0xaf
 
 SpellforceSpellFramework *sfsf;
@@ -131,19 +131,15 @@ SF_Rectangle* get_spell_vector(SF_Coord* source_position, SF_Coord* target_posit
     return spell_vector;
 }
 
-// we declare On Hit Handler
-// this handler will be triggered whenever a spellcaster makes an attack with the weapon against an enemy
-// the handler intercepts the damage dealt which will be dealt with an attack to the target and allows us to modify it according to our own rules
-// the game engine will continue processing the value which we return to it from the point of interception
-// we determine the moment when the spell will be intercept as part of mod initialization when we link the spell with the On Hit Handler
+// we declare Phys Effect Handler
+// this handler is triggered whenever a projectile (ranged attack) resolves against the spellcaster
+// the handler intercepts the physical damage the projectile was about to deal and allows us to modify it according to our own rules
+// the phys effect hook will continue processing the value which we return to it from the point of interception
+// we determine the moment when the handler is triggered as part of mod initialization when we link the spell with the Phys Effect Handler
 
-uint16_t __thiscall arrows_reflection_onhit_handler(SF_CGdFigureJobs *_this, uint16_t source_index, uint16_t target_index, uint16_t damage)
+uint16_t __thiscall arrows_reflection_phys_handler(SF_CGdEffect *_this, uint16_t source, uint16_t target,
+                                                   bool *isSpellDamage, uint16_t damage)
 {
-
-    char message[256];
-    snprintf(message, sizeof(message), "Ranged damage=%d",damage);
-    logger->logInfo(message);
-
     // first of all, we should check for dead-ends such as zero damage or automatical oneshot provided by Critical Strikes spell
 
     // 0x7fff is an amount which Critical Strikes uses to turn damage into oneshot
@@ -155,82 +151,84 @@ uint16_t __thiscall arrows_reflection_onhit_handler(SF_CGdFigureJobs *_this, uin
         return damage;
     }
 
-    // we declare structure to save the attacker's action in it
-    // we'll need it to determine whether the attack was ranged or melee
-    SF_SGtFigureAction action;
-
-    // we determine attacker'a action which triggered the On Hit handler with figureAPI function
-    // because the spell is tagged as TARGET_ONHIT_SPELL, the attacker is being the source and the spellcaster is regarded as the target
-    aiAPI->getTargetAction(_this->CGdFigure, &action, source_index);
-
-
-
-    snprintf(message, sizeof(message), "Action: %d",action.type);
-    logger->logInfo(message);
-
-    // Pass though is WIP, so we inline the function here
-    if ((action.type != 0x2712))
-    // number 0x2712 stands for ranged attack, if the attack wasn't ranged, we interrupt the function
+    // a self-shot (source == target) has no vector to mirror: the clone would
+    // land on the same figure with the reflection buff still active and chain
+    // clones forever, so the damage simply passes through
+    if (source == target)
     {
         return damage;
     }
-    else
-    // if the attack was ranged attack, we reflect the projectile back at the attacker and remove attack's damage
+
+    // the handler's source is the attacker and the handler's target is the spellcaster
+    // (the spell is tagged as TARGET_ONHIT_SPELL, so the phys effect hook dispatches target-side)
+    // we clone the incoming projectile and reverse its endpoints, so the clone flies
+    // from the spellcaster back to the attacker
+
+    // first we have to calculate the vector between the spellcaster and the attacker
+    // the vector can be stored as variable of SF_Rectangle type
+    SF_Rectangle spell_vector;
+    get_spell_vector(&_this->CGdFigure->figures[source].position, &_this->CGdFigure->figures[target].position, &spell_vector);
+
+    // we should also calculate the distance between the spellcaster and the attacker to know how fast the projectile should fly
+    // we wrapped up distance calculations in its own function as well
+    uint32_t distance = getDistance(&_this->CGdFigure->figures[source].position, &_this->CGdFigure->figures[target].position);
+
+    // Flight timing restored verbatim from the original example (HEAD): owner
+    // directive 2026-11-05 — donor-length reuse collapsed the flight (donor
+    // finishes before reflection fires).
+
+    // we don't need the distance itself, let's translate it into flight time with some numbers
+
+    distance = ((distance & 0xffff) * 0x578) / 3000;
+
+    uint16_t rfx_donor = effectAPI->getCurrentEffectIndex();
+
+    // source and target have to be manually reversed in this case, because to make the new projectile damage the attacker
+    // it should be sourced from the spellcaster and have attacker as its target
+    // basically, it means that the clone's source is the spellcaster (handler's target)
+    // and the clone's target is the attacker (handler's source)
+    // flight start decoupled from the visual anchor: world-point source gives
+    // Add an explicit start position (the reflector), while K12 in cloneEffect
+    // rewrites the record's source pair to the DONOR figure for the client
+    // template resolver (owner-approved mechanism, wave 16)
+    SF_CGdTargetData clone_source;
+    figureAPI->getPosition(_this->CGdFigure, &clone_source.position, target); // live position of the reflector (handler's target)
+    clone_source.entity_type = 4; // world point: Add writes the position verbatim (flight start = reflector)
+    // reflector figure id carrier — world-point index is ignored by Add, read by cloneEffect for the anchor hook
+    clone_source.entity_index = target;
+    SF_CGdTargetData clone_target = {1, source, {0, 0}};
+
+    // we clone the incoming projectile via the framework cloneEffect helper
+    // it copies the donor projectile's xdata (spell line, subspell, mana cost and so on),
+    // so special arrows (like the fire arrow) keep their visuals and subspells in the clone
+    auto rfx_tick_start = _this->OpaqueClass->current_step;
+    uint32_t rfx_tick_count = ((distance != 0) ? distance : 1);
+    uint16_t clone_id = effectAPI->cloneEffect(_this, rfx_donor, &clone_source, &clone_target,
+                                               rfx_tick_start, rfx_tick_count, &spell_vector);
+
+    // the engine silently refuses to allocate an effect slot when all 1999 slots are taken
+    // in that case the reflection didn't happen and the victim keeps the incoming damage
+    if (clone_id == 0)
     {
-        // to imitate the projectile being reflected, we'd have to spawn a new projectile and aim it at the attacker manually calculating the geometry
-
-        // first we have to calculate the vector from the spellcaster back to the attacker
-        // the vector can be stored as variable of SF_Rectangle type
-        SF_Rectangle spell_vector;
-
-        // we wrapped up necessary calculations in the function which we wrote above and can use it now
-        // the function accepts positions of the source and the target and writes the result in SF_Rectangle variable
-        get_spell_vector(&_this->CGdFigure->figures[source_index].position, &_this->CGdFigure->figures[target_index].position, &spell_vector);
-
-        // we should also calculate the distance between the spellcaster and the attacker to know how fast the projectile should fly
-        // we wrapped up distance calculations in its own function as well
-        uint32_t distance = getDistance(&_this->CGdFigure->figures[source_index].position, &_this->CGdFigure->figures[target_index].position);
-
-        // we don't need the distance itself, let's translate it into flight time with some numbers
-        distance = ((distance & 0xffff) * 0x578) / 3000;
-
-        logger->logInfo("COMPLETED DISTANCE CALCULATIONS");
-
-        // we'd also need the visual effect offsets for both spellcaster and the attacker
-
-        // source and target have to be manually reversed in this case, because to make the new projectile damage the attacker
-        // it should be sourced from the spellcaster and have attacker as its target
-        // basically, it means that target_index = spellcaster_index
-        // and source_index = attacker_index
-        SF_CGdTargetData source = {1, target_index, {0, 0}};
-        SF_CGdTargetData target = {1, source_index, {0, 0}};
-
-
-
-        // we spawn the projectile with addEffect command having EffectType set as kGdEffectProjectile
-        // please note that it's different command than the command we used to spawn visuals (addVisualEffect)
-        // addEffect accepts Type, visual offsets for source figure and target figure, the beginning tick, amount of ticks it should last (flight time), vector of movement
-        uint16_t effect_id = effectAPI->addEffect(_this->CGdEffect, kGdEffectProjectile, &source, &target,
-                                                  _this->OpaqueClass->current_step+distance, ((distance != 0) ? distance : 1), &spell_vector);
-
-        // after we spawned the effect, we have to manually set its data
-        // we set both spellcaster and attacker entity types as 1 (figure)
-        effectAPI->setEffectXData(_this->CGdEffect, effect_id, EFFECT_ENTITY_TYPE, 1);
-        effectAPI->setEffectXData(_this->CGdEffect, effect_id, EFFECT_ENTITY_TYPE2, 1);
-        // then we should assign the source and the target indexes to the effect
-        // it gets really messed here, but the first index should be attacker's index and the second the spellcaster's index
-        effectAPI->setEffectXData(_this->CGdEffect, effect_id, EFFECT_ENTITY_INDEX, source_index);
-        effectAPI->setEffectXData(_this->CGdEffect, effect_id, EFFECT_ENTITY_INDEX2, target.entity_index);
-        // we should specify that the projectile doesn't bring any subspell with itself
-        effectAPI->setEffectXData(_this->CGdEffect, effect_id, EFFECT_ADD_SUBSPELL, 1);
-        // we should set the projectile's physical damage, let's just return full damage the attacker was going to deal
-        effectAPI->setEffectXData(_this->CGdEffect, effect_id, EFFECT_PHYSICAL_DAMAGE, damage);
-
-        logger->logInfo("PROJECTILE IS MIRRORED");
-
-        // the projectile is ready, but we should also negate damage dealt to the spellcaster
-        return 0;
+        logger->logWarning("ARROW REFLECTION FAILED: no free effect slot for the clone");
+        return damage;
     }
+
+    // the cloned projectile carries the full damage the attacker was going to deal
+    effectAPI->setEffectXData(_this, clone_id, EFFECT_PHYSICAL_DAMAGE, damage);
+
+    // Damage attribution (owner decision): the clone's landing damage is dealt by the attacker
+    // (self-hit) — the server-side hook reads source from xdata ENTITY_INDEX. The clone's VISUAL
+    // is independent of these keys: it comes from the record's source pair copied by cloneEffect
+    // (K12), so the client template resolver uses the donor's weapon.
+    // type/index mirror the attacker's pair used for clone_target above (entity_type 1, handler's source)
+    effectAPI->setEffectXData(_this, clone_id, EFFECT_ENTITY_TYPE, 1);
+    effectAPI->setEffectXData(_this, clone_id, EFFECT_ENTITY_INDEX, source);
+
+    logger->logInfo("PROJECTILE IS MIRRORED");
+
+    // the original projectile is negated, so the spellcaster takes no damage
+    return 0;
 }
 
 void __thiscall arrows_reflection_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
@@ -264,7 +262,7 @@ void __thiscall arrows_reflection_effect_handler(SF_CGdSpell *_this, uint16_t sp
             // we declare structure for relative position of visual effect
             SF_CGdTargetData relative_data;
             figureAPI->getPosition(_this->CGdFigure, &relative_data.position, source_index);
-            relative_data.entity_type = 4;
+            relative_data.entity_type = 1;
             relative_data.entity_index = 0;
             uint32_t unused;
 
@@ -276,7 +274,8 @@ void __thiscall arrows_reflection_effect_handler(SF_CGdSpell *_this, uint16_t sp
             spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 0, &aux_data);
 
             // we disable the spell effect from being triggered until specified amount of time passes
-            uint16_t ticks_interval = spell_data.params[1];
+            // param 0 = buff duration in ms; on/off mechanic without frequent ticks
+            uint32_t ticks_interval = spell_data.params[0];
             _this->active_spell_list[spell_index].to_do_count = (uint16_t)((ticks_interval * 10) / 1000);
 
             // we have to activate the flag F_CHECK_SPELLS_BEFORE_JOB in order to make it possible for On Hit handler to trigger when the spellcaster makes an attack
@@ -359,8 +358,8 @@ extern "C" __declspec(dllexport) void InitModule(SpellforceSpellFramework *frame
     registrationAPI->linkTypeHandler(arrows_reflection_spell, &arrows_reflection_type_handler);
     registrationAPI->linkEffectHandler(arrows_reflection_spell, ARROWS_REFLECTION_JOB, &arrows_reflection_effect_handler);
     registrationAPI->linkRefreshHandler(arrows_reflection_spell, &arrows_reflection_refresh_handler);
-    registrationAPI->linkOnHitHandler(arrows_reflection_spell, &arrows_reflection_onhit_handler, PHASE_2);
-    // to make the On Hit handler be triggered when the caster is hit, we also have to tag the spell as TARGET_ON_HITSPELL
+    registrationAPI->linkPhysEffectHandler(arrows_reflection_spell, &arrows_reflection_phys_handler, PHASE_2);
+    // to make the Phys Effect handler be triggered when the caster is hit, we also have to tag the spell as TARGET_ONHIT_SPELL
     registrationAPI->applySpellTag(arrows_reflection_spell, TARGET_ONHIT_SPELL);
     registrationAPI->linkEndHandler(arrows_reflection_spell, &arrows_reflection_end_handler);
 }

@@ -33,6 +33,8 @@
 #include "hooks/sf_level_up_hook.h"
 
 #include "hooks/sf_effect_hook.h"
+#include "hooks/sf_phys_effect_hook.h"
+#include "hooks/sf_projectile_visual_hook.h"
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -294,6 +296,8 @@ void initialize_data_hooks()
     INCLUDE_FUNCTION(spell, tryClearCheckSpellsBeforeJob, &tryClearCheckSpellsBeforeJob);
 
     INCLUDE_FUNCTION(effect, effectXDataExists, &XDataExists);
+    INCLUDE_FUNCTION(effect, getCurrentEffectIndex, &getCurrentEffectIndex);
+    INCLUDE_FUNCTION(effect, cloneEffect, &cloneEffect);
     log_info("| - FigureAPI Wrappers");
     INCLUDE_FUNCTION(figure, addBonusMultToStatistic, &addBonusMultToStatistic);
 
@@ -946,6 +950,9 @@ void initialize_beta_hooks()
 
     log_info("Hooking avatar level up abilities");
     init_avatar_level_hook();
+
+    log_info("Hooking Projectile Visual Anchor");
+    initialize_projectile_visual_hooks();
 }
 
 /**

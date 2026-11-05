@@ -21,7 +21,7 @@ DECLARE_FUNCTION(void, linkSingleTargetAIHandler, SFSpell *spell, ai_single_hand
 DECLARE_FUNCTION(void, linkAOEAIHandler, SFSpell *spell, ai_aoe_handler_ptr handler);
 DECLARE_FUNCTION(void, linkAvoidanceAIHandler, SFSpell *spell, ai_avoidance_handler_ptr handler);
 DECLARE_FUNCTION(void, linkPhysRainHandler, SFSpell *spell, sub_effect_handler_ptr handler);
-DECLARE_FUNCTION(void, linkPhysEffectHandler, SFSpell *spell, phys_effect_handler_ptr handler);
+DECLARE_FUNCTION(void, linkPhysEffectHandler, SFSpell *spell, phys_effect_handler_ptr handler, OnHitPhase phase);
 DECLARE_FUNCTION(void, linkEnchantChanceHandler, SFSpell *spell, enchant_handler_ptr handler);
 
 DECLARE_FUNCTION(SFBuilding *, registerBuilding, uint8_t building_type);

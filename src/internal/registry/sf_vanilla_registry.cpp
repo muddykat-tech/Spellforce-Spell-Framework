@@ -1425,7 +1425,7 @@ void initialize_vanilla_spells()
 
     SFSpell *spark = registrationAPI.registerSpell(kGdSpellLineSpark);
     registrationAPI.linkTypeHandler(spark, &spark_handler);
-    registrationAPI.linkPhysEffectHandler(spark, &spark_phys_handler);
+    registrationAPI.linkPhysEffectHandler(spark, &spark_phys_handler, PHASE_5);
 
     SFSpell *tower_hypnotize = registrationAPI.registerSpell(kGdSpellLineHypnotizeTower);
     registrationAPI.linkTypeHandler(tower_hypnotize, &tower_hypnotize_handler);
