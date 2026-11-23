@@ -99,19 +99,8 @@ void __thiscall interference_effect_handler(SF_CGdSpell *_this, uint16_t spell_i
             SF_CGdResourceSpell spell_data;
             spellAPI->getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);
 
-            SF_CGdTargetData relative_data;
-            relative_data.position = {0, 0};
-            relative_data.entity_type = 1;
-            relative_data.entity_index = source_index;
-            uint32_t unused;
-
-            SF_Rectangle aux_data;
-            aux_data.partA = 0;
-            aux_data.partB = 0;
-
             // we apply the visual effect filling the area which we specified above
-            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data,
-                                      _this->OpaqueClass->current_step, 0x5, &aux_data);
+            spellAPI->addSpellHitEffect(_this, spell_index, source_index, 0x5);
             // the parameter before the last stands for spell area, effects affecting single target usually have this parameter set to 0
             // but if we want to make the effect look cool, we could put the number above 0 and it will look like an AoE spell on activation
 
@@ -252,19 +241,15 @@ void __thiscall patronize_effect_handler(SF_CGdSpell *_this, uint16_t spell_inde
             relative_data.position = {0, 0};
             relative_data.entity_type = 1;
             relative_data.entity_index = source_index;
-            uint32_t unused;
 
             SF_Rectangle hit_area;
 
             spellAPI->getTargetsRectangle(_this, &hit_area, spell_index, spell_data.params[0], &cast_center);
 
-            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitWorld, &unused, &relative_data,
-                                      _this->OpaqueClass->current_step, 0x25, &hit_area);
+            spellAPI->addSpellVisualEffect(_this, spell_index, kGdEffectSpellHitWorld, &relative_data,
+                                           0x25, &hit_area);
 
-            hit_area.partA = 0;
-            hit_area.partB = 0;
-            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data,
-                                      _this->OpaqueClass->current_step, 0x96, &hit_area);
+            spellAPI->addSpellHitEffect(_this, spell_index, source_index, 0x96);
 
             CGdFigureIterator figure_iterator;
             iteratorAPI->setupFigureIterator(&figure_iterator, _this);
@@ -313,22 +298,11 @@ void __thiscall patronize_effect_handler(SF_CGdSpell *_this, uint16_t spell_inde
             for (int i = 0; ((i < targets.size()) && (figure_count > 0)); i++)
             {
                 // we apply visual effect to every target
-                SF_CGdTargetData relative_data;
-                relative_data.position = {0, 0};
-                relative_data.entity_type = 1;         // 1 stands for individual figure
-                relative_data.entity_index = targets.at(i).figure_id;         //
-                uint32_t unused;
-
-                SF_Rectangle aux_data;
-                aux_data.partA = 0;
-                aux_data.partB = 0;
-
-                spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data,
-                                          _this->OpaqueClass->current_step, 0x96, &aux_data);
+                spellAPI->addSpellHitEffect(_this, spell_index, targets.at(i).figure_id, 0x96);
                 _this->CGdFigure->figures[source_index].flags |= F_CHECK_SPELLS_BEFORE_JOB;
 
                 // we add a spell to each figure
-                toolboxAPI->addSpellToFigure(_this->CGdFigureToolBox,  targets.at(i).figure_id, spell_index);
+                toolboxAPI->attachSpellToFigure(_this->CGdFigureToolBox,  targets.at(i).figure_id, spell_index);
                 figure_count--;
             }
 
@@ -359,19 +333,7 @@ void __thiscall shelter_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
             spellAPI->getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);
 
 
-            SF_CGdTargetData relative_data;
-            relative_data.position = {0, 0};
-            relative_data.entity_type = 1;
-            relative_data.entity_index = source_index;
-
-            uint32_t unused;
-
-            SF_Rectangle aux_data;
-            aux_data.partA = 0;
-            aux_data.partB = 0;
-
-            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data,
-                                      _this->OpaqueClass->current_step, 0x96, &aux_data);
+            spellAPI->addSpellHitEffect(_this, spell_index, source_index, 0x96);
             uint32_t ticks_interval = spell_data.params[0];
 
             spell->to_do_count = (uint16_t)((ticks_interval * 10) / 1000);

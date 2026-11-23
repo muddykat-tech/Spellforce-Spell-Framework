@@ -3,24 +3,24 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-/* Clone anchor ring (wave 19).
+/* Clone anchor ring.
  *
  * cloneEffect registers one entry per reflected projectile CLONE; the
  * 8AA2F4 site wrapper (see sf_projectile_visual_hook.c) looks the record
  * id up in this ring and swaps the rendered arc's source anchor (a4) to
  * the reflector. The engine resolver inside FUN_008aa610 is STATELESS: it
- * re-resolves the a4 key from the record on EVERY rendered frame (research
- * O-F3), so a consume-once substitution collapsed the arc back to the
- * attacker after the first frame (wave-17 regression, research VERDICT).
+ * re-resolves the a4 key from the record on EVERY rendered frame, so a
+ * consume-once substitution collapsed the arc back to the attacker after
+ * the first frame.
  * The entry therefore stays live for the WHOLE flight: the client renders
- * frames cs in [start, start+length] (research O-F5), expire_cs is
- * tick_start + tick_count (research O-F1), and pvfx_anchor_match does NOT
- * consume — expired entries are swept instead, both in match and on put
- * (wave 21). Engine precedent: vf15's
+ * frames cs in [start, start+length], expire_cs is
+ * tick_start + tick_count, and pvfx_anchor_match does NOT
+ * consume — expired entries are swept instead, both in match and on put.
+ * Engine precedent: vf15's
  * kGdSpellLineRockBulletChained branch rebuilds its anchor key every frame
  * the same way.
  *
- * Pure logic, no engine dependencies: the unit harness in the task contour
+ * Pure logic, no engine dependencies: the unit harness
  * compiles this header standalone. */
 #define PVFX_ANCHOR_RING_CAPACITY 8
 

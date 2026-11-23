@@ -279,6 +279,34 @@ void __thiscall white_almightness_end_handler(SF_CGdSpell *_this,
     default_end_handler(_this, spell_index);
 }
 
+/**
+ * mutation_revert_percentage - Revert a percentage stat bonus to the base value.
+ * @base_val: base statistic value of the figure
+ * @bonus: percentage bonus that was applied when the spell started
+ *
+ * Return: recalculated value, engine uint16 wrap semantics preserved
+ */
+static uint16_t mutation_revert_percentage(uint16_t base_val, int8_t bonus)
+{
+    return base_val - ((bonus * base_val) / 100);
+}
+
+/**
+ * mutation_restore_stat - Restore one mutation-affected statistic of the target.
+ * @figure: figure table of the engine
+ * @target_index: figure whose statistic is restored
+ * @stat_key: statistic to restore
+ * @base_val: base statistic value read from the figure table
+ * @bonus: percentage bonus that was applied when the spell started
+ */
+static void mutation_restore_stat(SF_CGdFigure *figure, uint16_t target_index,
+                                  uint16_t stat_key, uint16_t base_val, int8_t bonus)
+{
+    /* built as C++: uint16_t to StatisticDataKey needs an explicit cast */
+    figureAPI.addBonusMultToStatistic(figure, (StatisticDataKey)stat_key, target_index,
+                                      mutation_revert_percentage(base_val, bonus));
+}
+
 void __thiscall mutation_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
     SF_CGdResourceSpell spell_data;
@@ -291,93 +319,54 @@ void __thiscall mutation_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
     {
         int8_t bonus = spellAPI.getXData(_this, spell_index,
                                          SPELL_STAT_MUL_MODIFIER);
-        uint16_t stat_value =
-            _this->CGdFigure->figures[target_index].resistance_fire.base_val;
-        int8_t recalc_value = stat_value - ((bonus * stat_value) / 100);
-        figureAPI.addBonusMultToStatistic(_this->CGdFigure, RESISTANCE_FIRE,
-                                          target_index, recalc_value);
-
-        stat_value =
-            _this->CGdFigure->figures[target_index].fight_speed.base_val;
-        recalc_value = stat_value - ((bonus * stat_value) / 100);
-        figureAPI.addBonusMultToStatistic(_this->CGdFigure, FIGHT_SPEED,
-                                          target_index, recalc_value);
-
-        stat_value =
-            _this->CGdFigure->figures[target_index].intelligence.base_val;
-        recalc_value = stat_value - ((bonus * stat_value) / 100);
-        figureAPI.addBonusMultToStatistic(_this->CGdFigure, INTELLIGENCE,
-                                          target_index, recalc_value);
-
-        stat_value =
-            _this->CGdFigure->figures[target_index].stamina.base_val;
-        recalc_value = stat_value - ((bonus * stat_value) / 100);
-        figureAPI.addBonusMultToStatistic(_this->CGdFigure, STAMINA,
-                                          target_index, recalc_value);
+        mutation_restore_stat(_this->CGdFigure, target_index, RESISTANCE_FIRE,
+                              _this->CGdFigure->figures[target_index].resistance_fire.base_val,
+                              bonus);
+        mutation_restore_stat(_this->CGdFigure, target_index, FIGHT_SPEED,
+                              _this->CGdFigure->figures[target_index].fight_speed.base_val,
+                              bonus);
+        mutation_restore_stat(_this->CGdFigure, target_index, INTELLIGENCE,
+                              _this->CGdFigure->figures[target_index].intelligence.base_val,
+                              bonus);
+        mutation_restore_stat(_this->CGdFigure, target_index, STAMINA,
+                              _this->CGdFigure->figures[target_index].stamina.base_val,
+                              bonus);
 
         bonus = spellAPI.getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER2);
-        stat_value =
-            _this->CGdFigure->figures[target_index].resistance_ice.base_val;
-        recalc_value = stat_value - ((bonus * stat_value) / 100);
-        figureAPI.addBonusMultToStatistic(_this->CGdFigure, RESISTANCE_ICE,
-                                          target_index, recalc_value);
-
-        stat_value =
-            _this->CGdFigure->figures[target_index].cast_speed.base_val;
-        recalc_value = stat_value - ((bonus * stat_value) / 100);
-        figureAPI.addBonusMultToStatistic(_this->CGdFigure, CAST_SPEED,
-                                          target_index, recalc_value);
-
-        stat_value = _this->CGdFigure->figures[target_index].wisdom.base_val;
-        recalc_value = stat_value - ((bonus * stat_value) / 100);
-        figureAPI.addBonusMultToStatistic(_this->CGdFigure, WISDOM,
-                                          target_index, recalc_value);
+        mutation_restore_stat(_this->CGdFigure, target_index, RESISTANCE_ICE,
+                              _this->CGdFigure->figures[target_index].resistance_ice.base_val,
+                              bonus);
+        mutation_restore_stat(_this->CGdFigure, target_index, CAST_SPEED,
+                              _this->CGdFigure->figures[target_index].cast_speed.base_val,
+                              bonus);
+        mutation_restore_stat(_this->CGdFigure, target_index, WISDOM,
+                              _this->CGdFigure->figures[target_index].wisdom.base_val,
+                              bonus);
 
         bonus = spellAPI.getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER3);
-        stat_value =
-            _this->CGdFigure->figures[target_index].resistance_black.base_val;
-        recalc_value = stat_value - ((bonus * stat_value) / 100);
-        figureAPI.addBonusMultToStatistic(_this->CGdFigure, RESISTANCE_BLACK,
-                                          target_index, recalc_value);
-
-        stat_value =
-            _this->CGdFigure->figures[target_index].walk_speed.base_val;
-        recalc_value = stat_value - ((bonus * stat_value) / 100);
-        figureAPI.addBonusMultToStatistic(_this->CGdFigure, WALK_SPEED,
-                                          target_index, recalc_value);
-
-        stat_value =
-            _this->CGdFigure->figures[target_index].charisma.base_val;
-        recalc_value = stat_value - ((bonus * stat_value) / 100);
-        figureAPI.addBonusMultToStatistic(_this->CGdFigure, CHARISMA,
-                                          target_index, recalc_value);
-
-        stat_value =
-            _this->CGdFigure->figures[target_index].dexterity.base_val;
-        recalc_value = stat_value - ((bonus * stat_value) / 100);
-        figureAPI.addBonusMultToStatistic(_this->CGdFigure, DEXTERITY,
-                                          target_index, recalc_value);
+        mutation_restore_stat(_this->CGdFigure, target_index, RESISTANCE_BLACK,
+                              _this->CGdFigure->figures[target_index].resistance_black.base_val,
+                              bonus);
+        mutation_restore_stat(_this->CGdFigure, target_index, WALK_SPEED,
+                              _this->CGdFigure->figures[target_index].walk_speed.base_val,
+                              bonus);
+        mutation_restore_stat(_this->CGdFigure, target_index, CHARISMA,
+                              _this->CGdFigure->figures[target_index].charisma.base_val,
+                              bonus);
+        mutation_restore_stat(_this->CGdFigure, target_index, DEXTERITY,
+                              _this->CGdFigure->figures[target_index].dexterity.base_val,
+                              bonus);
 
         bonus = spellAPI.getXData(_this, spell_index, SPELL_STAT_MUL_MODIFIER4);
-        stat_value =
-            _this->CGdFigure->figures[target_index].resistance_mental.
-            base_val;
-        recalc_value = stat_value - ((bonus * stat_value) / 100);
-        figureAPI.addBonusMultToStatistic(_this->CGdFigure,
-                                          RESISTANCE_MENTAL, target_index,
-                                          recalc_value);
-
-        stat_value =
-            _this->CGdFigure->figures[target_index].strength.base_val;
-        recalc_value = stat_value - ((bonus * stat_value) / 100);
-        figureAPI.addBonusMultToStatistic(_this->CGdFigure, STRENGTH,
-                                          target_index, recalc_value);
-
-        stat_value =
-            _this->CGdFigure->figures[target_index].agility.base_val;
-        recalc_value = stat_value - ((bonus * stat_value) / 100);
-        figureAPI.addBonusMultToStatistic(_this->CGdFigure, AGILITY,
-                                          target_index, recalc_value);
+        mutation_restore_stat(_this->CGdFigure, target_index, RESISTANCE_MENTAL,
+                              _this->CGdFigure->figures[target_index].resistance_mental.base_val,
+                              bonus);
+        mutation_restore_stat(_this->CGdFigure, target_index, STRENGTH,
+                              _this->CGdFigure->figures[target_index].strength.base_val,
+                              bonus);
+        mutation_restore_stat(_this->CGdFigure, target_index, AGILITY,
+                              _this->CGdFigure->figures[target_index].agility.base_val,
+                              bonus);
     }
     default_end_handler(_this, spell_index);
 }
@@ -473,19 +462,12 @@ void __thiscall clay_feet_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
     spellAPI.setEffectDone(_this, spell_index, 0);
 }
 
+/* defined in sf_spelleffect_handlers.cpp; shared by aura end path across TUs */
+void aura_detach(SF_CGdSpell *_this, uint16_t spell_index, uint16_t source_index);
+
 void __thiscall aura_end_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
-    SF_CGdFigure *sf_figures = _this->CGdFigure;
     uint16_t source_index = _this->active_spell_list[spell_index].source.entity_index;
-    if ((sf_figures->figures[source_index].owner != (uint16_t)(-1)) &&
-        ((sf_figures->figures[source_index].flags & (IS_DEAD | RESESRVED_ONLY)) == 0))
-    {
-        sf_figures->figures[source_index].flags &= ~(GdFigureFlags::AURA_RUNNING);
-    }
-    uint16_t effect_index = spellAPI.getXData(_this, spell_index, EFFECT_EFFECT_INDEX);
-    if (effect_index != 0)
-    {
-        effectAPI.tryEndEffect(_this->CGdEffect, effect_index);
-    }
+    aura_detach(_this, spell_index, source_index);
     default_end_handler(_this, spell_index);
 }

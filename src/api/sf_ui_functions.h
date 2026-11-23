@@ -100,12 +100,40 @@ DECLARE_FUNCTION(void, menuLabelSetFont, void *_this, SF_Font *font);
 DECLARE_FUNCTION(void, menuLabelSetString, CMnuLabel *_this, SF_String *string);
 DECLARE_FUNCTION(SF_Font *, getFont, SF_FontStruct *_this, uint32_t font_id);
 DECLARE_FUNCTION(uint32_t, setScreenName, void *_this, SF_String *name);
-DECLARE_FUNCTION(void, vfunction175, CMnuLabel *_this, uint8_t param_1);
+/**
+ * vfunction175 - Toggles a CMnuLabel state flag and refreshes the label.
+ * @param enable_flag: New value of bit 0 of the label state word (+0x3C);
+ *        exact meaning not established, framework passes 1.
+ */
+DECLARE_FUNCTION(void, vfunction175, CMnuLabel *_this, uint8_t enable_flag);
 DECLARE_FUNCTION(void, setCanFocus, CMnuBase *_this, uint8_t value);
-DECLARE_FUNCTION(void, attachControlToScreen, void *_this, CMnuBase *param_1, uint8_t param_2);
-DECLARE_FUNCTION(void, vfunction12, CMnuBase *_this, float param_1, uint8_t param_2);
-DECLARE_FUNCTION(void, bringToFront, CMnuContainer *_this, void *param_1);
-DECLARE_FUNCTION(void, vfunction163, CMnuContainer *_this, void *param_1);
+/**
+ * attachControlToScreen - Attaches a control to a screen
+ * (CMnuScreen::vfunction207, engine CMnuScreen::AttachControl).
+ * @param control: Control to attach.
+ * @param activate_flag: Non-zero runs the post-attach activation path in
+ *        CMnuContainer::add_control; framework passes 0.
+ */
+DECLARE_FUNCTION(void, attachControlToScreen, void *_this, CMnuBase *control, uint8_t activate_flag);
+/**
+ * vfunction12 - Writes a float layout value to a CMnuBase (+0x180).
+ * @param layout_value: Value to store (position-like; framework passes
+ *        761.0 for a progress label).
+ * @param scale_flag: Non-zero scales the value from the screen design
+ *        units to the actual screen size before storing.
+ */
+DECLARE_FUNCTION(void, vfunction12, CMnuBase *_this, float layout_value, uint8_t scale_flag);
+/**
+ * bringToFront - Raises a container above its siblings.
+ * @param target_control: Container to raise; zero raises _this itself.
+ */
+DECLARE_FUNCTION(void, bringToFront, CMnuContainer *_this, void *target_control);
+/**
+ * vfunction163 - Conditional show for a visual control.
+ * @param refresh_mode: Flag forwarded to the show/refresh path
+ *        (vfunction166); semantics of the two paths not established.
+ */
+DECLARE_FUNCTION(void, vfunction163, CMnuContainer *_this, void *refresh_mode);
 
 /**
  * @brief operator new (global allocator). Declared manually (not via
@@ -147,8 +175,6 @@ DECLARE_FUNCTION(SF_String *, SFStringConstructor_char, SF_String *_this, const 
 DECLARE_FUNCTION(SF_String *, SFStringConstructor_wchar, SF_String *_this, const wchar_t *value);
 
 DECLARE_FUNCTION(uint32_t, vfunction187, void *_this, SF_String *name);
-
-DECLARE_FUNCTION(void, vfunction207, void *_this, CMnuBase *param_1, uint8_t param_2);
 
 /**
  * @ingroup API
@@ -227,7 +253,6 @@ typedef struct
     vfunction187_ptr vfunction187;
     vfunction175_ptr vfunction175;
     setCanFocus_ptr setCanFocus;
-    vfunction207_ptr vfunction207;
     vfunction12_ptr vfunction12;
     attachControlToScreen_ptr attachControlToScreen;
     bringToFront_ptr bringToFront;

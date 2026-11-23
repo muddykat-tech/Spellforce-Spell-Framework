@@ -122,10 +122,7 @@ void __thiscall rock_bullet_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
         else
         {
             spellAPI->figureAggro(_this, spell_index, target_index);
-            SF_Rectangle rect = {0,0};
-
-            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellTargetResisted, &source_data, &target_data,
-                                      _this->OpaqueClass->current_step, 40, &rect);
+            spellAPI->addSpellVisualEffect(_this, spell_index, kGdEffectSpellTargetResisted, &target_data, 40, NULL);
         }
 
     }

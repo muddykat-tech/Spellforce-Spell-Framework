@@ -332,8 +332,8 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
         // A 0-0 weapon (all damage comes from enchantments) and unarmed attackers
         // (stats 0-0 without a weapon item) deliberately fall through to the full
         // else branch: cast interruption, on-hit phases, projectile, Havoc curse
-        // and weapon enchantments (owner decision, TZ sf-phys-effect-v2 par. 3.7).
-        bool glanced = (damage == 0) && (weapon_stats.max_dmg != 0);
+         // and weapon enchantments (owner decision).
+        bool glanced = (damage == 0) && (weapon_stats.max_dmg > 1);
         if (glanced)
         {
 #if _DEBUG_
@@ -413,51 +413,9 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
             // donnoe wtf is it, looks like shooting?
             if (action.type == 0x2712)
             {
-                uint16_t maxY = (_this->CGdFigure->figures[source_index].position.Y <=
-                                 _this->CGdFigure->figures[target.entity_index].position.Y)
-                                    ? (_this->CGdFigure->figures[target.entity_index].position.Y)
-                                    : (_this->CGdFigure->figures[source_index].position.Y);
-
-                uint16_t maxX = (_this->CGdFigure->figures[source_index].position.X <=
-                                 _this->CGdFigure->figures[target.entity_index].position.X)
-                                    ? (_this->CGdFigure->figures[target.entity_index].position.X)
-                                    : (_this->CGdFigure->figures[source_index].position.X);
-
-                uint16_t minY = (_this->CGdFigure->figures[source_index].position.Y >
-                                 _this->CGdFigure->figures[target.entity_index].position.Y)
-                                    ? (_this->CGdFigure->figures[target.entity_index].position.Y)
-                                    : (_this->CGdFigure->figures[source_index].position.Y);
-
-                uint16_t minX = (_this->CGdFigure->figures[source_index].position.X >
-                                 _this->CGdFigure->figures[target.entity_index].position.X)
-                                    ? (_this->CGdFigure->figures[target.entity_index].position.X)
-                                    : (_this->CGdFigure->figures[source_index].position.X);
-                SF_Coord p1;
-                SF_Coord p2;
                 SF_Rectangle vector;
-                p1.X = maxX;
-                if (minX < maxX)
-                {
-                    p1.X = minX;
-                }
-                p1.Y = maxY;
-                if (minY < maxY)
-                {
-                    p1.Y = minY;
-                }
-
-                p2.X = maxX;
-                if (maxX <= minX)
-                {
-                    p2.X = minX;
-                }
-                p2.Y = maxY;
-                if (maxY <= minY)
-                {
-                    p2.Y = minY;
-                }
-                vector.partA = p1.Y << 0x10 | p1.X;
-                vector.partB = p2.Y << 0x10 | p2.X;
+                buildTargetRectangle(_this->CGdFigure->figures[source_index].position,
+                                     _this->CGdFigure->figures[target.entity_index].position, &vector);
 
                 uint32_t distance = getDistance(&_this->CGdFigure->figures[source_index].position,
                                                 &_this->CGdFigure->figures[target.entity_index].position);
@@ -500,6 +458,10 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
                         effectAPI.setEffectXData(_this->CGdEffect, effect_id, EFFECT_SUBSPELL_ID, spell_id);
                     }
                 }
+
+                // RANGED_SHOT phase dispatch (framework mechanism):
+                // one call per ranged shot; the registry function owns the walk and the gate.
+                run_onhit_shot_phase(_this, source_index, target.entity_index, effect_id);
             }
             else
             {
@@ -512,12 +474,8 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
                                                                    _this->CGdFigure->figures[source_index].level);
                     if (spell_id != 0)
                     {
-                        SF_CGdTargetData t_data;
-                        t_data.entity_index = source_index;
-                        t_data.entity_type = 1;
-                        t_data.position = {0, 0};
-                        spellAPI.addSpell(_this->CGdSpell, spell_id, _this->OpaqueClass->current_step, &target, &t_data,
-                                          0);
+                        addSpellToFigure(_this->CGdSpell, spell_id,
+                                         target.entity_index, source_index);
                     }
                 }
                 if(damage != 0)
@@ -566,12 +524,8 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
                             if (enchant_id != 0)
                             {
                                 // FIXME reflect enchants as well in riposte set handler;
-                                SF_CGdTargetData source;
-                                source.entity_type = 1;
-                                source.entity_index = source_index;
-                                source.position = {0, 0};
-                                spellAPI.addSpell(_this->CGdSpell, enchant_id, _this->OpaqueClass->current_step,
-                                                  &source, &target, 0);
+                                addSpellToFigure(_this->CGdSpell, enchant_id,
+                                                 source_index, target.entity_index);
                             }
                         }
                     }
@@ -599,6 +553,45 @@ void __thiscall sf_onhit_hook(SF_CGdFigureJobs *_this, uint16_t source_index,
             }
         }
     }
+}
+
+uint8_t __thiscall roll_weapon_enchant_effects(SF_CGdFigureJobs *jobs, uint16_t source_index,
+                                               uint16_t weapon_id, uint16_t *out_spell_ids)
+{
+    uint32_t effects[2];
+    g_getWeaponEffects(jobs->CGdResource, effects, weapon_id);
+    if (effects[0] == 0)
+    {
+        return 0;
+    }
+    uint8_t count = 0;
+    for (int i = 0; i < 3; i++)
+    {
+        uint16_t enchant_id = *(uint16_t *)((uint32_t)(&effects[0]) + i * 2 + 2);
+        if (enchant_id == 0)
+            break;
+        SF_CGdResourceSpell spell_data;
+        spellAPI.getResourceSpellData(jobs->CGdResource, &spell_data, enchant_id);
+        enchant_handler_ptr chance_handler = get_enchant_handler(spell_data.spell_line_id);
+        uint32_t chance = chance_handler(jobs->CGdFigure, source_index);
+        if (spellAPI.getRandom(jobs->OpaqueClass, 10000) < chance)
+        {
+            // Race leveling mirror (:556-564): races 1-6 with a non-zero owner
+            // level the enchant id; the leveled 0 result drops the proc (:566).
+            if ((jobs->CGdFigure->figures[source_index].race != 0) &&
+                (jobs->CGdFigure->figures[source_index].race < 7) &&
+                (jobs->CGdFigure->figures[source_index].owner != 0))
+            {
+                enchant_id = spellAPI.getLeveledSpellID(jobs->CGdResource, enchant_id,
+                                                        jobs->CGdFigure->figures[source_index].level);
+            }
+            if (enchant_id != 0)
+            {
+                out_spell_ids[count++] = enchant_id;
+            }
+        }
+    }
+    return count;
 }
 
 /**@} */

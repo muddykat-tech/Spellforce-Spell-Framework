@@ -14,11 +14,11 @@
  * (engine precedent: the kGdSpellLineRockBulletChained branch of vf15
  * rebuilds its primary key from xdata the same way).
  *
- * Wave 19: FUN_008aa610 resolves the a4 key STATELESSLY on EVERY frame
- * (research O-F3), so the wave-17 consume-once substitution collapsed the
+ * FUN_008aa610 resolves the a4 key STATELESSLY on EVERY frame, so the
+ * consume-once substitution collapsed the
  * arc back to the attacker after the first rendered frame. The ring now
  * keys entries by the clone's record id and keeps them for the whole
- * flight (cs <= expire_cs = tick_start + tick_count, research O-F1/O-F5);
+ * flight (cs <= expire_cs = tick_start + tick_count);
  * match is non-consuming and re-substitutes a4 on every frame. The
  * original callee is ALWAYS called; effect record, timings and positions
  * are not touched. */
@@ -30,7 +30,7 @@
 
 /* Original callee of the hooked site (FUN_008aa610, VA 0x8AA610):
  * __thiscall, this + 7 stack arguments (record, view, a3, a4, X, Y, Z) —
- * lifted from the site byte context (wave-9d scan) and the vf15 decompile,
+ * lifted from the site byte context and the vf15 decompile,
  * which forwards (this, record, record+0xC, secondary, primary, X, Y, Z). */
 typedef void (__thiscall *pvfx_fun_8aa610_ptr)(void *_this, void *record, void *view,
                                                uint32_t a3, uint32_t a4,

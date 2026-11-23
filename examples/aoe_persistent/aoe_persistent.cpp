@@ -46,12 +46,7 @@ void __thiscall thuderstorm_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
     // visual effect addition, if it's 1st tick
     if (tick_current == 0)
     {
-        SF_CGdTargetData relative_data;
-        relative_data.position = cast_center;
-        relative_data.entity_type = 4;
-        relative_data.entity_index = 0;
-        uint32_t unused;
-        spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitWorld, &unused, &relative_data, _this->OpaqueClass->current_step, 0x19, &hit_area);
+        spellAPI->addSpellHitWorldEffect(_this, spell_index, cast_center, 0x19, &hit_area);
     }
 
     iteratorAPI->iteratorSetArea(&iterator_memory, &cast_center, spell_data.params[0]);
@@ -85,11 +80,7 @@ void __thiscall thuderstorm_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
                         relative_data.position = {0, 0};
                         relative_data.entity_type = 1;
                         relative_data.entity_index = target_index;
-                        uint32_t unused;
-                        SF_Rectangle aux_data;
-                        aux_data.partA = 0;
-                        aux_data.partB = 0;
-                        spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 10, &hit_area);
+                        spellAPI->addSpellVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &relative_data, 10, &hit_area);
                         toolboxAPI->dealDamage(_this->CGdFigureToolBox, source_index, target_index, spell_data.params[1], 1, 0, 0);
                     }
                     else

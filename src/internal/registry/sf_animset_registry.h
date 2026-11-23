@@ -11,7 +11,7 @@
 
 /* Synthetic movie subkeys the animset bridge registers into a movie library
  * (one per shielded pair, at most 16 per library - the only section that
- * consumes them, TZ 7). */
+ * consumes them). */
 #define SFSF_ANIMSET_SYNTH_FIRST 240
 #define SFSF_ANIMSET_SYNTH_LAST 255
 

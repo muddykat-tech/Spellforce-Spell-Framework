@@ -375,7 +375,7 @@ void __thiscall disrupt_handler(SF_CGdSpell *_this, uint16_t spell_index)
 
 void __thiscall confuse_handler(SF_CGdSpell *_this, uint16_t spell_index)
 {
-    _this->active_spell_list[spell_index].spell_job = kGdSpellLineConfuse;
+    _this->active_spell_list[spell_index].spell_job = kGdSpellJobConfuse;
     initializeSpellData(_this, spell_index, SPELL_TICK_COUNT_AUX);
 }
 

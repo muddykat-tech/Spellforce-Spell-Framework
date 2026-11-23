@@ -158,13 +158,13 @@ void install_movie_lib_bridge()
     s_vca_ctor = (VcaManagerCtor_ptr)(ASI::AddrOf(0x3ba510));         /* manager constructor (VA 0x7BA510) */
     s_engine_new = (EngineNew_ptr)(ASI::AddrOf(0x675a9d));            /* engine operator new (VA 0xA75A9D) */
     s_vca_manager_slot = (void **)ASI::AddrOf(0x9751a4);              /* manager singleton global (VA 0x00D751A4) */
-    s_anim_effect_vftable = (void *)ASI::AddrOf(0x7D9DE0); /* CDrwMovieEffectAnimation::vftable (VA 0xBD9DE0); beta-exe loads relocated (+0x60000 observed), absolute literals never match — pitfalls §1 */
+    s_anim_effect_vftable = (void *)ASI::AddrOf(0x7D9DE0); /* CDrwMovieEffectAnimation::vftable (VA 0xBD9DE0); beta-exe loads relocated (+0x60000 observed), absolute literals never match */
     s_sound_effect_vftable = (void *)ASI::AddrOf(0x7D9E18); /* CDrwMovieEffectSound::vftable (VA 0xBD9E18); same relocation lesson as s_anim_effect_vftable */
 }
 
 uint16_t animsetJobForWeapon(uint16_t weapon_type)
 {
-    /* Full v2 jobMap (TZ 5.1): Punch for the fist-family, deterministic Stab
+    /* Full v2 jobMap: Punch for the fist-family, deterministic Stab
      * for the dagger, custom catalog types by attack_style, everything else
      * Strike - the registration job always equals the emission job of the
      * dispatcher, so the synth guard and the cascade step 1 agree. */
@@ -206,8 +206,7 @@ uint16_t animsetJobForWeapon(uint16_t weapon_type)
  * (_splitpath semantics, FUN_005e6560) and rebuilds the path replacing only
  * the extension with "bob"/"bor" (_makepath semantics, FUN_005e6350): the
  * directory component comes from the input, so a bare name would probe
- * <root>\<name>.bob and always miss (research file, "Fix-pass R1/R2",
- * fact 1). The decorated form also makes the probe cache key identical to
+ * <root>\<name>.bob and always miss. The decorated form also makes the probe cache key identical to
  * the engine's playback key.
  */
 static void buildProbeName(const char *name, char *out, size_t out_len)
@@ -230,8 +229,7 @@ static void buildProbeName(const char *name, char *out, size_t out_len)
  * SF_String::copy_from 0x783720, which allocates its own buffer and memcpy's
  * the bytes; lookup FUN_007bb0b0 compares key contents) - the input string is
  * only read during the call itself. A stack probe destroyed right after the
- * call is therefore safe; no keep-alive pool is needed (research file,
- * "Fix-pass R1/R2", fact 2).
+ * call is therefore safe; no keep-alive pool is needed.
  */
 static bool animNameResolves(const char *name)
 {
@@ -718,7 +716,7 @@ static bool recoverBaseName(const char (*names)[SFSF_ANIMSET_FILM_NAME_MAX], int
  * rebuilt (a map reload rebuilds them; ConTestAnims.lua rebuilds them live).
  * Every cache touch therefore verifies the signature captured at configure
  * time: the leftmost tree key plus the node count (both recomputed cheaply
- * from the tree itself). v2 (TZ 5.2 p.7): the signature is captured for EVERY
+ * from the tree itself). v2: the signature is captured for EVERY
  * final state and re-verified for every state, and the cache is finite -
  * 128 slots with a deterministic ring eviction (oldest INERT first, then the
  * oldest CONFIGURED/FAILED; a monotonic acquisition counter provides the
@@ -766,7 +764,7 @@ static LibCacheEntry *findLibCacheEntry(void *movie_lib)
     return NULL;
 }
 
-/** @brief Policy observability (owner decision 14.11): a DEBUG snapshot of
+/** @brief Policy observability (owner decision): a DEBUG snapshot of
  * the cache occupancy, printed at every configure completion and eviction.
  * Visible at the sfsf.ini debug level; INFO installs see nothing of it. */
 static void logCacheSnapshot(const char *event, const LibCacheEntry *entry)
@@ -812,7 +810,7 @@ static LibCacheEntry *acquireLibCacheEntry(void *movie_lib)
         }
     }
 
-    /* Cache full (TZ 5.2 p.7): deterministic ring eviction instead of the old
+    /* Cache full: deterministic ring eviction instead of the old
      * "disabled for the rest". The oldest INERT slot dies first (a foreign
      * library costs one re-evaluation on its next touch); with no INERT slot
      * left the oldest CONFIGURED/FAILED dies (its next touch reconfigures it
@@ -1016,7 +1014,7 @@ static bool findDonorSwingSound(void *movie_lib, uint16_t weapon,
 
 /**
  * @brief Ranged donor cascade for a shoot phase without an explicit sound
- * (owner decision 14.6, "analogous to melee"): (74, weapon) first, then
+ * (owner decision, "analogous to melee"): (74, weapon) first, then
  * (74, 0) - the vanilla fire-arrow sound sits on the Range2 job default
  * (ofil l.1380). Aim phases never inherit a sound (vanilla aims silently).
  */
@@ -1065,7 +1063,7 @@ static void attachPairSound(void *movie, int sound_id, float offset, float lengt
     }
 }
 
-/* Which default-sound cascade applies to a film set (TZ 8). */
+/* Which default-sound cascade applies to a film set. */
 typedef enum
 {
     FILM_DONOR_NONE = 0,  /* ranged aim: explicit sound only (vanilla aims silently) */
@@ -1091,7 +1089,7 @@ typedef struct
  * set occupies no slot); when NULL, @p subkey (the weapon type itself for
  * solo, the phase's job key space for ranged) is used directly.
  *
- * Resolve gate, SetRangeAndModes(Stretched) and AddSound follow v1 §5.2 p.2
+ * Resolve gate, SetRangeAndModes(Stretched) and AddSound follow v1
  * unchanged. The donor cascade resolves lazily after the first name passed
  * the gate, once per set.
  *
@@ -1104,11 +1102,11 @@ static bool registerFilmSet(void *movie_lib, int job, uint8_t subkey,
 {
     bool registered_any = false;
     int variant = 0;
-    /* M<N snapshot (TZ 12.8), taken lazily at the first AddNewMovie of this
+    /* M<N snapshot, taken lazily at the first AddNewMovie of this
      * set: how many film variants already stand under the key. For the
      * shielded section the snapshot lands after the lazy synth allocation,
      * so it consults the REAL (job, synth) key - never the vanilla
-     * (job, 0) default (review R2-1). */
+     * (job, 0) default. */
     int variants_before = -1;
 
     /* Resolve the set's sound ONCE, before the film loop: one set with an
@@ -1204,14 +1202,13 @@ static bool registerFilmSet(void *movie_lib, int job, uint8_t subkey,
         registered_any = true;
     }
 
-    /* M<N mixing diagnostic (TZ 12.8), one INFO line per key, and ONLY when
+    /* M<N mixing diagnostic, one INFO line per key, and ONLY when
      * the registration really leaves foreign variants behind: AddNewMovie
      * replaces variants 0..N-1, so films standing BEYOND our own count
      * (variants_before > variant) survive and will mix. A re-registration
      * over our own films (cache eviction -> reconfigure) counts exactly its
      * own variants and stays silent; for shielded the vanilla tree never
-     * occupies the synth key, so the line is unreachable there (review
-     * R2-1). */
+     * occupies the synth key, so the line is unreachable there. */
     if (variants_before > variant)
     {
         log_info("Animset bridge: key (job %d, subkey %d) carries %d film(s), registering %d, "
@@ -1249,7 +1246,7 @@ static bool registerRangedFilms(void *movie_lib, const AnimsetRangedEntry *set)
  * (all three sections).
  *
  * The signature (leftmost key + node count) is captured at EVERY completion
- * for ANY final state (TZ 5.2 p.7): the next touch re-verifies INERT and
+ * for ANY final state: the next touch re-verifies INERT and
  * FAILED slots exactly like CONFIGURED ones, so an allocator-reused address
  * never keeps a stale verdict. Every inert outcome is INFO - with the v2
  * registration point every figure type of the map passes here once, a
@@ -1259,8 +1256,8 @@ static void configureLibEntry(LibCacheEntry *entry)
 {
     /* Static instead of stack: 512 x 128 bytes = 64 KiB would be the largest
      * frame in the UpdateAnims call chain. The bridge is strictly
-     * single-threaded (every touch comes from the main game loop - research
-     * facts 1.2 p.9), so one shared buffer is safe. */
+     * single-threaded (every touch comes from the main game loop),
+     * so one shared buffer is safe. */
     static char names[SFSF_ANIMSET_LIB_FILM_CAP][SFSF_ANIMSET_FILM_NAME_MAX];
     LibWalkResult walk;
     memset(&walk, 0, sizeof(walk));
@@ -1437,7 +1434,7 @@ void ensureMovieLibConfigured(void *movie_lib)
         return;
     }
 
-    /* Re-verify EVERY state (TZ 5.2 p.7): the registration point touches all
+    /* Re-verify EVERY state: the registration point touches all
      * figure types of the map, and a reused library address with a stale
      * INERT/FAILED verdict would silently lose the feature. The failure
      * direction stays safe - a re-configure only re-runs the registration. */

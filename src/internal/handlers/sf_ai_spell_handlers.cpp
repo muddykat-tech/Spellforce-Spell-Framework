@@ -185,13 +185,27 @@ uint32_t __thiscall defensive_aura_ai_handler(SF_CGdBattleDevelopment *_this,
     return rank;
 }
 
-// Regeneration and Healing
+/* healing_aura_ai_handler - AI rank for the healing auras (Regeneration and
+ * Healing lines). Vanilla gates kept in order: caster-only, non-empty battle,
+ * aggregate figures_missing_hp, mana (cost*7/2). Candidate selection:
+ * rank 2 only when some ally's effective deficit -
+ * missing HP minus all incoming healing (in-flight tagged list snapshot via
+ * sumIncomingHealFromList plus walk-phase scan via
+ * sumIncomingPendingHealsAllFigures, saturating subtraction) - reaches the
+ * sub-spell volume params[0]; among such candidates the largest effective
+ * deficit wins. The selected figure itself is not returned here - the aura
+ * tick re-selects with the same formula (effect_aura AuraHealing branch).
+ * Cost note: every ally costs one list snapshot plus one all-figures walk
+ * scan (O(ally x (snapshot + max_used)) field reads) - acceptable on the AI
+ * phase, which runs per planning step, not per game tick. */
 uint32_t __thiscall healing_aura_ai_handler(SF_CGdBattleDevelopment *_this,
                                             uint16_t target_index,
                                             uint16_t spell_line,
                                             SF_CGdResourceSpell *spell_data)
 {
-    uint32_t rank = 1;
+    /* rank 2 unblocks the sticky selection floor (contest needs rank
+     * composite above the persisted ranking); vanilla value is 1 */
+    uint32_t rank = 2;
     if (_this->battleData.current_figure == target_index)
     {
         if ((_this->battleData.enemy_figures.entityCount == 0) &&
@@ -208,25 +222,37 @@ uint32_t __thiscall healing_aura_ai_handler(SF_CGdBattleDevelopment *_this,
             else
             {
                 uint16_t manacost = (spell_data->mana_cost * 7) / 2;
-                if (figureAPI.getCurrentStat(_this->battleData.CGdFigure, target_index, MANA) < manacost)
+                uint16_t mana_cur = figureAPI.getCurrentStat(_this->battleData.CGdFigure, target_index, MANA);
+                if (mana_cur < manacost)
                 {
                     rank = 0;
                 }
-                uint16_t best_target = 0;
                 uint16_t subspell_id = spell_data->params[6];
                 SF_CGdResourceSpell sub_spell_data;
                 spellAPI.getResourceSpellData(_this->battleData.CGdResource, &sub_spell_data, subspell_id);
-                uint16_t healing_amount = sub_spell_data.params[0];
+                uint32_t healing_volume = sub_spell_data.params[0];
+                uint32_t best_deficit = 0;
+                int best_found = 0;
                 for (int i = 0; i < _this->battleData.ally_figures.entityCount; i++)
                 {
                     uint16_t figure_id = _this->battleData.ally_figures.data[i].entity_index;
-                    if (_this->battleData.CGdFigure->figures[figure_id].health.missing_val >= healing_amount)
+                    uint32_t missing = _this->battleData.CGdFigure->figures[figure_id].health.missing_val;
+                    uint32_t incoming = sumIncomingHealFromList(_this->battleData.CGdFigure,
+                                                                _this->battleData.CGdResource,
+                                                                figure_id) +
+                                        sumIncomingPendingHealsAllFigures(_this->battleData.CGdFigure,
+                                                                          _this->battleData.CGdResource,
+                                                                          _this->battleData.CGdFigureToolBox,
+                                                                          figure_id);
+                    uint32_t effective_deficit = (missing > incoming) ? (missing - incoming) : 0u;
+                    if ((effective_deficit >= healing_volume) &&
+                        (!best_found || (effective_deficit > best_deficit)))
                     {
-                        best_target = figure_id;
-                        break;
+                        best_found = 1;
+                        best_deficit = effective_deficit;
                     }
                 }
-                if (best_target == 0)
+                if (!best_found)
                 {
                     rank = 0;
                 }
@@ -783,33 +809,36 @@ uint32_t __thiscall healing_ai_handler(SF_CGdBattleDevelopment *_this,
     {
         return 0;
     }
-    uint16_t healing_amount = 0;
-    struct
+    /* list (tagged, exact volumes) + walk-phase scan */
+    uint32_t healing_amount = sumIncomingPendingHeals(_this->battleData.CGdFigure,
+                                                      _this->battleData.CGdResource,
+                                                      &_this->battleData.ally_figures,
+                                                      target_index);
+    /* Usefulness gate - deliberate divergence from vanilla:
+     * refuse the cast (rank 0) while the wound is below the smaller of the two
+     * floors: max health / 10 and this spell's heal volume / 2 (both integer
+     * division, HP units; equality still triggers). The gate is additional to
+     * the vanilla full-health check below; the rank 1/2 logic is untouched.
+     * A heal volume of params[0] <= 1 HP zeroes the half-heal floor, so the
+     * gate stays passive (vanilla behaviour). */
+    const uint32_t gate_max_health_share = 10; /* wound floor divisor of max health (HP) */
+    const uint32_t gate_heal_volume_share = 2; /* wound floor divisor of heal volume (HP) */
+    uint32_t missing_health = (uint32_t)max_health - (uint32_t)current_health; /* HP */
+    uint32_t heal_volume = spell_data->params[0];                              /* HP */
+    uint32_t max_share_floor = max_health / gate_max_health_share;             /* HP */
+    uint32_t half_heal_floor = heal_volume / gate_heal_volume_share;           /* HP */
+    uint32_t usefulness_threshold = (max_share_floor < half_heal_floor) ? max_share_floor
+                                                                        : half_heal_floor; /* HP */
+    if (missing_health < usefulness_threshold)
     {
-        uint32_t *first;
-        uint32_t *data;
-        uint32_t *post_last;
-    } some_list;
-    uint32_t *list_first;
-    uint32_t *list_current;
-    figureAPI.getHealersList(_this->battleData.CGdFigure, &some_list, target_index);
-    uint32_t list_length = ((uint32_t)some_list.data - (uint32_t)some_list.first) >> 2;
-    if (list_length != 0)
-    {
-        list_first = some_list.first;
-        list_current = some_list.data;
-        while (list_current != list_first)
-        {
-            healing_amount += spell_data->params[0];
-            list_first++;
-        }
+        rank = 0;
+        return rank;
     }
     if (current_health + healing_amount < max_health)
     {
         if (current_health == 0)
         {
             rank = 0;
-            figureAPI.disposeHealerList(&some_list);
             return rank;
         }
         if (((max_health * 9) / 10 < current_health + healing_amount) ||

@@ -16,7 +16,7 @@
 #include "jsmn.h"
 
 /* Parse outcome of one section record: a record-local breach drops the
- * RECORD (per-record skip, TZ 4d), a structural breach kills the file. */
+ * RECORD (per-record skip), a structural breach kills the file. */
 enum
 {
     PARSE_OK = 0,
@@ -126,7 +126,7 @@ static bool copy_json_string(char *dst, size_t dst_len, const char *json, const 
 /**
  * @brief Reads one string token and enforces the name length limit.
  * @return 0 on success, PARSE_RECORD_DROP when the value is not a string or
- * longer than the limit (a record-local breach, TZ 4d).
+ * longer than the limit (a record-local breach).
  */
 static int parse_name_value_checked(char *dst, size_t dst_len, const char *json, const jsmntok_t *token,
                                     const char *field, const char *path)
@@ -376,7 +376,7 @@ static int parse_ranged_set_object(const char *json, const jsmntok_t *tokens, in
 /**
  * @brief Walks one section array (shielded / solo / ranged) into @p sets /
  * @p set_count. Excess records over the section cap are dropped one by one
- * (per-record, TZ 4d); the walk keeps consuming tokens either way.
+ * (per-record); the walk keeps consuming tokens either way.
  */
 static int parse_section_array(const char *json, const jsmntok_t *tokens, int token_count,
                                int array_index, int set_stride, void *sets, int32_t *set_count,
@@ -477,7 +477,7 @@ static int parse_entry_object(const char *json, const jsmntok_t *tokens, int tok
         }
         else if (json_token_streq(json, key_token, "pairs"))
         {
-            /* Retired v1 format (TZ 4c): the flag routes the file to the
+            /* Retired v1 format: the flag routes the file to the
              * module's exact skip line, the loader adds nothing here. */
             file->rejected_v1_format = true;
             return PARSE_FILE_BROKEN;

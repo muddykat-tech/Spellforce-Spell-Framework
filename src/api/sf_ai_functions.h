@@ -65,16 +65,40 @@ DECLARE_FUNCTION(int, getAIVectorLength, void *_this);
 DECLARE_FUNCTION(uint16_t, getCastType, void *resource, uint16_t spellID);
 DECLARE_FUNCTION(void *, AC60AddOrGetEntity, void *_autoclass60,
                  uint16_t entity_index);
+/**
+ * getPositionToCastAlly - Computes the mean position of a figure group.
+ * @param out_position: Receives the clamped centroid of the listed figures.
+ * Return: out_position, for call chaining.
+ */
 DECLARE_FUNCTION(SF_Coord *, getPositionToCastAlly,
-                 SF_CGdBattleDevelopment *_this, SF_Coord *param_1,
+                 SF_CGdBattleDevelopment *_this, SF_Coord *out_position,
                  void *std_vector_uint16_t);
+/**
+ * getPositionToCastEnemy - Finds the listed enemy figure closest to the AI
+ * current figure.
+ * @param out_position: Receives that figure's position ({0,0} for an empty
+ *        list).
+ * Return: out_position, for call chaining.
+ */
 DECLARE_FUNCTION(SF_Coord *, getPositionToCastEnemy,
-                 SF_CGdBattleDevelopment *_this, SF_Coord *param_1,
+                 SF_CGdBattleDevelopment *_this, SF_Coord *out_position,
                  void *std_vector_uint16_t);
 
+/**
+ * isUnknownWorldFeature - Spiral search for a free map cell near a point
+ * (variant of findClosestFreePosition with sector auto-detection).
+ * @param center_pos: Center of the spiral search.
+ * @param search_radius: Per-axis search extents in tiles (X and Y).
+ * @param exclude_figures: Non-zero rejects any cell occupied by a figure;
+ *        zero also accepts cells held by non-working figures.
+ * @param out_position: Zeroed on entry; receives the found cell on success.
+ * @param sector_id: Sector the cell must belong to; zero takes the sector
+ *        from the reference figure's current position.
+ * Return: Non-zero when a cell was found.
+ */
 DECLARE_FUNCTION(bool, isUnknownWorldFeature, SF_CGdWorldToolBox *,
-                 uint16_t figure_index, SF_Coord *param2, SF_Coord *param3,
-                 uint32_t param4, SF_Coord *param5, uint16_t param6);
+                 uint16_t figure_index, SF_Coord *center_pos, SF_Coord *search_radius,
+                 uint32_t exclude_figures, SF_Coord *out_position, uint16_t sector_id);
 
 /**
  * @ingroup API

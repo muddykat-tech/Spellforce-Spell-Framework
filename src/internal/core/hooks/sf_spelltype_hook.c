@@ -24,8 +24,8 @@ void initialize_spelltype_data_hooks()
 }
 
 uint16_t __thiscall sf_spelltype_hook(SF_CGdSpell *_this, uint16_t spell_id,
-                                      uint16_t param2, SF_CGdTargetData *source,
-                                      SF_CGdTargetData *target, uint16_t param5)
+                                      uint16_t start_tick, SF_CGdTargetData *source,
+                                      SF_CGdTargetData *target, uint16_t aux_entity_index)
 {
     uint16_t spell_index;
     uint16_t spell_line;
@@ -77,7 +77,7 @@ uint16_t __thiscall sf_spelltype_hook(SF_CGdSpell *_this, uint16_t spell_id,
         (target->position).X;
     _this->active_spell_list[spell_index].target.position.Y =
         (target->position).Y;
-    _this->active_spell_list[spell_index].to_do_count = param2 -
+    _this->active_spell_list[spell_index].to_do_count = start_tick -
                                                         (uint16_t)(_this->
                                                                    OpaqueClass->
                                                                    current_step);

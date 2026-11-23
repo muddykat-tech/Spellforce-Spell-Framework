@@ -7,11 +7,6 @@ void __thiscall elemental_sub_effect_handler(SF_CGdEffect *_this, uint16_t effec
 {
     uint16_t spell_id = effectAPI.getEffectXData(_this, effect_index, EFFECT_SUBSPELL_ID);
     uint16_t source_index = effectAPI.getEffectXData(_this, effect_index, EFFECT_ENTITY_INDEX);
-    uint8_t figure_type1 = 0;
-    if (source_index)
-    {
-        figure_type1 = effectAPI.getEffectXData(_this, effect_index, EFFECT_ENTITY_TYPE);
-    }
     uint16_t sub_spell_flag = effectAPI.getEffectXData(_this, effect_index, EFFECT_ADD_SUBSPELL);
     if (sub_spell_flag != 1)
     {
@@ -36,10 +31,8 @@ void __thiscall elemental_sub_effect_handler(SF_CGdEffect *_this, uint16_t effec
                           (!toolboxAPI.figuresCheckNeutral( _this->CGdFigureToolBox, source_index, target_index))) ||
                          (_this->CGdFigure->figures[target_index].owner != 0)))
                     {
-                        SF_CGdTargetData target = {1, target_index, {0, 0}};
-                        SF_CGdTargetData source = {1, source_index, {0, 0}};
-                        spellAPI.addSpell(_this->CGdSpell, spell_id, _this->OpaqueClass->current_step, &source, &target,
-                                          0);
+                        addSpellToFigure(_this->CGdSpell, spell_id,
+                                         source_index, target_index);
                     }
                 }
             }
@@ -57,9 +50,8 @@ void __thiscall elemental_sub_effect_handler(SF_CGdEffect *_this, uint16_t effec
         {
             return;
         }
-        SF_CGdTargetData source = {figure_type1, source_index, {0, 0}};
-        SF_CGdTargetData target = {figure_type2, figure_index2, {0, 0}};
-        spellAPI.addSpell(_this->CGdSpell, spell_id, _this->OpaqueClass->current_step, &source, &target, 0);
+        addSpellToFigure(_this->CGdSpell, spell_id,
+                         source_index, figure_index2);
     }
 }
 

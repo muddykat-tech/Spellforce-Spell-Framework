@@ -671,3 +671,208 @@ void __thiscall tryClearCheckSpellsBeforeJob(SF_CGdSpell *_this, uint16_t spell_
     _this->CGdFigure->figures[figure_index].flags &= ~(F_CHECK_SPELLS_BEFORE_JOB);
 
 }
+
+void __thiscall sf_end_spell_now(SF_CGdSpell *_this, uint16_t spell_index, bool try_unfreeze)
+{
+    if (try_unfreeze)
+    {
+        spellAPI.figTryUnfreeze(_this, spell_index, 0);
+    }
+    spellAPI.figTryClrCHkSPlBfrJob2(_this, spell_index);
+    spellAPI.figClrChkSplBfrChkBattle(_this, spell_index, 0);
+    spellAPI.removeDLLNode(_this, spell_index);
+    spellAPI.setEffectDone(_this, spell_index, 0);
+}
+
+void __thiscall addSpellVisualEffect(SF_CGdSpell *_this, uint16_t spell_index, CGdEffectType effect_id,
+                                     const SF_CGdTargetData *target, uint16_t tick_count,
+                                     const SF_Rectangle *corner_coords)
+{
+    uint32_t unused_out;
+    SF_CGdTargetData target_copy = *target;
+    SF_Rectangle rect_arg = (corner_coords != NULL) ? *corner_coords : SF_Rectangle{0, 0};
+    spellAPI.addVisualEffect(_this, spell_index, effect_id, &unused_out, &target_copy,
+                             _this->OpaqueClass->current_step, tick_count, &rect_arg);
+}
+
+void __thiscall addSpellHitEffect(SF_CGdSpell *_this, uint16_t spell_index,
+                                  uint16_t target_index, uint16_t tick_count)
+{
+    SF_CGdTargetData target;
+    target.entity_type = 1;
+    target.entity_index = target_index;
+    target.position = {0, 0};
+    addSpellVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &target, tick_count, NULL);
+}
+
+void __thiscall addSpellResistedEffect(SF_CGdSpell *_this, uint16_t spell_index,
+                                       uint16_t target_index, uint16_t tick_count)
+{
+    SF_CGdTargetData target;
+    target.entity_type = 1;
+    target.entity_index = target_index;
+    target.position = {0, 0};
+    addSpellVisualEffect(_this, spell_index, kGdEffectSpellTargetResisted, &target, tick_count, NULL);
+}
+
+void __thiscall addSpellHitWorldEffect(SF_CGdSpell *_this, uint16_t spell_index, SF_Coord position,
+                                       uint16_t tick_count, const SF_Rectangle *area)
+{
+    SF_CGdTargetData target;
+    target.entity_type = 4;
+    target.entity_index = 0;
+    target.position = position;
+    addSpellVisualEffect(_this, spell_index, kGdEffectSpellHitWorld, &target, tick_count, area);
+}
+
+void __thiscall buildTargetRectangle(SF_Coord pos_a, SF_Coord pos_b, SF_Rectangle *out_rect)
+{
+    uint16_t maxY = (pos_a.Y <= pos_b.Y) ? pos_b.Y : pos_a.Y;
+
+    uint16_t maxX = (pos_a.X <= pos_b.X) ? pos_b.X : pos_a.X;
+
+    uint16_t minY = (pos_a.Y > pos_b.Y) ? pos_b.Y : pos_a.Y;
+
+    uint16_t minX = (pos_a.X > pos_b.X) ? pos_b.X : pos_a.X;
+    SF_Coord p1;
+    SF_Coord p2;
+    p1.X = maxX;
+    if (minX < maxX)
+    {
+        p1.X = minX;
+    }
+    p1.Y = maxY;
+    if (minY < maxY)
+    {
+        p1.Y = minY;
+    }
+
+    p2.X = maxX;
+    if (maxX <= minX)
+    {
+        p2.X = minX;
+    }
+    p2.Y = maxY;
+    if (maxY <= minY)
+    {
+        p2.Y = minY;
+    }
+    out_rect->partA = p1.Y << 0x10 | p1.X;
+    out_rect->partB = p2.Y << 0x10 | p2.X;
+}
+
+uint16_t __thiscall addSpellToFigure(SF_CGdSpell *_this, uint16_t spell_id,
+                                     uint16_t source_index, uint16_t target_index)
+{
+    uint16_t start_tick = (uint16_t)_this->OpaqueClass->current_step;
+    SF_CGdTargetData source;
+    source.entity_type = 1;
+    source.entity_index = source_index;
+    source.position = {0, 0};
+    SF_CGdTargetData target;
+    target.entity_type = 1;
+    target.entity_index = target_index;
+    target.position = {0, 0};
+    return spellAPI.addSpell(_this, spell_id, start_tick, &source, &target, 0);
+}
+
+static uint32_t pending_heal_of_figure(SF_CGdFigure *figures, SF_CGdResource *resource,
+                                       uint16_t figure_index, uint16_t target_index)
+{
+    GdFigure *figure = &figures->figures[figure_index];
+    if ((figure->flags & (IS_DEAD | RESESRVED_ONLY)) != 0)
+    {
+        return 0;
+    }
+    FigureJobData *job = &figure->current_job;
+    if ((job->GdJobId != kGdJobWalkToTarget) && (job->GdJobId != kGdJobManualWalkToTarget) &&
+        (job->GdJobId != kGdJobPreCast))
+    {
+        return 0;
+    }
+    /* Walk-phase target gate. SetFigureWalkToTargetJob
+     * (0x6f4916, line 43) copies the AI cast target verbatim into
+     * current_job.target (CGdFigure::SetTargetData 0x6b70b0 ->
+     * JobData_maybe::SetTargetData 0x6c55a0). For ground-cast spells
+     * (cast_type1 == 2: area/sentinel healing, spell_cast_maybe 0x75c5c1)
+     * that target is a world point - entity_type = spell
+     * cast_type2 in {4,5}, entity_index 0 - not the patient figure, so a
+     * positional walker is matched by its healing job action alone; a
+     * figure target that is not this patient and non-walkable kinds
+     * (0 uninitialized, 2 building, 3 object) never count as walk
+     * matches. */
+    if (job->target.entity_type == 1)
+    {
+        if (job->target.entity_index != target_index)
+        {
+            return 0;
+        }
+    }
+    else if ((job->target.entity_type != 4) && (job->target.entity_type != 5))
+    {
+        return 0;
+    }
+    if ((job->action.type == 0) ||
+        (!spellAPI.hasSpellTag(job->action.type, SpellTag::HEALING_SPELL)))
+    {
+        return 0;
+    }
+    SF_CGdResourceSpell spell_data;
+    spellAPI.getResourceSpellData(resource, &spell_data, job->action.subtype);
+    return spell_data.params[0];
+}
+
+uint32_t __thiscall sumIncomingHealFromList(SF_CGdFigure *figures, SF_CGdResource *resource,
+                                            uint16_t target_index)
+{
+    uint_list_node some_list;
+    uint32_t incoming_sum = 0;
+    figureAPI.getIncomingSpellList(figures, &some_list, target_index);
+    uint32_t *pair = some_list.first;
+    while (pair != some_list.data)
+    {
+        uint16_t spell_id = (uint16_t)((*pair) >> 16);
+        SF_CGdResourceSpell pair_data;
+        spellAPI.getResourceSpellData(resource, &pair_data, spell_id);
+        if (spellAPI.hasSpellTag(pair_data.spell_line_id, SpellTag::HEALING_SPELL))
+        {
+            incoming_sum += pair_data.params[0];
+        }
+        pair++;
+    }
+    figureAPI.releaseIncomingSpellList(&some_list);
+    return incoming_sum;
+}
+
+uint32_t __thiscall sumIncomingPendingHeals(SF_CGdFigure *figures, SF_CGdResource *resource,
+                                            const EntityPriorityList *allies,
+                                            uint16_t target_index)
+{
+    uint32_t sum = sumIncomingHealFromList(figures, resource, target_index);
+    for (uint16_t i = 0; i < allies->entityCount; i++)
+    {
+        sum += pending_heal_of_figure(figures, resource, allies->data[i].entity_index, target_index);
+    }
+    return sum;
+}
+
+uint32_t __thiscall sumIncomingPendingHealsAllFigures(SF_CGdFigure *figures, SF_CGdResource *resource,
+                                                      SF_CGdFigureToolbox *toolbox, uint16_t target_index)
+{
+    uint32_t sum = 0;
+    for (uint16_t f = 1; f <= figures->max_used; f++)
+    {
+        if ((figures->figures[f].owner == (uint16_t)-1) ||
+            ((figures->figures[f].flags & (IS_DEAD | RESESRVED_ONLY)) != 0))
+        {
+            continue;
+        }
+        if (toolboxAPI.figuresCheckHostile(toolbox, f, target_index))
+        {
+            continue;
+        }
+        sum += pending_heal_of_figure(figures, resource, f, target_index);
+    }
+    return sum;
+}
+

@@ -91,7 +91,7 @@ void __thiscall summon_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
         uint16_t target_index = summonCreature(_this->CGdFigureToolBox, spell->source.entity_index, spell_data.params[2]);
         if (target_index != 0)
         {
-            toolboxAPI->addSpellToFigure(_this->CGdFigureToolBox, target_index, spell_index);
+            toolboxAPI->attachSpellToFigure(_this->CGdFigureToolBox, target_index, spell_index);
             spellAPI->addToXData(_this, spell_index, SPELL_TICK_COUNT_AUX, 1);
             _this->active_spell_list[spell_index].to_do_count = (spell_data.params[0] * 10) / 1000;
             _this->active_spell_list[spell_index].target.entity_index = target_index;
@@ -112,14 +112,7 @@ void __thiscall summon_effect_handler(SF_CGdSpell *_this, uint16_t spell_index)
         }
         else
         {
-            SF_Rectangle some_rect = {0, 0};
-            SF_CGdTargetData target;
-            target.entity_index = spell->target.entity_index;
-            target.position = {0, 0};
-            target.entity_type = 1;
-            uint32_t unused;
-            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget,
-                                      &unused, &target, _this->OpaqueClass->current_step, 0x19, &some_rect);
+            spellAPI->addSpellHitEffect(_this, spell_index, spell->target.entity_index, 0x19);
             toolboxAPI->dealDamage(_this->CGdFigureToolBox, 0, spell->target.entity_index, 0x7FFF, 1, 0, 0);
             return;
         }

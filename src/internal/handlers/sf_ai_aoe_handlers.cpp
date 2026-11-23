@@ -59,18 +59,89 @@ uint32_t __thiscall raise_dead_ai_handler(SF_CGdBattleDevelopment *_this,
     return rank;
 }
 
+/* Wounded = alive ally whose missing HP reaches the utility gate:
+ * min(figure max HP / share, heal volume / share), both in HP. A figure
+ * counts only with a real deficit (cur < max). Deviation from vanilla:
+ * the vanilla ranker checks the army aggregate only. */
+static bool is_wounded_enough(SF_CGdFigure *sf_figures,
+                              uint16_t figure_index,
+                              SF_CGdResourceSpell *spell_data)
+{
+    uint32_t fig_max = figureAPI.getMaxStat(sf_figures, figure_index,
+                                            HEALTH);
+    uint32_t cur = figureAPI.getCurrentStat(sf_figures, figure_index,
+                                            HEALTH);
+    if (cur >= fig_max)
+    {
+        return false;
+    }
+    uint32_t threshold = spell_data->params[1] / 2;
+    uint32_t by_max = fig_max / 10;
+    if (by_max < threshold)
+    {
+        threshold = by_max;
+    }
+    return (fig_max - cur) >= threshold;
+}
+
 uint32_t __thiscall area_heal_ai_handler(SF_CGdBattleDevelopment *_this,
                                          SF_Coord *cast_position,
                                          uint16_t spell_line,
                                          SF_CGdResourceSpell *spell_data)
 {
-    uint32_t rank = 1;
-    if (((_this->battleData.figures_missing_hp * 100) /
-         _this->battleData.figures_max_hp) >= 4)
+    uint32_t max_hp = _this->battleData.figures_max_hp;
+    if (max_hp == 0)
     {
-        rank = 0;
+        return 0; /* guards division by zero, vanilla divides unguarded */
     }
-    return rank;
+    if (((_this->battleData.figures_missing_hp * 100) / max_hp) <= 4)
+    {
+        return 0; /* vanilla 0x7612F8: rank 1 only above 4 percent */
+    }
+
+    CGdFigureIterator iter;
+    iteratorAPI.figureIteratorInit(&iter, 0, 0, 0x3ff, 0x3ff);
+    iteratorAPI.figureIteratorSetPointers(&iter, _this->battleData.CGdFigure,
+                                          _this->battleData.autoclass22,
+                                          _this->battleData.CGdWorld);
+    iteratorAPI.iteratorSetArea(&iter, cast_position, spell_data->params[0]);
+    uint16_t wounded_count = 0;
+    uint32_t x_sum = 0;
+    uint32_t y_sum = 0;
+    SF_CGdFigure *sf_figures = _this->battleData.CGdFigure;
+
+    uint16_t figure_index = iteratorAPI.getNextFigure(&iter);
+    while (figure_index != 0)
+    {
+        if (sf_figures->figures[figure_index].owner != (uint16_t)(-1))
+        {
+            if (sf_figures->figures[figure_index].owner ==
+                sf_figures->figures[_this->battleData.current_figure].owner)
+            {
+                if ((sf_figures->figures[figure_index].flags &
+                     GdFigureFlags::IS_DEAD) == 0)
+                {
+                    if (is_wounded_enough(sf_figures, figure_index,
+                                          spell_data))
+                    {
+                        x_sum += sf_figures->figures[figure_index].position.X;
+                        y_sum += sf_figures->figures[figure_index].position.Y;
+                        wounded_count++;
+                    }
+                }
+            }
+        }
+        figure_index = iteratorAPI.getNextFigure(&iter);
+    }
+    iteratorAPI.disposeFigureIterator(&iter);
+
+    if (wounded_count < 3)
+    {
+        return 0;
+    }
+    cast_position->X = x_sum / wounded_count;
+    cast_position->Y = y_sum / wounded_count;
+    return 1;
 }
 
 uint32_t __thiscall revenge_ai_handler(SF_CGdBattleDevelopment *_this,

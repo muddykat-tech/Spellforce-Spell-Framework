@@ -274,7 +274,7 @@ static int hitTargetGroup(uint16_t slot0)
     /* vanilla 0x7DB800: add eax,-2; cmp eax,0x11; ja default */
     if (slot0 < 2 || slot0 > 19)
     {
-        /* v2 (TZ 6.2): custom types dispatch by their weapon_types
+        /* v2: custom types dispatch by their weapon_types
          * attack_style - stab -> STAB (deterministic Stab job), punch ->
          * PUNCH, staff -> STAFF (Strike + extra 103); strike, ranged and
          * unknown ids stay DEFAULT, bit-for-bit the previous behaviour. */
@@ -445,7 +445,7 @@ void __thiscall sf_select_job_animation(DrwFigure *_this, FigureJobs *job, uint8
     uint32_t figure_flags = getFigureFlags(figure_index);
     uint16_t job_flags = getFigureJobFlags(figure_index);
 
-    /* Animsets v2 registration point (TZ 5.2): one call before the switch
+    /* Animsets v2 registration point: one call before the switch
      * covers EVERY path of this function - melee solo, shield pairs and both
      * ranged phases - and always precedes the emission, so step 1 of the
      * UpdateAnims cascade finds the registered films. Empty catalog: no-op;

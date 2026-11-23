@@ -35,6 +35,7 @@
 #include "hooks/sf_effect_hook.h"
 #include "hooks/sf_phys_effect_hook.h"
 #include "hooks/sf_projectile_visual_hook.h"
+#include "hooks/sf_template_resolver_hook.h"
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -121,8 +122,8 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(figure, getAggroValue, 0x2b1ab0);
     DEFINE_FUNCTION(figure, setAggroValue, 0x2b6670);
     DEFINE_FUNCTION(figure, isWarrior, 0x1c1510);
-    DEFINE_FUNCTION(figure, getHealersList, 0x2b2870);
-    DEFINE_FUNCTION(figure, disposeHealerList, 0x36436D);
+    DEFINE_FUNCTION(figure, getIncomingSpellList, 0x2b2870);
+    DEFINE_FUNCTION(figure, releaseIncomingSpellList, 0x36436D);
     DEFINE_FUNCTION(figure, getCurrentHealthPercent, 0x2fdeb0);
     DEFINE_FUNCTION(figure, prepareJobTransition, 0x2df6e0);
     DEFINE_FUNCTION(figure, onStartJob, 0x2e2180);
@@ -182,7 +183,7 @@ void initialize_data_hooks()
     DEFINE_FUNCTION(toolbox, figuresCheckFriendly, 0x2fe953);
     DEFINE_FUNCTION(toolbox, hasSpellOnIt, 0x2fe4ea);
     DEFINE_FUNCTION(toolbox, rescaleLevelStats, 0x2fff48);
-    DEFINE_FUNCTION(toolbox, addSpellToFigure, 0x2f673a);
+    DEFINE_FUNCTION(toolbox, attachSpellToFigure, 0x2f673a);
     DEFINE_FUNCTION(toolbox, getFigureFromWorld, 0x34F160);
     DEFINE_FUNCTION(toolbox, getSpellIndexOfType, 0x2fd939);
     DEFINE_FUNCTION(toolbox, getSpellIndexFromDLL, 0x2fdd90);
@@ -294,6 +295,12 @@ void initialize_data_hooks()
     INCLUDE_FUNCTION(spell, getSpellTags, &getSpellTags);
     INCLUDE_FUNCTION(spell, hasSpellTag, &hasSpellTag);
     INCLUDE_FUNCTION(spell, tryClearCheckSpellsBeforeJob, &tryClearCheckSpellsBeforeJob);
+    INCLUDE_FUNCTION(spell, rollWeaponEnchantEffects, &roll_weapon_enchant_effects);
+    INCLUDE_FUNCTION(spell, addSpellVisualEffect, &addSpellVisualEffect);
+    INCLUDE_FUNCTION(spell, addSpellHitEffect, &addSpellHitEffect);
+    INCLUDE_FUNCTION(spell, addSpellResistedEffect, &addSpellResistedEffect);
+    INCLUDE_FUNCTION(spell, addSpellHitWorldEffect, &addSpellHitWorldEffect);
+    INCLUDE_FUNCTION(spell, addSpellToFigure, &addSpellToFigure);
 
     INCLUDE_FUNCTION(effect, effectXDataExists, &XDataExists);
     INCLUDE_FUNCTION(effect, getCurrentEffectIndex, &getCurrentEffectIndex);
@@ -953,6 +960,9 @@ void initialize_beta_hooks()
 
     log_info("Hooking Projectile Visual Anchor");
     initialize_projectile_visual_hooks();
+
+    log_info("Hooking Template Resolver");
+    initialize_template_resolver_hooks();
 }
 
 /**

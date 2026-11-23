@@ -15,8 +15,13 @@ typedef void (__thiscall *sub_effect_handler_ptr)(SF_CGdEffect *,
 
 DECLARE_FUNCTION(void, setEffectXData, SF_CGdEffect *_this, uint16_t effect_index, SpellDataKey key, uint32_t value);
 DECLARE_FUNCTION(uint32_t, getEffectXData, SF_CGdEffect *_this, uint16_t effect_index, SpellDataKey key);
+/**
+ * addEffect - Creates an effect instance attached to a target.
+ * @param area_rect: Bounding rectangle of the effect area in world tiles;
+ *        all-zero rectangle marks a single point at the target position.
+ */
 DECLARE_FUNCTION(uint16_t, addEffect, SF_CGdEffect *_this, CGdEffectType effect_id, SF_CGdTargetData *source,
-                 SF_CGdTargetData *target, uint32_t tick_start, uint16_t tick_count, SF_Rectangle *param_6);
+                 SF_CGdTargetData *target, uint32_t tick_start, uint16_t tick_count, SF_Rectangle *area_rect);
 DECLARE_FUNCTION(void, tryEndEffect, SF_CGdEffect *_this, uint16_t effect_index);
 DECLARE_FUNCTION(bool, effectXDataExists, SF_CGdEffect *_this, uint16_t effect_index, SpellDataKey key);
 DECLARE_FUNCTION(uint16_t, getCurrentEffectIndex);

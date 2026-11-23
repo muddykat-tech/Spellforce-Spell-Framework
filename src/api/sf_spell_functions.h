@@ -38,18 +38,35 @@ DECLARE_FUNCTION(void, setXData, SF_CGdSpell *_this, uint16_t spell_id,
                  uint8_t xdatakey, uint32_t value);
 DECLARE_FUNCTION(void, initializeSpellData, SF_CGdSpell *_this,
                  uint16_t spell_id, SpellDataKey key);
+/**
+ * setEffectDone - Stops a spell effect handler for a given spell.
+ * @param clear_spell_data: Zero also clears the spell's XData (framework
+ *        always passes 0); non-zero keeps the data across the finish.
+ */
 DECLARE_FUNCTION(void, setEffectDone, SF_CGdSpell *_this, uint16_t spell_id,
-                 uint16_t param_2);
+                 uint16_t clear_spell_data);
 DECLARE_FUNCTION(uint32_t, addToXData, SF_CGdSpell *_this, uint16_t spell_id,
                  SpellDataKey key, uint32_t value);
-DECLARE_FUNCTION(uint32_t, getChanceToResistSpell, void *autoclass34,
+DECLARE_FUNCTION(uint32_t, getChanceToResistSpell, void *damage_reduction_class,
                  uint16_t source, uint16_t target,
                  uint16_t spell_index);
-DECLARE_FUNCTION(uint16_t, getRandom, AutoClass14 *autoclass14, uint16_t max_value);
+DECLARE_FUNCTION(uint16_t, getRandom, AutoClass14 *opaque_class, uint16_t max_value);
+DECLARE_FUNCTION(uint8_t, rollWeaponEnchantEffects, SF_CGdFigureJobs *jobs,
+                 uint16_t source_index, uint16_t weapon_id,
+                 uint16_t *out_spell_ids /* [3] */);
 DECLARE_FUNCTION(void, addVisualEffect, SF_CGdSpell *_this, uint16_t spell_id,
                  CGdEffectType effect_id, void *unused,
                  SF_CGdTargetData *target, uint32_t tick_start,
                  uint16_t tick_count, void *corner_coords);
+DECLARE_FUNCTION(void, addSpellVisualEffect, SF_CGdSpell *_this, uint16_t spell_index,
+                 CGdEffectType effect_id, const SF_CGdTargetData *target,
+                 uint16_t tick_count, const SF_Rectangle *corner_coords);
+DECLARE_FUNCTION(void, addSpellHitEffect, SF_CGdSpell *_this, uint16_t spell_index,
+                 uint16_t target_index, uint16_t tick_count);
+DECLARE_FUNCTION(void, addSpellResistedEffect, SF_CGdSpell *_this, uint16_t spell_index,
+                 uint16_t target_index, uint16_t tick_count);
+DECLARE_FUNCTION(void, addSpellHitWorldEffect, SF_CGdSpell *_this, uint16_t spell_index,
+                 SF_Coord position, uint16_t tick_count, const SF_Rectangle *area);
 DECLARE_FUNCTION(void, figureAggro, SF_CGdSpell *_this, uint16_t spell_id,
                  uint16_t target_index);
 DECLARE_FUNCTION(SF_CGdResourceSpell *, getResourceSpellData, SF_CGdResource *CGdResource,
@@ -59,13 +76,27 @@ DECLARE_FUNCTION(uint32_t, getXData, SF_CGdSpell *_this, uint16_t spell_id,
 DECLARE_FUNCTION(SF_Rectangle *, getTargetsRectangle, SF_CGdSpell *_this,
                  SF_Rectangle *output, uint16_t spell_id, uint16_t radius,
                  SF_Coord *center_maybe);
-DECLARE_FUNCTION(void, removeDLLNode, SF_CGdSpell *_this, uint16_t param_1);
+/**
+ * removeDLLNode - Removes a spell from the list of active spells over the
+ * target.
+ * @param spell_index: Index of the spell whose effect node list is torn
+ *        down.
+ */
+DECLARE_FUNCTION(void, removeDLLNode, SF_CGdSpell *_this, uint16_t spell_index);
 DECLARE_FUNCTION(void, spellClearFigureFlag, SF_CGdSpell *_this,
                  uint16_t spell_id, SpellFlagKey key);
 DECLARE_FUNCTION(void, onSpellRemove, SF_CGdSpell *_this, uint16_t spell_id);
+/**
+ * addSpell - Creates a new spell of a given type.
+ * @param start_tick: Absolute game tick when the spell becomes active
+ *        (stored as to_do_count = start_tick - current_step).
+ * @param aux_entity_index: Only used by the RockBullet spell lines: entity
+ *        index stored into XData EFFECT_ENTITY_INDEX3; ignored otherwise,
+ *        pass 0.
+ */
 DECLARE_FUNCTION(uint16_t, addSpell, SF_CGdSpell *_this, uint16_t spell_id,
-                 uint16_t param2, SF_CGdTargetData *source,
-                 SF_CGdTargetData *target, uint16_t param5);
+                 uint16_t start_tick, SF_CGdTargetData *source,
+                 SF_CGdTargetData *target, uint16_t aux_entity_index);
 DECLARE_FUNCTION(uint16_t, getSpellLine, SF_CGdSpell *_this, uint16_t spell_id);
 DECLARE_FUNCTION(void, figClrChkSplBfrChkBattle, SF_CGdSpell *_this,
                  uint16_t spell_id, uint16_t figure_id);
@@ -83,6 +114,20 @@ DECLARE_FUNCTION(void, spellEffectCallback, SF_CGdSpell *_this, uint16_t source_
                  void (*callbackPtr)(SF_CGdSpell *, uint16_t, uint16_t, uint16_t));
 DECLARE_FUNCTION(uint16_t, getLeveledSpellID, SF_CGdResource *CGdResource, uint16_t source_spell_id, uint16_t spell_level);
 DECLARE_FUNCTION(void, tryClearCheckSpellsBeforeJob, SF_CGdSpell *_this, uint16_t spell_index, uint16_t figure_index);
+/**
+ * addSpellToFigure - Starts a spell between two figures (entity targets).
+ * @param source_index: Figure index of the source.
+ * @param target_index: Figure index of the target.
+ * Return: Spell slot index, 0 when no free slot.
+ *
+ * Framework helper over addSpell: builds zero-position TargetData for
+ * both sides; the spell always starts at the current game tick (future
+ * starts only via direct addSpell). Figure targets only (entity_type 1
+ * implied by name); positional (4/5) spells - direct addSpell (position
+ * inside TargetData is meaningful for them, e.g. the AoE center).
+ */
+DECLARE_FUNCTION(uint16_t, addSpellToFigure, SF_CGdSpell *_this, uint16_t spell_id,
+                 uint16_t source_index, uint16_t target_index);
 
 
 //TODO export spelljobs structure
@@ -118,7 +163,8 @@ typedef struct
      * during the next game tick.
      * @param _this A pointer to the global spell object.
      * @param spell_id The Spell Index of the currently active spell.
-     * @param param_2 The second parameter whose purpose is currently unknown; it should always be set to 0.
+     * @param clear_spell_data Pass 0 to also clear the spell's XData on finish;
+     * non-zero keeps it. The framework always passes 0.
      */
     setEffectDone_ptr setEffectDone;
 
@@ -139,7 +185,9 @@ typedef struct
      * In case the spell has requirements for more than one magic school, the school with the highest requirement is
      * regarded as primary.
      *
-     * @param autoclass34 A pointer to an internal class.
+     * @param damage_reduction_class Engine component (CGdAutoClass34) consumed by
+     * resist/damage-reduction lookups (see the getPhysDamageReduction wrapper);
+     * exact internals not established.
      * @param source The source character or entity casting the spell.
      * @param target The target character or entity that we want the resistance from.
      * @param spell_id spell index (not spell line!)
@@ -152,7 +200,8 @@ typedef struct
      * @brief Generates a random value up to the specified maximum value.
      *
      * This function returns a random value between 0 and the specified maximum value (inclusive).
-     * @param autoclass14 A pointer to the Opaque class of the spell global object.
+     * @param opaque_class Opaque RNG class of the spell global object (the spell
+     * object's OpaqueClass in framework calls).
      * @param max_value The upper bound for the random number.
      * @return A random value between 0 and the specified maximum.
      */
@@ -242,8 +291,8 @@ typedef struct
      * class in the global spell object.
      * @param source The index of the spell caster (source entity).
      * @param target The Spell Target entity index.
-     * @param param5 The purpose of this parameter is currently unknown. For safe use, it is recommended to pass it as
-     * 0.
+     * @param aux_entity_index Only used by the RockBullet spell lines: entity index
+     * stored into XData EFFECT_ENTITY_INDEX3. Ignored otherwise - pass 0.
      */
     addSpell_ptr addSpell;
 
@@ -332,5 +381,87 @@ typedef struct
     getLeveledSpellID_ptr getLeveledSpellID;
 
     tryClearCheckSpellsBeforeJob_ptr tryClearCheckSpellsBeforeJob;
+
+    /**
+     * @brief Rolls the shooter's weapon enchant pool (up to 3 slots, one
+     * getRandom(10000) per slot, registry chance, race leveling 1-6 applied).
+     * Returns the number of winning enchant spell ids written into
+     * @p out_spell_ids (first @p return-value positions; the rest untouched -
+     * zero-initialize before calling). Framework mechanism behind the
+     * RANGED_SHOT phase: per-arrow enchant procs on rapid-fire clones.
+     */
+    rollWeaponEnchantEffects_ptr rollWeaponEnchantEffects;
+
+    /**
+     * @brief Spawn a spell visual effect without the TargetData/rect boilerplate.
+     *
+     * Framework helper around addVisualEffect: it keeps the live out-buffer the
+     * engine writes to, passes a local copy of the target data and uses the current
+     * game tick as tick_start.
+     * @param _this A pointer to the global spell object.
+     * @param spell_index The Spell Index of the currently active spell.
+     * @param effect_id The ID of the visual effect to apply. @see kGdEffectSpellHitTarget
+     * @param target The entity target data which the visual effect will be centered on. The structure is copied, so
+     * a temporary may be passed.
+     * @param tick_count The number of ticks the visual effect will last.
+     * @param corner_coords The area that the visual effect would be within for AoE effects. NULL means the zero
+     * rectangle {0,0} for non AOE spells.
+     */
+    addSpellVisualEffect_ptr addSpellVisualEffect;
+
+    /**
+     * @brief Spawn the spell-hit visual effect on a figure.
+     *
+     * Framework helper. Shortcut for addSpellVisualEffect with kGdEffectSpellHitTarget, a figure target
+     * (entity_type 1, zero position) and the zero rectangle.
+     * @param _this A pointer to the global spell object.
+     * @param spell_index The Spell Index of the currently active spell.
+     * @param target_index The figure the visual effect will be centered on.
+     * @param tick_count The number of ticks the visual effect will last.
+     */
+    addSpellHitEffect_ptr addSpellHitEffect;
+
+    /**
+     * @brief Spawn the spell-resisted visual effect on a figure.
+     *
+     * Framework helper. Shortcut for addSpellVisualEffect with kGdEffectSpellTargetResisted, a figure target
+     * (entity_type 1, zero position) and the zero rectangle.
+     * @param _this A pointer to the global spell object.
+     * @param spell_index The Spell Index of the currently active spell.
+     * @param target_index The figure the visual effect will be centered on.
+     * @param tick_count The number of ticks the visual effect will last.
+     */
+    addSpellResistedEffect_ptr addSpellResistedEffect;
+
+    /**
+     * @brief Spawn the world-hit visual effect at a map position.
+     *
+     * Framework helper. Shortcut for addSpellVisualEffect with kGdEffectSpellHitWorld, a world target
+     * (entity_type 4, index 0) at the given position.
+     * @param _this A pointer to the global spell object.
+     * @param spell_index The Spell Index of the currently active spell.
+     * @param position The map coordinates the visual effect will be centered on.
+     * @param tick_count The number of ticks the visual effect will last.
+     * @param area The area that the visual effect would be within for AoE effects. NULL means the zero rectangle
+     * {0,0}.
+     */
+    addSpellHitWorldEffect_ptr addSpellHitWorldEffect;
+
+    /**
+     * @brief Starts a spell between two figures (entity targets).
+     *
+     * Framework helper over addSpell: builds zero-position SF_CGdTargetData
+     * for source and target, the spell always starts at the current game
+     * tick. Figure targets only (entity_type 1 implied by name);
+     * positional (4/5) spells - direct addSpell (position inside
+     * TargetData is meaningful for them, e.g. the AoE center; also for
+     * future starts).
+     * @param _this A pointer to the global spell object.
+     * @param spell_id The Spell Type ID of the spell to start.
+     * @param source_index Figure index of the source.
+     * @param target_index Figure index of the target.
+     * @return The spell slot index, 0 when no free slot.
+     */
+    addSpellToFigure_ptr addSpellToFigure;
 
 } SpellFunctions;

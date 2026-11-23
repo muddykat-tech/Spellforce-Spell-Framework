@@ -904,7 +904,8 @@ typedef enum : uint16_t
     SIEGE_AURA_SPELL = 0x100,
     AURA_SPELL = 0x200,
     STACKABLE_SPELL = 0x400,
-    SPELL_TAG_COUNT = 12
+    HEALING_SPELL = 0x800,
+    SPELL_TAG_COUNT = 13
 } SpellTag;
 
 typedef enum : uint32_t
@@ -943,7 +944,18 @@ typedef enum
     PHASE_3,
     PHASE_4,
     PHASE_5,
-    OnHitEnd
+    OnHitEnd,
+    RANGED_SHOT   /* dispatched ONLY from the ranged branch of sf_onhit_hook AFTER
+                   * the donor projectile is fully built; kept AFTER OnHitEnd so the
+                   * phase loops (i < OnHitEnd: sf_onhit_hook.c:362, sf_phys_effect_hook.c:129)
+                   * never walk it. Contract of the phase: handlers receive
+                   * donor_effect_id in the damage slot; the return value is ignored.
+                   * Damage-transform handlers (the class of the 8 existing PHASE_0..3
+                   * onhit handlers) must NOT be registered here: such a handler gets
+                   * donor_effect_id in the damage slot, its return value is ignored
+                   * and its side effects still apply; replace+warning guards only
+                   * per (line, phase) and do not catch this - registering foreign
+                   * (damage-transform) handlers in RANGED_SHOT is prohibited. */
 } OnHitPhase;
 
 typedef enum
@@ -1790,7 +1802,12 @@ typedef void (__thiscall *set_label_flags_ptr)(CMnuLabel *_this,
 
 typedef void (__fastcall *original_menu_func_ptr)(CAppMenu *_this);
 
-typedef void *(__cdecl *new_operator_ptr)(uint32_t param_1);
+/**
+ * new_operator_ptr - Engine global operator new (__cdecl).
+ * @param size_bytes: Allocation size in bytes.
+ * Return: Pointer to the allocated memory, 0 on failure.
+ */
+typedef void *(__cdecl *new_operator_ptr)(uint32_t size_bytes);
 typedef void (__thiscall *container_add_control_ptr)(CMnuContainer *_this,
                                                      CMnuBase *CMnubase,
                                                      char c1, char c2,
@@ -1819,46 +1836,154 @@ typedef void (__thiscall *autoclass113_fun_00a278c0_ptr)(
 // Weird __cdecl class here, blind passthrough and hope it works.
 typedef uint16_t (__cdecl *fun_00a2a1d0_ptr)(void *some_ptr, void *some_ptr_2);
 
+/**
+ * fun_00a49b10_ptr - Rebuilds or clears the spell button slots of the
+ * selected figure on the controller client.
+ * @param rebuild_buttons: Non-zero rebuilds the slots from the selected
+ *        figure's spell list (cast_type1==1 and ==2 groups, 4 slots each);
+ *        zero clears/hides them.
+ */
 typedef void (__thiscall *fun_00a49b10_ptr)(CGdControllerClient *_this,
-                                            uint8_t param1);
+                                            uint8_t rebuild_buttons);
 
-typedef uint32_t *(__thiscall *fun_00a28d60_ptr)(void *_this, void *param1,
-                                                 uint32_t param2);
-typedef void (__thiscall *fun_009a4020_ptr)(void *_this, uint32_t param1);
+/**
+ * fun_00a28d60_ptr - Reads one element of a uint32 vector wrapper.
+ * @param out_value: Receives the element value.
+ * @param element_index: Index of the element to read.
+ * Return: out_value, for call chaining.
+ */
+typedef uint32_t *(__thiscall *fun_00a28d60_ptr)(void *_this, void *out_value,
+                                                 uint32_t element_index);
+/**
+ * fun_009a4020_ptr - Switches the building panel to a page.
+ * @param page_index: Index of the building panel page to display.
+ */
+typedef void (__thiscall *fun_009a4020_ptr)(void *_this, uint32_t page_index);
 
 typedef void (__thiscall *vfun164_ptr)(void *CMnuContainer);
-typedef void (__thiscall *vfun163_ptr)(void *CMnuContainer, uint8_t param1);
+/**
+ * vfun163_ptr - Shows a container (CMnuContainer::Show).
+ * @param refresh_mode: Selects the post-show refresh path (non-zero and
+ *        zero take different vtable refresh calls).
+ */
+typedef void (__thiscall *vfun163_ptr)(void *CMnuContainer,
+                                       uint8_t refresh_mode);
 typedef void *(__thiscall *vfun41_ptr)(void *CMnuContainer);
 
-typedef uint32_t (__thiscall *fun_006a0140_ptr)(void *_this, uint16_t p1,
-                                                SF_CGdTargetData *p2_ptr,
-                                                uint8_t p3, uint8_t p4);
-typedef void (__thiscall *fun_009a2790_ptr)(void *_this, void *_p1,
-                                            uint32_t p2);
+/**
+ * fun_006a0140_ptr - Handles a UI action with a target descriptor
+ * (framework calls it for action ids 10000-10002).
+ * @param action_value: Opaque value derived from the clicked action's
+ *        data list; exact meaning not established.
+ * @param target_data: Target descriptor (SF_CGdTargetData) built by the
+ *        caller; the framework zeroes its position.
+ * @param action_flag_1: Opaque flag; framework passes 0.
+ * @param action_flag_2: Opaque flag; framework passes 0.
+ * Return: Status value (caller ignores it; meaning not established).
+ */
+typedef uint32_t (__thiscall *fun_006a0140_ptr)(void *_this,
+                                                uint16_t action_value,
+                                                SF_CGdTargetData *target_data,
+                                                uint8_t action_flag_1,
+                                                uint8_t action_flag_2);
+/**
+ * fun_009a2790_ptr - Passes a uint32 vector range to the engine.
+ * @param first_element: First element pointer of the vector.
+ * @param element_count: Number of elements ((post_last - first) / 4).
+ */
+typedef void (__thiscall *fun_009a2790_ptr)(void *_this, void *first_element,
+                                            uint32_t element_count);
 typedef uint32_t (__thiscall *fun_0069f8d0_ptr)(void *_this, uint32_t p1);
+/**
+ * fun_0069fb90_ptr - Dispatches a spell cast attempt for a figure with a
+ * target descriptor (SF_CGdTargetData).
+ * @param targeting_flag: SF_UIElement.unknown_flag byte passed through
+ *        (opaque targeting byte).
+ * @param config_param: SF_UIElement.unknown_config_param passed through
+ *        (opaque config byte).
+ * @param mainchar_flag: Non-zero only on the main-character path
+ *        (computed from CUiMain state); exact meaning not established.
+ * @param mode_flag: Framework passes 0 from the action-activation path
+ *        and 1 from the cast-confirm path; exact meaning not established.
+ * Return: Status value (caller ignores it; meaning not established).
+ */
 typedef uint32_t (__thiscall *fun_0069fb90_ptr)(void *_this, uint16_t figure_id,
-                                                uint8_t po2, uint16_t unkn_p3,
+                                                uint8_t targeting_flag,
+                                                uint16_t config_param,
                                                 SF_CGdTargetData *data,
-                                                uint32_t p5, uint32_t p6);
+                                                uint32_t mainchar_flag,
+                                                uint32_t mode_flag);
 typedef bool (__thiscall *getSpellLineIsTargetSelf_ptr)(void *_this,
                                                         uint16_t spell_line_id);
 typedef void *(__thiscall *fun_009a0750_ptr)(void *_this);
-typedef void *(__thiscall *fun_009de190_ptr)(void *_this, void *param_1);
-typedef void (__thiscall *fun_0099f610_ptr)(void *_this, uint16_t param1,
-                                            uint16_t param2, uint8_t param3,
-                                            uint16_t param4);
-typedef void (__thiscall *fun_009cd1f0_ptr)(void *SF_CUiBottom, uint8_t param1);
-typedef void (__thiscall *fun_009a1fd0_ptr)(void *SF_CUiGame, uint32_t param1);
-typedef uint32_t (__thiscall *fun_006f8c06_ptr)(SF_CGdFigureToolbox *_this,
+/**
+ * fun_009de190_ptr - Vector copy-assign: copies all elements of the source
+ * into this vector, reallocating if needed.
+ * @param source_vector: Vector whose elements are copied into this.
+ * Return: this.
+ */
+typedef void *(__thiscall *fun_009de190_ptr)(void *_this, void *source_vector);
+/**
+ * fun_0099f610_ptr - Hands a pending spell cast to the CUiGame cast tool.
+ * @param spell_line_id: Spell line / action type id (SF_UIElement.actionType_id).
+ * @param spell_sub_id: Subordinate action id (SF_UIElement.actionSubtype_id).
+ * @param targeting_flag: SF_UIElement.unknown_flag, opaque targeting byte.
+ * @param config_param: SF_UIElement.unknown_config_param, opaque config word.
+ */
+typedef void (__thiscall *fun_0099f610_ptr)(void *_this,
+                                            uint16_t spell_line_id,
+                                            uint16_t spell_sub_id,
+                                            uint8_t targeting_flag,
+                                            uint16_t config_param);
+/**
+ * fun_009cd1f0_ptr - Sets the pressed state of the active CUiBottom action
+ * button.
+ * @param pressed_flag: Non-zero presses the button (and releases sibling
+ *        buttons), zero releases it.
+ */
+typedef void (__thiscall *fun_009cd1f0_ptr)(void *SF_CUiBottom,
+                                            uint8_t pressed_flag);
+/**
+ * fun_009a1fd0_ptr - Selects the CUiGame spell cast tool.
+ * @param cast_tool_id: Tool id (2, 3, 4 map to dedicated tools, any other
+ *        value selects the default tool); stored and reported to the
+ *        game callback.
+ */
+typedef void (__thiscall *fun_009a1fd0_ptr)(void *SF_CUiGame,
+                                            uint32_t cast_tool_id);
+/**
+ * canCastSpell_ptr - Checks whether a figure can cast a spell (engine
+ * CGdFigureToolBox::CanCastSpell).
+ * @param target_type: Target entity type: 1 = figure target (uses
+ *        target_id), 4..5 = position target (uses target_pos_packed).
+ * @param target_pos_packed: Target coordinates as a packed SF_Coord passed
+ *        by value; used when target_type is 4..5.
+ * @param check_range_vis: Non-zero enforces spell min/max range and line
+ *        of sight; zero skips both checks.
+ * @param ignore_alignment: Zero validates the target against the spell
+ *        cast type (hostile/friendly/neutral); non-zero only refuses
+ *        UNKILLABLE targets.
+ * @param silent_fail: Non-zero suppresses the "cannot cast" notification
+ *        event for hero/main-char casters.
+ * Return: Non-zero when casting is allowed.
+ */
+typedef uint32_t (__thiscall *canCastSpell_ptr)(SF_CGdFigureToolbox *_this,
                                                 uint16_t figure_id,
                                                 uint16_t spell_id,
                                                 uint32_t target_id,
-                                                uint8_t param4, uint32_t param5,
-                                                uint32_t param6,
-                                                uint32_t param7,
-                                                uint32_t param8);
-typedef void (__thiscall *fun_00910de0_ptr)(void *_this, void *param1,
-                                            uint32_t param2);
+                                                uint8_t target_type,
+                                                SF_Coord target_pos_packed,
+                                                uint32_t check_range_vis,
+                                                uint32_t ignore_alignment,
+                                                uint32_t silent_fail);
+/**
+ * fun_00910de0_ptr - Forwards an event to the CMnuScreen stored callback.
+ * @param event_param: Opaque parameter forwarded as the 3rd callback argument.
+ * @param event_id: Event/message id; must be non-zero for the callback to
+ *        run, forwarded as the 4th argument (framework uses 0x140).
+ */
+typedef void (__thiscall *fun_00910de0_ptr)(void *_this, void *event_param,
+                                            uint32_t event_id);
 
 typedef uint32_t (__thiscall *cuiVideoSequence_constructor_ptr)(
     SF_CUiVideo *_this, SF_String *p1);

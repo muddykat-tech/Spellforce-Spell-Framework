@@ -22,7 +22,7 @@
 
 SFMod *g_animset_mod = NULL;
 
-/* Whole-catalog name budget (TZ 4d, W2-3): the unit of account is one NAME
+/* Whole-catalog name budget: the unit of account is one NAME
  * OCCURRENCE - every element of anims[]/aim[]/shoot[] in every section of
  * every file. Conservative on purpose: the bridge's probe cache is keyed by
  * name, so counting occurrences (not distinct names) bounds the worst case
@@ -40,7 +40,7 @@ SFMod *g_animset_mod = NULL;
 /* Sound field bounds, seconds. */
 #define SFSF_ANIMSET_SOUND_MAX_SECONDS 60.0f
 
-/** @brief True for a weapon type allowed in a shielded pair (TZ 4b):
+/** @brief True for a weapon type allowed in a shielded pair:
  * {0,2,3,4,5,6,7,8,18} (vanilla 1H set + bare hand + Fist item) plus the two
  * custom segments. Type 19 (Claw) is deliberately absent (fixed owner list). */
 static bool animsetShieldedWeaponAllowed(int32_t weapon)
@@ -72,8 +72,8 @@ static bool animsetShieldedWeaponAllowed(int32_t weapon)
     return false;
 }
 
-/** @brief True for a weapon type allowed in a solo set (TZ 4b): the vanilla
- * melee set {0..15, 18..21} (ranged 16/17 excluded, W1-5) plus the custom
+/** @brief True for a weapon type allowed in a solo set: the vanilla
+ * melee set {0..15, 18..21} (ranged 16/17 excluded) plus the custom
  * segments - a catalog type with attack_style "ranged" is refused per-record
  * by the cross-check below, not by this set. */
 static bool animsetSoloWeaponAllowed(int32_t weapon)
@@ -93,7 +93,7 @@ static bool animsetSoloWeaponAllowed(int32_t weapon)
     return false;
 }
 
-/** @brief True for a weapon type allowed in a ranged set (TZ 4b): custom
+/** @brief True for a weapon type allowed in a ranged set: custom
  * segments only - the ranged phases are cross-checked against the
  * weapon_types catalog (attack_style "ranged") separately. */
 static bool animsetRangedWeaponAllowed(int32_t weapon)
@@ -115,7 +115,7 @@ static bool animsetNameCharsetOk(const char *name)
 }
 
 /* Section-validation outcome: record-local problems drop the record
- * (per-record skip, TZ 4d), structural/section problems kill the file. */
+ * (per-record skip), structural/section problems kill the file. */
 enum
 {
     SET_OK = 0,
@@ -219,8 +219,8 @@ static int acceptFilmSet(const AnimsetFilmSet *set, AnimsetFilmSetEntry *out_set
 }
 
 /** @brief Checks one ranged[] record and fills the registry set. Both phases
- * are mandatory (owner decision 14.2) and the type must sit in the
- * weapon_types catalog with attack_style "ranged" (TZ 4b cross-check; the
+ * are mandatory (owner decision) and the type must sit in the
+ * weapon_types catalog with attack_style "ranged" (cross-check; the
  * registry is finalized earlier in the Core Module Phase). */
 static int acceptRangedSet(const AnimsetRangedSet *set, AnimsetRangedEntry *out_set,
                            const char *source, uint32_t *dropped)
@@ -307,7 +307,7 @@ static int acceptRangedSet(const AnimsetRangedSet *set, AnimsetRangedEntry *out_
 /**
  * @brief Checks one parsed entry and converts it into a registry record.
  * @param dropped per-record skip counter of the current file (solo/ranged
- * granularity and loader drops, TZ 4d).
+ * granularity and loader drops).
  * @return false for per-file class problems (the file dies whole).
  */
 static bool accept_animset_entry(const AnimsetEntry *entry, AnimsetEntryRecord *record,
@@ -340,7 +340,7 @@ static bool accept_animset_entry(const AnimsetEntry *entry, AnimsetEntryRecord *
     }
 
     /* shielded: v1 granularity for its own errors (missing fields), per-record
-     * for the general TZ 4d rows (allowed ids, empty anims). */
+     * for the general rows (allowed ids, empty anims). */
     for (int i = 0; i < entry->shielded_count; i++)
     {
         int status = acceptFilmSet(&entry->shielded[i], &record->shielded[record->shielded_count],
@@ -399,7 +399,7 @@ static bool accept_animset_entry(const AnimsetEntry *entry, AnimsetEntryRecord *
             return false;
         }
     }
-    /* Duplicate solo weapons duplicate the key (jobMap(w), w): per-file (TZ 4d). */
+    /* Duplicate solo weapons duplicate the key (jobMap(w), w): per-file. */
     for (int i = 0; i < record->solo_count; i++)
     {
         for (int j = i + 1; j < record->solo_count; j++)
@@ -447,8 +447,8 @@ static bool accept_animset_entry(const AnimsetEntry *entry, AnimsetEntryRecord *
     return true;
 }
 
-/** @brief Name occurrences of one parsed file - the TZ 4d unit of account
- * (W2-3): every anims[]/aim[]/shoot[] element, counted at parse level before
+/** @brief Name occurrences of one parsed file - the unit of account: every
+ * anims[]/aim[]/shoot[] element, counted at parse level before
  * validation (conservative: dropped records still bound the probe budget). */
 static uint32_t fileNameOccurrences(const AnimsetCatalogFile *catalog)
 {
@@ -517,7 +517,7 @@ void initialize_animset_module()
         return;
     }
 
-    /* Deterministic 230 accounting (TZ 4d, W1-9): collect the file names
+    /* Deterministic 230 accounting: collect the file names
      * first, sort them, then load in that order - the file that crosses the
      * limit is then independent of the FindFirstFile order. */
     static char fileNames[SFSF_ANIMSET_MAX_FILES][SFSF_ANIMSET_MAX_PATH];
@@ -590,7 +590,7 @@ void initialize_animset_module()
             continue;
         }
 
-        /* 230 limit (TZ 4d): counted per file in name-sorted order; the
+        /* 230 limit: counted per file in name-sorted order; the
          * violating file dies whole, its names never enter the counter and
          * the following files keep loading. */
         uint32_t file_names = fileNameOccurrences(catalog);
@@ -670,7 +670,7 @@ void initialize_animset_module()
     skipped += (uint32_t)commit_skipped;
     loaded = (uint32_t)committed;
 
-    /* Section sums follow the COMMITTED records (TZ 11.5): base_name
+    /* Section sums follow the COMMITTED records: base_name
      * conflicts remove whole files (commit policy is per source), so their
      * records are excluded from the sums by source. */
     shielded_total = 0;

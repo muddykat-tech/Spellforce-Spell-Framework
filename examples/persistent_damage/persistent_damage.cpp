@@ -89,17 +89,7 @@ void __thiscall ignite_spelleffect_handler(SF_CGdSpell *_this, uint16_t spell_in
             uint16_t random_roll = spellAPI->getRandom(_this->OpaqueClass, 100);
             if (resist_chance < random_roll)
             {
-                uint32_t unused;
-                SF_CGdTargetData relative_data;
-                relative_data.position.X = 0;
-                relative_data.position.Y = 0;
-                relative_data.entity_type = 1;
-                relative_data.entity_index = target_index;
-
-                SF_Rectangle aux_data;
-                aux_data.partA = 0;
-                aux_data.partB = 0;
-                spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 10, &aux_data);
+                spellAPI->addSpellHitEffect(_this, spell_index, target_index, 10);
                 // all this data is necessary to center visual effect on the unit
 
                 // we get initial damage of the spell
@@ -113,17 +103,7 @@ void __thiscall ignite_spelleffect_handler(SF_CGdSpell *_this, uint16_t spell_in
             {
                 //the spell was resisted, but creature notices it was attacked and must become aggroed
                 spellAPI->figureAggro(_this, spell_index, target_index);
-                uint32_t unused;
-                SF_CGdTargetData relative_data;
-                relative_data.position.X = 0;
-                relative_data.position.Y = 0;
-                relative_data.entity_type = 1;
-                relative_data.entity_index = target_index;
-                SF_Rectangle aux_data;
-                aux_data.partA = 0;
-                aux_data.partB = 0;
-                spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellTargetResisted,
-                                          &unused, &relative_data, _this->OpaqueClass->current_step, 10, &aux_data);
+                spellAPI->addSpellResistedEffect(_this, spell_index, target_index, 10);
                 // we stop the spell, so it doesn't linger on creature
                 spellAPI->setEffectDone(_this, spell_index, 0);
              }
@@ -134,17 +114,13 @@ void __thiscall ignite_spelleffect_handler(SF_CGdSpell *_this, uint16_t spell_in
             // every other time when spell ticks
             if (ticks_passed <= ticks_total)
             {
-                uint32_t unused;
                 SF_CGdTargetData relative_data;
                 relative_data.position.X = 0;
                 relative_data.position.Y = 0;
                 relative_data.entity_type = 1;
                 relative_data.entity_index = target_index;
-                SF_Rectangle aux_data;
-                aux_data.partA = 0;
-                aux_data.partB = 0;
-                spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellDOTHitTarget,
-                                          &unused, &relative_data, _this->OpaqueClass->current_step, 10, &aux_data);
+                spellAPI->addSpellVisualEffect(_this, spell_index, kGdEffectSpellDOTHitTarget,
+                                               &relative_data, 10, NULL);
                 // we pull persistent damage value from spell data, it's supposed to be lesser than initial damage was
                 damage = spell_data.params[1];
                 // with the next command we make the game to ignore the spell effect handler for a specified amount of internal ticks until it's a proper time for the next spell tick to happen

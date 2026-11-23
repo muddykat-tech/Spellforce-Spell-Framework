@@ -732,6 +732,7 @@ void initialize_vanilla_spells()
     SFSpell *healing = registrationAPI.registerSpell(kGdSpellLineHealing);
     registrationAPI.linkTypeHandler(healing, &healing_handler);
     registrationAPI.applySpellTag(healing, STACKABLE_SPELL);
+    registrationAPI.applySpellTag(healing, SpellTag::HEALING_SPELL);
     registrationAPI.linkSingleTargetAIHandler(healing, &healing_ai_handler);
 
     SFSpell *death = registrationAPI.registerSpell(kGdSpellLineDeath);
@@ -896,14 +897,19 @@ void initialize_vanilla_spells()
     registrationAPI.linkTypeHandler(area_healing, &area_healing_handler);
     registrationAPI.linkAOEAIHandler(area_healing, &area_heal_ai_handler);
     registrationAPI.applySpellTag(area_healing, SpellTag::AOE_SPELL);
+    registrationAPI.applySpellTag(area_healing, SpellTag::HEALING_SPELL);
+
 
     SFSpell *sentinel_healing = registrationAPI.registerSpell(kGdSpellLineSentinelHealing);
     registrationAPI.linkTypeHandler(sentinel_healing, &sentinel_healing_handler);
+    registrationAPI.linkAOEAIHandler(sentinel_healing, &area_heal_ai_handler);
     registrationAPI.applySpellTag(sentinel_healing, SpellTag::AOE_SPELL);
+    registrationAPI.applySpellTag(sentinel_healing, SpellTag::HEALING_SPELL);
 
     SFSpell *healing2 = registrationAPI.registerSpell(kGdSpellLineGreaterHealing);
     registrationAPI.linkTypeHandler(healing2, &healing_handler);
     registrationAPI.applySpellTag(healing2, STACKABLE_SPELL);
+    registrationAPI.applySpellTag(healing2, SpellTag::HEALING_SPELL);
     registrationAPI.linkSingleTargetAIHandler(healing2, &healing_ai_handler);
 
     SFSpell *charm_animal = registrationAPI.registerSpell(kGdSpellLineCharmAnimal);
@@ -1145,6 +1151,7 @@ void initialize_vanilla_spells()
 
     SFSpell *suicide_heal = registrationAPI.registerSpell(kGdSpellLineSuicideHeal);
     registrationAPI.linkTypeHandler(suicide_heal, &suicide_heal_handler);
+    registrationAPI.applySpellTag(suicide_heal, SpellTag::HEALING_SPELL);
 
     SFSpell *summon_6 = registrationAPI.registerSpell(kGdSpellLineSummonWolf);
     registrationAPI.linkTypeHandler(summon_6, &summons_handler);
@@ -1332,6 +1339,7 @@ void initialize_vanilla_spells()
     SFSpell *tower_healing = registrationAPI.registerSpell(kGdSpellLineHealingTower);
     registrationAPI.linkTypeHandler(tower_healing, &tower_healing_handler);
     registrationAPI.applySpellTag(tower_healing, STACKABLE_SPELL);
+    registrationAPI.applySpellTag(tower_healing, SpellTag::HEALING_SPELL);
     registrationAPI.linkSingleTargetAIHandler(tower_healing, &healing_ai_handler);
 
     SFSpell *tower_icestrike = registrationAPI.registerSpell(kGdSpellLineIceburstTower);
@@ -1447,6 +1455,7 @@ void initialize_vanilla_spells()
 
     SFSpell *healing3 = registrationAPI.registerSpell(kGdSpellLineHealingAura);
     registrationAPI.linkTypeHandler(healing3, &healing_handler);
+    registrationAPI.applySpellTag(healing3, SpellTag::HEALING_SPELL);
 
     SFSpell *hypnotize2 = registrationAPI.registerSpell(kGdSpellLineHypnotizeTwo);
     registrationAPI.linkTypeHandler(hypnotize2, &hypnotize_handler);

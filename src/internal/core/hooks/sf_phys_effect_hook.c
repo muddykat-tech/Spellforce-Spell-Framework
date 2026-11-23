@@ -59,7 +59,7 @@ uint16_t __thiscall cloneEffect(SF_CGdEffect *_this, uint16_t src_effect_id, SF_
     /* Honest clone: EFFECT_ENTITY_INDEX3 travels with the donor when present
      * and is copied key-by-key (whitelist gate, same rule as donor_keys above)
      * — this is the key the engine's own kGdSpellLineRockBulletChained
-     * override inside CDrwEffectObject::vfunction15 reads. The wave-12c
+     * override inside CDrwEffectObject::vfunction15 reads. The
      * fallback marker (INDEX3 synthesized from the donor record's source
      * index) was removed together with the diagnostic visual-hook layer:
      * the K12 source-pair copy above already carries the donor anchor.
@@ -71,18 +71,18 @@ uint16_t __thiscall cloneEffect(SF_CGdEffect *_this, uint16_t src_effect_id, SF_
                                  effectAPI.getEffectXData(_this, src_effect_id, EFFECT_ENTITY_INDEX3));
     }
 
-    /* Anchor registration (waves 17/19): the arc is rendered per frame from
+    /* Anchor registration: the arc is rendered per frame from
      * the anchors passed to the 8aa610 call site inside vf15, and the record
      * keeps the DONOR in its source pair (K12 copy above) so the client
      * template resolver uses the donor's weapon. The engine resolver is
      * stateless and re-reads the record keys EVERY frame, so the clone's
      * record id -> {donor, reflector} entry stays live for the whole flight:
      * expire = tick_start + tick_count covers exactly the rendered frames
-     * cs in [start, start+length] (research O-F1/O-F5). Donor id: the
+     * cs in [start, start+length]. Donor id: the
      * donor's EFFECT_ENTITY_INDEX3 when it carries one, else the donor
      * record's source index (+0x46). now_cs = engine current_step lets the
      * put side sweep finished flights and, on a full ring, drop the entry
-     * with the earliest expire_cs (wave 21). */
+     * with the earliest expire_cs. */
     uint32_t anchor_donor = effectAPI.effectXDataExists(_this, src_effect_id, EFFECT_ENTITY_INDEX3)
                                 ? effectAPI.getEffectXData(_this, src_effect_id, EFFECT_ENTITY_INDEX3)
                                 : *(uint16_t *)(donor_rec + 10);

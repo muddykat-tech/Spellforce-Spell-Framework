@@ -150,14 +150,9 @@ void __thiscall iceblade_effect_handler(SF_CGdSpell *_this, uint16_t spell_index
             figureAPI->getPosition(_this->CGdFigure, &relative_data.position, source_index);
             relative_data.entity_type = 4;
             relative_data.entity_index = 0;
-            uint32_t unused;
-
-            SF_Rectangle aux_data;
-            aux_data.partA = 0;
-            aux_data.partB = 0;
 
             // we apply the visual effect to the target (requires editing lua scripts to make the continous visual effect as long as the spell is active)
-            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 0, &aux_data);
+            spellAPI->addSpellVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &relative_data, 0, NULL);
 
             // we have to activate the flag F_CHECK_SPELLS_BEFORE_JOB in order to make it possible for On Hit handler to trigger when the spellcaster makes an attack
             _this->CGdFigure->figures[source_index].flags |= F_CHECK_SPELLS_BEFORE_JOB;

@@ -38,9 +38,8 @@ void __thiscall static_sub_effect_handler(SF_CGdEffect *_this, uint16_t effect_i
     {
         return;
     }
-    SF_CGdTargetData source = {figure_type1, figure_index1, {0, 0}};
-    SF_CGdTargetData target = {figure_type2, figure_index2, {0, 0}};
-    spellAPI->addSpell(_this->CGdSpell, spell_id, _this->OpaqueClass->current_step, &source, &target, 0);
+    spellAPI->addSpellToFigure(_this->CGdSpell, spell_id,
+                               figure_index1, figure_index2);
 }
 
 void __thiscall static_handler(SF_CGdSpell *_this, uint16_t spell_index)
@@ -108,18 +107,11 @@ void __thiscall simple_damage_effect_handler(SF_CGdSpell *_this, uint16_t spell_
             uint32_t resist_chance = spellAPI->getChanceToResistSpell(_this->CGdAutoClass34, source_index, target_index, spell_index);
             if ((uint32_t)resist_chance < random_roll)
             {
-                uint32_t unused;
-                // IDK, if this right, though
-                SF_CGdTargetData relative_data;
-                relative_data.position.X = 0;
-                relative_data.position.Y = 0;
-                relative_data.entity_type = 1;
-                relative_data.entity_index = target_index;
                 // IDK what that structure
                 SF_Rectangle aux_data;
                 aux_data.partA = 0;
                 aux_data.partB = 0;
-                spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 0x19, &aux_data);
+                spellAPI->addSpellHitEffect(_this, spell_index, target_index, 0x19);
                 if (figureAPI->isAlive(_this->CGdFigure, target_index))
                 {
                     uint16_t damage = spell_data.params[0];
@@ -151,17 +143,7 @@ void __thiscall simple_damage_effect_handler(SF_CGdSpell *_this, uint16_t spell_
             else
             {
                 spellAPI->figureAggro(_this, spell_index, target_index);
-                uint32_t unused;
-                SF_CGdTargetData relative_data;
-                relative_data.position.X = 0;
-                relative_data.position.Y = 0;
-                relative_data.entity_type = 1;
-                relative_data.entity_index = target_index;
-                // IDK what that structure
-                SF_Rectangle aux_data;
-                aux_data.partA = 0;
-                aux_data.partB = 0;
-                spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellTargetResisted, &unused, &relative_data, _this->OpaqueClass->current_step, 10, &aux_data);
+                spellAPI->addSpellResistedEffect(_this, spell_index, target_index, 10);
             }
         }
     spellAPI->setEffectDone(_this, spell_index, 0);

@@ -196,22 +196,8 @@ void __thiscall dwarf_hammer_tower_effect_handler(SF_CGdSpell *_this, uint16_t s
         ((int16_t)(_this->CGdFigure->figures[target_index].owner) != -1))
      {
 
-                uint32_t unused;
-
-                // we declare geometry for spell visual effect
-                SF_CGdTargetData relative_data;
-                relative_data.position.X = 0;
-                relative_data.position.Y = 0;
-                relative_data.entity_type = 1;
-                relative_data.entity_index = target_index;
-
-                // since the spell isn't AoE, we declare its area of effect as 0
-                SF_Rectangle aux_data;
-                aux_data.partA = 0;
-                aux_data.partB = 0;
-
                 // we apply on hit visual effect to the target
-                spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 10, &aux_data);
+                spellAPI->addSpellHitEffect(_this, spell_index, target_index, 10);
 
 
                 // we obtain spell damage

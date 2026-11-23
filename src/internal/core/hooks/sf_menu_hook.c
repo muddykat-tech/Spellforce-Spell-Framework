@@ -59,7 +59,7 @@ fun_0099f610_ptr fun_0099f610;
 
 fun_009cd1f0_ptr fun_009cd1f0;
 fun_009a1fd0_ptr fun_009a1fd0;
-fun_006f8c06_ptr fun_006f8c06;
+canCastSpell_ptr canCastSpell;
 fun_00910de0_ptr fun_00910de0;
 
 
@@ -98,7 +98,7 @@ void initialize_menu_data_hooks()
     fun_0099f610 = (fun_0099f610_ptr)(ASI::AddrOf(0x59f610));
     fun_009cd1f0 = (fun_009cd1f0_ptr)(ASI::AddrOf(0x5cd1f0));
     fun_009a1fd0 = (fun_009a1fd0_ptr)(ASI::AddrOf(0x5a1fd0));
-    fun_006f8c06 = (fun_006f8c06_ptr)(ASI::AddrOf(0x2f8c06));
+    canCastSpell = (canCastSpell_ptr)(ASI::AddrOf(0x2f8c06));
     fun_00910de0 = (fun_00910de0_ptr)(ASI::AddrOf(0x510de0));
 
     vfun163 = (vfun163_ptr)(ASI::AddrOf(0x513C80));
@@ -367,9 +367,9 @@ void __attribute__((thiscall)) sf_click_horizontal_button(SF_CUiMain *_this,
             fun_009a1fd0(_this->CUiMain_data.CUiGame, 0);
             return;
         }
-        if (!fun_006f8c06(_this->CUiMain_data.CGdFigureToolBox, figure_id,
-                          param2->actionSubtype_id, figure_id, 1, 0,
-                          1, 1, 1))
+        if (!canCastSpell(_this->CUiMain_data.CGdFigureToolBox, figure_id,
+                          param2->actionSubtype_id, figure_id, 1,
+                          (SF_Coord){0, 0}, 1, 1, 1))
         {
             uint32_t *unknown_field = (uint32_t *)vfun41(_this);
             fun_00910de0(unknown_field, _this, 0x140);

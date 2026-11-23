@@ -90,7 +90,7 @@ AnimsetCommitStatus commitAnimsetCatalog(const AnimsetEntryRecord *entries, size
         return ANIMSET_COMMIT_OK;
     }
 
-    /* Per-file conflict policy (TZ 5.1 v1.6): the bridge matches a movie
+    /* Per-file conflict policy: the bridge matches a movie
      * library by the exact base_name, so a duplicated base_name must never
      * register, but only the offending files die - a duplicate inside one
      * file skips that file, the same base_name in two files skips both. */

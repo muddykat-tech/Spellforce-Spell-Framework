@@ -21,7 +21,7 @@
 SFMod *g_weapon_type_mod = NULL;
 
 /**
- * @brief Maps one attack_style json string to its enum value (TZ 6.1/6.3).
+ * @brief Maps one attack_style json string to its enum value.
  * @return false for every string outside the five v2 style names ("melee"
  * included - it is a rejected alias of "strike", not a style of its own).
  */
@@ -113,7 +113,7 @@ static bool accept_weapon_type_record(const WeaponTypeJsonRecord *record, Weapon
         }
     }
 
-    /* v2 style set (TZ 6.3): {"ranged", "strike", "stab", "punch", "staff"}.
+    /* v2 style set: {"ranged", "strike", "stab", "punch", "staff"}.
      * "melee" is deliberately NOT accepted - "strike" is the one name of the
      * plain swing style, a second alias would split the catalog language. */
     WeaponAttackStyle style;

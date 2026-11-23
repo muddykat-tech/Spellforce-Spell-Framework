@@ -36,12 +36,7 @@ void __thiscall aoe_lifetap_effect_handler(SF_CGdSpell *_this, uint16_t spell_in
     // SF_Coord
     spellAPI->getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);
     spellAPI->getTargetsRectangle(_this, &hit_area, spell_index, spell_data.params[0], &cast_center);
-    SF_CGdTargetData relative_data;
-    relative_data.position = cast_center;
-    relative_data.entity_type = 4;
-    relative_data.entity_index = 0;
-    uint32_t unused;
-    spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitWorld, &unused, &relative_data, _this->OpaqueClass->current_step, 0x19, &hit_area);
+    spellAPI->addSpellHitWorldEffect(_this, spell_index, cast_center, 0x19, &hit_area);
     iteratorAPI->iteratorSetArea(&figure_iterator, &cast_center, spell_data.params[0]);
     uint16_t target_index = iteratorAPI->getNextFigure(&figure_iterator);
 

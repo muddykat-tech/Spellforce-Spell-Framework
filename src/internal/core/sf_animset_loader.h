@@ -27,7 +27,7 @@ typedef struct
     bool found_length;
 } AnimsetSound;
 
-/** Raw values of one shielded[] / solo[] element (TZ 4b). */
+/** Raw values of one shielded[] / solo[] element. */
 typedef struct
 {
     int32_t weapon;
@@ -39,7 +39,7 @@ typedef struct
 } AnimsetFilmSet;
 
 /** Raw values of one ranged[] element: aim and shoot are two separate film
- * lists; BOTH are mandatory at validation time (owner decision 14.2). */
+ * lists; BOTH are mandatory at validation time (owner decision). */
 typedef struct
 {
     int32_t weapon;
@@ -77,12 +77,12 @@ typedef struct
 {
     AnimsetEntry entries[SFSF_ANIMSET_MAX_ENTRIES];
     int32_t entry_count;
-    /* Record-local limit breaches the loader dropped on the fly (TZ 4d:
-     * >8 names per set, >64 sets per section, name >63 characters). The
+    /* Record-local limit breaches the loader dropped on the fly
+     * (>8 names per set, >64 sets per section, name >63 characters). The
      * module adds this to its skipped count. */
     int32_t dropped_record_count;
     /* Set when any entry carries the retired v1 "pairs" section: the module
-     * then skips the file whole with the exact TZ 4c line. */
+     * then skips the file whole. */
     bool rejected_v1_format;
 } AnimsetCatalogFile;
 

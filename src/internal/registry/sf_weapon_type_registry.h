@@ -81,7 +81,7 @@ bool getWeaponTypeAt(size_t index, WeaponTypeEntry *out);
 bool isOverridedRangedWeaponType(uint16_t weapon_type);
 
 /**
- * @brief Attack style lookup for the animsets v2 consumers (TZ 6.2/6.3).
+ * @brief Attack style lookup for the animsets v2 consumers.
  *
  * The table is id-sorted by finalizeWeaponTypes(); the vanilla crossbow base
  * entry (id 17) answers RANGED like every catalog "ranged" record.

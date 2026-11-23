@@ -291,11 +291,11 @@ void __thiscall shield_wall_universal_effect_handler(SF_CGdSpell *_this, uint16_
                             // spell_data.params[3] stands for SHIELDWALL spell data id which we're going to apply to the target
                             // _this->OpaqueClass->current_step stands for the spell starting tick (meaning game ticks, not spell tick)
                             // it's unknown what's the last parameter is standing for
-                            toolboxAPI->addSpellToFigure(_this->CGdFigureToolBox, target_index, spell_index);
+                            toolboxAPI->attachSpellToFigure(_this->CGdFigureToolBox, target_index, spell_index);
 
                             figureAPI->addBonusMultToStatistic(_this->CGdFigure, ARMOR, target_index, recalc_value);
 
-                            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 0, &hit_area);
+                            spellAPI->addSpellVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &relative_data, 0, &hit_area);
                             // we spent one usage of the spell, hence we decrease the possible limit by one
                             figure_count--;
                         }

@@ -175,13 +175,6 @@ void __thiscall melee_group_ability_effect_handler(SF_CGdSpell *_this, uint16_t 
     spellAPI->getResourceSpellData(_this->CGdResource, &spell_data, spell->spell_id);
 
 
-    // we declare structure for relative position of visual effect
-    SF_CGdTargetData relative_data;
-    figureAPI->getPosition(_this->CGdFigure, &relative_data.position, source_index);
-    relative_data.entity_type = 4;
-    relative_data.entity_index = 0;
-    uint32_t unused;
-    
     // we declare structure to specify the area affected by the AoE effect
     SF_Rectangle hit_area;
 
@@ -197,7 +190,7 @@ void __thiscall melee_group_ability_effect_handler(SF_CGdSpell *_this, uint16_t 
     spellAPI->getTargetsRectangle(_this, &hit_area, spell_index, spell_data.params[0], &cast_center);
 
     // we apply the visual effect filling the area which we specified above
-    spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitWorld, &unused, &relative_data, _this->OpaqueClass->current_step, 0x19, &hit_area);
+    spellAPI->addSpellHitWorldEffect(_this, spell_index, cast_center, 0x19, &hit_area);
 
 
     // we declare an iterator
@@ -241,15 +234,13 @@ void __thiscall melee_group_ability_effect_handler(SF_CGdSpell *_this, uint16_t 
                 if (spellAPI->checkCanApply(_this, spell_index))
                 {
                     // checkCanApply returned 1 here, so we add the spell to a long validated target
-                    // to do this, we declare structures for source and target to trigger another component (wrapped as its own spell) within the AoE spell
-                    SF_CGdTargetData source = {spell->source.entity_type, source_index, {0, 0}};
-                    SF_CGdTargetData target = {spell->source.entity_type, target_index, {0, 0}};
+                    // to do this, we pass source and target entity pairs to trigger another component (wrapped as its own spell) within the AoE spell
                     // we apply SHIELDWALL spell to a single specific target (the spellcaster)
                     // we have equated a source and a target in this case
                     // spell_data.params[3] stands for SHIELDWALL spell data id which we're going to apply to the target
                     // _this->OpaqueClass->current_step stands for the spell starting tick (meaning game ticks, not spell tick)
-                    // it's unknown what's the last parameter is standing for
-                    spellAPI->addSpell(_this, spell_data.params[3], _this->OpaqueClass->current_step, &source, &target, 0);
+                    spellAPI->addSpellToFigure(_this, spell_data.params[3],
+                                               source_index, target_index);
 
                     // we spent one usage of the spell, hence we decrease the possible limit by one
                     // but if we applied the spell to a spellcaster, let's give it for free

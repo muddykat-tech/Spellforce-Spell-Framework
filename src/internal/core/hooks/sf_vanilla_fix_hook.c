@@ -477,6 +477,62 @@ uint8_t __thiscall getEffectiveRace(SF_CGdFigure *_this, uint16_t figure_id)
     return _this->figures[figure_id].race;
 }
 
+/* Pure gate deciding which spells figureTurnOffBattleMode may end.
+ * (moved into this TU from its former dedicated header - single caller)
+ *
+ * DELIBERATE DIVERGENCE FROM VANILLA. Vanilla figure_turn_off_battle_mode
+ * collected every spell with
+ * GetJob == kGdSpellJobAura on the figure (only when no enemies remain) and
+ * called CGdSpell::EndSpell on each - the healing-aura wrapper line 103
+ * (AuraHealing) included. Ending the aura dropped hasSpellOnIt(caster, 103),
+ * the AI aggregate gate re-ranked the still-wounded allies, the aura was
+ * re-cast immediately, and the "cast -> 2 ticks -> battle-mode off -> aura
+ * ended -> re-cast" loop repeated forever.
+ *
+ * Conditional teardown (replaces the earlier unconditional skip): the
+ * healing aura is meant to outlive the battle
+ * while someone is still wounded - it keeps ticking and heals the crowd - so
+ * line 103 is collected for ending ONLY when the fight is over AND nobody is
+ * missing HP (enemy_count == 0 && allies_missing_hp == 0). With wounded
+ * allies present (post-battle, aggregate > 0) the aura lives out its natural
+ * duration and hasSpellOnIt keeps the AI from re-casting while it runs; once
+ * everyone is healthy the aura is torn down and the re-cast cannot happen
+ * because the AI aggregate gate sees figures_missing_hp == 0 - no loop.
+ * Width: only line 103 is conditional. Every other aura-tagged and
+ * siege-aura-tagged line keeps the vanilla cleanup semantics 1:1 (hostile
+ * auras, siege auras, allied auras are still ended when the battle ends with
+ * no enemies). Untagged lines are never collected (vanilla parity).
+ * MP-safety: all inputs are synchronized sim state - spell_line is a static
+ * gamedata constant, enemy_count and allies_missing_hp are battleData fields
+ * written deterministically by the lockstep simulation on every peer,
+ * identical on all peers.
+ */
+
+/**
+ * Pure decision "should battle-mode teardown end this spell?".
+ *
+ * @param spell_line         gamedata line of the spell instance on the figure
+ * @param aura_tagged        spell_line carries the AURA_SPELL tag
+ * @param siege_tagged       spell_line carries the SIEGE_AURA_SPELL tag
+ * @param enemy_count        enemies left in battleData.enemy_figures (count,
+ *                           entityCount units)
+ * @param allies_missing_hp  aggregate missing HP of the ally side
+ *                           (battleData.figures_missing_hp, HP units)
+ * @return 1 - collect the spell for ending (vanilla semantics), 0 - skip.
+ */
+static uint8_t battlemode_spell_ends(uint16_t spell_line, uint8_t aura_tagged,
+                                     uint8_t siege_tagged, uint16_t enemy_count,
+                                     uint32_t allies_missing_hp)
+{
+    if (spell_line == kGdSpellLineAuraHealing)
+    {
+        /* Conditional teardown: end only when the battle is over AND no
+         * ally is missing HP; with wounded allies the aura keeps ticking. */
+        return (uint8_t)((enemy_count == 0) && (allies_missing_hp == 0u));
+    }
+    return (uint8_t)((aura_tagged != 0) || (siege_tagged != 0));
+}
+
 void __thiscall figureTurnOffBattleMode(SF_CGdBattleDevelopment *_this)
 {
     uint16_t figure_id = _this->battleData.current_figure;
@@ -492,8 +548,17 @@ void __thiscall figureTurnOffBattleMode(SF_CGdBattleDevelopment *_this)
         {
             uint16_t spell_index = toolboxAPI.getSpellIndexFromDLL(_this->battleData.CGdDoubleLinkList, i);
             uint16_t spell_line = spellAPI.getSpellLine(_this->battleData.CGdSpell, spell_index);
-            if (((spellAPI.hasSpellTag(spell_line, SpellTag::AURA_SPELL))
-                 || (spellAPI.hasSpellTag(spell_line, SpellTag::SIEGE_AURA_SPELL)))
+            /* Deliberate divergence from vanilla: the gate tears the
+             * AuraHealing wrapper line 103 down ONLY when no
+             * enemies remain AND no ally is missing HP (post-battle with wounded
+             * allies keeps the aura ticking); every other aura/siege-aura line
+             * keeps the vanilla cleanup semantics. Details -
+             * battlemode_spell_ends() above. */
+            if ((battlemode_spell_ends(spell_line,
+                                       spellAPI.hasSpellTag(spell_line, SpellTag::AURA_SPELL),
+                                       spellAPI.hasSpellTag(spell_line, SpellTag::SIEGE_AURA_SPELL),
+                                       _this->battleData.enemy_figures.entityCount,
+                                       _this->battleData.figures_missing_hp) != 0)
                 && (_this->battleData.enemy_figures.entityCount == 0))
             {
                 spell_indices.push_back(spell_index);

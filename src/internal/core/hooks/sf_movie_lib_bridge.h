@@ -15,7 +15,7 @@
 void install_movie_lib_bridge();
 
 /**
- * @brief Staging job of a weapon+shield pair (full v2 jobMap, TZ 5.1).
+ * @brief Staging job of a weapon+shield pair (full v2 jobMap).
  *
  * 2 (Hand) / 19 (Claw) -> kGdJobPunch; 3 (1HDagger) -> kGdJobStab; custom ids
  * of the weapon_types catalog follow their attack_style (stab -> Stab,
@@ -36,7 +36,7 @@ uint16_t animsetJobForWeapon(uint16_t weapon_type);
 uint8_t lookupShieldSynth(void *movie_lib, uint16_t weapon_type);
 
 /**
- * @brief Registration point of ALL animset v2 sections (TZ 5.2): find /
+ * @brief Registration point of ALL animset v2 sections: find /
  * acquire / configure / verify one movie library.
  *
  * Called from the top of sf_select_job_animation (before the job switch), so
@@ -49,7 +49,7 @@ uint8_t lookupShieldSynth(void *movie_lib, uint16_t weapon_type);
 void ensureMovieLibConfigured(void *movie_lib);
 
 /** @brief Ring-eviction counter of the movie lib cache (observability of the
- * TZ 5.2 p.7 policy; printed by the module's summary line as well). */
+ * eviction policy; printed by the module's summary line as well). */
 uint32_t animsetLibCacheEvictionCount();
 
 /** @} */

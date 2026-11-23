@@ -58,11 +58,9 @@ uint16_t __thiscall dmg_shield_dmg_handler(SF_CGdFigureToolbox *_this,
     {
         SF_CGdResourceSpell spell_data;
         spellAPI.getResourceSpellData(_this->CGdResource, &spell_data, spell_id);
-        SF_CGdTargetData source_data = {1, source, {0, 0}};
-        SF_CGdTargetData target_data = {1, target, {0, 0}};
         // Attention -- source and target ARE reversed here
-        spellAPI.addSpell(_this->CGdSpell, spell_data.params[1], _this->maybe_random->current_step, &target_data,
-                          &source_data, 0);
+        addSpellToFigure(_this->CGdSpell, spell_data.params[1], target,
+                         source);
     }
     return current_damage;
 }
@@ -91,10 +89,7 @@ uint16_t __thiscall conservation_dmg_handler(SF_CGdFigureToolbox *_this,
         spellAPI.setXData(_this->CGdSpell, spell_index, SPELL_CONSERVATION_SHIELD, shield_value);
         if (shield_value == 0)
         {
-            spellAPI.figTryClrCHkSPlBfrJob2(_this->CGdSpell, spell_index);
-            spellAPI.figClrChkSplBfrChkBattle(_this->CGdSpell, spell_index, 0);
-            spellAPI.removeDLLNode(_this->CGdSpell, spell_index);
-            spellAPI.setEffectDone(_this->CGdSpell, spell_index, 0);
+            sf_end_spell_now(_this->CGdSpell, spell_index, false);
         }
     }
     return current_damage;
@@ -178,11 +173,7 @@ uint16_t __thiscall hypnotize_dmg_handler(SF_CGdFigureToolbox *_this,
     uint16_t spell_index = toolboxAPI.getSpellIndexOfType(_this, target, spell_data.spell_line_id, 0);
     while (spell_index != 0)
     {
-        spellAPI.figTryUnfreeze(_this->CGdSpell, spell_index, 0);
-        spellAPI.figTryClrCHkSPlBfrJob2(_this->CGdSpell, spell_index);
-        spellAPI.figClrChkSplBfrChkBattle(_this->CGdSpell, spell_index, 0);
-        spellAPI.removeDLLNode(_this->CGdSpell, spell_index);
-        spellAPI.setEffectDone(_this->CGdSpell, spell_index, 0);
+        sf_end_spell_now(_this->CGdSpell, spell_index, true);
         spell_index = toolboxAPI.getSpellIndexOfType(_this, target, spell_data.spell_line_id, 0);
     }
     return current_damage;

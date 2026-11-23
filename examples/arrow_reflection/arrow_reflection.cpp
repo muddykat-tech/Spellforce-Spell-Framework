@@ -190,7 +190,7 @@ uint16_t __thiscall arrows_reflection_phys_handler(SF_CGdEffect *_this, uint16_t
     // flight start decoupled from the visual anchor: world-point source gives
     // Add an explicit start position (the reflector), while K12 in cloneEffect
     // rewrites the record's source pair to the DONOR figure for the client
-    // template resolver (owner-approved mechanism, wave 16)
+    // template resolver (owner-approved mechanism)
     SF_CGdTargetData clone_source;
     figureAPI->getPosition(_this->CGdFigure, &clone_source.position, target); // live position of the reflector (handler's target)
     clone_source.entity_type = 4; // world point: Add writes the position verbatim (flight start = reflector)
@@ -264,14 +264,9 @@ void __thiscall arrows_reflection_effect_handler(SF_CGdSpell *_this, uint16_t sp
             figureAPI->getPosition(_this->CGdFigure, &relative_data.position, source_index);
             relative_data.entity_type = 1;
             relative_data.entity_index = 0;
-            uint32_t unused;
-
-            SF_Rectangle aux_data;
-            aux_data.partA = 0;
-            aux_data.partB = 0;
 
             // we apply the visual effect to the target (requires editing lua scripts to make the continous visual effect as long as the spell is active)
-            spellAPI->addVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &unused, &relative_data, _this->OpaqueClass->current_step, 0, &aux_data);
+            spellAPI->addSpellVisualEffect(_this, spell_index, kGdEffectSpellHitTarget, &relative_data, 0, NULL);
 
             // we disable the spell effect from being triggered until specified amount of time passes
             // param 0 = buff duration in ms; on/off mechanic without frequent ticks
